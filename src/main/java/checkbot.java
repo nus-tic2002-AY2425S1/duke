@@ -2,6 +2,8 @@ import java.util.Scanner;
 
 public class checkbot {
     public static String horizontalLine = "--------------------------------------";
+    public static String[] tasks = new String[100];
+    public static int taskCount = 0;
 
     public static void printHello() {
         System.out.println(horizontalLine + System.lineSeparator() +
@@ -16,23 +18,49 @@ public class checkbot {
                 horizontalLine);
     }
 
-    public static void printEcho() {
+    public static void printTasks() {
+        System.out.println(horizontalLine + System.lineSeparator());
+
+        for (int i = 0; i < tasks.length; i++) {
+            if (tasks[i] == null) {
+                continue;
+            }
+            System.out.println(i+1 + ". " + tasks[i]);
+        }
+
+        System.out.println(horizontalLine);
+    }
+
+    public static void printEcho(String input) {
+        System.out.println(horizontalLine + System.lineSeparator() +
+                "added: " + input + System.lineSeparator() +
+                horizontalLine);
+    }
+
+    public static String readInput() {
         String input;
         Scanner in = new Scanner(System.in);
         input = in.nextLine();
 
-        if (input.equals("bye")) {
-            printExit();
-        } else {
-            System.out.println(horizontalLine + System.lineSeparator() +
-                    input + System.lineSeparator() +
-                    horizontalLine);
-            printEcho();
-        }
+        return input;
     }
 
     public static void main(String[] args) {
         printHello();
-        printEcho();
+
+        while (true) {
+            String input = readInput();
+
+            if (input.equals("bye")) {
+                printExit();
+                break;
+            } else if (input.equals("list")) {
+                printTasks();
+            } else {
+                tasks[taskCount] = input;
+                taskCount++;
+                printEcho(input);
+            }
+        }
     }
 }

@@ -19,12 +19,9 @@ public class checkbot {
     }
 
     public static void printTasks() {
-        System.out.println(horizontalLine + System.lineSeparator());
+        System.out.println(horizontalLine);
 
-        for (int i = 0; i < tasks.length; i++) {
-            if (tasks[i] == null) {
-                continue;
-            }
+        for (int i = 0; i < taskCount; i++) {
             System.out.println(i+1 + ". " + tasks[i]);
         }
 

@@ -47,7 +47,8 @@ public class checkbot {
     public static void markTask(int taskNum) {
         // TODO: exception when taskNum is 0 or > taskCount
         tasks[taskNum-1].setDone(true);
-        System.out.println("Nice! I've marked this task as done: " + System.lineSeparator() +
+        System.out.println(horizontalLine + System.lineSeparator() +
+                "Nice! I've marked this task as done: " + System.lineSeparator() +
                 "  [" + tasks[taskNum-1].getStatusIcon() + "] " + tasks[taskNum-1].getDescription() + System.lineSeparator() +
                 horizontalLine);
     }
@@ -55,7 +56,8 @@ public class checkbot {
     public static void unmarkTask(int taskNum) {
         // TODO: exception when taskNum is 0 or > taskCount
         tasks[taskNum-1].setDone(false);
-        System.out.println("Okay, I've marked this task as not done yet: " + System.lineSeparator() +
+        System.out.println(horizontalLine + System.lineSeparator() +
+                "Okay, I've marked this task as not done yet: " + System.lineSeparator() +
                 "  [" + tasks[taskNum-1].getStatusIcon() + "] " + tasks[taskNum-1].getDescription() + System.lineSeparator() +
                 horizontalLine);
     }

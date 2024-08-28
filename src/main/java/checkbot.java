@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class checkbot {
     public static String horizontalLine = "--------------------------------------";
-    public static String[] tasks = new String[100];
+    public static Task[] tasks = new Task[100];
     public static int taskCount = 0;
 
     public static void printHello() {
@@ -20,17 +20,17 @@ public class checkbot {
 
     public static void printTasks() {
         System.out.println(horizontalLine);
-
         for (int i = 0; i < taskCount; i++) {
-            System.out.println(i+1 + ". " + tasks[i]);
+            System.out.println(i+1 + ". " + tasks[i].getDescription());
         }
-
         System.out.println(horizontalLine);
     }
 
-    public static void printEcho(String input) {
+    public static void addTask(String description) {
+        tasks[taskCount] = new Task(description);
+        taskCount++;
         System.out.println(horizontalLine + System.lineSeparator() +
-                "added: " + input + System.lineSeparator() +
+                "added: " + description + System.lineSeparator() +
                 horizontalLine);
     }
 
@@ -48,15 +48,13 @@ public class checkbot {
         while (true) {
             String input = readInput();
 
-            if (input.equals("bye")) {
+            if (input.trim().equalsIgnoreCase("bye")) {
                 printExit();
                 break;
-            } else if (input.equals("list")) {
+            } else if (input.trim().equalsIgnoreCase("list")) {
                 printTasks();
             } else {
-                tasks[taskCount] = input;
-                taskCount++;
-                printEcho(input);
+                addTask(input);
             }
         }
     }

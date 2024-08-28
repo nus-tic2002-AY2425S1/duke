@@ -1,6 +1,20 @@
 import java.util.Scanner;
 
 public class Alice {
+    private static Task[] Tasks = new Task[100];
+    private static int taskCount = 0;
+
+    public static void addTask(Task t){
+        Tasks[taskCount] = t;
+        taskCount++;
+    }
+
+    public static void printTasks(){
+        for (int i = 0; i < taskCount; i++){
+            System.out.println((i+1) + ". " + Tasks[i].getDescription());
+        }
+    }
+
     public static void main(String[] args) {
         String separator = "____________________________________________________________\n";
         String intro =
@@ -19,7 +33,17 @@ public class Alice {
         Scanner input = new Scanner(System.in);
         line = input.nextLine();
         while(!line.equals("bye")){
-            System.out.print(separator + line + "\n" + separator);
+            switch (line) {
+                case "list":
+                    System.out.print(separator);
+                    printTasks();
+                    System.out.print(separator);
+                    break;
+                default:
+                    addTask(new Task(line));
+                    System.out.print(separator + "added: " + line + "\n" + separator);
+            }
+
             input = new Scanner(System.in);
             line = input.nextLine();
         }

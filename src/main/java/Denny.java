@@ -12,11 +12,33 @@ public class Denny {
         Scanner scanner = new Scanner(System.in);
         String userInput;
 
+        //Array to store up to 100 tasks
+        String[] tasks = new String[100];
+        int taskCount = 0;
+
+        //User input loop processing
+
         while(true) {
             userInput = scanner.nextLine();
+
             if (userInput.equalsIgnoreCase("bye")) {
                 break;
+            } else if (userInput.equalsIgnoreCase("list")) {
+                //List tasks
+                System.out.println("____________________________________________________________");
+                for (int i = 0; i < taskCount; i++) {
+                    System.out.println(" " + (i + 1) + ". " + tasks[i]);
+                }
+                System.out.println("____________________________________________________________");
+            } else {
+                //Add task to array
+                tasks[taskCount] = userInput;
+                taskCount++;
+                System.out.println("____________________________________________________________");
+                System.out.println(" added: " + userInput);
+                System.out.println("____________________________________________________________");
             }
+
             System.out.println("____________________________________________________________");
             System.out.println(" " + userInput);
             System.out.println("____________________________________________________________");

@@ -5,13 +5,23 @@ public class Input {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void startEcho() {
-        String echo = "";
-        while (!echo.equalsIgnoreCase("bye")) {
-            echo = getString();
-            Log.printSeperator();
-            Log.printMsg(echo);
+        while (true) {
+            String echo = getString();
+            Log.printSeparator();
+
+            switch (echo.toLowerCase()) {
+                case "bye":
+                    Log.printMsg("Bye. Hope to see you again soon!");
+                    return;
+                case "list":
+                    EchoStorage.list();
+                    break;
+                default:
+                    EchoStorage.add(echo);
+                    Log.printMsg(echo);
+                    break;
+            }
         }
-        Log.printMsg("Bye. Hope to see you again soon!");
     }
 
     public static String getString() {

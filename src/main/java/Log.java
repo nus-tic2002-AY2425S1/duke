@@ -3,10 +3,19 @@ public class Log {
         for (String message :messages) {
             println(message);
         }
-        printSeperator();
+        printSeparator();
     }
 
-    public static void printSeperator() {
+    public static void printSeqMsg(String... messages) {
+        int counter = 1;
+        for (String message : messages) {
+            println(counter + ". " + message);
+            counter++;
+        }
+        printSeparator();
+    }
+
+    public static void printSeparator() {
         println("____________________________________________________________");
     }
 

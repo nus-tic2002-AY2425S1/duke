@@ -1,7 +1,16 @@
 public class Log {
-    public static void println(String... messages) {
+    public static void printMsg(String... messages) {
         for (String message :messages) {
-            System.out.println(message);
+            println(message);
         }
+        printSeperator();
+    }
+
+    public static void printSeperator() {
+        println("____________________________________________________________");
+    }
+
+    private static void println(String message) {
+        System.out.println(message);
     }
 }

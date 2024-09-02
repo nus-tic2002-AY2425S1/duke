@@ -1,3 +1,5 @@
+package duke.dancepop;
+
 public class Log {
     public static void printMsg(String... messages) {
         for (String message :messages) {

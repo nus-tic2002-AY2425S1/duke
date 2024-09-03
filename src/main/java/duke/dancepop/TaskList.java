@@ -9,15 +9,17 @@ public class TaskList {
     private static final List<Task> tasks = new ArrayList<>();
 
     public static Task get(int i) {
-       return tasks.get(i-1);
+       return tasks.get(i);
     }
 
     public static void add(Task t) {
         tasks.add(t);
+        // TODO: Refactor all these strings into enum or something
+        Log.printMsg("Got it. I've added this task:", t.toString(), "Now you have " + tasks.size() + " tasks in the list.");
     }
 
     public static void remove(int i) {
-        tasks.remove(i-1);
+        tasks.remove(i);
     }
 
     public static void markDone(int i) {
@@ -33,9 +35,10 @@ public class TaskList {
     }
 
     public static void print() {
+        String header = "Here are the tasks in your list:";
         String[] taskDescriptions = tasks.stream()
             .map(Task::toString)
             .toArray(String[]::new);
-        Log.printSeqMsg(taskDescriptions);
+        Log.printSeqMsg(header, taskDescriptions);
     }
 }

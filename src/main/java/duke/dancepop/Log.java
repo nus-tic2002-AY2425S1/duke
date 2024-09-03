@@ -9,7 +9,9 @@ public class Log {
         printSeparator();
     }
 
-    public static void printSeqMsg(String... messages) {
+    public static void printSeqMsg(String header, String... messages) {
+        printSeparator();
+        println(header);
         int counter = 1;
         for (String message : messages) {
             println(counter + ". " + message);

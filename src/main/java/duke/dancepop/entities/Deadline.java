@@ -22,4 +22,8 @@ public class Deadline extends Task {
     public void setDeadline(String deadline) {
         this.deadline = deadline;
     }
+
+    public String toString() {
+        return super.toString() + " (by: " + deadline +")";
+    }
 }

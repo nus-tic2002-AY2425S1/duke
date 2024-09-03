@@ -23,7 +23,7 @@ public abstract class Task {
     }
 
     public String toString() {
-        String done = getDone() ? "X" : "";
-        return "[" + type.getValue() + "]" + "[" + done + "]" + description;
+        String done = getDone() ? "X" : " ";
+        return "[" + type.getValue() + "]" + "[" + done + "] " + description;
     }
 }

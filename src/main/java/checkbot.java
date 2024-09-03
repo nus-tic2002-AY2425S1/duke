@@ -4,10 +4,10 @@ public class checkbot {
     public static String horizontalLine = "--------------------------------------";
     public static Task[] tasks = new Task[100];
     public static int taskCount = 0;
+    public static Scanner in = new Scanner(System.in);
 
     public static String readInput() {
         String input;
-        Scanner in = new Scanner(System.in);
         input = in.nextLine();
 
         return input;

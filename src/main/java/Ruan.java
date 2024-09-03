@@ -1,5 +1,17 @@
 import java.util.*;
 public class Ruan {
+
+    public static void printList(String[] taskList){
+        int taskNo = 1;
+        for (String task : taskList) {
+            if(task == null){
+                return;//exit this function and continue
+            }
+
+            //print only when there is value
+            System.out.println("  "+taskNo+". "+task);
+        }
+    }
     public static void main(String[] args) {
         // String logo = " ____        _        \n"
         //         + "|  _ \\ _   _| | _____ \n"
@@ -9,6 +21,8 @@ public class Ruan {
         // System.out.println("Hello from\n" + logo);
 
         String line = "";
+        String[] taskList = new String[100];
+        int listCount = 0;
         try(Scanner userInput = new Scanner(System.in)){
 
             System.out.println("  -----------------------------------");
@@ -18,15 +32,30 @@ public class Ruan {
             while(!line.trim().toLowerCase().equals("bye")){
                 line = userInput.nextLine();
                 String lineOut = line;
+
+                //check for "bye"
                 if(line.trim().toLowerCase().equals("bye")){
                     lineOut = "Bye. Hope to see you again soon!";
                 }
+                
+                //add to list when not "bye" & "list"
+                if(!line.trim().toLowerCase().equals("bye") && !line.trim().toLowerCase().equals("list")){
+                    taskList[listCount] = lineOut;
+                    lineOut = "added: "+lineOut;
+                    listCount++;
+                }
 
+                //print results
                 System.out.println("  -----------------------------------");
-                System.out.println("  "+lineOut);
+                if(line.trim().toLowerCase().equals("list")){
+                    printList(taskList);
+                }else{
+                    System.out.println("  "+lineOut);
+                }
                 System.out.println("  -----------------------------------");
                 
             }
         }
+
     }
 }

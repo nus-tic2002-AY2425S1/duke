@@ -3,10 +3,16 @@ package duke.dancepop.entities;
 import duke.dancepop.enums.TaskEnum;
 
 public abstract class Task {
-    protected TaskEnum type;
-    protected boolean done;
-    protected String description;
+    private final TaskEnum type;
+    private boolean done;
+    private final String description;
 
+    public Task(String description) {
+        this.description = description;
+        this.type = getType();  // Template method to be defined by subclasses
+    }
+
+    protected abstract TaskEnum getType();
 
     public boolean getDone() {
         return done;
@@ -18,7 +24,6 @@ public abstract class Task {
 
     public String toString() {
         String done = getDone() ? "X" : "";
-        // return "[" + type.getValue() + "]" + "[" + done + "]";
-        return "[" + done + "] " + description;
+        return "[" + type.getValue() + "]" + "[" + done + "]" + description;
     }
 }

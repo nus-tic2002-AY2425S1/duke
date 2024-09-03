@@ -2,6 +2,7 @@ package duke.dancepop;
 
 public class Log {
     public static void printMsg(String... messages) {
+        printSeparator();
         for (String message :messages) {
             println(message);
         }
@@ -22,6 +23,6 @@ public class Log {
     }
 
     private static void println(String message) {
-        System.out.println(message);
+        System.out.println("\t" + message);
     }
 }

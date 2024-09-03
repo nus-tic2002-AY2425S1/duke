@@ -1,22 +1,35 @@
 package duke.dancepop.entities;
 
+import duke.dancepop.enums.TaskEnum;
+
 public class Event extends Task {
-    private String startDateTime;
-    private String endDateTime;
+    private String start;
+    private String end;
 
-    public String getStartDateTime() {
-        return startDateTime;
+    // TODO: Fix design for inheritance
+    public Event(String description, String start, String end) {
+        super(description);
+        this.start = start;
+        this.end = end;
     }
 
-    public void setStartDateTime(String startDateTime) {
-        this.startDateTime = startDateTime;
+    protected TaskEnum getType() {
+        return TaskEnum.EVENT;
     }
 
-    public String getEndDateTime() {
-        return endDateTime;
+    public String getStart() {
+        return start;
     }
 
-    public void setEndDateTime(String endDateTime) {
-        this.endDateTime = endDateTime;
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
     }
 }

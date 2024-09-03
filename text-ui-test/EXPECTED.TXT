@@ -3,5 +3,54 @@ Hello! I'm checkbot.
 What can I do for you? :)
 --------------------------------------
 --------------------------------------
-added: Task 1
+Got it! I've added this task:
+  [T][ ] task 1
+Now you have 1 task(s) in the list.
+--------------------------------------
+--------------------------------------
+Got it! I've added this task:
+  [E][ ] meeting (from: this time to: that time)
+Now you have 2 task(s) in the list.
+--------------------------------------
+--------------------------------------
+Got it! I've added this task:
+  [D][ ] task 2 (by: some due date)
+Now you have 3 task(s) in the list.
+--------------------------------------
+--------------------------------------
+Here are the task(s) in your list:
+1. [T][ ] task 1
+2. [E][ ] meeting (from: this time to: that time)
+3. [D][ ] task 2 (by: some due date)
+--------------------------------------
+--------------------------------------
+Nice! I've marked this task as done: 
+  [T][X] task 1
+--------------------------------------
+--------------------------------------
+Nice! I've marked this task as done: 
+  [E][X] meeting (from: this time to: that time)
+--------------------------------------
+--------------------------------------
+Nice! I've marked this task as done: 
+  [T][X] task 1
+--------------------------------------
+--------------------------------------
+Here are the task(s) in your list:
+1. [T][X] task 1
+2. [E][X] meeting (from: this time to: that time)
+3. [D][ ] task 2 (by: some due date)
+--------------------------------------
+--------------------------------------
+Okay, I've marked this task as not done yet: 
+  [E][ ] meeting (from: this time to: that time)
+--------------------------------------
+--------------------------------------
+Here are the task(s) in your list:
+1. [T][X] task 1
+2. [E][ ] meeting (from: this time to: that time)
+3. [D][ ] task 2 (by: some due date)
+--------------------------------------
+--------------------------------------
+Bye. Hope to see you again soon!
 --------------------------------------

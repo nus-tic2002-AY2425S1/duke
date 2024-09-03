@@ -1,1 +1,11 @@
-Task 1
+Todo task 1
+Event meeting /from this time /to that time
+Deadline task 2 /by some due date
+list
+mark 1
+mark 2
+mark 1
+list
+unmark 2
+list
+bye

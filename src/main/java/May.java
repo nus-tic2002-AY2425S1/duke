@@ -21,7 +21,7 @@ public class May {
             // Scan for user input
             input = scan.nextLine();
 
-            // Check for Exit command
+            // Check for Exit command & output exit command message
             if(input.equalsIgnoreCase("bye")){
                 /*Exit Message*/
                 System.out.println("Bye. Hope to see you again soon!");
@@ -34,6 +34,7 @@ public class May {
                     System.out.println("No Item in current list, you may add your list item.");
                 }
                 else{
+                    System.out.println("Here are the task in you list:");
                     for (int i = 0; i < listNum; i++){
                         System.out.println((i+1) + ". " + list[i]);
                     }

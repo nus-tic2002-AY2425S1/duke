@@ -17,5 +17,7 @@ public class WKDuke {
         System.out.println(logo);
         System.out.println(stringIndent + "Hello! I'm WKDuke\n" + stringIndent + "What can I do for you?");
         System.out.println(borderLine);
+        System.out.println(stringIndent + "Bye. Hope to see you again soon!");
+        System.out.println(borderLine);
     }
 }

@@ -59,7 +59,7 @@ public class Parser {
     ErrorMessageBuilder errorBuilder = new ErrorMessageBuilder(CommandEnum.DEADLINE);
 
     if (!deadlineMatcher.matches()) {
-      errorBuilder.unknownCommand();
+      errorBuilder.unknownArguments();
       throw new InputException(errorBuilder.build());
     }
 
@@ -88,7 +88,7 @@ public class Parser {
     ErrorMessageBuilder errorBuilder = new ErrorMessageBuilder(CommandEnum.EVENT);
 
     if (!eventMatcher.matches()) {
-      errorBuilder.unknownCommand();
+      errorBuilder.unknownArguments();
       throw new InputException(errorBuilder.build());
     }
 

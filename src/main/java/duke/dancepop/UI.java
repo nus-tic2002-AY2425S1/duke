@@ -1,5 +1,6 @@
 package duke.dancepop;
 
+import duke.dancepop.exceptions.InputException;
 import duke.dancepop.parser.Command;
 import duke.dancepop.parser.Parser;
 
@@ -12,8 +13,12 @@ public class UI {
         Log.printMsg("Hello! I'm DancePop", "What can I do for you?");
         while (true) {
             String echo = getString();
-            Command command = Parser.parse(echo);
-            command.execute();
+            try {
+                Command command = Parser.parse(echo);
+                command.execute();
+            } catch (InputException e) {
+                Log.printMsg(e.getMessages().toArray(new String[0]));
+            }
         }
     }
 

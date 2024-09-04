@@ -1,10 +1,16 @@
 package duke.dancepop.parser;
 
+import duke.dancepop.enums.CommandEnum;
+import duke.dancepop.enums.RegexEnum;
+import duke.dancepop.exceptions.*;
+
+import java.text.MessageFormat;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Parser {
-  public static Command parse(String input) throws IllegalArgumentException {
+  public static Command parse(String input) throws InputException {
     String[] parts = input.split(" ", 2);
     String command = parts[0].toLowerCase().trim();
     String arguments = parts.length > 1 ? parts[1].trim() : "";
@@ -34,66 +40,118 @@ public class Parser {
       case "bye" -> {
         return parseBye(arguments);
       }
-      // TODO: Handle invalid input flow
-      default -> { return null; }
+      default -> throw new InputException(ExceptionConsts.UNKNOWN_COMMAND_ERROR);
     }
   }
 
-  private static Command parseTodo(String arguments) {
+  private static Command parseTodo(String arguments) throws InputException {
     if (arguments.isBlank()) {
-      // TODO: Handle error flow
+      List<String> errors = new ErrorMessageBuilder(CommandEnum.TODO).missingDescription().build();
+      throw new InputException(errors);
     }
     return new TodoCommand(arguments);
   }
 
-  private static Command parseDeadline(String arguments) {
-    Pattern deadlinePattern = Pattern.compile("(.+) /by (.+)");
+  private static Command parseDeadline(String arguments) throws InputException {
+    Pattern deadlinePattern = Pattern.compile(RegexEnum.DEADLINE.getValue());
     Matcher deadlineMatcher = deadlinePattern.matcher(arguments);
+
+    ErrorMessageBuilder errorBuilder = new ErrorMessageBuilder(CommandEnum.DEADLINE);
+
     if (!deadlineMatcher.matches()) {
-      // TODO: Handle error flow
+      errorBuilder.unknownCommand();
+      throw new InputException(errorBuilder.build());
     }
-    return new DeadlineCommand(deadlineMatcher.group(1).trim(), deadlineMatcher.group(2).trim());
+
+    String description = deadlineMatcher.group("description").trim();
+    String deadline = deadlineMatcher.group("deadline").trim();
+
+    if (description.isEmpty()) {
+      errorBuilder.missingDescription();
+    }
+
+    if (deadline.isEmpty()) {
+      errorBuilder.missingBy();
+    }
+
+    List<String> errors = errorBuilder.build();
+    if (!errors.isEmpty())
+      throw new InputException(errors);
+
+    return new DeadlineCommand(description, deadline);
   }
 
-  private static Command parseEvent(String arguments) {
-    Pattern eventPattern = Pattern.compile("(.+) /from (.+) /to (.+)");
+  private static Command parseEvent(String arguments) throws InputException {
+    Pattern eventPattern = Pattern.compile(RegexEnum.EVENT.getValue());
     Matcher eventMatcher = eventPattern.matcher(arguments);
+
+    ErrorMessageBuilder errorBuilder = new ErrorMessageBuilder(CommandEnum.EVENT);
+
     if (!eventMatcher.matches()) {
-      // TODO: Handle error flow
+      errorBuilder.unknownCommand();
+      throw new InputException(errorBuilder.build());
     }
 
-    return new EventCommand(eventMatcher.group(1).trim(), eventMatcher.group(2).trim(), eventMatcher.group(3).trim());
+    String description = eventMatcher.group("description").trim();
+    String from = eventMatcher.group("start").trim();
+    String to = eventMatcher.group("end").trim();
+
+    if (description.isEmpty()) {
+      errorBuilder.missingDescription();
+    }
+
+    if (from.isEmpty()) {
+      errorBuilder.missingFrom();
+    }
+
+    if (to.isEmpty()) {
+      errorBuilder.missingTo();
+    }
+
+    List<String> errors = errorBuilder.build();
+    if (!errors.isEmpty())
+      throw new InputException(errors);
+
+    return new EventCommand(description, from, to);
   }
 
-  private static Command parseMark(String arguments) {
-    // TODO: Handle NumberFormatException?
-    int markValue = Integer.parseInt(arguments);
-    return new MarkCommand(markValue);
+  private static Command parseMark(String arguments) throws InputException {
+      int value = parseInt(CommandEnum.MARK, arguments);
+      return new MarkCommand(value);
   }
 
-  private static Command parseUnmark(String arguments) {
-    // TODO: Handle NumberFormatException?
-    int markValue = Integer.parseInt(arguments);
-    return new UnmarkCommand(markValue);
+  private static Command parseUnmark(String arguments) throws InputException {
+    int value = parseInt(CommandEnum.UNMARK, arguments);
+    return new UnmarkCommand(value);
   }
 
-  private static Command parseDelete(String arguments) {
-    // TODO: Handle NumberFormatException?
-    int deleteValue = Integer.parseInt(arguments);
-    return new DeleteCommand(deleteValue);
+  private static Command parseDelete(String arguments) throws InputException {
+    int value = parseInt(CommandEnum.DELETE, arguments);
+    return new DeleteCommand(value);
   }
 
-  private static Command parseList(String arguments) {
+  private static Command parseList(String arguments) throws InputException {
     if (!arguments.isBlank()) {
-      // TODO: Handle error flow
+      List<String> errors = new ErrorMessageBuilder(CommandEnum.LIST).additionalArguments().build();
+      throw new InputException(errors);
     }
     return new ListCommand();
   }
 
-  private static Command parseBye(String arguments) {
+  private static Command parseBye(String arguments) throws InputException {
     if (!arguments.isBlank()) {
-      // TODO: Handle error flow
+      List<String> errors = new ErrorMessageBuilder(CommandEnum.BYE).additionalArguments().build();
+      throw new InputException(errors);
     }
     return new ByeCommand();
+  }
+
+  private static int parseInt(CommandEnum command, String value) throws InputException {
+    try {
+      return Integer.parseInt(value);
+    } catch (NumberFormatException nfe) {
+      List<String> errors = new ErrorMessageBuilder(command).integerParse().build();
+      throw new InputException(errors);
+    }
   }
 }

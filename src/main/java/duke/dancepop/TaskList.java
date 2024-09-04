@@ -19,7 +19,9 @@ public class TaskList {
     }
 
     public static void remove(int i) {
+        Task t = tasks.get(i);
         tasks.remove(i);
+        Log.printMsg("Noted. I've removed this task:", t.toString(), "Now you have " + tasks.size() + " tasks in the list.");
     }
 
     public static void markDone(int i) {

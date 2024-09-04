@@ -3,6 +3,14 @@ import java.util.Scanner;
 public class Denny {
     public static void main(String[] args) {
         // Greet the user
+
+        String logo = "____                         \n"
+                + "|  _ \\  ___ _ __  _ __  _   _ \n"
+                + "| | | |/ _ \\ '_ \\| '_ \\| | | |\n"
+                + "| |_| |  __/ | | | | | | |_| |\n"
+                + "|____/ \\___|_| |_|_| |_|\\__, |\n"
+                + "                        |___/ \n";
+        System.out.println("Hello from\n" + logo);
         System.out.println("____________________________________________________________");
         System.out.println(" Hello! I'm Denny");
         System.out.println(" What can I do for you?");

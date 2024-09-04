@@ -16,9 +16,10 @@ Prerequisites: JDK 17, update Intellij to the most recent version.
 3. After that, locate the `src/main/java/Denny.java` file, right-click it, and choose `Run Denny.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
    ```
    Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
+   ____                         
+   |  _ \  ___ _ __  _ __  _   _ 
+   | | | |/ _ \ '_ \| '_ \| | | |
+   | |_| |  __/ | | | | | | |_| |
+   |____/ \___|_| |_|_| |_|\__, |
+                           |___/ 
    ```

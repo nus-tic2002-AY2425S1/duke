@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class WKDuke {
@@ -5,10 +7,19 @@ public class WKDuke {
     private static final String endBorderLine = "\t____________________________________________________________\n";
     private static final String stringIndent = "\t ";
     private static final String exitKeyword = "bye";
+    private static final String listItemKeyword = "list";
 
     public static void echo(String message) {
         System.out.println(startBorderLine);
         System.out.println(stringIndent + message);
+        System.out.println(endBorderLine);
+    }
+
+    public static void printList(List<String> list) {
+        System.out.println(startBorderLine);
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(stringIndent + Integer.toString(i + 1) + ". " + list.get(i));
+        }
         System.out.println(endBorderLine);
     }
 
@@ -29,13 +40,21 @@ public class WKDuke {
         System.out.println(endBorderLine);
 
         String input;
-        do {
-            Scanner sc = new Scanner(System.in);
+        List<String> list = new ArrayList<>();
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
             input = sc.nextLine();
-            if (!input.equals(exitKeyword)) {
-                echo(input);
+            input = input.trim();
+            if (input.equals(exitKeyword)) {
+                break;
+            } else if (input.equals(listItemKeyword)) {
+                printList(list);
+            } else {
+                list.add(input);
+                echo("added: " + input);
             }
-        } while (!input.equals(exitKeyword));
+        }
 
         System.out.println(startBorderLine);
         System.out.println(stringIndent + "Bye. Hope to see you again soon!");

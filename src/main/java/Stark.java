@@ -8,6 +8,7 @@ public class Stark {
     }
 
     public static void welcomeMsg(){
+        lineBreak();
         System.out.println("Hello! I'm Stark \n" +
                            "What can I do for you?");
         lineBreak();
@@ -22,37 +23,40 @@ public class Stark {
 
     public static void main(String[] args) {
         welcomeMsg();
+
         TaskList taskList = new TaskList();
         Scanner inputQuery = new Scanner(System.in);
         String[] query = inputQuery.nextLine().split(" ");
-        while(true){
 
-            if(query[0].equalsIgnoreCase("bye")){
+        while(!query[0].equalsIgnoreCase("bye")){
 
-                byeMsg();
-                break;
-            }
+            lineBreak();
+
             if(query[0].equalsIgnoreCase("list")){
                 taskList.printAllTasks();
+                lineBreak();
                 query = inputQuery.nextLine().split(" ");
                 continue;
             }
             if(query[0].equalsIgnoreCase("mark") || query[0].equalsIgnoreCase("unmark")){
-                lineBreak();
+
                 if(query.length == 2){
                     taskList.statusChange(query[0], Integer.parseInt(query[1]));
                 }
                 else{
                     System.out.println("Please enter a valid mark or unmark task number");
                 }
-                query = inputQuery.nextLine().split(" ");
                 lineBreak();
+                query = inputQuery.nextLine().split(" ");
                 continue;
             }
-            taskList.addTask(query[0]);
-            query = inputQuery.nextLine().split(" ");
+
+            taskList.addTask(String.join(" ", query));
             lineBreak();
+            query = inputQuery.nextLine().split(" ");
+
         }
+        byeMsg();
 
     }
 

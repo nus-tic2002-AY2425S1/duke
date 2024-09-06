@@ -4,7 +4,6 @@ import duke.dancepop.enums.CommandEnum;
 import duke.dancepop.enums.RegexEnum;
 import duke.dancepop.exceptions.*;
 
-import java.text.MessageFormat;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -116,16 +115,28 @@ public class Parser {
   }
 
   private static Command parseMark(String arguments) throws InputException {
-      int value = parseInt(CommandEnum.MARK, arguments);
-      return new MarkCommand(value);
+    if (arguments.isBlank()) {
+      throw new InputException(new ErrorMessageBuilder(CommandEnum.MARK).missingIndex().build());
+    }
+
+    int value = parseInt(CommandEnum.MARK, arguments);
+    return new MarkCommand(value);
   }
 
   private static Command parseUnmark(String arguments) throws InputException {
+    if (arguments.isBlank()) {
+      throw new InputException(new ErrorMessageBuilder(CommandEnum.UNMARK).missingIndex().build());
+    }
+
     int value = parseInt(CommandEnum.UNMARK, arguments);
     return new UnmarkCommand(value);
   }
 
   private static Command parseDelete(String arguments) throws InputException {
+    if (arguments.isBlank()) {
+      throw new InputException(new ErrorMessageBuilder(CommandEnum.DELETE).missingIndex().build());
+    }
+
     int value = parseInt(CommandEnum.DELETE, arguments);
     return new DeleteCommand(value);
   }

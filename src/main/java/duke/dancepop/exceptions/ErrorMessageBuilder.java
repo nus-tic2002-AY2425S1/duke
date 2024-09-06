@@ -10,7 +10,7 @@ import java.util.List;
 public class ErrorMessageBuilder {
 
     private final List<String> messages = new ArrayList<>();
-    private CommandEnum command;
+    private final CommandEnum command;
 
     public ErrorMessageBuilder(CommandEnum command) {
         this.command = command;
@@ -18,6 +18,12 @@ public class ErrorMessageBuilder {
 
     public ErrorMessageBuilder missingDescription() {
         String formattedMessage = MessageFormat.format(ExceptionConsts.DESCRIPTION_EMPTY_ERROR, command.getValue());
+        messages.add(formattedMessage);
+        return this;
+    }
+
+    public ErrorMessageBuilder missingIndex() {
+        String formattedMessage = MessageFormat.format(ExceptionConsts.INDEX_EMPTY_ERROR, command.getValue());
         messages.add(formattedMessage);
         return this;
     }
@@ -49,6 +55,11 @@ public class ErrorMessageBuilder {
     public ErrorMessageBuilder integerParse() {
         String formattedMessage = MessageFormat.format(ExceptionConsts.INTEGER_PARSE_ERROR, ActualCommandEnum.getActualCommand(command));
         messages.add(formattedMessage);
+        return this;
+    }
+
+    public ErrorMessageBuilder indexOutOfBounds() {
+        messages.add(ExceptionConsts.INDEX_INVALID_ERROR);
         return this;
     }
 

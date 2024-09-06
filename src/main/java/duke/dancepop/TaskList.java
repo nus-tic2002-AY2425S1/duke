@@ -14,7 +14,7 @@ public class TaskList {
 
     public static void add(Task t) {
         tasks.add(t);
-        // TODO: Refactor all these strings into enum or something
+        // TODO: Refactor all these strings into enum or something and also outside of this class
         Log.printMsg("Got it. I've added this task:", t.toString(), "Now you have " + tasks.size() + " tasks in the list.");
     }
 
@@ -36,11 +36,19 @@ public class TaskList {
         Log.printMsg("OK, I've marked this task as not done yet:", t.toString());
     }
 
+    public static void clear() {
+        tasks.clear();
+    }
+
+    public static List<Task> getTasks() {
+        return tasks;
+    }
+
     public static void print() {
         String header = "Here are the tasks in your list:";
         String[] taskDescriptions = tasks.stream()
-            .map(Task::toString)
-            .toArray(String[]::new);
+                .map(Task::toString)
+                .toArray(String[]::new);
         Log.printSeqMsg(header, taskDescriptions);
     }
 }

@@ -9,10 +9,12 @@ public abstract class Task {
 
     public Task(String description) {
         this.description = description;
-        this.type = getType();  // Template method to be defined by subclasses
+        this.type = getType();
     }
 
     protected abstract TaskEnum getType();
+
+    public String getDescription() { return description; }
 
     public boolean getDone() {
         return done;
@@ -20,6 +22,10 @@ public abstract class Task {
 
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    public void setDone(String done) {
+        this.done = Boolean.parseBoolean(done);
     }
 
     public String toString() {

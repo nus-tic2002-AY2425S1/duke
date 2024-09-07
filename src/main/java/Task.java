@@ -23,4 +23,9 @@ public class Task {
     public void unmarkAsDone(){
         isDone = false;
     }
+
+    // Output task as string
+    public String toString() {
+        return "[" + getStatusIcon() + "] " + taskName;
+    }
 }

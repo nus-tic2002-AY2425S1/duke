@@ -3,8 +3,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class WKDuke {
-    private static final String startBorderLine = "\t____________________________________________________________";
-    private static final String endBorderLine = "\t____________________________________________________________\n";
+    private static final String borderLine = "\t____________________________________________________________";
     private static final String stringIndent = "\t ";
     private static final String newIndentLine = System.lineSeparator() + "\t ";
 
@@ -15,17 +14,17 @@ public class WKDuke {
     private static List<Task> taskList = new ArrayList<>();
 
     public static void echo(String message) {
-        System.out.println(startBorderLine);
+        System.out.println(borderLine);
         System.out.println(stringIndent + message);
-        System.out.println(endBorderLine);
+        System.out.println(borderLine + System.lineSeparator());
     }
 
-    public static void printList(List<Task> taskList) {
-        System.out.println(startBorderLine);
+    public static void printTaskList() {
+        String message = "Here are the tasks in your list:";
         for (int i = 0; i < taskList.size(); i++) {
-            System.out.println(stringIndent + Integer.toString(i + 1) + ". " + taskList.get(i));
+            message = message.concat(newIndentLine + Integer.toString(i + 1) + "." + taskList.get(i));
         }
-        System.out.println(endBorderLine);
+        echo(message);
     }
 
     public static boolean isInteger(String string) {
@@ -68,11 +67,7 @@ public class WKDuke {
                 \t    \\ \\____________\\ \\__\\\\ \\__\\ \\_______\\ \\_______\\ \\__\\\\ \\__\\ \\_______\\
                 \t     \\|____________|\\|__| \\|__|\\|_______|\\|_______|\\|__| \\|__|\\|_______|
                 """;
-
-        System.out.println(startBorderLine);
-        System.out.println(logo);
-        System.out.println(stringIndent + "Hello! I'm WKDuke\n" + stringIndent + "What can I do for you?");
-        System.out.println(endBorderLine);
+        echo(logo + newIndentLine + "Hello! I'm WKDuke" + newIndentLine + "What can I do for you?");
 
         Scanner sc = new Scanner(System.in);
         String action = "";
@@ -89,7 +84,7 @@ public class WKDuke {
                 case exitKeyword:
                     break;
                 case listTaskKeyword:
-                    printList(taskList);
+                    printTaskList();
                     break;
                 case markTaskDoneKeyword:
                     if (checkUpdateTaskInput(inputWords)) {
@@ -108,8 +103,6 @@ public class WKDuke {
             }
         }
 
-        System.out.println(startBorderLine);
-        System.out.println(stringIndent + "Bye. Hope to see you again soon!");
-        System.out.println(endBorderLine);
+        echo("Bye. Hope to see you again soon!");
     }
 }

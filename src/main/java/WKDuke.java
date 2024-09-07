@@ -6,6 +6,8 @@ public class WKDuke {
     private static final String startBorderLine = "\t____________________________________________________________";
     private static final String endBorderLine = "\t____________________________________________________________\n";
     private static final String stringIndent = "\t ";
+    private static final String newIndentLine = System.lineSeparator() + "\t ";
+
     private static final String exitKeyword = "bye";
     private static final String listTaskKeyword = "list";
     private static final String markTaskDoneKeyword = "mark";
@@ -24,6 +26,36 @@ public class WKDuke {
             System.out.println(stringIndent + Integer.toString(i + 1) + ". " + taskList.get(i));
         }
         System.out.println(endBorderLine);
+    }
+
+    public static boolean isInteger(String string) {
+        try {
+            Integer.parseInt(string);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public static boolean checkUpdateTaskInput(String[] inputWords) {
+        String action = inputWords[0];
+        // Check if input contain a task number
+        if (inputWords.length < 2) {
+            echo(String.format("Action: %s%sError: Action required a task number.", action, newIndentLine));
+            return false;
+        }
+        String taskNumber = inputWords[1];
+        // Check if task number is a valid integer
+        if (!isInteger(taskNumber) || Integer.parseInt(taskNumber) <= 0) {
+            echo(String.format("Action: %s%sError: Task number '%s' is invalid.", action, newIndentLine, taskNumber));
+            return false;
+        }
+        // Check if task number exist in taskList
+        if (Integer.parseInt(taskNumber) > taskList.size()) {
+            echo(String.format("Action: %s%sError: Task number '%s' not found.", action, newIndentLine, taskNumber));
+            return false;
+        }
+        return true;
     }
 
     public static void main(String[] args) {
@@ -60,10 +92,14 @@ public class WKDuke {
                     printList(taskList);
                     break;
                 case markTaskDoneKeyword:
-                    // Mark Task Done
+                    if (checkUpdateTaskInput(inputWords)) {
+                        // Mark Task Done
+                    }
                     break;
                 case markTaskUndoneKeyword:
-                    // Mark Task Undone
+                    if (checkUpdateTaskInput(inputWords)) {
+                        // Mark Task Undone
+                    }
                     break;
                 default:
                     taskList.add(new Task(input));

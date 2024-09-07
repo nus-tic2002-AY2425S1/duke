@@ -57,6 +57,20 @@ public class WKDuke {
         return true;
     }
 
+    public static void markTaskAsDone(String taskNumber) {
+        Task task = taskList.get(Integer.parseInt(taskNumber) - 1);
+        task.markAsDone();
+        String message = "Nice! I've marked this task as done:" + newIndentLine + "  " + task;
+        echo(message);
+    }
+
+    public static void markTaskAsUndone(String taskNumber) {
+        Task task = taskList.get(Integer.parseInt(taskNumber) - 1);
+        task.markAsUndone();
+        String message = "OK, I've marked this task as not done yet:" + newIndentLine + "  " + task;
+        echo(message);
+    }
+
     public static void main(String[] args) {
         String logo = """
                 \t  ___       __   ___  __    ________  ___  ___  ___  __    _______     \s
@@ -88,12 +102,12 @@ public class WKDuke {
                     break;
                 case markTaskDoneKeyword:
                     if (checkUpdateTaskInput(inputWords)) {
-                        // Mark Task Done
+                        markTaskAsDone(inputWords[1]);
                     }
                     break;
                 case markTaskUndoneKeyword:
                     if (checkUpdateTaskInput(inputWords)) {
-                        // Mark Task Undone
+                        markTaskAsUndone(inputWords[1]);
                     }
                     break;
                 default:

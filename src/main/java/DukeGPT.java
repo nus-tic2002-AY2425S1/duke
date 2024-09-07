@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class DukeGPT {
     private static String chatbotName = "DukeGPT";
-    private static String[] task = new String[100];
+    private static Task[] task = new Task[100];
     private static int countTask = 0;
 
     public static void main(String[] args) {
@@ -12,6 +12,14 @@ public class DukeGPT {
             String userInput = scanner.nextLine();
             if(userInput.equalsIgnoreCase("bye")){
                 break;
+            }
+            else if (userInput.startsWith("mark")){
+                int taskIndex = Integer.parseInt(userInput.split(" ")[1]) - 1;
+                markTask(taskIndex);
+            }
+            else if(userInput.startsWith("unmark")){
+                int taskIndex = Integer.parseInt(userInput.split(" ")[1]) - 1;
+                unmarkTask(taskIndex);
             }
             else if(userInput.equalsIgnoreCase("list")){
                 printList();
@@ -43,7 +51,7 @@ public class DukeGPT {
     public static void printAddedItems(String userInput){
         System.out.println("____________________________________________________________");
         System.out.println("added: " + userInput);
-        task[countTask] = userInput;
+        task[countTask] = new Task(userInput);
         countTask++;
         System.out.println("____________________________________________________________");
     }
@@ -52,6 +60,22 @@ public class DukeGPT {
         for(int i = 0; i < countTask; i++){
             System.out.println(i+1 +". " + task[i]);
         }
+        System.out.println("____________________________________________________________");
+    }
+
+    public static void markTask(int taskIndex){
+        task[taskIndex].markDone();
+        System.out.println("____________________________________________________________");
+        System.out.println("Nice! I've marked this task as done:");
+        System.out.println(task[taskIndex]);
+        System.out.println("____________________________________________________________");
+    }
+
+    public static void unmarkTask(int taskIndex){
+        task[taskIndex].unmarkDone();
+        System.out.println("____________________________________________________________");
+        System.out.println("OK, I've marked this task as not done yet:");
+        System.out.println(task[taskIndex]);
         System.out.println("____________________________________________________________");
     }
 

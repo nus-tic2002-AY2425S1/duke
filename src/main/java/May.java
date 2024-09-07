@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class May {
 
     /*Store User Input*/
-    private static String[] list = new String[100];
+    private static Task[] taskList = new Task[100];
     private static int listNum = 0;
 
     public static void main(String[] args) {
@@ -21,6 +21,7 @@ public class May {
             // Scan for user input
             input = scan.nextLine();
 
+
             // Check for Exit command & output exit command message
             if(input.equalsIgnoreCase("bye")){
                 /*Exit Message*/
@@ -28,25 +29,25 @@ public class May {
                 break;
             }
 
-            // Check for List Command & output item inside List
-            else if (input.equalsIgnoreCase("list")){
+            // Check for taskList Command & output item inside taskList
+            else if (input.equalsIgnoreCase("taskList")){
                 if (listNum == 0){
-                    System.out.println("No Item in current list, you may add your list item.");
+                    System.out.println("No Item in current taskList, you may add your taskList item.");
                 }
                 else{
                     System.out.println("Here are the task in you list:");
                     for (int i = 0; i < listNum; i++){
-                        System.out.println((i+1) + ". " + list[i]);
+                        System.out.println((i+1) + ". " + taskList[i]);
                     }
                 }
             }
 
-            // Add item in the list
+            // Add item in the taskList
             else{
-                list[listNum] = input;
+                taskList[listNum] = input;
                 listNum++;
 
-                //Echo item add in the list
+                //Echo item add in the taskList
                 System.out.println("Added: " + input);
             }
         }

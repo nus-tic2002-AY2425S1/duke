@@ -11,7 +11,7 @@ public class Task {
     // Mark done task with X
     public String getStatusIcon(){
         // ✔ for Done, X for have not complete
-        return (isDone? "✔" : "X");
+        return (isDone? "✔" : " ");
     }
 
     // Task is Done Set to true.

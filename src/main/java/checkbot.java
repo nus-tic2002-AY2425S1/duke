@@ -23,8 +23,8 @@ public class checkbot {
         System.out.println(StringHelper.commandNotFound);
     }
 
-    public static void printEmptyInput() {
-        System.out.println(StringHelper.emptyInput);
+    public static void printEmptyDescription() {
+        System.out.println(StringHelper.emptyDescription);
     }
 
     public static void printEmptyTime() {
@@ -52,8 +52,6 @@ public class checkbot {
                     break;
                 }
             case "event":
-//                addEvent(taskDetails);
-//                break;
                 try{
                     addEvent(taskDetails);
                     break;
@@ -150,14 +148,14 @@ public class checkbot {
                 StringHelper.outputLine);
     }
 
-    public static void setStatus(String  input) {
-        // TODO: ArrayIndexOutOfBoundsException - no number indicated
-        String action = input.split(" ")[0].toLowerCase();
-        // TODO: NumberFormatException - number not numeric digits
-        // TODO: ArrayIndexOutOfBoundsException - task number <= 0
-        int taskIdx = Integer.parseInt(input.split(" ")[1]) - 1;
+    public static void setStatus(String  input) throws EmptyInputException {
+        String[] setStatusArray = input.split(" ", 2);
+        if (setStatusArray.length < 2) {
+            throw new EmptyInputException();
+        }
+        String action = setStatusArray[0].toLowerCase();
+        int taskIdx = Integer.parseInt(setStatusArray[1]) - 1;
 
-        // TODO: NullPointerException - task number > taskCount
         switch (action) {
             case "mark":
                 markTask(tasks[taskIdx]);
@@ -190,8 +188,19 @@ public class checkbot {
                 case "mark":
                     // fallthrough
                 case "unmark":
-                    setStatus(input);
-                    break;
+                    try {
+                        setStatus(input);
+                        break;
+                    } catch (EmptyInputException e) {
+                        System.out.println(StringHelper.emptyNumber);
+                        break;
+                    } catch (NumberFormatException e) {
+                        System.out.println(StringHelper.nonIntegerNumber);
+                        break;
+                    } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
+                        System.out.println(StringHelper.invalidTaskNumber);
+                        break;
+                    }
                 case "todo":
                     // fallthrough
                 case "deadline":
@@ -201,7 +210,7 @@ public class checkbot {
                         addTask(input);
                         break;
                     } catch (EmptyInputException e) {
-                        printEmptyInput();
+                        printEmptyDescription();
                         break;
                     } catch (EmptyTimeException e) {
                         printEmptyTime();

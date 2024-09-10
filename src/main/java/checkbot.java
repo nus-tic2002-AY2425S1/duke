@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
 public class checkbot {
-    public static String horizontalLine = "--------------------------------------";
     public static Task[] tasks = new Task[100];
     public static int taskCount = 0;
     public static Scanner in = new Scanner(System.in);
@@ -13,45 +12,57 @@ public class checkbot {
     }
 
     public static void printHello() {
-        System.out.println(horizontalLine + System.lineSeparator() +
-                "Hello! I'm checkbot." + System.lineSeparator() +
-                "What can I do for you? :)" + System.lineSeparator() +
-                horizontalLine);
+        System.out.println(StringHelper.hello);
     }
 
     public static void printExit() {
-        System.out.println(horizontalLine + System.lineSeparator() +
-                "Bye. Hope to see you again soon!" + System.lineSeparator() +
-                horizontalLine);
+        System.out.println(StringHelper.exit);
     }
 
-    public static void printNotFound() {
-        System.out.println(horizontalLine + System.lineSeparator() +
-                "Sorry, I didn't get that. :(" + System.lineSeparator() +
-                "Try starting a task with \"todo\", \"deadline\", or \"event\"." + System.lineSeparator() +
-                "To see the full task list, type \"list\"." + System.lineSeparator() +
-                "To end this session, type \"bye\"." + System.lineSeparator() +
-                horizontalLine);
+    public static void printCommandNotFound() {
+        System.out.println(StringHelper.commandNotFound);
     }
 
-    public static void addTask(String input) {
-        String taskType = input.split(" ",2)[0].toLowerCase();
-        // TODO: ArrayIndexOutOfBoundsException - task is empty
-//        String taskDetails = input.split(" ",2)[1];
+    public static void printEmptyInput() {
+        System.out.println(StringHelper.emptyInput);
+    }
+
+    public static void printEmptyTime() {
+        System.out.println(StringHelper.emptyTime);
+    }
+
+    public static void addTask(String input) throws EmptyInputException, EmptyTimeException {
+        String[] taskArray = input.split(" ",2);
+        if (taskArray.length < 2) {
+            throw new EmptyInputException();
+        }
+        String taskType = taskArray[0].toLowerCase();
+        String taskDetails = taskArray[1];
 
         switch (taskType) {
             case "todo":
-                addTodo(input.split(" ",2)[1]);
+                addTodo(taskDetails);
                 break;
             case "deadline":
-                addDeadline(input.split(" ",2)[1]);
-                break;
+                try{
+                    addDeadline(taskDetails);
+                    break;
+                } catch (CommandNotFoundException e) {
+                    System.out.println(StringHelper.deadlineError);
+                    break;
+                }
             case "event":
-                addEvent(input.split(" ",2)[1]);
-                break;
+//                addEvent(taskDetails);
+//                break;
+                try{
+                    addEvent(taskDetails);
+                    break;
+                } catch (CommandNotFoundException e) {
+                    System.out.println(StringHelper.eventError);
+                    break;
+                }
             default:
-                printNotFound();
-                break;
+                // do nothing
         }
     }
 
@@ -62,10 +73,20 @@ public class checkbot {
         taskCount++;
     }
 
-    public static void addDeadline(String input){
-        // TODO: ArrayIndexOutOfBoundsException - absence of "/by"
-        String description = input.split("/by")[0].trim();
-        String dueDateTime = input.split("/by")[1].trim();
+    public static void addDeadline(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
+        // input format: <task> /by <datetime>
+        if (!input.contains("/by")){
+            throw new CommandNotFoundException();
+        }
+        String[] deadlineArray = input.split("/by",2);
+        String description = deadlineArray[0].trim();
+        String dueDateTime = deadlineArray[1].trim();
+        if (description.isEmpty()) {
+            throw new EmptyInputException();
+        }
+        if (dueDateTime.isEmpty()) {
+            throw new EmptyTimeException();
+        }
 
         Deadline task = new Deadline(description, dueDateTime);
         tasks[taskCount] = task;
@@ -73,13 +94,22 @@ public class checkbot {
         taskCount++;
     }
 
-    public static void addEvent(String input){
-        // TODO: StringIndexOutOfBoundsException - absence of "/from" and "/to"
-        int idxOfFrom = input.indexOf("/from");
-        int idxOfTo = input.indexOf("/to");
-        String description = input.substring(0, idxOfFrom-1).trim();
-        String startDateTime = input.substring(idxOfFrom+6, idxOfTo-1).trim();
-        String endDateTime = input.substring(idxOfTo+4);
+    public static void addEvent(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
+        // input format: <event> /from <datetime> /to <datetime>
+        if (!input.contains("/from") || !input.contains("/to")){
+            throw new CommandNotFoundException();
+        }
+        String[] eventArray = input.split("/from",2);
+        String[] dateTimeArray = eventArray[1].split("/to",2);
+        String description = eventArray[0].trim();
+        if (description.isEmpty()) {
+            throw new EmptyInputException();
+        }
+        String startDateTime = dateTimeArray[0].trim();
+        String endDateTime = dateTimeArray[1].trim();
+        if (startDateTime.isEmpty() || endDateTime.isEmpty()) {
+            throw new EmptyTimeException();
+        }
 
         Event task = new Event(description, startDateTime, endDateTime);
         tasks[taskCount] = task;
@@ -88,36 +118,36 @@ public class checkbot {
     }
 
     public static void echoTask(int taskIdx) {
-        System.out.println(horizontalLine + System.lineSeparator() +
+        System.out.println(StringHelper.outputLine + System.lineSeparator() +
                 "Got it! I've added this task:" + System.lineSeparator() +
                 "  " + tasks[taskIdx].getListView() + System.lineSeparator() +
                 "Now you have " + (taskIdx+1) + " task(s) in the list." + System.lineSeparator() +
-                horizontalLine);
+                StringHelper.outputLine);
     }
 
     public static void printTasks() {
-        System.out.println(horizontalLine);
+        System.out.println(StringHelper.outputLine);
         System.out.println("Here are the task(s) in your list:");
         for (int i = 0; i < taskCount; i++) {
             System.out.println(i+1 + ". " + tasks[i].getListView());
         }
-        System.out.println(horizontalLine);
+        System.out.println(StringHelper.outputLine);
     }
 
     public static void markTask(Task task) {
         task.setDone(true);
-        System.out.println(horizontalLine + System.lineSeparator() +
+        System.out.println(StringHelper.outputLine + System.lineSeparator() +
                 "Nice! I've marked this task as done: " + System.lineSeparator() +
                 "  " + task.getListView() + System.lineSeparator() +
-                horizontalLine);
+                StringHelper.outputLine);
     }
 
     public static void unmarkTask(Task task) {
         task.setDone(false);
-        System.out.println(horizontalLine + System.lineSeparator() +
+        System.out.println(StringHelper.outputLine + System.lineSeparator() +
                 "Okay, I've marked this task as not done yet: " + System.lineSeparator() +
                 "  " + task.getListView() + System.lineSeparator() +
-                horizontalLine);
+                StringHelper.outputLine);
     }
 
     public static void setStatus(String  input) {
@@ -136,7 +166,7 @@ public class checkbot {
                 unmarkTask(tasks[taskIdx]);
                 break;
             default:
-                printNotFound();
+                printCommandNotFound();
                 break;
         }
     }
@@ -146,7 +176,7 @@ public class checkbot {
         boolean goToExit = false;
 
         do {
-            String input = readInput();
+            String input = readInput().trim();
             String keyword = input.split(" ")[0].toLowerCase();
 
             switch (keyword) {
@@ -162,9 +192,23 @@ public class checkbot {
                 case "unmark":
                     setStatus(input);
                     break;
+                case "todo":
+                    // fallthrough
+                case "deadline":
+                    // fallthrough
+                case "event":
+                    try {
+                        addTask(input);
+                        break;
+                    } catch (EmptyInputException e) {
+                        printEmptyInput();
+                        break;
+                    } catch (EmptyTimeException e) {
+                        printEmptyTime();
+                        break;
+                    }
                 default:
-                    addTask(input);
-                    break;
+                    printCommandNotFound();
             }
         } while (!goToExit);
     }

@@ -55,12 +55,42 @@ public class Denny {
                 System.out.println(" OK, I've marked this task as not done yet:");
                 System.out.println("   " + tasks[taskIndex]);
                 System.out.println("____________________________________________________________");
-            } else {
-                // Add task to array
-                tasks[taskCount] = new Task(userInput);
+            } else if (userInput.toLowerCase().startsWith("todo")) {
+                // Add ToDo task
+                String description = userInput.substring(5);
+                tasks[taskCount] = new ToDo(description);
                 taskCount++;
                 System.out.println("____________________________________________________________");
-                System.out.println(" added: " + userInput);
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + tasks[taskCount - 1]);
+                System.out.println("____________________________________________________________");
+            } else if (userInput.toLowerCase().startsWith("deadline")) {
+                // Add Deadline task
+                String[] parts = userInput.split(" /by ");
+                String description = parts[0].substring(9);
+                String by = parts[1];
+                tasks[taskCount] = new Deadline(description, by);
+                taskCount++;
+                System.out.println("____________________________________________________________");
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + tasks[taskCount - 1]);
+                System.out.println("____________________________________________________________");
+            } else if (userInput.toLowerCase().startsWith("event")) {
+                // Add Event task
+                String[] parts = userInput.split(" /from | /to ");
+                String description = parts[0].substring(6);
+                String from = parts[1];
+                String to = parts[2];
+                tasks[taskCount] = new Event(description, from, to);
+                taskCount++;
+                System.out.println("____________________________________________________________");
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + tasks[taskCount - 1]);
+                System.out.println("____________________________________________________________");
+            } else {
+                // Invalid command
+                System.out.println("____________________________________________________________");
+                System.out.println(" Invalid command. Please enter a valid task type.");
                 System.out.println("____________________________________________________________");
             }
         }

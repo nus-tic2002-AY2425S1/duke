@@ -3,34 +3,53 @@ Hello! I'm Stark
 What can I do for you?
 ------------------------------------------------------
 ------------------------------------------------------
-added: Read book
+Got it. I've added this task:
+  [T] [ ] borrow book
+Now you have 1 tasks in the list.
 ------------------------------------------------------
 ------------------------------------------------------
-added: return book
+Got it. I've added this task:
+  [D] [ ] return book (by: Sunday)
+Now you have 2 tasks in the list.
 ------------------------------------------------------
 ------------------------------------------------------
-1. [ ] Read book
-2. [ ] return book
+Got it. I've added this task:
+  [E] [ ] project meeting (from: Mon 2pm to: 4pm )
+Now you have 3 tasks in the list.
+------------------------------------------------------
+------------------------------------------------------
+1. [T] [ ] borrow book
+2. [D] [ ] return book (by: Sunday)
+3. [E] [ ] project meeting (from: Mon 2pm to: 4pm )
 ------------------------------------------------------
 ------------------------------------------------------
 Nice! I've marked this task as done:
-  [X] Read book
+  [E] [X] project meeting (from: Mon 2pm to: 4pm )
 ------------------------------------------------------
 ------------------------------------------------------
-added: play football
+Got it. I've added this task:
+  [T] [ ] play football
+Now you have 4 tasks in the list.
 ------------------------------------------------------
 ------------------------------------------------------
 Nice! I've marked this task as done:
-  [X] play football
+  [D] [X] return book (by: Sunday)
+------------------------------------------------------
+------------------------------------------------------
+1. [T] [ ] borrow book
+2. [D] [X] return book (by: Sunday)
+3. [E] [X] project meeting (from: Mon 2pm to: 4pm )
+4. [T] [ ] play football
 ------------------------------------------------------
 ------------------------------------------------------
 OK, I've marked this task as not done yet:
-  [ ] Read book
+  [E] [ ] project meeting (from: Mon 2pm to: 4pm )
 ------------------------------------------------------
 ------------------------------------------------------
-1. [ ] Read book
-2. [ ] return book
-3. [X] play football
+1. [T] [ ] borrow book
+2. [D] [X] return book (by: Sunday)
+3. [E] [ ] project meeting (from: Mon 2pm to: 4pm )
+4. [T] [ ] play football
 ------------------------------------------------------
 ------------------------------------------------------
 Bye. Hope to see you again soon!

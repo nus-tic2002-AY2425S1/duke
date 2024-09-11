@@ -18,7 +18,7 @@ public class TaskList {
             String[] str = task.split(" /from ");
             tasks.add(new Event(str[0],str[1]));
         }else{
-            tasks.add(new Task(type + task));
+            tasks.add(new Task(type+ " " + task));
         }
 
         totalTasks++;

@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 public class Mochi {
   final static String _name = "Mochi";
@@ -12,31 +11,37 @@ public class Mochi {
       + " Hello! I'm " + _name + System.lineSeparator()
       + " What can I do for you?";
     System.out.println(greating);
-    ArrayList<String> list = new ArrayList<>();
+    TaskList taskList = new TaskList();
 
     Scanner in = new Scanner(System.in);
-    String line = "";
-    while (!line.equals("bye")) {
-      line = in.nextLine();
-      switch (line) {
+    boolean bye = false;
+    while (!bye) {
+      String input = in.nextLine();
+      String[] token = input.split(" ");
+      String cross = " ";
+      switch (token[0]) {
+        case "mark":
+          taskList.markTask(Integer.parseInt(token[1]));
+          if (taskList.getTaskStatusByIndex(Integer.parseInt(token[1])))
+            cross = "X";
+          response("Nice! I've marked this task as done:" + System.lineSeparator() + " [" + cross + "] " + taskList.getTaskNameByIndex(Integer.parseInt(token[1])));
+          break;
+        case "unmark":
+          taskList.unmarkTask(Integer.parseInt(token[1]));
+          if (taskList.getTaskStatusByIndex(Integer.parseInt(token[1])))
+            cross = "X";
+          response("OK, I've marked this task as not done yet:" + System.lineSeparator() + " [" + cross + "] " + taskList.getTaskNameByIndex(Integer.parseInt(token[1])));
+          break;
         case "bye":
           response("Bye. Hope to see you again soon!");
+          bye = true;
           break;
         case "list":
-          String r = "";
-          int index = 1;
-          for (String s : list) {
-            if (list.indexOf(s) == list.size()-1)
-              r +=  index + ": " + s;
-            else
-              r +=  index + ": " + s + System.lineSeparator();
-            index++;
-          }
-          response(r);
+          taskList.printTaskList();
           break;
-        default :
-          response("added: " + line);
-          list.add(line);
+        default:
+          response("added: " + input);
+          taskList.addTask(input);
       }
     }
   }

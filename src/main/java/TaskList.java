@@ -7,13 +7,19 @@ public class TaskList {
     }
 
     public void addTask(String type, String task) {
+        task = task.replace(type +" ","");       //remove the type of new task from input
 
         if(type.equalsIgnoreCase("Todo")){
             tasks.add(new Todo(task));
+        }else if(type.equalsIgnoreCase("Deadline")){
+            String[] str = task.split(" /by ");
+            tasks.add(new Deadline(str[0],str[1]));
+        }else{
+            tasks.add(new Task(type + task));
         }
-        tasks.add(new Task(task));
+
         totalTasks++;
-        System.out.println("Got it. I've added this task:" + tasks.get(totalTasks-1).printTask());
+        System.out.println("Got it. I've added this task:\n  " + tasks.get(totalTasks-1).printTask());
         System.out.println("Now you have " + totalTasks + " tasks in the list.");
 
     }

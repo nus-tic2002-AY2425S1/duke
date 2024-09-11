@@ -14,6 +14,9 @@ public class TaskList {
         }else if(type.equalsIgnoreCase("Deadline")){
             String[] str = task.split(" /by ");
             tasks.add(new Deadline(str[0],str[1]));
+        }else if (type.equalsIgnoreCase("Event")){
+            String[] str = task.split(" /from ");
+            tasks.add(new Event(str[0],str[1]));
         }else{
             tasks.add(new Task(type + task));
         }

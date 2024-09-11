@@ -51,7 +51,7 @@ public class Stark {
                 continue;
             }
 
-            taskList.addTask(String.join(" ", query));
+            taskList.addTask(query[0],String.join(" ", query));
             lineBreak();
             query = inputQuery.nextLine().split(" ");
 

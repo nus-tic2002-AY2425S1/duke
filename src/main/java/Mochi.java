@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 public class Mochi {
   final static String _name = "Mochi";
@@ -11,6 +13,7 @@ public class Mochi {
       + " Hello! I'm " + _name + System.lineSeparator()
       + " What can I do for you?";
     System.out.println(greating);
+    ArrayList<String> list = new ArrayList<String>();
     Scanner in = new Scanner(System.in);
     String line = "";
     while (!line.equals("bye")) {
@@ -20,10 +23,20 @@ public class Mochi {
           response("Bye. Hope to see you again soon!");
           break;
         case "list":
-
+          String r = "";
+          int index = 1;
+          for (String s : list) {
+            if (list.indexOf(s) == list.size()-1)
+              r +=  index + ": " + s;
+            else
+              r +=  index + ": " + s + System.lineSeparator();
+            index++;
+          }
+          response(r);
           break;
         default :
-          response(line);
+          response("added: " + line);
+          list.add(line);
       }
     }
   }

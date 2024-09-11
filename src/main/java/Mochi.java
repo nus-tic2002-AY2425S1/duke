@@ -13,6 +13,7 @@ public class Mochi {
       + " What can I do for you?";
     System.out.println(greating);
     ArrayList<String> list = new ArrayList<>();
+
     Scanner in = new Scanner(System.in);
     String line = "";
     while (!line.equals("bye")) {

@@ -15,11 +15,15 @@ public class Mochi {
     String line = "";
     while (!line.equals("bye")) {
       line = in.nextLine();
-      if (!line.equals("bye")) {
-        response(line);
-      }
-      else {
-        response("Bye. Hope to see you again soon!");
+      switch (line) {
+        case "bye":
+          response("Bye. Hope to see you again soon!");
+          break;
+        case "list":
+
+          break;
+        default :
+          response(line);
       }
     }
   }

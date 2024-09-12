@@ -1,8 +1,17 @@
 import java.util.Scanner;
 
 public class Denny {
+    private static final int MAX_TASKS = 100;
+    private static final Task[] tasks = new Task[MAX_TASKS];
+    private static int taskCount = 0;
+
     public static void main(String[] args) {
-        // Greet the user
+        greetUser();
+        processUserInput();
+        exitMessage();
+    }
+
+    private static void greetUser() {
         String logo = "____                         \n"
                 + "|  _ \\  ___ _ __  _ __  _   _ \n"
                 + "| | | |/ _ \\ '_ \\| '_ \\| | | |\n"
@@ -14,92 +23,126 @@ public class Denny {
         System.out.println(" Hello! I'm Denny");
         System.out.println(" What can I do for you?");
         System.out.println("____________________________________________________________");
+    }
 
-        // Create Scanner
+    private static void processUserInput() {
         Scanner scanner = new Scanner(System.in);
         String userInput;
 
-        // Array to store up to 100 tasks
-        Task[] tasks = new Task[100];
-        int taskCount = 0;
-
-        // User input loop processing
         while (true) {
             userInput = scanner.nextLine();
 
             if (userInput.equalsIgnoreCase("bye")) {
                 break;
-            } else if (userInput.equalsIgnoreCase("list")) {
-                // List tasks
-                System.out.println("____________________________________________________________");
-                System.out.println(" Here are the tasks in your list:");
-                for (int i = 0; i < taskCount; i++) {
-                    System.out.println(" " + (i + 1) + ". " + tasks[i]);
-                }
-                System.out.println("____________________________________________________________");
+            }
+
+            if (userInput.equalsIgnoreCase("list")) {
+                listTasks();
             } else if (userInput.toLowerCase().startsWith("mark")) {
-                // Mark task as done
-                String[] parts = userInput.split(" ");
-                int taskIndex = Integer.parseInt(parts[1]) - 1;
-                tasks[taskIndex].markAsDone();
-                System.out.println("____________________________________________________________");
-                System.out.println(" Nice! I've marked this task as done:");
-                System.out.println("   " + tasks[taskIndex]);
-                System.out.println("____________________________________________________________");
+                markTaskAsDone(userInput);
             } else if (userInput.toLowerCase().startsWith("unmark")) {
-                // Unmark task as not done
-                String[] parts = userInput.split(" ");
-                int taskIndex = Integer.parseInt(parts[1]) - 1;
-                tasks[taskIndex].markAsNotDone();
-                System.out.println("____________________________________________________________");
-                System.out.println(" OK, I've marked this task as not done yet:");
-                System.out.println("   " + tasks[taskIndex]);
-                System.out.println("____________________________________________________________");
+                unmarkTask(userInput);
             } else if (userInput.toLowerCase().startsWith("todo")) {
-                // Add ToDo task
-                String description = userInput.substring(5);
-                tasks[taskCount] = new ToDo(description);
-                taskCount++;
-                System.out.println("____________________________________________________________");
-                System.out.println(" Got it. I've added this task:");
-                System.out.println("   " + tasks[taskCount - 1]);
-                System.out.println("____________________________________________________________");
+                addTodoTask(userInput);
             } else if (userInput.toLowerCase().startsWith("deadline")) {
-                // Add Deadline task
-                String[] parts = userInput.split(" /by ");
-                String description = parts[0].substring(9);
-                String by = parts[1];
-                tasks[taskCount] = new Deadline(description, by);
-                taskCount++;
-                System.out.println("____________________________________________________________");
-                System.out.println(" Got it. I've added this task:");
-                System.out.println("   " + tasks[taskCount - 1]);
-                System.out.println("____________________________________________________________");
+                addDeadlineTask(userInput);
             } else if (userInput.toLowerCase().startsWith("event")) {
-                // Add Event task
-                String[] parts = userInput.split(" /from | /to ");
-                String description = parts[0].substring(6);
-                String from = parts[1];
-                String to = parts[2];
-                tasks[taskCount] = new Event(description, from, to);
-                taskCount++;
-                System.out.println("____________________________________________________________");
-                System.out.println(" Got it. I've added this task:");
-                System.out.println("   " + tasks[taskCount - 1]);
-                System.out.println("____________________________________________________________");
+                addEventTask(userInput);
             } else {
-                // Invalid command
-                System.out.println("____________________________________________________________");
-                System.out.println(" Invalid command. Please enter a valid task type.");
-                System.out.println("____________________________________________________________");
+                invalidCommand();
             }
         }
 
-        // Exit message
+        scanner.close();
+    }
+
+    private static void listTasks() {
+        System.out.println("____________________________________________________________");
+        System.out.println(" Here are the tasks in your list:");
+        for (int i = 0; i < taskCount; i++) {
+            System.out.println(" " + (i + 1) + ". " + tasks[i]);
+        }
+        System.out.println("____________________________________________________________");
+    }
+
+    private static void markTaskAsDone(String userInput) {
+        int taskIndex = getTaskIndex(userInput);
+        if (taskIndex != -1) {
+            tasks[taskIndex].markAsDone();
+            System.out.println("____________________________________________________________");
+            System.out.println(" Nice! I've marked this task as done:");
+            System.out.println("   " + tasks[taskIndex]);
+            System.out.println("____________________________________________________________");
+        }
+    }
+
+    private static void unmarkTask(String userInput) {
+        int taskIndex = getTaskIndex(userInput);
+        if (taskIndex != -1) {
+            tasks[taskIndex].markAsNotDone();
+            System.out.println("____________________________________________________________");
+            System.out.println(" OK, I've marked this task as not done yet:");
+            System.out.println("   " + tasks[taskIndex]);
+            System.out.println("____________________________________________________________");
+        }
+    }
+
+    private static void addTodoTask(String userInput) {
+        String description = userInput.substring(5);
+        tasks[taskCount] = new ToDo(description);
+        taskCount++;
+        printTaskAddedMessage();
+    }
+
+    private static void addDeadlineTask(String userInput) {
+        String[] parts = userInput.split(" /by ");
+        String description = parts[0].substring(9);
+        String by = parts[1];
+        tasks[taskCount] = new Deadline(description, by);
+        taskCount++;
+        printTaskAddedMessage();
+    }
+
+    private static void addEventTask(String userInput) {
+        String[] parts = userInput.split(" /from | /to ");
+        String description = parts[0].substring(6);
+        String from = parts[1];
+        String to = parts[2];
+        tasks[taskCount] = new Event(description, from, to);
+        taskCount++;
+        printTaskAddedMessage();
+    }
+
+    private static void invalidCommand() {
+        System.out.println("____________________________________________________________");
+        System.out.println(" Invalid command. Please enter a valid task type.");
+        System.out.println("____________________________________________________________");
+    }
+
+    private static void printTaskAddedMessage() {
+        System.out.println("____________________________________________________________");
+        System.out.println(" Got it. I've added this task:");
+        System.out.println("   " + tasks[taskCount - 1]);
+        System.out.println("____________________________________________________________");
+    }
+
+    private static int getTaskIndex(String userInput) {
+        try {
+            String[] parts = userInput.split(" ");
+            int taskIndex = Integer.parseInt(parts[1]) - 1;
+            if (taskIndex >= 0 && taskIndex < taskCount) {
+                return taskIndex;
+            } else {
+                System.out.println(" Task number is out of bounds.");
+            }
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            System.out.println(" Invalid task number.");
+        }
+        return -1;
+    }
+
+    private static void exitMessage() {
         System.out.println(" Bye. Hope to see you again soon!");
         System.out.println("____________________________________________________________");
-
-        // Close scanner
-        scanner.close();
     }
 }

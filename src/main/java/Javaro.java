@@ -13,15 +13,25 @@ public class Javaro {
     static final String UNMARK="unmark";
 
     public static void space(boolean isLine) {
-        String space = "    ";
+        // https://stackoverflow.com/questions/1073787/print-spaces-with-string-format
+        String space; 
+        // String space = String.format("%4s", "");
+        // String space = "    ";
 
         // If space is to come before a horizontal line, use "    "
         if (isLine) {
+            // numberOfSpaces += 4;
+            // System.out.println("number of spaces " + numberOfSpaces);
+            // space = String.format("%" + numberOfSpaces + "s", "");
+
+            // Print 4 spaces
+            space = String.format("%" + 4 + "s", ""); 
             System.out.print(space);
         
         // If space is to come before a line of text, use "     "
         } else {
-            System.out.print(space + " ");
+            space = String.format("%" + 5 + "s", ""); 
+            System.out.print(space);
         }
     }
 

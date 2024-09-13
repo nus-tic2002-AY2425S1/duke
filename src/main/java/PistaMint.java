@@ -29,13 +29,10 @@ public class PistaMint {
 
     public static void printItems(){
         System.out.println("\t"+line);
-        for(int i=0;i<listItems.length;i++){
-            if(listItems[i]==null){
-                break;
-            }
+        for(int i=0;i<itemCount;i++){
             System.out.println("\t"+i+". "+listItems[i]);
         }
-        System.out.println("\t"+line+"\n");
+        System.out.println("\t"+line);
     }
 
     public static void main(String[] args) {

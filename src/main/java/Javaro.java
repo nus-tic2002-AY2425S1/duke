@@ -67,12 +67,16 @@ public class Javaro {
     }
 
     // 1st element has index 0. Length 1
-    public static String[] addToList(String[] list, String item) {
+    public static Task[] addToList(Task[] list, String item) {
         int listLength = list.length;
-        String[] newList = Arrays.copyOf(list, listLength + 1);
+        Task[] newList = Arrays.copyOf(list, listLength + 1);
 
         // When adding the task to the list, initialize the task with checkbox as not done
-        newList[listLength] = "[ ] " + item;
+        Task newTask = new Task();
+        newTask.setDescription(item);
+        // System.out.println("newTask " + newTask);
+        newList[listLength] = newTask;
+        // newList[listLength] = "[ ] " + item;
         return newList;
     }
 
@@ -85,18 +89,20 @@ public class Javaro {
         printLine();
     }
 
-    public static void printTasks(String[] list) {
+    public static void printTasks(Task[] list) {
         for (int i = 0; i < list.length; i++) {
+            Task current = list[i];
+            // System.out.println("desc " + current);
             String index = Integer.toString(i + 1);
 
             // list[i] contains the checkbox
-            String line = index + ". " + list[i];
+            String line = index + ". " + current;
             
             printMessage(false, line);
         }
     }
 
-    public static void printList(String[] list) {
+    public static void printList(Task[] list) {
         printLine();
         
         String message = "Here are the tasks in your list:";
@@ -116,10 +122,50 @@ public class Javaro {
 
     // Add the ability to mark tasks as done. Optionally, add the ability to change the status back to not done.
     // list will be the list of tasks that the user has entered
-    // input will be the command that the user types
+    // input will be the command that the user types (e.g. "mark 1")
     // What if the user mark a task that is already done, or try to unmark a task that is not done
     // What if index entered by user is greater than the number of items in the list
-    public static void markDone(String[] list, String input) {
+    
+    public static void markDone(Task[] list, String input) {
+        String message;
+        
+        // To get the task number that the user wants to mark/unmark, cannot simply extract the last character because this would assume that the task number will always be less than 10, i.e. it will not work if there are more than 9 tasks in the list
+        // Because command can be "mark" or "unmark", cannot simply use the length of the word "mark" or "unmark" and +2 (+1 for the space after the command and another +1 to get to the task number) to get the value of the task number that the user wants to mark/unmark
+        // Instead, the substring function extracts the value after the space, i.e. value of task number that user wants to mark/unmark. Then to get the index (because String array indices start from 0), need to -1
+        int indexOfSpace = input.indexOf(' ');
+        int indexToMark = Integer.parseInt(input.substring(indexOfSpace + 1)) - 1;
+
+        // System.out.println("task to mark is " + list[indexToMark]);
+        Task taskToMark = list[indexToMark];
+        // TODO: Handle the case where index (from input) > number of items in the list
+        if (indexToMark > list.length) {
+            System.out.println("Item not found");
+            return;
+        }
+
+        if (input.startsWith(MARK)) {
+            // Mark task as done
+            message = "Nice! I've marked this task as done:";
+            taskToMark.setDone(true);
+            // list[indexToMark] = taskFirstPart + 'X' + taskSecondPart;
+            
+        } else {
+            // Mark task as not done
+            message = "OK, I've marked this task as not done yet:";
+            taskToMark.setDone(false);
+            // list[indexToMark] = taskFirstPart + ' ' + taskSecondPart;
+        }
+
+        // Print result on CLI
+        printLine();
+        printMessage(false, message);
+        printMessage(false, "  " + taskToMark);
+        printLine();
+
+    }
+
+    /* 
+    public static void markDone(Task[] list, String input) {
         String message;
         String task;
 
@@ -147,7 +193,8 @@ public class Javaro {
         if (input.startsWith(MARK)) {
             // Mark task as done
             message = "Nice! I've marked this task as done:";
-            list[indexToMark] = taskFirstPart + 'X' + taskSecondPart;
+            
+            // list[indexToMark] = taskFirstPart + 'X' + taskSecondPart;
             
         } else {
             // Mark task as not done
@@ -165,6 +212,7 @@ public class Javaro {
         printLine();
         
     }
+    */
 
     // This function echos commands entered by the user, and exits when the user types the command bye.
     public static void echo() {
@@ -174,7 +222,7 @@ public class Javaro {
         String input = in.nextLine().toLowerCase();
 
         // Assume there will be no more than 100 tasks. Initialize an empty list of String array
-        String[] list = new String[0];
+        Task[] list = new Task[0];
 
         // Continue looping until input is "bye"
         while (checkInput(input, BYE) == false) {

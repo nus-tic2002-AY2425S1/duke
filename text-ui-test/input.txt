@@ -1,0 +1,14 @@
+list
+read book
+list
+return book
+list
+buy bread
+list
+mark 1
+list
+mark 2
+list
+unmark 1
+list
+bye

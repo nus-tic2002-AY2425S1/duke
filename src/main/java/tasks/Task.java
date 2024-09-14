@@ -1,4 +1,5 @@
-public class Task {
+package tasks;
+public abstract class Task {
     protected boolean isDone;
     protected String description;
 
@@ -20,4 +21,5 @@ public class Task {
         return "[" + (isDone? "X" : " ") + "] " + description;
     }
 
+    public abstract Task createTask(String description);
 }

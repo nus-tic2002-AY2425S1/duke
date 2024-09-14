@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import tasks.*;
 
 public class DukeGPT {
     private static String chatbotName = "DukeGPT";
@@ -25,7 +26,8 @@ public class DukeGPT {
                 printList();
             }
             else {
-                printAddedItems(userInput);
+                Task newTask  = CommandFactory.generateTask(userInput);
+                printAddedItems(newTask);
             }
         }
         printGoodbye();
@@ -48,17 +50,21 @@ public class DukeGPT {
         System.out.println(userInput);
         System.out.println("____________________________________________________________");
     }
-    public static void printAddedItems(String userInput){
-        System.out.println("____________________________________________________________");
-        System.out.println("added: " + userInput);
-        task[countTask] = new Task(userInput);
+    public static void printAddedItems(Task newTask){
+        task[countTask] = newTask;
         countTask++;
         System.out.println("____________________________________________________________");
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + newTask);
+        System.out.println("Now you have " + countTask + " tasks in the list.");
+        System.out.println("____________________________________________________________");
     }
+
     public static void printList(){
         System.out.println("____________________________________________________________");
+        System.out.println("Here are the tasks in your list:");
         for(int i = 0; i < countTask; i++){
-            System.out.println(i+1 +". " + task[i]);
+            System.out.println("  " + (i+1) +"." + task[i]);
         }
         System.out.println("____________________________________________________________");
     }
@@ -67,7 +73,7 @@ public class DukeGPT {
         task[taskIndex].markDone();
         System.out.println("____________________________________________________________");
         System.out.println("Nice! I've marked this task as done:");
-        System.out.println(task[taskIndex]);
+        System.out.println("  " + task[taskIndex]);
         System.out.println("____________________________________________________________");
     }
 
@@ -75,7 +81,7 @@ public class DukeGPT {
         task[taskIndex].unmarkDone();
         System.out.println("____________________________________________________________");
         System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println(task[taskIndex]);
+        System.out.println("  " + task[taskIndex]);
         System.out.println("____________________________________________________________");
     }
 

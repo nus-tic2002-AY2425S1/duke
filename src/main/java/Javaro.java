@@ -15,15 +15,9 @@ public class Javaro {
     public static void space(boolean isLine) {
         // https://stackoverflow.com/questions/1073787/print-spaces-with-string-format
         String space; 
-        // String space = String.format("%4s", "");
-        // String space = "    ";
 
         // If space is to come before a horizontal line, use "    "
         if (isLine) {
-            // numberOfSpaces += 4;
-            // System.out.println("number of spaces " + numberOfSpaces);
-            // space = String.format("%" + numberOfSpaces + "s", "");
-
             // Print 4 spaces
             space = String.format("%" + 4 + "s", ""); 
             System.out.print(space);
@@ -35,6 +29,7 @@ public class Javaro {
         }
     }
 
+    // Print the message
     public static void printMessage(boolean isLine, String message) {
         space(isLine);
         System.out.println(message);
@@ -42,25 +37,19 @@ public class Javaro {
 
     // This function prints a horizontal line
     public static void printLine() {
-        // String line = "____________________________________________________________";
         printMessage(true, LINE);
-        // space(true);
-        // System.out.println(line);
     }
 
     // Chatbot greets the user
     public static void greet() {
-        // printLine();
-        printMessage(true, LINE);
+        printLine();
         
+        // Print first message: "Hello, I'm Javaro."
         String message;
         message = "Hello, I'm " + CHATBOTNAME + ".";
-        // space(false);
-        // System.out.println("Hello, I'm " + chatbotName + ".");
         printMessage(false, message);
         
-        // space(false);
-        // System.out.println("What can I do for you?");
+        // Print first message: "What can I do for you?"
         message = "What can I do for you?";
         printMessage(false, message);
 
@@ -70,35 +59,12 @@ public class Javaro {
     // Chatbot exits
     public static void exit() {
         printLine();
-        
-        // space(false);
-        // System.out.println("Bye. Hope to see you again soon!");
 
         String message = "Bye. Hope to see you again soon!";
         printMessage(false, message);
         
         printLine();
     }
-
-    // int length = list.length;
-    // String[] result = new String[length + 1];
-    // for (int i = 0; i < length; i++) {
-    //     result[i] = list[i];
-    // }
-    // result[length] = email;
-    // return result;
-
-
-    // double[] newOverseas = Arrays.copyOf(overseas, overseas.length + 1);
-    // // System.out.println("this is new overseas ");
-    // // System.out.println(Arrays.toString(newOverseas));
-    
-    // newOverseas[overseas.length] = expense;
-    // // System.out.println("this is new overseas after adding expense ");
-    // // System.out.println(Arrays.toString(newOverseas));
-    
-    // return newOverseas;
-
 
     // 1st element has index 0. Length 1
     public static String[] addToList(String[] list, String item) {
@@ -112,9 +78,7 @@ public class Javaro {
 
     public static void printAddMessage(String item) {
         printLine();
-        
-        // space(false);
-        // System.out.println("added: " + item);
+
         String message = "added: " + item;
         printMessage(false, message);
         
@@ -125,26 +89,15 @@ public class Javaro {
         for (int i = 0; i < list.length; i++) {
             String index = Integer.toString(i + 1);
 
-            // list[i] should contain the checkbox
-            // String line = index + ". [" + "] " + list[i];
-            // list[i] = index + ". [" + "] " + list[i];
-            // String line = list[i];
+            // list[i] contains the checkbox
             String line = index + ". " + list[i];
-
-            // space(false);
-            // System.out.println(line);
             
             printMessage(false, line);
         }
     }
 
     public static void printList(String[] list) {
-        // System.out.println(Arrays.toString(list));
-
         printLine();
-        
-        // space(false);
-        // System.out.println("Here are the tasks in your list:");
         
         String message = "Here are the tasks in your list:";
         printMessage(false, message);
@@ -161,152 +114,57 @@ public class Javaro {
         return input.equals(command);
     }
 
+    // Add the ability to mark tasks as done. Optionally, add the ability to change the status back to not done.
+    // list will be the list of tasks that the user has entered
     // input will be the command that the user types
+    // What if the user mark a task that is already done, or try to unmark a task that is not done
     // What if index entered by user is greater than the number of items in the list
-    public static String[] markDone(String[] list, String input, boolean isDone) {
+    public static void markDone(String[] list, String input) {
         String message;
-        String checkbox;
         String task;
 
-        // Because command can be "mark" or "unmark", 
+        // To get the task number that the user wants to mark/unmark, cannot simply extract the last character because this would assume that the task number will always be less than 10, i.e. it will not work if there are more than 9 tasks in the list
+        // Because command can be "mark" or "unmark", cannot simply use the length of the word "mark" or "unmark" and +2 (+1 for the space after the command and another +1 to get to the task number) to get the value of the task number that the user wants to mark/unmark
+        // Instead, the substring function extracts the value after the space, i.e. value of task number that user wants to mark/unmark. Then to get the index (because String array indices start from 0), need to -1
         int indexOfSpace = input.indexOf(' ');
-        // System.out.println(indexOfSpace);
-        // String indexToMark = input.substring(indexOfSpace + 1);
-        int indexToMark = Integer.parseInt(input.substring(indexOfSpace + 1));
-        // System.out.println("markLength: " + MARK.length());
-        // System.out.println("unmarkLength: " + UNMARK.length());
-        // System.out.println("indexToMark: " + indexToMark);
-        // System.out.println("list index to mark: " + list[indexToMark - 1]);
+        int indexToMark = Integer.parseInt(input.substring(indexOfSpace + 1)) - 1;
 
-        int indexOpenBracket = list[indexToMark - 1].indexOf("[");
-        // System.out.println("indexOpenBracket " + indexOpenBracket);
+        // Get the position (index) of the opening bracket, so that I know where to insert the X
+        int indexOpenBracket = list[indexToMark].indexOf("[");
 
         // TODO: Handle the case where index (from input) > number of items in the list
         if (indexToMark > list.length) {
             System.out.println("Item not found");
-            return list;
+            return;
         }
 
-        String taskFirstPart = list[indexToMark - 1].substring(0, indexOpenBracket + 1);
-        String taskSecondPart = list[indexToMark - 1].substring(indexOpenBracket + 2, list[indexToMark - 1].length());
+        // Extract the part of the task from the beginning of the task, up to the space after the opening bracket
+        String taskFirstPart = list[indexToMark].substring(0, indexOpenBracket + 1);
+
+        // Extract the part of the task from the closing bracket, up to the end of the task
+        String taskSecondPart = list[indexToMark].substring(indexOpenBracket + 2, list[indexToMark].length());
+
         if (input.startsWith(MARK)) {
-            // indexToMark = Integer.parseInt(input.substring(MARK.length() + 1));
-            // indexToMark = indexOfSpace + 1;
-            
+            // Mark task as done
             message = "Nice! I've marked this task as done:";
-            // checkbox = "[X]"
-            // System.out.println("asdf " + input);
-            // list[indexToMark - 1] = Integer.toString(indexToMark + 1) + ". [X] ";
-            // System.out.println("first part " + list[indexToMark - 1].substring(0, indexOpenBracket + 1));
-            list[indexToMark - 1] = taskFirstPart + 'X' + taskSecondPart;
-            // System.out.println("substring " + list[indexToMark - 1]);
-            
-            // message = "[X] " + list[indexToMark - 1];
+            list[indexToMark] = taskFirstPart + 'X' + taskSecondPart;
             
         } else {
+            // Mark task as not done
             message = "OK, I've marked this task as not done yet:";
-            // checkbox = "[ ]";
-            list[indexToMark - 1] = taskFirstPart + ' ' + taskSecondPart;
+            list[indexToMark] = taskFirstPart + ' ' + taskSecondPart;
         }
 
-        // task = checkbox + " " + list[indexToMark - 1];
-        task = list[indexToMark - 1];
+        // Overwrite current index with the marked task
+        task = list[indexToMark];
         
+        // Print result on CLI
         printLine();
-        // System.out.println("message " + message);
         printMessage(false, message);
         printMessage(false, "  " + task);
         printLine();
         
-        // Update list to mark/unmark item
-        // System.out.println("indexToMark: " + indexToMark);
-        // System.out.println("String indexToMark: " + String.valueOf(indexToMark) + ". " + task);
-        // System.out.println("item " + list[indexToMark - 1]);
-        list[indexToMark - 1] = task;
-        // System.out.println("TASK: " + task);
-
-        return list;
     }
-
-    /* 
-    // Returns the new list of items
-    // list - Original list
-    // input - item to mark done
-    // Add the ability to mark tasks as done. Optionally, add the ability to change the status back to not done.
-    // what if you remark a task that is already done, or try to mark an undone task, maybe try ask chatgpt to think of corner cases
-    public static void markDone(String[] list, String input, boolean isDone) {
-        String message = "";
-        // String[] markedList = new String[list.length];
-        
-        // I cannot simply just extract the last character, because what if the index is 2 digit, i.e. there are more than 9 tasks in the list
-        // System.out.println("INPUT " + input + " TYPE " + input.getClass().getName());
-        
-        // System.out.println("substring " + input.substring(MARK.length() + 1));
-        // String index = input.substring(MARK.length() + 1);
-
-        // Extract out the task number that the user wants to "mark"
-        // + 1 to factor in the space after "mark" command
-        int indexToMark = Integer.parseInt(input.substring(MARK.length() + 1));
-        // System.out.println("index " + index);
-        // String[] inputParts = input.split(" ");
-        // // System.out.println("this is inputparts " + inputParts[0] + " and " + inputParts[1]);
-        // char indexChar = inputParts.charAt(1);
-        
-        // System.out.println("index to mark is " + input.charAt(input.length() - 1));
-        
-        // String item = list[indexToMark];
-        // System.out.println("this is item " + item);
-
-        // System.out.println("line at " + String.valueOf(indexToMark) + " is " + list[indexToMark - 1]);
-        String line = list[indexToMark - 1];
-
-        // for (int i = 0; i < list.length; i++) {
-        //     // System.out.println("this is list[" + i + "]: " + list[i]);
-        //     String task = list[i];
-        //     String indexString = Integer.toString(i + 1);
-        //     String line = "";
-        //     if (indexToMark == i) {
-        //         line = indexToMark + ". [X] " + list[i];
-        //         isDone = true;
-        //     } else {
-        //         line = indexString + ". [ ] " + list[i];
-        //         isDone = false;
-        //     }
-        //     // System.out.println("this is line " + line);
-        //     markedList[i] = line;
-        // }
-
-        // System.out.println("printing marked list");
-        // System.out.println(Arrays.toString(markedList));
-
-
-        // for (int i = 0; i < list.length; i++) {
-        //     String index = Integer.toString(i + 1);
-        //     String line = index + ". [" + "] " + list[i];
-        //     space(false);
-        //     System.out.println(line);
-        // }
-
-        String finalLine = "  ";
-        if (isDone) {
-            message = "Nice! I've marked this task as done:";
-            finalLine += "[X] " + line; 
-        } else {
-            message = "OK, I've marked this task as not done yet:";
-            finalLine += "[ ] " + line; 
-        }
-        
-        printLine();
-        space(false);
-        System.out.println(message);
-        space(false);
-        System.out.println(finalLine);
-        printLine();
-
-        // return list;
-    }
-    */
-
 
     // This function echos commands entered by the user, and exits when the user types the command bye.
     public static void echo() {
@@ -315,23 +173,19 @@ public class Javaro {
         // Get the input and convert it to lower case
         String input = in.nextLine().toLowerCase();
 
-        // Assume there will be no more than 100 tasks.
+        // Assume there will be no more than 100 tasks. Initialize an empty list of String array
         String[] list = new String[0];
 
-        while (checkInput(input, BYE) == false) {         // while (input.equals("bye") == false) {
+        // Continue looping until input is "bye"
+        while (checkInput(input, BYE) == false) {
             
             if (checkInput(input, LIST)) {
-            // if (input.equals("list")) {
                 printList(list);
-
-            } else if (input.startsWith(MARK)) {        // startsWith checks if one string has the other as a substring at the beginning e.g., Apple and App
-                list = markDone(list, input, true);
-            } else if (input.startsWith(UNMARK)) {
-                list = markDone(list, input, false);
+            } else if (input.startsWith(MARK) || input.startsWith(UNMARK)) {        // Check if input contains the command "mark" or "unmark"
+                markDone(list, input);
             } else {
                 list = addToList(list, input);
                 printAddMessage(input);
-
             }
 
             System.lineSeparator();

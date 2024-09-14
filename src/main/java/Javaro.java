@@ -74,9 +74,8 @@ public class Javaro {
         // When adding the task to the list, initialize the task with checkbox as not done
         Task newTask = new Task();
         newTask.setDescription(item);
-        // System.out.println("newTask " + newTask);
         newList[listLength] = newTask;
-        // newList[listLength] = "[ ] " + item;
+
         return newList;
     }
 
@@ -125,20 +124,19 @@ public class Javaro {
     // input will be the command that the user types (e.g. "mark 1")
     // What if the user mark a task that is already done, or try to unmark a task that is not done
     // What if index entered by user is greater than the number of items in the list
-    
     public static void markDone(Task[] list, String input) {
         String message;
-        
+
         // To get the task number that the user wants to mark/unmark, cannot simply extract the last character because this would assume that the task number will always be less than 10, i.e. it will not work if there are more than 9 tasks in the list
         // Because command can be "mark" or "unmark", cannot simply use the length of the word "mark" or "unmark" and +2 (+1 for the space after the command and another +1 to get to the task number) to get the value of the task number that the user wants to mark/unmark
         // Instead, the substring function extracts the value after the space, i.e. value of task number that user wants to mark/unmark. Then to get the index (because String array indices start from 0), need to -1
         int indexOfSpace = input.indexOf(' ');
         int indexToMark = Integer.parseInt(input.substring(indexOfSpace + 1)) - 1;
 
-        // System.out.println("task to mark is " + list[indexToMark]);
         Task taskToMark = list[indexToMark];
+        // TODO: Check if the task number is a valid number and not an alphabet
         // TODO: Handle the case where index (from input) > number of items in the list
-        if (indexToMark > list.length) {
+        if (indexToMark < 0 || indexToMark > list.length) {
             System.out.println("Item not found");
             return;
         }
@@ -147,13 +145,10 @@ public class Javaro {
             // Mark task as done
             message = "Nice! I've marked this task as done:";
             taskToMark.setDone(true);
-            // list[indexToMark] = taskFirstPart + 'X' + taskSecondPart;
-            
         } else {
             // Mark task as not done
             message = "OK, I've marked this task as not done yet:";
             taskToMark.setDone(false);
-            // list[indexToMark] = taskFirstPart + ' ' + taskSecondPart;
         }
 
         // Print result on CLI
@@ -163,56 +158,6 @@ public class Javaro {
         printLine();
 
     }
-
-    /* 
-    public static void markDone(Task[] list, String input) {
-        String message;
-        String task;
-
-        // To get the task number that the user wants to mark/unmark, cannot simply extract the last character because this would assume that the task number will always be less than 10, i.e. it will not work if there are more than 9 tasks in the list
-        // Because command can be "mark" or "unmark", cannot simply use the length of the word "mark" or "unmark" and +2 (+1 for the space after the command and another +1 to get to the task number) to get the value of the task number that the user wants to mark/unmark
-        // Instead, the substring function extracts the value after the space, i.e. value of task number that user wants to mark/unmark. Then to get the index (because String array indices start from 0), need to -1
-        int indexOfSpace = input.indexOf(' ');
-        int indexToMark = Integer.parseInt(input.substring(indexOfSpace + 1)) - 1;
-
-        // Get the position (index) of the opening bracket, so that I know where to insert the X
-        int indexOpenBracket = list[indexToMark].indexOf("[");
-
-        // TODO: Handle the case where index (from input) > number of items in the list
-        if (indexToMark > list.length) {
-            System.out.println("Item not found");
-            return;
-        }
-
-        // Extract the part of the task from the beginning of the task, up to the space after the opening bracket
-        String taskFirstPart = list[indexToMark].substring(0, indexOpenBracket + 1);
-
-        // Extract the part of the task from the closing bracket, up to the end of the task
-        String taskSecondPart = list[indexToMark].substring(indexOpenBracket + 2, list[indexToMark].length());
-
-        if (input.startsWith(MARK)) {
-            // Mark task as done
-            message = "Nice! I've marked this task as done:";
-            
-            // list[indexToMark] = taskFirstPart + 'X' + taskSecondPart;
-            
-        } else {
-            // Mark task as not done
-            message = "OK, I've marked this task as not done yet:";
-            list[indexToMark] = taskFirstPart + ' ' + taskSecondPart;
-        }
-
-        // Overwrite current index with the marked task
-        task = list[indexToMark];
-        
-        // Print result on CLI
-        printLine();
-        printMessage(false, message);
-        printMessage(false, "  " + task);
-        printLine();
-        
-    }
-    */
 
     // This function echos commands entered by the user, and exits when the user types the command bye.
     public static void echo() {

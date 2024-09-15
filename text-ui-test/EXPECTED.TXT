@@ -12,46 +12,144 @@
 	____________________________________________________________
 
 	____________________________________________________________
-	 added: read book
+	 Got it. I've added this task:
+	   [T][ ] read book
+	 Now you have 1 tasks in the list.
 	____________________________________________________________
 
 	____________________________________________________________
-	 added: return book
+	 Got it. I've added this task:
+	   [D][ ] return book (by: June 6th)
+	 Now you have 2 tasks in the list.
 	____________________________________________________________
 
 	____________________________________________________________
-	 added: buy bread
+	 Got it. I've added this task:
+	   [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+	 Now you have 3 tasks in the list.
+	____________________________________________________________
+
+	____________________________________________________________
+	 Got it. I've added this task:
+	   [T][ ] borrow book
+	 Now you have 4 tasks in the list.
+	____________________________________________________________
+
+	____________________________________________________________
+	 Got it. I've added this task:
+	   [D][ ] return book 2 (by: Sunday)
+	 Now you have 5 tasks in the list.
+	____________________________________________________________
+
+	____________________________________________________________
+	 Got it. I've added this task:
+	   [E][ ] project meeting 2 (from: Mon 2pm to: 4pm)
+	 Now you have 6 tasks in the list.
 	____________________________________________________________
 
 	____________________________________________________________
 	 Here are the tasks in your list:
-	 1.[ ] read book
-	 2.[ ] return book
-	 3.[ ] buy bread
+	 1.[T][ ] read book
+	 2.[D][ ] return book (by: June 6th)
+	 3.[E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+	 4.[T][ ] borrow book
+	 5.[D][ ] return book 2 (by: Sunday)
+	 6.[E][ ] project meeting 2 (from: Mon 2pm to: 4pm)
 	____________________________________________________________
 
 	____________________________________________________________
 	 Nice! I've marked this task as done:
-	   [X] return book
+	   [T][X] read book
 	____________________________________________________________
 
 	____________________________________________________________
 	 Here are the tasks in your list:
-	 1.[ ] read book
-	 2.[X] return book
-	 3.[ ] buy bread
+	 1.[T][X] read book
+	 2.[D][ ] return book (by: June 6th)
+	 3.[E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+	 4.[T][ ] borrow book
+	 5.[D][ ] return book 2 (by: Sunday)
+	 6.[E][ ] project meeting 2 (from: Mon 2pm to: 4pm)
+	____________________________________________________________
+
+	____________________________________________________________
+	 Nice! I've marked this task as done:
+	   [D][X] return book (by: June 6th)
+	____________________________________________________________
+
+	____________________________________________________________
+	 Here are the tasks in your list:
+	 1.[T][X] read book
+	 2.[D][X] return book (by: June 6th)
+	 3.[E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+	 4.[T][ ] borrow book
+	 5.[D][ ] return book 2 (by: Sunday)
+	 6.[E][ ] project meeting 2 (from: Mon 2pm to: 4pm)
+	____________________________________________________________
+
+	____________________________________________________________
+	 Nice! I've marked this task as done:
+	   [E][X] project meeting (from: Aug 6th 2pm to: 4pm)
+	____________________________________________________________
+
+	____________________________________________________________
+	 Here are the tasks in your list:
+	 1.[T][X] read book
+	 2.[D][X] return book (by: June 6th)
+	 3.[E][X] project meeting (from: Aug 6th 2pm to: 4pm)
+	 4.[T][ ] borrow book
+	 5.[D][ ] return book 2 (by: Sunday)
+	 6.[E][ ] project meeting 2 (from: Mon 2pm to: 4pm)
 	____________________________________________________________
 
 	____________________________________________________________
 	 OK, I've marked this task as not done yet:
-	   [ ] return book
+	   [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
 	____________________________________________________________
 
 	____________________________________________________________
 	 Here are the tasks in your list:
-	 1.[ ] read book
-	 2.[ ] return book
-	 3.[ ] buy bread
+	 1.[T][X] read book
+	 2.[D][X] return book (by: June 6th)
+	 3.[E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+	 4.[T][ ] borrow book
+	 5.[D][ ] return book 2 (by: Sunday)
+	 6.[E][ ] project meeting 2 (from: Mon 2pm to: 4pm)
+	____________________________________________________________
+
+	____________________________________________________________
+	 OK, I've marked this task as not done yet:
+	   [D][ ] return book (by: June 6th)
+	____________________________________________________________
+
+	____________________________________________________________
+	 Here are the tasks in your list:
+	 1.[T][X] read book
+	 2.[D][ ] return book (by: June 6th)
+	 3.[E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+	 4.[T][ ] borrow book
+	 5.[D][ ] return book 2 (by: Sunday)
+	 6.[E][ ] project meeting 2 (from: Mon 2pm to: 4pm)
+	____________________________________________________________
+
+	____________________________________________________________
+	 OK, I've marked this task as not done yet:
+	   [T][ ] read book
+	____________________________________________________________
+
+	____________________________________________________________
+	 Here are the tasks in your list:
+	 1.[T][ ] read book
+	 2.[D][ ] return book (by: June 6th)
+	 3.[E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+	 4.[T][ ] borrow book
+	 5.[D][ ] return book 2 (by: Sunday)
+	 6.[E][ ] project meeting 2 (from: Mon 2pm to: 4pm)
+	____________________________________________________________
+
+	____________________________________________________________
+	 Action: userInput
+	 Error: Unknown command for '[Invalid Input Test]'.
 	____________________________________________________________
 
 	____________________________________________________________
@@ -61,17 +159,12 @@
 
 	____________________________________________________________
 	 Action: mark
-	 Error: Task number '0' is invalid.
-	____________________________________________________________
-
-	____________________________________________________________
-	 Action: mark
-	 Error: Task number '5' not found.
-	____________________________________________________________
-
-	____________________________________________________________
-	 Action: mark
 	 Error: Task number 'a' is invalid.
+	____________________________________________________________
+
+	____________________________________________________________
+	 Action: mark
+	 Error: Task number '10' not found.
 	____________________________________________________________
 
 	____________________________________________________________
@@ -81,17 +174,32 @@
 
 	____________________________________________________________
 	 Action: unmark
-	 Error: Task number '0' is invalid.
-	____________________________________________________________
-
-	____________________________________________________________
-	 Action: unmark
-	 Error: Task number '5' not found.
-	____________________________________________________________
-
-	____________________________________________________________
-	 Action: unmark
 	 Error: Task number 'a' is invalid.
+	____________________________________________________________
+
+	____________________________________________________________
+	 Action: unmark
+	 Error: Task number '10' not found.
+	____________________________________________________________
+
+	____________________________________________________________
+	 Action: addTask
+	 Error: Deadline task requires '/by' information.
+	____________________________________________________________
+
+	____________________________________________________________
+	 Action: addTask
+	 Error: Deadline task requires '/by' information.
+	____________________________________________________________
+
+	____________________________________________________________
+	 Action: addTask
+	 Error: Event task requires '/from' and '/to' information.
+	____________________________________________________________
+
+	____________________________________________________________
+	 Action: addTask
+	 Error: Event task requires '/from' and '/to' information.
 	____________________________________________________________
 
 	____________________________________________________________

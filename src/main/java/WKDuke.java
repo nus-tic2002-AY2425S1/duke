@@ -64,15 +64,13 @@ public class WKDuke {
     public static void markTaskAsDone(String taskNumber) {
         Task task = taskList.get(Integer.parseInt(taskNumber) - 1);
         task.markAsDone();
-        String message = "Nice! I've marked this task as done:" + NEW_INDENT_LINE + "  " + task;
-        echo(message);
+        echo(String.format("Nice! I've marked this task as done:%s  %s", NEW_INDENT_LINE, task));
     }
 
     public static void markTaskAsUndone(String taskNumber) {
         Task task = taskList.get(Integer.parseInt(taskNumber) - 1);
         task.markAsUndone();
-        String message = "OK, I've marked this task as not done yet:" + NEW_INDENT_LINE + "  " + task;
-        echo(message);
+        echo(String.format("OK, I've marked this task as not done yet:%s  %s", NEW_INDENT_LINE, task));
     }
 
     private static Task parseDeadlineTask(String taskDetail) throws InvalidTaskFormatException {
@@ -108,7 +106,7 @@ public class WKDuke {
 
     public static void main(String[] args) {
         String logo = """
-                \t  ___       __   ___  __    ________  ___  ___  ___  __    _______     \s
+                 ___       __   ___  __    ________  ___  ___  ___  __    _______
                 \t |\\  \\     |\\  \\|\\  \\|\\  \\ |\\   ___ \\|\\  \\|\\  \\|\\  \\|\\  \\ |\\  ___ \\    \s
                 \t \\ \\  \\    \\ \\  \\ \\  \\/  /|\\ \\  \\_|\\ \\ \\  \\\\\\  \\ \\  \\/  /|\\ \\   __/|   \s
                 \t  \\ \\  \\  __\\ \\  \\ \\   ___  \\ \\  \\ \\\\ \\ \\  \\\\\\  \\ \\   ___  \\ \\  \\_|/__ \s
@@ -116,7 +114,7 @@ public class WKDuke {
                 \t    \\ \\____________\\ \\__\\\\ \\__\\ \\_______\\ \\_______\\ \\__\\\\ \\__\\ \\_______\\
                 \t     \\|____________|\\|__| \\|__|\\|_______|\\|_______|\\|__| \\|__|\\|_______|
                 """;
-        echo(logo + NEW_INDENT_LINE + "Hello! I'm WKDuke" + NEW_INDENT_LINE + "What can I do for you?");
+        echo(String.format("%s%sHello! I'm WKDuke%sWhat can I do for you?", logo, NEW_INDENT_LINE, NEW_INDENT_LINE));
 
         Scanner sc = new Scanner(System.in);
         String action = "";

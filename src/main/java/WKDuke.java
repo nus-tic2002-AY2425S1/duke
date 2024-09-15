@@ -40,37 +40,47 @@ public class WKDuke {
         }
     }
 
-    public static boolean checkUpdateTaskInput(String[] inputWords) {
-        String action = inputWords[0];
+    private static int getTaskNumber(String[] inputWords) throws InvalidTaskOperationException {
+        String taskOperation = inputWords[0];
         // Check if input contain a task number
         if (inputWords.length < 2) {
-            echo(String.format("Action: %s%sError: Action required a task number.", action, NEW_INDENT_LINE));
-            return false;
+            throw new InvalidTaskOperationException("Action required a task number.", taskOperation);
         }
-        String taskNumber = inputWords[1];
         // Check if task number is a valid integer
+        String taskNumber = inputWords[1];
         if (!isInteger(taskNumber) || Integer.parseInt(taskNumber) <= 0) {
-            echo(String.format("Action: %s%sError: Task number '%s' is invalid.", action, NEW_INDENT_LINE, taskNumber));
-            return false;
+            throw new InvalidTaskOperationException(String.format("Task number '%s' is invalid.", taskNumber), taskOperation);
         }
         // Check if task number exist in taskList
         if (Integer.parseInt(taskNumber) > taskList.size()) {
-            echo(String.format("Action: %s%sError: Task number '%s' not found.", action, NEW_INDENT_LINE, taskNumber));
-            return false;
+            throw new InvalidTaskOperationException(String.format("Task number '%s' not found.", taskNumber), taskOperation);
         }
-        return true;
+        return Integer.parseInt(taskNumber);
     }
 
-    public static void markTaskAsDone(String taskNumber) {
-        Task task = taskList.get(Integer.parseInt(taskNumber) - 1);
+    public static void markTaskAsDone(int taskNumber) {
+        Task task = taskList.get(taskNumber - 1);
         task.markAsDone();
         echo(String.format("Nice! I've marked this task as done:%s  %s", NEW_INDENT_LINE, task));
     }
 
-    public static void markTaskAsUndone(String taskNumber) {
-        Task task = taskList.get(Integer.parseInt(taskNumber) - 1);
+    public static void markTaskAsUndone(int taskNumber) {
+        Task task = taskList.get(taskNumber - 1);
         task.markAsUndone();
         echo(String.format("OK, I've marked this task as not done yet:%s  %s", NEW_INDENT_LINE, task));
+    }
+
+    public static void updateTask(String action, String[] inputWords) {
+        try {
+            int taskNumber = getTaskNumber(inputWords);
+            switch (action) {
+                case MARK_TASK_DONE_KEYWORD -> markTaskAsDone(taskNumber);
+                case MARK_TASK_UNDONE_KEYWORD -> markTaskAsUndone(taskNumber);
+                default -> throw new InvalidTaskOperationException("Unknown task operation.", action);
+            }
+        } catch (InvalidTaskOperationException e) {
+            echo(String.format("Action: %s%sError: %s", e.getTaskOperation(), NEW_INDENT_LINE, e.getMessage()));
+        }
     }
 
     private static Task parseDeadlineTask(String taskDetail) throws InvalidTaskFormatException {
@@ -134,14 +144,8 @@ public class WKDuke {
                     printTaskList();
                     break;
                 case MARK_TASK_DONE_KEYWORD:
-                    if (checkUpdateTaskInput(inputWords)) {
-                        markTaskAsDone(inputWords[1]);
-                    }
-                    break;
                 case MARK_TASK_UNDONE_KEYWORD:
-                    if (checkUpdateTaskInput(inputWords)) {
-                        markTaskAsUndone(inputWords[1]);
-                    }
+                    updateTask(action, inputWords);
                     break;
                 case ADD_TODO_TASK_KEYWORD:
                 case ADD_DEADLINE_TASK_KEYWORD:

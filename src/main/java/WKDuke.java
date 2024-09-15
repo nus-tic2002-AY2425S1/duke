@@ -23,12 +23,13 @@ public class WKDuke {
         System.out.println(BORDER_LINE + System.lineSeparator());
     }
 
+    //Solution below inspired by https://stackoverflow.com/questions/69576641
     public static void printTaskList() {
-        String message = "Here are the tasks in your list:";
+        StringBuilder messageBuilder = new StringBuilder("Here are the tasks in your list:");
         for (int i = 0; i < taskList.size(); i++) {
-            message = message.concat(NEW_INDENT_LINE + Integer.toString(i + 1) + "." + taskList.get(i));
+            messageBuilder.append(NEW_INDENT_LINE).append(i + 1).append(".").append(taskList.get(i));
         }
-        echo(message);
+        echo(messageBuilder.toString());
     }
 
     public static boolean invalidTaskNumber(String string) {

@@ -5,7 +5,12 @@ public class ToDo extends Task{
     }
 
     @Override
+    protected String getTaskType(){
+        return "T";
+    }
+
+    @Override
     public String toString(){
-        return "[T]" + super.toString();
+        return "[" + getTaskType() + "][" + getStatusIcon() + "] " + taskName;
     }
 }

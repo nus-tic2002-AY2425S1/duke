@@ -24,8 +24,14 @@ public class Task {
         isDone = false;
     }
 
+    // Task type for sub class to override
+    protected String getTaskType(){
+        return " ";
+    }
+
     // Output task as string
+    @Override
     public String toString() {
-        return "[" + getStatusIcon() + "] " + taskName;
+        return "[" + getTaskType() + "][" + getStatusIcon() + "] " + taskName;
     }
 }

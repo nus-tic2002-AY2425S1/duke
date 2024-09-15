@@ -91,7 +91,7 @@ public class WKDuke {
         return new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
     }
 
-    public static void addTask(String taskDetail, String taskType) {
+    public static void addTask(String taskType, String taskDetail) {
         try {
             Task newTask = switch (taskType) {
                 case ADD_TODO_TASK_KEYWORD -> new ToDo(taskDetail);
@@ -148,7 +148,7 @@ public class WKDuke {
                 case ADD_TODO_TASK_KEYWORD:
                 case ADD_DEADLINE_TASK_KEYWORD:
                 case ADD_EVENT_TASK_KEYWORD:
-                    addTask(inputWords[1], action);
+                    addTask(action, inputWords[1]);
                     break;
                 default:
                     echo(String.format("Action: userInput%sError: Unknown command for '%s'.", NEW_INDENT_LINE, input));

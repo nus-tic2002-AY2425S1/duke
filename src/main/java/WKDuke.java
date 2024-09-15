@@ -31,12 +31,12 @@ public class WKDuke {
         echo(message);
     }
 
-    public static boolean isInteger(String string) {
+    public static boolean invalidTaskNumber(String string) {
         try {
-            Integer.parseInt(string);
-            return true;
+            int taskNumber = Integer.parseInt(string);
+            return taskNumber <= 0;
         } catch (NumberFormatException e) {
-            return false;
+            return true;
         }
     }
 
@@ -46,9 +46,9 @@ public class WKDuke {
         if (inputWords.length < 2) {
             throw new InvalidTaskOperationException("Action required a task number.", taskOperation);
         }
-        // Check if task number is a valid integer
+        // Check if task number is not a valid integer
         String taskNumber = inputWords[1];
-        if (!isInteger(taskNumber) || Integer.parseInt(taskNumber) <= 0) {
+        if (invalidTaskNumber(taskNumber)) {
             throw new InvalidTaskOperationException(String.format("Task number '%s' is invalid.", taskNumber), taskOperation);
         }
         // Check if task number exist in taskList

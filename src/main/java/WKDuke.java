@@ -11,7 +11,11 @@ public class WKDuke {
     private static final String listTaskKeyword = "list";
     private static final String markTaskDoneKeyword = "mark";
     private static final String markTaskUndoneKeyword = "unmark";
-    private static List<Task> taskList = new ArrayList<>();
+    private static final String addToDoTaskKeyword = "todo";
+    private static final String addDeadlineTaskKeyword = "deadline";
+    private static final String addEventTaskKeyword = "event";
+
+    private static final List<Task> taskList = new ArrayList<>();
 
     public static void echo(String message) {
         System.out.println(borderLine);
@@ -71,6 +75,37 @@ public class WKDuke {
         echo(message);
     }
 
+    private static Task parseDeadlineTask(String taskDetail) throws InvalidTaskFormatException {
+        String[] taskDetailParts = taskDetail.split("/by");
+        if (taskDetailParts.length != 2) {
+            throw new InvalidTaskFormatException("Deadline task requires '/by' information.");
+        }
+        return new Deadline(taskDetailParts[0].trim(), taskDetailParts[1].trim());
+    }
+
+    private static Task parseEventTask(String taskDetail) throws InvalidTaskFormatException {
+        String[] parts = taskDetail.split("/from|/to");
+        if (parts.length != 3) {
+            throw new InvalidTaskFormatException("Event task requires '/from' and '/to' information.");
+        }
+        return new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
+    }
+
+    public static void addTask(String taskDetail, String taskType) {
+        try {
+            Task newTask = switch (taskType) {
+                case addToDoTaskKeyword -> new ToDo(taskDetail);
+                case addDeadlineTaskKeyword -> parseDeadlineTask(taskDetail);
+                case addEventTaskKeyword -> parseEventTask(taskDetail);
+                default -> throw new InvalidTaskFormatException("Unknown task type.");
+            };
+            taskList.add(newTask);
+            echo(String.format("Got it. I've added this task:%s  %s%sNow you have %s tasks in the list.", newIndentLine, newTask, newIndentLine, taskList.size()));
+        } catch (InvalidTaskFormatException e) {
+            echo(String.format("Action: addTask%sError: %s", newIndentLine, e.getMessage()));
+        }
+    }
+
     public static void main(String[] args) {
         String logo = """
                 \t  ___       __   ___  __    ________  ___  ___  ___  __    _______     \s
@@ -92,7 +127,7 @@ public class WKDuke {
                 continue;
             }
 
-            String[] inputWords = input.split(" ");
+            String[] inputWords = input.split(" ", 2);
             action = inputWords[0];
             switch (action) {
                 case exitKeyword:
@@ -110,9 +145,13 @@ public class WKDuke {
                         markTaskAsUndone(inputWords[1]);
                     }
                     break;
+                case addToDoTaskKeyword:
+                case addDeadlineTaskKeyword:
+                case addEventTaskKeyword:
+                    addTask(inputWords[1], action);
+                    break;
                 default:
-                    taskList.add(new Task(input));
-                    echo("added: " + input);
+                    echo(String.format("Action: userInput%sError: Unknown command for '%s'.", newIndentLine, input));
                     break;
             }
         }

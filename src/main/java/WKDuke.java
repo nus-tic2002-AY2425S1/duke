@@ -3,30 +3,30 @@ import java.util.List;
 import java.util.Scanner;
 
 public class WKDuke {
-    private static final String borderLine = "\t____________________________________________________________";
-    private static final String stringIndent = "\t ";
-    private static final String newIndentLine = System.lineSeparator() + "\t ";
+    private static final String BORDER_LINE = "\t____________________________________________________________";
+    private static final String INDENT = "\t ";
+    private static final String NEW_INDENT_LINE = System.lineSeparator() + "\t ";
 
-    private static final String exitKeyword = "bye";
-    private static final String listTaskKeyword = "list";
-    private static final String markTaskDoneKeyword = "mark";
-    private static final String markTaskUndoneKeyword = "unmark";
-    private static final String addToDoTaskKeyword = "todo";
-    private static final String addDeadlineTaskKeyword = "deadline";
-    private static final String addEventTaskKeyword = "event";
+    private static final String EXIT_KEYWORD = "bye";
+    private static final String LIST_TASK_KEYWORD = "list";
+    private static final String MARK_TASK_DONE_KEYWORD = "mark";
+    private static final String MARK_TASK_UNDONE_KEYWORD = "unmark";
+    private static final String ADD_TODO_TASK_KEYWORD = "todo";
+    private static final String ADD_DEADLINE_TASK_KEYWORD = "deadline";
+    private static final String ADD_EVENT_TASK_KEYWORD = "event";
 
     private static final List<Task> taskList = new ArrayList<>();
 
     public static void echo(String message) {
-        System.out.println(borderLine);
-        System.out.println(stringIndent + message);
-        System.out.println(borderLine + System.lineSeparator());
+        System.out.println(BORDER_LINE);
+        System.out.println(INDENT + message);
+        System.out.println(BORDER_LINE + System.lineSeparator());
     }
 
     public static void printTaskList() {
         String message = "Here are the tasks in your list:";
         for (int i = 0; i < taskList.size(); i++) {
-            message = message.concat(newIndentLine + Integer.toString(i + 1) + "." + taskList.get(i));
+            message = message.concat(NEW_INDENT_LINE + Integer.toString(i + 1) + "." + taskList.get(i));
         }
         echo(message);
     }
@@ -44,18 +44,18 @@ public class WKDuke {
         String action = inputWords[0];
         // Check if input contain a task number
         if (inputWords.length < 2) {
-            echo(String.format("Action: %s%sError: Action required a task number.", action, newIndentLine));
+            echo(String.format("Action: %s%sError: Action required a task number.", action, NEW_INDENT_LINE));
             return false;
         }
         String taskNumber = inputWords[1];
         // Check if task number is a valid integer
         if (!isInteger(taskNumber) || Integer.parseInt(taskNumber) <= 0) {
-            echo(String.format("Action: %s%sError: Task number '%s' is invalid.", action, newIndentLine, taskNumber));
+            echo(String.format("Action: %s%sError: Task number '%s' is invalid.", action, NEW_INDENT_LINE, taskNumber));
             return false;
         }
         // Check if task number exist in taskList
         if (Integer.parseInt(taskNumber) > taskList.size()) {
-            echo(String.format("Action: %s%sError: Task number '%s' not found.", action, newIndentLine, taskNumber));
+            echo(String.format("Action: %s%sError: Task number '%s' not found.", action, NEW_INDENT_LINE, taskNumber));
             return false;
         }
         return true;
@@ -64,14 +64,14 @@ public class WKDuke {
     public static void markTaskAsDone(String taskNumber) {
         Task task = taskList.get(Integer.parseInt(taskNumber) - 1);
         task.markAsDone();
-        String message = "Nice! I've marked this task as done:" + newIndentLine + "  " + task;
+        String message = "Nice! I've marked this task as done:" + NEW_INDENT_LINE + "  " + task;
         echo(message);
     }
 
     public static void markTaskAsUndone(String taskNumber) {
         Task task = taskList.get(Integer.parseInt(taskNumber) - 1);
         task.markAsUndone();
-        String message = "OK, I've marked this task as not done yet:" + newIndentLine + "  " + task;
+        String message = "OK, I've marked this task as not done yet:" + NEW_INDENT_LINE + "  " + task;
         echo(message);
     }
 
@@ -94,15 +94,15 @@ public class WKDuke {
     public static void addTask(String taskDetail, String taskType) {
         try {
             Task newTask = switch (taskType) {
-                case addToDoTaskKeyword -> new ToDo(taskDetail);
-                case addDeadlineTaskKeyword -> parseDeadlineTask(taskDetail);
-                case addEventTaskKeyword -> parseEventTask(taskDetail);
+                case ADD_TODO_TASK_KEYWORD -> new ToDo(taskDetail);
+                case ADD_DEADLINE_TASK_KEYWORD -> parseDeadlineTask(taskDetail);
+                case ADD_EVENT_TASK_KEYWORD -> parseEventTask(taskDetail);
                 default -> throw new InvalidTaskFormatException("Unknown task type.");
             };
             taskList.add(newTask);
-            echo(String.format("Got it. I've added this task:%s  %s%sNow you have %s tasks in the list.", newIndentLine, newTask, newIndentLine, taskList.size()));
+            echo(String.format("Got it. I've added this task:%s  %s%sNow you have %s tasks in the list.", NEW_INDENT_LINE, newTask, NEW_INDENT_LINE, taskList.size()));
         } catch (InvalidTaskFormatException e) {
-            echo(String.format("Action: addTask%sError: %s", newIndentLine, e.getMessage()));
+            echo(String.format("Action: addTask%sError: %s", NEW_INDENT_LINE, e.getMessage()));
         }
     }
 
@@ -116,12 +116,12 @@ public class WKDuke {
                 \t    \\ \\____________\\ \\__\\\\ \\__\\ \\_______\\ \\_______\\ \\__\\\\ \\__\\ \\_______\\
                 \t     \\|____________|\\|__| \\|__|\\|_______|\\|_______|\\|__| \\|__|\\|_______|
                 """;
-        echo(logo + newIndentLine + "Hello! I'm WKDuke" + newIndentLine + "What can I do for you?");
+        echo(logo + NEW_INDENT_LINE + "Hello! I'm WKDuke" + NEW_INDENT_LINE + "What can I do for you?");
 
         Scanner sc = new Scanner(System.in);
         String action = "";
 
-        while (!action.equals(exitKeyword)) {
+        while (!action.equals(EXIT_KEYWORD)) {
             String input = sc.nextLine().trim();
             if (input.isEmpty()) {
                 continue;
@@ -130,28 +130,28 @@ public class WKDuke {
             String[] inputWords = input.split(" ", 2);
             action = inputWords[0];
             switch (action) {
-                case exitKeyword:
+                case EXIT_KEYWORD:
                     break;
-                case listTaskKeyword:
+                case LIST_TASK_KEYWORD:
                     printTaskList();
                     break;
-                case markTaskDoneKeyword:
+                case MARK_TASK_DONE_KEYWORD:
                     if (checkUpdateTaskInput(inputWords)) {
                         markTaskAsDone(inputWords[1]);
                     }
                     break;
-                case markTaskUndoneKeyword:
+                case MARK_TASK_UNDONE_KEYWORD:
                     if (checkUpdateTaskInput(inputWords)) {
                         markTaskAsUndone(inputWords[1]);
                     }
                     break;
-                case addToDoTaskKeyword:
-                case addDeadlineTaskKeyword:
-                case addEventTaskKeyword:
+                case ADD_TODO_TASK_KEYWORD:
+                case ADD_DEADLINE_TASK_KEYWORD:
+                case ADD_EVENT_TASK_KEYWORD:
                     addTask(inputWords[1], action);
                     break;
                 default:
-                    echo(String.format("Action: userInput%sError: Unknown command for '%s'.", newIndentLine, input));
+                    echo(String.format("Action: userInput%sError: Unknown command for '%s'.", NEW_INDENT_LINE, input));
                     break;
             }
         }

@@ -13,9 +13,11 @@ public class Snitch {
         // Set up for user input
         Scanner scanner = new Scanner(System.in);
 
-        // Create a list to store the user inputs
-        ArrayList<String> tasks = new ArrayList<>();
-        // keep accepting user input
+        // Create a fixed-size array to store up to 100 tasks
+        Task[] tasks = new Task[100];
+        int taskCount = 0;  // To track the number of tasks added
+
+        //  keep accepting user input
         while (true) {
             // Get input from the user
             String userInput = scanner.nextLine();
@@ -23,22 +25,52 @@ public class Snitch {
             // Check if the user types "bye"
             if (userInput.equalsIgnoreCase("bye")) {
                 System.out.println("Bye. Hope to see you again soon!");
-                break;  // Exit the loop and terminate
+                break;  // Exit the loop
             }
+
             // Check if the user types "list"
             if (userInput.equalsIgnoreCase("list")) {
-                for (int i = 0; i < tasks.size(); i++) {
-                    System.out.println((i + 1) + ". " + tasks.get(i));
+                System.out.println("Here are the tasks in your list:");
+                for (int i = 0; i < taskCount; i++) {
+                    System.out.println((i + 1) + "." + tasks[i].toString());
                 }
-            } else {
-                // else add the user input to the list of tasks
-                tasks.add(userInput);
-                System.out.println("added: " + userInput);
+            }
+            // Adding tasks: ToDo, Deadline, Event
+            else if (userInput.startsWith("todo")) {
+                String description = userInput.substring(5);
+                tasks[taskCount] = new Todo(description);
+                taskCount++;
+                System.out.println("Got it. I've added this task:");
+                System.out.println("  " + tasks[taskCount - 1]);
+                System.out.println("Now you have " + taskCount + " tasks in the list.");
+            }
+            else if (userInput.startsWith("deadline")) {
+                String[] parts = userInput.split("/by ");
+                String description = parts[0].substring(9);
+                String by = parts[1];
+                tasks[taskCount] = new Deadline(description, by);
+                taskCount++;
+                System.out.println("Got it. I've added this task:");
+                System.out.println("  " + tasks[taskCount - 1]);
+                System.out.println("Now you have " + taskCount + " tasks in the list.");
+            }
+            else if (userInput.startsWith("event")) {
+                String[] parts = userInput.split("/from | /to ");
+                String description = parts[0].substring(6);
+                String from = parts[1];
+                String to = parts[2];
+                tasks[taskCount] = new Event(description, from, to);
+                taskCount++;
+                System.out.println("Got it. I've added this task:");
+                System.out.println("  " + tasks[taskCount - 1]);
+                System.out.println("Now you have " + taskCount + " tasks in the list.");
+            }
+            else {
+                System.out.println("What are you asking??");
             }
         }
+
         // Close the scanner
         scanner.close();
     }
-
-    }
-
+}

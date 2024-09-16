@@ -39,7 +39,6 @@ public class Task {
 
     @Override
     public String toString() {
-        // System.out.println("description is " + getDescription() + " isDone is " + getDone());
         return "[" + getStatusIcon() + "] " + getDescription();
     }
 

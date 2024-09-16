@@ -22,14 +22,28 @@ public class Chad {
             /* to add: what if user input mark index out of range */
             case "mark":
             //mark a task with its index to is done
-            inputList[Integer.parseInt(arr[1])-1].setTask();
-            chadSay("Nice! I've marked this task as done:" + System.lineSeparator() + inputList[Integer.parseInt(arr[1])-1].getStatusIcon()+inputList[Integer.parseInt(arr[1])-1].description);
+            int taskIdx=Integer.parseInt(arr[1])-1;
+
+            if(taskIdx>NoOfTask)
+            {
+                //throw some exception here
+            }
+
+            inputList[taskIdx].setTask();
+            chadSay("Nice! I've marked this task as done:" + System.lineSeparator() + inputList[taskIdx].toString());
 
             break;
+
             case "unmark":
             //mark a task with its index to not done
-            inputList[Integer.parseInt(arr[1])-1].unSetTask();
-            chadSay("OK, I've marked this task as not done yet:" + System.lineSeparator() + inputList[Integer.parseInt(arr[1])-1].getStatusIcon()+inputList[Integer.parseInt(arr[1])-1].description);
+            int unmarkTaskIdx=Integer.parseInt(arr[1])-1;
+            if(unmarkTaskIdx>NoOfTask)
+            {
+                //throw some exception here
+            }
+
+            inputList[unmarkTaskIdx].unSetTask();
+            chadSay("OK, I've marked this task as not done yet:" + System.lineSeparator() + inputList[unmarkTaskIdx].toString());
             break;
 
             default:
@@ -57,15 +71,13 @@ public class Chad {
         System.out.println(myline);
         System.out.println("Here are the tasks in your list:");
         
-        for(int i=0;i<99;i++)
+        for(int i=0;i<NoOfTask;i++)
         {
             if(inputList[i]==null)
             {
-                //record this i as no of task.
-                NoOfTask=i+1;
                 break;
             }
-            System.out.println((i+1)+"."+inputList[i].getStatusIcon()+inputList[i].getDescription());
+            System.out.println((i+1)+"."+inputList[i].toString());
         }
         System.out.println(myline);
         return;
@@ -76,7 +88,6 @@ public class Chad {
         String myline = "_________________________________________________________________";
         String logo = " Chad\n";
         chadSay("Hello from " + logo+"\n"+"What can I do for you?\n");
-        Task[] inputList = new Task[100];
         String[] chadCommands = {"list","mark","unmark"};
         //Arrays.asList(yourArray).contains(yourValue)
         //https://stackoverflow.com/questions/1128723/how-do-i-determine-whether-an-array-contains-a-particular-value-in-java
@@ -105,11 +116,51 @@ public class Chad {
                 continue;
             }
             
+            //according to different task type add to task list.
 
-            chadSay("added: " + line);
+            switch(arr[0])
+            {
+                case "todo":
+                //add todo, case sensitive not handled
+                String todoname = line.split("todo")[1];
+                Chad.inputList[i]=new Todo(todoname);
+                break;
 
-            Chad.inputList[i]=new Task(line);
+                case "deadline":
+                //add deadline
+                String deadlinename,deadlineby;
+                deadlinename = line.substring(line.indexOf("deadline") + 8, line.indexOf("/by"));////space is taken into consideration, to allow space index change to +7
+                deadlineby=line.split("/by")[1];
+                Chad.inputList[i]=new Deadline(deadlinename,deadlineby);
+
+                break;
+
+                case "event":
+                //add event
+                String eventname,startsAt,endsAt;
+                eventname=line.substring(line.indexOf("event") + 6, line.indexOf("/from")); //space is taken into consideration, to allow space index change to +5
+                startsAt = line.substring(line.indexOf("/from") + 6, line.indexOf("/to"));//space is taken into consideration, to allow space index change to +5
+                endsAt=line.split("/to")[1];
+                Chad.inputList[i]=new Event(eventname,startsAt,endsAt);
+                break;
+
+                default:
+                //add general task
+                Chad.inputList[i]=new Task(line);
+                break;
+            }
             i++;
+            NoOfTask=i;
+
+            chadSay( "Got it. I've added this task:" + System.lineSeparator()+inputList[i-1].toString() +System.lineSeparator() +"Now you have "+ NoOfTask+" tasks in the list.");
+            /*todo, deadline, event 
+             * task : task name
+             * todo : todo + space + task name
+             * deadline: deadline + task name + "/by" + by
+             * event: event + task name + "/from" + startsAt + "/to" + endsAt
+            */
+
+
             line=in.nextLine();
             
         }

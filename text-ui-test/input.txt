@@ -1,15 +1,29 @@
+testinvalidcommand
+todo
+todo 
 todo read book
 todo return book
 todo buy book
 list
 mark 1
 mark 2
+mark 10
 list
 unmark 2
+unmark 10
 list
 todo borrow book
 list
+deadline
+deadline return book
+deadline /by Sunday
+deadline /by
 deadline return book /by Sunday
+event 
+event project meeting 
+event project meeting /from Mon 2pm
+event project meeting /from /to
+event project meeting /from /to 4pm
 event project meeting /from Mon 2pm /to 4pm
 list
 bye

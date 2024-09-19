@@ -7,7 +7,7 @@ public class Chad {
     static Task[] inputList = new Task[100]; 
     static int NoOfTask;
 
-    public static void processCmd(String cmdString)
+    public static void processCmd(String cmdString) throws DukeException
     {
         String arr[] = cmdString.split(" ");
 
@@ -24,9 +24,11 @@ public class Chad {
             //mark a task with its index to is done
             int taskIdx=Integer.parseInt(arr[1])-1;
 
-            if(taskIdx>NoOfTask)
+            if(inputList[taskIdx]==null)
             {
-                //throw some exception here
+                //throw ProcessCmdFailException
+                //bot say:suggest use list to view task's id
+                throw new DukeException("OOPS!!! Invalid task id to mark");
             }
 
             inputList[taskIdx].setTask();
@@ -37,9 +39,10 @@ public class Chad {
             case "unmark":
             //mark a task with its index to not done
             int unmarkTaskIdx=Integer.parseInt(arr[1])-1;
-            if(unmarkTaskIdx>NoOfTask)
+            if(unmarkTaskIdx<1 || inputList[unmarkTaskIdx]==null)
             {
-                //throw some exception here
+                //throw ProcessCmdFailException
+                throw new DukeException("OOPS!!! Invalid task id to unmark");
             }
 
             inputList[unmarkTaskIdx].unSetTask();
@@ -67,8 +70,20 @@ public class Chad {
     public static void printList(){
 
         // TODO: add your code here
+        String addTaskManual = "You can add task by: Taskname1\n"
+                                +"add todo by:todo Mytodo1\n"
+                                +"add deadline by:deadline myDeadLineName1 /by sometime1\n"
+                                +"add event by: event MyEventname1 /from time1 /to time2\n";
         String myline = "_________________________________________________________________";    
         System.out.println(myline);
+        //check if the task list is empty
+        if(inputList[0]==null)
+        {
+            System.out.println("Your tasks list is empty");
+            System.out.println(addTaskManual);
+            System.out.println(myline);
+            return;
+        }
         System.out.println("Here are the tasks in your list:");
         
         for(int i=0;i<NoOfTask;i++)
@@ -83,6 +98,67 @@ public class Chad {
         return;
     }
 
+    public static void addTask(String taskString,int taskID) throws DukeException
+    {
+        String arr[] = taskString.split(" ");
+
+
+        switch(arr[0])
+            {
+                case "todo":
+                //add todo, case sensitive not handled
+                try{
+                    String todoname = taskString.split("todo")[1];
+                    Chad.inputList[taskID]=new Todo(todoname);
+
+                }catch (ArrayIndexOutOfBoundsException e)
+                {
+                    throw new DukeException("Opps!Pls re-write discription for todo");
+                }
+                
+          
+                break;
+
+                case "deadline":
+                //add deadline
+
+                String deadlinename,deadlineby;
+                try{
+                    deadlinename = taskString.substring(taskString.indexOf("deadline") + 8, taskString.indexOf("/by"));////space is taken into consideration, to allow space index change to +7
+                    deadlineby=taskString.split("/by")[1];
+                    Chad.inputList[taskID]=new Deadline(deadlinename,deadlineby);
+                }catch(StringIndexOutOfBoundsException e){
+                    throw new DukeException("Opps!! Add deadline failed!!!Deadline Syntax: deadline task1 /by time1");
+                }
+                //deadlinename = taskString.substring(taskString.indexOf("deadline") + 8, taskString.indexOf("/by"));////space is taken into consideration, to allow space index change to +7
+                
+                
+                
+
+                break;
+
+                case "event":
+                //add event
+                String eventname,startsAt,endsAt;
+                try{
+                eventname=taskString.substring(taskString.indexOf("event") + 6, taskString.indexOf("/from")); //space is taken into consideration, to allow space index change to +5
+                startsAt = taskString.substring(taskString.indexOf("/from") + 6, taskString.indexOf("/to"));//space is taken into consideration, to allow space index change to +5
+                endsAt=taskString.split("/to")[1];
+                Chad.inputList[taskID]=new Event(eventname,startsAt,endsAt);
+                }catch(StringIndexOutOfBoundsException e){
+                    throw new DukeException("Opps!! Add event failed!!!Event Syntax: event task1 /from time1 /to time2");
+                }
+                
+                break;
+
+                default:
+                //add general task
+                //all other string will add as a whole as a new task
+                Chad.inputList[taskID]=new Task(taskString);
+                break;
+            }
+
+    }
     public static void main(String[] args) {
 
         String myline = "_________________________________________________________________";
@@ -110,49 +186,46 @@ public class Chad {
             boolean isCommand = Arrays.asList(chadCommands).contains(arr[0]);
             if(isCommand)
             {
-                //printList(inputList);
-                processCmd(line);
+                //printList(inputList);S
+                try{
+                    processCmd(line);
+                } catch(DukeException e)
+                {
+                    System.out.println(e);  
+                }
+                
                 line=in.nextLine();
                 continue;
             }
             
             //according to different task type add to task list.
+            /*
+             * Put addlist in separate function to enable exception handle
+             * try call somefunction() 
+             * catch exception when have..
+             * 
+             * 1.need to re-define function, to follow syntax ... throws exception1,exception2 ...  
+             * 2. figure out what exception may happen
+             *      -add to list,  invaild format,input string not following example syntax
+             *      -print list,   list is empty?(not a exception, just tell user the list is empty)
+             *      -processing command mark/unmark with invalid task index, 
+             * 3. add custom exception class, add custom error msg
+             * 4. caller part, add try-catch implementation
+             * 
+             */
+            try{
+                addTask(line,i);
+                i++;
+                NoOfTask=i;
+                chadSay( "Got it. I've added this task:" + System.lineSeparator()+inputList[i-1].toString() +System.lineSeparator() +"Now you have "+ NoOfTask+" tasks in the list.");
 
-            switch(arr[0])
-            {
-                case "todo":
-                //add todo, case sensitive not handled
-                String todoname = line.split("todo")[1];
-                Chad.inputList[i]=new Todo(todoname);
-                break;
-
-                case "deadline":
-                //add deadline
-                String deadlinename,deadlineby;
-                deadlinename = line.substring(line.indexOf("deadline") + 8, line.indexOf("/by"));////space is taken into consideration, to allow space index change to +7
-                deadlineby=line.split("/by")[1];
-                Chad.inputList[i]=new Deadline(deadlinename,deadlineby);
-
-                break;
-
-                case "event":
-                //add event
-                String eventname,startsAt,endsAt;
-                eventname=line.substring(line.indexOf("event") + 6, line.indexOf("/from")); //space is taken into consideration, to allow space index change to +5
-                startsAt = line.substring(line.indexOf("/from") + 6, line.indexOf("/to"));//space is taken into consideration, to allow space index change to +5
-                endsAt=line.split("/to")[1];
-                Chad.inputList[i]=new Event(eventname,startsAt,endsAt);
-                break;
-
-                default:
-                //add general task
-                Chad.inputList[i]=new Task(line);
-                break;
+            }catch (DukeException e){
+                //do sth here
+                System.out.println(e);  
             }
-            i++;
-            NoOfTask=i;
+            
+            
 
-            chadSay( "Got it. I've added this task:" + System.lineSeparator()+inputList[i-1].toString() +System.lineSeparator() +"Now you have "+ NoOfTask+" tasks in the list.");
             /*todo, deadline, event 
              * task : task name
              * todo : todo + space + task name

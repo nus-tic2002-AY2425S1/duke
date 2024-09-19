@@ -7,7 +7,7 @@ public class Chad {
     static Task[] inputList = new Task[100]; 
     static int NoOfTask;
 
-    public static void processCmd(String cmdString) throws DukeException
+    public static void processCmd(String cmdString) throws ChadException
     {
         String arr[] = cmdString.split(" ");
 
@@ -28,7 +28,7 @@ public class Chad {
             {
                 //throw ProcessCmdFailException
                 //bot say:suggest use list to view task's id
-                throw new DukeException("OOPS!!! Invalid task id to mark");
+                throw new ChadException("OOPS!!! Invalid task id to mark");
             }
 
             inputList[taskIdx].setTask();
@@ -42,7 +42,7 @@ public class Chad {
             if(unmarkTaskIdx<1 || inputList[unmarkTaskIdx]==null)
             {
                 //throw ProcessCmdFailException
-                throw new DukeException("OOPS!!! Invalid task id to unmark");
+                throw new ChadException("OOPS!!! Invalid task id to unmark");
             }
 
             inputList[unmarkTaskIdx].unSetTask();
@@ -98,7 +98,7 @@ public class Chad {
         return;
     }
 
-    public static void addTask(String taskString,int taskID) throws DukeException
+    public static void addTask(String taskString,int taskID) throws ChadException
     {
         String arr[] = taskString.split(" ");
 
@@ -113,7 +113,7 @@ public class Chad {
 
                 }catch (ArrayIndexOutOfBoundsException e)
                 {
-                    throw new DukeException("Opps!Pls re-write discription for todo");
+                    throw new ChadException("Opps!Pls re-write discription for todo");
                 }
                 
           
@@ -128,7 +128,7 @@ public class Chad {
                     deadlineby=taskString.split("/by")[1];
                     Chad.inputList[taskID]=new Deadline(deadlinename,deadlineby);
                 }catch(StringIndexOutOfBoundsException e){
-                    throw new DukeException("Opps!! Add deadline failed!!!Deadline Syntax: deadline task1 /by time1");
+                    throw new ChadException("Opps!! Add deadline failed!!!Deadline Syntax: deadline task1 /by time1");
                 }
                 //deadlinename = taskString.substring(taskString.indexOf("deadline") + 8, taskString.indexOf("/by"));////space is taken into consideration, to allow space index change to +7
                 
@@ -146,7 +146,7 @@ public class Chad {
                 endsAt=taskString.split("/to")[1];
                 Chad.inputList[taskID]=new Event(eventname,startsAt,endsAt);
                 }catch(StringIndexOutOfBoundsException e){
-                    throw new DukeException("Opps!! Add event failed!!!Event Syntax: event task1 /from time1 /to time2");
+                    throw new ChadException("Opps!! Add event failed!!!Event Syntax: event task1 /from time1 /to time2");
                 }
                 
                 break;
@@ -189,7 +189,7 @@ public class Chad {
                 //printList(inputList);S
                 try{
                     processCmd(line);
-                } catch(DukeException e)
+                } catch(ChadException e)
                 {
                     System.out.println(e);  
                 }
@@ -219,7 +219,7 @@ public class Chad {
                 NoOfTask=i;
                 chadSay( "Got it. I've added this task:" + System.lineSeparator()+inputList[i-1].toString() +System.lineSeparator() +"Now you have "+ NoOfTask+" tasks in the list.");
 
-            }catch (DukeException e){
+            }catch (ChadException e){
                 //do sth here
                 System.out.println(e);  
             }

@@ -21,16 +21,16 @@ public class Mochi {
       String cross = " ";
       switch (token[0]) {
         case "mark":
-          taskList.markTask(Integer.parseInt(token[1]));
-          if (taskList.getTaskStatusByIndex(Integer.parseInt(token[1])))
+          taskList.markTask(Integer.parseInt(token[1])-1);
+          if (taskList.getTaskStatusByIndex(Integer.parseInt(token[1])-1))
             cross = "X";
-          response("Nice! I've marked this task as done:" + System.lineSeparator() + " [" + cross + "] " + taskList.getTaskNameByIndex(Integer.parseInt(token[1])));
+          response("Nice! I've marked this task as done:" + System.lineSeparator() + " [" + cross + "] " + taskList.getTaskNameByIndex(Integer.parseInt(token[1])-1));
           break;
         case "unmark":
-          taskList.unmarkTask(Integer.parseInt(token[1]));
-          if (taskList.getTaskStatusByIndex(Integer.parseInt(token[1])))
+          taskList.unmarkTask(Integer.parseInt(token[1])-1);
+          if (taskList.getTaskStatusByIndex(Integer.parseInt(token[1])-1))
             cross = "X";
-          response("OK, I've marked this task as not done yet:" + System.lineSeparator() + " [" + cross + "] " + taskList.getTaskNameByIndex(Integer.parseInt(token[1])));
+          response("OK, I've marked this task as not done yet:" + System.lineSeparator() + " [ ] " + taskList.getTaskNameByIndex(Integer.parseInt(token[1])-1));
           break;
         case "bye":
           response("Bye. Hope to see you again soon!");

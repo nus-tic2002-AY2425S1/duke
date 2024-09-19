@@ -1,44 +1,42 @@
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 
 public class TaskList {
-  private static final ArrayList<String> _list = new ArrayList<>();
-  private static final HashSet<String> _status = new HashSet<>();
+  protected ArrayList<Task> _list = new ArrayList<>();
+  protected HashMap<String,Integer> _taskNameToIndexMap = new HashMap<>();
+
   public TaskList() {}
   public void addTask(String task) {
-    _list.add(task);
+    Task tmp = new Task(task);
+    _list.add(tmp);
+    _taskNameToIndexMap.put(task,_list.indexOf(tmp));
   }
 
-  public ArrayList<String> getTaskList() {
+  public ArrayList<Task> getTaskList() {
     return _list;
   }
 
   public void markTask(int index) {
-    _status.add(_list.get(index - 1));
+    _list.get(index).markTask();
   }
 
   public void unmarkTask(int index) {
-    _status.remove(_list.get(index-1));
+    _list.get(index).unmarkTask();
   }
   public boolean getTaskStatusByName(String name) {
-    return (_status.contains(name));
+    return (_list.get(_taskNameToIndexMap.get(name)).getStatus());
   }
   public boolean getTaskStatusByIndex(int index) {
-    return (_status.contains(_list.get(index-1)));
+    return (_list.get(index).getStatus());
   }
   public String getTaskNameByIndex(int index) {
-    return (_list.get(index-1));
+    return (_list.get(index).getName());
   }
   public void printTaskList() {
     System.out.println("____________________________________________________________");
     System.out.println(" Here are the task in your list:");
-    int index = 0;
-    for (String i : _list) {
-      String statusPrint = " ";
-      if (_status.contains(i))
-        statusPrint = "X";
-      index++;
-      System.out.println(index + ".[" + statusPrint + "] " + i);
+    for (Task i : _list) {
+      System.out.println(_list.indexOf(i)+1 + ".[" + i.getStatusIcon() + "] " + i.getName());
     }
     System.out.println("____________________________________________________________");
   }

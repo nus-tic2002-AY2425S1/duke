@@ -8,4 +8,15 @@ todo borrow book
 list
 deadline return book /by Sunday
 event project meeting /from Mon 2pm /to 4pm
+
+todo
+deadline
+event
+deadline test fail
+event test fail
+testFail
+mark 1000
+unmark 1000
+mark fail
+unmark fail
 bye

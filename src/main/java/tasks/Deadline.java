@@ -1,4 +1,7 @@
 package tasks;
+
+import exception.DukeException;
+
 public class Deadline extends Task{
     public String time;
 
@@ -13,8 +16,11 @@ public class Deadline extends Task{
     }
 
     @Override
-    public Task createTask(String deadlineString) {
+    public Task createTask(String deadlineString) throws DukeException {
         String [] deadlineParts = deadlineString.split(" /by ");
+        if(deadlineParts.length != 2){
+            throw new DukeException("OOPS!! The Deadline description is improperly formatted. Please try again!");
+        }
         return new Deadline(deadlineParts[0],deadlineParts[1]);
     }
 }

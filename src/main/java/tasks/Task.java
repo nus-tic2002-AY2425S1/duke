@@ -1,4 +1,7 @@
 package tasks;
+
+import exception.DukeException;
+
 public abstract class Task {
     protected boolean isDone;
     protected String description;
@@ -21,5 +24,5 @@ public abstract class Task {
         return "[" + (isDone? "X" : " ") + "] " + description;
     }
 
-    public abstract Task createTask(String description);
+    public abstract Task createTask(String description) throws DukeException;
 }

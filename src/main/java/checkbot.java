@@ -1,8 +1,8 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class checkbot {
-    public static Task[] tasks = new Task[100];
-    public static int taskCount = 0;
+    public static ArrayList<Task> tasks = new ArrayList<>();
     public static Scanner in = new Scanner(System.in);
 
     public static String readInput() {
@@ -66,9 +66,8 @@ public class checkbot {
 
     public static void addTodo(String input){
         Todo task = new Todo(input);
-        tasks[taskCount] = task;
-        echoTask(taskCount);
-        taskCount++;
+        tasks.add(task);
+        echoTask(task);
     }
 
     public static void addDeadline(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
@@ -87,9 +86,8 @@ public class checkbot {
         }
 
         Deadline task = new Deadline(description, dueDateTime);
-        tasks[taskCount] = task;
-        echoTask(taskCount);
-        taskCount++;
+        tasks.add(task);
+        echoTask(task);
     }
 
     public static void addEvent(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
@@ -110,24 +108,23 @@ public class checkbot {
         }
 
         Event task = new Event(description, startDateTime, endDateTime);
-        tasks[taskCount] = task;
-        echoTask(taskCount);
-        taskCount++;
+        tasks.add(task);
+        echoTask(task);
     }
 
-    public static void echoTask(int taskIdx) {
+    public static void echoTask(Task task) {
         System.out.println(StringHelper.outputLine + System.lineSeparator() +
                 "Got it! I've added this task:" + System.lineSeparator() +
-                "  " + tasks[taskIdx].getListView() + System.lineSeparator() +
-                "Now you have " + (taskIdx+1) + " task(s) in the list." + System.lineSeparator() +
+                "  " + task.getListView() + System.lineSeparator() +
+                "Now you have " + tasks.size() + " task(s) in the list." + System.lineSeparator() +
                 StringHelper.outputLine);
     }
 
     public static void printTasks() {
         System.out.println(StringHelper.outputLine);
         System.out.println("Here are the task(s) in your list:");
-        for (int i = 0; i < taskCount; i++) {
-            System.out.println(i+1 + ". " + tasks[i].getListView());
+        for (Task task : tasks) {
+            System.out.println(tasks.indexOf(task)+1 + ". " + task.getListView());
         }
         System.out.println(StringHelper.outputLine);
     }
@@ -158,10 +155,10 @@ public class checkbot {
 
         switch (action) {
             case "mark":
-                markTask(tasks[taskIdx]);
+                markTask(tasks.get(taskIdx));
                 break;
             case "unmark":
-                unmarkTask(tasks[taskIdx]);
+                unmarkTask(tasks.get(taskIdx));
                 break;
             default:
                 printCommandNotFound();

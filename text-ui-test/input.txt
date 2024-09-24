@@ -1,11 +1,27 @@
+Todo
 Todo task 1
-Event meeting /from this time /to that time
-Deadline task 2 /by some due date
+Event
+Event task 2
+Event task 2 /from
+Event task 2 /from this time
+Event task 2 /from /to
+Event task 2 /from this time /to
+Event task 2 from this time /to that time
+Event task 2 /from this time /to that time
+Deadline
+Deadline task 3
+Deadline task 3 /by
+Deadline task 3 /by some due date
+Todo task 4
+lisy
 list
 mark 1
 mark 2
 mark 1
+remove 2
+delete 2
+Event task 5 /from sun 4pm /to sun 7pm
 list
-unmark 2
+unmark 1
 list
 bye

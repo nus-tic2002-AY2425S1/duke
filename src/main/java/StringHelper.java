@@ -10,6 +10,8 @@ public class StringHelper {
     public static String commandNotFound = outputLine + System.lineSeparator() +
             "Sorry, I didn't get that. :(" + System.lineSeparator() +
             "Try starting a task with \"todo\", \"deadline\", or \"event\"." + System.lineSeparator() +
+            "To delete a task, type \"delete\", followed by the task number." + System.lineSeparator() +
+            "To mark a task as done or undone, type \"mark\" or \"unmark\", followed by the task number." + System.lineSeparator() +
             "To see the full task list, type \"list\"." + System.lineSeparator() +
             "To end this session, type \"bye\"." + System.lineSeparator() +
             outputLine;

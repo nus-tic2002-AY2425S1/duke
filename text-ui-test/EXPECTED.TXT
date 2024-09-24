@@ -3,25 +3,92 @@ Hello! I'm checkbot.
 What can I do for you? :)
 --------------------------------------
 --------------------------------------
+Task cannot be empty!
+To add a Todo task: Todo <task>
+To add a Deadline task: Deadline <task> /by <datetime>
+To add an Event task: Event <task> /from <datetime> /to <datetime>
+--------------------------------------
+--------------------------------------
 Got it! I've added this task:
   [T][ ] task 1
 Now you have 1 task(s) in the list.
 --------------------------------------
 --------------------------------------
+Task cannot be empty!
+To add a Todo task: Todo <task>
+To add a Deadline task: Deadline <task> /by <datetime>
+To add an Event task: Event <task> /from <datetime> /to <datetime>
+--------------------------------------
+--------------------------------------
+Missing keyword "/from" and/or "/to"!
+To add an Event task: Event <task> /from <datetime> /to <datetime>
+--------------------------------------
+--------------------------------------
+Missing keyword "/from" and/or "/to"!
+To add an Event task: Event <task> /from <datetime> /to <datetime>
+--------------------------------------
+--------------------------------------
+Missing keyword "/from" and/or "/to"!
+To add an Event task: Event <task> /from <datetime> /to <datetime>
+--------------------------------------
+--------------------------------------
+We need to know the time! Try following the format below:
+To add a Deadline task: Deadline <task> /by <datetime>
+To add an Event task: Event <task> /from <datetime> /to <datetime>
+--------------------------------------
+--------------------------------------
+We need to know the time! Try following the format below:
+To add a Deadline task: Deadline <task> /by <datetime>
+To add an Event task: Event <task> /from <datetime> /to <datetime>
+--------------------------------------
+--------------------------------------
+Missing keyword "/from" and/or "/to"!
+To add an Event task: Event <task> /from <datetime> /to <datetime>
+--------------------------------------
+--------------------------------------
 Got it! I've added this task:
-  [E][ ] meeting (from: this time to: that time)
+  [E][ ] task 2 (from: this time to: that time)
 Now you have 2 task(s) in the list.
 --------------------------------------
 --------------------------------------
+Task cannot be empty!
+To add a Todo task: Todo <task>
+To add a Deadline task: Deadline <task> /by <datetime>
+To add an Event task: Event <task> /from <datetime> /to <datetime>
+--------------------------------------
+--------------------------------------
+Missing keyword "/by"!
+To add a Deadline task: Deadline <task> /by <datetime>
+--------------------------------------
+--------------------------------------
+We need to know the time! Try following the format below:
+To add a Deadline task: Deadline <task> /by <datetime>
+To add an Event task: Event <task> /from <datetime> /to <datetime>
+--------------------------------------
+--------------------------------------
 Got it! I've added this task:
-  [D][ ] task 2 (by: some due date)
+  [D][ ] task 3 (by: some due date)
 Now you have 3 task(s) in the list.
+--------------------------------------
+--------------------------------------
+Got it! I've added this task:
+  [T][ ] task 4
+Now you have 4 task(s) in the list.
+--------------------------------------
+--------------------------------------
+Sorry, I didn't get that. :(
+Try starting a task with "todo", "deadline", or "event".
+To delete a task, type "delete", followed by the task number.
+To mark a task as done or undone, type "mark" or "unmark", followed by the task number.
+To see the full task list, type "list".
+To end this session, type "bye".
 --------------------------------------
 --------------------------------------
 Here are the task(s) in your list:
 1. [T][ ] task 1
-2. [E][ ] meeting (from: this time to: that time)
-3. [D][ ] task 2 (by: some due date)
+2. [E][ ] task 2 (from: this time to: that time)
+3. [D][ ] task 3 (by: some due date)
+4. [T][ ] task 4
 --------------------------------------
 --------------------------------------
 Nice! I've marked this task as done: 
@@ -29,27 +96,47 @@ Nice! I've marked this task as done:
 --------------------------------------
 --------------------------------------
 Nice! I've marked this task as done: 
-  [E][X] meeting (from: this time to: that time)
+  [E][X] task 2 (from: this time to: that time)
 --------------------------------------
 --------------------------------------
 Nice! I've marked this task as done: 
   [T][X] task 1
+--------------------------------------
+--------------------------------------
+Sorry, I didn't get that. :(
+Try starting a task with "todo", "deadline", or "event".
+To delete a task, type "delete", followed by the task number.
+To mark a task as done or undone, type "mark" or "unmark", followed by the task number.
+To see the full task list, type "list".
+To end this session, type "bye".
+--------------------------------------
+--------------------------------------
+Got it. I've removed this task: 
+  [E][X] task 2 (from: this time to: that time)
+Now you have 3 task(s) in the list.
+--------------------------------------
+--------------------------------------
+Got it! I've added this task:
+  [E][ ] task 5 (from: sun 4pm to: sun 7pm)
+Now you have 4 task(s) in the list.
 --------------------------------------
 --------------------------------------
 Here are the task(s) in your list:
 1. [T][X] task 1
-2. [E][X] meeting (from: this time to: that time)
-3. [D][ ] task 2 (by: some due date)
+2. [D][ ] task 3 (by: some due date)
+3. [T][ ] task 4
+4. [E][ ] task 5 (from: sun 4pm to: sun 7pm)
 --------------------------------------
 --------------------------------------
 Okay, I've marked this task as not done yet: 
-  [E][ ] meeting (from: this time to: that time)
+  [T][ ] task 1
 --------------------------------------
 --------------------------------------
 Here are the task(s) in your list:
-1. [T][X] task 1
-2. [E][ ] meeting (from: this time to: that time)
-3. [D][ ] task 2 (by: some due date)
+1. [T][ ] task 1
+2. [D][ ] task 3 (by: some due date)
+3. [T][ ] task 4
+4. [E][ ] task 5 (from: sun 4pm to: sun 7pm)
 --------------------------------------
 --------------------------------------
 Bye. Hope to see you again soon!

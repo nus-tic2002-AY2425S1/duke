@@ -3,11 +3,8 @@ public class Deadline extends Task {
 
     public Deadline(String description, String dueDateTime) {
         super(description);
+        taskType = TaskType.DEADLINE;
         this.dueDateTime = dueDateTime;
-    }
-
-    public String getTaskIcon(){
-        return "D";
     }
 
     public String getListView() {

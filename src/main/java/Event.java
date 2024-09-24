@@ -4,12 +4,9 @@ public class Event extends Task {
 
     public Event(String description, String startDateTime, String endDateTime) {
         super(description);
+        taskType = TaskType.EVENT;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
-    }
-
-    public String getTaskIcon() {
-        return "E";
     }
 
     public String getListView() {

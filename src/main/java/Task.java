@@ -1,10 +1,11 @@
 public abstract class Task {
     protected String description;
-    protected boolean isDone;
+    protected TaskStatus status;
+    protected TaskType taskType;
 
     public Task(String description) {
         this.description = description;
-        this.isDone = false;
+        status = TaskStatus.NOT_DONE;
     }
 
     public String getDescription() {
@@ -12,13 +13,20 @@ public abstract class Task {
     }
 
     public String getStatusIcon() {
-        return (isDone ? "X" : " ");
+        return status.getStatusIcon();
+    }
+
+    public String getTaskIcon(){
+        return taskType.getTaskIcon();
     }
 
     public void setDone(boolean done) {
-        isDone = done;
+        if (done) {
+            status = TaskStatus.DONE;
+        } else {
+            status = TaskStatus.NOT_DONE;
+        }
     }
 
-    public abstract String getTaskIcon();
     public abstract String getListView();
 }

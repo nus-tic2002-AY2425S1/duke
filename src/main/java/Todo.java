@@ -1,10 +1,8 @@
 public class Todo extends Task {
+
     public Todo(String description){
         super(description);
-    }
-
-    public String getTaskIcon(){
-        return "T";
+        taskType = TaskType.TODO;
     }
 
     public String getListView() {

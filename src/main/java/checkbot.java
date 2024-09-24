@@ -145,6 +145,16 @@ public class checkbot {
                 StringHelper.outputLine);
     }
 
+    public static void deleteTask(Task task) {
+        tasks.remove(task);
+        System.out.println(StringHelper.outputLine + System.lineSeparator() +
+                "Got it. I've removed this task: " + System.lineSeparator() +
+                "  " + task.getListView() + System.lineSeparator() +
+                "Now you have " + tasks.size() + " task(s) in the list." + System.lineSeparator() +
+                StringHelper.outputLine);
+
+    }
+
     public static void setStatus(String  input) throws EmptyInputException {
         String[] setStatusArray = input.split(" ", 2);
         if (setStatusArray.length < 2) {
@@ -159,6 +169,9 @@ public class checkbot {
                 break;
             case "unmark":
                 unmarkTask(tasks.get(taskIdx));
+                break;
+            case "delete":
+                deleteTask(tasks.get(taskIdx));
                 break;
             default:
                 printCommandNotFound();
@@ -185,6 +198,8 @@ public class checkbot {
                 case "mark":
                     // fallthrough
                 case "unmark":
+                    // fallthrough
+                case "delete":
                     try {
                         setStatus(input);
                         break;

@@ -17,52 +17,23 @@ public class Javaro {
     static final String DEADLINE="deadline";
     static final String EVENT="event";
     
-    // /* 
-    // public static void space(int numberOfSpace) {
+    // Solution below adapted from https://stackoverflow.com/questions/1073787/print-spaces-with-string-format
     public static String space(int numberOfSpace) {
         String space = String.format("%" + numberOfSpace + "s", ""); 
         return space;
-        // System.out.print(space);
     }
-    // */
-
-    /*
-    public static void space(boolean isLine, boolean isTask) {
-        // https://stackoverflow.com/questions/1073787/print-spaces-with-string-format
-        String space; 
-
-        // If space is to come before a horizontal line, use "    "
-        if (isLine) {
-            // Print 4 spaces
-            space = space(4);
-        } else {        // If space is to come before a line of text, use "     "
-            space = space(5);
-        }
-
-        if (isTask == false) {
-            space = space(6);
-        }
-
-        System.out.print(space);
-    }
-    */
 
     public static void space(boolean isLine, boolean isTask) {
-        // https://stackoverflow.com/questions/1073787/print-spaces-with-string-format
         String space = ""; 
 
         // If space is to come before a horizontal line, use "    "
-        if (isLine == true && isTask == true) {
-            // Print 4 spaces
-            // space = space(4);
-        } else if (isLine == true && isTask == false) {
+        if (isLine == true && isTask == false) {
             // System.out.println("istask is true");
             space = space(4);
         } else if (isLine == false && isTask == true) {        // If space is to come before a line of text, use "     "
             // For printing task
             space = space(7);
         } else if (isLine == false && isTask == false) {
-            // System.out.println("istask is false");
             space = space(5);
         } 
 
@@ -71,7 +42,6 @@ public class Javaro {
 
     // Print the message
     public static void printMessage(boolean isLine, String message) {
-        // System.out.println("isline value is " + isLine);
         space(isLine, false);
         System.out.println(message);
     }
@@ -80,7 +50,6 @@ public class Javaro {
     public static void printLine() {
         space(true, false);
         System.out.println(LINE);
-        // printMessage(true, LINE);
     }
 
     // Chatbot greets the user
@@ -114,10 +83,6 @@ public class Javaro {
         int listLength = list.length;
         Task[] newList = Arrays.copyOf(list, listLength + 1);
 
-        // When adding the task to the list, initialize the task with checkbox as not done
-        // Task newTask = new Task();
-        // newTask.setDescription(item);
-        
         newList[listLength] = task;
 
         return newList;
@@ -209,59 +174,146 @@ public class Javaro {
 
     }
 
-    public static void addTodo(Task[] list, String input) {
-        // printLine();
-
-        String messagePart1 = "Got it. I've added this task:";
-        // System.out.println(messagePart1);
-
-        String description = input.substring(TODO.length() + 1, input.length());
-        System.out.println(description);
-
-        Todo task = new Todo(description, false);
-
-        addToList(list, task);
-
-        System.out.println("This is the todo task: " + task);
-
-        String messagePart2 = "Now you have " + list.length + " tasks in the list.";
-        // System.out.println(messagePart2);
-
-        // printLine();
+    public static void parseTaskInfo(String input, String info) {
+        boolean isValid = input.contains(info);
+        // TODO: Replace if-else with try-catch block
+        if (isValid) {
+            int infoLength = info.length();
+            int indexOfInfo = input.indexOf(info) + infoLength + 1;
+        } else {
+            System.out.println("Invalid input");
+        }
     }
 
-    // Add task (Types: Todo, Deadline, Event)
+    public static int indexOfKeyword(String input, String keyword) {
+        return input.indexOf(keyword) + keyword.length() + 1;
+    }
+
+    public static String extractDescription(String input) {
+        // return input.substring(command.length() + 1, indexOfBy - byLength - 1);
+        
+        int commandLength = input.trim().split(" ")[0].length();
+        // System.out.println("commandLength is " + commandLength);
+        int startIndex = commandLength + 1;
+        
+        String description;
+        int endIndex;
+        // String description = input.substring(commandLength + 1, input.indexOf('/'));
+        
+        // Check if input contains '/'
+        if (input.contains("/")) {
+            // set start index to after command length and end index to before '/'
+            endIndex = input.indexOf('/') - 1;
+            // description = input.substring(startIndex, input.indexOf('/') - 1);
+        } else {
+            // if cmd is todo, set endindex as input.length
+            endIndex = input.length();
+            // description = input.substring(startIndex, input.length());
+        }
+
+        description = input.substring(startIndex, endIndex);
+        // description = description.trim();
+
+        // System.out.println("desc " + description);
+        return description;
+    }
+
+    // Does not apply to Todo tasks. 
+    // For Deadline tasks, extracts the date/time from input ("after '/by'"), using substring from after '/by' to the end of input. 
+    // For Event tasks, extracts the date/time from input. 
+    // TODO: For Deadline, return a List of String that just contains one element which is the due date
+    // TODO: For Event, return a List of String where first element is the start time and second element is the end time
+    
+    // keyword is either "/by", or "/from" or "/to"
+    public static String extractDateTime(String input, String keyword) {
+        // System.out.println("index of keyword is " + input.indexOf(keyword));
+        
+        // Get index of word after keyword and space
+        int startIndex = input.indexOf(keyword) + keyword.length() + 1;
+        int endIndex;
+
+        if (checkEquals(keyword, "/from")) {
+            endIndex = input.indexOf('/', startIndex);
+            // int endIndex = input.substring(indexOfSlash, input.length());
+        } else {
+            endIndex = input.length();
+        }
+
+        endIndex -= 1;
+
+        return input.substring(startIndex, endIndex + 1).trim();
+
+        /* 
+        switch (keyword) {
+            case "/by":
+            case "/to":
+                // System.out.println("Keyword is /by or /to");
+                int endIndex = input.length() - 1;
+                break;
+            case "/from":
+                // System.out.println("Keyword is /from");
+                int indexOfSlash = input.indexOf('/', startIndex);
+                System.out.println("At " + indexOfSlash + " is " + input.substring(indexOfSlash, input.length()));
+                break;
+        }
+        */
+
+        /* 
+        int startIndex = input.indexOf(keyword) + keyword.length() + 1;
+        // System.out.println("char at start index " + startIndex + " is " + input.charAt(startIndex));
+        
+        // For /from, endIndex is before /to
+        int endIndex = input.indexOf(' ', startIndex);
+
+        if (endIndex == -1) {
+            endIndex = input.length() - 1;
+        }
+
+        // System.out.println("char at end index " + endIndex + " is " + input.charAt(endIndex));
+        return input.substring(startIndex, endIndex + 1).trim();
+        */
+        
+    }
+
+    /* 
+    public static String extractDateTime(String input) {
+        int indexOfSlash = input.indexOf('/');
+        // System.out.println("indexOfSlash is " + indexOfSlash);
+        // System.out.println("indexOf " + input.charAt(input.indexOf(' ', indexOfSlash)) + " is " + (input.indexOf(' ', indexOfSlash) - 1));
+        // String command = input.substring(indexOfSlash + 1, input.indexOf(input, indexOfSlash));
+        return "";
+    }
+    */
+
+    // Add task (Types supported: Todo, Deadline, Event)
     public static Task[] addTask(Task[] list, String input) {
         printLine();
         
-        String command = input.split(" ")[0];
-        // System.out.println("command is " + command);
+        String command = input.trim().split(" ")[0];
 
         space(false, false);
         String messagePart1 = "Got it. I've added this task:";
         System.out.println(messagePart1);
         
-        String description = input.substring(command.length() + 1, input.length());
-        // System.out.println(description);
+        String description = extractDescription(input);
         
         Task task = new Task(description, false);
 
+        // TODO: Handle the case where input is not in correct format, e.g. missing "/by" for deadline tasks, or missing "/from" / "/to" for event tasks
         if (checkEquals(command, TODO)) {
             task = new Todo(description, false);
         } else if (checkEquals(command, DEADLINE)) {
-            // deadline return book /by Sunday
-            
-            // Check if input contains "/by"
             String by = "/by";
             int byLength = by.length();
-
+            
+            // Check if input contains "/by"
             boolean isValid = input.contains(by);
-            int indexOfBy = input.indexOf(by) + byLength + 1;
+            int indexOfBy = indexOfKeyword(input, by);
             
-            description = input.substring(command.length() + 1, indexOfBy - byLength - 1);
+            // description = input.substring(command.length() + 1, indexOfBy - byLength - 1);
             
-            String due = input.substring(indexOfBy, input.length());
-            // System.out.println("Due: " + due);
+            // String due = input.substring(indexOfBy, input.length());
+            String due = extractDateTime(input, by);
             
             task = new Deadline(description, false, due);
         } else if (checkEquals(command, EVENT)) {
@@ -274,42 +326,47 @@ public class Javaro {
             int toLength = to.length();
 
             boolean isValid = input.contains(from) && input.contains(to);
-            int indexOfFrom = input.indexOf(from) + fromLength + 1;
-            int indexOfTo = input.indexOf(to) + toLength + 1;
+            int indexOfFrom = indexOfKeyword(input, from);
+            int indexOfTo = indexOfKeyword(input, to);
             
-            description = input.substring(command.length() + 1, indexOfFrom - fromLength - 1);
-            // System.out.println("Description " + description);
-            
-            String start = input.substring(indexOfFrom, indexOfTo - to.length() - 2);
-            String end = input.substring(indexOfTo, input.length());
-            // System.out.println("Start: " + start);
-            // System.out.println("End: " + end);
+            // description = input.substring(command.length() + 1, indexOfFrom - fromLength - 1);
+
+            // String start = input.substring(indexOfFrom, indexOfTo - to.length() - 2);
+            // String end = input.substring(indexOfTo, input.length());
+            String start = extractDateTime(input, from);
+            String end = extractDateTime(input, to);
 
             task = new Event(description, false, start, end);
         }
 
         space(false, true);
         System.out.println(task);
-        // System.out.println("This is the " + task.getClass().getName() + " task: " + task);
 
-        int listLength = list.length;
-        Task[] newList = Arrays.copyOf(list, listLength + 1);
-
-        newList[listLength] = task;
+        list = addToList(list, task);
 
         space(false, false);
-        String messagePart2 = "Now you have " + newList.length;
-        if (newList.length == 1) {
-            messagePart2 += " task";
-        } else {
-            messagePart2 += " tasks";
+        int listLength = list.length;
+        
+        String messagePart2 = "Now you have " + listLength + " task";
+        // String messagePart2 = "Now you have " + listLength;
+        
+        // if (listLength == 1) {
+        //     messagePart2 += " task";
+        // } else {
+        //     messagePart2 += " tasks";
+        // }
+        
+        if (listLength > 1) {
+            messagePart2 += "s";
         }
+        
         messagePart2 += " in the list.";
+
         System.out.println(messagePart2);
         
         printLine();
         
-        return newList;
+        return list;
     }
 
     // This function echos commands entered by the user, and exits when the user types the command bye.
@@ -317,7 +374,7 @@ public class Javaro {
         Scanner in = new Scanner(System.in);
 
         // Get the input
-        String input = in.nextLine();
+        String input = in.nextLine().trim();
 
         // Assume there will be no more than 100 tasks. Initialize an empty list of String array
         Task[] list = new Task[0];
@@ -325,8 +382,6 @@ public class Javaro {
         // Continue looping until input is "bye"
         while (checkEquals(input, BYE) == false) {
 
-            // int taskCount = list.length;
-            
             if (checkEquals(input, LIST)) {
                 printList(list);
             } else if (checkInputStartsWith(input, MARK) || checkInputStartsWith(input, UNMARK)) {        // Check if input contains the command "mark" or "unmark"
@@ -336,23 +391,22 @@ public class Javaro {
                     checkInputStartsWith(input, DEADLINE) || 
                     checkInputStartsWith(input, EVENT)
                 ) {
+                    // String command = input.substring(0, input.indexOf(' '));
+                    // System.out.println("command is " + command);
+                    // String idk = extractDateTime(input, "/by");
+                    // System.out.println("idk is " + idk);
+                    // extractDescription(input);
                     list = addTask(list, input);
                 }
-            // else if (checkInputStartsWith(input, TODO)) {
-            //     addTodo(list, input);
-            // } else if (checkInputStartsWith(input, DEADLINE)) {
-            // } else if (checkInputStartsWith(input, EVENT)) {
-            // } 
             else {
                 // TODO: Since we now have 3 types of tasks (Todo, Deadline, and Event) implemented in Level-4, it should be safe to assume that all tasks that should be added to the task list, should start with either "todo", or "deadline", or "event". Hence, if it just starts with the task description, then it should not be a valid task
-                // list = addToList(list, input);
-                printAddMessage(input);
+                System.out.println("Invalid command entered");
             }
 
             System.lineSeparator();
 
             // Ask the user for the next input
-            input = in.nextLine();
+            input = in.nextLine().trim();
         }
     }
 

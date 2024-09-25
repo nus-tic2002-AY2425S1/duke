@@ -14,6 +14,10 @@ public class Event extends Task {
 
     @Override
     public String toString() {
+        // If description does not end with a space, add a space behind it
+        if (!description.endsWith(" ")) {
+            description += " ";
+        } 
         return "[E]" + super.toString() + "(from: " + start + " to: " + end + ")";
     }
 

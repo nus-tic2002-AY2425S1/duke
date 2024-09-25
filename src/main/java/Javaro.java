@@ -15,7 +15,10 @@ public class Javaro {
     static final String UNMARK="unmark";
     static final String TODO="todo";
     static final String DEADLINE="deadline";
+    static final String BY="/by";
     static final String EVENT="event";
+    static final String FROM="/from";
+    static final String TO="/to";
     
     // Solution below adapted from https://stackoverflow.com/questions/1073787/print-spaces-with-string-format
     public static String space(int numberOfSpace) {
@@ -28,7 +31,6 @@ public class Javaro {
 
         // If space is to come before a horizontal line, use "    "
         if (isLine == true && isTask == false) {
-            // System.out.println("istask is true");
             space = space(4);
         } else if (isLine == false && isTask == true) {        // If space is to come before a line of text, use "     "
             // For printing task
@@ -100,7 +102,6 @@ public class Javaro {
     public static void printTasks(Task[] list) {
         for (int i = 0; i < list.length; i++) {
             Task current = list[i];
-            // System.out.println("desc " + current);
             String index = Integer.toString(i + 1);
 
             // list[i] contains the checkbox
@@ -193,7 +194,6 @@ public class Javaro {
         // return input.substring(command.length() + 1, indexOfBy - byLength - 1);
         
         int commandLength = input.trim().split(" ")[0].length();
-        // System.out.println("commandLength is " + commandLength);
         int startIndex = commandLength + 1;
         
         String description;
@@ -202,11 +202,11 @@ public class Javaro {
         
         // Check if input contains '/'
         if (input.contains("/")) {
-            // set start index to after command length and end index to before '/'
+            // Set startIndex to after command length and end index to before '/'
             endIndex = input.indexOf('/') - 1;
             // description = input.substring(startIndex, input.indexOf('/') - 1);
         } else {
-            // if cmd is todo, set endindex as input.length
+            // If the command is todo
             endIndex = input.length();
             // description = input.substring(startIndex, input.length());
         }
@@ -214,7 +214,6 @@ public class Javaro {
         description = input.substring(startIndex, endIndex);
         // description = description.trim();
 
-        // System.out.println("desc " + description);
         return description;
     }
 
@@ -230,8 +229,10 @@ public class Javaro {
         
         // Get index of word after keyword and space
         int startIndex = input.indexOf(keyword) + keyword.length() + 1;
+        // System.out.println("char at start index " + startIndex + " is " + input.charAt(startIndex));
         int endIndex;
 
+        // For /from, endIndex is before /to
         if (checkEquals(keyword, "/from")) {
             endIndex = input.indexOf('/', startIndex);
             // int endIndex = input.substring(indexOfSlash, input.length());
@@ -239,51 +240,9 @@ public class Javaro {
             endIndex = input.length();
         }
 
-        endIndex -= 1;
-
-        return input.substring(startIndex, endIndex + 1).trim();
-
-        /* 
-        switch (keyword) {
-            case "/by":
-            case "/to":
-                // System.out.println("Keyword is /by or /to");
-                int endIndex = input.length() - 1;
-                break;
-            case "/from":
-                // System.out.println("Keyword is /from");
-                int indexOfSlash = input.indexOf('/', startIndex);
-                System.out.println("At " + indexOfSlash + " is " + input.substring(indexOfSlash, input.length()));
-                break;
-        }
-        */
-
-        /* 
-        int startIndex = input.indexOf(keyword) + keyword.length() + 1;
-        // System.out.println("char at start index " + startIndex + " is " + input.charAt(startIndex));
-        
-        // For /from, endIndex is before /to
-        int endIndex = input.indexOf(' ', startIndex);
-
-        if (endIndex == -1) {
-            endIndex = input.length() - 1;
-        }
-
-        // System.out.println("char at end index " + endIndex + " is " + input.charAt(endIndex));
-        return input.substring(startIndex, endIndex + 1).trim();
-        */
+        return input.substring(startIndex, endIndex).trim();
         
     }
-
-    /* 
-    public static String extractDateTime(String input) {
-        int indexOfSlash = input.indexOf('/');
-        // System.out.println("indexOfSlash is " + indexOfSlash);
-        // System.out.println("indexOf " + input.charAt(input.indexOf(' ', indexOfSlash)) + " is " + (input.indexOf(' ', indexOfSlash) - 1));
-        // String command = input.substring(indexOfSlash + 1, input.indexOf(input, indexOfSlash));
-        return "";
-    }
-    */
 
     // Add task (Types supported: Todo, Deadline, Event)
     public static Task[] addTask(Task[] list, String input) {
@@ -297,44 +256,25 @@ public class Javaro {
         
         String description = extractDescription(input);
         
-        Task task = new Task(description, false);
+        Task task = null;
+        // Task task = new Task(description, false);
 
         // TODO: Handle the case where input is not in correct format, e.g. missing "/by" for deadline tasks, or missing "/from" / "/to" for event tasks
         if (checkEquals(command, TODO)) {
             task = new Todo(description, false);
         } else if (checkEquals(command, DEADLINE)) {
-            String by = "/by";
-            int byLength = by.length();
-            
             // Check if input contains "/by"
-            boolean isValid = input.contains(by);
-            int indexOfBy = indexOfKeyword(input, by);
+            boolean isValid = input.contains(BY);
             
-            // description = input.substring(command.length() + 1, indexOfBy - byLength - 1);
-            
-            // String due = input.substring(indexOfBy, input.length());
-            String due = extractDateTime(input, by);
+            String due = extractDateTime(input, BY);
             
             task = new Deadline(description, false, due);
         } else if (checkEquals(command, EVENT)) {
-            // event project meeting /from Mon 2pm /to 4pm
+            // Check if input contains "/from" and "/to"
+            boolean isValid = input.contains(FROM) && input.contains(TO);
 
-            // Check if input contains "/by"
-            String from = "/from";
-            int fromLength = from.length();
-            String to = "/to";
-            int toLength = to.length();
-
-            boolean isValid = input.contains(from) && input.contains(to);
-            int indexOfFrom = indexOfKeyword(input, from);
-            int indexOfTo = indexOfKeyword(input, to);
-            
-            // description = input.substring(command.length() + 1, indexOfFrom - fromLength - 1);
-
-            // String start = input.substring(indexOfFrom, indexOfTo - to.length() - 2);
-            // String end = input.substring(indexOfTo, input.length());
-            String start = extractDateTime(input, from);
-            String end = extractDateTime(input, to);
+            String start = extractDateTime(input, FROM);
+            String end = extractDateTime(input, TO);
 
             task = new Event(description, false, start, end);
         }
@@ -348,14 +288,7 @@ public class Javaro {
         int listLength = list.length;
         
         String messagePart2 = "Now you have " + listLength + " task";
-        // String messagePart2 = "Now you have " + listLength;
-        
-        // if (listLength == 1) {
-        //     messagePart2 += " task";
-        // } else {
-        //     messagePart2 += " tasks";
-        // }
-        
+
         if (listLength > 1) {
             messagePart2 += "s";
         }
@@ -391,11 +324,6 @@ public class Javaro {
                     checkInputStartsWith(input, DEADLINE) || 
                     checkInputStartsWith(input, EVENT)
                 ) {
-                    // String command = input.substring(0, input.indexOf(' '));
-                    // System.out.println("command is " + command);
-                    // String idk = extractDateTime(input, "/by");
-                    // System.out.println("idk is " + idk);
-                    // extractDescription(input);
                     list = addTask(list, input);
                 }
             else {

@@ -12,13 +12,21 @@ public class Event extends Task {
         this.end = end;
     }
 
+    public String getStart() {
+        return start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
     @Override
     public String toString() {
         // If description does not end with a space, add a space behind it
         if (!description.endsWith(" ")) {
             description += " ";
         } 
-        return "[E]" + super.toString() + "(from: " + start + " to: " + end + ")";
+        return "[E]" + super.toString() + "(from: " + getStart() + " to: " + getEnd() + ")";
     }
 
 }

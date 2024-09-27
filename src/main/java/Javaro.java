@@ -190,13 +190,36 @@ public class Javaro {
         return input.indexOf(keyword) + keyword.length() + 1;
     }
 
-    public static String extractDescription(String input) {
-        // return input.substring(command.length() + 1, indexOfBy - byLength - 1);
+    // Note that here, input is without command in front
+    public static String extractDescription(String details, String command) {
+        System.out.println("details in extractDescription: " + details);
+        String description = details.trim();
+        int endIndex;
+        try {
+            switch (command) {
+                case TODO:
+                    break;
+                case DEADLINE:
+                    endIndex = details.indexOf('/') - 1;
+                    if (endIndex == -1) {
+                        throw new TaskException("No deadline found");
+                    }
+                case EVENT:
+                    endIndex = details.indexOf('/') - 1;
+                    if (endIndex == -1) {
+                        throw new TaskException("No deadline found");
+                    }
+                    break;
+            }
+        } catch (TaskException taskException) {
+            System.out.println("Error: " + taskException.getMessage());
+        }
         
-        int commandLength = input.trim().split(" ")[0].length();
+        /* 
+        int commandLength = input.trim().split(" ", 2)[0].length();
         int startIndex = commandLength + 1;
         
-        String description;
+        String description = null;
         int endIndex;
         // String description = input.substring(commandLength + 1, input.indexOf('/'));
         
@@ -211,8 +234,19 @@ public class Javaro {
             // description = input.substring(startIndex, input.length());
         }
 
-        description = input.substring(startIndex, endIndex);
+        // System.out.println("(extractDescription) description: " + description);
+        // System.out.println("start " + startIndex + " end " + endIndex);
+        // System.out.println("start " + startIndex + " " + input.charAt(startIndex) + " end " + endIndex  + " " + input.charAt(endIndex));
+
+        try {
+            description = input.substring(startIndex, endIndex);
+        } catch (StringIndexOutOfBoundsException stringIndexOutOfBoundsException) {
+            System.out.println("Missing description");
+        }
         // description = description.trim();
+
+        return description;
+        */
 
         return description;
     }
@@ -225,11 +259,20 @@ public class Javaro {
     
     // keyword is either "/by", or "/from" or "/to"
     public static String extractDateTime(String input, String keyword) {
-        // System.out.println("index of keyword is " + input.indexOf(keyword));
+        System.out.println("in extractDateTime: " + input.contains(keyword));
         
+        // Check if user input contains the keyword
+        try {
+            if (input.contains(keyword) == false) {
+                String message = "No " + keyword;
+                throw new TaskException(message);
+            }
+        } catch (TaskException taskException) {
+            printLine();
+        }
+
         // Get index of word after keyword and space
         int startIndex = input.indexOf(keyword) + keyword.length() + 1;
-        // System.out.println("char at start index " + startIndex + " is " + input.charAt(startIndex));
         int endIndex;
 
         // For /from, endIndex is before /to
@@ -240,21 +283,70 @@ public class Javaro {
             endIndex = input.length();
         }
 
-        return input.substring(startIndex, endIndex).trim();
+        String dateTime = null;
+
+        try {
+            dateTime = input.substring(startIndex, endIndex).trim();
+        } catch (StringIndexOutOfBoundsException stringIndexOutOfBoundsException) {
+            System.out.println("Uh oh! There is no due date");
+            // System.out.println("Missing date/time for " + );
+        }
+
+        return dateTime;
         
     }
 
+    // public static void printExceptionMessage() {
+    //     prin
+    // }
+
     // Add task (Types supported: Todo, Deadline, Event)
-    public static Task[] addTask(Task[] list, String input) {
+    public static Task[] addTask(Task[] list, String input) throws TaskException {
         printLine();
         
-        String command = input.trim().split(" ")[0];
+        // Split the input into a String array where the first element is the command and the second element is the description + deadline OR start/end date/time or event
+        String[] splitInput = input.trim().split(" ", 2);
 
+        String command = splitInput[0];
+    
+        // Check if description is empty
+        
+        if (splitInput.length < 2 || splitInput[1].startsWith("/")) {
+            throw new TaskException("The description of a task cannot be empty");
+        }
+        
+        /* 
+        try {
+            if (splitInput.length < 2 || splitInput[1].startsWith("/")) {
+                throw new TaskException("The description of a task cannot be empty");
+            }
+        } catch (TaskException missingDescription) {
+            // printLine();
+            String message = missingDescription.getMessage();
+            printMessage(false, message);
+            printLine();
+            return list;
+        }
+        */
+        
         space(false, false);
         String messagePart1 = "Got it. I've added this task:";
         System.out.println(messagePart1);
-        
-        String description = extractDescription(input);
+
+        // String description;
+        // try {
+        //     description = extractDescription(input);
+        // } catch (EmptyDescriptionException emptyDescriptionException) {
+        //     System.out.println(emptyDescriptionException);
+        // }
+
+        String description = null;
+        // try {
+        //     description = extractDescription(splitInput[1], command);
+        // } catch (TaskException taskException) {
+        //     String message = "Missing description";
+        //     System.out.println(taskException.getMessage());
+        // }
         
         Task task = null;
         // Task task = new Task(description, false);
@@ -305,42 +397,52 @@ public class Javaro {
     // This function echos commands entered by the user, and exits when the user types the command bye.
     public static void echo() {
         Scanner in = new Scanner(System.in);
-
-        // Get the input
-        String input = in.nextLine().trim();
-
+        
         // Assume there will be no more than 100 tasks. Initialize an empty list of String array
         Task[] list = new Task[0];
-
-        // Continue looping until input is "bye"
-        while (checkEquals(input, BYE) == false) {
-
-            if (checkEquals(input, LIST)) {
-                printList(list);
-            } else if (checkInputStartsWith(input, MARK) || checkInputStartsWith(input, UNMARK)) {        // Check if input contains the command "mark" or "unmark"
-                markDone(list, input);
-            } else if (
-                    checkInputStartsWith(input, TODO) ||
-                    checkInputStartsWith(input, DEADLINE) || 
-                    checkInputStartsWith(input, EVENT)
-                ) {
-                    list = addTask(list, input);
+        
+        // Continue looping indefinitely
+        while (true) {
+            
+            // Get the input
+            String input = in.nextLine().trim();
+            
+            // Check if the command entered by the user is valid
+            try {
+                if (checkEquals(input, BYE)) {
+                    exit();
+                    break;
+                } else if (checkEquals(input, LIST)) {
+                    printList(list);
+                } else if (checkInputStartsWith(input, MARK) || checkInputStartsWith(input, UNMARK)) {        // Check if input contains the command "mark" or "unmark"
+                    markDone(list, input);
+                } else if (
+                        checkInputStartsWith(input, TODO) ||
+                        checkInputStartsWith(input, DEADLINE) || 
+                        checkInputStartsWith(input, EVENT)
+                    ) {
+                        list = addTask(list, input);
+                } else {
+                    String message = "Invalid command entered. Please start with 'list', 'mark', 'unmark', 'todo', 'deadline', 'event'. If you are done, please enter 'bye' to exit the chat";
+                    throw new CommandException(message);
                 }
-            else {
-                // TODO: Since we now have 3 types of tasks (Todo, Deadline, and Event) implemented in Level-4, it should be safe to assume that all tasks that should be added to the task list, should start with either "todo", or "deadline", or "event". Hence, if it just starts with the task description, then it should not be a valid task
-                System.out.println("Invalid command entered");
+
+                System.lineSeparator();
+
+            } catch (CommandException commandException) {     // When user enters an invalid command, e.g. gibberish
+                printLine();
+                printMessage(true, commandException.getMessage());
+                printLine();
+            } catch (TaskException taskException) {
+                printMessage(false, taskException.getMessage());
+                printLine();
             }
-
-            System.lineSeparator();
-
-            // Ask the user for the next input
-            input = in.nextLine().trim();
         }
+        
     }
 
     public static void main(String[] args) {
         greet();
         echo();
-        exit();
     }
 }

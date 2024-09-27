@@ -9,13 +9,17 @@ public class Deadline extends Task {
         this.due = due;
     }
 
+    public String getDue() {
+        return due;
+    }
+
     @Override
     public String toString() {
         // If description does not end with a space, add a space behind it
         if (!description.endsWith(" ")) {
             description += " ";
         } 
-        return "[D]" + super.toString() + "(by: " + due + ")";
+        return "[D]" + super.toString() + "(by: " + getDue() + ")";
     }
 
 }

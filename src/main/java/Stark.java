@@ -1,3 +1,4 @@
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class Stark {
@@ -37,12 +38,13 @@ public class Stark {
                     break;
                 } else if (queryTokens[0].equalsIgnoreCase("list")) {
                     taskList.printAllTasks();
-                } else if (queryTokens[0].equalsIgnoreCase("mark") || queryTokens[0].equalsIgnoreCase("unmark")) {
+                } else if (queryTokens[0].equalsIgnoreCase("mark")
+                        || queryTokens[0].equalsIgnoreCase("unmark")) {
                     taskList.statusChange(queryTokens[0], Integer.parseInt(queryTokens[1]));
                 } else {
                     taskList.addTask(queryTokens[0], String.join(" ", query));
                 }
-            }catch (Exception e){
+            } catch (IllegalArgumentException | IndexOutOfBoundsException e){
                 System.out.println(e.getMessage());
             }
             lineBreak();

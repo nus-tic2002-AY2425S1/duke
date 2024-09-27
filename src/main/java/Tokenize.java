@@ -2,17 +2,17 @@ import java.util.Arrays;
 
 public class Tokenize {
 
-   public static void tokenize(String input) {
+   public static void tokenize(String input) throws IllegalArgumentException {
        String[] tokens = input.split(" ");
 
        if (tokens.length == 1) {
-           if(tokens[0].equalsIgnoreCase("")){
-               throw new IllegalArgumentException("Empty input");
-           }else if (tokens[0].equalsIgnoreCase("todo")
+           if (tokens[0].equalsIgnoreCase("todo")
                 || tokens[0].equalsIgnoreCase("Deadline")
                 || tokens[0].equalsIgnoreCase("Deadline")) {
-              throw new IllegalArgumentException(" OOPS!!! \"" + tokens[0].toUpperCase() + " description cannot be empty\" ");
-          }else if( !(tokens[0].equalsIgnoreCase("bye")
+              throw new IllegalArgumentException(" OOPS!!! \"" + tokens[0].toUpperCase() + "\" description cannot be empty");
+           }else if(tokens[0].equalsIgnoreCase("mark") || tokens[0].equalsIgnoreCase("unmark")){
+               throw new IllegalArgumentException(" OOPS!!! \"" + tokens[0].toUpperCase() + "\" should include task number");
+           }else if( !(tokens[0].equalsIgnoreCase("bye")
                     || tokens[0].equalsIgnoreCase("list"))) {
               throw new IllegalArgumentException(" OOPS!!! ( \"" + tokens[0].toUpperCase() + "\" is not valid query or input )");
           }
@@ -27,6 +27,17 @@ public class Tokenize {
                    && !((Arrays.asList(tokens).contains("/from"))
                    && (Arrays.asList(tokens).contains("/to")))){
                throw new IllegalArgumentException(" OOPS!!! \"EVENT\" tasks need to start and ends at a specific date/time\n \t\t \"eg: event project meeting /from Mon 2pm /to 4pm\" ");
+           }else if (tokens[0].equalsIgnoreCase("mark") || tokens[0].equalsIgnoreCase("unmark")){
+               if(tokens.length > 2){
+                   throw new IllegalArgumentException(" OOPS!!! ( \"" + tokens[0].toUpperCase() + "\" is not valid query or input\n \t\t \"eg: mark 2\" )");
+               }else {
+                   try{
+                       int val  = Integer.parseInt(tokens[1]);
+                   }catch (NumberFormatException e){
+                       throw new NumberFormatException(" OOPS!!! ( \"" + tokens[0].toUpperCase() + "\" didnt have valid task id\n \t\t \"eg: mark 2\" )");
+                   }
+
+               }
            }
        }
    }

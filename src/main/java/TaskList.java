@@ -21,10 +21,6 @@ public class TaskList {
             tasks.add(new Event(str[0],str[1]));
             totalTasks++;
         }
-//        else{
-//            tasks.add(new Task(type+ " " + task));
-//        }
-        
         System.out.println("Got it. I've added this task:\n  " + tasks.get(totalTasks-1).printTask());
         System.out.println("Now you have " + totalTasks + " tasks in the list.");
 
@@ -39,7 +35,7 @@ public class TaskList {
     }
 
     public void statusChange(String done, int number) {
-        if(tasks.size() >= number) {
+        if(tasks.size() >= number && number > 0) {
             Task requiredTask = tasks.get(number - 1);
             requiredTask.setStatus(done);
             if (done.equalsIgnoreCase("mark")) {
@@ -48,7 +44,11 @@ public class TaskList {
                 System.out.println("OK, I've marked this task as not done yet:\n" + "  " + requiredTask.printTask());
             }
         }else{
-            System.out.println("No tasks found");
+            if(tasks.isEmpty()){
+                throw new IndexOutOfBoundsException("OOPS! Task list is empty! \n \t\t please add tasks");
+            }else {
+                throw new IndexOutOfBoundsException("OOPS! input task number is invalid \n Valid range is 1 to " + tasks.size());
+            }
         }
     }
 

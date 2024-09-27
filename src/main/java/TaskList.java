@@ -11,17 +11,20 @@ public class TaskList {
 
         if(type.equalsIgnoreCase("Todo")){
             tasks.add(new Todo(task));
+            totalTasks++;
         }else if(type.equalsIgnoreCase("Deadline")){
             String[] str = task.split(" /by ");
             tasks.add(new Deadline(str[0],str[1]));
+            totalTasks++;
         }else if (type.equalsIgnoreCase("Event")){
             String[] str = task.split(" /from ");
             tasks.add(new Event(str[0],str[1]));
-        }else{
-            tasks.add(new Task(type+ " " + task));
+            totalTasks++;
         }
-
-        totalTasks++;
+//        else{
+//            tasks.add(new Task(type+ " " + task));
+//        }
+        
         System.out.println("Got it. I've added this task:\n  " + tasks.get(totalTasks-1).printTask());
         System.out.println("Now you have " + totalTasks + " tasks in the list.");
 

@@ -67,6 +67,10 @@ public class Alice {
                     System.out.print(separator);
                     break;
                 case "todo":
+                    if (instruction.length == 1){
+                        System.out.println("The description of todo cannot be empty!");
+                        break;
+                    }
                     body += instruction[1];
                     while(i < instruction.length) {
                         body += " " + instruction[i];
@@ -80,13 +84,28 @@ public class Alice {
 
                     break;
                 case "deadline":
+                    if (instruction.length == 1){
+                        System.out.println("The description of deadline cannot be empty!");
+                        break;
+                    }
                     body += instruction[1];
-                    while(!instruction[i].equals("/by")){
-                        body += " " + instruction[i];
-                        i++;
+                    try {
+                        while (!instruction[i].equals("/by")) {
+                            body += " " + instruction[i];
+                            i++;
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e){
+                        System.out.println("Do include the /by flag!");
+                        break;
                     }
                     i++;
-                    param += instruction[i];
+                    try {
+                        param += instruction[i];
+                    } catch (ArrayIndexOutOfBoundsException e){
+                        System.out.println("Do include the day after /by!");
+                        break;
+                    }
+
                     i++;
                     while(i < instruction.length) {
                         param += " " + instruction[i];
@@ -101,19 +120,39 @@ public class Alice {
                     break;
                 case "event":
                     body += instruction[1];
-                    while(!instruction[i].equals("/from")){
-                        body += " " + instruction[i];
-                        i++;
+                    try {
+                        while (!instruction[i].equals("/from")) {
+                            body += " " + instruction[i];
+                            i++;
+                        }
+                    }catch (ArrayIndexOutOfBoundsException e){
+                        System.out.println("Do include the /from flag!");
+                        break;
                     }
                     i++;
-                    param += instruction[i];
-                    i++;
-                    while(!instruction[i].equals("/to")){
-                        param += " " + instruction[i];
-                        i++;
+                    try {
+                        param += instruction[i];
+                    }catch (ArrayIndexOutOfBoundsException e){
+                        System.out.println("Do include the day after /from!");
+                        break;
                     }
                     i++;
-                    param2 += instruction[i];
+                    try {
+                        while (!instruction[i].equals("/to")) {
+                            param += " " + instruction[i];
+                            i++;
+                        }
+                    }catch (ArrayIndexOutOfBoundsException e){
+                        System.out.println("Do include the /to flag!");
+                        break;
+                    }
+                    i++;
+                    try {
+                        param2 += instruction[i];
+                    }catch (ArrayIndexOutOfBoundsException e){
+                        System.out.println("Do include the day after /to!");
+                        break;
+                    }
                     i++;
                     while(i < instruction.length) {
                         param2 += " " + instruction[i];
@@ -127,7 +166,7 @@ public class Alice {
 
                     break;
                 default:
-
+                    System.out.println("Please put an instruction I can understand :(");
 
             }
 

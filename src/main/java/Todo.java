@@ -12,7 +12,7 @@ public class Todo extends Task {
 
     public String getFileView() {
         return this.getTaskIcon() + " | " +
-                this.status.getBoolean() + " | " +
+                this.status.toString() + " | " +
                 this.getDescription();
     }
 }

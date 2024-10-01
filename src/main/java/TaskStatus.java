@@ -8,11 +8,11 @@ public enum TaskStatus {
         };
     }
 
-    public int getBoolean() {
+    public String toString() {
         if (this == DONE) {
-            return 1;
+            return "DONE";
         } else {
-            return 0;
+            return "NOT_DONE";
         }
     }
 }

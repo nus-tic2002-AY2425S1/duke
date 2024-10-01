@@ -14,8 +14,8 @@ public class Deadline extends Task {
 
     public String getFileView() {
         return this.getTaskIcon() + " | " +
-                this.status.getBoolean() + " | " +
-                this.getDescription() + " | " +
+                this.status.toString() + " | " +
+                this.getDescription() + " /by " +
                 dueDateTime;
     }
 }

@@ -16,9 +16,9 @@ public class Event extends Task {
 
     public String getFileView() {
         return this.getTaskIcon() + " | " +
-                this.status.getBoolean() + " | " +
-                this.getDescription() + " | " +
-                this.startDateTime + " | " +
+                this.status.toString() + " | " +
+                this.getDescription() + " /from " +
+                this.startDateTime + " /to " +
                 this.endDateTime;
     }
 }

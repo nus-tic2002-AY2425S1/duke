@@ -13,4 +13,12 @@ public class Event extends Task {
         return "[" + this.getTaskIcon() + "][" + this.getStatusIcon() + "] " +
                 description + " (from: " + startDateTime + " to: " + endDateTime + ")";
     }
+
+    public String getFileView() {
+        return this.getTaskIcon() + " | " +
+                this.status.getBoolean() + " | " +
+                this.getDescription() + " | " +
+                this.startDateTime + " | " +
+                this.endDateTime;
+    }
 }

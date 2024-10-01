@@ -1,13 +1,17 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class checkbot {
     public static ArrayList<Task> tasks = new ArrayList<>();
-    public static Scanner in = new Scanner(System.in);
+    public static Scanner scanInput = new Scanner(System.in);
+    public static File taskFile = new File("data/checkbot.txt");
 
     public static String readInput() {
         String input;
-        input = in.nextLine();
+        input = scanInput.nextLine();
         return input;
     }
 
@@ -29,6 +33,24 @@ public class checkbot {
 
     public static void printEmptyTime() {
         System.out.println(StringHelper.emptyTime);
+    }
+
+    public static void writeToFile(String textToAdd) throws IOException {
+        FileWriter fw = new FileWriter(taskFile);
+        fw.write(textToAdd);
+        fw.close();
+    }
+
+    public static void updateFile() {
+        String textToAdd = "";
+        for (Task task : tasks) {
+            textToAdd = textToAdd.concat(task.getFileView() + System.lineSeparator());
+        }
+        try {
+            writeToFile(textToAdd);
+        } catch (IOException e) {
+            System.out.println("Oops! Something wrong happened with saving of file.");
+        }
     }
 
     public static void addTask(String input) throws EmptyInputException, EmptyTimeException {
@@ -174,14 +196,23 @@ public class checkbot {
                 deleteTask(tasks.get(taskIdx));
                 break;
             default:
-                printCommandNotFound();
-                break;
+                // do nothing
         }
     }
 
     public static void main(String[] args) {
         printHello();
         boolean goToExit = false;
+
+        if (!taskFile.exists()) {
+            try {
+                taskFile.getParentFile().mkdir();
+                taskFile.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        // TODO: Parse file into tasks on startup
 
         do {
             String input = readInput().trim();
@@ -202,6 +233,7 @@ public class checkbot {
                 case "delete":
                     try {
                         setStatus(input);
+                        updateFile();
                         break;
                     } catch (EmptyInputException e) {
                         System.out.println(StringHelper.emptyNumber);
@@ -220,6 +252,7 @@ public class checkbot {
                 case "event":
                     try {
                         addTask(input);
+                        updateFile();
                         break;
                     } catch (EmptyInputException e) {
                         printEmptyDescription();

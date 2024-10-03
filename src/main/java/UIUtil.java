@@ -52,6 +52,14 @@ public class UIUtil {
         System.out.println("____________________________________________________________");
     }
 
+    public static void printTaskDeletedMessage(Task deletedTask, int remainingTasks) {
+        System.out.println("____________________________________________________________");
+        System.out.println(" Noted. I've removed this task:");
+        System.out.println("   " + deletedTask);
+        System.out.println(" Now you have " + remainingTasks + " tasks in the list.");
+        System.out.println("____________________________________________________________");
+    }
+
     public static void printExitMessage() {
         System.out.println(" Bye. Hope to see you again soon!");
         System.out.println("____________________________________________________________");

@@ -1,9 +1,34 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Denny {
-    private static final int MAX_TASKS = 100;
-    private static final Task[] tasks = new Task[MAX_TASKS];
-    private static int taskCount = 0;
+    private static final ArrayList<Task> tasks = new ArrayList<>();
+
+    private enum Command {
+        BYE("bye"),
+        LIST("list"),
+        MARK("mark"),
+        UNMARK("unmark"),
+        TODO("todo"),
+        DEADLINE("deadline"),
+        EVENT("event"),
+        DELETE("delete");
+
+        private final String commandText;
+
+        Command(String commandText) {
+            this.commandText = commandText;
+        }
+
+        public static Command fromString(String text) {
+            for (Command command : Command.values()) {
+                if (text.toLowerCase().startsWith(command.commandText)) {
+                    return command;
+                }
+            }
+            throw new IllegalArgumentException("Unknown command: " + text);
+        }
+    }
 
     public static void main(String[] args) {
         UIUtil.printGreeting();
@@ -15,42 +40,52 @@ public class Denny {
         Scanner scanner = new Scanner(System.in);
         String userInput;
 
-        while (true) {
-            userInput = scanner.nextLine();
+        try {
+            while (true) {
+                userInput = scanner.nextLine();
 
-            if (userInput.equalsIgnoreCase("bye")) {
-                break;
-            }
-
-            try {
-                if (userInput.equalsIgnoreCase("list")) {
-                    listTasks();
-                } else if (userInput.toLowerCase().startsWith("mark")) {
-                    markTaskAsDone(userInput);
-                } else if (userInput.toLowerCase().startsWith("unmark")) {
-                    unmarkTask(userInput);
-                } else if (userInput.toLowerCase().startsWith("todo")) {
-                    addTodoTask(userInput);
-                } else if (userInput.toLowerCase().startsWith("deadline")) {
-                    addDeadlineTask(userInput);
-                } else if (userInput.toLowerCase().startsWith("event")) {
-                    addEventTask(userInput);
-                } else {
-                    throw new IllegalArgumentException("Unknown command: " + userInput);
+                try {
+                    Command command = Command.fromString(userInput);
+                    switch (command) {
+                        case BYE:
+                            return;
+                        case LIST:
+                            listTasks();
+                            break;
+                        case MARK:
+                            markTaskAsDone(userInput);
+                            break;
+                        case UNMARK:
+                            unmarkTask(userInput);
+                            break;
+                        case TODO:
+                            addTodoTask(userInput);
+                            break;
+                        case DEADLINE:
+                            addDeadlineTask(userInput);
+                            break;
+                        case EVENT:
+                            addEventTask(userInput);
+                            break;
+                        case DELETE:
+                            deleteTask(userInput);
+                            break;
+                    }
+                } catch (IllegalArgumentException e) {
+                    UIUtil.printUnknownCommand(e.getMessage());
+                } catch (Exception e) {
+                    UIUtil.printError("An unexpected error occurred: " + e.getMessage());
                 }
-            } catch (IllegalArgumentException e) {
-                UIUtil.printUnknownCommand(e.getMessage());
-            } catch (Exception e) {
-                UIUtil.printError(" An unexpected error occurred: " + e.getMessage());
             }
+        } finally {
+            scanner.close();
         }
-        scanner.close();
     }
 
     private static void listTasks() {
         UIUtil.printListTasksHeader();
-        for (int i = 0; i < taskCount; i++) {
-            System.out.println(" " + (i + 1) + ". " + tasks[i]);
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println(" " + (i + 1) + ". " + tasks.get(i));
         }
         System.out.println("____________________________________________________________");
     }
@@ -59,8 +94,8 @@ public class Denny {
         try {
             int taskIndex = getTaskIndex(userInput);
             if (taskIndex != -1) {
-                tasks[taskIndex].markAsDone();
-                UIUtil.printTaskMarkedDone(tasks[taskIndex]);
+                tasks.get(taskIndex).markAsDone();
+                UIUtil.printTaskMarkedDone(tasks.get(taskIndex));
             }
         } catch (Exception e) {
             UIUtil.printError("Error marking task as done: " + e.getMessage());
@@ -71,8 +106,8 @@ public class Denny {
         try {
             int taskIndex = getTaskIndex(userInput);
             if (taskIndex != -1) {
-                tasks[taskIndex].markAsNotDone();
-                UIUtil.printTaskUnmarked(tasks[taskIndex]);
+                tasks.get(taskIndex).markAsNotDone();
+                UIUtil.printTaskUnmarked(tasks.get(taskIndex));
             }
         } catch (Exception e) {
             UIUtil.printError("Error unmarking task: " + e.getMessage());
@@ -88,9 +123,9 @@ public class Denny {
             if (description.isEmpty()) {
                 throw new IllegalArgumentException("The description of a todo cannot be empty.");
             }
-            tasks[taskCount] = new ToDo(description);
-            taskCount++;
-            UIUtil.printTaskAddedMessage(tasks[taskCount - 1]);
+            Task newTask = new ToDo(description);
+            tasks.add(newTask);
+            UIUtil.printTaskAddedMessage(newTask);
         } catch (StringIndexOutOfBoundsException e) {
             UIUtil.printError("An error occurred while processing your todo task. Please make sure you provide a description.");
         } catch (IllegalArgumentException e) {
@@ -111,9 +146,9 @@ public class Denny {
             }
             String description = parts[0].substring(9).trim();
             String by = parts[1].trim();
-            tasks[taskCount] = new Deadline(description, by);
-            taskCount++;
-            UIUtil.printTaskAddedMessage(tasks[taskCount - 1]);
+            Task newTask = new Deadline(description, by);
+            tasks.add(newTask);
+            UIUtil.printTaskAddedMessage(newTask);
         } catch (StringIndexOutOfBoundsException e) {
             UIUtil.printError("An error occurred while processing your deadline task. Please make sure the description is properly formatted.");
         } catch (IllegalArgumentException e) {
@@ -135,11 +170,23 @@ public class Denny {
             if (description.isEmpty() || from.isEmpty() || to.isEmpty()) {
                 throw new IllegalArgumentException("None of the event details can be empty.");
             }
-            tasks[taskCount] = new Event(description, from, to);
-            taskCount++;
-            UIUtil.printTaskAddedMessage(tasks[taskCount - 1]);
+            Task newTask = new Event(description, from, to);
+            tasks.add(newTask);
+            UIUtil.printTaskAddedMessage(newTask);
         } catch (IllegalArgumentException e) {
             UIUtil.printError(e.getMessage());
+        }
+    }
+
+    private static void deleteTask(String userInput) {
+        try {
+            int taskIndex = getTaskIndex(userInput);
+            if (taskIndex != -1) {
+                Task deletedTask = tasks.remove(taskIndex);
+                UIUtil.printTaskDeletedMessage(deletedTask, tasks.size());
+            }
+        } catch (Exception e) {
+            UIUtil.printError("Error deleting task: " + e.getMessage());
         }
     }
 
@@ -147,7 +194,7 @@ public class Denny {
         try {
             String[] parts = userInput.split(" ");
             int taskIndex = Integer.parseInt(parts[1]) - 1;
-            if (taskIndex >= 0 && taskIndex < taskCount) {
+            if (taskIndex >= 0 && taskIndex < tasks.size()) {
                 return taskIndex;
             } else {
                 throw new IndexOutOfBoundsException("Task index out of bounds.");

@@ -6,10 +6,9 @@ public class TaskList {
   protected HashMap<String,Integer> _taskNameToIndexMap = new HashMap<>();
 
   public TaskList() {}
-  public void addTask(String task) {
-    Task tmp = new Task(task);
-    _list.add(tmp);
-    _taskNameToIndexMap.put(task,_list.indexOf(tmp));
+  public void addTask(Task task) {
+    _list.add(task);
+    _taskNameToIndexMap.put(task.getName(),_list.indexOf(task));
   }
 
   public ArrayList<Task> getTaskList() {
@@ -29,14 +28,23 @@ public class TaskList {
   public boolean getTaskStatusByIndex(int index) {
     return (_list.get(index).getStatus());
   }
+  public String getTaskStatusIconByIndex(int index) {
+    return (_list.get(index).getStatusIcon());
+  }
   public String getTaskNameByIndex(int index) {
     return (_list.get(index).getName());
+  }
+  public Task getTaskById(int index) {
+    return _list.get(index);
+  }
+  public int getTaskListSize() {
+    return _list.size();
   }
   public void printTaskList() {
     System.out.println("____________________________________________________________");
     System.out.println(" Here are the task in your list:");
     for (Task i : _list) {
-      System.out.println(_list.indexOf(i)+1 + ".[" + i.getStatusIcon() + "] " + i.getName());
+      System.out.println(_list.indexOf(i)+1 + "." + i.toString());
     }
     System.out.println("____________________________________________________________");
   }

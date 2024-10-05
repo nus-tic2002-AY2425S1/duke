@@ -37,48 +37,33 @@ public class Denny {
     }
 
     private static void processUserInput() {
-        Scanner scanner = new Scanner(System.in);
-        String userInput;
-
-        try {
+        try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
-                userInput = scanner.nextLine();
-
-                try {
-                    Command command = Command.fromString(userInput);
-                    switch (command) {
-                        case BYE:
-                            return;
-                        case LIST:
-                            listTasks();
-                            break;
-                        case MARK:
-                            markTaskAsDone(userInput);
-                            break;
-                        case UNMARK:
-                            unmarkTask(userInput);
-                            break;
-                        case TODO:
-                            addTodoTask(userInput);
-                            break;
-                        case DEADLINE:
-                            addDeadlineTask(userInput);
-                            break;
-                        case EVENT:
-                            addEventTask(userInput);
-                            break;
-                        case DELETE:
-                            deleteTask(userInput);
-                            break;
-                    }
-                } catch (IllegalArgumentException e) {
-                    UIUtil.printUnknownCommand(e.getMessage());
-                } catch (Exception e) {
-                    UIUtil.printError("An unexpected error occurred: " + e.getMessage());
+                String userInput = scanner.nextLine().trim();
+                if (userInput.equalsIgnoreCase(Command.BYE.commandText)) {
+                    break;
                 }
+                processCommand(userInput);
             }
-        } finally {
-            scanner.close();
+        }
+    }
+
+    private static void processCommand(String userInput) {
+        try {
+            Command command = Command.fromString(userInput);
+            switch (command) {
+                case LIST -> listTasks();
+                case MARK -> markTaskAsDone(userInput);
+                case UNMARK -> unmarkTask(userInput);
+                case TODO -> addTodoTask(userInput);
+                case DEADLINE -> addDeadlineTask(userInput);
+                case EVENT -> addEventTask(userInput);
+                case DELETE -> deleteTask(userInput);
+            }
+        } catch (IllegalArgumentException e) {
+            UIUtil.printUnknownCommand(e.getMessage());
+        } catch (Exception e) {
+            UIUtil.printError("An unexpected error occurred: " + e.getMessage());
         }
     }
 
@@ -91,26 +76,26 @@ public class Denny {
     }
 
     private static void markTaskAsDone(String userInput) {
-        try {
-            int taskIndex = getTaskIndex(userInput);
-            if (taskIndex != -1) {
-                tasks.get(taskIndex).markAsDone();
-                UIUtil.printTaskMarkedDone(tasks.get(taskIndex));
-            }
-        } catch (Exception e) {
-            UIUtil.printError("Error marking task as done: " + e.getMessage());
-        }
+        processTaskStatusChange(userInput, true);
     }
 
     private static void unmarkTask(String userInput) {
+        processTaskStatusChange(userInput, false);
+    }
+
+    private static void processTaskStatusChange(String userInput, boolean markAsDone) {
         try {
             int taskIndex = getTaskIndex(userInput);
-            if (taskIndex != -1) {
-                tasks.get(taskIndex).markAsNotDone();
-                UIUtil.printTaskUnmarked(tasks.get(taskIndex));
+            Task task = tasks.get(taskIndex);
+            if (markAsDone) {
+                task.markAsDone();
+                UIUtil.printTaskMarkedDone(task);
+            } else {
+                task.markAsNotDone();
+                UIUtil.printTaskUnmarked(task);
             }
         } catch (Exception e) {
-            UIUtil.printError("Error unmarking task: " + e.getMessage());
+            UIUtil.printError("Error changing task status: " + e.getMessage());
         }
     }
 

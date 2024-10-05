@@ -99,47 +99,38 @@ public class Denny {
         }
     }
 
+    private static String extractDescription(String input, String taskType) {
+        String description = input.substring(taskType.length()).trim();
+        if (description.isEmpty()) {
+            throw new IllegalArgumentException("The description of a " + taskType + " cannot be empty.");
+        }
+        return description;
+    }
+
     private static void addTodoTask(String userInput) {
         try {
-            if (userInput.length() <= 5) { // Check if input is too short
-                throw new IllegalArgumentException("The description of a todo cannot be empty.");
-            }
-            String description = userInput.substring(5).trim(); // Extract the description
-            if (description.isEmpty()) {
-                throw new IllegalArgumentException("The description of a todo cannot be empty.");
-            }
+            String description = extractDescription(userInput, "todo");
             Task newTask = new ToDo(description);
             tasks.add(newTask);
             UIUtil.printTaskAddedMessage(newTask);
-        } catch (StringIndexOutOfBoundsException e) {
-            UIUtil.printError("An error occurred while processing your todo task. Please make sure you provide a description.");
         } catch (IllegalArgumentException e) {
             UIUtil.printError(e.getMessage());
-        } catch (Exception e) {
-            UIUtil.printError("An unexpected error occurred: " + e.getMessage());
         }
     }
 
     private static void addDeadlineTask(String userInput) {
         try {
-            if (!userInput.contains(" /by ")) {
-                throw new IllegalArgumentException("Please provide a valid deadline format: 'deadline <description> /by <date>'.");
-            }
             String[] parts = userInput.split(" /by ", 2);
             if (parts.length < 2) {
                 throw new IllegalArgumentException("Please provide the deadline in the format: deadline <description> /by <date>");
             }
-            String description = parts[0].substring(9).trim();
+            String description = extractDescription(parts[0], "deadline");
             String by = parts[1].trim();
             Task newTask = new Deadline(description, by);
             tasks.add(newTask);
             UIUtil.printTaskAddedMessage(newTask);
-        } catch (StringIndexOutOfBoundsException e) {
-            UIUtil.printError("An error occurred while processing your deadline task. Please make sure the description is properly formatted.");
         } catch (IllegalArgumentException e) {
             UIUtil.printError(e.getMessage());
-        } catch (Exception e) {
-            UIUtil.printError("An unexpected error occurred: " + e.getMessage());
         }
     }
 
@@ -149,12 +140,9 @@ public class Denny {
             if (parts.length < 3) {
                 throw new IllegalArgumentException("Please provide the event details in the format: event <description> /from <start date> /to <end date>");
             }
-            String description = parts[0].substring(6).trim();
+            String description = extractDescription(parts[0], "event");
             String from = parts[1].trim();
             String to = parts[2].trim();
-            if (description.isEmpty() || from.isEmpty() || to.isEmpty()) {
-                throw new IllegalArgumentException("None of the event details can be empty.");
-            }
             Task newTask = new Event(description, from, to);
             tasks.add(newTask);
             UIUtil.printTaskAddedMessage(newTask);
@@ -166,10 +154,8 @@ public class Denny {
     private static void deleteTask(String userInput) {
         try {
             int taskIndex = getTaskIndex(userInput);
-            if (taskIndex != -1) {
-                Task deletedTask = tasks.remove(taskIndex);
-                UIUtil.printTaskDeletedMessage(deletedTask, tasks.size());
-            }
+            Task deletedTask = tasks.remove(taskIndex);
+            UIUtil.printTaskDeletedMessage(deletedTask, tasks.size());
         } catch (Exception e) {
             UIUtil.printError("Error deleting task: " + e.getMessage());
         }
@@ -179,17 +165,14 @@ public class Denny {
         try {
             String[] parts = userInput.split(" ");
             int taskIndex = Integer.parseInt(parts[1]) - 1;
-            if (taskIndex >= 0 && taskIndex < tasks.size()) {
-                return taskIndex;
-            } else {
+            if (taskIndex < 0 || taskIndex >= tasks.size()) {
                 throw new IndexOutOfBoundsException("Task index out of bounds.");
             }
+            return taskIndex;
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Invalid task number format.");
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new IllegalArgumentException("Invalid task number. Please enter a valid number.");
-        } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException(e.getMessage());
         }
     }
 }

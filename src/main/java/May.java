@@ -1,11 +1,15 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 
 public class May {
 
     /*Store User Input*/
-    private static Task[] taskList = new Task[100];
-    private static int listNum = 0;
+    //private static Task[] taskList = new Task[100];
+    //private static int listNum = 0;
+
+    // Using ArrayList
+    private static ArrayList<Task> taskList = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -35,6 +39,7 @@ public class May {
                 // Add a normal task (not used in the updated design, can be removed)
                 else if (command[0].equalsIgnoreCase("add") && command.length > 1) {
                     addTask(new Task(command[1]));
+
                 }
 
                 // Check for taskList Command & output item inside taskList
@@ -47,10 +52,10 @@ public class May {
                     int taskIndex = Integer.parseInt(command[1]) - 1;
                     // Check for taskIndex is within the task number
                     // If it is within the range, then we mark as done
-                    if (taskIndex < listNum) {
-                        taskList[taskIndex].markAsDone();
+                    if (taskIndex < taskList.size()) {
+                        taskList.get(taskIndex).markAsDone();
                         System.out.println("Congratulations! You have completed the task! ");
-                        System.out.println(" " + taskList[taskIndex]);
+                        System.out.println(" " + taskList.get(taskIndex));
                     }
                     else {
                         // add in error handle
@@ -63,10 +68,10 @@ public class May {
                     int taskIndex = Integer.parseInt(command[1]) - 1;
                     // Check for taskIndex is within the task number
                     // If it is within the range, then we mark as done
-                    if (taskIndex < listNum) {
-                        taskList[taskIndex].unmarkAsDone();
+                    if (taskIndex < taskList.size()) {
+                        taskList.get(taskIndex).unmarkAsDone();
                         System.out.println("Task have not done, Kindly complete the task. ");
-                        System.out.println(" " + taskList[taskIndex]);
+                        System.out.println(" " + taskList.get(taskIndex));
                     }
                     else {
                         // add in error handle
@@ -106,9 +111,22 @@ public class May {
                     addOrUpdateTask(new Event(eventTime[0].trim(), eventTime[1].trim(), eventTime[2].trim()));
                 }
 
+                // Delete task from the list
+                else if (command[0].equalsIgnoreCase("delete")) {
+                    int taskIndex = Integer.parseInt(command[1]) - 1;
+                    if (taskIndex < taskList.size()) {
+                        Task removedTask = taskList.remove(taskIndex);
+                        System.out.println("Noted. I've removed this task:");
+                        System.out.println(" " + removedTask);
+                        System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+                    } else {
+                        throw new ErrorException("Invalid task index. Please enter a valid task index.");
+                    }
+                }
+
                 // Unknown command
                 else {
-                    throw new Error("I'm Sorry, I don't recognize that command. ");
+                    throw new ErrorException("I'm sorry, I don't recognize that command.");
                 }
             }
 
@@ -132,12 +150,12 @@ public class May {
 
     // add or update the task
     private static void addOrUpdateTask(Task newTask){
-        for (int i = 0; i < listNum; i++){
-            if (taskList[i].taskName.equals(newTask.taskName)){
-                taskList[i] = newTask;
+        for (int i = 0; i < taskList.size(); i++){
+            if (taskList.get(i).taskName.equals(newTask.taskName)){
+                taskList.set(i, newTask);
                 System.out.println("Got it, I've updated this task:");
-                System.out.println(" " + taskList[i]);
-                System.out.println("Now you have " + listNum + " tasks in the list.");
+                System.out.println(" " + taskList.get(i));
+                System.out.println("Now you have " + taskList.size() + " tasks in the list.");
                 return;
             }
         }
@@ -146,23 +164,21 @@ public class May {
 
     // Add task to the task-list
     private static void addTask(Task task){
-        taskList[listNum] = task;
-        listNum++;
+        taskList.add(task);
         System.out.println("Got it, I've added this task:");
-        System.out.println(" " + taskList[listNum - 1]);
-        System.out.println("Now you have " + listNum + " tasks in the task list.");
+        System.out.println(" " + taskList.get(taskList.size() - 1));
+        System.out.println("Now you have " + taskList.size()  + " tasks in the task list.");
     }
 
     //display the task in the task list
     private static void displayTaskList() {
-        if (listNum == 0) {
+        if (taskList.isEmpty()) {
             System.out.println("No tasks in the list.");
         } else {
             System.out.println("Here are the tasks in your list:");
-            for (int i = 0; i < listNum; i++) {
-                System.out.println((i + 1) + ". " + taskList[i]);
+            for (int i = 0; i < taskList.size(); i++) {
+                System.out.println((i + 1) + ". " + taskList.get(i));
             }
         }
     }
-
 }

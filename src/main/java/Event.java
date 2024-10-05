@@ -17,6 +17,6 @@ public class Event extends Task{
     // output the event to string with [E] and the schedule timeline for event from till to.
     @Override
     public String toString(){
-        return "[" +getTaskType() + "][" + getStatusIcon() +"] " + taskName + " (from: " + from + " to: " + to + ")";
+        return "[" + getTaskType() + "][" + getStatusIcon() +"] " + taskName + " (from: " + from + " to: " + to + ")";
     }
 }

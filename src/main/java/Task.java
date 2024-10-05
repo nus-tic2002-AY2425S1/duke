@@ -2,10 +2,13 @@ public class Task {
     protected String taskName;
     protected boolean isDone;
 
+
     // Construct a new task
-    public Task (String taskName){
+
+    public Task (String taskName) {
         this.taskName = taskName;
         this.isDone = false;
+        //this.taskType = taskType;
     }
 
     // Mark done task with X
@@ -24,7 +27,7 @@ public class Task {
         isDone = false;
     }
 
-    // Task type for sub class to override
+    // Task type for subclass to override
     protected String getTaskType(){
         return " ";
     }

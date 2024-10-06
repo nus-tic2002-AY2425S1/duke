@@ -8,7 +8,12 @@ public class Event extends Task {
     this._to = to;
     this._type = "E";
   }
-
+  public String getFrom() {
+    return this._from;
+  }
+  public String getTo() {
+    return this._to;
+  }
   @Override
   public String toString() {
     return "[" + _type + "]" + super.toString() + " (from: " + this._from + " to: "+ this._to +  ")";

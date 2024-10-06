@@ -6,7 +6,26 @@ public class TaskList {
   protected HashMap<String,Integer> _taskNameToIndexMap = new HashMap<>();
 
   public TaskList() {}
-  public void addTask(Task task) {
+  public void addTask(Task task) throws MochiException {
+    if (_taskNameToIndexMap.containsKey(task.getName())) {
+      throw new MochiException(ExceptionMessages.TASK_EXIST);
+    }
+    if (task.getName().isEmpty()) {
+      throw new MochiException(ExceptionMessages.TASK_NAME_EMPTY);
+    }
+    if (task instanceof Event eventT) {
+      if (eventT.getFrom().isEmpty()) {
+        throw new MochiException(ExceptionMessages.TASK_EVENT_FROM_EMPTY);
+      }
+      if (eventT.getTo().isEmpty()) {
+        throw new MochiException(ExceptionMessages.TASK_EVENT_TO_EMPTY);
+      }
+    }
+    if (task instanceof Deadline deadlineT) {
+      if (deadlineT.getBy().isEmpty()) {
+        throw new MochiException(ExceptionMessages.TASK_DEADLINE_BY_EMPTY);
+      }
+    }
     _list.add(task);
     _taskNameToIndexMap.put(task.getName(),_list.indexOf(task));
   }
@@ -42,7 +61,7 @@ public class TaskList {
   }
   public void printTaskList() {
     System.out.println("____________________________________________________________");
-    System.out.println(" Here are the task in your list:");
+    System.out.println(DialogMessages.LIST_TASK);
     for (Task i : _list) {
       System.out.println(_list.indexOf(i)+1 + "." + i.toString());
     }

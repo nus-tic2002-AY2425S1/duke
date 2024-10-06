@@ -1,4 +1,6 @@
-todo borrow book
+todo
+list
+test
 list
 deadline return book /by Sunday
 event project meeting /from Mon 2pm /to 4pm
@@ -9,3 +11,17 @@ mark 3
 unmark 2
 mark 1
 list
+deadline return book1 /by
+list
+event project meeting1 /from Mon 2pm
+list
+event project meeting1 /to 4pm
+list
+deadline do homework /by no idea :-p
+list
+mark 10
+unmark 10
+list
+mark two
+list
+bye

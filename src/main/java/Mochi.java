@@ -1,4 +1,3 @@
-import java.util.Date;
 import java.util.Scanner;
 public class Mochi {
   final static String _name = "Mochi";
@@ -10,15 +9,52 @@ public class Mochi {
     System.out.println("____________________________________________________________");
   }
   public static void addTask(Task task) {
-    taskList.addTask(task);
-    response(
-      " Got it. I've added this task:"
-      + System.lineSeparator()
-      + "  "+ task.toString()
-      + System.lineSeparator()
-      + " Now you have " + taskList.getTaskListSize() + " tasks in the list"
-    );
+    try {
+      taskList.addTask(task);
+      response(
+        DialogMessages.TASK_ADDED
+          + System.lineSeparator()
+          + "  " + task.toString()
+      );
+      response(" Now you have " + taskList.getTaskListSize() + " tasks in the list");
+    }
+    catch (MochiException e) {
+      response(e.getMessage());
+    }
+    finally {
+    }
   }
+  public static void markTask(String[] token) {
+    try {
+      int i = Integer.parseInt(token[1]) - 1;
+      taskList.markTask(i);
+      response(DialogMessages.MARK_TASK
+        + System.lineSeparator()
+        + taskList.getTaskById(i).toString()
+      );
+    } catch (NumberFormatException e) {
+      response(ExceptionMessages.NUMBER_FORMAT_EXCEPTION);
+    }
+      catch (IndexOutOfBoundsException e) {
+      response(ExceptionMessages.TASK_ID_NOT_FOUND);
+    }
+  }
+  public static void unMarkTask(String[] token) {
+    try {
+      int i = Integer.parseInt(token[1]) - 1;
+      taskList.unmarkTask(i);
+      response(DialogMessages.UNMARK_TASK
+        + System.lineSeparator()
+        + taskList.getTaskById(i).toString()
+      );
+    } catch (NumberFormatException e) {
+      response(ExceptionMessages.NUMBER_FORMAT_EXCEPTION);
+    }
+    catch (IndexOutOfBoundsException e) {
+      response(ExceptionMessages.TASK_ID_NOT_FOUND);
+    }
+  }
+
   public static String trimStringArrayWithStartEnd(String[] s, String start, String end, String dilimeter) {
     String body = "";
     boolean copy = false;
@@ -26,7 +62,7 @@ public class Mochi {
       if (!end.isEmpty() && i.equals(end))
         break;
       if(copy) {
-        body += i + " ";
+        body += i + dilimeter;
       }
       if (i.equals(start))
         copy = true;
@@ -34,33 +70,21 @@ public class Mochi {
     return body.trim();
   }
   public static void main(String[] args) {
-    String greating = "____________________________________________________________" + System.lineSeparator()
-      + " Hello! I'm " + _name + System.lineSeparator()
-      + " What can I do for you?";
-    System.out.println(greating);
+    response(DialogMessages.GREETINGS);
     Scanner in = new Scanner(System.in);
     boolean bye = false;
     while (!bye) {
       String input = in.nextLine();
       String[] token = input.split(" ");
-      String cross = " ";
-      int i;
       switch (token[0]) {
         case "mark":
-          i = Integer.parseInt(token[1])-1;
-          taskList.markTask(i);
-          response("Nice! I've marked this task as done:"
-            + System.lineSeparator()
-            + taskList.getTaskById(i).toString()
-          );
+          markTask(token);
           break;
         case "unmark":
-          i = Integer.parseInt(token[1])-1;
-          taskList.unmarkTask(i);
-          response("OK, I've marked this task as not done yet:" + System.lineSeparator() + taskList.getTaskById(i).toString());
+          unMarkTask(token);
           break;
         case "bye":
-          response("Bye. Hope to see you again soon!");
+          response(DialogMessages.BYE);
           bye = true;
           break;
         case "list":
@@ -69,7 +93,7 @@ public class Mochi {
         case "deadline":
           String d_name = trimStringArrayWithStartEnd(token,"deadline","/by"," ");
           String by = trimStringArrayWithStartEnd(token,"/by",""," ");
-          addTask(new Dateline(d_name,by));
+          addTask(new Deadline(d_name,by));
           break;
         case "event":
           String e_name = trimStringArrayWithStartEnd(token,"event","/from"," ");
@@ -82,8 +106,7 @@ public class Mochi {
           addTask(new Todo(t_name));
           break;
         default:
-          response("added: " + input);
-          addTask(new Task(input));
+          response(DialogMessages.INPUT_UNKNOWN);
       }
     }
   }

@@ -41,7 +41,7 @@ public class WKDuke {
         }
     }
 
-    private static int getTaskNumber(String[] inputWords) throws InvalidTaskOperationException {
+    private static void validateUpdateTaskInput(String[] inputWords) throws InvalidTaskOperationException {
         String taskOperation = inputWords[0];
         // Check if input contain a task number
         if (inputWords.length < 2) {
@@ -56,7 +56,6 @@ public class WKDuke {
         if (Integer.parseInt(taskNumber) > taskList.size()) {
             throw new InvalidTaskOperationException(String.format("Task number '%s' not found.", taskNumber), taskOperation);
         }
-        return Integer.parseInt(taskNumber);
     }
 
     public static void markTaskAsDone(int taskNumber) {
@@ -71,53 +70,79 @@ public class WKDuke {
         echo(String.format("OK, I've marked this task as not done yet:%s  %s", NEW_INDENT_LINE, task));
     }
 
-    public static void updateTask(String action, String[] inputWords) {
+    public static void updateTask(String[] inputWords) {
+        String taskAction = inputWords[0];
         try {
-            int taskNumber = getTaskNumber(inputWords);
-            switch (action) {
+            validateUpdateTaskInput(inputWords);
+
+            int taskNumber = Integer.parseInt(inputWords[1]);
+            switch (taskAction) {
                 case MARK_TASK_DONE_KEYWORD -> markTaskAsDone(taskNumber);
                 case MARK_TASK_UNDONE_KEYWORD -> markTaskAsUndone(taskNumber);
-                default -> throw new InvalidTaskOperationException("Unknown task operation.", action);
+                default -> throw new InvalidTaskOperationException("Unknown task operation.", taskAction);
             }
         } catch (InvalidTaskOperationException e) {
-            echo(String.format("Action: %s%sError: %s", e.getTaskOperation(), NEW_INDENT_LINE, e.getMessage()));
+            echo(String.format("Action: updateTask(%s)%sError: %s", e.getTaskOperation(), NEW_INDENT_LINE, e.getMessage()));
         }
     }
 
-    private static Task parseDeadlineTask(String taskDetail) throws InvalidTaskFormatException {
+
+    private static void parseDeadlineTask(String taskDetail) throws InvalidTaskFormatException {
         String[] taskDetailParts = taskDetail.split("/by");
         if (taskDetailParts.length != 2) {
-            throw new InvalidTaskFormatException("Deadline task requires '/by' information.");
+            throw new InvalidTaskFormatException("Deadline task requires '/by' information.", ADD_DEADLINE_TASK_KEYWORD);
         }
+    }
+
+    private static void parseEventTask(String taskDetail) throws InvalidTaskFormatException {
+        String[] parts = taskDetail.split("/from|/to");
+        if (parts.length != 3) {
+            throw new InvalidTaskFormatException("Event task requires '/from' and '/to' information.", ADD_EVENT_TASK_KEYWORD);
+        }
+    }
+
+    private static void validateAddTaskInput(String[] inputWords) throws InvalidTaskFormatException {
+        String taskType = inputWords[0];
+        if (inputWords.length == 1 || inputWords[1].trim().isEmpty()) {
+            throw new InvalidTaskFormatException("Task description is missing.", taskType);
+        }
+        String taskDetail = inputWords[1].trim();
+        switch (taskType) {
+            case ADD_DEADLINE_TASK_KEYWORD:
+                parseDeadlineTask(taskDetail);
+                break;
+            case ADD_EVENT_TASK_KEYWORD:
+                parseEventTask(taskDetail);
+                break;
+        }
+    }
+
+    private static Task createDeadlineTask(String taskDetail) {
+        String[] taskDetailParts = taskDetail.split("/by");
         return new Deadline(taskDetailParts[0].trim(), taskDetailParts[1].trim());
     }
 
-    private static Task parseEventTask(String taskDetail) throws InvalidTaskFormatException {
+    private static Task createEventTask(String taskDetail) {
         String[] parts = taskDetail.split("/from|/to");
-        if (parts.length != 3) {
-            throw new InvalidTaskFormatException("Event task requires '/from' and '/to' information.");
-        }
         return new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
     }
 
     public static void addTask(String[] inputWords) {
         String taskType = inputWords[0];
         try {
-            if (inputWords.length == 1) {
-                throw new InvalidTaskFormatException("Task description is missing.");
-            }
+            validateAddTaskInput(inputWords);
 
             String taskDetail = inputWords[1];
             Task newTask = switch (taskType) {
                 case ADD_TODO_TASK_KEYWORD -> new ToDo(taskDetail);
-                case ADD_DEADLINE_TASK_KEYWORD -> parseDeadlineTask(taskDetail);
-                case ADD_EVENT_TASK_KEYWORD -> parseEventTask(taskDetail);
-                default -> throw new InvalidTaskFormatException("Unknown task type.");
+                case ADD_DEADLINE_TASK_KEYWORD -> createDeadlineTask(taskDetail);
+                case ADD_EVENT_TASK_KEYWORD -> createEventTask(taskDetail);
+                default -> throw new InvalidTaskFormatException("Unknown task type.", taskType);
             };
             taskList.add(newTask);
             echo(String.format("Got it. I've added this task:%s  %s%sNow you have %s tasks in the list.", NEW_INDENT_LINE, newTask, NEW_INDENT_LINE, taskList.size()));
         } catch (InvalidTaskFormatException e) {
-            echo(String.format("Action: addTask%sError: %s", NEW_INDENT_LINE, e.getMessage()));
+            echo(String.format("Action: addTask(%s)%sError: %s", e.getTaskType(), NEW_INDENT_LINE, e.getMessage()));
         }
     }
 
@@ -152,7 +177,7 @@ public class WKDuke {
                     break;
                 case MARK_TASK_DONE_KEYWORD:
                 case MARK_TASK_UNDONE_KEYWORD:
-                    updateTask(action, inputWords);
+                    updateTask(inputWords);
                     break;
                 case ADD_TODO_TASK_KEYWORD:
                 case ADD_DEADLINE_TASK_KEYWORD:

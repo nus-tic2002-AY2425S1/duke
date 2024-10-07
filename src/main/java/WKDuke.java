@@ -25,6 +25,11 @@ public class WKDuke {
 
     //Solution below inspired by https://stackoverflow.com/questions/69576641
     public static void printTaskList() {
+        if (taskList.isEmpty()) {
+            echo("Your task list is currently empty.");
+            return;
+        }
+
         StringBuilder messageBuilder = new StringBuilder("Here are the tasks in your list:");
         for (int i = 0; i < taskList.size(); i++) {
             messageBuilder.append(NEW_INDENT_LINE).append(i + 1).append(".").append(taskList.get(i));
@@ -60,12 +65,20 @@ public class WKDuke {
 
     public static void markTaskAsDone(int taskNumber) {
         Task task = taskList.get(taskNumber - 1);
+        if (task.isDone()) {
+            echo(String.format("This task is already marked as done:%s  %s", NEW_INDENT_LINE, task));
+            return;
+        }
         task.markAsDone();
         echo(String.format("Nice! I've marked this task as done:%s  %s", NEW_INDENT_LINE, task));
     }
 
     public static void markTaskAsUndone(int taskNumber) {
         Task task = taskList.get(taskNumber - 1);
+        if (!task.isDone()) {
+            echo(String.format("This task is still not completed:%s  %s", NEW_INDENT_LINE, task));
+            return;
+        }
         task.markAsUndone();
         echo(String.format("OK, I've marked this task as not done yet:%s  %s", NEW_INDENT_LINE, task));
     }
@@ -85,7 +98,6 @@ public class WKDuke {
             echo(String.format("Action: updateTask(%s)%sError: %s", e.getTaskOperation(), NEW_INDENT_LINE, e.getMessage()));
         }
     }
-
 
     private static void parseDeadlineTask(String taskDetail) throws InvalidTaskFormatException {
         String[] taskDetailParts = taskDetail.split("/by");

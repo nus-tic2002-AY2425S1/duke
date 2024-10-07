@@ -100,8 +100,14 @@ public class WKDuke {
         return new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
     }
 
-    public static void addTask(String taskType, String taskDetail) {
+    public static void addTask(String[] inputWords) {
+        String taskType = inputWords[0];
         try {
+            if (inputWords.length == 1) {
+                throw new InvalidTaskFormatException("Task description is missing.");
+            }
+
+            String taskDetail = inputWords[1];
             Task newTask = switch (taskType) {
                 case ADD_TODO_TASK_KEYWORD -> new ToDo(taskDetail);
                 case ADD_DEADLINE_TASK_KEYWORD -> parseDeadlineTask(taskDetail);
@@ -151,7 +157,7 @@ public class WKDuke {
                 case ADD_TODO_TASK_KEYWORD:
                 case ADD_DEADLINE_TASK_KEYWORD:
                 case ADD_EVENT_TASK_KEYWORD:
-                    addTask(action, inputWords[1]);
+                    addTask(inputWords);
                     break;
                 default:
                     echo(String.format("Action: userInput%sError: Unknown command for '%s'.", NEW_INDENT_LINE, input));

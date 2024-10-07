@@ -57,4 +57,12 @@ public class OutputHandler {
         }
         printSeparator();
     }
+
+    public static void printDeleteItem(int taskIndex, List<Task> tasks) {
+        printSeparator();
+        System.out.println("Noted. I've removed this task:");
+        System.out.println("  " + tasks.get(taskIndex));
+        System.out.println("Now you have " + (tasks.size()-1) + " tasks in the list.");
+        printSeparator();
+    }
 }

@@ -7,11 +7,15 @@ import java.util.List;
 
 public class Utility {
     public static int parseTaskIndex(String userInput) throws DukeException {
-        String[] parts = userInput.split(" ");
-        if(parts.length < 2){
-            throw new DukeException("OOPS!! Please provide a task number!");
+        try {
+            String[] parts = userInput.split(" ");
+            if (parts.length < 2) {
+                throw new DukeException("OOPS!! Please provide a task number!");
+            }
+            return Integer.parseInt(parts[1]) - 1;
+        }  catch (NumberFormatException e) {
+            throw new DukeException("OOPS!! The task number must be a valid integer!");
         }
-        return Integer.parseInt(parts[1]) -1;
     }
 
     public static boolean isValidIndex(int taskIndex, List<Task> tasks){

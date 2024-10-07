@@ -1,13 +1,13 @@
 package command;
 
-import output.OutputHandler;
 import tasks.Task;
-
 import java.util.List;
+import static output.OutputHandler.printList;
+
 
 public class ListCommandHandler implements CommandHandler{
     @Override
     public void handle(String userInput, List<Task> tasks){
-        OutputHandler.printList(tasks);
+        printList(tasks);
     }
 }

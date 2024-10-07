@@ -81,10 +81,40 @@ ____________________________________________________________
 OOPS!! Task number is out of range!
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! Please provide a valid task number!
+OOPS!! The task number must be a valid integer!
 ____________________________________________________________
 ____________________________________________________________
-OOPS!!! Please provide a valid task number!
+OOPS!! The task number must be a valid integer!
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+  1.[T][X] read book
+  2.[D][ ] return book (by: June 6th)
+  3.[E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+  4.[T][X] join sports club
+  5.[T][ ] borrow book
+  6.[D][ ] return book (by: Sunday)
+  7.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+____________________________________________________________
+____________________________________________________________
+Noted. I've removed this task:
+  [T][X] join sports club
+Now you have 6 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+OOPS!! Task number is out of range!
+____________________________________________________________
+____________________________________________________________
+OOPS!! The task number must be a valid integer!
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+  1.[T][X] read book
+  2.[D][ ] return book (by: June 6th)
+  3.[E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+  4.[T][ ] borrow book
+  5.[D][ ] return book (by: Sunday)
+  6.[E][ ] project meeting (from: Mon 2pm to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
  Bye. Hope to see you again soon!

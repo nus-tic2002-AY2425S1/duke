@@ -5,7 +5,7 @@ import tasks.Task;
 import java.util.List;
 import static command.Utility.isValidIndex;
 import static command.Utility.parseTaskIndex;
-import output.OutputHandler;
+import static output.OutputHandler.printMarkDone;
 
 public class MarkCommandHandler implements CommandHandler{
     @Override
@@ -13,7 +13,7 @@ public class MarkCommandHandler implements CommandHandler{
         int taskIndex = parseTaskIndex(userInput);
         if(isValidIndex(taskIndex, tasks)){
             tasks.get(taskIndex).markDone();
-            OutputHandler.printMarkDone(taskIndex,tasks);
+            printMarkDone(taskIndex,tasks);
         }
         else {
             throw new DukeException("OOPS!! Task number is out of range!");

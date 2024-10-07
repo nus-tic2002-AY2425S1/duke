@@ -19,4 +19,9 @@ mark 1000
 unmark 1000
 mark fail
 unmark fail
+list
+delete 4
+delete 1000
+delete fail
+list
 bye

@@ -3,8 +3,10 @@ import java.util.*;
 import command.*;
 import command.CommandHandler;
 import exception.DukeException;
-import output.OutputHandler;
 import tasks.*;
+import static output.OutputHandler.*;
+
+
 
 public class DukeGPT {
     private static String chatbotName = "DukeGPT";
@@ -15,18 +17,19 @@ public class DukeGPT {
         commandHandlerMapping.put("list", new ListCommandHandler());
         commandHandlerMapping.put("mark", new MarkCommandHandler());
         commandHandlerMapping.put("unmark", new UnmarkCommandHandler());
+        commandHandlerMapping.put("delete", new DeleteCommandHandler());
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         initCommandHandlers();
-        OutputHandler.printGreetings(chatbotName);
+        printGreetings(chatbotName);
 
         while (true){
             String userInput = scanner.nextLine().trim();
             try{
                 if(userInput.equalsIgnoreCase("bye")){
-                    OutputHandler.printGoodbye();
+                    printGoodbye();
                     break;
                 }
                 else if(userInput.trim().isEmpty()){
@@ -40,14 +43,14 @@ public class DukeGPT {
                 }else {
                     Task newTask  = CommandFactory.generateTask(userInput);
                     tasks.add(newTask);
-                    OutputHandler.printAddedItems(newTask, tasks);
+                    printAddedItems(newTask, tasks);
                 }
             } catch (DukeException e){
-                OutputHandler.printError(e.getMessage());
+                printError(e.getMessage());
             } catch (NumberFormatException e){
-                OutputHandler.printError("OOPS!!! Please provide a valid task number!");
+                printError("OOPS!!! Please provide a valid task number!");
             } catch (Exception e){
-                OutputHandler.printError("OOPS!!! Something went wrong, please try again");
+                printError("OOPS!!! Something went wrong, please try again");
             }
         }
     }

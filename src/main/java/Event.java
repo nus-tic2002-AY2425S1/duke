@@ -9,6 +9,12 @@ public class Event extends Task{
         this.to = to;
     }
 
+    public Event(String description, boolean isDone, String from, String to) {
+        super(description, isDone);
+        this.from = from;
+        this.to = to;
+    }
+
     public void setFrom(String from) {
         this.from = from;
     }
@@ -29,4 +35,6 @@ public class Event extends Task{
     public String toString() {
         return "[E][ ] " + super.toString() + " (from: " + from + " to: " + to + ")";
     }
+    @Override
+    public String toSave() { return "E" + super.toSave() + " /from " + from + " /to " + to; }
 }

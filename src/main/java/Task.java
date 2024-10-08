@@ -7,6 +7,11 @@ public class Task {
         this.isDone = false;
     }
 
+    public Task(String description, boolean isDone) {
+        this.description = description;
+        this.isDone = isDone;
+    }
+
     public void setDone(boolean b) {
         this.isDone = b;
     }
@@ -17,4 +22,9 @@ public class Task {
     public String toString(){
         return "description: " + description;
     }
+
+    public String toSave(){
+        return (isDone ? " 1 " : " 0 " ) + description;
+    }
+
 }

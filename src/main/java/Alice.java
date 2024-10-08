@@ -4,14 +4,23 @@ import java.util.Scanner;
 public class Alice {
     private static ArrayList<Task> Tasks = new ArrayList<>();
 
+    public static String separator = "____________________________________________________________\n";
+
     public static void printTasks(){
         for (int i = 0; i < Tasks.size(); i++){
             System.out.println((i+1) + "." + Tasks.get(i).toString());
         }
     }
 
+    public static void separatorMessage(String message){
+        System.out.print(separator);
+        System.out.println(message);
+        System.out.print(separator);
+    }
+
+
     public static void main(String[] args) {
-        String separator = "____________________________________________________________\n";
+
         String intro =
                 "____________________________________________________________\n" +
                 "Hello! I'm Alice, here to make you magically organized!\n" +
@@ -42,7 +51,7 @@ public class Alice {
                     break;
                 case "delete":
                     if (instruction.length == 1){
-                        System.out.println("Do specify the task number to delete!");
+                        separatorMessage("Do specify the task number to delete!");
                         break;
                     }
                     try {
@@ -54,17 +63,13 @@ public class Alice {
                         System.out.print("Now you have " + Tasks.size() + " in the list." + "\n" + separator);
 
                     }catch (IndexOutOfBoundsException e){
-                        System.out.print(separator);
-                        System.out.println("Task number not found!");
-                        System.out.print(separator);
+                        separatorMessage("Task number not found!");
                         break;
                     }
                     break;
                 case "mark":
                     if (instruction.length == 1){
-                        System.out.print(separator);
-                        System.out.println("Do specify the task number!");
-                        System.out.print(separator);
+                        separatorMessage("Do specify the task number!");
                         break;
                     }
 
@@ -77,9 +82,7 @@ public class Alice {
                     break;
                 case "unmark":
                     if (instruction.length == 1){
-                        System.out.print(separator);
-                        System.out.println("Do specify the task number!");
-                        System.out.print(separator);
+                        separatorMessage("Do specify the task number!");
                         break;
                     }
 
@@ -92,9 +95,7 @@ public class Alice {
                     break;
                 case "todo":
                     if (instruction.length == 1){
-                        System.out.print(separator);
-                        System.out.println("The description of todo cannot be empty!");
-                        System.out.print(separator);
+                        separatorMessage("The description of todo cannot be empty!");
                         break;
                     }
                     body += instruction[1];
@@ -110,9 +111,7 @@ public class Alice {
                     break;
                 case "deadline":
                     if (instruction.length == 1){
-                        System.out.print(separator);
-                        System.out.println("The description of deadline cannot be empty!");
-                        System.out.print(separator);
+                        separatorMessage("The description of deadline cannot be empty!");
                         break;
                     }
                     body += instruction[1];
@@ -122,18 +121,14 @@ public class Alice {
                             i++;
                         }
                     } catch (ArrayIndexOutOfBoundsException e){
-                        System.out.print(separator);
-                        System.out.println("Do include the /by flag!");
-                        System.out.print(separator);
+                        separatorMessage("Do include the /by flag!");
                         break;
                     }
                     i++;
                     try {
                         param += instruction[i];
                     } catch (ArrayIndexOutOfBoundsException e){
-                        System.out.print(separator);
-                        System.out.println("Do include the day after /by!");
-                        System.out.print(separator);
+                        separatorMessage("Do include the day after /by!");
                         break;
                     }
 
@@ -156,18 +151,14 @@ public class Alice {
                             i++;
                         }
                     }catch (ArrayIndexOutOfBoundsException e){
-                        System.out.print(separator);
-                        System.out.println("Do include the /from flag!");
-                        System.out.print(separator);
+                        separatorMessage("Do include the /from flag!");
                         break;
                     }
                     i++;
                     try {
                         param += instruction[i];
                     }catch (ArrayIndexOutOfBoundsException e){
-                        System.out.print(separator);
-                        System.out.println("Do include the day after /from!");
-                        System.out.print(separator);
+                        separatorMessage("Do include the day after /from!");
                         break;
                     }
                     i++;
@@ -177,18 +168,14 @@ public class Alice {
                             i++;
                         }
                     }catch (ArrayIndexOutOfBoundsException e){
-                        System.out.print(separator);
-                        System.out.println("Do include the /to flag!");
-                        System.out.print(separator);
+                        separatorMessage("Do include the /to flag!");
                         break;
                     }
                     i++;
                     try {
                         param2 += instruction[i];
                     }catch (ArrayIndexOutOfBoundsException e){
-                        System.out.print(separator);
-                        System.out.println("Do include the day after /to!");
-                        System.out.print(separator);
+                        separatorMessage("Do include the day after /to!");
                         break;
                     }
                     i++;
@@ -203,10 +190,7 @@ public class Alice {
 
                     break;
                 default:
-                    System.out.print(separator);
-                    System.out.println("Please put an instruction I can understand :(");
-                    System.out.print(separator);
-
+                    separatorMessage("Please put an instruction I can understand :(");
             }
 
             input = new Scanner(System.in);

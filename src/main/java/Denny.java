@@ -1,5 +1,7 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.IOException;
+
 
 public class Denny {
     private static final ArrayList<Task> tasks = new ArrayList<>();
@@ -32,8 +34,28 @@ public class Denny {
 
     public static void main(String[] args) {
         UIUtil.printGreeting();
+        loadTasks();
         processUserInput();
         UIUtil.printExitMessage();
+    }
+
+    private static void loadTasks() {
+        try {
+            ArrayList<Task> loadedTasks = new ArrayList<>(Storage.loadTasks());
+            tasks.clear();  // Clear the existing tasks
+            tasks.addAll(loadedTasks);  // Add all loaded tasks to the existing ArrayList
+            UIUtil.printTasksLoaded(tasks.size());
+        } catch (IOException e) {
+            UIUtil.printError("Error loading tasks: " + e.getMessage());
+        }
+    }
+
+    private static void saveTasks() {
+        try {
+            Storage.saveTasks(tasks);
+        } catch (IOException e) {
+            UIUtil.printError("Error saving tasks: " + e.getMessage());
+        }
     }
 
     private static void processUserInput() {
@@ -94,6 +116,7 @@ public class Denny {
                 task.markAsNotDone();
                 UIUtil.printTaskUnmarked(task);
             }
+            saveTasks();
         } catch (Exception e) {
             UIUtil.printError("Error changing task status: " + e.getMessage());
         }
@@ -113,6 +136,7 @@ public class Denny {
             Task newTask = new ToDo(description);
             tasks.add(newTask);
             UIUtil.printTaskAddedMessage(newTask);
+            saveTasks();
         } catch (IllegalArgumentException e) {
             UIUtil.printError(e.getMessage());
         }
@@ -129,6 +153,7 @@ public class Denny {
             Task newTask = new Deadline(description, by);
             tasks.add(newTask);
             UIUtil.printTaskAddedMessage(newTask);
+            saveTasks();
         } catch (IllegalArgumentException e) {
             UIUtil.printError(e.getMessage());
         }
@@ -146,6 +171,7 @@ public class Denny {
             Task newTask = new Event(description, from, to);
             tasks.add(newTask);
             UIUtil.printTaskAddedMessage(newTask);
+            saveTasks();
         } catch (IllegalArgumentException e) {
             UIUtil.printError(e.getMessage());
         }
@@ -156,6 +182,7 @@ public class Denny {
             int taskIndex = getTaskIndex(userInput);
             Task deletedTask = tasks.remove(taskIndex);
             UIUtil.printTaskDeletedMessage(deletedTask, tasks.size());
+            saveTasks();
         } catch (Exception e) {
             UIUtil.printError("Error deleting task: " + e.getMessage());
         }

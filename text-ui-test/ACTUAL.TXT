@@ -10,11 +10,9 @@ ____________________________________________________________
  Hello! I'm Denny
  What can I do for you?
 ____________________________________________________________
-____________________________________________________________
  0 task(s) loaded from storage.
 ____________________________________________________________
-____________________________________________________________
- Sorry, I didn't understand that command. Unknown command: testinvalidcommand
+ Oops! Unknown command: testinvalidcommand
 ____________________________________________________________
 ____________________________________________________________
  Oops! The description of a todo cannot be empty.
@@ -25,20 +23,23 @@ ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
    [T][ ] read book
+ Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
    [T][ ] return book
+ Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
    [T][ ] buy book
+ Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
- 1. [T][ ] read book
- 2. [T][ ] return book
- 3. [T][ ] buy book
+ 1.[T][ ] read book
+ 2.[T][ ] return book
+ 3.[T][ ] buy book
 ____________________________________________________________
 ____________________________________________________________
  Nice! I've marked this task as done:
@@ -49,37 +50,38 @@ ____________________________________________________________
    [T][X] return book
 ____________________________________________________________
 ____________________________________________________________
- Oops! Error changing task status: Task index out of bounds.
+ Oops! Invalid task number.
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
- 1. [T][X] read book
- 2. [T][X] return book
- 3. [T][ ] buy book
+ 1.[T][X] read book
+ 2.[T][X] return book
+ 3.[T][ ] buy book
 ____________________________________________________________
 ____________________________________________________________
  OK, I've marked this task as not done yet:
    [T][ ] return book
 ____________________________________________________________
 ____________________________________________________________
- Oops! Error changing task status: Task index out of bounds.
+ Oops! Invalid task number.
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
- 1. [T][X] read book
- 2. [T][ ] return book
- 3. [T][ ] buy book
+ 1.[T][X] read book
+ 2.[T][ ] return book
+ 3.[T][ ] buy book
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
    [T][ ] borrow book
+ Now you have 4 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
- 1. [T][X] read book
- 2. [T][ ] return book
- 3. [T][ ] buy book
- 4. [T][ ] borrow book
+ 1.[T][X] read book
+ 2.[T][ ] return book
+ 3.[T][ ] buy book
+ 4.[T][ ] borrow book
 ____________________________________________________________
 ____________________________________________________________
  Oops! Please provide the deadline in the format: deadline <description> /by <date>
@@ -88,7 +90,7 @@ ____________________________________________________________
  Oops! Please provide the deadline in the format: deadline <description> /by <date>
 ____________________________________________________________
 ____________________________________________________________
- Oops! The description of a deadline cannot be empty.
+ Oops! Please provide the deadline in the format: deadline <description> /by <date>
 ____________________________________________________________
 ____________________________________________________________
  Oops! Please provide the deadline in the format: deadline <description> /by <date>
@@ -96,6 +98,7 @@ ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
    [D][ ] return book (by: Sunday)
+ Now you have 5 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Oops! Please provide the event details in the format: event <description> /from <start date> /to <end date>
@@ -115,21 +118,22 @@ ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
    [E][ ] project meeting (from: Mon 2pm to: 4pm)
+ Now you have 6 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
- 1. [T][X] read book
- 2. [T][ ] return book
- 3. [T][ ] buy book
- 4. [T][ ] borrow book
- 5. [D][ ] return book (by: Sunday)
- 6. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+ 1.[T][X] read book
+ 2.[T][ ] return book
+ 3.[T][ ] buy book
+ 4.[T][ ] borrow book
+ 5.[D][ ] return book (by: Sunday)
+ 6.[E][ ] project meeting (from: Mon 2pm to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
- Oops! Error deleting task: Invalid task number. Please enter a valid number.
+ Oops! Invalid task number.
 ____________________________________________________________
 ____________________________________________________________
- Oops! Error deleting task: Invalid task number. Please enter a valid number.
+ Oops! Invalid task number.
 ____________________________________________________________
 ____________________________________________________________
  Noted. I've removed this task:
@@ -138,11 +142,12 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
- 1. [T][X] read book
- 2. [T][ ] return book
- 3. [T][ ] borrow book
- 4. [D][ ] return book (by: Sunday)
- 5. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+ 1.[T][X] read book
+ 2.[T][ ] return book
+ 3.[T][ ] borrow book
+ 4.[D][ ] return book (by: Sunday)
+ 5.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+____________________________________________________________
 ____________________________________________________________
  Bye. Hope to see you again soon!
 ____________________________________________________________

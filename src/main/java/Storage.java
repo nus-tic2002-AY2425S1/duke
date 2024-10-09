@@ -7,19 +7,30 @@ public class Storage {
 
     public Storage(String filePath) {
         this.filePath = filePath;
+        createDirectoryIfNotExists();
+    }
+
+    private void createDirectoryIfNotExists() {
+        File directory = new File(filePath).getParentFile();
+        if (directory != null && !directory.exists()) {
+            directory.mkdirs();
+        }
     }
 
     public List<Task> loadTasks() throws IOException {
         List<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
         if (!file.exists()) {
-            file.createNewFile();
             return tasks;
         }
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                tasks.add(parseTask(line));
+                try {
+                    tasks.add(parseTask(line));
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Error parsing line: " + line + ". " + e.getMessage());
+                }
             }
         }
         return tasks;
@@ -36,6 +47,9 @@ public class Storage {
 
     private Task parseTask(String line) {
         String[] parts = line.split("\\|");
+        if (parts.length < 3) {
+            throw new IllegalArgumentException("Invalid task format");
+        }
         String type = parts[0].trim();
         boolean isDone = parts[1].trim().equals("1");
         String description = parts[2].trim();

@@ -1,101 +1,78 @@
 import java.io.*;
-import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Storage {
-    private static final String DATA_DIRECTORY = "data";
-    private static final String DATA_FILE = "duke.txt";
-    private static final Path DATA_PATH = Paths.get(DATA_DIRECTORY, DATA_FILE);
+    private final String filePath;
 
-    public static void saveTasks(List<Task> tasks) throws IOException {
-        createDataDirectoryIfNotExists();
-        try (BufferedWriter writer = Files.newBufferedWriter(DATA_PATH)) {
-            for (Task task : tasks) {
-                writer.write(taskToFileString(task));
-                writer.newLine();
-            }
-        }
+    public Storage(String filePath) {
+        this.filePath = filePath;
     }
 
-    public static ArrayList<Task> loadTasks() throws IOException {
-        ArrayList<Task> tasks = new ArrayList<>();
-        if (Files.exists(DATA_PATH)) {
-            try (BufferedReader reader = Files.newBufferedReader(DATA_PATH)) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    Task task = fileStringToTask(line);
-                    if (task != null) {
-                        tasks.add(task);
-                    }
-                }
+    public List<Task> loadTasks() throws IOException {
+        List<Task> tasks = new ArrayList<>();
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.createNewFile();
+            return tasks;
+        }
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                tasks.add(parseTask(line));
             }
         }
         return tasks;
     }
 
-    private static void createDataDirectoryIfNotExists() throws IOException {
-        Files.createDirectories(Paths.get(DATA_DIRECTORY));
+    public void saveTasks(List<Task> tasks) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            for (Task task : tasks) {
+                writer.write(formatTask(task));
+                writer.newLine();
+            }
+        }
     }
 
-    private static String taskToFileString(Task task) {
-        String typeCode;
-        String additionalInfo = "";
-
-        if (task instanceof ToDo) {
-            typeCode = "T";
-        } else if (task instanceof Deadline) {
-            typeCode = "D";
-            additionalInfo = " | " + ((Deadline) task).getBy();
-        } else if (task instanceof Event) {
-            typeCode = "E";
-            additionalInfo = " | " + ((Event) task).getFrom() + " | " + ((Event) task).getTo();
-        } else {
-            throw new IllegalArgumentException("Unknown task type");
-        }
-
-        return String.format("%s | %d | %s%s", typeCode, task.isDone() ? 1 : 0, task.getDescription(), additionalInfo);
-    }
-
-    private static Task fileStringToTask(String line) {
-        String[] parts = line.split(" \\| ");
-        if (parts.length < 3) {
-            System.out.println("Warning: Skipping invalid line in data file: " + line);
-            return null;
-        }
-
-        String typeCode = parts[0];
-        boolean isDone = parts[1].equals("1");
-        String description = parts[2];
+    private Task parseTask(String line) {
+        String[] parts = line.split("\\|");
+        String type = parts[0].trim();
+        boolean isDone = parts[1].trim().equals("1");
+        String description = parts[2].trim();
 
         Task task;
-        switch (typeCode) {
+        switch (type) {
             case "T":
                 task = new ToDo(description);
                 break;
             case "D":
-                if (parts.length < 4) {
-                    System.out.println("Warning: Skipping invalid Deadline task in data file: " + line);
-                    return null;
-                }
-                task = new Deadline(description, parts[3]);
+                String by = parts[3].trim();
+                task = new Deadline(description, by);
                 break;
             case "E":
-                if (parts.length < 5) {
-                    System.out.println("Warning: Skipping invalid Event task in data file: " + line);
-                    return null;
-                }
-                task = new Event(description, parts[3], parts[4]);
+                String from = parts[3].trim();
+                String to = parts[4].trim();
+                task = new Event(description, from, to);
                 break;
             default:
-                System.out.println("Warning: Unknown task type in data file: " + line);
-                return null;
+                throw new IllegalArgumentException("Unknown task type: " + type);
         }
 
         if (isDone) {
             task.markAsDone();
         }
-
         return task;
+    }
+
+    private String formatTask(Task task) {
+        String type = task instanceof ToDo ? "T" : task instanceof Deadline ? "D" : "E";
+        String isDone = task.isDone() ? "1" : "0";
+        String formatted = String.format("%s | %s | %s", type, isDone, task.getDescription());
+        if (task instanceof Deadline) {
+            formatted += " | " + ((Deadline) task).getBy();
+        } else if (task instanceof Event) {
+            formatted += " | " + ((Event) task).getFrom() + " | " + ((Event) task).getTo();
+        }
+        return formatted;
     }
 }

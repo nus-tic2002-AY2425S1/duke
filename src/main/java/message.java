@@ -14,7 +14,7 @@ public class message {
     public static void printHorizontalLines(){
         System.out.println("____________________________________________________________");
     }
-    // (Wk 3) Level-0 printing simple welcome message
+    // (Wk 3) Level-0 Print welcome message
     public static void printWelcomeMessage(String systemName) {
         printHorizontalLines();
         System.out.println("Hello! I'm " + systemName);

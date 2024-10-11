@@ -1,4 +1,4 @@
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
@@ -12,19 +12,14 @@ public class Task {
         this.isDone = isDone;
     }
 
-    public void setDone(boolean b) {
+    protected void setDone(boolean b) {
         this.isDone = b;
     }
     public String getDescription() {
         return description;
     }
-    @Override
-    public String toString(){
-        return "description: " + description;
-    }
 
-    public String toSave(){
-        return (isDone ? " 1 " : " 0 " ) + description;
-    }
+    public abstract String print();
+    public abstract String toSave();
 
 }

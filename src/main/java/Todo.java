@@ -15,9 +15,9 @@ public class Todo extends Task {
     }
 
     @Override
-    public String toString(){
-        return "[T]" + (isDone ? "[X] " : "[ ] ") + super.toString();
+    public String print(){
+        return "[T]" + (isDone ? "[X] " : "[ ] ") + "description: " + description;
     }
     @Override
-    public String toSave() { return "T" + super.toSave(); }
+    public String toSave() { return "T" + (isDone ? " 1 " : " 0 " ) + description; }
 }

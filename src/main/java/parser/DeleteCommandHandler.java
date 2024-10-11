@@ -1,13 +1,12 @@
-package command;
+package parser;
 
 import exception.DukeException;
-import output.OutputHandler;
 import tasks.Task;
 
 import java.util.List;
 
-import static command.Utility.isValidIndex;
-import static command.Utility.parseTaskIndex;
+import static parser.Utility.isValidIndex;
+import static parser.Utility.parseTaskIndex;
 import static output.OutputHandler.printDeleteItem;
 
 public class DeleteCommandHandler implements CommandHandler{

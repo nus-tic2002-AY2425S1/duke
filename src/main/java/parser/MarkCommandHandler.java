@@ -1,10 +1,10 @@
-package command;
+package parser;
 
 import exception.DukeException;
 import tasks.Task;
 import java.util.List;
-import static command.Utility.isValidIndex;
-import static command.Utility.parseTaskIndex;
+import static parser.Utility.isValidIndex;
+import static parser.Utility.parseTaskIndex;
 import static output.OutputHandler.printMarkDone;
 
 public class MarkCommandHandler implements CommandHandler{

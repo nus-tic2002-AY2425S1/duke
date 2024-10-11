@@ -25,5 +25,10 @@ public class Event extends Task{
         }
         return new Event(eventParts[0], eventParts[1], eventParts[2]);
     }
+
+    @Override
+    public String toFileFormat(){
+        return "E|" + (isDone ? 1:0) + "|" + description + "|" + from + "|" + to;
+    }
     
 }

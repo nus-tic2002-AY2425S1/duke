@@ -1,8 +1,11 @@
+package ui;
+
 import java.util.*;
 
-import command.*;
-import command.CommandHandler;
+import parser.*;
+import parser.CommandHandler;
 import exception.DukeException;
+import storage.FileProcessor;
 import tasks.*;
 import static output.OutputHandler.*;
 
@@ -10,6 +13,7 @@ import static output.OutputHandler.*;
 
 public class DukeGPT {
     private static String chatbotName = "DukeGPT";
+    private static String fileLocation = "./data/dukegpt.txt";
     private static List<Task> tasks = new ArrayList<>();
     private static Map<String, CommandHandler> commandHandlerMapping = new HashMap<>();
 
@@ -24,6 +28,12 @@ public class DukeGPT {
         Scanner scanner = new Scanner(System.in);
         initCommandHandlers();
         printGreetings(chatbotName);
+        FileProcessor fileProcessor = new FileProcessor(fileLocation);
+        try{
+            tasks = fileProcessor.load();
+        } catch (DukeException e){
+            printError("OOPS!! Error initialising save file!" + e.getMessage());
+        }
 
         while (true){
             String userInput = scanner.nextLine().trim();
@@ -45,6 +55,7 @@ public class DukeGPT {
                     tasks.add(newTask);
                     printAddedItems(newTask, tasks);
                 }
+                fileProcessor.save(tasks);
             } catch (DukeException e){
                 printError(e.getMessage());
             } catch (NumberFormatException e){
@@ -53,5 +64,6 @@ public class DukeGPT {
                 printError("OOPS!!! Something went wrong, please try again");
             }
         }
+
     }
 }

@@ -25,4 +25,5 @@ public abstract class Task {
     }
 
     public abstract Task createTask(String description) throws DukeException;
+    public abstract String toFileFormat() throws DukeException;
 }

@@ -23,4 +23,9 @@ public class Deadline extends Task{
         }
         return new Deadline(deadlineParts[0],deadlineParts[1]);
     }
+
+    @Override
+    public String toFileFormat(){
+        return "D|" + (isDone ? 1:0) + "|" + description + "|" + time;
+    }
 }

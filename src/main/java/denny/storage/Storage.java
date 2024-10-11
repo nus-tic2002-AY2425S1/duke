@@ -1,3 +1,10 @@
+package denny.storage;
+
+import denny.task.Deadline;
+import denny.task.Event;
+import denny.task.Task;
+import denny.task.ToDo;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;

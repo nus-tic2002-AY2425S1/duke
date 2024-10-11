@@ -1,4 +1,4 @@
-# Denny User Guide
+# denny.main.Denny User Guide
 
 // Update the title above to match the actual product name
 

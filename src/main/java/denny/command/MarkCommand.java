@@ -1,9 +1,16 @@
+package denny.command;
+
+import denny.task.TaskList;
+import denny.task.Task;
+import denny.ui.Ui;
+import denny.storage.Storage;
+import denny.exception.DennyException;
 import java.io.IOException;
 
-public class UnmarkCommand extends Command {
+public class MarkCommand extends Command {
     private final String arguments;
 
-    public UnmarkCommand(String arguments) {
+    public MarkCommand(String arguments) {
         this.arguments = arguments;
     }
 
@@ -12,8 +19,8 @@ public class UnmarkCommand extends Command {
         try {
             int index = Integer.parseInt(arguments) - 1;
             Task task = tasks.getTask(index);
-            task.markAsNotDone();
-            ui.showTaskUnmarked(task);
+            task.markAsDone();
+            ui.showTaskMarkedDone(task);
             storage.saveTasks(tasks.getAllTasks());
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
             throw new DennyException("Invalid task number.");

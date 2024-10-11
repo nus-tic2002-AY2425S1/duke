@@ -1,3 +1,7 @@
+package denny.ui;
+
+import denny.task.Task;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,7 +24,7 @@ public class Ui {
             """;
         System.out.println("Hello from\n" + logo);
         showLine();
-        System.out.println(" Hello! I'm Denny");
+        System.out.println(" Hello! I'm denny.main.Denny");
         System.out.println(" What can I do for you?");
         showLine();
     }

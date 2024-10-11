@@ -1,3 +1,11 @@
+package denny.command;
+
+import denny.task.TaskList;
+import denny.task.Task;
+import denny.ui.Ui;
+import denny.storage.Storage;
+import denny.exception.DennyException;
+import denny.task.Event;
 import java.io.IOException;
 
 public class AddEventCommand extends Command {

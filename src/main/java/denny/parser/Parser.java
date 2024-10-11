@@ -1,3 +1,8 @@
+package denny.parser;
+
+import denny.command.*;
+import denny.exception.DennyException;
+
 public class Parser {
     public Command parse(String fullCommand) throws DennyException {
         String[] parts = fullCommand.split(" ", 2);

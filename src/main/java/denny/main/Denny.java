@@ -1,3 +1,12 @@
+package denny.main;
+
+import denny.command.Command;
+import denny.exception.DennyException;
+import denny.parser.Parser;
+import denny.storage.Storage;
+import denny.ui.Ui;
+import denny.task.TaskList;
+
 import java.io.IOException;
 
 public class Denny {

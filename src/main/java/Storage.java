@@ -45,7 +45,7 @@ public class Storage {
                         i++;
                     }
                     System.out.println(body.toString() + instruction[1]);
-                    loadList.add(new Todo(body.toString(), Boolean.getBoolean(instruction[1])));
+                    loadList.add(new Todo(body.toString(), Boolean.parseBoolean(instruction[1])));
                     break;
                 case "D":
                     if (instruction.length == 1) {
@@ -75,7 +75,7 @@ public class Storage {
                         param.append(" ").append(instruction[i]);
                         i++;
                     }
-                    loadList.add(new Deadline(body.toString(), Boolean.getBoolean(instruction[1]), param.toString()));
+                    loadList.add(new Deadline(body.toString(), Boolean.parseBoolean(instruction[1]), param.toString()));
 
                     break;
                 case "E":
@@ -118,7 +118,7 @@ public class Storage {
                         param2.append(" ").append(instruction[i]);
                         i++;
                     }
-                    loadList.add(new Event(body.toString(), Boolean.getBoolean(instruction[1]), param.toString(), param2.toString()));
+                    loadList.add(new Event(body.toString(), Boolean.parseBoolean(instruction[1]), param.toString(), param2.toString()));
                     break;
                 default:
                     System.out.println("Please put an instruction I can understand :(");

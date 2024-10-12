@@ -21,9 +21,9 @@ public class Deadline extends Task{
 
     @Override
     public String print() {
-        return "[D][ ] description: " + description + " (by: " + by + ")";
+        return "[D]["+ (isDone ? "X" : " " ) +"] description: " + description + " (by: " + by + ")";
     }
 
     @Override
-    public String toSave() { return "D" + (isDone ? " 1 " : " 0 " ) + description + " /by " + by; }
+    public String toSave() { return "D" + (isDone ? " true " : " false " ) + description + " /by " + by; }
 }

@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.*;
 
 public class Parser {
@@ -33,7 +32,9 @@ public class Parser {
                     return new IncorrectCommand();
                 }
             case "todo", "deadline", "event":
-                return new AddCommand(action, instruction);
+                return new AddCommand(action, String.join(" ", instruction));
+            case "help":
+                return new HelpCommand();
             default:
                 return new UnknownCommand();
         }

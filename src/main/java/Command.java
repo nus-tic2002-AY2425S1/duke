@@ -5,7 +5,10 @@ public abstract class Command {
     private int index = -1;
     private boolean bool;
     private String action;
-    private ArrayList<String> instruction;
+    private String instruction;
+
+    public abstract boolean isExit();
+    public abstract void execute(TaskList tasks,Ui ui,Storage storage) throws IOException, NoArgsException;
 
     public Command(){
     }
@@ -15,13 +18,11 @@ public abstract class Command {
         this.setBool(bool);
     }
 
-    public Command(String action, ArrayList<String> instruction){
+    public Command(String action, String instruction){
         this.setAction(action);
         this.setInstruction(instruction);
     }
 
-    public abstract boolean isExit();
-    public abstract void execute(TaskList tasks,Ui ui,Storage storage) throws IOException, NoArgsException;
 
     public Command(int index){
         this.setIndex(index);
@@ -43,11 +44,11 @@ public abstract class Command {
         this.bool = bool;
     }
 
-    public ArrayList<String> getInstruction() {
+    public String getInstruction() {
         return instruction;
     }
 
-    public void setInstruction(ArrayList<String> instruction) {
+    public void setInstruction(String instruction) {
         this.instruction = instruction;
     }
 

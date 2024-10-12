@@ -15,7 +15,7 @@ public class DeleteCommand extends Command{
         Task task = tasks.get(getIndex());
         tasks.remove(getIndex());
         System.out.println("Noted. I've removed this task:");
-        System.out.println(task.toString());
+        System.out.println(task.print());
         ui.showSize(tasks.size());
     }
 }

@@ -1,5 +1,11 @@
 public class NoArgsException extends Exception{
+    private final String error;
+
+    public NoArgsException(String error){
+        this.error = error;
+    }
+
     public String getMessage(){
-        return "No arguments in the command!";
+        return "No "+ error +" in the command!";
     }
 }

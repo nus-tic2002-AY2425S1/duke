@@ -33,8 +33,8 @@ public class Event extends Task{
 
     @Override
     public String print() {
-        return "[E][ ] description: " + description + " (from: " + from + " to: " + to + ")";
+        return "[E]["+ (isDone ? "X" : " " ) +"] description: " + description + " (from: " + from + " to: " + to + ")";
     }
     @Override
-    public String toSave() { return "E" + (isDone ? " 1 " : " 0 " ) + description + " /from " + from + " /to " + to; }
+    public String toSave() { return "E" + (isDone ? " true " : " false " ) + description + " /from " + from + " /to " + to; }
 }

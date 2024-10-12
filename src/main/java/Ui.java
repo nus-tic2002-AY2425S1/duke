@@ -25,12 +25,14 @@ public class Ui {
         System.out.println(intro);
     }
 
+    public void showHelp(){
+        String help = "These are the commands available for you:\nlist\nmark (list number)\nunmark (list number)\ntodo (task)\ndeadline (task) /by (date)\nevent (task) /from (date) /to (date)\ndelete (list number)\nbye";
+        System.out.println(help);
+    }
+
+
     public void showEnding(){
-        String ending =
-                """
-                        ____________________________________________________________
-                        Bye. Back to my wonderland!
-                        ____________________________________________________________""";
+        String ending = "Bye. Back to my wonderland!";
         System.out.println(ending);
     }
 

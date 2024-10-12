@@ -19,5 +19,5 @@ public class Todo extends Task {
         return "[T]" + (isDone ? "[X] " : "[ ] ") + "description: " + description;
     }
     @Override
-    public String toSave() { return "T" + (isDone ? " 1 " : " 0 " ) + description; }
+    public String toSave() { return "T" + (isDone ? " true " : " false " ) + description; }
 }

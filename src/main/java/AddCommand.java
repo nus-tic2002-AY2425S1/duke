@@ -1,9 +1,10 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AddCommand extends Command{
 
-    public AddCommand(String action, ArrayList<String> instruction) {
+    public AddCommand(String action, String instruction) {
         super(action, instruction);
     }
 
@@ -14,48 +15,36 @@ public class AddCommand extends Command{
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws IOException, NoArgsException {
+
         if (getInstruction().isEmpty())
-            throw new NoArgsException();
+            throw new NoArgsException("arguments");
 
-        if (getAction().equals("todo"))
-            tasks.add(new Todo(getInstruction().toString()));
-        else if (getAction().equals("deadline")){
-            if (instruction.length == 1){
-                separatorMessage("The description of deadline cannot be empty!");
+        switch (getAction()) {
+            case "todo":
+                tasks.add(new Todo(getInstruction()));
                 break;
-            }
-            body.append(instruction[1]);
-            try {
-                while (!instruction[i].equals("/by")) {
-                    body.append(" ").append(instruction[i]);
-                    i++;
-                }
-            } catch (ArrayIndexOutOfBoundsException e){
-                separatorMessage("Do include the /by flag!");
-                break;
-            }
-            i++;
-            try {
-                param.append(instruction[i]);
-            } catch (ArrayIndexOutOfBoundsException e){
-                separatorMessage("Do include the day after /by!");
-                break;
-            }
+            case "deadline":
+                if (!getInstruction().contains(" /by "))
+                    throw new NoArgsException("/by");
 
-            i++;
-            while(i < instruction.length) {
-                param.append(" ").append(instruction[i]);
-                i++;
-            }
-            tasks.add(new Deadline(body.toString(), param.toString()));
-            System.out.print(separator);
-            System.out.println("Got it, I've added this task: \n" + tasks.getLast().print());
-            System.out.print("Now you have " + tasks.size() + " in the list." + "\n" + separator);
+                ArrayList<String> deadlineInstruction = new ArrayList<>(Arrays.asList(getInstruction().split(" /by ")));
+                tasks.add(new Deadline(deadlineInstruction.getFirst(), deadlineInstruction.getLast()));
+                break;
+            case "event":
+                if (!getInstruction().contains(" /from "))
+                    throw new NoArgsException("/from");
+                else if (!getInstruction().contains(" /to "))
+                    throw new NoArgsException("/to");
 
+                ArrayList<String> eventInstruction = new ArrayList<>(Arrays.asList(getInstruction().split(" /from ")));
+                ArrayList<String> eventInstruction2 = new ArrayList<>(Arrays.asList(eventInstruction.getLast().split(" /to ")));
+
+                tasks.add(new Event(eventInstruction.getFirst(), eventInstruction2.getFirst(), eventInstruction2.getLast()));
+                break;
         }
-
-        System.out.println("Got it, I've added this task: \n" + getInstruction().toString());
+        System.out.println("Got it, I've added this task: \n" + tasks.getLast().print());
         ui.showSize(tasks.size());
+
     }
 }
 

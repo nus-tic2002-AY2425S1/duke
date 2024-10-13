@@ -1,8 +1,15 @@
+package alice.command;
+
+import alice.exception.NoArgsException;
+import alice.storage.Storage;
+import alice.task.*;
+import alice.ui.Ui;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class AddCommand extends Command{
+public class AddCommand extends Command {
 
     public AddCommand(String action, String instruction) {
         super(action, instruction);
@@ -47,47 +54,3 @@ public class AddCommand extends Command{
 
     }
 }
-
-//body.append(instruction[1]);
-//                try {
-//                        while (!instruction[i].equals("/from")) {
-//        body.append(" ").append(instruction[i]);
-//i++;
-//        }
-//        }catch (ArrayIndexOutOfBoundsException e){
-//separatorMessage("Do include the /from flag!");
-//                    break;
-//                            }
-//i++;
-//        try {
-//        param.append(instruction[i]);
-//                }catch (ArrayIndexOutOfBoundsException e){
-//separatorMessage("Do include the day after /from!");
-//                    break;
-//                            }
-//i++;
-//        try {
-//        while (!instruction[i].equals("/to")) {
-//        param.append(" ").append(instruction[i]);
-//i++;
-//        }
-//        }catch (ArrayIndexOutOfBoundsException e){
-//separatorMessage("Do include the /to flag!");
-//                    break;
-//                            }
-//i++;
-//        try {
-//        param2.append(instruction[i]);
-//                }catch (ArrayIndexOutOfBoundsException e){
-//separatorMessage("Do include the day after /to!");
-//                    break;
-//                            }
-//i++;
-//        while(i < instruction.length) {
-//        param2.append(" ").append(instruction[i]);
-//i++;
-//        }
-//        tasks.add(new Event(body.toString(), param.toString(), param2.toString()));
-//        System.out.print(separator);
-//                System.out.println("Got it, I've added this task: \n" + tasks.getLast().print());
-//        System.out.print("Now you have " + tasks.size() + " in the list." + "\n" + separator);

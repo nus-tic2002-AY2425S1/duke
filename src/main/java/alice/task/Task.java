@@ -1,3 +1,5 @@
+package alice.task;
+
 public abstract class Task {
     protected String description;
     protected boolean isDone;
@@ -12,7 +14,7 @@ public abstract class Task {
         this.isDone = isDone;
     }
 
-    protected void setDone(boolean b) {
+    public void setDone(boolean b) {
         this.isDone = b;
     }
     public String getDescription() {

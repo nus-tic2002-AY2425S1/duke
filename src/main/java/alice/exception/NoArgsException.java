@@ -1,3 +1,5 @@
+package alice.exception;
+
 public class NoArgsException extends Exception{
     private final String error;
 
@@ -6,6 +8,6 @@ public class NoArgsException extends Exception{
     }
 
     public String getMessage(){
-        return "No "+ error +" in the command!";
+        return "No "+ error +" in the alice.command!";
     }
 }

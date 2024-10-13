@@ -1,6 +1,12 @@
+package alice.command;
+
+import alice.storage.Storage;
+import alice.task.*;
+import alice.ui.Ui;
+
 import java.io.IOException;
 
-public class MarkCommand extends Command{
+public class MarkCommand extends Command {
 
     public MarkCommand(int index, boolean bool){
         super(index, bool);

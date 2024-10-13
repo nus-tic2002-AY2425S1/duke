@@ -1,6 +1,12 @@
+package alice.command;
+
+import alice.storage.Storage;
+import alice.task.TaskList;
+import alice.ui.Ui;
+
 import java.io.IOException;
 
-public class ExitCommand extends Command{
+public class ExitCommand extends Command {
 
     public boolean isExit(){
         return true;

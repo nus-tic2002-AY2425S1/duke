@@ -1,10 +1,14 @@
+package alice.parser;
+
+import alice.command.*;
+
 import java.util.*;
 
 public class Parser {
 
     public static Command parse(String fullCommand){
         ArrayList<String> instruction = new ArrayList<>(Arrays.asList(fullCommand.split(" ")));
-        //break the command into args
+        //break the alice.command into args
         String action = instruction.getFirst();
         instruction.removeFirst();
 

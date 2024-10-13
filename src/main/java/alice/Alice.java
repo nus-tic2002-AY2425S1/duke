@@ -1,3 +1,12 @@
+package alice;
+
+import alice.command.Command;
+import alice.exception.NoArgsException;
+import alice.parser.Parser;
+import alice.storage.Storage;
+import alice.task.*;
+import alice.ui.Ui;
+
 import java.io.IOException;
 
 public class Alice {

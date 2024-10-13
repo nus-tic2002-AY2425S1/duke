@@ -1,6 +1,13 @@
+package alice.command;
+
+import alice.exception.NoArgsException;
+import alice.storage.Storage;
+import alice.task.TaskList;
+import alice.ui.Ui;
+
 import java.io.IOException;
 
-public class UnknownCommand extends Command{
+public class UnknownCommand extends Command {
 
     @Override
     public boolean isExit() {

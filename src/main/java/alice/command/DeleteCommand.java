@@ -1,6 +1,12 @@
+package alice.command;
+
+import alice.storage.Storage;
+import alice.task.*;
+import alice.ui.Ui;
+
 import java.io.IOException;
 
-public class DeleteCommand extends Command{
+public class DeleteCommand extends Command {
 
     public DeleteCommand(int index){
         super(index);

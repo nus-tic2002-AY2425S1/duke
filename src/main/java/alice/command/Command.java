@@ -1,5 +1,11 @@
+package alice.command;
+
+import alice.exception.NoArgsException;
+import alice.storage.Storage;
+import alice.task.TaskList;
+import alice.ui.Ui;
+
 import java.io.IOException;
-import java.util.ArrayList;
 
 public abstract class Command {
     private int index = -1;
@@ -8,7 +14,7 @@ public abstract class Command {
     private String instruction;
 
     public abstract boolean isExit();
-    public abstract void execute(TaskList tasks,Ui ui,Storage storage) throws IOException, NoArgsException;
+    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws IOException, NoArgsException;
 
     public Command(){
     }

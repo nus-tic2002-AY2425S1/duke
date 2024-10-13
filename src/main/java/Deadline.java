@@ -16,4 +16,9 @@ public class Deadline extends Task{
     public String toString() {
         return "[" + getTaskType() + "][" + getStatusIcon() +"] " + taskName + " (by: " + by +")";
     }
+
+    @Override
+    public String toFileString() {
+        return getTaskType() + " | " + (isDone ? "1" : "0") + " | " + taskName + " | " + by;
+    }
 }

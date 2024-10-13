@@ -19,4 +19,9 @@ public class Event extends Task{
     public String toString(){
         return "[" + getTaskType() + "][" + getStatusIcon() +"] " + taskName + " (from: " + from + " to: " + to + ")";
     }
+
+    @Override
+    public String toFileString() {
+        return getTaskType() + " | " + (isDone ? "1" : "0") + " | " + taskName + " | " + from + " | " + to;
+    }
 }

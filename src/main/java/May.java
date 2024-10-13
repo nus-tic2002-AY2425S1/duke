@@ -13,6 +13,9 @@ public class May {
 
     public static void main(String[] args) {
 
+        // Load tasks from file
+        taskList = SaveTask.loadTasks();
+
         //Scanner
         Scanner scan = new Scanner(System.in);
         String input;
@@ -56,6 +59,7 @@ public class May {
                         taskList.get(taskIndex).markAsDone();
                         System.out.println("Congratulations! You have completed the task! ");
                         System.out.println(" " + taskList.get(taskIndex));
+                        SaveTask.saveTasks(taskList);
                     }
                     else {
                         // add in error handle
@@ -72,6 +76,7 @@ public class May {
                         taskList.get(taskIndex).unmarkAsDone();
                         System.out.println("Task have not done, Kindly complete the task. ");
                         System.out.println(" " + taskList.get(taskIndex));
+                        SaveTask.saveTasks(taskList);  // Save after unmarking as done
                     }
                     else {
                         // add in error handle
@@ -119,6 +124,7 @@ public class May {
                         System.out.println("Noted. I've removed this task:");
                         System.out.println(" " + removedTask);
                         System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+                        SaveTask.saveTasks(taskList);
                     } else {
                         throw new ErrorException("Invalid task index. Please enter a valid task index.");
                     }
@@ -156,6 +162,7 @@ public class May {
                 System.out.println("Got it, I've updated this task:");
                 System.out.println(" " + taskList.get(i));
                 System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+                SaveTask.saveTasks(taskList);
                 return;
             }
         }
@@ -168,6 +175,7 @@ public class May {
         System.out.println("Got it, I've added this task:");
         System.out.println(" " + taskList.get(taskList.size() - 1));
         System.out.println("Now you have " + taskList.size()  + " tasks in the task list.");
+        SaveTask.saveTasks(taskList);
     }
 
     //display the task in the task list

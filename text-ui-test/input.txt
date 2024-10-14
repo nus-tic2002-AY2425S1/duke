@@ -17,10 +17,14 @@ list
 todo join sports club
 mark 4
 list
+delete 2
+list
 todo borrow book
 list
 deadline do homework /by no idea :-p
 list
 mark abc
 mark 123456789
+delete abc
+delete 123456789
 bye

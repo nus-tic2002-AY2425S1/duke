@@ -13,17 +13,29 @@ public class Javaro {
     static final String NEW_LINE = "\n";
 
     // Commands used in chatbot
-    static final String BYE="bye";
-    static final String LIST="list";
-    static final String MARK="mark";
-    static final String UNMARK="unmark";
-    static final String TODO="todo";
-    static final String DEADLINE="deadline";
+    // static final String BYE=Command.BYE.toString();
+    // static final String LIST=Command.LIST.toString();
+    // static final String MARK=Command.MARK.toString();
+    // static final String UNMARK=Command.UNMARK.toString();
+    // static final String TODO=Command.TODO.toString();
+    // static final String DEADLINE=Command.DEADLINE.toString();
+
+    // static final String BYE="bye";
+    // static final String LIST="list";
+    // static final String MARK="mark";
+    // static final String UNMARK="unmark";
+    // static final String TODO="todo";
+    // static final String DEADLINE="deadline";
     static final String BY="/by";
-    static final String EVENT="event";
+    
+    // static final String EVENT=Command.EVENT.toString();
+    // static final String EVENT="event";
+    
     static final String FROM="/from";
     static final String TO="/to";
-    static final String DELETE="delete";
+    
+    // static final String DELETE=Command.DELETE.toString();
+    // static final String DELETE="delete";
     
     // Solution below adapted from https://stackoverflow.com/questions/1073787/print-spaces-with-string-format
     // https://stackoverflow.com/questions/69576641/why-would-you-use-a-stringbuilder-method-over-a-string-in-java
@@ -148,6 +160,16 @@ public class Javaro {
         return input.startsWith(command);
     }
 
+
+    public static String getTaskWord(int taskListSize) {
+        StringBuilder taskWordStringBuilder = new StringBuilder(" task");
+        if (taskListSize > 1) {
+            taskWordStringBuilder.append("s");
+        }
+        String taskWord = taskWordStringBuilder.toString();
+        return taskWord;
+    }
+
     // Add the ability to mark tasks as done. Optionally, add the ability to change the status back to not done.
     // list will be the list of tasks that the user has entered
     // input will be the command that the user types (e.g. "mark 1")
@@ -179,7 +201,7 @@ public class Javaro {
         alreadyMarkedMessage = alreadyMarkedMessage.append("done. No action done.");
         alreadyUnmarkedMessage = alreadyUnmarkedMessage.append("done. No action done.");
         
-        if (input.startsWith(MARK)) {
+        if (checkInputStartsWith(input, Command.MARK)) {
             if (taskToMark.getDone() == true) {
                 // throw new TaskException(alreadyMarkedMessage.toString());
                 throw new TaskException("The task is already marked as done. No action done.");
@@ -206,7 +228,11 @@ public class Javaro {
     public static String extractDescription(String details, String command) throws TaskException {
         String description = details.trim();
 
-        if (command.equals(TODO) == true) {
+        boolean isCommandEqualTodo = checkEquals(command, Command.TODO);
+        boolean isCommandEqualDeadline = checkEquals(command, Command.DEADLINE);
+        boolean isCommandEqualEvent = checkEquals(command, Command.EVENT);
+
+        if (isCommandEqualTodo == true) {
             description = details.substring(0, details.length()).trim();
         } else {
             int slashIndex = details.indexOf('/');
@@ -217,10 +243,10 @@ public class Javaro {
             String message;
     
             if (hasSlash == false) {     // User did not input /
-                if (command.equals(DEADLINE)) {
+                if (isCommandEqualDeadline == true) {
                     missingInfo = BY;
                     // throw new TaskException("Error: Missing '/' in deadline command. Please enter the deadline in the format 'deadline <description> /by <due date>'.");
-                } else if (command.equals(EVENT)) {
+                } else if (isCommandEqualEvent == true) {
                     missingInfo = FROM;
                     // throw new TaskException("Error: Missing '/' in event command. Please enter the event in the format 'event <description> /from <start date/time> /to <end date/time>'.");
                 }
@@ -234,9 +260,9 @@ public class Javaro {
             boolean hasAfter = afterIndex != -1;
     
             if (hasAfter == false) {
-                if (command.equals(DEADLINE)) {      // "Please enter the due date of the deadline"
+                if (isCommandEqualDeadline == true) {      // "Please enter the due date of the deadline"
                     missingInfo = "due date";
-                } else if (command.equals(EVENT)) {      // "Please enter the start date/time of the event"
+                } else if (isCommandEqualEvent == true) {      // "Please enter the start date/time of the event"
                     missingInfo = "start date/time";
                 }
                 message = "Please enter the " + missingInfo;
@@ -326,9 +352,9 @@ public class Javaro {
         Task task = null;
 
         // For todo, check if user has entered description. If not, don't add to task list
-        if (checkEquals(command, TODO)) {
+        if (checkEquals(command, Command.TODO)) {
             task = new Todo(description, false);
-        } else if (checkEquals(command, DEADLINE)) {
+        } else if (checkEquals(command, Command.DEADLINE)) {
             // Check if input contains "/by"
             // boolean hasBy = input.contains(BY);
             // System.out.println("hasBy " + hasBy);
@@ -341,7 +367,7 @@ public class Javaro {
             String due = extractDateTime(input, BY);
             
             task = new Deadline(description, false, due);
-        } else if (checkEquals(command, EVENT)) {
+        } else if (checkEquals(command, Command.EVENT)) {
             // Check if input contains "/from" and "/to"
             // boolean isValid = input.contains(FROM) && input.contains(TO);
 
@@ -358,11 +384,12 @@ public class Javaro {
         taskList.add(task);
 
         int taskListSize = taskList.size();
-        StringBuilder taskWordStringBuilder = new StringBuilder(" task");
-        if (taskListSize > 1) {
-            taskWordStringBuilder.append("s");
-        }
-        String taskWord = taskWordStringBuilder.toString();
+        // StringBuilder taskWordStringBuilder = new StringBuilder(" task");
+        // if (taskListSize > 1) {
+        //     taskWordStringBuilder.append("s");
+        // }
+        // String taskWord = taskWordStringBuilder.toString();
+        String taskWord = getTaskWord(taskListSize);
 
         String[] messageList = {"Got it. I've added this task:", formatSpace(2) + task, 
                                 "Now you have " + taskListSize + taskWord + " in the list."};
@@ -373,7 +400,7 @@ public class Javaro {
     }
 
 
-    public static ArrayList<Task> delete(ArrayList<Task> taskList, String input) throws TaskException {
+    public static ArrayList<Task> deleteTask(ArrayList<Task> taskList, String input) throws TaskException {
         // System.out.println("taskList before removal: " + taskList);
         // Split the input into a String array where the first element is the command and the second element is the description + deadline OR start/end date/time or event
         String[] splitInput = input.trim().split(" ", 2);
@@ -395,17 +422,19 @@ public class Javaro {
         taskList.remove(indexToDelete);
 
         int taskListSize = taskList.size();
-        StringBuilder taskWordStringBuilder = new StringBuilder(" task");
-        if (taskListSize > 1) {
-            taskWordStringBuilder.append("s");
-        }
-        String taskWord = taskWordStringBuilder.toString();
+        // StringBuilder taskWordStringBuilder = new StringBuilder(" task");
+        // if (taskListSize > 1) {
+        //     taskWordStringBuilder.append("s");
+        // }
+        // String taskWord = taskWordStringBuilder.toString();
+        
+        String taskWord = getTaskWord(taskListSize);
 
         String[] messageList = {"Noted. I've removed this task:", 
                                 formatSpace(2) + taskToDelete,
                                 "Now you have " + taskListSize + taskWord + " in the list."};
         printMessage(messageList);
-        
+
         // System.out.println("taskList after removal: " + taskList);
         return taskList;
     }
@@ -427,21 +456,21 @@ public class Javaro {
             
             // Check if the command entered by the user is valid
             try {
-                if (checkEquals(input, BYE)) {
+                if (checkEquals(input, Command.BYE)) {
                     exit();
                     break;
-                } else if (checkEquals(input, LIST)) {
+                } else if (checkEquals(input, Command.LIST)) {
                     printTaskList(taskList);
-                } else if (checkInputStartsWith(input, MARK) || checkInputStartsWith(input, UNMARK)) {        // Check if input contains the command "mark" or "unmark"
+                } else if (checkInputStartsWith(input, Command.MARK) || checkInputStartsWith(input, Command.UNMARK)) {        // Check if input contains the command "mark" or "unmark"
                     markDone(taskList, input);
                 } else if (
-                        checkInputStartsWith(input, TODO) ||
-                        checkInputStartsWith(input, DEADLINE) || 
-                        checkInputStartsWith(input, EVENT)
+                        checkInputStartsWith(input, Command.TODO) ||
+                        checkInputStartsWith(input, Command.DEADLINE) || 
+                        checkInputStartsWith(input, Command.EVENT)
                     ) {
                         taskList = addTask(taskList, input);
-                } else if (checkInputStartsWith(input, DELETE)) {
-                    taskList = delete(taskList, input);
+                } else if (checkInputStartsWith(input, Command.DELETE)) {
+                    taskList = deleteTask(taskList, input);
                 } else {
                     String message = "Invalid command entered. " + NEW_LINE + getSpace(false, false) + 
                                         "Please start with 'list', 'mark', 'unmark', 'todo', 'deadline', 'event'. If you are done, please enter 'bye' to exit the chat";

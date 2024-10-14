@@ -14,6 +14,7 @@ public class WKDuke {
     private static final String ADD_TODO_TASK_KEYWORD = "todo";
     private static final String ADD_DEADLINE_TASK_KEYWORD = "deadline";
     private static final String ADD_EVENT_TASK_KEYWORD = "event";
+    private static final String DELETE_TASK_KEYWORD = "delete";
 
     private static final List<Task> taskList = new ArrayList<>();
 
@@ -46,7 +47,7 @@ public class WKDuke {
         }
     }
 
-    private static void validateUpdateTaskInput(String[] inputWords) throws InvalidTaskOperationException {
+    private static void validateTaskInput(String[] inputWords) throws InvalidTaskOperationException {
         String taskOperation = inputWords[0];
         // Check if input contain a task number
         if (inputWords.length < 2) {
@@ -86,7 +87,7 @@ public class WKDuke {
     public static void updateTask(String[] inputWords) {
         String taskAction = inputWords[0];
         try {
-            validateUpdateTaskInput(inputWords);
+            validateTaskInput(inputWords);
 
             int taskNumber = Integer.parseInt(inputWords[1]);
             switch (taskAction) {
@@ -158,6 +159,19 @@ public class WKDuke {
         }
     }
 
+    public static void deleteTask(String[] inputWords) {
+        try {
+            validateTaskInput(inputWords);
+
+            int taskNumber = Integer.parseInt(inputWords[1]);
+            Task task = taskList.get(taskNumber - 1);
+            taskList.remove(task);
+            echo(String.format("Noted. I've removed this task:%s  %s%sNow you have %s tasks in the list.", NEW_INDENT_LINE, task, NEW_INDENT_LINE, taskList.size()));
+        } catch (InvalidTaskOperationException e) {
+            echo(String.format("Action: deleteTask%sError: %s", NEW_INDENT_LINE, e.getMessage()));
+        }
+    }
+
     public static void main(String[] args) {
         String logo = """
                  ___       __   ___  __    ________  ___  ___  ___  __    _______
@@ -195,6 +209,9 @@ public class WKDuke {
                 case ADD_DEADLINE_TASK_KEYWORD:
                 case ADD_EVENT_TASK_KEYWORD:
                     addTask(inputWords);
+                    break;
+                case DELETE_TASK_KEYWORD:
+                    deleteTask(inputWords);
                     break;
                 default:
                     echo(String.format("Action: userInput%sError: Unknown command for '%s'.", NEW_INDENT_LINE, input));

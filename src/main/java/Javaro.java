@@ -1,3 +1,5 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.*;
@@ -51,27 +53,50 @@ public class Javaro {
     }
 
     // Prints a horizontal line, followed by the message (may be one or multiple lines), then another horizontal line
-    public static void printMessage(String[] message) {
+    // https://stackoverflow.com/questions/2914695/how-can-you-write-a-function-that-accepts-multiple-types
+    public static <T> void printMessage(T messageList) {
         String line = getLine();        // includes space before line
         String space = getSpace(false, false);
         
         StringBuilder stringBuilder = new StringBuilder().append(line).append(NEW_LINE);
         
-        for (int i = 0; i < message.length; i++) {
-            stringBuilder.append(space).append(message[i]).append(NEW_LINE);
+        // System.out.println(messageList.getClass());
+
+        // https://stackoverflow.com/questions/40899820/arrays-check-if-object-is-an-array
+        if (messageList.getClass().isArray()) {
+            for (int i = 0; i < Array.getLength(messageList); i++) {
+                stringBuilder.append(space)
+                             .append(Array.get(messageList, i))
+                             .append(NEW_LINE);
+            }
+        } 
+        
+        // https://stackoverflow.com/questions/14674027/checking-if-object-is-instance-of-listobject
+        else if (messageList instanceof ArrayList<?>) {
+            for (int i = 0; i < ((ArrayList<?>) messageList).size(); i++) {
+                stringBuilder.append(space).append(
+                                                ((ArrayList<?>) messageList)
+                                                .get(i)
+                                            )
+                                           .append(NEW_LINE);
+            }
         }
+
+        // for (int i = 0; i < messageList.length; i++) {
+        //     stringBuilder.append(space).append(messageList[i]).append(NEW_LINE);
+        // }
         
         String text = stringBuilder.append(line).toString();
         
         System.out.println(text);
     }
 
-    public static String[] addMessage(String[] messageList, String message) {
-        int listLength = messageList.length;
-        String[] newList = Arrays.copyOf(messageList, listLength + 1);
-        newList[listLength] = message;
-        return newList;
-    }
+    // public static String[] addMessage(String[] messageList, String message) {
+    //     int listLength = messageList.length;
+    //     String[] newList = Arrays.copyOf(messageList, listLength + 1);
+    //     newList[listLength] = message;
+    //     return newList;
+    // }
 
     // Print greeting message
     public static void greet() {
@@ -86,26 +111,27 @@ public class Javaro {
     }
 
     // 1st element has index 0. Length 1
-    public static Task[] addToList(Task[] list, Task task) {
-        int listLength = list.length;
-        Task[] newList = Arrays.copyOf(list, listLength + 1);
-        newList[listLength] = task;
-        return newList;
-    }
+    // public static Task[] addToList(Task[] list, Task task) {
+    //     int listLength = list.length;
+    //     Task[] newList = Arrays.copyOf(list, listLength + 1);
+    //     newList[listLength] = task;
+    //     return newList;
+    // }
 
-    public static void printTaskList(Task[] list) throws TaskException {
-        String[] messageList = {"Here are the tasks in your list:"};
-        if (list.length == 0) {
+    public static void printTaskList(ArrayList<Task> taskList) throws TaskException {
+        // https://stackoverflow.com/questions/1005073/initialization-of-an-arraylist-in-one-line
+        // ArrayList<String> places = new ArrayList<>(Arrays.asList("Buenos Aires", "Córdoba", "La Plata"));
+        ArrayList<String> messageList = new ArrayList<>(Arrays.asList("Here are the tasks in your list:"));
+        int taskListSize = taskList.size();
+        if (taskListSize == 0) {
             throw new TaskException("Yay! You're all caught up!");
         }
-        for (int i = 0; i < list.length; i++) {
-            Task current = list[i];
+        for (int i = 0; i < taskListSize; i++) {
+            Task current = taskList.get(i);         // taskList.get(i) contains the checkbox
             String index = Integer.toString(i + 1);
-
-            // list[i] contains the checkbox
             String line = index + ". " + current;
-            
-            messageList = addMessage(messageList, line);
+            messageList.add(line);
+            // messageList = addMessage(messageList, line);
         }
         printMessage(messageList);
     }
@@ -126,7 +152,7 @@ public class Javaro {
     // input will be the command that the user types (e.g. "mark 1")
     // TODO: What if the user mark a task that is already done, or try to unmark a task that is not done
     // TODO: What if index entered by user is greater than the number of items in the list
-    public static void markDone(Task[] list, String input) throws TaskException {
+    public static void markDone(ArrayList<Task> taskList, String input) throws TaskException {
         String message;
 
         // To get the task number that the user wants to mark/unmark, cannot simply extract the last character because this would assume that the task number will always be less than 10, i.e. it will not work if there are more than 9 tasks in the list
@@ -141,9 +167,9 @@ public class Javaro {
         // TODO: Test if it handles the case where index (from input) > number of items in the list, or when index (from input) > number of items in the list
         try {
             indexToMark = Integer.parseInt(input.substring(indexOfSpace + 1)) - 1;
-            taskToMark = list[indexToMark];
-        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-            message = "Task not found. Please enter a valid task number from 1 to " + list.length + ".";
+            taskToMark = taskList.get(indexToMark);
+        } catch (IndexOutOfBoundsException | NumberFormatException e) {
+            message = "Task not found. Please enter a valid task number from 1 to " + taskList.size() + ".";
             throw new TaskException(message);
         }
         
@@ -279,7 +305,7 @@ public class Javaro {
     }
 
     // Add task (Types supported: Todo, Deadline, Event)
-    public static Task[] addTask(Task[] list, String input) throws TaskException {
+    public static ArrayList<Task> addTask(ArrayList<Task> taskList, String input) throws TaskException {
         // printLine();
         
         // Split the input into a String array where the first element is the command and the second element is the description + deadline OR start/end date/time or event
@@ -328,20 +354,21 @@ public class Javaro {
             task = new Event(description, false, start, end);
         }
 
-        list = addToList(list, task);
+        taskList.add(task);
 
-        int listLength = list.length;
+        int taskListSize = taskList.size();
         StringBuilder taskWordStringBuilder = new StringBuilder(" task");
-        if (listLength > 1) {
+        if (taskListSize > 1) {
             taskWordStringBuilder.append("s");
         }
         String taskWord = taskWordStringBuilder.toString();
 
-        String[] messageList = {"Got it. I've added this task:", formatSpace(2) + task, "Now you have " + listLength + taskWord + " in the list."};
+        String[] messageList = {"Got it. I've added this task:", formatSpace(2) + task, 
+                                "Now you have " + taskListSize + taskWord + " in the list."};
 
         printMessage(messageList);
 
-        return list;
+        return taskList;
     }
 
     // This function echos commands entered by the user, and exits when the user types the command bye.
@@ -349,7 +376,8 @@ public class Javaro {
         Scanner in = new Scanner(System.in);
         
         // Assume there will be no more than 100 tasks. Initialize an empty list of String array
-        Task[] list = new Task[0];
+        ArrayList<Task> taskList = new ArrayList<>();
+        // Task[] list = new Task[0];
         
         // Continue looping indefinitely
         while (true) {
@@ -363,15 +391,15 @@ public class Javaro {
                     exit();
                     break;
                 } else if (checkEquals(input, LIST)) {
-                    printTaskList(list);
+                    printTaskList(taskList);
                 } else if (checkInputStartsWith(input, MARK) || checkInputStartsWith(input, UNMARK)) {        // Check if input contains the command "mark" or "unmark"
-                    markDone(list, input);
+                    markDone(taskList, input);
                 } else if (
                         checkInputStartsWith(input, TODO) ||
                         checkInputStartsWith(input, DEADLINE) || 
                         checkInputStartsWith(input, EVENT)
                     ) {
-                        list = addTask(list, input);
+                        taskList = addTask(taskList, input);
                 } else {
                     String message = "Invalid command entered. " + NEW_LINE + getSpace(false, false) + 
                                         "Please start with 'list', 'mark', 'unmark', 'todo', 'deadline', 'event'. If you are done, please enter 'bye' to exit the chat";

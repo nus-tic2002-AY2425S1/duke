@@ -103,28 +103,28 @@ public class WKDuke {
     private static void parseDeadlineTask(String taskDetail) throws InvalidTaskFormatException {
         String[] taskDetailParts = taskDetail.split("/by");
         if (taskDetailParts.length != 2) {
-            throw new InvalidTaskFormatException("Deadline task requires '/by' information.", ADD_DEADLINE_TASK_KEYWORD);
+            throw new InvalidTaskFormatException("Deadline task requires '/by' information.", TaskType.DEADLINE);
         }
     }
 
     private static void parseEventTask(String taskDetail) throws InvalidTaskFormatException {
         String[] parts = taskDetail.split("/from|/to");
         if (parts.length != 3) {
-            throw new InvalidTaskFormatException("Event task requires '/from' and '/to' information.", ADD_EVENT_TASK_KEYWORD);
+            throw new InvalidTaskFormatException("Event task requires '/from' and '/to' information.", TaskType.EVENT);
         }
     }
 
     private static void validateAddTaskInput(String[] inputWords) throws InvalidTaskFormatException {
-        String taskType = inputWords[0];
+        TaskType taskType = TaskType.valueOf(inputWords[0].toUpperCase());
         if (inputWords.length == 1 || inputWords[1].trim().isEmpty()) {
             throw new InvalidTaskFormatException("Task description is missing.", taskType);
         }
         String taskDetail = inputWords[1].trim();
         switch (taskType) {
-            case ADD_DEADLINE_TASK_KEYWORD:
+            case DEADLINE:
                 parseDeadlineTask(taskDetail);
                 break;
-            case ADD_EVENT_TASK_KEYWORD:
+            case EVENT:
                 parseEventTask(taskDetail);
                 break;
         }
@@ -141,15 +141,15 @@ public class WKDuke {
     }
 
     public static void addTask(String[] inputWords) {
-        String taskType = inputWords[0];
+        TaskType taskType = TaskType.valueOf(inputWords[0].toUpperCase());
         try {
             validateAddTaskInput(inputWords);
 
             String taskDetail = inputWords[1];
             Task newTask = switch (taskType) {
-                case ADD_TODO_TASK_KEYWORD -> new ToDo(taskDetail);
-                case ADD_DEADLINE_TASK_KEYWORD -> createDeadlineTask(taskDetail);
-                case ADD_EVENT_TASK_KEYWORD -> createEventTask(taskDetail);
+                case TODO -> new ToDo(taskDetail);
+                case DEADLINE -> createDeadlineTask(taskDetail);
+                case EVENT -> createEventTask(taskDetail);
                 default -> throw new InvalidTaskFormatException("Unknown task type.", taskType);
             };
             taskList.add(newTask);

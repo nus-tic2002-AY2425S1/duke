@@ -1,12 +1,12 @@
 public class InvalidTaskFormatException extends Exception {
-    private final String taskType;
+    private final TaskType taskType;
 
-    public InvalidTaskFormatException(String message, String taskType) {
+    public InvalidTaskFormatException(String message, TaskType taskType) {
         super(message);
         this.taskType = taskType;
     }
 
-    public String getTaskType() {
+    public TaskType getTaskType() {
         return taskType;
     }
 }

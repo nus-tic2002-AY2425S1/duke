@@ -23,6 +23,7 @@ public class Javaro {
     static final String EVENT="event";
     static final String FROM="/from";
     static final String TO="/to";
+    static final String DELETE="delete";
     
     // Solution below adapted from https://stackoverflow.com/questions/1073787/print-spaces-with-string-format
     // https://stackoverflow.com/questions/69576641/why-would-you-use-a-stringbuilder-method-over-a-string-in-java
@@ -371,6 +372,45 @@ public class Javaro {
         return taskList;
     }
 
+
+    public static ArrayList<Task> delete(ArrayList<Task> taskList, String input) throws TaskException {
+        // System.out.println("taskList before removal: " + taskList);
+        // Split the input into a String array where the first element is the command and the second element is the description + deadline OR start/end date/time or event
+        String[] splitInput = input.trim().split(" ", 2);
+        String command = splitInput[0];
+        String index = splitInput[1];
+        int indexToDelete = -1;
+        Task taskToDelete;
+        String message;
+
+        try {
+            indexToDelete = Integer.parseInt(index) - 1;
+            taskToDelete = taskList.get(indexToDelete);
+        } catch (IndexOutOfBoundsException | NumberFormatException e) {
+            message = "Task not found. Please enter a valid task number from 1 to " + taskList.size() + ".";
+            throw new TaskException(message);
+        }
+
+        // System.out.println("indexToDelete is " + indexToDelete + NEW_LINE + "taskToDelete is " + taskToDelete);
+        taskList.remove(indexToDelete);
+
+        int taskListSize = taskList.size();
+        StringBuilder taskWordStringBuilder = new StringBuilder(" task");
+        if (taskListSize > 1) {
+            taskWordStringBuilder.append("s");
+        }
+        String taskWord = taskWordStringBuilder.toString();
+
+        String[] messageList = {"Noted. I've removed this task:", 
+                                formatSpace(2) + taskToDelete,
+                                "Now you have " + taskListSize + taskWord + " in the list."};
+        printMessage(messageList);
+        
+        // System.out.println("taskList after removal: " + taskList);
+        return taskList;
+    }
+
+    
     // This function echos commands entered by the user, and exits when the user types the command bye.
     public static void echo() {
         Scanner in = new Scanner(System.in);
@@ -400,6 +440,8 @@ public class Javaro {
                         checkInputStartsWith(input, EVENT)
                     ) {
                         taskList = addTask(taskList, input);
+                } else if (checkInputStartsWith(input, DELETE)) {
+                    taskList = delete(taskList, input);
                 } else {
                     String message = "Invalid command entered. " + NEW_LINE + getSpace(false, false) + 
                                         "Please start with 'list', 'mark', 'unmark', 'todo', 'deadline', 'event'. If you are done, please enter 'bye' to exit the chat";

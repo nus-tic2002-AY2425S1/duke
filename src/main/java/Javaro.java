@@ -12,30 +12,10 @@ public class Javaro {
     static final String LINE = "____________________________________________________________";
     static final String NEW_LINE = "\n";
 
-    // Commands used in chatbot
-    // static final String BYE=Command.BYE.toString();
-    // static final String LIST=Command.LIST.toString();
-    // static final String MARK=Command.MARK.toString();
-    // static final String UNMARK=Command.UNMARK.toString();
-    // static final String TODO=Command.TODO.toString();
-    // static final String DEADLINE=Command.DEADLINE.toString();
-
-    // static final String BYE="bye";
-    // static final String LIST="list";
-    // static final String MARK="mark";
-    // static final String UNMARK="unmark";
-    // static final String TODO="todo";
-    // static final String DEADLINE="deadline";
     static final String BY="/by";
-    
-    // static final String EVENT=Command.EVENT.toString();
-    // static final String EVENT="event";
     
     static final String FROM="/from";
     static final String TO="/to";
-    
-    // static final String DELETE=Command.DELETE.toString();
-    // static final String DELETE="delete";
     
     // Solution below adapted from https://stackoverflow.com/questions/1073787/print-spaces-with-string-format
     // https://stackoverflow.com/questions/69576641/why-would-you-use-a-stringbuilder-method-over-a-string-in-java
@@ -95,21 +75,10 @@ public class Javaro {
             }
         }
 
-        // for (int i = 0; i < messageList.length; i++) {
-        //     stringBuilder.append(space).append(messageList[i]).append(NEW_LINE);
-        // }
-        
         String text = stringBuilder.append(line).toString();
         
         System.out.println(text);
     }
-
-    // public static String[] addMessage(String[] messageList, String message) {
-    //     int listLength = messageList.length;
-    //     String[] newList = Arrays.copyOf(messageList, listLength + 1);
-    //     newList[listLength] = message;
-    //     return newList;
-    // }
 
     // Print greeting message
     public static void greet() {
@@ -122,14 +91,6 @@ public class Javaro {
         String[] messageList = {"Bye. Hope to see you again soon!"};
         printMessage(messageList);
     }
-
-    // 1st element has index 0. Length 1
-    // public static Task[] addToList(Task[] list, Task task) {
-    //     int listLength = list.length;
-    //     Task[] newList = Arrays.copyOf(list, listLength + 1);
-    //     newList[listLength] = task;
-    //     return newList;
-    // }
 
     public static void printTaskList(ArrayList<Task> taskList) throws TaskException {
         // https://stackoverflow.com/questions/1005073/initialization-of-an-arraylist-in-one-line
@@ -144,7 +105,6 @@ public class Javaro {
             String index = Integer.toString(i + 1);
             String line = index + ". " + current;
             messageList.add(line);
-            // messageList = addMessage(messageList, line);
         }
         printMessage(messageList);
     }
@@ -173,7 +133,6 @@ public class Javaro {
     // Add the ability to mark tasks as done. Optionally, add the ability to change the status back to not done.
     // list will be the list of tasks that the user has entered
     // input will be the command that the user types (e.g. "mark 1")
-    // TODO: What if the user mark a task that is already done, or try to unmark a task that is not done
     // TODO: What if index entered by user is greater than the number of items in the list
     public static void markDone(ArrayList<Task> taskList, String input) throws TaskException {
         String message;
@@ -384,11 +343,6 @@ public class Javaro {
         taskList.add(task);
 
         int taskListSize = taskList.size();
-        // StringBuilder taskWordStringBuilder = new StringBuilder(" task");
-        // if (taskListSize > 1) {
-        //     taskWordStringBuilder.append("s");
-        // }
-        // String taskWord = taskWordStringBuilder.toString();
         String taskWord = getTaskWord(taskListSize);
 
         String[] messageList = {"Got it. I've added this task:", formatSpace(2) + task, 
@@ -422,12 +376,6 @@ public class Javaro {
         taskList.remove(indexToDelete);
 
         int taskListSize = taskList.size();
-        // StringBuilder taskWordStringBuilder = new StringBuilder(" task");
-        // if (taskListSize > 1) {
-        //     taskWordStringBuilder.append("s");
-        // }
-        // String taskWord = taskWordStringBuilder.toString();
-        
         String taskWord = getTaskWord(taskListSize);
 
         String[] messageList = {"Noted. I've removed this task:", 
@@ -446,11 +394,12 @@ public class Javaro {
         
         // Assume there will be no more than 100 tasks. Initialize an empty list of String array
         ArrayList<Task> taskList = new ArrayList<>();
-        // Task[] list = new Task[0];
         
         // Continue looping indefinitely
         while (true) {
             
+            System.out.println();
+
             // Get the input
             String input = in.nextLine().trim();
             
@@ -476,8 +425,6 @@ public class Javaro {
                                         "Please start with 'list', 'mark', 'unmark', 'todo', 'deadline', 'event'. If you are done, please enter 'bye' to exit the chat";
                     throw new CommandException(message);
                 }
-
-                System.lineSeparator();
 
             } catch (CommandException commandException) {     // When user enters an invalid command, e.g. gibberish
                 String[] messageList = {commandException.getMessage()};

@@ -162,6 +162,35 @@
 	____________________________________________________________
 
 	____________________________________________________________
+	 Noted. I've removed this task:
+	   [T][ ] read book
+	 Now you have 5 tasks in the list.
+	____________________________________________________________
+
+	____________________________________________________________
+	 Here are the tasks in your list:
+	 1.[D][ ] return book (by: June 6th)
+	 2.[E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+	 3.[T][ ] borrow book
+	 4.[D][ ] return book 2 (by: Sunday)
+	 5.[E][ ] project meeting 2 (from: Mon 2pm to: 4pm)
+	____________________________________________________________
+
+	____________________________________________________________
+	 Noted. I've removed this task:
+	   [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+	 Now you have 4 tasks in the list.
+	____________________________________________________________
+
+	____________________________________________________________
+	 Here are the tasks in your list:
+	 1.[D][ ] return book (by: June 6th)
+	 2.[T][ ] borrow book
+	 3.[D][ ] return book 2 (by: Sunday)
+	 4.[E][ ] project meeting 2 (from: Mon 2pm to: 4pm)
+	____________________________________________________________
+
+	____________________________________________________________
 	 Action: userInput
 	 Error: Unknown command for '[Invalid Input Test]'.
 	____________________________________________________________

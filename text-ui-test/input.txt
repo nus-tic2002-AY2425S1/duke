@@ -20,6 +20,10 @@ unmark 2
 list
 unmark 1
 list
+delete 1
+list
+delete 2
+list
 [Invalid Input Test]
 mark
 mark a

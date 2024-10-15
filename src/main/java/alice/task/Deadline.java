@@ -1,17 +1,21 @@
 package alice.task;
 
-public class Deadline extends Task {
-    protected String by;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-    public Deadline(String description, String by) {
+public class Deadline extends Task {
+    private String by;
+
+
+    public Deadline(String description, LocalDate by) {
         super(description);
         this.isDone = false;
-        this.by = by;
+        this.by = by.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
     }
 
-    public Deadline(String description, boolean isDone, String by) {
+    public Deadline(String description, boolean isDone, LocalDate by) {
         super(description, isDone);
-        this.by = by;
+        this.by = by.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
     }
 
     public void setBy(String by) {

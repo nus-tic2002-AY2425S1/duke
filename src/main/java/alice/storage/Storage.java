@@ -3,7 +3,14 @@ package alice.storage;
 import alice.task.*;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,6 +18,38 @@ import java.io.IOException;
 public class Storage {
     private File f;
     public static final String defaultName = "data/duke.txt";
+    private static final String[] DATE_PATTERNS = {
+            "yyyy-MM-dd",
+            "yyyy-M-d",
+            "dd-MM-yyyy",
+            "d-M-yyyy",
+            "MM/dd/yyyy",
+            "M/d/yyyy",
+            "yyyy/MM/dd",
+            "yyyy/M/d",
+            "yyyy-MM-dd",
+            "yyyy-M-d",
+            "dd MMM yyyy",
+            "d MMM yyyy",
+            "dd/MM/yyyy",
+            "d/M/yyyy",
+            "dd-MM-yyyy",
+            "d-M-yyyy",
+            "MMM dd yyyy",
+            "MMM d yyyy"
+    };
+
+    private static DateTimeFormatter buildFormatter() {
+        DateTimeFormatterBuilder builder = new DateTimeFormatterBuilder();
+        for (String pattern : DATE_PATTERNS) {
+            builder.parseCaseInsensitive()
+                    .appendOptional(DateTimeFormatter.ofPattern(pattern, Locale.ENGLISH)).optionalStart()
+                    .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+                    .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+                    .optionalEnd();
+        }
+        return builder.toFormatter().withResolverStyle(ResolverStyle.SMART);
+    }
 
     public Storage(){
         this(defaultName);
@@ -77,8 +116,11 @@ public class Storage {
                         param.append(" ").append(instruction[i]);
                         i++;
                     }
-                    loadList.add(new Deadline(body.toString(), Boolean.parseBoolean(instruction[1]), param.toString()));
-
+                    try {
+                        loadList.add(new Deadline(body.toString(), Boolean.parseBoolean(instruction[1]), LocalDate.parse(param, buildFormatter())));
+                    } catch (DateTimeParseException e){
+                        System.out.println("Wrong datetime input!");
+                    }
                     break;
                 case "E":
                     body.append(instruction[2]);

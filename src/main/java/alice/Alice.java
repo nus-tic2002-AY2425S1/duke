@@ -45,7 +45,7 @@ public class Alice {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         new Alice("data/tasks.txt").run();
     }
 }

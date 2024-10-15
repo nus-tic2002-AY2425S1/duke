@@ -16,7 +16,10 @@ public class Parser {
             case "bye":
                 return new ExitCommand();
             case "list":
-                return new ListCommand();
+                if (instruction.isEmpty())
+                    return new ListCommand();
+                else
+                    return new ListCommand(action, String.join(" ", instruction));
             case "delete":
                 try {
                     return new DeleteCommand(Integer.parseInt(instruction.getFirst())-1);

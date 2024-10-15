@@ -23,7 +23,7 @@ public class Ui {
 
     public void showWelcome(){
         String intro =
-                "____________________________________________________________\nHello! I'm alice.command.Alice, here to make you magically organized!\nHow may I help you?\n____________________________________________________________";
+                "____________________________________________________________\nHello! I'm Alice, here to make you magically organized!\nHow may I help you?\n____________________________________________________________";
         System.out.println(intro);
     }
 

@@ -16,6 +16,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
+/**
+ * <h1>Add Command</h1>
+ * The AddCommand program implements an application that
+ * allows the user to add tasks into the tasklist.
+ * <p>
+ *
+ * @author  Jarrel Bin
+ * @version 1.0
+ * @since   2024-10-16
+ */
 public class AddCommand extends Command {
 
     private static final String[] DATE_PATTERNS = {
@@ -47,7 +57,12 @@ public class AddCommand extends Command {
     public boolean isExit() {
         return false;
     }
-
+    /**
+     * This method is used to create acceptable datetime format for the /by
+     * parameter in deadline
+     * @return DateTimeFormatter This returns the format that the parameter will
+     * be processed in.
+     */
     private static DateTimeFormatter buildFormatter() {
         DateTimeFormatterBuilder builder = new DateTimeFormatterBuilder();
         for (String pattern : DATE_PATTERNS) {

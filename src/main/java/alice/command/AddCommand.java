@@ -93,7 +93,7 @@ public class AddCommand extends Command {
 
                 ArrayList<String> deadlineInstruction = new ArrayList<>(Arrays.asList(getInstruction().split(" /by ")));
                 try {
-                    tasks.add(new Deadline(deadlineInstruction.getFirst(), LocalDate.parse(deadlineInstruction.getLast(), buildFormatter())));
+                    tasks.add(new Deadline(deadlineInstruction.get(0), LocalDate.parse(deadlineInstruction.get(deadlineInstruction.size()-1), buildFormatter())));
                     System.out.println("Got it, I've added this task: \n" + tasks.getLast().print());
                     ui.showSize(tasks.size());
                 } catch (DateTimeParseException e){
@@ -107,9 +107,9 @@ public class AddCommand extends Command {
                     throw new NoArgsException("/to");
 
                 ArrayList<String> eventInstruction = new ArrayList<>(Arrays.asList(getInstruction().split(" /from ")));
-                ArrayList<String> eventInstruction2 = new ArrayList<>(Arrays.asList(eventInstruction.getLast().split(" /to ")));
+                ArrayList<String> eventInstruction2 = new ArrayList<>(Arrays.asList(eventInstruction.get(eventInstruction.size()-1).split(" /to ")));
 
-                tasks.add(new Event(eventInstruction.getFirst(), eventInstruction2.getFirst(), eventInstruction2.getLast()));
+                tasks.add(new Event(eventInstruction.get(0), eventInstruction2.get(0), eventInstruction2.get(eventInstruction.size()-1)));
                 System.out.println("Got it, I've added this task: \n" + tasks.getLast().print());
                 ui.showSize(tasks.size());
                 break;

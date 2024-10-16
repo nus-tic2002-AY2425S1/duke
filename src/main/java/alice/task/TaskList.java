@@ -35,7 +35,7 @@ public class TaskList {
     }
 
     public Task getLast() {
-        return tasks.getLast();
+        return tasks.get(tasks.size()-1);
     }
     public String toString(){
         ArrayList<String> out = new ArrayList<>();

@@ -104,7 +104,7 @@ public class Main {
                     addDeadline(taskDetails);
                     return true;
                 } catch (CommandNotFoundException e) {
-                    System.out.println(StringHelper.deadlineError);
+                    System.out.println(Messages.deadlineError);
                     break;
                 }
             case "event":
@@ -112,7 +112,7 @@ public class Main {
                     addEvent(taskDetails);
                     return true;
                 } catch (CommandNotFoundException e) {
-                    System.out.println(StringHelper.eventError);
+                    System.out.println(Messages.eventError);
                     break;
                 }
             default:
@@ -171,27 +171,27 @@ public class Main {
 
     public static void markTask(Task task) {
         task.setDone(true);
-        System.out.println(StringHelper.outputLine + System.lineSeparator() +
+        System.out.println(Messages.divider + System.lineSeparator() +
                 "Nice! I've marked this task as done: " + System.lineSeparator() +
                 "  " + task.getListView() + System.lineSeparator() +
-                StringHelper.outputLine);
+                Messages.divider);
     }
 
     public static void unmarkTask(Task task) {
         task.setDone(false);
-        System.out.println(StringHelper.outputLine + System.lineSeparator() +
+        System.out.println(Messages.divider + System.lineSeparator() +
                 "Okay, I've marked this task as not done yet: " + System.lineSeparator() +
                 "  " + task.getListView() + System.lineSeparator() +
-                StringHelper.outputLine);
+                Messages.divider);
     }
 
     public static void deleteTask(Task task) {
         TaskList.tasks.remove(task);
-        System.out.println(StringHelper.outputLine + System.lineSeparator() +
+        System.out.println(Messages.divider + System.lineSeparator() +
                 "Got it. I've removed this task: " + System.lineSeparator() +
                 "  " + task.getListView() + System.lineSeparator() +
                 "Now you have " + TaskList.tasks.size() + " task(s) in the list." + System.lineSeparator() +
-                StringHelper.outputLine);
+                Messages.divider);
 
     }
 
@@ -256,13 +256,13 @@ public class Main {
                         updateFile();
                         break;
                     } catch (EmptyInputException e) {
-                        System.out.println(StringHelper.emptyNumber);
+                        System.out.println(Messages.emptyNumber);
                         break;
                     } catch (NumberFormatException e) {
-                        System.out.println(StringHelper.nonIntegerNumber);
+                        System.out.println(Messages.nonIntegerNumber);
                         break;
                     } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-                        System.out.println(StringHelper.invalidTaskNumber);
+                        System.out.println(Messages.invalidTaskNumber);
                         break;
                     }
                 case "todo":

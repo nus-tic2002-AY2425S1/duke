@@ -32,8 +32,9 @@ public class Stark {
             String query = inputQuery.nextLine().trim();
             lineBreak();
             try {
-                Tokenize.tokenize(query);
-                String[] queryTokens = query.split(" ");
+
+                String[] queryTokens = Tokenize.tokenize(query); // for checking the input are valid
+
                 if (queryTokens[0].equalsIgnoreCase("bye")) {
                     break;
                 } else if (queryTokens[0].equalsIgnoreCase("list")) {
@@ -44,7 +45,11 @@ public class Stark {
                 } else {
                     taskList.addTask(queryTokens[0], String.join(" ", query));
                 }
-            } catch (IllegalArgumentException | IndexOutOfBoundsException e){
+            } catch (StarkException.InvalidDescriptionException |
+                     StarkException.InvalidTaskException |
+                     StarkException.InvalidCommandException |
+                     IndexOutOfBoundsException e){
+
                 System.out.println(e.getMessage());
             }
             lineBreak();

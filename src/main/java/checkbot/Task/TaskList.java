@@ -1,6 +1,7 @@
 package checkbot.Task;
 
 import checkbot.Exception.*;
+import checkbot.Parser.*;
 import checkbot.Ui.TextUi;
 import checkbot.Utils.Messages;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 public class TaskList {
     public static ArrayList<Task> tasks = new ArrayList<>();
 
+    // TODO: add datetime exceptions
     public static boolean addTask(String input) throws EmptyInputException, EmptyTimeException {
         String[] taskArray = input.split(" ",2);
         if (taskArray.length < 2) {
@@ -49,8 +51,9 @@ public class TaskList {
         TextUi.echoTask(task);
     }
 
+    // TODO: add datetime exceptions
     public static void addDeadline(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
-        // input format: <task> /by <datetime>
+        // input format: <task> /by <DD/MM/YYYY HHMM(24H)>
         if (!input.contains("/by")){
             throw new CommandNotFoundException();
         }
@@ -64,7 +67,7 @@ public class TaskList {
             throw new EmptyTimeException();
         }
 
-        Deadline task = new Deadline(description, dueDateTime);
+        Deadline task = new Deadline(description, Parser.parseDateTime(dueDateTime));
         TaskList.tasks.add(task);
         TextUi.echoTask(task);
     }

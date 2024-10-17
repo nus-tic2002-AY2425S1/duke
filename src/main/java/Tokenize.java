@@ -13,7 +13,8 @@ public class Tokenize {
                 || tokens[0].equalsIgnoreCase("Deadline")
                 || tokens[0].equalsIgnoreCase("Deadline")) {
               throw new StarkException.InvalidDescriptionException(" OOPS!!! \"" + tokens[0].toUpperCase() + "\" description cannot be empty");
-           }else if(tokens[0].equalsIgnoreCase("mark") || tokens[0].equalsIgnoreCase("unmark")){
+           }else if(tokens[0].equalsIgnoreCase("mark") || tokens[0].equalsIgnoreCase("unmark")
+                   || tokens[0].equalsIgnoreCase("delete")){
                throw new StarkException.InvalidTaskException(" OOPS!!! \"" + tokens[0].toUpperCase() + "\" should include task number");
            }else if( !(tokens[0].equalsIgnoreCase("bye")
                     || tokens[0].equalsIgnoreCase("list"))) {
@@ -35,20 +36,22 @@ public class Tokenize {
                    throw new StarkException.InvalidDescriptionException(" OOPS!!! \"EVENT\" tasks need to start and ends at a specific date/time " +
                                                                         System.lineSeparator() + "\t\t \"eg: event project meeting /from Mon 2pm /to 4pm\" ");
                }
-           }else if (tokens[0].equalsIgnoreCase("mark") || tokens[0].equalsIgnoreCase("unmark")){
+           }else if (tokens[0].equalsIgnoreCase("mark") || tokens[0].equalsIgnoreCase("unmark")
+                    || tokens[0].equalsIgnoreCase("delete")){
+               String query = tokens[0].toLowerCase();
                if(tokens.length > 2){
                    throw new StarkException.InvalidCommandException(" OOPS!!! ( \"" + tokens[0].toUpperCase() + "\" is not valid query or input" +
-                                                                        System.lineSeparator()+ "\t\t \"eg: mark 2\" )");
+                                                                        System.lineSeparator()+ "\t\t \"eg: "+query+" 2\" )");
                }else {
                    try{
-                       int val  = Integer.parseInt(tokens[1]);
+                       int val = Integer.parseInt(tokens[1]);
                    }catch (NumberFormatException e){
                        throw new StarkException.InvalidTaskException(" OOPS!!! ( \"" + tokens[0].toUpperCase() + "\" didnt have valid task id" +
-                                                                        System.lineSeparator()+"\t\t \"eg: mark 2\" )");
+                                                                        System.lineSeparator()+"\t\t \"eg: "+query+" 2\" )");
                    }
 
                }
-           }else {
+           }else if (!tokens[0].equalsIgnoreCase("todo")) {
                //all other type of input throw exception
                throw new StarkException.InvalidCommandException(" OOPS!!! above query is not valid. Please try again...");
 

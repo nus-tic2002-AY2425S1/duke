@@ -40,15 +40,16 @@ public class Stark {
                 } else if (queryTokens[0].equalsIgnoreCase("list")) {
                     taskList.printAllTasks();
                 } else if (queryTokens[0].equalsIgnoreCase("mark")
-                        || queryTokens[0].equalsIgnoreCase("unmark")) {
+                        || queryTokens[0].equalsIgnoreCase("unmark")
+                        || queryTokens[0].equalsIgnoreCase("delete")) {
                     taskList.statusChange(queryTokens[0], Integer.parseInt(queryTokens[1]));
-                } else {
+                }else {
                     taskList.addTask(queryTokens[0], String.join(" ", query));
                 }
             } catch (StarkException.InvalidDescriptionException |
                      StarkException.InvalidTaskException |
                      StarkException.InvalidCommandException |
-                     IndexOutOfBoundsException e){
+                     StarkException.InvalidIndexException e){
 
                 System.out.println(e.getMessage());
             }

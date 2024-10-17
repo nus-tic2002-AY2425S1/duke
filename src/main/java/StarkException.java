@@ -16,4 +16,10 @@ public class StarkException {
             super(message);
         }
     }
+
+    public static class InvalidIndexException extends IndexOutOfBoundsException {
+        public InvalidIndexException(String message) {
+            super(message);
+        }
+    }
 }

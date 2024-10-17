@@ -37,20 +37,35 @@ public class TaskList {
     public void statusChange(String done, int number) {
         if(tasks.size() >= number && number > 0) {
             Task requiredTask = tasks.get(number - 1);
-            requiredTask.setStatus(done);
+
             if (done.equalsIgnoreCase("mark")) {
-                System.out.println("Nice! I've marked this task as done:\n" + "  " + requiredTask.printTask());
+                requiredTask.setStatus(done);
+                System.out.println("Nice! I've marked this task as done:" + System.lineSeparator()
+                                    + "  " + requiredTask.printTask());
+
             } else if (done.equalsIgnoreCase("unmark")) {
-                System.out.println("OK, I've marked this task as not done yet:\n" + "  " + requiredTask.printTask());
+                requiredTask.setStatus(done);
+                System.out.println("OK, I've marked this task as not done yet:"+ System.lineSeparator()
+                                    + "  " + requiredTask.printTask());
+
+            } else if (done.equalsIgnoreCase("delete")) {
+                tasks.remove(number - 1);
+                totalTasks--;
+                System.out.println("Noted. I've removed this task:" + System.lineSeparator()
+                        + "  " + requiredTask.printTask() + System.lineSeparator()
+                        + "Now you have "+ totalTasks +" tasks in the list");
             }
         }else{
             if(tasks.isEmpty()){
-                throw new IndexOutOfBoundsException("OOPS! Task list is empty! \n \t\t please add tasks");
+                throw new StarkException.InvalidIndexException("OOPS! Task list is empty!"+
+                                                     System.lineSeparator() + " \t\t please add tasks");
             }else {
-                throw new IndexOutOfBoundsException("OOPS! input task number is invalid \n Valid range is 1 to " + tasks.size());
+                throw new StarkException.InvalidIndexException("OOPS! input task number is invalid " +
+                                                     System.lineSeparator() +" Valid range is 1 to " + totalTasks);
             }
         }
     }
+
 
 
 }

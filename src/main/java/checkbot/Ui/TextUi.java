@@ -1,9 +1,9 @@
 package checkbot.Ui;
 
-import java.util.Scanner;
-
 import checkbot.Task.*;
 import checkbot.Utils.*;
+
+import java.util.Scanner;
 
 public class TextUi {
     public static Scanner scanInput = new Scanner(System.in);

@@ -1,3 +1,5 @@
+package checkbot.Utils;
+
 public class StringHelper {
     public static String outputLine = "--------------------------------------";
     public static String hello = outputLine + System.lineSeparator() +

@@ -6,36 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class checkbot {
-    public static ArrayList<Task> tasks = new ArrayList<>();
-    public static Scanner scanInput = new Scanner(System.in);
+import checkbot.Task.*;
+import checkbot.Ui.*;
+import checkbot.Utils.*;
+
+public class Main {
     public static File taskFile = new File("data/checkbot.txt");
-
-    public static String readInput() {
-        String input;
-        input = scanInput.nextLine();
-        return input;
-    }
-
-    public static void printHello() {
-        System.out.println(StringHelper.hello);
-    }
-
-    public static void printExit() {
-        System.out.println(StringHelper.exit);
-    }
-
-    public static void printCommandNotFound() {
-        System.out.println(StringHelper.commandNotFound);
-    }
-
-    public static void printEmptyDescription() {
-        System.out.println(StringHelper.emptyDescription);
-    }
-
-    public static void printEmptyTime() {
-        System.out.println(StringHelper.emptyTime);
-    }
 
     public static void writeToFile(String textToAdd) throws IOException {
         FileWriter fw = new FileWriter(taskFile);
@@ -46,7 +22,7 @@ public class checkbot {
     public static void updateFile() {
         String textToAdd = "";
 
-        for (Task task : tasks) {
+        for (Task task : TaskList.tasks) {
             textToAdd = textToAdd.concat(task.getFileView() + System.lineSeparator());
         }
 
@@ -83,9 +59,9 @@ public class checkbot {
                 if (addTask(taskCommand)) {
                     // if task added successfully, set task status
                     if (taskArray[1].trim().equals("NOT_DONE")) {
-                        tasks.get(taskCount).setDone(false);
+                        TaskList.tasks.get(taskCount).setDone(false);
                     } else if (taskArray[1].trim().equals("DONE")) {
-                        tasks.get(taskCount).setDone(true);
+                        TaskList.tasks.get(taskCount).setDone(true);
                     } else {
                         System.out.println("Invalid task status! Please check your txt file.");
                         throw new RuntimeException();
@@ -99,12 +75,12 @@ public class checkbot {
                 }
             } catch (EmptyTimeException e) {
                 // empty time, end the program
-                printEmptyTime();
+                TextUi.printEmptyTime();
                 System.out.println("Invalid input! Please check your txt file.");
                 throw new RuntimeException();
             } catch (EmptyInputException e) {
                 // empty task, end the program
-                printEmptyDescription();
+                TextUi.printEmptyDescription();
                 System.out.println("Invalid input! Please check your txt file.");
                 throw new RuntimeException();
             }
@@ -147,8 +123,8 @@ public class checkbot {
 
     public static void addTodo(String input){
         Todo task = new Todo(input);
-        tasks.add(task);
-        echoTask(task);
+        TaskList.tasks.add(task);
+        TextUi.echoTask(task);
     }
 
     public static void addDeadline(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
@@ -167,8 +143,8 @@ public class checkbot {
         }
 
         Deadline task = new Deadline(description, dueDateTime);
-        tasks.add(task);
-        echoTask(task);
+        TaskList.tasks.add(task);
+        TextUi.echoTask(task);
     }
 
     public static void addEvent(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
@@ -189,25 +165,8 @@ public class checkbot {
         }
 
         Event task = new Event(description, startDateTime, endDateTime);
-        tasks.add(task);
-        echoTask(task);
-    }
-
-    public static void echoTask(Task task) {
-        System.out.println(StringHelper.outputLine + System.lineSeparator() +
-                "Got it! I've added this task:" + System.lineSeparator() +
-                "  " + task.getListView() + System.lineSeparator() +
-                "Now you have " + tasks.size() + " task(s) in the list." + System.lineSeparator() +
-                StringHelper.outputLine);
-    }
-
-    public static void printTasks() {
-        System.out.println(StringHelper.outputLine);
-        System.out.println("Here are the task(s) in your list:");
-        for (Task task : tasks) {
-            System.out.println(tasks.indexOf(task)+1 + ". " + task.getListView());
-        }
-        System.out.println(StringHelper.outputLine);
+        TaskList.tasks.add(task);
+        TextUi.echoTask(task);
     }
 
     public static void markTask(Task task) {
@@ -227,11 +186,11 @@ public class checkbot {
     }
 
     public static void deleteTask(Task task) {
-        tasks.remove(task);
+        TaskList.tasks.remove(task);
         System.out.println(StringHelper.outputLine + System.lineSeparator() +
                 "Got it. I've removed this task: " + System.lineSeparator() +
                 "  " + task.getListView() + System.lineSeparator() +
-                "Now you have " + tasks.size() + " task(s) in the list." + System.lineSeparator() +
+                "Now you have " + TaskList.tasks.size() + " task(s) in the list." + System.lineSeparator() +
                 StringHelper.outputLine);
 
     }
@@ -246,13 +205,13 @@ public class checkbot {
 
         switch (action) {
             case "mark":
-                markTask(tasks.get(taskIdx));
+                markTask(TaskList.tasks.get(taskIdx));
                 break;
             case "unmark":
-                unmarkTask(tasks.get(taskIdx));
+                unmarkTask(TaskList.tasks.get(taskIdx));
                 break;
             case "delete":
-                deleteTask(tasks.get(taskIdx));
+                deleteTask(TaskList.tasks.get(taskIdx));
                 break;
             default:
                 // do nothing
@@ -260,7 +219,7 @@ public class checkbot {
     }
 
     public static void main(String[] args) {
-        printHello();
+        TextUi.printHello();
         boolean goToExit = false;
 
         // read file from existing file and add into tasks
@@ -276,16 +235,16 @@ public class checkbot {
         }
 
         do {
-            String input = readInput().trim();
+            String input = TextUi.readInput().trim();
             String keyword = input.split(" ")[0].toLowerCase();
 
             switch (keyword) {
                 case "bye":
-                    printExit();
+                    TextUi.printExit();
                     goToExit = true;
                     break;
                 case "list":
-                    printTasks();
+                    TextUi.printTasks();
                     break;
                 case "mark":
                     // fallthrough
@@ -316,14 +275,14 @@ public class checkbot {
                         updateFile();
                         break;
                     } catch (EmptyInputException e) {
-                        printEmptyDescription();
+                        TextUi.printEmptyDescription();
                         break;
                     } catch (EmptyTimeException e) {
-                        printEmptyTime();
+                        TextUi.printEmptyTime();
                         break;
                     }
                 default:
-                    printCommandNotFound();
+                    TextUi.printCommandNotFound();
             }
         } while (!goToExit);
     }

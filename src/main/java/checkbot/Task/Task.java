@@ -1,3 +1,5 @@
+package checkbot.Task;
+
 public abstract class Task {
     protected String description;
     protected TaskStatus status;

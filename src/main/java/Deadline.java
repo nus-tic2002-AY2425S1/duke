@@ -11,4 +11,11 @@ public class Deadline extends Task {
         return "[" + this.getTaskIcon() + "][" + this.getStatusIcon() + "] " +
                 description + " (by: " + dueDateTime + ")";
     }
+
+    public String getFileView() {
+        return this.getTaskIcon() + " | " +
+                this.status.toString() + " | " +
+                this.getDescription() + " /by " +
+                dueDateTime;
+    }
 }

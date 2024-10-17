@@ -29,4 +29,5 @@ public abstract class Task {
     }
 
     public abstract String getListView();
+    public abstract String getFileView();
 }

@@ -7,4 +7,12 @@ public enum TaskStatus {
             case NOT_DONE -> " ";
         };
     }
+
+    public String toString() {
+        if (this == DONE) {
+            return "DONE";
+        } else {
+            return "NOT_DONE";
+        }
+    }
 }

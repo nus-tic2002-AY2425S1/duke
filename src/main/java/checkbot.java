@@ -1,13 +1,19 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class checkbot {
     public static ArrayList<Task> tasks = new ArrayList<>();
-    public static Scanner in = new Scanner(System.in);
+    public static Scanner scanInput = new Scanner(System.in);
+    public static File taskFile = new File("data/checkbot.txt");
 
     public static String readInput() {
         String input;
-        input = in.nextLine();
+        input = scanInput.nextLine();
         return input;
     }
 
@@ -31,7 +37,81 @@ public class checkbot {
         System.out.println(StringHelper.emptyTime);
     }
 
-    public static void addTask(String input) throws EmptyInputException, EmptyTimeException {
+    public static void writeToFile(String textToAdd) throws IOException {
+        FileWriter fw = new FileWriter(taskFile);
+        fw.write(textToAdd);
+        fw.close();
+    }
+
+    public static void updateFile() {
+        String textToAdd = "";
+
+        for (Task task : tasks) {
+            textToAdd = textToAdd.concat(task.getFileView() + System.lineSeparator());
+        }
+
+        try {
+            writeToFile(textToAdd);
+        } catch (IOException e) {
+            System.out.println("Oops! Something wrong happened with saving of file.");
+        }
+    }
+
+    public static void readFile(File taskFile) throws FileNotFoundException {
+        Scanner scanFile = new Scanner(taskFile);
+        List<String> taskList = new ArrayList<>();
+        int taskCount = 0;
+
+        while (scanFile.hasNextLine()) {
+            taskList.add(scanFile.nextLine());
+        }
+
+        for (String task : taskList) {
+            String[] taskArray = task.split("\\|");
+            String taskCommand = switch (taskArray[0].trim()) {
+                case "T" -> "Todo " + taskArray[2].trim();
+                case "D" -> "Deadline " + taskArray[2].trim();
+                case "E" -> "Event " + taskArray[2].trim();
+                default -> {
+                    // invalid task type, end the program
+                    System.out.println("Invalid task type! Please check your txt file.");
+                    throw new RuntimeException();
+                }
+            };
+
+            try {
+                if (addTask(taskCommand)) {
+                    // if task added successfully, set task status
+                    if (taskArray[1].trim().equals("NOT_DONE")) {
+                        tasks.get(taskCount).setDone(false);
+                    } else if (taskArray[1].trim().equals("DONE")) {
+                        tasks.get(taskCount).setDone(true);
+                    } else {
+                        System.out.println("Invalid task status! Please check your txt file.");
+                        throw new RuntimeException();
+                    }
+                    // increase taskCount for next line in taskList
+                    taskCount++;
+                } else {
+                    // command input is wrong, end the program
+                    System.out.println("Invalid task! Please check your txt file.");
+                    throw new RuntimeException();
+                }
+            } catch (EmptyTimeException e) {
+                // empty time, end the program
+                printEmptyTime();
+                System.out.println("Invalid input! Please check your txt file.");
+                throw new RuntimeException();
+            } catch (EmptyInputException e) {
+                // empty task, end the program
+                printEmptyDescription();
+                System.out.println("Invalid input! Please check your txt file.");
+                throw new RuntimeException();
+            }
+        }
+    }
+
+    public static boolean addTask(String input) throws EmptyInputException, EmptyTimeException {
         String[] taskArray = input.split(" ",2);
         if (taskArray.length < 2) {
             throw new EmptyInputException();
@@ -42,11 +122,11 @@ public class checkbot {
         switch (taskType) {
             case "todo":
                 addTodo(taskDetails);
-                break;
+                return true;
             case "deadline":
                 try{
                     addDeadline(taskDetails);
-                    break;
+                    return true;
                 } catch (CommandNotFoundException e) {
                     System.out.println(StringHelper.deadlineError);
                     break;
@@ -54,7 +134,7 @@ public class checkbot {
             case "event":
                 try{
                     addEvent(taskDetails);
-                    break;
+                    return true;
                 } catch (CommandNotFoundException e) {
                     System.out.println(StringHelper.eventError);
                     break;
@@ -62,6 +142,7 @@ public class checkbot {
             default:
                 // do nothing
         }
+        return false;
     }
 
     public static void addTodo(String input){
@@ -174,14 +255,25 @@ public class checkbot {
                 deleteTask(tasks.get(taskIdx));
                 break;
             default:
-                printCommandNotFound();
-                break;
+                // do nothing
         }
     }
 
     public static void main(String[] args) {
         printHello();
         boolean goToExit = false;
+
+        // read file from existing file and add into tasks
+        try {
+            readFile(taskFile);
+        } catch (FileNotFoundException e) {
+            try {
+                taskFile.getParentFile().mkdir();
+                taskFile.createNewFile();
+            } catch (IOException ioe) {
+                throw new RuntimeException(ioe);
+            }
+        }
 
         do {
             String input = readInput().trim();
@@ -202,6 +294,7 @@ public class checkbot {
                 case "delete":
                     try {
                         setStatus(input);
+                        updateFile();
                         break;
                     } catch (EmptyInputException e) {
                         System.out.println(StringHelper.emptyNumber);
@@ -220,6 +313,7 @@ public class checkbot {
                 case "event":
                     try {
                         addTask(input);
+                        updateFile();
                         break;
                     } catch (EmptyInputException e) {
                         printEmptyDescription();

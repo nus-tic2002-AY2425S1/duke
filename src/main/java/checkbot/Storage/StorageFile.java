@@ -36,7 +36,7 @@ public class StorageFile {
         }
     }
 
-    public static void readFile(File taskFile) throws FileNotFoundException {
+    public static void recoverTasks(File taskFile) throws FileNotFoundException {
         Scanner scanFile = new Scanner(taskFile);
         List<String> taskList = new ArrayList<>();
         int taskCount = 0;
@@ -86,6 +86,20 @@ public class StorageFile {
                 TextUi.printEmptyDescription();
                 System.out.println("Invalid input! Please check your txt file.");
                 throw new RuntimeException();
+            }
+        }
+    }
+
+    public static void readFile() {
+        // read file from existing file and add into tasks
+        try {
+            StorageFile.recoverTasks(StorageFile.taskFile);
+        } catch (FileNotFoundException e) {
+            try {
+                StorageFile.taskFile.getParentFile().mkdir();
+                StorageFile.taskFile.createNewFile();
+            } catch (IOException ioe) {
+                throw new RuntimeException(ioe);
             }
         }
     }

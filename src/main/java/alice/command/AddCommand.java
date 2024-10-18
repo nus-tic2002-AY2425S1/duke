@@ -109,7 +109,7 @@ public class AddCommand extends Command {
                 ArrayList<String> eventInstruction = new ArrayList<>(Arrays.asList(getInstruction().split(" /from ")));
                 ArrayList<String> eventInstruction2 = new ArrayList<>(Arrays.asList(eventInstruction.get(eventInstruction.size()-1).split(" /to ")));
 
-                tasks.add(new Event(eventInstruction.get(0), eventInstruction2.get(0), eventInstruction2.get(eventInstruction.size()-1)));
+                tasks.add(new Event(eventInstruction.get(0), LocalDate.parse(eventInstruction2.get(0),buildFormatter()), LocalDate.parse(eventInstruction2.get(eventInstruction.size()-1),buildFormatter())));
                 System.out.println("Got it, I've added this task: \n" + tasks.getLast().print());
                 ui.showSize(tasks.size());
                 break;

@@ -30,8 +30,8 @@ public class AliceTest {
             tasks = new TaskList();
         }
     }
-
-    public static void run() {
+    @Test
+    void run() {
         ui.showWelcome();
         boolean isExit = false;
         while (!isExit) {
@@ -47,6 +47,7 @@ public class AliceTest {
                 ui.showLine();
             }
         }
+        //assertEquals();
     }
 
     public static void main(String[] args) {

@@ -2,6 +2,7 @@ package alice.parser;
 
 import alice.command.*;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class Parser {
@@ -19,7 +20,8 @@ public class Parser {
                 if (instruction.isEmpty())
                     return new ListCommand();
                 else
-                    return new ListCommand(action, String.join(" ", instruction));
+                    return new ListCommand(String.join(" ", instruction));
+                    //return new ListCommand(action, String.join(" ", instruction));
             case "delete":
                 try {
                     return new DeleteCommand(Integer.parseInt(instruction.get(0))-1);

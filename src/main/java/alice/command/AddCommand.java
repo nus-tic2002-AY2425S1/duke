@@ -63,7 +63,7 @@ public class AddCommand extends Command {
      * @return DateTimeFormatter This returns the format that the parameter will
      * be processed in.
      */
-    private static DateTimeFormatter buildFormatter() {
+    public static DateTimeFormatter buildFormatter() {
         DateTimeFormatterBuilder builder = new DateTimeFormatterBuilder();
         for (String pattern : DATE_PATTERNS) {
             builder.parseCaseInsensitive()

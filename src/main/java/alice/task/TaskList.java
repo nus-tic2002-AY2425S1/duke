@@ -1,6 +1,9 @@
 package alice.task;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+
+import static alice.command.AddCommand.buildFormatter;
 
 public class TaskList {
     protected ArrayList<Task> tasks;
@@ -15,6 +18,23 @@ public class TaskList {
     public void printTasks(){
         for (int i = 0; i < tasks.size(); i++){
             System.out.println((i+1) + "." + tasks.get(i).print());
+        }
+    }
+
+    public void printTasks(LocalDate dateQuery){
+        for (int i = 0; i < tasks.size(); i++){
+            if (tasks.get(i) instanceof Deadline){
+                String by = ((Deadline)tasks.get(i)).getBy();
+                if (LocalDate.parse(by, buildFormatter()).equals(dateQuery))
+                    System.out.println((i+1) + "." + tasks.get(i).print());
+            }else if (tasks.get(i) instanceof Event){
+                String from = ((Event)tasks.get(i)).getFrom();
+                String to = ((Event)tasks.get(i)).getTo();
+                if (LocalDate.parse(from, buildFormatter()).isBefore(dateQuery) && LocalDate.parse(to, buildFormatter()).isAfter(dateQuery))
+                    System.out.println((i+1) + "." + tasks.get(i).print());
+            }
+
+
         }
     }
 

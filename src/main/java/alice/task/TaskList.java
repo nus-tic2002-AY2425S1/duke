@@ -21,6 +21,13 @@ public class TaskList {
         }
     }
 
+    public void printTasks(String searchWord){
+        for (int i = 0; i < tasks.size(); i++){
+            if (tasks.get(i).print().contains(searchWord))
+                System.out.println((i+1) + "." + tasks.get(i).print());
+        }
+    }
+
     public void printTasks(LocalDate dateQuery){
         for (int i = 0; i < tasks.size(); i++){
             if (tasks.get(i) instanceof Deadline){
@@ -33,8 +40,6 @@ public class TaskList {
                 if (LocalDate.parse(from, buildFormatter()).isBefore(dateQuery) && LocalDate.parse(to, buildFormatter()).isAfter(dateQuery))
                     System.out.println((i+1) + "." + tasks.get(i).print());
             }
-
-
         }
     }
 

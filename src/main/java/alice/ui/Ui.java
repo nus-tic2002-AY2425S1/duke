@@ -28,7 +28,7 @@ public class Ui {
     }
 
     public void showHelp(){
-        String help = "These are the commands available for you:\nlist\nmark (list number)\nunmark (list number)\ntodo (task)\ndeadline (task) /by (date)\nevent (task) /from (date) /to (date)\ndelete (list number)\nbye";
+        String help = "These are the commands available for you:\nlist\nlist (date)\nfind (word)\nmark (list number)\nunmark (list number)\ntodo (task)\ndeadline (task) /by (date)\nevent (task) /from (date) /to (date)\ndelete (list number)\nbye";
         System.out.println(help);
     }
 

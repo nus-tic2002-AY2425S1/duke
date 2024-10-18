@@ -21,7 +21,8 @@ public class Parser {
                     return new ListCommand();
                 else
                     return new ListCommand(String.join(" ", instruction));
-                    //return new ListCommand(action, String.join(" ", instruction));
+            case "find":
+                return new FindCommand(action, String.join(" ", instruction));
             case "delete":
                 try {
                     return new DeleteCommand(Integer.parseInt(instruction.get(0))-1);

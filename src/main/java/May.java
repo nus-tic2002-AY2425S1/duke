@@ -4,10 +4,6 @@ import java.util.ArrayList;
 
 public class May {
 
-    /*Store User Input*/
-    //private static Task[] taskList = new Task[100];
-    //private static int listNum = 0;
-
     // Using ArrayList
     private static ArrayList<Task> taskList = new ArrayList<>();
 

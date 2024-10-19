@@ -15,8 +15,10 @@ public class SaveTask {
             }
 
             FileWriter writer = new FileWriter(FILE);
-            for(Task task : taskList){
-                writer.write(task.toFileString()+System.lineSeparator());
+
+            for (int i =0; i < taskList.size(); i++){
+                Task task = taskList.get(i);
+                writer.write((i + 1) + ". " + task.toFileString() + System.lineSeparator());
             }
             writer.close();
         }
@@ -39,30 +41,42 @@ public class SaveTask {
         try{
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()){
-                String line = scanner.nextLine();
+                String line = scanner.nextLine().trim();
+
+                // Spilite base on the foramt given in lecture
                 String[] taskDetail = line.split(" \\| ");
-                Task task;
+                Task task = null;
 
-                switch (taskDetail[0]){
-                    case "T":
-                        task = new ToDo(taskDetail[2]);
-                        break;
-                    case "D":
-                        task = new Deadline(taskDetail[2],taskDetail[3]);
-                        break;
-                    case "E":
-                        task = new Event(taskDetail[2],taskDetail[3],taskDetail[4]);
-                    default:
-                        throw new ErrorException("Invalid task type in the file.");
+                //To load task with no task type
+                if (taskDetail.length == 3){
+                    String taskName = taskDetail[2].trim();
+                    task = new Task(taskName);
                 }
-
+                else if (taskDetail.length >=3){
+                    switch (taskDetail[0]){
+                        case "T":
+                            task = new ToDo(taskDetail[2].trim());
+                            break;
+                        case "D":
+                            task = new Deadline(taskDetail[2],taskDetail[3]);
+                            break;
+                        case "E":
+                            task = new Event(taskDetail[2],taskDetail[3],taskDetail[4]);
+                        default:
+                            throw new ErrorException("Invalid task type in the file.");
+                    }
+                }
                 // mark task as done if it's marked in the file
-                if (taskDetail[1].equals("1")){
+                if (task != null && taskDetail[1].trim().equals("1")){
                     task.markAsDone();
                 }
-                taskList.add(task);
+                if (task != null) {
+                    taskList.add(task);
+                }
             }
+            scanner.close();
         }
+
         catch(FileNotFoundException e){
             System.out.println("Task file not found.");
         }

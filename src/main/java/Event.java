@@ -24,4 +24,5 @@ public class Event extends Task{
     public String toFileString() {
         return getTaskType() + " | " + (isDone ? "1" : "0") + " | " + taskName + " | " + from + " | " + to;
     }
+
 }

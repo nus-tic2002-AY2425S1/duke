@@ -1,7 +1,6 @@
-T | 0 | Read book
-D | 0 | Submit assignment | 2024-12-11
-E | 0 | Project meeting | 2024-10-25 | 2024-10-30
-D | 0 | Doctor's appointment | 2024-11-05
-E | 1 | Birthday party | 2024-10-30 | 2024-10-30
-D | 0 | play game | 2024-12-15
-E | 0 | game meeting | 2024-10-22 | 2024-10-22
+T | 1 | Read a book
+D | 0 | Submit assignment | 22/10/2024 2359
+E | 0 | Team meeting | 23/10/2024 1000 | 23/10/2024 1100
+D | 0 | Submit paper | 22/10/2024 2359
+E | 0 | play game | 23/10/2024 1000 | 23/10/2024 1100
+  | 0 | buy laptop

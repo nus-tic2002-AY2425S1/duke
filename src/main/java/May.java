@@ -4,14 +4,13 @@ import java.util.ArrayList;
 
 public class May {
 
-    /*Store User Input*/
-    //private static Task[] taskList = new Task[100];
-    //private static int listNum = 0;
-
     // Using ArrayList
     private static ArrayList<Task> taskList = new ArrayList<>();
 
     public static void main(String[] args) {
+
+        // Load tasks from file
+        taskList = SaveAndLoadTask.loadTasks();
 
         //Scanner
         Scanner scan = new Scanner(System.in);
@@ -56,6 +55,7 @@ public class May {
                         taskList.get(taskIndex).markAsDone();
                         System.out.println("Congratulations! You have completed the task! ");
                         System.out.println(" " + taskList.get(taskIndex));
+                        SaveAndLoadTask.saveTasks(taskList);
                     }
                     else {
                         // add in error handle
@@ -72,6 +72,7 @@ public class May {
                         taskList.get(taskIndex).unmarkAsDone();
                         System.out.println("Task have not done, Kindly complete the task. ");
                         System.out.println(" " + taskList.get(taskIndex));
+                        SaveAndLoadTask.saveTasks(taskList);  // Save after unmarking as done
                     }
                     else {
                         // add in error handle
@@ -119,6 +120,7 @@ public class May {
                         System.out.println("Noted. I've removed this task:");
                         System.out.println(" " + removedTask);
                         System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+                        SaveAndLoadTask.saveTasks(taskList);
                     } else {
                         throw new ErrorException("Invalid task index. Please enter a valid task index.");
                     }
@@ -156,6 +158,7 @@ public class May {
                 System.out.println("Got it, I've updated this task:");
                 System.out.println(" " + taskList.get(i));
                 System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+                SaveAndLoadTask.saveTasks(taskList);
                 return;
             }
         }
@@ -168,6 +171,7 @@ public class May {
         System.out.println("Got it, I've added this task:");
         System.out.println(" " + taskList.get(taskList.size() - 1));
         System.out.println("Now you have " + taskList.size()  + " tasks in the task list.");
+        SaveAndLoadTask.saveTasks(taskList);
     }
 
     //display the task in the task list

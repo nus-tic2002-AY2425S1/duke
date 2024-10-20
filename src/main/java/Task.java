@@ -37,4 +37,9 @@ public class Task {
     public String toString() {
         return "[" + getTaskType() + "][" + getStatusIcon() + "] " + taskName;
     }
+
+    // String representation of task for saving to file
+    public String toFileString() {
+        return getTaskType() + " | " + (isDone ? "1" : "0") + " | " + taskName;
+    }
 }

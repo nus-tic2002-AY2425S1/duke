@@ -1,6 +1,6 @@
 T|1|read book
-D|0|return book|June 6th
-E|0|project meeting|Aug 6th 2pm|4pm
+D|0|return book|2/12/2019 1500
+E|0|project meeting|2/12/2019 1500|2/12/2019 1800
 T|0|borrow book
-D|0|return book|Sunday
-E|0|project meeting|Mon 2pm|4pm
+D|0|return book|2/12/2019 1500
+E|0|project meeting|2/12/2019 1500|2/12/2019 1800

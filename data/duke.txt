@@ -1,7 +1,7 @@
-T | 1 | read book
-D | 0 | return book | 2024-10-29
-T | 1 | finish homework
-D | 0 | submit assignment | 2024-10-31
-T | 0 | buy groceries
-E | 0 | borrow book | 2024-10-10 | 2024-10-21
-D | 0 | play game | sunday
+T | 0 | Read book
+D | 0 | Submit assignment | 2024-12-11
+E | 0 | Project meeting | 2024-10-25 | 2024-10-30
+D | 0 | Doctor's appointment | 2024-11-05
+E | 1 | Birthday party | 2024-10-30 | 2024-10-30
+D | 0 | play game | 2024-12-15
+E | 0 | game meeting | 2024-10-22 | 2024-10-22

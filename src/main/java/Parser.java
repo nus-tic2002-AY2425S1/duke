@@ -1,3 +1,7 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Parser {
     public static Task parseCommand(String command) throws Exception {
 
@@ -6,7 +10,11 @@ public class Parser {
             String[] parts = command.split(" /by ", 2);
             String description = parts[0].substring(9).trim(); // Extract description
             String dateTime = parts[1].trim(); // Extract date string
-            return new Deadline(description, dateTime); // Create a new Deadline task
+
+            // Parse the date and time
+            LocalDateTime dateTimeParsed = parseDateTime(dateTime);
+            // Create a new Deadline task
+            return new Deadline(description, dateTimeParsed);
         }
 
         // Check for event command
@@ -16,9 +24,27 @@ public class Parser {
             String[] dateParts = parts[1].split(" /to ", 2);
             String fromDate = dateParts[0].trim(); // Extract start date string
             String toDate = dateParts[1].trim(); // Extract end date string
-            return new Event(description, fromDate, toDate); // Create a new Event task
+
+            // Parse the start and end dates
+            LocalDateTime fromDateParsed = parseDateTime(fromDate);
+            LocalDateTime toDateParsed = parseDateTime(toDate);
+
+            return new Event(description, fromDateParsed, toDateParsed); // Create a new Event task
         }
         // Handle other commands
         throw new Exception("Invalid command.");
     }
+
+    // Method to check date and time from "d/M/yyyy HHmm" format
+    public static LocalDateTime parseDateTime(String dateTimeString) throws Exception {
+        try {
+
+            // Define the formatter
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+            return LocalDateTime.parse(dateTimeString, formatter);
+        } catch (DateTimeParseException e) {
+            throw new Exception("Invalid date/time format. Please use 'dd/MM/yyyy HHmm'.");
+        }
+    }
+
 }

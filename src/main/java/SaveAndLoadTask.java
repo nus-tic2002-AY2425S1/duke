@@ -1,4 +1,5 @@
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -6,6 +7,7 @@ import java.util.Scanner;
 
 public class SaveAndLoadTask {
     private static final String FILE = "./data/duke.txt";
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
 
     // save all the task in the txt file
     public static void saveTasks (ArrayList<Task> taskList){
@@ -18,11 +20,6 @@ public class SaveAndLoadTask {
 
             FileWriter writer = new FileWriter(FILE);
 
-//            for (int i =0; i < taskList.size(); i++){
-//                Task task = taskList.get(i);
-//                writer.write((i + 1) + ". " + task.toFileString() + System.lineSeparator());
-//            }
-//            writer.close();
             for (Task task : taskList) {
                 writer.write(task.toFileString() + System.lineSeparator());
             }
@@ -73,14 +70,21 @@ public class SaveAndLoadTask {
                             System.out.println("Skipping line due to insufficient details for Deadline: " + line);
                             continue;
                         }
-                        task = new Deadline(taskDetail[2].trim(), taskDetail[3].trim());
+                        // Parse LocalDateTime for Deadline
+                        LocalDateTime deadlineTime = LocalDateTime.parse(taskDetail[3].trim(), DATE_TIME_FORMATTER);
+
+                        task = new Deadline(taskDetail[2].trim(), deadlineTime);
                         break;
                     case "E":
                         if (taskDetail.length < 5) {
                             System.out.println("Skipping line due to insufficient details for Event: " + line);
                             continue;
                         }
-                        task = new Event(taskDetail[2].trim(), taskDetail[3].trim(), taskDetail[4].trim());
+                        // Parse LocalDateTime for Event (start and end time)
+                        LocalDateTime fromTime = LocalDateTime.parse(taskDetail[3].trim(), DATE_TIME_FORMATTER);
+                        LocalDateTime toTime = LocalDateTime.parse(taskDetail[4].trim(), DATE_TIME_FORMATTER);
+
+                        task = new Event(taskDetail[2].trim(), fromTime, toTime);
                         break;
                     default:
                         System.out.println("Invalid task type in the file: " + taskType);

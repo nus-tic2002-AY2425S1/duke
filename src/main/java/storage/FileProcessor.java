@@ -10,14 +10,27 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import static parser.DateTimeParser.parseDateTime;
 
+/**
+ * Handles loading and saving of tasks to and from a file
+ */
 public class FileProcessor {
     String fileLocation;
 
+    /**
+     * Constructor for a file processor with a specified file location
+     * @param fileLocation
+     */
     public FileProcessor(String fileLocation){
         this.fileLocation = fileLocation;
     }
 
+    /**
+     * Loads file from the file location
+     * @return List of tasks loaded from file
+     * @throws DukeException If an error occur while loading file
+     */
     public List<Task> load() throws DukeException {
         List<Task> tasks = new ArrayList<>();
         File file = new File(fileLocation);
@@ -33,10 +46,10 @@ public class FileProcessor {
                         task = new ToDo(taskParts[2]);
                         break;
                     case "D":
-                        task =  new Deadline(taskParts[2], taskParts[3]);
+                        task =  new Deadline(taskParts[2], parseDateTime(taskParts[3]));
                         break;
                     case "E":
-                        task = new Event(taskParts[2], taskParts[3], taskParts[4]);
+                        task = new Event(taskParts[2], parseDateTime(taskParts[3]), parseDateTime(taskParts[4]));
                         break;
                     default:
                         throw new DukeException("Invalid task type in file");
@@ -50,6 +63,11 @@ public class FileProcessor {
         return tasks;
     }
 
+    /**
+     * Save tasks to file
+     * @param tasks The list of tasks to be saved
+     * @throws DukeException If an error occur while saving file
+     */
     public void save(List<Task> tasks) throws DukeException{
         File file = new File(fileLocation);
         file.getParentFile().mkdir();

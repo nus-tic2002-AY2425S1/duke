@@ -2,21 +2,26 @@ package ui;
 
 import java.util.*;
 
-import parser.*;
-import parser.CommandHandler;
+import command.*;
+import command.CommandHandler;
 import exception.DukeException;
 import storage.FileProcessor;
 import tasks.*;
 import static output.OutputHandler.*;
 
 
-
+/**
+ * Main class for DukeGPT Application
+ */
 public class DukeGPT {
     private static String chatbotName = "DukeGPT";
     private static String fileLocation = "./data/dukegpt.txt";
     private static List<Task> tasks = new ArrayList<>();
     private static Map<String, CommandHandler> commandHandlerMapping = new HashMap<>();
 
+    /**
+     * Initialise the command handlers
+     */
     private static void initCommandHandlers() {
         commandHandlerMapping.put("list", new ListCommandHandler());
         commandHandlerMapping.put("mark", new MarkCommandHandler());
@@ -24,6 +29,10 @@ public class DukeGPT {
         commandHandlerMapping.put("delete", new DeleteCommandHandler());
     }
 
+    /**
+     * Main method for DukeGPT Application
+     * @param args Command line arguments
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         initCommandHandlers();

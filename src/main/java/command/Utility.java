@@ -1,11 +1,21 @@
-package parser;
+package command;
 
 import exception.DukeException;
 import tasks.Task;
 
 import java.util.List;
 
+/**
+ * Utility class for providing helper methods for command handling.
+ */
 public class Utility {
+
+    /**
+     * Parse task index from user input
+     * @param userInput The user input command string
+     * @return The parsed task index
+     * @throws DukeException If the index is not a valid index in the task or is an invalid integer
+     */
     public static int parseTaskIndex(String userInput) throws DukeException {
         try {
             String[] parts = userInput.split(" ");
@@ -18,6 +28,12 @@ public class Utility {
         }
     }
 
+    /**
+     * Checks if task index is valid in the TaskList
+     * @param taskIndex The task index to be checked
+     * @param tasks List of tasks
+     * @return Boolean value if task index is valid or not
+     */
     public static boolean isValidIndex(int taskIndex, List<Task> tasks){
         return taskIndex >= 0 && taskIndex < tasks.size();
     }

@@ -1,42 +1,36 @@
-package utility;
+package parser;
 
 import exception.DukeException;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Handles datetime parsing
+ */
 public class DateTimeParser {
+    private static final DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+    private static final DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy, h:mm a");
 
-    private static final DateTimeFormatter inputFormatterWithTime = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
-    private static final DateTimeFormatter inputFormatterWithoutTime = DateTimeFormatter.ofPattern("d/M/yyyy");
-    private static final DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a");
 
     /**
-     * Parses a string with date and time (or just date) into a LocalDateTime object.
-     * If only a date is provided, it defaults the time to 23:59.
+     * Parses a string with date and time into a LocalDateTime object.
      *
      * @param dateTimeString The string representing date and time.
      * @return The parsed LocalDateTime object.
      * @throws DukeException If the input date or time format is invalid.
      */
     public static LocalDateTime parseDateTime(String dateTimeString) throws DukeException {
-        try {
-            if (dateTimeString.trim().contains(" ")) {
-                return LocalDateTime.parse(dateTimeString.trim(), inputFormatterWithTime);
-            } else {
-                return LocalDateTime.of(
-                        LocalDateTime.parse(dateTimeString.trim(), inputFormatterWithoutTime).toLocalDate(),
-                        LocalTime.of(23, 59)
-                );
-            }
-        } catch (DateTimeParseException e) {
-            throw new DukeException("OOPS!! Please provide a valid date and time in the format d/M/yyyy HHmm.");
+        try{
+            return LocalDateTime.parse(dateTimeString.trim(),inputFormatter);
+        }
+        catch (DateTimeParseException e){
+            throw new DukeException("OOPSS!! Please provide a valid date and time in the format d/M/yyyy HHmm");
         }
     }
 
     /**
-     * Formats a LocalDateTime object into a human-readable string.
+     * Formats a LocalDateTime object into output format.
      *
      * @param dateTime The LocalDateTime object to format.
      * @return The formatted string.
@@ -46,12 +40,12 @@ public class DateTimeParser {
     }
 
     /**
-     * Formats a LocalDateTime object into a string suitable for saving to a file.
+     * Formats a LocalDateTime object into a input format to save to file.
      *
-     * @param dateTime The LocalDateTime object to format.
-     * @return The formatted string in the file format.
+     * @param dateTime The LocalDateTime object to input format for file saving.
+     * @return Formatted string in input format.
      */
     public static String formatToFile(LocalDateTime dateTime) {
-        return dateTime.format(inputFormatterWithTime);
+        return dateTime.format(inputFormatter);
     }
 }

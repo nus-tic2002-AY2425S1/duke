@@ -1,12 +1,16 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Event extends Task{
-    protected String from;
-    protected String to;
+    protected LocalDate from;
+    protected LocalDate to;
+    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
     // Construct an event task with schedule timing
     public Event(String taskName, String from, String to){
         super(taskName);
-        this.from = from;
-        this.to = to;
+        this.from = LocalDate.parse(from);
+        this.to = LocalDate.parse(to);
     }
 
     @Override
@@ -17,7 +21,7 @@ public class Event extends Task{
     // output the event to string with [E] and the schedule timeline for event from till to.
     @Override
     public String toString(){
-        return "[" + getTaskType() + "][" + getStatusIcon() +"] " + taskName + " (from: " + from + " to: " + to + ")";
+        return "[" + getTaskType() + "][" + getStatusIcon() + "] " + taskName + " (from: " + from.format(OUTPUT_FORMAT) + " to: " + to.format(OUTPUT_FORMAT) + ")";
     }
 
     @Override

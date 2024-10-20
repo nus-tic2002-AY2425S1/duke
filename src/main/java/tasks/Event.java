@@ -1,6 +1,8 @@
 package tasks;
 
 import exception.DukeException;
+import lombok.Getter;
+
 import java.time.LocalDateTime;
 
 import static parser.DateTimeParser.*;
@@ -8,6 +10,7 @@ import static parser.DateTimeParser.*;
 /**
  * Event task with start time and end time
  */
+@Getter
 public class Event extends Task{
     private final LocalDateTime from;
     private final LocalDateTime to;
@@ -35,9 +38,9 @@ public class Event extends Task{
 
     /**
      * Parse user input and create Event object.
-     * @param eventString
-     * @return
-     * @throws DukeException
+     * @param eventString User input
+     * @return Event object
+     * @throws DukeException If event user input is improperly formatted
      */
     @Override
     public Task createTask(String eventString) throws DukeException {

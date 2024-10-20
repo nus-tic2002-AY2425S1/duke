@@ -1,12 +1,15 @@
 package tasks;
 
 import exception.DukeException;
+import lombok.Getter;
+
 import static parser.DateTimeParser.*;
 import java.time.LocalDateTime;
 
 /**
  * Task with deadline
  */
+@Getter
 public class Deadline extends Task {
     private final LocalDateTime by;
 

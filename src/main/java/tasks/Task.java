@@ -1,10 +1,12 @@
 package tasks;
 
 import exception.DukeException;
+import lombok.Getter;
 
 /**
  * An abstract task class
  */
+@Getter
 public abstract class Task {
     protected boolean isDone;
     protected String description;

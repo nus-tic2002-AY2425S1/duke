@@ -1,37 +1,38 @@
 #!/usr/bin/env bash
 
-# create bin directory if it doesn't exist
-if [ ! -d "../bin" ]
+# Navigate to the root directory
+cd ..
+
+# Clean previous outputs
+if [ -e "./text-ui-test/ACTUAL.TXT" ]
 then
-    mkdir ../bin
+    rm ./text-ui-test/ACTUAL.TXT
 fi
 
-# delete output from previous run
-if [ -e "./ACTUAL.TXT" ]
-then
-    rm ACTUAL.TXT
-fi
-
+# Clean previous saved file
 if [ -e "./data/dukegpt.txt" ]
 then
     rm ./data/dukegpt.txt
 fi
 
-# compile the code into the bin folder, terminates if error occurred
-if ! javac -cp ../src/main/java -Xlint:none -d ../bin ../src/main/java/**/*.java
+# Use Gradle to clean and build the project, terminates if error occurred
+if ! ./gradlew clean build
 then
     echo "********** BUILD FAILURE **********"
     exit 1
 fi
 
-# run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-java -classpath ../bin ui.DukeGPT < input.txt > ACTUAL.TXT
+# Run compiled gradle program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
+java -classpath ./build/classes/java/main ui.DukeGPT < text-ui-test/input.txt > text-ui-test/ACTUAL.TXT
 
-# convert to UNIX format
+# Navigate back to the test folder to run comparisons
+cd text-ui-test
+
+# Convert to UNIX format
 cp EXPECTED.TXT EXPECTED-UNIX.TXT
 dos2unix ACTUAL.TXT EXPECTED-UNIX.TXT
 
-# compare the output to the expected output
+# Compare the output to the expected output
 diff ACTUAL.TXT EXPECTED-UNIX.TXT
 if [ $? -eq 0 ]
 then
@@ -40,7 +41,8 @@ else
     echo "Test result: FAILED"
 fi
 
-diff data/dukegpt.txt EXPECTED_SAVE.TXT
+# Compare the saved output file to the expected save file
+diff ../data/dukegpt.txt EXPECTED_SAVE.TXT
 if [ $? -eq 0 ]
 then
     echo "Save file comparison: PASSED"

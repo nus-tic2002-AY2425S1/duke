@@ -1,10 +1,12 @@
 package tasks;
 
 import exception.DukeException;
+import lombok.Getter;
 
 /**
  * A to-do task
  */
+@Getter
 public class ToDo extends Task{
     /**
      * Constructor for to-do task

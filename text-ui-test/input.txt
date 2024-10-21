@@ -26,4 +26,6 @@ delete fail
 list
 deadline return book /by wrongdate
 event project meeting /from wrongdate /to wrongdate
+find book
+find project meeting
 bye

@@ -27,6 +27,7 @@ public class DukeGPT {
         commandHandlerMapping.put("mark", new MarkCommandHandler());
         commandHandlerMapping.put("unmark", new UnmarkCommandHandler());
         commandHandlerMapping.put("delete", new DeleteCommandHandler());
+        commandHandlerMapping.put("find", new FindCommandHandler());
     }
 
     /**

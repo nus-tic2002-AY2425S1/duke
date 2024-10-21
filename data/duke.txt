@@ -1,7 +1,6 @@
-T | 1 | read book
-D | 0 | return book | 2024-10-29
-T | 1 | finish homework
-D | 0 | submit assignment | 2024-10-31
-T | 0 | buy groceries
-E | 0 | borrow book | 2024-10-10 | 2024-10-21
-D | 0 | play game | sunday
+T | 1 | Read a book
+D | 0 | Submit assignment | 22/10/2024 2359
+E | 0 | Team meeting | 23/10/2024 1000 | 23/10/2024 1100
+D | 0 | Submit paper | 22/10/2024 2359
+E | 0 | play game | 23/10/2024 1000 | 23/10/2024 1100
+  | 0 | buy laptop

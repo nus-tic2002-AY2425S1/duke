@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 
 public class May {
@@ -97,7 +98,8 @@ public class May {
                     if (doneBy.length < 2) {
                         throw new ErrorException("Invalid deadline format.");
                     }
-                    addOrUpdateTask(new Deadline(doneBy[0].trim(), doneBy[1].trim()));
+                    LocalDateTime deadlineTime = Parser.parseDateTime(doneBy[1].trim());
+                    addOrUpdateTask(new Deadline(doneBy[0].trim(), deadlineTime));
                 }
 
                 // Create upcoming event task
@@ -109,7 +111,9 @@ public class May {
                     if (eventTime.length < 3) {
                         throw new ErrorException("Invalid event format.");
                     }
-                    addOrUpdateTask(new Event(eventTime[0].trim(), eventTime[1].trim(), eventTime[2].trim()));
+                    LocalDateTime fromTime = Parser.parseDateTime(eventTime[1].trim());
+                    LocalDateTime toTime = Parser.parseDateTime(eventTime[2].trim());
+                    addOrUpdateTask(new Event(eventTime[0].trim(), fromTime, toTime));
                 }
 
                 // Delete task from the list

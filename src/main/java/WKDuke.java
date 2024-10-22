@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,7 +15,8 @@ public class WKDuke {
     private static final String ADD_EVENT_TASK_KEYWORD = "event";
     private static final String DELETE_TASK_KEYWORD = "delete";
 
-    private static final List<Task> taskList = new ArrayList<>();
+    private static List<Task> taskList;
+    private static StorageFile storageFile;
 
     public static void echo(String message) {
         System.out.println(BORDER_LINE);
@@ -84,7 +84,7 @@ public class WKDuke {
         echo(String.format("OK, I've marked this task as not done yet:%s  %s", NEW_INDENT_LINE, task));
     }
 
-    public static void updateTask(String[] inputWords) {
+    public static void updateTask(String[] inputWords) throws StorageOperationException {
         String taskAction = inputWords[0];
         try {
             validateTaskInput(inputWords);
@@ -95,6 +95,7 @@ public class WKDuke {
                 case MARK_TASK_UNDONE_KEYWORD -> markTaskAsUndone(taskNumber);
                 default -> throw new InvalidTaskOperationException("Unknown task operation.", taskAction);
             }
+            storageFile.save(taskList);
         } catch (InvalidTaskOperationException e) {
             echo(String.format("Action: updateTask(%s)%sError: %s", e.getTaskOperation(), NEW_INDENT_LINE, e.getMessage()));
         }
@@ -140,7 +141,7 @@ public class WKDuke {
         return new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
     }
 
-    public static void addTask(String[] inputWords) {
+    public static void addTask(String[] inputWords) throws StorageOperationException {
         TaskType taskType = TaskType.valueOf(inputWords[0].toUpperCase());
         try {
             validateAddTaskInput(inputWords);
@@ -150,22 +151,23 @@ public class WKDuke {
                 case TODO -> new ToDo(taskDetail);
                 case DEADLINE -> createDeadlineTask(taskDetail);
                 case EVENT -> createEventTask(taskDetail);
-                default -> throw new InvalidTaskFormatException("Unknown task type.", taskType);
             };
             taskList.add(newTask);
+            storageFile.save(taskList);
             echo(String.format("Got it. I've added this task:%s  %s%sNow you have %s tasks in the list.", NEW_INDENT_LINE, newTask, NEW_INDENT_LINE, taskList.size()));
         } catch (InvalidTaskFormatException e) {
             echo(String.format("Action: addTask(%s)%sError: %s", e.getTaskType(), NEW_INDENT_LINE, e.getMessage()));
         }
     }
 
-    public static void deleteTask(String[] inputWords) {
+    public static void deleteTask(String[] inputWords) throws StorageOperationException {
         try {
             validateTaskInput(inputWords);
 
             int taskNumber = Integer.parseInt(inputWords[1]);
             Task task = taskList.get(taskNumber - 1);
             taskList.remove(task);
+            storageFile.save(taskList);
             echo(String.format("Noted. I've removed this task:%s  %s%sNow you have %s tasks in the list.", NEW_INDENT_LINE, task, NEW_INDENT_LINE, taskList.size()));
         } catch (InvalidTaskOperationException e) {
             echo(String.format("Action: deleteTask%sError: %s", NEW_INDENT_LINE, e.getMessage()));
@@ -173,52 +175,58 @@ public class WKDuke {
     }
 
     public static void main(String[] args) {
-        String logo = """
-                 ___       __   ___  __    ________  ___  ___  ___  __    _______
-                \t |\\  \\     |\\  \\|\\  \\|\\  \\ |\\   ___ \\|\\  \\|\\  \\|\\  \\|\\  \\ |\\  ___ \\    \s
-                \t \\ \\  \\    \\ \\  \\ \\  \\/  /|\\ \\  \\_|\\ \\ \\  \\\\\\  \\ \\  \\/  /|\\ \\   __/|   \s
-                \t  \\ \\  \\  __\\ \\  \\ \\   ___  \\ \\  \\ \\\\ \\ \\  \\\\\\  \\ \\   ___  \\ \\  \\_|/__ \s
-                \t   \\ \\  \\|\\__\\_\\  \\ \\  \\\\ \\  \\ \\  \\_\\\\ \\ \\  \\\\\\  \\ \\  \\\\ \\  \\ \\  \\_|\\ \\\s
-                \t    \\ \\____________\\ \\__\\\\ \\__\\ \\_______\\ \\_______\\ \\__\\\\ \\__\\ \\_______\\
-                \t     \\|____________|\\|__| \\|__|\\|_______|\\|_______|\\|__| \\|__|\\|_______|
-                """;
-        echo(String.format("%s%sHello! I'm WKDuke%sWhat can I do for you?", logo, NEW_INDENT_LINE, NEW_INDENT_LINE));
+        try {
+            storageFile = new StorageFile();
+            taskList = storageFile.load();
 
-        Scanner sc = new Scanner(System.in);
-        String action = "";
+            String logo = """
+                     ___       __   ___  __    ________  ___  ___  ___  __    _______
+                    \t |\\  \\     |\\  \\|\\  \\|\\  \\ |\\   ___ \\|\\  \\|\\  \\|\\  \\|\\  \\ |\\  ___ \\    \s
+                    \t \\ \\  \\    \\ \\  \\ \\  \\/  /|\\ \\  \\_|\\ \\ \\  \\\\\\  \\ \\  \\/  /|\\ \\   __/|   \s
+                    \t  \\ \\  \\  __\\ \\  \\ \\   ___  \\ \\  \\ \\\\ \\ \\  \\\\\\  \\ \\   ___  \\ \\  \\_|/__ \s
+                    \t   \\ \\  \\|\\__\\_\\  \\ \\  \\\\ \\  \\ \\  \\_\\\\ \\ \\  \\\\\\  \\ \\  \\\\ \\  \\ \\  \\_|\\ \\\s
+                    \t    \\ \\____________\\ \\__\\\\ \\__\\ \\_______\\ \\_______\\ \\__\\\\ \\__\\ \\_______\\
+                    \t     \\|____________|\\|__| \\|__|\\|_______|\\|_______|\\|__| \\|__|\\|_______|
+                    """;
+            echo(String.format("%s%sHello! I'm WKDuke%sWhat can I do for you?", logo, NEW_INDENT_LINE, NEW_INDENT_LINE));
 
-        while (!action.equals(EXIT_KEYWORD)) {
-            String input = sc.nextLine().trim();
-            if (input.isEmpty()) {
-                continue;
+            Scanner sc = new Scanner(System.in);
+            String action = "";
+
+            while (!action.equals(EXIT_KEYWORD)) {
+                String input = sc.nextLine().trim();
+                if (input.isEmpty()) {
+                    continue;
+                }
+
+                String[] inputWords = input.split(" ", 2);
+                action = inputWords[0];
+                switch (action) {
+                    case EXIT_KEYWORD:
+                        break;
+                    case LIST_TASK_KEYWORD:
+                        printTaskList();
+                        break;
+                    case MARK_TASK_DONE_KEYWORD:
+                    case MARK_TASK_UNDONE_KEYWORD:
+                        updateTask(inputWords);
+                        break;
+                    case ADD_TODO_TASK_KEYWORD:
+                    case ADD_DEADLINE_TASK_KEYWORD:
+                    case ADD_EVENT_TASK_KEYWORD:
+                        addTask(inputWords);
+                        break;
+                    case DELETE_TASK_KEYWORD:
+                        deleteTask(inputWords);
+                        break;
+                    default:
+                        echo(String.format("Action: userInput%sError: Unknown command for '%s'.", NEW_INDENT_LINE, input));
+                        break;
+                }
             }
-
-            String[] inputWords = input.split(" ", 2);
-            action = inputWords[0];
-            switch (action) {
-                case EXIT_KEYWORD:
-                    break;
-                case LIST_TASK_KEYWORD:
-                    printTaskList();
-                    break;
-                case MARK_TASK_DONE_KEYWORD:
-                case MARK_TASK_UNDONE_KEYWORD:
-                    updateTask(inputWords);
-                    break;
-                case ADD_TODO_TASK_KEYWORD:
-                case ADD_DEADLINE_TASK_KEYWORD:
-                case ADD_EVENT_TASK_KEYWORD:
-                    addTask(inputWords);
-                    break;
-                case DELETE_TASK_KEYWORD:
-                    deleteTask(inputWords);
-                    break;
-                default:
-                    echo(String.format("Action: userInput%sError: Unknown command for '%s'.", NEW_INDENT_LINE, input));
-                    break;
-            }
+            echo("Bye. Hope to see you again soon!");
+        } catch (InvalidStorageFilePathException | StorageOperationException e) {
+            throw new RuntimeException(e);
         }
-
-        echo("Bye. Hope to see you again soon!");
     }
 }

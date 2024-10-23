@@ -13,4 +13,13 @@ public class Deadline extends Task{
   public String toString() {
     return "[" + _type + "]" + super.toString() + " (by " + this._by + ")";
   }
+  @Override
+  public String toDBString() {
+    return Command.DEADLINE.toString()
+            + TaskList._saveDelimiter
+            + super.getName()
+            + TaskList._saveDelimiter
+            + "/by "
+            + _by;
+  }
 }

@@ -9,4 +9,7 @@ public class Todo extends Task{
   public String toString() {
     return "[" + this._type + "]" + super.toString();
   }
+
+  @Override
+  public String toDBString() { return Command.TODO.toString() + TaskList._saveDelimiter + super.getName(); }
 }

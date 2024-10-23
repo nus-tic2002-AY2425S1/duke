@@ -18,4 +18,17 @@ public class Event extends Task {
   public String toString() {
     return "[" + _type + "]" + super.toString() + " (from: " + this._from + " to: "+ this._to +  ")";
   }
+
+  @Override
+  public String toDBString() {
+    return Command.EVENT.toString()
+            + TaskList._saveDelimiter
+            + super.getName()
+            + TaskList._saveDelimiter
+            + "/from "
+            + _from
+            + TaskList._saveDelimiter
+            + "/to "
+            + _to;
+  }
 }

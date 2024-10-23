@@ -1,20 +1,24 @@
 package TaskManager;
 
+import UserUI.StarkException;
+
 import java.util.ArrayList;
 
 public class TaskList {
-    private ArrayList<Task> tasks = new ArrayList<Task>();
-    private int totalTasks = 0;
-    public TaskList() {
+    private ArrayList<Task> tasks;
+    private int totalTasks;
+    public TaskList(ArrayList<Task> tasks) {
+        this.tasks = tasks;
+        this.totalTasks = tasks.size();
     }
 
     public void addTask(String type, String task) throws StarkException.InvalidIndexException {
         task = task.replace(type +" ","");       //remove the type of new task from input
 
-        if(type.equalsIgnoreCase("Tasks.Todo")){
+        if(type.equalsIgnoreCase("Todo")){
             tasks.add(new Todo(task));
             totalTasks++;
-        }else if(type.equalsIgnoreCase("Tasks.Deadline")){
+        }else if(type.equalsIgnoreCase("Deadline")){
             String[] str = task.split(" /by ");
             try{
                 tasks.add(new Deadline(str[0],str[1]));
@@ -23,7 +27,7 @@ public class TaskList {
                         System.lineSeparator() +"\t\t \"eg: deadline return book /by Sunday\" ");
             }
             totalTasks++;
-        }else if (type.equalsIgnoreCase("Tasks.Event")){
+        }else if (type.equalsIgnoreCase("Event")){
             String[] str = task.split(" /from ");
             try {
                 String action = str[0];

@@ -32,4 +32,10 @@ public class StarkException {
             super(message);
         }
     }
+
+    public static class FileNotFoundException extends Exception {
+        public FileNotFoundException(String message) {
+            super(message);
+        }
+    }
 }

@@ -1,4 +1,2 @@
- | T | bus |   | 
- | T | car | X | 
- | D | bus (by: mon)   | 
-| E | project meeting (from: Mon 2pm to: 4pm ) X | 
+T ]cars ]X ]
+T ]bus ]  ]

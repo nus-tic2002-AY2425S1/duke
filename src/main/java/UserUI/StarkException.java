@@ -1,3 +1,5 @@
+package UserUI;
+
 import java.io.IOException;
 
 public class StarkException {

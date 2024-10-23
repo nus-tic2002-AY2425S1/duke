@@ -1,3 +1,5 @@
+package UserUI;
+
 import java.util.Arrays;
 
 public class Tokenize {
@@ -10,8 +12,8 @@ public class Tokenize {
 
        if (tokens.length == 1) {
            if (tokens[0].equalsIgnoreCase("todo")
-                || tokens[0].equalsIgnoreCase("Deadline")
-                || tokens[0].equalsIgnoreCase("Deadline")) {
+                || tokens[0].equalsIgnoreCase("Tasks.Deadline")
+                || tokens[0].equalsIgnoreCase("Tasks.Deadline")) {
               throw new StarkException.InvalidDescriptionException(" OOPS!!! \"" + tokens[0].toUpperCase() + "\" description cannot be empty");
            }else if(tokens[0].equalsIgnoreCase("mark") || tokens[0].equalsIgnoreCase("unmark")
                    || tokens[0].equalsIgnoreCase("delete")){

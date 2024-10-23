@@ -1,3 +1,6 @@
+package Storage;
+
+import TaskManager.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,25 +13,24 @@ public class SaveToFile {
     private String filePath;
 
 
-    public SaveToFile(ArrayList<Task> taskList, String filePath) {
+    public SaveToFile(ArrayList<Task> taskList, String filePath) throws Exception {
         this.tasks = taskList;
         this.filePath = filePath;
         if (Files.exists(Paths.get(filePath))) {
-            System.out.println("File exists in given path..." + System.lineSeparator() + "Saving Tasks to the file");
+            System.out.println("File exists in given path..." + System.lineSeparator() );
         } else {
             System.out.println("File doesn't exist at the given path, Creating a new one");
             try {
                 File file = new File(filePath);
                 System.out.println("File created at: " + filePath);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            } catch (Exception e){
+                throw new Exception("Creating a new file failed");
             }
-
         }
 
     }
 
-    public void writeToFile() throws StarkException.WriteToFileException {
+    public void writeToFile() throws IOException {
 
         try {
             FileWriter fileWriter = new FileWriter(filePath);
@@ -42,9 +44,10 @@ public class SaveToFile {
                 }
                 fileWriter.append(System.lineSeparator());
                 fileWriter.close();
+                System.out.println("Tasks saved to the file successfully");
             }
         } catch (IOException e) {
-            throw new StarkException.WriteToFileException("Saving the task to \" " + filePath + " \" failed...");
+            throw new IOException("Saving the task to \" " + filePath + " \" failed...");
         }
     }
 }

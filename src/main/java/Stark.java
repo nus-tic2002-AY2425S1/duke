@@ -1,5 +1,9 @@
+import Storage.SaveToFile;
+import TaskManager.TaskList;
+import UserUI.StarkException;
+import UserUI.Tokenize;
+
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.Scanner;
 
 public class Stark {
@@ -59,7 +63,7 @@ public class Stark {
         byeMsg();
         try{
             new SaveToFile(taskList.getTasks(),"src/Data/TaskLists.txt").writeToFile();
-        }catch (StarkException.WriteToFileException e){
+        }catch (Exception e){
             System.out.println(e.getMessage());
         }
 

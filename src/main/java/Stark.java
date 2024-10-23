@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Scanner;
 
@@ -56,6 +57,12 @@ public class Stark {
             lineBreak();
         }
         byeMsg();
+        try{
+            new SaveToFile(taskList.getTasks(),"src/Data/TaskLists.txt").writeToFile();
+        }catch (StarkException.WriteToFileException e){
+            System.out.println(e.getMessage());
+        }
+
 
     }
 

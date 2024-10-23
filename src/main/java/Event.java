@@ -1,16 +1,14 @@
 public class Event extends Task{
-    private String startAt;
-    private String endBy;
 
-    public Event(String task, String time){
-        super(task);
-        String[] timeSplit = time.split(" /to ");
-        startAt = timeSplit[0];
-        endBy = timeSplit[1];
+
+    public Event(String task, String startAt, String endBy) {
+        super(task+ " (from: " + startAt + " to: " + endBy + " )");
+
+
     }
 
     @Override
     public String printTask() {
-        return "[E] " + super.printTask() + " (from: " + startAt + " to: " + endBy + " )";
+        return "[E] " + super.printTask();
     }
 }

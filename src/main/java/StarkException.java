@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 public class StarkException {
 
     public static class InvalidDescriptionException extends IllegalArgumentException {
@@ -19,6 +21,12 @@ public class StarkException {
 
     public static class InvalidIndexException extends IndexOutOfBoundsException {
         public InvalidIndexException(String message) {
+            super(message);
+        }
+    }
+
+    public static class WriteToFileException extends IOException {
+        public WriteToFileException(String message) {
             super(message);
         }
     }

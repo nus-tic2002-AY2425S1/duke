@@ -6,7 +6,7 @@ public class TaskList {
     public TaskList() {
     }
 
-    public void addTask(String type, String task) {
+    public void addTask(String type, String task) throws StarkException.InvalidIndexException {
         task = task.replace(type +" ","");       //remove the type of new task from input
 
         if(type.equalsIgnoreCase("Todo")){
@@ -14,11 +14,27 @@ public class TaskList {
             totalTasks++;
         }else if(type.equalsIgnoreCase("Deadline")){
             String[] str = task.split(" /by ");
-            tasks.add(new Deadline(str[0],str[1]));
+            try{
+                tasks.add(new Deadline(str[0],str[1]));
+            }catch (StarkException.InvalidIndexException e){
+                throw new StarkException.InvalidIndexException(" OOPS!!! \"DEADLINE\" tasks need to be done before a specific date/time " +
+                        System.lineSeparator() +"\t\t \"eg: deadline return book /by Sunday\" ");
+            }
             totalTasks++;
         }else if (type.equalsIgnoreCase("Event")){
             String[] str = task.split(" /from ");
-            tasks.add(new Event(str[0],str[1]));
+            try {
+                String action = str[0];
+                str = str[1].split(" /to ");
+                String startTime = str[0];
+                String endTime = str[1];
+                tasks.add(new Event(action,startTime,endTime));
+            }catch (StarkException.InvalidIndexException e){
+                throw new StarkException.InvalidIndexException(" OOPS!!! \"EVENT\" tasks need to start and ends at a specific date/time " +
+                        System.lineSeparator() + "\t\t \"eg: event project meeting /from Mon 2pm /to 4pm\" ");
+            }
+
+
             totalTasks++;
         }
         System.out.println("Got it. I've added this task:\n  " + tasks.get(totalTasks-1).printTask());
@@ -66,6 +82,9 @@ public class TaskList {
         }
     }
 
+    public ArrayList<Task> getTasks() {
+        return tasks;
+    }
 
 
 }

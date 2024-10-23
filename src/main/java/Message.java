@@ -1,4 +1,4 @@
-public class message {
+public class Message {
     public static void printHorizontalLines(){
         System.out.println("____________________________________________________________");
     }
@@ -33,7 +33,7 @@ public class message {
     public static void printDuplicateMessage(){
         printSingleMessage("Task exist in list.");
     }
-    public static void printTaskStatusMessage(boolean isDone, task currentTask){
+    public static void printTaskStatusMessage(boolean isDone, Task currentTask){
         String message;
         if(isDone){
             message = "Nice! I've marked this task as done";
@@ -47,5 +47,21 @@ public class message {
     }
     public static void printMarkedTaskMessage(){
         printSingleMessage("Task have been marked / unmarked");
+    }
+    public static void printAddedTaskMessage(int totalNumberOfTodoTask, String addedTask){
+        printHorizontalLines();
+        System.out.println("Got it. I've added this task:");
+        System.out.println(addedTask);
+        System.out.println("Now you have " + totalNumberOfTodoTask + " tasks in the list.");
+        printHorizontalLines();
+    }
+    public static void printMissingCommandKeywordMessage(){
+        printSingleMessage("It looks like you forgot to specify the task type! Please indicate whether this task is a Todo, Event, or Deadline task so we can help you keep track of it.");
+    }
+    public static void printMissingDeadlineParameterMessage(){
+        printSingleMessage("It seems you forgot to specify a parameter! Please enter it in the following format: [Task_name] /by [Deadline].");
+    }
+    public static void printMissingEventParameterMessage(){
+        printSingleMessage("It seems you forgot to specify a parameter! Please enter it in the following format: [Task_name] /from [Start_date] /to [End_date].");
     }
 }

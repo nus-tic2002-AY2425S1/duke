@@ -4,6 +4,8 @@ import exception.DukeException;
 import lombok.Getter;
 
 import static parser.DateTimeParser.*;
+import static parser.TaskParser.parseDeadline;
+
 import java.time.LocalDateTime;
 
 /**
@@ -11,7 +13,7 @@ import java.time.LocalDateTime;
  */
 @Getter
 public class Deadline extends Task {
-    private final LocalDateTime by;
+    private LocalDateTime by;
 
     /**
      * Constructor for Deadline
@@ -43,15 +45,15 @@ public class Deadline extends Task {
      */
     @Override
     public Task createTask(String deadlineString) throws DukeException {
-        String[] deadlineParts = deadlineString.split(" /by ");
-        if (deadlineParts.length != 2) {
-            throw new DukeException("OOPS!! The Deadline description is improperly formatted. Please try again!");
-        }
+        String[] deadlineParts = parseDeadline(deadlineString);
+        return new Deadline(deadlineParts[0], parseDateTime(deadlineParts[1]));
+    }
 
-        String description = deadlineParts[0];
-        LocalDateTime deadlineTime = parseDateTime(deadlineParts[1]);
-
-        return new Deadline(description.trim(), deadlineTime);
+    @Override
+    public void update(String deadlineString) throws DukeException {
+        String[] deadlineParts = parseDeadline(deadlineString);
+        this.description = deadlineParts[0];
+        this.by = parseDateTime(deadlineParts[1]);
     }
 
     /**

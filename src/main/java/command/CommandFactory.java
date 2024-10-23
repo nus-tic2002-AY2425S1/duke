@@ -6,6 +6,8 @@ import java.util.Map;
 import exception.DukeException;
 import tasks.*;
 
+import static parser.TaskParser.parseTask;
+
 /**
  * Factory class to generate tasks based on user input commands.
  */
@@ -24,19 +26,16 @@ public class CommandFactory {
      * @throws DukeException If the command is invalid or description is emoty.
      */
     public static Task generateTask(String userInput) throws DukeException {
-        String [] commandParts = userInput.split(" ", 2);
-        String command = commandParts[0];
-        String commandString = commandParts.length == 2 ? commandParts[1] : null;
+        String [] taskParts = parseTask(userInput);
 
-        Task taskTemplate = taskMap.get(command.toLowerCase());
-
+        Task taskTemplate = taskMap.get(taskParts[0]);
         if (taskTemplate != null) {
-            if (commandString == null || commandString.trim().isEmpty()) {
-                throw new DukeException("OOPS!!! The description of a " + command + " cannot be empty");
+            if (taskParts[1] == null || taskParts[1].isEmpty()) {
+                throw new DukeException("OOPS!!! The description of a " + taskParts[0] + " cannot be empty");
             }
-            return taskTemplate.createTask(commandString);
+            return taskTemplate.createTask(taskParts[1]);
         } else {
-            throw new DukeException("OOPS!!! I don't know what the command \"" + command + "\" means");
+            throw new DukeException("OOPS!!! I don't know what the command \"" + taskParts[0] + "\" means");
         }
     }
 }

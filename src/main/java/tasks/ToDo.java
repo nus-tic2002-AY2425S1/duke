@@ -34,6 +34,11 @@ public class ToDo extends Task{
         return new ToDo(description);
     }
 
+    @Override
+    public void update (String description) {
+        this.description = description;
+    }
+
     /**
      * Convert To-Do to a format for file saving
      * @return String in the format to save To-Do into a file

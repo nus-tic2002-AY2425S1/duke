@@ -108,4 +108,17 @@ public class OutputHandler {
         System.out.println("Now you have " + (tasks.size()-1) + " tasks in the list.");
         printSeparator();
     }
+    /**
+     * Prints a message that a task has been updated in the TaskList.
+     *
+     * @param taskIndex The index of task
+     * @param tasks The list of task objects
+     */
+    public static void printUpdateItem(int taskIndex, List<Task> tasks) {
+        printSeparator();
+        System.out.println("Noted. I've updated this task:");
+        System.out.println("  " + tasks.get(taskIndex));
+        printSeparator();
+    }
+
 }

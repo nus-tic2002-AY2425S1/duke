@@ -51,6 +51,8 @@ public abstract class Task {
      */
     public abstract Task createTask(String description) throws DukeException;
 
+    public abstract void update (String updateInput) throws DukeException;
+
     /**
      * Convert task to a format for file saving
      * @return String in the format to save task into a file

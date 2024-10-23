@@ -6,14 +6,15 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 import static parser.DateTimeParser.*;
+import static parser.TaskParser.*;
 
 /**
  * Event task with start time and end time
  */
 @Getter
 public class Event extends Task{
-    private final LocalDateTime from;
-    private final LocalDateTime to;
+    private  LocalDateTime from;
+    private  LocalDateTime to;
 
     /**
      * Constructor for Event.
@@ -44,13 +45,17 @@ public class Event extends Task{
      */
     @Override
     public Task createTask(String eventString) throws DukeException {
-        String [] eventParts = eventString.split(" /from | /to ");
-        if(eventParts.length != 3){
-            throw new DukeException("OOPS!! The Event description is improperly formatted. Please try again!");
-        }
+        String [] eventParts = parseEvent(eventString);
         return new Event(eventParts[0], parseDateTime(eventParts[1]), parseDateTime(eventParts[2]));
     }
 
+    @Override
+    public void update(String eventString) throws DukeException {
+        String [] eventParts = parseEvent(eventString);
+        this.description = eventParts[0];
+        this.from = parseDateTime(eventParts[1]);
+        this.to = parseDateTime(eventParts[2]);
+    }
     /**
      * Converts the Event task to a format suitable for file saving.
      *

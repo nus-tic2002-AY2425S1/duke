@@ -4,7 +4,7 @@ public class Event extends Task{
 
 
     public Event(String task, String startAt, String endBy) {
-        super(task+ " (from: " + startAt + " to: " + endBy + " )");
+        super(task+ " (from: " + startAt + " to: " + endBy + ")");
 
 
     }

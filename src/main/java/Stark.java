@@ -4,9 +4,6 @@ import TaskManager.Task;
 import TaskManager.TaskList;
 import UserUI.StarkException;
 import UserUI.Tokenize;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -35,10 +32,8 @@ public class Stark {
         try {
 
             ArrayList<Task>tasks = new TaskStorage("src/Data/TaskLists.txt").updateTaskList();
-
-            if (tasks.isEmpty()){
-                tasks = new ArrayList<>();
-            }
+            System.out.println("Tasks read from the file completed");
+            lineBreak();
             TaskList taskList = new TaskList(tasks);
             Scanner inputQuery = new Scanner(System.in);
 

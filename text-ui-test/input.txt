@@ -22,6 +22,12 @@ list
 mark 10
 unmark 10
 list
-mark two
+mark 2
 list
+deadline return book1 /by tmr
+delete 3
+deadline return book1 /by tmr
+list
+delete 4
+delete 1
 bye

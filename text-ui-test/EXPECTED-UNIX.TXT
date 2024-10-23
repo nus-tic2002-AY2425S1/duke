@@ -1,0 +1,166 @@
+____________________________________________________________
+Hello! I'm Mochi
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+Ops, `name` parameter is empty, please supply in correct format
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+____________________________________________________________
+____________________________________________________________
+Looks like you have input the wrong input, here are the available commands
+1. todo X                               - Adds a new to-do task. Example: todo Buy groceries
+2. event X /from Mon 5pm /to Mon 7pm    - Adds a new event task. Example: event Attend meeting between a given date
+3. deadline X /by Mon 5pm               - Adds a new deadline task. Example: Deadline Submit report by a given date
+4. list                                 - Displays all current tasks, events, and deadlines.
+5. delete X                             - Deletes a existing task with task ID. Example : delete 1
+6. bye                                  - Exits the program.
+
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+  [D][ ] return book (by Sunday)
+____________________________________________________________
+____________________________________________________________
+ Now you have 1 tasks in the list
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+  [E][ ] project meeting (from: Mon 2pm to: 4pm)
+____________________________________________________________
+____________________________________________________________
+ Now you have 2 tasks in the list
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+  [D][ ] do homework (by no idea :-p)
+____________________________________________________________
+____________________________________________________________
+ Now you have 3 tasks in the list
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[D][ ] return book (by Sunday)
+2.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+3.[D][ ] do homework (by no idea :-p)
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+[E][X] project meeting (from: Mon 2pm to: 4pm)
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+[D][X] do homework (by no idea :-p)
+____________________________________________________________
+____________________________________________________________
+OK, I've marked this task as not done yet:
+[E][ ] project meeting (from: Mon 2pm to: 4pm)
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+[D][X] return book (by Sunday)
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[D][X] return book (by Sunday)
+2.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+3.[D][X] do homework (by no idea :-p)
+____________________________________________________________
+____________________________________________________________
+Ops, the deadline's `to` parameter is empty, please supply in correct format
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[D][X] return book (by Sunday)
+2.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+3.[D][X] do homework (by no idea :-p)
+____________________________________________________________
+____________________________________________________________
+Ops, the event's `to` parameter is empty, please supply in correct format
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[D][X] return book (by Sunday)
+2.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+3.[D][X] do homework (by no idea :-p)
+____________________________________________________________
+____________________________________________________________
+Ops, the event's `from` parameter is empty, please supply in correct format
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[D][X] return book (by Sunday)
+2.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+3.[D][X] do homework (by no idea :-p)
+____________________________________________________________
+____________________________________________________________
+Input task name exist in the system, please use another task name
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[D][X] return book (by Sunday)
+2.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+3.[D][X] do homework (by no idea :-p)
+____________________________________________________________
+____________________________________________________________
+Input task ID not found, please specify correct task ID
+____________________________________________________________
+____________________________________________________________
+Input task ID not found, please specify correct task ID
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[D][X] return book (by Sunday)
+2.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+3.[D][X] do homework (by no idea :-p)
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+[E][X] project meeting (from: Mon 2pm to: 4pm)
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[D][X] return book (by Sunday)
+2.[E][X] project meeting (from: Mon 2pm to: 4pm)
+3.[D][X] do homework (by no idea :-p)
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+  [D][ ] return book1 (by tmr)
+____________________________________________________________
+____________________________________________________________
+ Now you have 4 tasks in the list
+____________________________________________________________
+____________________________________________________________
+Noted. I've removed this task:
+  [D][X] do homework (by no idea :-p)
+____________________________________________________________
+____________________________________________________________
+ Now you have 3 tasks in the list
+____________________________________________________________
+____________________________________________________________
+Input task name exist in the system, please use another task name
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[D][X] return book (by Sunday)
+2.[E][X] project meeting (from: Mon 2pm to: 4pm)
+3.[D][ ] return book1 (by tmr)
+____________________________________________________________
+____________________________________________________________
+Input task ID not found, please specify correct task ID
+____________________________________________________________
+____________________________________________________________
+Noted. I've removed this task:
+  [D][X] return book (by Sunday)
+____________________________________________________________
+____________________________________________________________
+ Now you have 2 tasks in the list
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________

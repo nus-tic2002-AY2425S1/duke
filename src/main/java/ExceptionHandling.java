@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class ExceptionHandling {
     //Solution below adapted from https://www.quora.com/What-is-the-function-of-a-isInteger-in-Java
+    // Exception: Validates whether the input index for marking or unmarking a task is a valid integer
     public static boolean isInteger(String input) {
         try {
             Integer.parseInt( input );
@@ -11,10 +12,10 @@ public class ExceptionHandling {
             return false;
         }
     }
+    // Exception: Validates if the input contains only specified keywords or if no name has been provided for the task
     public static boolean isEmptyInput(String input) {
         input = input.trim().replaceAll("\\s+", " ");
         boolean taskIsEmpty = false;
-        // Checks if the input contains only the following keywords or is left empty
         if (input.equalsIgnoreCase("todo") || input.equalsIgnoreCase("deadline") || input.equalsIgnoreCase("event") || input.isEmpty()) {
             taskIsEmpty = true;
         } else {
@@ -51,6 +52,7 @@ public class ExceptionHandling {
         return taskIsEmpty;
     }
     // (Wk 5) Level-4 Updated duplication method to detect objects instead of text string
+    // Exception: Validates if there are duplicate tasks, including task type, already added to the list
     public static boolean isTaskDuplicated(ArrayList<Task> todoTaskList, String newTask) {
         newTask = newTask.trim().replaceAll("\\s+", " ");
         for (Task task : todoTaskList) {
@@ -91,6 +93,7 @@ public class ExceptionHandling {
         }
         return false;
     }
+    // Exception: Validates if the task has already been marked or unmarked in the list
     public static boolean isTaskMarked(ArrayList<Task> todoTaskList, int index, boolean isDone){
         try{
             return todoTaskList.get(index - 1).isDone == isDone;
@@ -98,6 +101,7 @@ public class ExceptionHandling {
             return false;
         }
     }
+    // Exception: Validates the keyword to categorize the task
     public static boolean isCommandKeywordPresent(String keyword){
         ArrayList<String> commandKeyword = new ArrayList<>();
         commandKeyword.add("todo");
@@ -105,9 +109,11 @@ public class ExceptionHandling {
         commandKeyword.add("event");
         return commandKeyword.contains(keyword);
     }
+    // Exception: Validates if the provided deadline for the task is missing
     public static boolean isValidDeadlineInput(String[] deadlineDetails) {
         return deadlineDetails.length >= 2 && !deadlineDetails[1].trim().isEmpty();
     }
+    // Exception: Validates if the event period provided for the task is missing
     public static boolean isValidEventInput(String[] eventDetails) {
         if (eventDetails.length < 2) {
             return false;

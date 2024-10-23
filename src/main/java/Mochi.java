@@ -11,8 +11,8 @@ public class Mochi {
   public static void addTask(Task task) {
     try {
       taskList.addTask(task);
-      response(
-        DialogMessages.TASK_ADDED
+      response( " "
+          + DialogMessages.TASK_ADDED.getValue()
           + System.lineSeparator()
           + "  " + task.toString()
       );
@@ -28,7 +28,7 @@ public class Mochi {
     try {
       int i = Integer.parseInt(token[1]) - 1;
       taskList.markTask(i);
-      response(DialogMessages.MARK_TASK
+      response(DialogMessages.MARK_TASK.getValue()
         + System.lineSeparator()
         + taskList.getTaskById(i).toString()
       );
@@ -39,11 +39,27 @@ public class Mochi {
       response(ExceptionMessages.TASK_ID_NOT_FOUND);
     }
   }
+  public static void deleteTask(String[] token) {
+    try {
+      int i = Integer.parseInt(token[1]) - 1;
+      // Task will get deleted, store into var first
+      String tempTask = taskList.getTaskById(i).toString();
+      taskList.deleteTask(i);
+      response(DialogMessages.DELETE_TASK.getValue()
+        + System.lineSeparator()
+        + "  " + tempTask
+      );
+      response(" Now you have " + taskList.getTaskListSize() + " tasks in the list");
+    }
+    catch (IndexOutOfBoundsException e) {
+      response(ExceptionMessages.TASK_ID_NOT_FOUND);
+    }
+  }
   public static void unMarkTask(String[] token) {
     try {
       int i = Integer.parseInt(token[1]) - 1;
       taskList.unmarkTask(i);
-      response(DialogMessages.UNMARK_TASK
+      response(DialogMessages.UNMARK_TASK.getValue()
         + System.lineSeparator()
         + taskList.getTaskById(i).toString()
       );
@@ -55,14 +71,14 @@ public class Mochi {
     }
   }
 
-  public static String trimStringArrayWithStartEnd(String[] s, String start, String end, String dilimeter) {
+  public static String trimStringArrayWithStartEnd(String[] s, String start, String end, String delimiter) {
     String body = "";
     boolean copy = false;
     for (String i : s) {
       if (!end.isEmpty() && i.equals(end))
         break;
       if(copy) {
-        body += i + dilimeter;
+        body += i + delimiter;
       }
       if (i.equals(start))
         copy = true;
@@ -70,43 +86,47 @@ public class Mochi {
     return body.trim();
   }
   public static void main(String[] args) {
-    response(DialogMessages.GREETINGS);
+    response(DialogMessages.GREETINGS.getValue());
     Scanner in = new Scanner(System.in);
     boolean bye = false;
     while (!bye) {
       String input = in.nextLine();
       String[] token = input.split(" ");
-      switch (token[0]) {
-        case "mark":
+      Command command = Command.getValue(token[0]);
+      switch (command) {
+        case DELETE:
+          deleteTask(token);
+          break;
+        case MARK:
           markTask(token);
           break;
-        case "unmark":
+        case UNMARK:
           unMarkTask(token);
           break;
-        case "bye":
-          response(DialogMessages.BYE);
+        case BYE:
+          response(DialogMessages.BYE.getValue());
           bye = true;
           break;
-        case "list":
+        case LIST:
           taskList.printTaskList();
           break;
-        case "deadline":
+        case DEADLINE:
           String d_name = trimStringArrayWithStartEnd(token,"deadline","/by"," ");
           String by = trimStringArrayWithStartEnd(token,"/by",""," ");
           addTask(new Deadline(d_name,by));
           break;
-        case "event":
+        case EVENT:
           String e_name = trimStringArrayWithStartEnd(token,"event","/from"," ");
           String from = trimStringArrayWithStartEnd(token,"/from","/to"," ");
           String to = trimStringArrayWithStartEnd(token,"/to",""," ");
           addTask(new Event(e_name,from,to));
           break;
-        case "todo":
+        case TODO:
           String t_name = trimStringArrayWithStartEnd(token,"todo",""," ");
           addTask(new Todo(t_name));
           break;
         default:
-          response(DialogMessages.INPUT_UNKNOWN);
+          response(DialogMessages.INPUT_UNKNOWN.getValue());
       }
     }
   }

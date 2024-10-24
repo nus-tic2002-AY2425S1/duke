@@ -5,8 +5,10 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-import static parser.DateTimeParser.*;
-import static parser.TaskParser.*;
+import static parser.DateTimeParser.parseDateTime;
+import static parser.DateTimeParser.formatDateTime;
+import static parser.DateTimeParser.formatToFile;
+import static parser.TaskParser.parseEvent;
 
 /**
  * Event task with start time and end time

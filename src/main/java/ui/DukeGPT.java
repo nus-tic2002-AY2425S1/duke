@@ -2,13 +2,23 @@ package ui;
 
 import java.util.*;
 
-import command.*;
 import command.CommandHandler;
+import command.ListCommandHandler;
+import command.MarkCommandHandler;
+import command.UnmarkCommandHandler;
+import command.DeleteCommandHandler;
+import command.FindCommandHandler;
+import command.UpdateCommandHandler;
+import command.CommandFactory;
+
 import exception.DukeException;
 import storage.FileProcessor;
-import tasks.*;
-import static output.OutputHandler.*;
+import tasks.Task;
 
+import static output.OutputHandler.printError;
+import static output.OutputHandler.printGreetings;
+import static output.OutputHandler.printGoodbye;
+import static output.OutputHandler.printAddedItems;
 
 /**
  * Main class for DukeGPT Application

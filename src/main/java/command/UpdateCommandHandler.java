@@ -5,9 +5,7 @@ import tasks.Task;
 
 import java.util.List;
 
-import static command.Utility.isValidIndex;
 import static command.Utility.parseTaskIndex;
-import static output.OutputHandler.printDeleteItem;
 import static output.OutputHandler.printUpdateItem;
 import static parser.TaskParser.parseUpdate;
 

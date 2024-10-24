@@ -1,6 +1,5 @@
 package tasks;
 
-import exception.DukeException;
 import lombok.Getter;
 
 /**

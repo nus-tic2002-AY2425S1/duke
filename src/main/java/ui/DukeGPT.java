@@ -1,6 +1,5 @@
 package ui;
 
-import java.util.*;
 
 import command.CommandHandler;
 import command.ListCommandHandler;
@@ -9,11 +8,18 @@ import command.UnmarkCommandHandler;
 import command.DeleteCommandHandler;
 import command.FindCommandHandler;
 import command.UpdateCommandHandler;
+import command.CommandType;
 import command.CommandFactory;
 
 import exception.DukeException;
 import storage.FileProcessor;
 import tasks.Task;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.HashMap;
 
 import static output.OutputHandler.printError;
 import static output.OutputHandler.printGreetings;
@@ -24,8 +30,8 @@ import static output.OutputHandler.printAddedItems;
  * Main class for DukeGPT Application
  */
 public class DukeGPT {
-    private static String chatbotName = "DukeGPT";
-    private static String fileLocation = "./data/dukegpt.txt";
+    private static final String chatbotName = "DukeGPT";
+    private static final String fileLocation = "./data/dukegpt.txt";
     private static List<Task> tasks = new ArrayList<>();
     private static Map<String, CommandHandler> commandHandlerMapping = new HashMap<>();
 
@@ -33,12 +39,51 @@ public class DukeGPT {
      * Initialise the command handlers
      */
     private static void initCommandHandlers() {
-        commandHandlerMapping.put("list", new ListCommandHandler());
-        commandHandlerMapping.put("mark", new MarkCommandHandler());
-        commandHandlerMapping.put("unmark", new UnmarkCommandHandler());
-        commandHandlerMapping.put("delete", new DeleteCommandHandler());
-        commandHandlerMapping.put("find", new FindCommandHandler());
-        commandHandlerMapping.put("update", new UpdateCommandHandler());
+        commandHandlerMapping.put(CommandType.LIST.name().toLowerCase(), new ListCommandHandler());
+        commandHandlerMapping.put(CommandType.MARK.name().toLowerCase(), new MarkCommandHandler());
+        commandHandlerMapping.put(CommandType.UNMARK.name().toLowerCase(), new UnmarkCommandHandler());
+        commandHandlerMapping.put(CommandType.DELETE.name().toLowerCase(), new DeleteCommandHandler());
+        commandHandlerMapping.put(CommandType.FIND.name().toLowerCase(), new FindCommandHandler());
+        commandHandlerMapping.put(CommandType.UPDATE.name().toLowerCase(), new UpdateCommandHandler());
+    }
+
+    private static List<Task> loadTasksFromFile() {
+        FileProcessor fileProcessor = new FileProcessor(fileLocation);
+        try {
+            return fileProcessor.load();
+        } catch (DukeException e) {
+            printError("OOPS!! Error initialising save file!" + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    private static void saveTasksToFile() {
+        FileProcessor fileProcessor = new FileProcessor(fileLocation);
+        try {
+            fileProcessor.save(tasks);
+        } catch (DukeException e) {
+            printError("OOPS!! Error saving to file! " + e.getMessage());
+        }
+    }
+
+    public static void handleUserInput(String userInput) throws DukeException{
+        if(userInput.equalsIgnoreCase("bye")){
+            printGoodbye();
+            System.exit(0);
+        }
+        else if(userInput.trim().isEmpty()){
+            throw new DukeException("OOPS!!! Input cannot be empty!");
+        }
+        String[] inputParts = userInput.split(" ", 2);
+        CommandHandler commandHandler = commandHandlerMapping.get(inputParts[0].toLowerCase());
+
+        if(commandHandler != null){
+            commandHandler.handle(userInput, tasks);
+        }else {
+            Task newTask  = CommandFactory.generateTask(userInput);
+            tasks.add(newTask);
+            printAddedItems(newTask, tasks);
+        }
     }
 
     /**
@@ -49,34 +94,13 @@ public class DukeGPT {
         Scanner scanner = new Scanner(System.in);
         initCommandHandlers();
         printGreetings(chatbotName);
-        FileProcessor fileProcessor = new FileProcessor(fileLocation);
-        try{
-            tasks = fileProcessor.load();
-        } catch (DukeException e){
-            printError("OOPS!! Error initialising save file!" + e.getMessage());
-        }
+        tasks = loadTasksFromFile();
 
         while (true){
             String userInput = scanner.nextLine().trim();
             try{
-                if(userInput.equalsIgnoreCase("bye")){
-                    printGoodbye();
-                    break;
-                }
-                else if(userInput.trim().isEmpty()){
-                    throw new DukeException("OOPS!!! Input cannot be empty!");
-                }
-                String[] inputParts = userInput.split(" ", 2);
-                CommandHandler commandHandler = commandHandlerMapping.get(inputParts[0].toLowerCase());
-
-                if(commandHandler != null){
-                    commandHandler.handle(userInput, tasks);
-                }else {
-                    Task newTask  = CommandFactory.generateTask(userInput);
-                    tasks.add(newTask);
-                    printAddedItems(newTask, tasks);
-                }
-                fileProcessor.save(tasks);
+                handleUserInput(userInput);
+                saveTasksToFile();
             } catch (DukeException e){
                 printError(e.getMessage());
             } catch (NumberFormatException e){

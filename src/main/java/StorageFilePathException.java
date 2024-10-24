@@ -1,5 +1,5 @@
-public class InvalidStorageFilePathException extends Exception {
-    public InvalidStorageFilePathException(String message) {
+public class StorageFilePathException extends RuntimeException {
+    public StorageFilePathException(String message) {
         super(message);
     }
 }

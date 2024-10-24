@@ -5,23 +5,21 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class StorageFile {
+public class Storage {
     protected static final String DEFAULT_STORAGE_FILEPATH = "./data/tasks.txt";
     private final Path filePath;
 
-    public StorageFile()
-            throws InvalidStorageFilePathException, StorageOperationException {
+    public Storage() throws StorageOperationException {
         this(DEFAULT_STORAGE_FILEPATH);
     }
 
-    public StorageFile(String filePathString) throws InvalidStorageFilePathException, StorageOperationException {
+    public Storage(String filePathString) throws StorageOperationException {
         filePath = Paths.get(filePathString);
         Path folderPath = filePath.getParent();
 
         if (!isValidPath(filePath)) {
-            throw new InvalidStorageFilePathException("Storage file should end with '.txt'");
+            throw new StorageFilePathException(Messages.MESSAGE_FILE_PATH_ERROR);
         }
-
         try {
             if (!Files.exists(folderPath)) {
                 Files.createDirectories(folderPath);
@@ -30,7 +28,10 @@ public class StorageFile {
                 Files.createFile(filePath);
             }
         } catch (IOException e) {
-            throw new StorageOperationException("Error creating the folder or file: " + filePath);
+            throw new StorageOperationException(
+                    Messages.MESSAGE_CREATE_FILE_ERROR,
+                    String.format("FilePath='%s", filePathString)
+            );
         }
     }
 
@@ -38,24 +39,28 @@ public class StorageFile {
         return filePath.toString().endsWith(".txt");
     }
 
-    public List<Task> load() throws StorageOperationException {
+    public TaskList load() throws FileContentException, StorageOperationException {
         try {
             return TaskListDecoder.decodeTaskList(Files.readAllLines(filePath));
         } catch (FileNotFoundException e) {
-            throw new AssertionError("A non-existent file scenario is already handled earlier.");
+            throw new AssertionError("A non-existent file scenario is already handled earlier");
         } catch (IOException e) {
-            throw new StorageOperationException("Error writing to file: " + filePath);
-        } catch (IllegalValueException e) {
-            throw new StorageOperationException("File contains illegal data values; data type constraints not met");
+            throw new StorageOperationException(
+                    Messages.MESSAGE_READ_FILE_ERROR,
+                    String.format("FilePath='%s", filePath)
+            );
         }
     }
 
-    public void save(List<Task> taskList) throws StorageOperationException {
+    public void save(TaskList taskList) throws StorageOperationException {
         try {
-            List<String> encodedAddressBook = TaskListEncoder.encodeTaskList(taskList);
-            Files.write(filePath, encodedAddressBook);
+            List<String> encodedTaskList = TaskListEncoder.encodeTaskList(taskList);
+            Files.write(filePath, encodedTaskList);
         } catch (IOException ioe) {
-            throw new StorageOperationException("Error writing to file: " + filePath);
+            throw new StorageOperationException(
+                    Messages.MESSAGE_WRITE_FILE_ERROR,
+                    String.format("FilePath='%s", filePath)
+            );
         }
     }
 

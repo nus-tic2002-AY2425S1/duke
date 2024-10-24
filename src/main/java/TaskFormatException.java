@@ -1,15 +1,13 @@
-public class InvalidTaskFormatException extends WKDukeException {
-    public InvalidTaskFormatException(String message) {
+public class TaskFormatException extends WKDukeException {
+    public TaskFormatException(String message) {
         super(message);
     }
 
-    public InvalidTaskFormatException(String message, String detail) {
-        this(message);
-        this.detail = detail;
+    public TaskFormatException(String message, String detail) {
+        super(message, detail);
     }
 
-    public InvalidTaskFormatException(String message, String detail, String help) {
-        this(message, detail);
-        this.help = help;
+    public TaskFormatException(String message, String detail, String help) {
+        super(message, detail, help);
     }
 }

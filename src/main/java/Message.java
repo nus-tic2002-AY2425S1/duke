@@ -7,7 +7,6 @@ public class Message {
         System.out.println(textMessage);
         printHorizontalLines();
     }
-    // (Wk 3) Level-0 Print welcome message
     public static void printWelcomeMessage(String systemName) {
         printHorizontalLines();
         System.out.println("Hello! I'm " + systemName);
@@ -55,13 +54,22 @@ public class Message {
         System.out.println("Now you have " + totalNumberOfTodoTask + " tasks in the list.");
         printHorizontalLines();
     }
+    public static void printDeleteTaskMessage(int totalNumberOfTodoTask, String removeTask){
+        printHorizontalLines();
+        System.out.println("Noted. I've removed this task:");
+        System.out.println(removeTask);
+        System.out.println("Now you have " + totalNumberOfTodoTask + " tasks in the list.");
+        printHorizontalLines();
+    }
     public static void printMissingCommandKeywordMessage(){
-        printSingleMessage("It looks like you forgot to specify the task type! Please indicate whether this task is a Todo, Event, or Deadline task so we can help you keep track of it.");
+        printSingleMessage("It looks like you forgot to specify keywords!");
     }
-    public static void printMissingDeadlineParameterMessage(){
-        printSingleMessage("It seems you forgot to specify a parameter! Please enter it in the following format: [Task_name] /by [Deadline].");
-    }
-    public static void printMissingEventParameterMessage(){
-        printSingleMessage("It seems you forgot to specify a parameter! Please enter it in the following format: [Task_name] /from [Start_date] /to [End_date].");
+    public static void printMissingParameterMessage(String taskType){
+        String format = switch (taskType) {
+            case "deadline" -> "[Task_name] /by [Deadline]";
+            case "event" -> "[Task_name] /from [Start_date] /to [End_date]";
+            default -> "";
+        };
+        printSingleMessage("It seems you forgot to specify a parameter! Please enter it in the following format: " + format);
     }
 }

@@ -51,7 +51,6 @@ public class ExceptionHandling {
         }
         return taskIsEmpty;
     }
-    // (Wk 5) Level-4 Updated duplication method to detect objects instead of text string
     // Exception: Validates if there are duplicate tasks, including task type, already added to the list
     public static boolean isTaskDuplicated(ArrayList<Task> todoTaskList, String newTask) {
         newTask = newTask.trim().replaceAll("\\s+", " ");
@@ -103,11 +102,7 @@ public class ExceptionHandling {
     }
     // Exception: Validates the keyword to categorize the task
     public static boolean isCommandKeywordPresent(String keyword){
-        ArrayList<String> commandKeyword = new ArrayList<>();
-        commandKeyword.add("todo");
-        commandKeyword.add("deadline");
-        commandKeyword.add("event");
-        return commandKeyword.contains(keyword);
+        return Keywords.isValidKeyword(keyword);
     }
     // Exception: Validates if the provided deadline for the task is missing
     public static boolean isValidDeadlineInput(String[] deadlineDetails) {

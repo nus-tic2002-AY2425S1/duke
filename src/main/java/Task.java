@@ -15,6 +15,10 @@ public abstract class Task {
         this.description = description;
     }
 
+    public String getStatusIcon() {
+        return (isDone ? "X" : " "); // mark done task with X
+    }
+
     public boolean isDone() {
         return isDone;
     }
@@ -25,10 +29,6 @@ public abstract class Task {
 
     public void markAsUndone() {
         isDone = false;
-    }
-
-    public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
     }
 
     @Override

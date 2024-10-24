@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,44 +10,60 @@ public class TaskListDecoder {
                     + "(?: \\| (?<from>[^|]+) \\| (?<to>[^|]+))?" // Optional from and to for E
     );
 
-    public static List<Task> decodeTaskList(List<String> encodedTaskList) throws IllegalValueException, StorageOperationException {
-        final List<Task> decodedTasks = new ArrayList<>();
-
+    public static TaskList decodeTaskList(List<String> encodedTaskList) throws FileContentException {
+        TaskList taskList = new TaskList();
         for (String encodedTask : encodedTaskList) {
-            decodedTasks.add(decodeTaskFromString(encodedTask));
+            taskList.addTask(decodeTaskFromString(encodedTask));
         }
-        return decodedTasks;
+        return taskList;
     }
 
-    public static Task decodeTaskFromString(String encodedTask) throws IllegalValueException {
+    public static Task decodeTaskFromString(String encodedTask) throws FileContentException {
         final Matcher matcher = TASK_PATTERN.matcher(encodedTask);
         if (!matcher.matches()) {
-            throw new IllegalValueException("Unable to decode the task due to an invalid encoded format.");
+            throw new FileContentException(
+                    Messages.MESSAGE_INVALID_TASK_ENCODED_FORMAT,
+                    String.format("EncodedTask='%s'", encodedTask)
+            );
         }
-
         TaskType taskType = TaskType.fromCode(matcher.group("taskType"));
         int taskStatus = Integer.parseInt(matcher.group("taskStatus"));
-        Task task = getTask(matcher, taskType);
+        try {
+            Task task = getTask(matcher, taskType);
 
-        if (taskStatus == 1) {
-            task.markAsDone();
+            if (taskStatus == 1) {
+                task.markAsDone();
+            }
+            return task;
+        } catch (FileContentException e) {
+            e.setDetail(String.format("EncodedTask='%s'", encodedTask));
+            throw e;
         }
-        return task;
+
     }
 
-    private static Task getTask(Matcher matcher, TaskType taskType) {
+    private static Task getTask(Matcher matcher, TaskType taskType) throws FileContentException {
         String description = matcher.group("description");
         Task task;
-
         switch (taskType) {
             case TODO -> task = new ToDo(description);
             case DEADLINE -> {
                 String by = matcher.group("by");
+                if (by == null) {
+                    throw new FileContentException(
+                            Messages.MESSAGE_INVALID_DEADLINE_ENCODED
+                    );
+                }
                 task = new Deadline(description, by);
             }
             case EVENT -> {
                 String from = matcher.group("from");
                 String to = matcher.group("to");
+                if (from == null || to == null) {
+                    throw new FileContentException(
+                            Messages.MESSAGE_INVALID_EVENT_ENCODED
+                    );
+                }
                 task = new Event(description, from, to);
             }
             default -> throw new AssertionError("An invalid task type scenario is already handled earlier.");

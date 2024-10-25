@@ -35,6 +35,11 @@ public class TextUi {
         System.out.println(Messages.emptyTime);
     }
 
+    /**
+     * Takes in a Task type and prints confirmation of task addition in UI.
+     *
+     * @param task
+     */
     public static void echoTask(Task task) {
         System.out.println(Messages.divider + System.lineSeparator() +
                 "Got it! I've added this task:" + System.lineSeparator() +
@@ -52,6 +57,13 @@ public class TextUi {
         System.out.println(Messages.divider);
     }
 
+    /**
+     * Takes in LocalDateTime object and converts into string for UI list view.
+     * E.g. of output: 26 OCTOBER 2024, 2:06AM
+     *
+     * @param dateTime
+     * @return String type dateTime in DD MONTH YYYY, HH:MM(AM/PM)
+     */
     public static String printDateTime(LocalDateTime dateTime) {
         int day = dateTime.getDayOfMonth();
         String month = dateTime.getMonth().toString();

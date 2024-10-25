@@ -1,5 +1,7 @@
 package checkbot.Task;
 
+import checkbot.Ui.TextUi;
+
 import java.time.LocalDateTime;
 
 public class Deadline extends Task {
@@ -18,7 +20,7 @@ public class Deadline extends Task {
 
     public String getListView() {
         return "[" + this.getTaskIcon() + "][" + this.getStatusIcon() + "] " +
-                description + " (by: " + this.getDueDateTime() + ")";
+                description + " (by: " + TextUi.printDateTime(dueDateTime) + ")";
     }
 
     public String getFileView() {

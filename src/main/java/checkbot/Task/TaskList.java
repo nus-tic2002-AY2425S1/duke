@@ -73,7 +73,7 @@ public class TaskList {
     }
 
     public static void addEvent(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
-        // input format: <event> /from <datetime> /to <datetime>
+        // input format: <event> /from <DD/MM/YYYY HHMM(24H)> /to <DD/MM/YYYY HHMM(24H)>
         if (!input.contains("/from") || !input.contains("/to")){
             throw new CommandNotFoundException();
         }
@@ -89,7 +89,7 @@ public class TaskList {
             throw new EmptyTimeException();
         }
 
-        Event task = new Event(description, startDateTime, endDateTime);
+        Event task = new Event(description, Parser.parseDateTime(startDateTime), Parser.parseDateTime(endDateTime));
         TaskList.tasks.add(task);
         TextUi.echoTask(task);
     }

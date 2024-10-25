@@ -66,6 +66,13 @@ public class Parser {
         } while (!goToExit);
     }
 
+    /**
+     * Takes in date and time in String with format of DD/MM/YYYY HHMM(24H)
+     * and converts it into a LocalDateTime object.
+     *
+     * @param input Format: DD/MM/YYYY HHMM(24H)
+     * @return LocalDateTime object
+     */
     // TODO: Exceptions
     public static LocalDateTime parseDateTime(String input) {
         String[] dateTimeArray = input.split(" ",2);

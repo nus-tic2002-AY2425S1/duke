@@ -11,11 +11,6 @@ public class Todo extends Task {
         super(description,isDone);
     }
 
-
-    public boolean isDone() {
-        return isDone;
-    }
-
     @Override
     public String print(){
         return "[T]" + (isDone ? "[X] " : "[ ] ") + "description: " + description;

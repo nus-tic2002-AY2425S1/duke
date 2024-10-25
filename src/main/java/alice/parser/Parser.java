@@ -9,7 +9,6 @@ public class Parser {
 
     public static Command parse(String fullCommand){
         ArrayList<String> instruction = new ArrayList<>(Arrays.asList(fullCommand.split(" ")));
-        //break the alice.command into args
         String action = instruction.get(0);
         instruction.remove(0);
 

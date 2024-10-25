@@ -4,6 +4,14 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
 public class Javaro {
     
     // Use constant variables to store the keyword commands
@@ -17,6 +25,9 @@ public class Javaro {
     static final String FROM="/from";
     static final String TO="/to";
     
+    static final String DIRECTORY_PATH="./data/";
+    static final String FILE_PATH="./data/tasks.txt";
+
     // Solution below adapted from https://stackoverflow.com/questions/1073787/print-spaces-with-string-format
     // https://stackoverflow.com/questions/69576641/why-would-you-use-a-stringbuilder-method-over-a-string-in-java
     public static String formatSpace(int numberOfSpace) {
@@ -388,13 +399,107 @@ public class Javaro {
     }
 
     
+    // Your code must handle (i.e., if the file is missing, your code must create it) 
+    // the case where the data file doesn't exist at the start. Reason: when someone else 
+    // takes your chatbot and runs it for the first time, the required file will not exist 
+    // in their computer. Similarly, if you expect the data file to be in a specific folder 
+    // (e.g., ./data/), you must also handle the folder-does-not-exist-yet case.
+    // https://www.blackbox.ai/chat/Q2Kzags
+    public static boolean checkDataFolderExists(String filePath) {
+        // Check if "data" directory exists in current folder 
+        Path dataFolderPath = Paths.get(FILE_PATH).getParent();
+        // System.out.println(dataFolderPath);
+        // boolean isDataFolderExists = Files.exists(dataFolderPath) && Files.isDirectory(dataFolderPath);
+        File dataFolder = new File(dataFolderPath.toString());
+        boolean isDataFolderExists = dataFolder.exists() && dataFolder.isDirectory();
+
+        try {
+            // Create the directory if it does not exist
+            if (isDataFolderExists) {
+                return true;
+            } else {
+                // https://tutorialspoint.com/java/java_directories.htm
+                // The mkdir() method creates a directory, returning true on success and false on failure. Failure indicates that the path specified in the File object already exists, or that the directory cannot be created because the entire path does not exist yet.
+                boolean isDataFolderCreated = dataFolder.mkdir();
+                if (isDataFolderCreated) {
+                    System.out.println("Data directory created");
+                } else {
+                    throw new IOException("An error occurred while creating the data directory");
+                }
+            }
+        } catch (IOException ioException) {
+            System.err.println(ioException.getMessage());
+        }
+
+        return false;
+    }
+
+    public static boolean checkTaskFileExists(String filePath) {
+        File tasksFile = new File(FILE_PATH);
+        boolean isTaskFileExists = tasksFile.exists();
+        
+        try {
+            if (isTaskFileExists) {
+                return true;
+            } else {
+                boolean isFileCreated = tasksFile.createNewFile();
+                if (isFileCreated) {
+                    System.out.println("Task file created");
+                    return true;
+                } else {
+                    throw new IOException("An error occurred while creating the task file");
+                }
+            }
+        } catch (IOException ioException) {
+            System.out.println(ioException.getMessage());
+        }
+
+        return false;
+    }
+
+    /* 
+    public static void checkFileExists(String filePath) {
+        // https://stackoverflow.com/questions/15571496/how-to-check-if-a-folder-exists
+        // Check if "data" directory exists in current folder 
+        Path dataFolderPath = Paths.get(FILE_PATH).getParent();
+        // System.out.println(dataFolderPath);
+        // boolean isDataFolderExists = Files.exists(dataFolderPath) && Files.isDirectory(dataFolderPath);
+        File dataFolder = new File(dataFolderPath.toString());
+        boolean isDataFolderExists = dataFolder.exists() && dataFolder.isDirectory();
+        // File directory = new File(DIRECTORY_PATH);
+
+        // Create the folder if it does not exist
+        if (!isDataFolderExists) {
+            dataFolder.mkdirs();
+        }
+
+        File tasksFile = new File(FILE_PATH);
+        boolean isTaskFileExists = tasksFile.exists();
+        System.out.println(isDataFolderExists);
+        
+        try {
+            if (!isTaskFileExists) {
+                tasksFile.createNewFile();
+            }
+        } catch (IOException ioException) {
+            System.out.println(ioException.getMessage());
+        }
+    }
+    */
+
+    // Save the tasks in the hard disk automatically whenever the task list changes. Load the data from the hard disk when the chatbot starts up.
+    public static void save() {
+        
+    }
+
+    
     // This function echos commands entered by the user, and exits when the user types the command bye.
     public static void echo() {
         Scanner in = new Scanner(System.in);
         
         // Assume there will be no more than 100 tasks. Initialize an empty list of String array
         ArrayList<Task> taskList = new ArrayList<>();
-        
+
         // Continue looping indefinitely
         while (true) {
             
@@ -438,7 +543,15 @@ public class Javaro {
     }
 
     public static void main(String[] args) {
-        greet();
-        echo();
+        // File temp = new File(FILE_PATH);
+        // System.out.println("parent " + temp.getParent());
+        
+        System.out.println(checkDataFolderExists(FILE_PATH));
+        System.out.println(checkTaskFileExists(FILE_PATH));
+
+
+        // checkFileExists(FILE_PATH);
+        // greet();
+        // echo();
     }
 }

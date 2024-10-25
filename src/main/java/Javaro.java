@@ -543,15 +543,7 @@ public class Javaro {
     }
 
     public static void main(String[] args) {
-        // File temp = new File(FILE_PATH);
-        // System.out.println("parent " + temp.getParent());
-        
-        System.out.println(checkDataFolderExists(FILE_PATH));
-        System.out.println(checkTaskFileExists(FILE_PATH));
-
-
-        // checkFileExists(FILE_PATH);
-        // greet();
-        // echo();
+        greet();
+        echo();
     }
 }

@@ -1,9 +1,10 @@
 package checkbot.Ui;
 
-import java.util.Scanner;
-
 import checkbot.Task.*;
 import checkbot.Utils.*;
+
+import java.time.LocalDateTime;
+import java.util.Scanner;
 
 public class TextUi {
     public static Scanner scanInput = new Scanner(System.in);
@@ -49,5 +50,28 @@ public class TextUi {
             System.out.println(TaskList.tasks.indexOf(task)+1 + ". " + task.getListView());
         }
         System.out.println(Messages.divider);
+    }
+
+    public static String printDateTime(LocalDateTime dateTime) {
+        int day = dateTime.getDayOfMonth();
+        String month = dateTime.getMonth().toString();
+        int year = dateTime.getYear();
+        String minute = String.format("%02d", dateTime.getMinute());
+        int hour;
+        String meridiem;
+        if (dateTime.getHour() == 0) {
+            hour = 12;
+            meridiem = "AM";
+        } else if (dateTime.getHour() == 12) {
+            hour = 12;
+            meridiem = "PM";
+        } else if (dateTime.getHour() > 12) {
+            hour = dateTime.getHour() - 12;
+            meridiem = "PM";
+        } else {
+            hour = dateTime.getHour();
+            meridiem = "AM";
+        }
+        return day + " " + month + " " + year + ", " + hour + ":" + minute + meridiem;
     }
 }

@@ -1,26 +1,40 @@
 package checkbot.Task;
 
-public class Event extends Task {
-    protected String startDateTime;
-    protected String endDateTime;
+import checkbot.Ui.TextUi;
 
-    public Event(String description, String startDateTime, String endDateTime) {
+import java.time.LocalDateTime;
+
+public class Event extends Task {
+    protected LocalDateTime startDateTime;
+    protected LocalDateTime endDateTime;
+
+    public Event(String description, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         super(description);
         taskType = TaskType.EVENT;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
     }
 
+    public String getStartDateTime() {
+        return startDateTime.getDayOfMonth() + "/" + startDateTime.getMonthValue() + "/" + startDateTime.getYear() +
+                " " + String.format("%02d", startDateTime.getHour()) + String.format("%02d", startDateTime.getMinute());
+    }
+
+    public String getEndDateTime() {
+        return endDateTime.getDayOfMonth() + "/" + endDateTime.getMonthValue() + "/" + endDateTime.getYear() +
+                " " + String.format("%02d", endDateTime.getHour()) + String.format("%02d", endDateTime.getMinute());
+    }
+
     public String getListView() {
         return "[" + this.getTaskIcon() + "][" + this.getStatusIcon() + "] " +
-                description + " (from: " + startDateTime + " to: " + endDateTime + ")";
+                description + " (from: " + TextUi.printDateTime(startDateTime) + " to: " + TextUi.printDateTime(endDateTime) + ")";
     }
 
     public String getFileView() {
         return this.getTaskIcon() + " | " +
                 this.status.toString() + " | " +
                 this.getDescription() + " /from " +
-                this.startDateTime + " /to " +
-                this.endDateTime;
+                this.getStartDateTime() + " /to " +
+                this.getEndDateTime();
     }
 }

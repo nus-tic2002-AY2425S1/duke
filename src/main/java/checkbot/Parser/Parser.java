@@ -7,6 +7,8 @@ import checkbot.Task.TaskList;
 import checkbot.Ui.TextUi;
 import checkbot.Utils.Messages;
 
+import java.time.LocalDateTime;
+
 public class Parser {
     static boolean goToExit = false;
 
@@ -62,5 +64,22 @@ public class Parser {
                     TextUi.printCommandNotFound();
             }
         } while (!goToExit);
+    }
+
+    // TODO: Exceptions
+    public static LocalDateTime parseDateTime(String input) {
+        String[] dateTimeArray = input.split(" ",2);
+
+        String date = dateTimeArray[0].trim();
+        String[] dateArray = date.split("/",3);
+        int day = Integer.parseInt(dateArray[0]);
+        int month = Integer.parseInt(dateArray[1]);
+        int year = Integer.parseInt(dateArray[2]);
+
+        String time = dateTimeArray[1].trim();
+        int hour = Integer.parseInt(time.substring(0, 2));
+        int min = Integer.parseInt(time.substring(2, 4));
+
+        return LocalDateTime.of(year, month, day, hour, min);
     }
 }

@@ -18,6 +18,7 @@ public class Deadline extends Task {
                 " " + String.format("%02d", dueDateTime.getHour()) + String.format("%02d", dueDateTime.getMinute());
     }
 
+    // TODO: add priority in list view for storage
     public String getListView() {
         return "[" + this.getTaskIcon() + "][" + this.getStatusIcon() + "] " +
                 description + " (by: " + TextUi.printDateTime(dueDateTime) + ")";

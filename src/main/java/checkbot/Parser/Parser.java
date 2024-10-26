@@ -17,6 +17,7 @@ public class Parser {
             String input = TextUi.readInput().trim();
             String keyword = input.split(" ")[0].toLowerCase();
 
+            // TODO: add help page
             switch (keyword) {
                 case "bye":
                     TextUi.printExit();
@@ -30,6 +31,8 @@ public class Parser {
                 case "unmark":
                     // fallthrough
                 case "delete":
+                    //fall through
+                case "rank":
                     try {
                         TaskList.setStatus(input);
                         StorageFile.updateFile();

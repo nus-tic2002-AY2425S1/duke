@@ -121,13 +121,35 @@ public class TaskList {
 
     }
 
+    public static void rankTask(Task task, String priority) {
+        switch (priority.toLowerCase()) {
+            case "high":
+                task.setPriority(TaskPriority.HIGH);
+                break;
+            case "medium":
+                task.setPriority(TaskPriority.MEDIUM);
+                break;
+            case "low":
+                task.setPriority(TaskPriority.LOW);
+                break;
+            case "none":
+                task.setPriority(TaskPriority.NOT_SET);
+                break;
+            default:
+                // TODO: throw exception
+        }
+        // TODO: print confirmation message
+        // TODO: maybe show list in order of priority
+    }
+
     public static void setStatus(String  input) throws EmptyInputException {
-        String[] setStatusArray = input.split(" ", 2);
+        String[] setStatusArray = input.split(" ");
         if (setStatusArray.length < 2) {
             throw new EmptyInputException();
         }
         String action = setStatusArray[0].toLowerCase();
         int taskIdx = Integer.parseInt(setStatusArray[1]) - 1;
+        String priority = setStatusArray[2];
 
         switch (action) {
             case "mark":
@@ -138,6 +160,9 @@ public class TaskList {
                 break;
             case "delete":
                 deleteTask(TaskList.tasks.get(taskIdx));
+                break;
+            case "rank":
+                rankTask(TaskList.tasks.get(taskIdx), priority);
                 break;
             default:
                 // do nothing

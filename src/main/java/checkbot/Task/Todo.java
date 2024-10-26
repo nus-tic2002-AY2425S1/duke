@@ -7,6 +7,7 @@ public class Todo extends Task {
         taskType = TaskType.TODO;
     }
 
+    // TODO: add priority in list view for storage
     public String getListView() {
         return "[" + this.getTaskIcon() + "][" + this.getStatusIcon() + "] " +
                 description;

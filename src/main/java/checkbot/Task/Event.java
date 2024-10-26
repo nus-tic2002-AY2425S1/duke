@@ -25,6 +25,7 @@ public class Event extends Task {
                 " " + String.format("%02d", endDateTime.getHour()) + String.format("%02d", endDateTime.getMinute());
     }
 
+    // TODO: add priority in list view for storage
     public String getListView() {
         return "[" + this.getTaskIcon() + "][" + this.getStatusIcon() + "] " +
                 description + " (from: " + TextUi.printDateTime(startDateTime) + " to: " + TextUi.printDateTime(endDateTime) + ")";

@@ -69,6 +69,7 @@ public class StorageFile {
                         System.out.println("Invalid task status! Please check your txt file.");
                         throw new RuntimeException();
                     }
+                    // TODO: add priority setter
                     // increase taskCount for next line in taskList
                     taskCount++;
                 } else {

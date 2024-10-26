@@ -6,3 +6,6 @@ E | 1 | Play game | 23/10/2024 1000 | 23/10/2024 1100
 T | 0 | read book
 E | 0 | return book | 23/10/2024 1000 | 23/10/2024 1200
 D | 0 | submit assignment | 22/10/2024 2359
+N | 0 | play game
+N | 0 | game 1
+N | 0 | game 2

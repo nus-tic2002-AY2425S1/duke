@@ -7,13 +7,11 @@ public class May {
 
     // Using ArrayList
     private static ArrayList<Task> taskList = new ArrayList<>();
-    private static ManageTask taskManager;
 
     public static void main(String[] args) {
 
         // Load tasks from file
         taskList = SaveAndLoadTask.loadTasks();
-        taskManager = new ManageTask(taskList);
 
         //Scanner
         Scanner scan = new Scanner(System.in);
@@ -40,12 +38,13 @@ public class May {
 
                 // Add a normal task (not used in the updated design, can be removed)
                 else if (command[0].equalsIgnoreCase("add") && command.length > 1) {
-                    taskManager.addTask(new Task(command[1]));
+                    addTask(new Task(command[1]));
+
                 }
 
                 // Check for taskList Command & output item inside taskList
                 else if (command[0].equalsIgnoreCase("taskList")) {
-                    taskManager.displayTaskList();
+                    displayTaskList();
                 }
 
                 // Mark the task as done
@@ -87,7 +86,7 @@ public class May {
                     if (command.length < 2 || command[1].trim().isEmpty()) {
                         throw new ErrorException(" 'todo' command cannot be empty.");
                     }
-                    taskManager.addOrUpdateTask(new ToDo(command[1]));
+                    addOrUpdateTask(new ToDo(command[1]));
                 }
 
                 // Mark the deadline of the task
@@ -100,7 +99,7 @@ public class May {
                         throw new ErrorException("Invalid deadline format.");
                     }
                     LocalDateTime deadlineTime = Parser.parseDateTime(doneBy[1].trim());
-                    taskManager.addOrUpdateTask(new Deadline(doneBy[0].trim(), deadlineTime));
+                    addOrUpdateTask(new Deadline(doneBy[0].trim(), deadlineTime));
                 }
 
                 // Create upcoming event task
@@ -114,7 +113,7 @@ public class May {
                     }
                     LocalDateTime fromTime = Parser.parseDateTime(eventTime[1].trim());
                     LocalDateTime toTime = Parser.parseDateTime(eventTime[2].trim());
-                    taskManager.addOrUpdateTask(new Event(eventTime[0].trim(), fromTime, toTime));
+                    addOrUpdateTask(new Event(eventTime[0].trim(), fromTime, toTime));
                 }
 
                 // Delete task from the list
@@ -129,15 +128,6 @@ public class May {
                     } else {
                         throw new ErrorException("Invalid task index. Please enter a valid task index.");
                     }
-                }
-
-                // Find task with keyword
-                else if (command[0].equalsIgnoreCase("find")){
-                    if (command.length < 2 || command[1].trim().isEmpty()){
-                        throw new ErrorException("'find' command cannot be empty.");
-                    }
-                    String keyword = command[1].trim();
-                    taskManager.findTask(keyword);
                 }
 
                 // Unknown command
@@ -164,4 +154,39 @@ public class May {
         scan.close();
     }
 
+    // add or update the task
+    private static void addOrUpdateTask(Task newTask){
+        for (int i = 0; i < taskList.size(); i++){
+            if (taskList.get(i).taskName.equals(newTask.taskName)){
+                taskList.set(i, newTask);
+                System.out.println("Got it, I've updated this task:");
+                System.out.println(" " + taskList.get(i));
+                System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+                SaveAndLoadTask.saveTasks(taskList);
+                return;
+            }
+        }
+        addTask(newTask);
+    }
+
+    // Add task to the task-list
+    private static void addTask(Task task){
+        taskList.add(task);
+        System.out.println("Got it, I've added this task:");
+        System.out.println(" " + taskList.get(taskList.size() - 1));
+        System.out.println("Now you have " + taskList.size()  + " tasks in the task list.");
+        SaveAndLoadTask.saveTasks(taskList);
+    }
+
+    //display the task in the task list
+    private static void displayTaskList() {
+        if (taskList.isEmpty()) {
+            System.out.println("No tasks in the list.");
+        } else {
+            System.out.println("Here are the tasks in your list:");
+            for (int i = 0; i < taskList.size(); i++) {
+                System.out.println((i + 1) + ". " + taskList.get(i));
+            }
+        }
+    }
 }

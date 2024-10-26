@@ -1,4 +1,4 @@
-package UserUI;
+package StarkChatbot.UserUI;
 
 import java.io.IOException;
 

@@ -1,7 +1,7 @@
-package Storage;
+package StarkChatbot.Storage;
 
-import TaskManager.Task;
-import UserUI.StarkException;
+import StarkChatbot.TaskManager.Task;
+import StarkChatbot.UserUI.StarkException;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -24,8 +24,9 @@ public class TaskStorage {
                 tasks.add(TaskParser.parseTasks(task));
             }
             return tasks;
-        } catch (StarkException.InvalidDescriptionException e) {
+        } catch (StarkException.InvalidDescriptionException | FileNotFoundException e) {
             throw new StarkException.InvalidDescriptionException(e.getMessage());
+
         }
 
     }

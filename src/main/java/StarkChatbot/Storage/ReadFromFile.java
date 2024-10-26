@@ -1,4 +1,4 @@
-package Storage;
+package StarkChatbot.Storage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,17 +19,18 @@ public class ReadFromFile {
         try {
             ArrayList<String> taskDetail = new ArrayList<>();
             if (Files.exists(Paths.get(fileName))) {
-                System.out.println("Reading Tasks from file");
                 Scanner scanner = new Scanner(new File(fileName));
                 while (scanner.hasNextLine()) {
                     taskDetail.add(scanner.nextLine());
                 }
-            } else {
-
+                scanner.close();
+                System.out.println("Tasks read from the file completed");
+            }else{
+                System.out.println("File does not exist");
             }
             return taskDetail;
         } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("Error reading Tasks from the storage");
+            throw new FileNotFoundException("Error reading file");
         }
     }
 }

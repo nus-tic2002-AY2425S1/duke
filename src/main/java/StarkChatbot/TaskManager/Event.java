@@ -1,4 +1,4 @@
-package TaskManager;
+package StarkChatbot.TaskManager;
 
 public class Event extends Task{
 

@@ -1,7 +1,7 @@
-package Storage;
+package StarkChatbot.Storage;
 
-import TaskManager.*;
-import UserUI.StarkException;
+import StarkChatbot.TaskManager.*;
+import StarkChatbot.UserUI.StarkException;
 
 import java.io.FileWriter;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package UserUI;
+package StarkChatbot.UserUI;
 
 import java.util.Arrays;
 
@@ -54,7 +54,7 @@ public class Tokenize {
 
                }
            }else if (!tokens[0].equalsIgnoreCase("todo")) {
-               //all other type of input throw exception
+               //all other type of wrong user input throw exception
                throw new StarkException.InvalidCommandException(" OOPS!!! above query is not valid. Please try again...");
 
            }

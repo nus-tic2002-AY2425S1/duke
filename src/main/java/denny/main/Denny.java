@@ -9,12 +9,20 @@ import denny.task.TaskList;
 
 import java.io.IOException;
 
+/**
+ * Main class for the Denny task management application.
+ * Handles initialization of components and the main execution loop.
+ */
 public class Denny {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
     private Parser parser;
 
+    /**
+     * Initializes the task management application with the specified storage location.
+     * @param filePath Path to the file where tasks will be stored
+     */
     public Denny(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -29,6 +37,9 @@ public class Denny {
         }
     }
 
+    /**
+     * Starts the main application loop that processes user commands until exit.
+     */
     public void run() {
         boolean isExit = false;
         while (!isExit) {
@@ -46,6 +57,10 @@ public class Denny {
         }
     }
 
+    /**
+     * Entry point of the application.
+     * @param args Command line arguments (not used)
+     */
     public static void main(String[] args) {
         new Denny("data/tasks.txt").run();
     }

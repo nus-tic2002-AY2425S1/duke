@@ -8,13 +8,27 @@ import denny.exception.DennyException;
 import denny.task.Event;
 import java.io.IOException;
 
+/**
+ * Command to add a new event task to the task list.
+ */
 public class AddEventCommand extends Command {
     private final String arguments;
 
+    /**
+     * Creates a new AddEventCommand.
+     * @param arguments String containing the description and event times
+     */
     public AddEventCommand(String arguments) {
         this.arguments = arguments;
     }
 
+    /**
+     * Executes the add event command.
+     * @param tasks The current list of tasks
+     * @param ui The user interface for displaying output
+     * @param storage The storage manager for persisting changes
+     * @throws DennyException if the format is invalid or required fields are missing
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DennyException {
         String[] parts = arguments.split(" /from | /to ");

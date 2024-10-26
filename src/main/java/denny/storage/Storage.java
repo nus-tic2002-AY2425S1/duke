@@ -11,16 +11,27 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles persistence of tasks to and from file storage.
+ * Supports saving and loading of different task types with their associated data.
+ */
 public class Storage {
     private final String filePath;
     private static final DateTimeFormatter STORAGE_FORMATTER =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
+    /**
+     * Creates a new Storage instance with the specified file path.
+     * @param filePath Path to the storage file
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
         createDirectoryIfNotExists();
     }
 
+    /**
+     * Creates the storage directory if it doesn't exist.
+     */
     private void createDirectoryIfNotExists() {
         File directory = new File(filePath).getParentFile();
         if (directory != null && !directory.exists()) {
@@ -28,6 +39,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads tasks from the storage file.
+     * @return List of Task objects read from storage
+     * @throws IOException if there are errors reading the file
+     */
     public List<Task> loadTasks() throws IOException {
         List<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
@@ -47,6 +63,11 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves the current list of tasks to storage.
+     * @param tasks List of Task objects to save
+     * @throws IOException if there are errors writing to the file
+     */
     public void saveTasks(List<Task> tasks) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             for (Task task : tasks) {

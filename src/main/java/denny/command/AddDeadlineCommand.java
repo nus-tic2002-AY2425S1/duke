@@ -8,13 +8,27 @@ import denny.exception.DennyException;
 import denny.task.Deadline;
 import java.io.IOException;
 
+/**
+ * Command to add a new deadline task to the task list.
+ */
 public class AddDeadlineCommand extends Command {
     private final String arguments;
 
+    /**
+     * Creates a new AddDeadlineCommand.
+     * @param arguments String containing the description and deadline
+     */
     public AddDeadlineCommand(String arguments) {
         this.arguments = arguments;
     }
 
+    /**
+     * Executes the add deadline command.
+     * @param tasks The current list of tasks
+     * @param ui The user interface for displaying output
+     * @param storage The storage manager for persisting changes
+     * @throws DennyException if the format is invalid or required fields are missing
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DennyException {
         String[] parts = arguments.split(" /by ", 2);

@@ -44,6 +44,9 @@ public class Parser {
                         System.out.println(Messages.invalidTaskNumber);
                         break;
                     }
+                case "find":
+                    TextUi.printMatchingTasks(input.split(" ",2)[1].trim());
+                    break;
                 case "todo":
                     // fallthrough
                 case "deadline":

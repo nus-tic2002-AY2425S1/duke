@@ -72,6 +72,7 @@ public class TaskList {
         TextUi.echoTask(task);
     }
 
+    // TODO: add datetime exceptions
     public static void addEvent(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
         // input format: <event> /from <DD/MM/YYYY HHMM(24H)> /to <DD/MM/YYYY HHMM(24H)>
         if (!input.contains("/from") || !input.contains("/to")){

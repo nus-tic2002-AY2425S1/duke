@@ -55,4 +55,12 @@ public class Messages {
     public static String invalidTaskNumber = divider + System.lineSeparator() +
             "You've keyed in an invalid task number." + System.lineSeparator() +
             divider;
+
+    public static String invalidPriority = divider + System.lineSeparator() +
+            "Please indicate priority:" + System.lineSeparator() +
+            "  HIGH" + System.lineSeparator() +
+            "  MEDIUM" + System.lineSeparator() +
+            "  LOW" + System.lineSeparator() +
+            "If you do not wish to set priority, please input \"none\"." + System.lineSeparator() +
+            divider;
 }

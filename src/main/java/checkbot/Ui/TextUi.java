@@ -45,7 +45,7 @@ public class TextUi {
 
     public static void echoRankTask(Task task) {
         System.out.println(Messages.divider + System.lineSeparator() +
-                "Got it! I've changed the priority of this task to:" + task.getPriority() + System.lineSeparator() +
+                "Got it! I've changed the priority of this task to: " + task.getPriorityString() + System.lineSeparator() +
                 "  " + task.getListView() + System.lineSeparator() +
                 Messages.divider);
     }

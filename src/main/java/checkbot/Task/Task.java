@@ -24,8 +24,12 @@ public abstract class Task {
         return taskType.getTaskIcon();
     }
 
-    public String getPriority(){
-        return priority.getPriority();
+    public String getPriorityIcon(){
+        return priority.getPriorityIcon();
+    }
+
+    public String getPriorityString(){
+        return priority.toString();
     }
 
     public void setDone(boolean done) {

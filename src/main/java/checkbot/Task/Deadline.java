@@ -19,14 +19,14 @@ public class Deadline extends Task {
     }
 
     public String getListView() {
-        return "[Priority: " + this.getPriority() + "][" + this.getTaskIcon() + "][" + this.getStatusIcon() + "] " +
+        return "[" + this.getPriorityIcon() + "][" + this.getTaskIcon() + "][" + this.getStatusIcon() + "] " +
                 description + " (by: " + TextUi.printDateTime(dueDateTime) + ")";
     }
 
     public String getFileView() {
         return this.getTaskIcon() + " | " +
                 this.status.toString() + " | " +
-                this.priority.getPriority() + " | " +
+                this.priority.toString() + " | " +
                 this.getDescription() + " /by " +
                 this.getDueDateTime();
     }

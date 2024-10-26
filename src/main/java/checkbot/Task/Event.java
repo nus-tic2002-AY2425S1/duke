@@ -26,14 +26,14 @@ public class Event extends Task {
     }
 
     public String getListView() {
-        return "[Priority: " + this.getPriority() + "][" + this.getTaskIcon() + "][" + this.getStatusIcon() + "] " +
+        return "[" + this.getPriorityIcon() + "][" + this.getTaskIcon() + "][" + this.getStatusIcon() + "] " +
                 description + " (from: " + TextUi.printDateTime(startDateTime) + " to: " + TextUi.printDateTime(endDateTime) + ")";
     }
 
     public String getFileView() {
         return this.getTaskIcon() + " | " +
                 this.status.toString() + " | " +
-                this.priority.getPriority() + " | " +
+                this.priority.toString() + " | " +
                 this.getDescription() + " /from " +
                 this.getStartDateTime() + " /to " +
                 this.getEndDateTime();

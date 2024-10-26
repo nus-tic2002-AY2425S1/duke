@@ -52,6 +52,22 @@ public class TextUi {
         System.out.println(Messages.divider);
     }
 
+    public static void printMatchingTasks(String input) {
+        boolean found = false;
+        System.out.println(Messages.divider);
+        System.out.println("Here are the matching task(s) in your list:");
+        for (Task task : TaskList.tasks) {
+            if (task.getDescription().contains(input)) {
+                System.out.println(TaskList.tasks.indexOf(task)+1 + ". " + task.getListView());
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("Sorry, there are no matching tasks.");
+        }
+        System.out.println(Messages.divider);
+    }
+
     public static String printDateTime(LocalDateTime dateTime) {
         int day = dateTime.getDayOfMonth();
         String month = dateTime.getMonth().toString();

@@ -23,6 +23,10 @@ public class TextUi {
         System.out.println(Messages.exit);
     }
 
+    public static void printHelp() {
+        System.out.println(Messages.help);
+    }
+
     public static void printCommandNotFound() {
         System.out.println(Messages.commandNotFound);
     }
@@ -97,6 +101,4 @@ public class TextUi {
         }
         return day + " " + month + " " + year + ", " + hour + ":" + minute + meridiem;
     }
-
-    // TODO: add print help page
 }

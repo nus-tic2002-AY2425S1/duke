@@ -17,12 +17,14 @@ public class Parser {
         do {
             String input = TextUi.readInput().trim();
             String keyword = input.split(" ")[0].toLowerCase();
-
-            // TODO: add help page
+            
             switch (keyword) {
                 case "bye":
                     TextUi.printExit();
                     goToExit = true;
+                    break;
+                case "help":
+                    TextUi.printHelp();
                     break;
                 case "list":
                     TextUi.printTasks();

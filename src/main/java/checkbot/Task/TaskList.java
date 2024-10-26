@@ -140,7 +140,6 @@ public class TaskList {
         }
 
         TextUi.echoRankTask(task);
-        // TODO: maybe show list in order of priority
     }
 
     public static void setStatus(String  input) throws EmptyInputException, CommandNotFoundException {

@@ -9,7 +9,7 @@ public class InputProcessor {
       Conversation.response( " "
               + DialogMessages.TASK_ADDED.getValue()
               + System.lineSeparator()
-              + "  " + task.toString()
+              + "  " + task
       );
       Conversation.response(" Now you have " + taskList.getTaskListSize() + " tasks in the list");
     }

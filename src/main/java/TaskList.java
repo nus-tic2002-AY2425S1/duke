@@ -14,8 +14,12 @@ public class TaskList implements AutoCloseable {
     }
   }
   @Override
-  public void close() throws MochiException {
-    saveTasks();
+  public void close() {
+    try {
+      saveTasks();
+    } catch (Exception e) {
+      Conversation.response(e.getMessage());
+    }
   }
     private void saveTasks() throws MochiException {
     ArrayList<String> tasksToDbString = new ArrayList<>();

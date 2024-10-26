@@ -3,7 +3,6 @@ public class Task {
   protected boolean _status;
   protected String _type;
 
-  public Task() {}
   public Task(String name, String type) {
     _name = name;
     _type = type;

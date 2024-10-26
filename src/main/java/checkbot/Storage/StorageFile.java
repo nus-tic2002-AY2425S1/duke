@@ -3,6 +3,7 @@ package checkbot.Storage;
 import checkbot.Exception.*;
 import checkbot.Task.Task;
 import checkbot.Task.TaskList;
+import checkbot.Task.TaskPriority;
 import checkbot.Ui.TextUi;
 
 import java.io.File;
@@ -46,11 +47,14 @@ public class StorageFile {
         }
 
         for (String task : taskList) {
+            // Format: <task type> | <task status> | <task priority> | <description w/ datetime (if applicable)>
             String[] taskArray = task.split("\\|");
+
+            // Convert stored tasks into UI command
             String taskCommand = switch (taskArray[0].trim()) {
-                case "T" -> "Todo " + taskArray[2].trim();
-                case "D" -> "Deadline " + taskArray[2].trim();
-                case "E" -> "Event " + taskArray[2].trim();
+                case "T" -> "Todo " + taskArray[3].trim();
+                case "D" -> "Deadline " + taskArray[3].trim();
+                case "E" -> "Event " + taskArray[3].trim();
                 default -> {
                     // invalid task type, end the program
                     System.out.println("Invalid task type! Please check your txt file.");
@@ -61,15 +65,37 @@ public class StorageFile {
             try {
                 if (TaskList.addTask(taskCommand)) {
                     // if task added successfully, set task status
-                    if (taskArray[1].trim().equals("NOT_DONE")) {
-                        TaskList.tasks.get(taskCount).setDone(false);
-                    } else if (taskArray[1].trim().equals("DONE")) {
-                        TaskList.tasks.get(taskCount).setDone(true);
-                    } else {
-                        System.out.println("Invalid task status! Please check your txt file.");
-                        throw new RuntimeException();
+                    switch (taskArray[1].trim()) {
+                        case "NOT DONE":
+                            TaskList.tasks.get(taskCount).setDone(false);
+                            break;
+                        case "DONE":
+                            TaskList.tasks.get(taskCount).setDone(true);
+                            break;
+                        default:
+                            System.out.println("Invalid task status! Please check your txt file.");
+                            throw new RuntimeException();
                     }
-                    // TODO: add priority setter
+
+                    // if task added successfully, set task priority
+                    switch (taskArray[2].trim()) {
+                        case "HIGH":
+                            TaskList.tasks.get(taskCount).setPriority(TaskPriority.HIGH);
+                            break;
+                        case "MEDIUM":
+                            TaskList.tasks.get(taskCount).setPriority(TaskPriority.MEDIUM);
+                            break;
+                        case "LOW":
+                            TaskList.tasks.get(taskCount).setPriority(TaskPriority.LOW);
+                            break;
+                        case "NOT SET":
+                            TaskList.tasks.get(taskCount).setPriority(TaskPriority.NOT_SET);
+                            break;
+                        default:
+                            System.out.println("Invalid task priority! Please check your txt file.");
+                            throw new RuntimeException();
+                    }
+
                     // increase taskCount for next line in taskList
                     taskCount++;
                 } else {
@@ -89,6 +115,9 @@ public class StorageFile {
                 throw new RuntimeException();
             }
         }
+
+        // print list after adding all stored tasks
+        TextUi.printTasks();
     }
 
     public static void readFile() {

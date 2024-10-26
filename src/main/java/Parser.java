@@ -5,6 +5,12 @@ import java.time.format.DateTimeParseException;
 public class Parser {
     public static Task parseCommand(String command) throws Exception {
 
+        // Check for normal task command
+        if (command.startsWith("add ")) {
+            String taskDescription = command.substring(4).trim(); // Extract the task description
+            return new Task(taskDescription); // Create a new normal task
+        }
+
         // Check for deadline command
         if (command.startsWith("deadline ")) {
             String[] parts = command.split(" /by ", 2);

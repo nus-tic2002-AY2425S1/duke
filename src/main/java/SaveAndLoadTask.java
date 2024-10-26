@@ -86,6 +86,12 @@ public class SaveAndLoadTask {
 
                         task = new Event(taskDetail[2].trim(), fromTime, toTime);
                         break;
+                    case "N":
+                        // Create a normal task with "N"
+                        task = new Task(taskDetail[2].trim()); // Assuming Task constructor exists
+                        System.out.println("Loaded normal task: " + task.toString()); // Debug print
+                        break;
+
                     default:
                         System.out.println("Invalid task type in the file: " + taskType);
                         continue; // Skip invalid task types

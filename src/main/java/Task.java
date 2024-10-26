@@ -19,6 +19,12 @@ public class Task {
         this.isDone = false;
     }
 
+    // New constructor for normal tasks without specific types - NEW
+    public Task(String taskName, boolean isDone) {
+        this.taskName = taskName;
+        this.isDone = isDone;
+    }
+
 
     // Mark done task with X
     public String getStatusIcon(){
@@ -43,10 +49,10 @@ public class Task {
 
     /**
      * Task type for subclass to override
-     * @return a string that represent the task type. example "T", "D", "E"
+     * @return a string that represent the task type. example "T", "D", "E" and "N" for normal task
      */
     protected String getTaskType(){
-        return " ";
+        return "N";
     }
 
     /**

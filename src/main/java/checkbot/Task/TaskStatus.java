@@ -14,7 +14,7 @@ public enum TaskStatus {
         if (this == DONE) {
             return "DONE";
         } else {
-            return "NOT_DONE";
+            return "NOT DONE";
         }
     }
 }

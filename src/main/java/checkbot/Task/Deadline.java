@@ -18,15 +18,15 @@ public class Deadline extends Task {
                 " " + String.format("%02d", dueDateTime.getHour()) + String.format("%02d", dueDateTime.getMinute());
     }
 
-    // TODO: add priority in list view for storage
     public String getListView() {
-        return "[" + this.getTaskIcon() + "][" + this.getStatusIcon() + "] " +
+        return "[Priority: " + this.getPriority() + "][" + this.getTaskIcon() + "][" + this.getStatusIcon() + "] " +
                 description + " (by: " + TextUi.printDateTime(dueDateTime) + ")";
     }
 
     public String getFileView() {
         return this.getTaskIcon() + " | " +
                 this.status.toString() + " | " +
+                this.priority.getPriority() + " | " +
                 this.getDescription() + " /by " +
                 this.getDueDateTime();
     }

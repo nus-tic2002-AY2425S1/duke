@@ -5,10 +5,10 @@ public enum TaskPriority {
 
     public String getPriority() {
         return switch (this) {
-            case HIGH -> "High";
-            case MEDIUM -> "Medium";
-            case LOW -> "Low";
-            case NOT_SET -> "Not Set";
+            case HIGH -> "HIGH";
+            case MEDIUM -> "MEDIUM";
+            case LOW -> "LOW";
+            case NOT_SET -> "NOT SET";
         };
     }
 }

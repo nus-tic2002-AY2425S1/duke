@@ -7,15 +7,15 @@ public class Todo extends Task {
         taskType = TaskType.TODO;
     }
 
-    // TODO: add priority in list view for storage
     public String getListView() {
-        return "[" + this.getTaskIcon() + "][" + this.getStatusIcon() + "] " +
+        return "[Priority: " + this.getPriority() + "][" + this.getTaskIcon() + "][" + this.getStatusIcon() + "] " +
                 description;
     }
 
     public String getFileView() {
         return this.getTaskIcon() + " | " +
                 this.status.toString() + " | " +
+                this.priority.getPriority() + " | " +
                 this.getDescription();
     }
 }

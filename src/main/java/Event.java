@@ -1,12 +1,10 @@
 public class Event extends Task {
   protected String _from;
   protected String _to;
-  protected String _type;
   public Event(String name, String from, String to) {
-    super(name);
+    super(name,"E");
     this._from = from;
     this._to = to;
-    this._type = "E";
   }
   public String getFrom() {
     return this._from;
@@ -16,19 +14,19 @@ public class Event extends Task {
   }
   @Override
   public String toString() {
-    return "[" + _type + "]" + super.toString() + " (from: " + this._from + " to: "+ this._to +  ")";
+    return "[" + _type + "]" + super.toString() + " (from: " + _from + " to: "+ _to +  ")";
   }
 
   @Override
   public String toDBString() {
-    return Command.EVENT.toString()
-            + TaskList._saveDelimiter
-            + super.getName()
-            + TaskList._saveDelimiter
-            + "/from "
-            + _from
-            + TaskList._saveDelimiter
-            + "/to "
-            + _to;
+    return _type
+      + TaskList._saveDelimiter
+      + _status
+      + TaskList._saveDelimiter
+      + _name
+      + TaskList._saveDelimiter
+      + _from
+      + TaskList._saveDelimiter
+      + _to;
   }
 }

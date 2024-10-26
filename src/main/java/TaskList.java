@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class TaskList implements AutoCloseable {
   protected ArrayList<Task> _list = new ArrayList<>();
   protected HashMap<String,Integer> _taskNameToIndexMap = new HashMap<>();
-  final static String _saveDelimiter = " ";
+  final static String _saveDelimiter = "||";
   public TaskList() {
     try {
       loadTasks();
@@ -40,8 +40,8 @@ public class TaskList implements AutoCloseable {
             throw new MochiException(DialogMessages.LOAD_TASK_LINE_ERROR.getValue() + line);
           }
           else {
-            InputProcessor inputProcessor = new InputProcessor(this);
-            inputProcessor.processInput(s,_saveDelimiter);
+            LoadProcessor loadProcessor = new LoadProcessor(this);
+            loadProcessor.processInput(s,_saveDelimiter);
             line++;
           }
         }
@@ -100,8 +100,8 @@ public class TaskList implements AutoCloseable {
   public boolean getTaskStatusByName(String name) {
     return (_list.get(_taskNameToIndexMap.get(name)).getStatus());
   }
-  public boolean getTaskStatusByIndex(int index) {
-    return (_list.get(index).getStatus());
+  public Integer getTaskIdByTask(Task task) {
+    return _taskNameToIndexMap.get(task.getName());
   }
   public String getTaskStatusIconByIndex(int index) {
     return (_list.get(index).getStatusIcon());

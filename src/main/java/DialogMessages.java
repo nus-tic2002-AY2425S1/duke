@@ -11,6 +11,8 @@ public enum DialogMessages {
    UNMARK_TASK("OK, I've marked this task as not done yet:"),
    BYE("Bye. Hope to see you again soon!"),
    TASK_ADDED("Got it. I've added this task:"),
+
+   TASK_LOADED("Loaded:"),
    COMMANDS_LIST("""
             1. todo X                               - Adds a new to-do task. Example: todo Buy groceries
             2. event X /from Mon 5pm /to Mon 7pm    - Adds a new event task. Example: event Attend meeting between a given date

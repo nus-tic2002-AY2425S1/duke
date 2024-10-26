@@ -83,7 +83,7 @@ public class InputProcessor {
       if(copy) {
         body += i + delimiter;
       }
-      if (i.equals(start))
+      if (i.equalsIgnoreCase(start))
         copy = true;
     }
     return body.trim();

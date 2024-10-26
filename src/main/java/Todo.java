@@ -1,8 +1,7 @@
 public class Todo extends Task{
-  protected String _type;
+
   public Todo (String name) {
-    super(name);
-    _type = "T";
+    super(name,"T");
   }
 
   @Override
@@ -11,5 +10,8 @@ public class Todo extends Task{
   }
 
   @Override
-  public String toDBString() { return Command.TODO.toString() + TaskList._saveDelimiter + super.getName(); }
+  public String toDBString() {
+    return
+      super.toDBString();
+  }
 }

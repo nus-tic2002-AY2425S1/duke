@@ -8,7 +8,9 @@ import checkbot.Task.TaskList;
 import checkbot.Ui.TextUi;
 import checkbot.Utils.Messages;
 
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Parser {
     static boolean goToExit = false;
@@ -71,6 +73,12 @@ public class Parser {
                     } catch (EmptyTimeException e) {
                         TextUi.printEmptyTime();
                         break;
+                    } catch (DateTimeException e) {
+                        System.out.println(e.getMessage());
+                        break;
+                    } catch (NumberFormatException e) {
+                        System.out.println(Messages.invalidDateTime);
+                        break;
                     }
                 default:
                     TextUi.printCommandNotFound();
@@ -78,7 +86,6 @@ public class Parser {
         } while (!goToExit);
     }
 
-    // TODO: Exceptions
     public static LocalDateTime parseDateTime(String input) {
         String[] dateTimeArray = input.split(" ",2);
 

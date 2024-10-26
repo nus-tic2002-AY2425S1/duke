@@ -68,6 +68,11 @@ public class Messages {
             "You've keyed in an invalid task number." + System.lineSeparator() +
             divider;
 
+    public static String invalidDateTime = divider + System.lineSeparator() +
+            "You've entered an invalid date time format. Please follow the following:" + System.lineSeparator() +
+            "DD/MM/YYYY HHMM(24H)" + System.lineSeparator() +
+            divider;
+
     public static String invalidPriority = divider + System.lineSeparator() +
             "Please indicate priority:" + System.lineSeparator() +
             "  HIGH" + System.lineSeparator() +

@@ -5,13 +5,17 @@ import checkbot.Parser.*;
 import checkbot.Ui.TextUi;
 import checkbot.Utils.Messages;
 
+import java.time.DateTimeException;
 import java.util.ArrayList;
 
 public class TaskList {
     public static ArrayList<Task> tasks = new ArrayList<>();
 
-    // TODO: add datetime exceptions
-    public static boolean addTask(String input) throws EmptyInputException, EmptyTimeException {
+    public static boolean addTask(String input)
+            throws EmptyInputException,
+            EmptyTimeException,
+            DateTimeException,
+            NumberFormatException {
         String[] taskArray = input.split(" ",2);
         if (taskArray.length < 2) {
             throw new EmptyInputException();
@@ -51,7 +55,6 @@ public class TaskList {
         TextUi.echoAddTask(task);
     }
 
-    // TODO: add datetime exceptions
     public static void addDeadline(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
         // input format: <task> /by <DD/MM/YYYY HHMM(24H)>
         if (!input.contains("/by")){
@@ -72,7 +75,6 @@ public class TaskList {
         TextUi.echoAddTask(task);
     }
 
-    // TODO: add datetime exceptions
     public static void addEvent(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
         // input format: <event> /from <DD/MM/YYYY HHMM(24H)> /to <DD/MM/YYYY HHMM(24H)>
         if (!input.contains("/from") || !input.contains("/to")){

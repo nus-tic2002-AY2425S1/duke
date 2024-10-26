@@ -35,11 +35,18 @@ public class TextUi {
         System.out.println(Messages.emptyTime);
     }
 
-    public static void echoTask(Task task) {
+    public static void echoAddTask(Task task) {
         System.out.println(Messages.divider + System.lineSeparator() +
                 "Got it! I've added this task:" + System.lineSeparator() +
                 "  " + task.getListView() + System.lineSeparator() +
                 "Now you have " + TaskList.tasks.size() + " task(s) in the list." + System.lineSeparator() +
+                Messages.divider);
+    }
+
+    public static void echoRankTask(Task task) {
+        System.out.println(Messages.divider + System.lineSeparator() +
+                "Got it! I've changed the priority of this task to:" + task.getPriority() + System.lineSeparator() +
+                "  " + task.getListView() + System.lineSeparator() +
                 Messages.divider);
     }
 

@@ -48,7 +48,7 @@ public class TaskList {
     public static void addTodo(String input){
         Todo task = new Todo(input);
         TaskList.tasks.add(task);
-        TextUi.echoTask(task);
+        TextUi.echoAddTask(task);
     }
 
     // TODO: add datetime exceptions
@@ -69,7 +69,7 @@ public class TaskList {
 
         Deadline task = new Deadline(description, Parser.parseDateTime(dueDateTime));
         TaskList.tasks.add(task);
-        TextUi.echoTask(task);
+        TextUi.echoAddTask(task);
     }
 
     // TODO: add datetime exceptions
@@ -92,7 +92,7 @@ public class TaskList {
 
         Event task = new Event(description, Parser.parseDateTime(startDateTime), Parser.parseDateTime(endDateTime));
         TaskList.tasks.add(task);
-        TextUi.echoTask(task);
+        TextUi.echoAddTask(task);
     }
 
     public static void markTask(Task task) {
@@ -138,7 +138,8 @@ public class TaskList {
             default:
                 throw new CommandNotFoundException();
         }
-        // TODO: print confirmation message
+
+        TextUi.echoRankTask(task);
         // TODO: maybe show list in order of priority
     }
 

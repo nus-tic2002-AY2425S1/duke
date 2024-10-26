@@ -6,11 +6,15 @@ import denny.task.Task;
 import denny.task.ToDo;
 
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Storage {
     private final String filePath;
+    private static final DateTimeFormatter STORAGE_FORMATTER =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public Storage(String filePath) {
         this.filePath = filePath;
@@ -62,21 +66,27 @@ public class Storage {
         String description = parts[2].trim();
 
         Task task;
-        switch (type) {
-            case "T":
-                task = new ToDo(description);
-                break;
-            case "D":
-                String by = parts[3].trim();
-                task = new Deadline(description, by);
-                break;
-            case "E":
-                String from = parts[3].trim();
-                String to = parts[4].trim();
-                task = new Event(description, from, to);
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown task type: " + type);
+        try {
+            switch (type) {
+                case "T":
+                    task = new ToDo(description);
+                    break;
+                case "D":
+                    String by = parts[3].trim();
+                    task = new Deadline(description, convertStorageToInputFormat(by));
+                    break;
+                case "E":
+                    String from = parts[3].trim();
+                    String to = parts[4].trim();
+                    task = new Event(description,
+                            convertStorageToInputFormat(from),
+                            convertStorageToInputFormat(to));
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown task type: " + type);
+            }
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error parsing date/time: " + e.getMessage());
         }
 
         if (isDone) {
@@ -85,15 +95,27 @@ public class Storage {
         return task;
     }
 
+    private String convertStorageToInputFormat(String storageDateTime) {
+        LocalDateTime dateTime = LocalDateTime.parse(storageDateTime, STORAGE_FORMATTER);
+        return dateTime.format(DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+    }
+
     private String formatTask(Task task) {
         String type = task instanceof ToDo ? "T" : task instanceof Deadline ? "D" : "E";
         String isDone = task.isDone() ? "1" : "0";
-        String formatted = String.format("%s | %s | %s", type, isDone, task.getDescription());
+        StringBuilder formatted = new StringBuilder(String.format("%s | %s | %s",
+                type, isDone, task.getDescription()));
+
         if (task instanceof Deadline) {
-            formatted += " | " + ((Deadline) task).getBy();
+            Deadline deadline = (Deadline) task;
+            formatted.append(" | ").append(deadline.getBy().format(STORAGE_FORMATTER));
         } else if (task instanceof Event) {
-            formatted += " | " + ((Event) task).getFrom() + " | " + ((Event) task).getTo();
+            Event event = (Event) task;
+            formatted.append(" | ")
+                    .append(event.getFrom().format(STORAGE_FORMATTER))
+                    .append(" | ")
+                    .append(event.getTo().format(STORAGE_FORMATTER));
         }
-        return formatted;
+        return formatted.toString();
     }
 }

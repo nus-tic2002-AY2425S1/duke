@@ -1,7 +1,9 @@
 package denny.task;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TaskList {
     private List<Task> tasks;
@@ -32,5 +34,26 @@ public class TaskList {
 
     public List<Task> getAllTasks() {
         return new ArrayList<>(tasks);
+    }
+
+    // New methods for date-based operations
+    public List<Task> getTasksOnDate(LocalDateTime date) {
+        return tasks.stream()
+                .filter(task -> {
+                    if (task instanceof Deadline) {
+                        LocalDateTime deadlineDate = ((Deadline) task).getBy();
+                        return isSameDate(deadlineDate, date);
+                    } else if (task instanceof Event) {
+                        LocalDateTime eventStart = ((Event) task).getFrom();
+                        LocalDateTime eventEnd = ((Event) task).getTo();
+                        return isSameDate(eventStart, date) || isSameDate(eventEnd, date);
+                    }
+                    return false;
+                })
+                .collect(Collectors.toList());
+    }
+
+    private boolean isSameDate(LocalDateTime date1, LocalDateTime date2) {
+        return date1.toLocalDate().equals(date2.toLocalDate());
     }
 }

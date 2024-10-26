@@ -1,16 +1,20 @@
 package denny.task;
 
+import java.time.LocalDateTime;
+
 public class Task {
     protected String description;
     protected boolean isDone;
+    protected final LocalDateTime createdAt;
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        this.createdAt = LocalDateTime.now();
     }
 
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
+        return (isDone ? "X" : " ");
     }
 
     public void markAsDone() {
@@ -27,6 +31,10 @@ public class Task {
 
     public boolean isDone() {
         return isDone;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
     @Override

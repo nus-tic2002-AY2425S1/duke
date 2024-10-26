@@ -19,7 +19,8 @@ public class AddEventCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DennyException {
         String[] parts = arguments.split(" /from | /to ");
         if (parts.length < 3) {
-            throw new DennyException("Please provide the event details in the format: event <description> /from <start date> /to <end date>");
+            throw new DennyException("Please provide the event details in the format: " +
+                    "event <description> /from d/M/yyyy HHmm /to d/M/yyyy HHmm");
         }
         String description = parts[0].trim();
         String from = parts[1].trim();
@@ -27,11 +28,14 @@ public class AddEventCommand extends Command {
         if (description.isEmpty() || from.isEmpty() || to.isEmpty()) {
             throw new DennyException("The description, start date, and end date cannot be empty.");
         }
-        Task newTask = new Event(description, from, to);
-        tasks.addTask(newTask);
-        ui.showTaskAdded(newTask, tasks.size());
         try {
+            Task newTask = new Event(description, from, to);
+            tasks.addTask(newTask);
+            ui.showTaskAdded(newTask, tasks.size());
             storage.saveTasks(tasks.getAllTasks());
+        } catch (IllegalArgumentException e) {
+            throw new DennyException("Invalid date format or dates. Error: " + e.getMessage() +
+                    "\nPlease use the format: d/M/yyyy HHmm (e.g., 2/12/2019 1800)");
         } catch (IOException e) {
             throw new DennyException("Error saving tasks: " + e.getMessage());
         }

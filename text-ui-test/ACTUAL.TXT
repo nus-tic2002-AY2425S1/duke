@@ -7,7 +7,7 @@ ____
                         |___/
 
 ____________________________________________________________
- Hello! I'm denny.main.Denny
+ Hello! I'm Denny
  What can I do for you?
 ____________________________________________________________
  0 task(s) loaded from storage.
@@ -84,40 +84,40 @@ ____________________________________________________________
  4.[T][ ] borrow book
 ____________________________________________________________
 ____________________________________________________________
- Oops! Please provide the deadline in the format: deadline <description> /by <date>
+ Oops! Please provide the deadline in the format: deadline <description> /by d/M/yyyy HHmm
 ____________________________________________________________
 ____________________________________________________________
- Oops! Please provide the deadline in the format: deadline <description> /by <date>
+ Oops! Please provide the deadline in the format: deadline <description> /by d/M/yyyy HHmm
 ____________________________________________________________
 ____________________________________________________________
- Oops! Please provide the deadline in the format: deadline <description> /by <date>
+ Oops! Please provide the deadline in the format: deadline <description> /by d/M/yyyy HHmm
 ____________________________________________________________
 ____________________________________________________________
- Oops! Please provide the deadline in the format: deadline <description> /by <date>
+ Oops! Please provide the deadline in the format: deadline <description> /by d/M/yyyy HHmm
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [D][ ] return book (by: Sunday)
+   [D][ ] return book (by: Dec 2 2019, 06:00 pm)
  Now you have 5 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
- Oops! Please provide the event details in the format: event <description> /from <start date> /to <end date>
+ Oops! Please provide the event details in the format: event <description> /from d/M/yyyy HHmm /to d/M/yyyy HHmm
 ____________________________________________________________
 ____________________________________________________________
- Oops! Please provide the event details in the format: event <description> /from <start date> /to <end date>
+ Oops! Please provide the event details in the format: event <description> /from d/M/yyyy HHmm /to d/M/yyyy HHmm
 ____________________________________________________________
 ____________________________________________________________
- Oops! Please provide the event details in the format: event <description> /from <start date> /to <end date>
+ Oops! Please provide the event details in the format: event <description> /from d/M/yyyy HHmm /to d/M/yyyy HHmm
 ____________________________________________________________
 ____________________________________________________________
- Oops! Please provide the event details in the format: event <description> /from <start date> /to <end date>
+ Oops! Please provide the event details in the format: event <description> /from d/M/yyyy HHmm /to d/M/yyyy HHmm
 ____________________________________________________________
 ____________________________________________________________
- Oops! Please provide the event details in the format: event <description> /from <start date> /to <end date>
+ Oops! Please provide the event details in the format: event <description> /from d/M/yyyy HHmm /to d/M/yyyy HHmm
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [E][ ] project meeting (from: Mon 2pm to: 4pm)
+   [E][ ] project meeting (from: Dec 2 2019, 06:00 pm to: Dec 4 2019, 09:00 am)
  Now you have 6 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
@@ -126,8 +126,8 @@ ____________________________________________________________
  2.[T][ ] return book
  3.[T][ ] buy book
  4.[T][ ] borrow book
- 5.[D][ ] return book (by: Sunday)
- 6.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+ 5.[D][ ] return book (by: Dec 2 2019, 06:00 pm) (by: Dec 2 2019, 06:00 pm)
+ 6.[E][ ] project meeting (from: Dec 2 2019, 06:00 pm to: Dec 4 2019, 09:00 am) (from: Dec 2 2019, 06:00 pm to: Dec 4 2019, 09:00 am)
 ____________________________________________________________
 ____________________________________________________________
  Oops! Invalid task number.
@@ -145,8 +145,8 @@ ____________________________________________________________
  1.[T][X] read book
  2.[T][ ] return book
  3.[T][ ] borrow book
- 4.[D][ ] return book (by: Sunday)
- 5.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+ 4.[D][ ] return book (by: Dec 2 2019, 06:00 pm) (by: Dec 2 2019, 06:00 pm)
+ 5.[E][ ] project meeting (from: Dec 2 2019, 06:00 pm to: Dec 4 2019, 09:00 am) (from: Dec 2 2019, 06:00 pm to: Dec 4 2019, 09:00 am)
 ____________________________________________________________
 ____________________________________________________________
  Bye. Hope to see you again soon!

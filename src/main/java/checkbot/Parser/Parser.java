@@ -1,5 +1,6 @@
 package checkbot.Parser;
 
+import checkbot.Exception.CommandNotFoundException;
 import checkbot.Exception.EmptyInputException;
 import checkbot.Exception.EmptyTimeException;
 import checkbot.Storage.StorageFile;
@@ -16,11 +17,14 @@ public class Parser {
         do {
             String input = TextUi.readInput().trim();
             String keyword = input.split(" ")[0].toLowerCase();
-
+            
             switch (keyword) {
                 case "bye":
                     TextUi.printExit();
                     goToExit = true;
+                    break;
+                case "help":
+                    TextUi.printHelp();
                     break;
                 case "list":
                     TextUi.printTasks();
@@ -30,6 +34,8 @@ public class Parser {
                 case "unmark":
                     // fallthrough
                 case "delete":
+                    //fall through
+                case "rank":
                     try {
                         TaskList.setStatus(input);
                         StorageFile.updateFile();
@@ -43,7 +49,13 @@ public class Parser {
                     } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
                         System.out.println(Messages.invalidTaskNumber);
                         break;
+                    } catch (CommandNotFoundException e) {
+                        System.out.println(Messages.invalidPriority);
+                        break;
                     }
+                case "find":
+                    TextUi.printMatchingTasks(input.split(" ",2)[1].trim());
+                    break;
                 case "todo":
                     // fallthrough
                 case "deadline":

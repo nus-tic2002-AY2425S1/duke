@@ -48,7 +48,7 @@ public class TaskList {
     public static void addTodo(String input){
         Todo task = new Todo(input);
         TaskList.tasks.add(task);
-        TextUi.echoTask(task);
+        TextUi.echoAddTask(task);
     }
 
     // TODO: add datetime exceptions
@@ -69,9 +69,10 @@ public class TaskList {
 
         Deadline task = new Deadline(description, Parser.parseDateTime(dueDateTime));
         TaskList.tasks.add(task);
-        TextUi.echoTask(task);
+        TextUi.echoAddTask(task);
     }
 
+    // TODO: add datetime exceptions
     public static void addEvent(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
         // input format: <event> /from <DD/MM/YYYY HHMM(24H)> /to <DD/MM/YYYY HHMM(24H)>
         if (!input.contains("/from") || !input.contains("/to")){
@@ -91,7 +92,7 @@ public class TaskList {
 
         Event task = new Event(description, Parser.parseDateTime(startDateTime), Parser.parseDateTime(endDateTime));
         TaskList.tasks.add(task);
-        TextUi.echoTask(task);
+        TextUi.echoAddTask(task);
     }
 
     public static void markTask(Task task) {
@@ -120,8 +121,29 @@ public class TaskList {
 
     }
 
-    public static void setStatus(String  input) throws EmptyInputException {
-        String[] setStatusArray = input.split(" ", 2);
+    public static void rankTask(Task task, String priority) throws CommandNotFoundException {
+        switch (priority.toLowerCase()) {
+            case "high":
+                task.setPriority(TaskPriority.HIGH);
+                break;
+            case "medium":
+                task.setPriority(TaskPriority.MEDIUM);
+                break;
+            case "low":
+                task.setPriority(TaskPriority.LOW);
+                break;
+            case "none":
+                task.setPriority(TaskPriority.NOT_SET);
+                break;
+            default:
+                throw new CommandNotFoundException();
+        }
+
+        TextUi.echoRankTask(task);
+    }
+
+    public static void setStatus(String  input) throws EmptyInputException, CommandNotFoundException {
+        String[] setStatusArray = input.split(" ");
         if (setStatusArray.length < 2) {
             throw new EmptyInputException();
         }
@@ -137,6 +159,13 @@ public class TaskList {
                 break;
             case "delete":
                 deleteTask(TaskList.tasks.get(taskIdx));
+                break;
+            case "rank":
+                if (setStatusArray.length < 3) {
+                    throw new CommandNotFoundException();
+                }
+                String priority = setStatusArray[2];
+                rankTask(TaskList.tasks.get(taskIdx), priority);
                 break;
             default:
                 // do nothing

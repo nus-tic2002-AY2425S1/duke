@@ -12,13 +12,25 @@ public class Messages {
             "Bye. Hope to see you again soon!" + System.lineSeparator() +
             divider;
 
+    public static String help = divider + System.lineSeparator() +
+            "To add a task: Start with \"todo\", \"deadline\", or \"event\"." + System.lineSeparator() +
+            "  todo <description>" + System.lineSeparator() +
+            "  deadline <description> /by <DD/MM/YYYY HHMM(24H)>" + System.lineSeparator() +
+            "  event <description> /from <DD/MM/YYYY HHMM(24H)> /to <DD/MM/YYYY HHMM(24H)>" + System.lineSeparator() +
+            "To see the full task list: type \"list\"." + System.lineSeparator() +
+            "To delete a task: Start with \"delete\", followed by the task number." + System.lineSeparator() +
+            "To mark a task as done or undone: Start with \"mark\" or \"unmark\", followed by the task number." + System.lineSeparator() +
+            "To rank a task with priority: Start with \"rank\", followed by the task number, followed by priority." + System.lineSeparator() +
+            "  rank <task number> high" + System.lineSeparator() +
+            "  rank <task number> medium" + System.lineSeparator() +
+            "  rank <task number> low" + System.lineSeparator() +
+            "  rank <task number> none" + System.lineSeparator() +
+            "To end this session, type \"bye\"." + System.lineSeparator() +
+            divider;
+
     public static String commandNotFound = divider + System.lineSeparator() +
             "Sorry, I didn't get that. :(" + System.lineSeparator() +
-            "Try starting a task with \"todo\", \"deadline\", or \"event\"." + System.lineSeparator() +
-            "To delete a task, type \"delete\", followed by the task number." + System.lineSeparator() +
-            "To mark a task as done or undone, type \"mark\" or \"unmark\", followed by the task number." + System.lineSeparator() +
-            "To see the full task list, type \"list\"." + System.lineSeparator() +
-            "To end this session, type \"bye\"." + System.lineSeparator() +
+            "Type \"help\" for command manual." + System.lineSeparator() +
             divider;
 
     public static String emptyDescription = divider + System.lineSeparator() +
@@ -54,5 +66,18 @@ public class Messages {
 
     public static String invalidTaskNumber = divider + System.lineSeparator() +
             "You've keyed in an invalid task number." + System.lineSeparator() +
+            divider;
+
+    public static String invalidDateTime = divider + System.lineSeparator() +
+            "You've entered an invalid date time format. Please follow the following:" + System.lineSeparator() +
+            "DD/MM/YYYY HHMM(24H)" + System.lineSeparator() +
+            divider;
+
+    public static String invalidPriority = divider + System.lineSeparator() +
+            "Please indicate priority:" + System.lineSeparator() +
+            "  HIGH" + System.lineSeparator() +
+            "  MEDIUM" + System.lineSeparator() +
+            "  LOW" + System.lineSeparator() +
+            "If you do not wish to set priority, please input \"none\"." + System.lineSeparator() +
             divider;
 }

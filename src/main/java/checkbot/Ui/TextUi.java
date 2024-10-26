@@ -23,6 +23,10 @@ public class TextUi {
         System.out.println(Messages.exit);
     }
 
+    public static void printHelp() {
+        System.out.println(Messages.help);
+    }
+
     public static void printCommandNotFound() {
         System.out.println(Messages.commandNotFound);
     }
@@ -40,11 +44,18 @@ public class TextUi {
      *
      * @param task
      */
-    public static void echoTask(Task task) {
+    public static void echoAddTask(Task task) {
         System.out.println(Messages.divider + System.lineSeparator() +
                 "Got it! I've added this task:" + System.lineSeparator() +
                 "  " + task.getListView() + System.lineSeparator() +
                 "Now you have " + TaskList.tasks.size() + " task(s) in the list." + System.lineSeparator() +
+                Messages.divider);
+    }
+
+    public static void echoRankTask(Task task) {
+        System.out.println(Messages.divider + System.lineSeparator() +
+                "Got it! I've changed the priority of this task to: " + task.getPriorityString() + System.lineSeparator() +
+                "  " + task.getListView() + System.lineSeparator() +
                 Messages.divider);
     }
 
@@ -57,6 +68,22 @@ public class TextUi {
         System.out.println(Messages.divider);
     }
 
+    public static void printMatchingTasks(String input) {
+        boolean found = false;
+        System.out.println(Messages.divider);
+        System.out.println("Here are the matching task(s) in your list:");
+        for (Task task : TaskList.tasks) {
+            if (task.getDescription().contains(input)) {
+                System.out.println(TaskList.tasks.indexOf(task)+1 + ". " + task.getListView());
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("Sorry, there are no matching tasks.");
+        }
+        System.out.println(Messages.divider);
+    }
+    
     /**
      * Takes in LocalDateTime object and converts into string for UI list view.
      * E.g. of output: 26 OCTOBER 2024, 2:06AM

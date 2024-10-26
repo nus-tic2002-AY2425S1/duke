@@ -1,5 +1,6 @@
 package checkbot.Parser;
 
+import checkbot.Exception.CommandNotFoundException;
 import checkbot.Exception.EmptyInputException;
 import checkbot.Exception.EmptyTimeException;
 import checkbot.Storage.StorageFile;
@@ -45,6 +46,9 @@ public class Parser {
                         break;
                     } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
                         System.out.println(Messages.invalidTaskNumber);
+                        break;
+                    } catch (CommandNotFoundException e) {
+                        System.out.println(Messages.invalidPriority);
                         break;
                     }
                 case "find":

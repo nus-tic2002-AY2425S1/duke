@@ -121,7 +121,7 @@ public class TaskList {
 
     }
 
-    public static void rankTask(Task task, String priority) {
+    public static void rankTask(Task task, String priority) throws CommandNotFoundException {
         switch (priority.toLowerCase()) {
             case "high":
                 task.setPriority(TaskPriority.HIGH);
@@ -136,20 +136,19 @@ public class TaskList {
                 task.setPriority(TaskPriority.NOT_SET);
                 break;
             default:
-                // TODO: throw exception
+                throw new CommandNotFoundException();
         }
         // TODO: print confirmation message
         // TODO: maybe show list in order of priority
     }
 
-    public static void setStatus(String  input) throws EmptyInputException {
+    public static void setStatus(String  input) throws EmptyInputException, CommandNotFoundException {
         String[] setStatusArray = input.split(" ");
         if (setStatusArray.length < 2) {
             throw new EmptyInputException();
         }
         String action = setStatusArray[0].toLowerCase();
         int taskIdx = Integer.parseInt(setStatusArray[1]) - 1;
-        String priority = setStatusArray[2];
 
         switch (action) {
             case "mark":
@@ -162,6 +161,10 @@ public class TaskList {
                 deleteTask(TaskList.tasks.get(taskIdx));
                 break;
             case "rank":
+                if (setStatusArray.length < 3) {
+                    throw new CommandNotFoundException();
+                }
+                String priority = setStatusArray[2];
                 rankTask(TaskList.tasks.get(taskIdx), priority);
                 break;
             default:

@@ -7,6 +7,7 @@ public class ManageTask {
     public ManageTask (ArrayList<Task> taskList) {
         this.taskList = taskList;
     }
+
     // add or update the task
     public void addOrUpdateTask(Task newTask){
         for (int i = 0; i < taskList.size(); i++){
@@ -21,14 +22,27 @@ public class ManageTask {
         }
         addTask(newTask);
     }
+
+    // Add in feature C-DetectDuplicates
+    public boolean DuplicateTask(String taskName){
+        return taskList.stream().anyMatch(task -> task.taskName.equalsIgnoreCase(taskName));
+    }
+
     // Add task to the task-list
     public void addTask(Task task){
-        taskList.add(task);
-        System.out.println("Got it, I've added this task:");
-        System.out.println(" " + taskList.get(taskList.size() - 1));
-        System.out.println("Now you have " + taskList.size()  + " tasks in the task list.");
-        SaveAndLoadTask.saveTasks(taskList);
+        if (DuplicateTask(task.taskName)){
+            System.out.println("This Task already exists: " + task.taskName);
+        }
+        else{
+            taskList.add(task);
+            System.out.println("Got it, I've added this task:");
+            System.out.println(" " + taskList.get(taskList.size() - 1));
+            System.out.println("Now you have " + taskList.size()  + " tasks in the task list.");
+            SaveAndLoadTask.saveTasks(taskList);
+        }
+
     }
+
     // Display the tasks in the task list
     public void displayTaskList() {
         if (taskList.isEmpty()) {
@@ -40,6 +54,7 @@ public class ManageTask {
             }
         }
     }
+
     // Find task with keyword
     public void findTask(String keyword){
         ArrayList<Task> matchTasks = taskList.stream().filter(task -> task.taskName.toLowerCase().contains(keyword.toLowerCase())).collect(Collectors.toCollection(ArrayList::new));
@@ -53,4 +68,5 @@ public class ManageTask {
             }
         }
     }
+
 }

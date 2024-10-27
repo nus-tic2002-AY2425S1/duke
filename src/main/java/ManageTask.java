@@ -24,13 +24,13 @@ public class ManageTask {
     }
 
     // Add in feature C-DetectDuplicates
-    public boolean DuplicateTask(String taskName){
+    public boolean isDuplicate(String taskName){
         return taskList.stream().anyMatch(task -> task.taskName.equalsIgnoreCase(taskName));
     }
 
     // Add task to the task-list
     public void addTask(Task task){
-        if (DuplicateTask(task.taskName)){
+        if (isDuplicate(task.taskName)){
             System.out.println("This Task already exists: " + task.taskName);
         }
         else{

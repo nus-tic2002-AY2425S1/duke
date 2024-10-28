@@ -6,6 +6,11 @@ public abstract class Task {
     protected TaskType taskType;
     protected TaskPriority priority;
 
+    /**
+     * Constructor for Task object. Sets status as not done and priority as not set.
+     *
+     * @param description String
+     */
     public Task(String description) {
         this.description = description;
         status = TaskStatus.NOT_DONE;
@@ -24,6 +29,11 @@ public abstract class Task {
         return taskType.getTaskIcon();
     }
 
+    /**
+     * Returns task priority for list view.
+     *
+     * @return String of exclamation mark(s) if priority is set
+     */
     public String getPriorityIcon(){
         return priority.getPriorityIcon();
     }

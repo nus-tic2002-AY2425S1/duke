@@ -11,51 +11,28 @@ import java.util.ArrayList;
 public class TaskList {
     public static ArrayList<Task> tasks = new ArrayList<>();
 
-    public static boolean addTask(String input)
-            throws EmptyInputException,
-            EmptyTimeException,
-            DateTimeException,
-            NumberFormatException {
-        String[] taskArray = input.split(" ",2);
-        if (taskArray.length < 2) {
-            throw new EmptyInputException();
-        }
-        String taskType = taskArray[0].toLowerCase();
-        String taskDetails = taskArray[1];
-
-        switch (taskType) {
-            case "todo":
-                addTodo(taskDetails);
-                return true;
-            case "deadline":
-                try{
-                    addDeadline(taskDetails);
-                    return true;
-                } catch (CommandNotFoundException e) {
-                    System.out.println(Messages.deadlineError);
-                    break;
-                }
-            case "event":
-                try{
-                    addEvent(taskDetails);
-                    return true;
-                } catch (CommandNotFoundException e) {
-                    System.out.println(Messages.eventError);
-                    break;
-                }
-            default:
-                // do nothing
-        }
-        return false;
-    }
-
-    public static void addTodo(String input){
+    /**
+     * Add todo task.
+     *
+     * @param input Task description
+     * @return Todo object
+     */
+    public static Todo addTodo(String input){
         Todo task = new Todo(input);
         TaskList.tasks.add(task);
-        TextUi.echoAddTask(task);
+        return task;
     }
 
-    public static void addDeadline(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
+    /**
+     * Add deadline task.
+     *
+     * @param input description /by datetime
+     * @return Deadline object
+     * @throws EmptyInputException Empty description
+     * @throws EmptyTimeException Empty due datetime
+     * @throws CommandNotFoundException Missing /by command
+     */
+    public static Deadline addDeadline(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
         // input format: <task> /by <DD/MM/YYYY HHMM(24H)>
         if (!input.contains("/by")){
             throw new CommandNotFoundException();
@@ -72,10 +49,19 @@ public class TaskList {
 
         Deadline task = new Deadline(description, Parser.parseDateTime(dueDateTime));
         TaskList.tasks.add(task);
-        TextUi.echoAddTask(task);
+        return task;
     }
 
-    public static void addEvent(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
+    /**
+     * Add event task.
+     *
+     * @param input description /from datetime /to datetime
+     * @return Event object
+     * @throws EmptyInputException Empty description
+     * @throws EmptyTimeException Empty due datetime
+     * @throws CommandNotFoundException Missing /from or /to command
+     */
+    public static Event addEvent(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
         // input format: <event> /from <DD/MM/YYYY HHMM(24H)> /to <DD/MM/YYYY HHMM(24H)>
         if (!input.contains("/from") || !input.contains("/to")){
             throw new CommandNotFoundException();
@@ -94,9 +80,55 @@ public class TaskList {
 
         Event task = new Event(description, Parser.parseDateTime(startDateTime), Parser.parseDateTime(endDateTime));
         TaskList.tasks.add(task);
-        TextUi.echoAddTask(task);
+        return task;
     }
 
+    /**
+     * Add task into tasks.
+     *
+     * @param input task command
+     * @return task object
+     * @throws EmptyInputException Empty description
+     * @throws EmptyTimeException Empty datetime when necessary
+     * @throws DateTimeException Invalid datetime
+     * @throws NumberFormatException Wrong format of datetime
+     */
+    public static Task addTask(String input)
+            throws EmptyInputException,
+            EmptyTimeException,
+            DateTimeException,
+            NumberFormatException {
+        String[] taskArray = input.split(" ",2);
+        if (taskArray.length < 2) {
+            throw new EmptyInputException();
+        }
+        String taskType = taskArray[0].toLowerCase();
+        String taskDetails = taskArray[1];
+
+        if (taskType.equals("deadline")) {
+            try{
+                return addDeadline(taskDetails);
+            } catch (CommandNotFoundException e) {
+                System.out.println(Messages.deadlineError);
+            }
+        }
+
+        if (taskType.equals("event")) {
+            try{
+                return addEvent(taskDetails);
+            } catch (CommandNotFoundException e) {
+                System.out.println(Messages.eventError);
+            }
+        }
+
+        return addTodo(taskDetails);
+    }
+
+    /**
+     * Mark task as done. Print confirmation message.
+     *
+     * @param task Task to mark
+     */
     public static void markTask(Task task) {
         task.setDone(true);
         System.out.println(Messages.divider + System.lineSeparator() +
@@ -105,6 +137,11 @@ public class TaskList {
                 Messages.divider);
     }
 
+    /**
+     * Mark task as not done. Print confirmation message.
+     *
+     * @param task Task to unmark
+     */
     public static void unmarkTask(Task task) {
         task.setDone(false);
         System.out.println(Messages.divider + System.lineSeparator() +
@@ -113,6 +150,11 @@ public class TaskList {
                 Messages.divider);
     }
 
+    /**
+     * Delete task from tasks. Print confirmation message.
+     *
+     * @param task Task to be deleted
+     */
     public static void deleteTask(Task task) {
         TaskList.tasks.remove(task);
         System.out.println(Messages.divider + System.lineSeparator() +
@@ -123,6 +165,13 @@ public class TaskList {
 
     }
 
+    /**
+     * Sets task's priority. Prints confirmation message.
+     *
+     * @param task Task to set priority
+     * @param priority priority
+     * @throws CommandNotFoundException Invalid priority
+     */
     public static void rankTask(Task task, String priority) throws CommandNotFoundException {
         switch (priority.toLowerCase()) {
             case "high":
@@ -144,6 +193,13 @@ public class TaskList {
         TextUi.echoRankTask(task);
     }
 
+    /**
+     * Set status of task.
+     *
+     * @param input Command
+     * @throws EmptyInputException Missing input in command
+     * @throws CommandNotFoundException Missing input for priority command
+     */
     public static void setStatus(String  input) throws EmptyInputException, CommandNotFoundException {
         String[] setStatusArray = input.split(" ");
         if (setStatusArray.length < 2) {

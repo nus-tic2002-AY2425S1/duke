@@ -4,13 +4,13 @@ import checkbot.Exception.CommandNotFoundException;
 import checkbot.Exception.EmptyInputException;
 import checkbot.Exception.EmptyTimeException;
 import checkbot.Storage.StorageFile;
+import checkbot.Task.Task;
 import checkbot.Task.TaskList;
 import checkbot.Ui.TextUi;
 import checkbot.Utils.Messages;
 
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Parser {
     static boolean goToExit = false;
@@ -64,8 +64,9 @@ public class Parser {
                     // fallthrough
                 case "event":
                     try {
-                        TaskList.addTask(input);
+                        Task task = TaskList.addTask(input);
                         StorageFile.updateFile();
+                        TextUi.echoAddTask(task);
                         break;
                     } catch (EmptyInputException e) {
                         TextUi.printEmptyDescription();
@@ -86,6 +87,13 @@ public class Parser {
         } while (!goToExit);
     }
 
+    /**
+     * Takes in date and time in String with format of DD/MM/YYYY HHMM(24H)
+     * and converts it into a LocalDateTime object.
+     *
+     * @param input Format: DD/MM/YYYY HHMM(24H)
+     * @return LocalDateTime object
+     */
     public static LocalDateTime parseDateTime(String input) {
         String[] dateTimeArray = input.split(" ",2);
 

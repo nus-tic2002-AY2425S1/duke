@@ -100,7 +100,7 @@ public class StorageFile {
                 
                 // System.out.println(scanner.nextLine());
                 String[] taskData = rawInput.split(" \\| ");
-                System.out.println("taskData: " + Arrays.toString(taskData));
+                // System.out.println("taskData: " + Arrays.toString(taskData));
 
                 // [T] --> taskData.length = 1
                 // [T, 1, read book]
@@ -315,7 +315,7 @@ public class StorageFile {
             Task originalTask = taskList.get(taskIndex);
             // System.out.println(taskList.get(taskIndex));
             String originalTaskEncoded = originalTask.encodeTask();
-            System.out.println("encoded: " + originalTaskEncoded);
+            // System.out.println("encoded: " + originalTaskEncoded);
 
             List<String> lines = Files.readAllLines(filePath);
             // Replace the line if the line number is valid

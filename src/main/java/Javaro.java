@@ -176,7 +176,7 @@ public class Javaro {
             // System.out.println("taskToMark getIsDoneValue: " + taskToMark.getIsDoneValue());
 
             if (taskToMark.getIsDone() == true) {
-                System.out.println("getIsDone is true");
+                // System.out.println("getIsDone is true");
                 // throw new TaskException(alreadyMarkedMessage.toString());
                 messageList = new String[]{alreadyMarkedMessage};
                 throw new TaskException(alreadyMarkedMessage);
@@ -275,7 +275,7 @@ public class Javaro {
             // }
     
             // Mark task as done
-            message = "Nice! I've marked this task as not done yet:";
+            // message = "OK, I've marked this task as not done yet:";
             // messageList.add(message);
             taskToMark.setDone(false);
             

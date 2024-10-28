@@ -46,6 +46,7 @@ public class Task {
         Message.printHorizontalLines();
     }
     public static void addTask(ArrayList<Task> todoTaskList, String todoTask, String keyword, KeywordHandling keywordHandling){
+        todoTask = todoTask.toLowerCase();
         switch (keyword){
             case "todo":
                 keywordHandling.processTodoTask(todoTask, todoTaskList);

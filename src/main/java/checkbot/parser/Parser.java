@@ -13,7 +13,7 @@ import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
 public class Parser {
-    static boolean goToExit = false;
+    static boolean isFinished = false;
 
     public static void parse() {
         do {
@@ -23,7 +23,7 @@ public class Parser {
             switch (keyword) {
                 case "bye":
                     TextUi.printExit();
-                    goToExit = true;
+                    isFinished = true;
                     break;
                 case "help":
                     TextUi.printHelp();
@@ -84,7 +84,7 @@ public class Parser {
                 default:
                     TextUi.printCommandNotFound();
             }
-        } while (!goToExit);
+        } while (!isFinished);
     }
 
     /**

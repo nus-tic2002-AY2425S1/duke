@@ -19,8 +19,10 @@ public class Messages {
             "  event <description> /from <DD/MM/YYYY HHMM(24H)> /to <DD/MM/YYYY HHMM(24H)>" + System.lineSeparator() +
             "To see the full task list: type \"list\"." + System.lineSeparator() +
             "To delete a task: Start with \"delete\", followed by the task number." + System.lineSeparator() +
-            "To mark a task as done or undone: Start with \"mark\" or \"unmark\", followed by the task number." + System.lineSeparator() +
-            "To rank a task with priority: Start with \"rank\", followed by the task number, followed by priority." + System.lineSeparator() +
+            "To mark a task as done or undone: Start with \"mark\" or \"unmark\", followed by the task number." +
+            System.lineSeparator() +
+            "To rank a task with priority: Start with \"rank\", followed by the task number, followed by priority." +
+            System.lineSeparator() +
             "  rank <task number> high" + System.lineSeparator() +
             "  rank <task number> medium" + System.lineSeparator() +
             "  rank <task number> low" + System.lineSeparator() +
@@ -57,7 +59,8 @@ public class Messages {
             DIVIDER;
 
     public final static String EMPTY_NUMBER = DIVIDER + System.lineSeparator() +
-            "We need to know which task you are referring to! Please include the task number in numerical digits." + System.lineSeparator() +
+            "We need to know which task you are referring to! Please include the task number in numerical digits." +
+            System.lineSeparator() +
             DIVIDER;
 
     public final static String NON_INTEGER_NUMBER = DIVIDER + System.lineSeparator() +

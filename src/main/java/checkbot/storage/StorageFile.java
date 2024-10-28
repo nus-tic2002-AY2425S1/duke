@@ -139,7 +139,8 @@ public class StorageFile {
                 throw new RuntimeException();
             } catch (NumberFormatException e) {
                 // datetime format is wrong, end the program
-                System.out.println("Invalid datetime format! It should follow DD/MM/YYYY HHMM(24H). Please check your txt file.");
+                System.out.println("Invalid datetime format! It should follow DD/MM/YYYY HHMM(24H). " +
+                        "Please check your txt file.");
                 throw new RuntimeException();
             }
         }

@@ -42,7 +42,8 @@ public class Event extends Task {
      */
     public String getListView() {
         return "[" + this.getPriorityIcon() + "][" + this.getTaskIcon() + "][" + this.getStatusIcon() + "] " +
-                description + " (from: " + TextUi.printDateTime(startDateTime) + " to: " + TextUi.printDateTime(endDateTime) + ")";
+                description + " (from: " + TextUi.printDateTime(startDateTime) + " to: " +
+                TextUi.printDateTime(endDateTime) + ")";
     }
 
     /**

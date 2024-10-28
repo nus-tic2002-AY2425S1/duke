@@ -32,7 +32,8 @@ public class TaskList {
      * @throws EmptyTimeException Empty due datetime
      * @throws CommandNotFoundException Missing /by command
      */
-    public static Deadline addDeadline(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
+    public static Deadline addDeadline(String input)
+            throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
         // input format: <task> /by <DD/MM/YYYY HHMM(24H)>
         if (!input.contains("/by")){
             throw new CommandNotFoundException();
@@ -61,7 +62,8 @@ public class TaskList {
      * @throws EmptyTimeException Empty due datetime
      * @throws CommandNotFoundException Missing /from or /to command
      */
-    public static Event addEvent(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
+    public static Event addEvent(String input)
+            throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
         // input format: <event> /from <DD/MM/YYYY HHMM(24H)> /to <DD/MM/YYYY HHMM(24H)>
         if (!input.contains("/from") || !input.contains("/to")){
             throw new CommandNotFoundException();
@@ -94,10 +96,7 @@ public class TaskList {
      * @throws NumberFormatException Wrong format of datetime
      */
     public static Task addTask(String input)
-            throws EmptyInputException,
-            EmptyTimeException,
-            DateTimeException,
-            NumberFormatException {
+            throws EmptyInputException, EmptyTimeException, DateTimeException, NumberFormatException {
         String[] taskArray = input.split(" ",2);
         if (taskArray.length < 2) {
             throw new EmptyInputException();

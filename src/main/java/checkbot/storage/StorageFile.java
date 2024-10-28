@@ -1,4 +1,4 @@
-package checkbot.Storage;
+package checkbot.storage;
 
 import checkbot.exception.*;
 import checkbot.Task.Task;

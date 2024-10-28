@@ -1,7 +1,7 @@
 package checkbot;
 
 import checkbot.parser.Parser;
-import checkbot.Storage.StorageFile;
+import checkbot.storage.StorageFile;
 import checkbot.Ui.TextUi;
 
 public class Checkbot {

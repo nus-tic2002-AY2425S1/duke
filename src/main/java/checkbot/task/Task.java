@@ -42,8 +42,8 @@ public abstract class Task {
         return priority.toString();
     }
 
-    public void setDone(boolean done) {
-        if (done) {
+    public void setDone(boolean isDone) {
+        if (isDone) {
             status = TaskStatus.DONE;
         } else {
             status = TaskStatus.NOT_DONE;

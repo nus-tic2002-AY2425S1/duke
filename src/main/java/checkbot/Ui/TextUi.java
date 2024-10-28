@@ -40,9 +40,9 @@ public class TextUi {
     }
 
     /**
-     * Takes in a Task type and prints confirmation of task addition in UI.
+     * Takes in a Task type and prints confirmation of task addition.
      *
-     * @param task
+     * @param task Added task
      */
     public static void echoAddTask(Task task) {
         System.out.println(Messages.divider + System.lineSeparator() +
@@ -52,6 +52,11 @@ public class TextUi {
                 Messages.divider);
     }
 
+    /**
+     * Takes in a task type and prints confirmation of priority change.
+     *
+     * @param task Task with changed priority
+     */
     public static void echoRankTask(Task task) {
         System.out.println(Messages.divider + System.lineSeparator() +
                 "Got it! I've changed the priority of this task to: " + task.getPriorityString() + System.lineSeparator() +
@@ -59,6 +64,9 @@ public class TextUi {
                 Messages.divider);
     }
 
+    /**
+     * Prints all tasks in TaskList.tasks.
+     */
     public static void printTasks() {
         System.out.println(Messages.divider);
         System.out.println("Here are the task(s) in your list:");
@@ -68,6 +76,11 @@ public class TextUi {
         System.out.println(Messages.divider);
     }
 
+    /**
+     * Prints a list of tasks with description containing input.
+     *
+     * @param input String to match with
+     */
     public static void printMatchingTasks(String input) {
         boolean found = false;
         System.out.println(Messages.divider);

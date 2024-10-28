@@ -17,14 +17,14 @@ import java.util.Scanner;
 
 public class StorageFile {
     /**
-     * Storage file to store existing tasks
+     * Storage file to store existing tasks.
      */
     public static File taskFile = new File("data/checkbot.txt");
 
     /**
-     * Overwrites storage file with string input
+     * Overwrites storage file with string input.
      *
-     * @param textToAdd tasks in String format
+     * @param textToAdd Tasks in String format
      * @throws IOException IO exception when writing file
      */
     public static void writeToFile(String textToAdd) throws IOException {
@@ -34,7 +34,7 @@ public class StorageFile {
     }
 
     /**
-     * Captures current taskList in String format to overwrite storage file
+     * Captures current tasks in String format to overwrite storage file.
      */
     public static void updateFile() {
         String textToAdd = "";
@@ -92,20 +92,20 @@ public class StorageFile {
     }
 
     /**
-     * Add saved tasks in storage file into taskList ArrayList
+     * Add saved tasks in storage file into tasks.
      *
-     * @param taskFile storage file
+     * @param taskFile Storage file
      * @throws FileNotFoundException No storage file found
      */
     public static void recoverTasks(File taskFile) throws FileNotFoundException {
         Scanner scanFile = new Scanner(taskFile);
-        List<String> taskList = new ArrayList<>();
+        List<String> storageTaskList = new ArrayList<>();
 
         while (scanFile.hasNextLine()) {
-            taskList.add(scanFile.nextLine());
+            storageTaskList.add(scanFile.nextLine());
         }
 
-        for (String task : taskList) {
+        for (String task : storageTaskList) {
             // Format: <task type> | <task status> | <task priority> | <description w/ datetime (if applicable)>
             String[] taskArray = task.split("\\|");
 

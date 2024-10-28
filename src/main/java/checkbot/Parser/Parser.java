@@ -11,7 +11,6 @@ import checkbot.Utils.Messages;
 
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Parser {
     static boolean goToExit = false;

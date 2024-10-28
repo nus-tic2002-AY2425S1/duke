@@ -123,7 +123,7 @@ public class StorageFile {
                 // invalid datetime indicated, end the program
                 System.out.println("There's invalid time! Please check your txt file.");
                 throw new RuntimeException();
-            } catch (NumberFormatException | NullPointerException e) {
+            } catch (NumberFormatException | IndexOutOfBoundsException e) {
                 // datetime format is wrong, end the program
                 System.out.println("Invalid datetime format! It should follow DD/MM/YYYY HHMM(24H). " +
                         "Please check your txt file.");

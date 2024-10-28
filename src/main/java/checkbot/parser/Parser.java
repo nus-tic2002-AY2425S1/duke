@@ -69,7 +69,7 @@ public class Parser {
                 } catch (DateTimeException | InvalidInputException e) {
                     System.out.println(e.getMessage());
                     break;
-                } catch (NumberFormatException | NullPointerException e) {
+                } catch (NumberFormatException | IndexOutOfBoundsException e) {
                     System.out.println(Messages.INVALID_DATETIME);
                     break;
                 }

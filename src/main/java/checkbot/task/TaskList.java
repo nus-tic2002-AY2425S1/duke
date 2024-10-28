@@ -37,7 +37,7 @@ public class TaskList {
      */
     public static Deadline addDeadline(String input)
             throws CommandNotFoundException, InvalidInputException,
-            NumberFormatException, NullPointerException, DateTimeException {
+            NumberFormatException, IndexOutOfBoundsException, DateTimeException {
         // input format: <task> /by <DD/MM/YYYY HHMM(24H)>
         if (!input.contains("/by")){
             throw new CommandNotFoundException(Messages.DEADLINE_ERROR);
@@ -72,7 +72,7 @@ public class TaskList {
      */
     public static Event addEvent(String input)
             throws CommandNotFoundException, InvalidInputException,
-            NumberFormatException, NullPointerException, DateTimeException {
+            NumberFormatException, IndexOutOfBoundsException, DateTimeException {
         // input format: <event> /from <DD/MM/YYYY HHMM(24H)> /to <DD/MM/YYYY HHMM(24H)>
         if (!input.contains("/from") || !input.contains("/to")){
             throw new CommandNotFoundException(Messages.EVENT_ERROR);
@@ -109,7 +109,7 @@ public class TaskList {
      * @throws InvalidInputException Empty description
      */
     public static Task addTask(String input)
-            throws DateTimeException, NumberFormatException, NullPointerException, InvalidInputException {
+            throws DateTimeException, NumberFormatException, IndexOutOfBoundsException, InvalidInputException {
         String[] taskArray = input.split(" ",2);
 
         if (taskArray.length < 2) {

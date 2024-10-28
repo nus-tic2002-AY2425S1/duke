@@ -5,15 +5,17 @@ import checkbot.exception.EmptyTimeException;
 import checkbot.utils.Messages;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TaskListTest {
     Task testEvent = new Event("Event description",
-            "22102024 1000",
-            "22102024 2200");
+            LocalDateTime.of(2024,10,22,10,0),
+            LocalDateTime.of(2024,10,22,22,0));
 
     Task testDeadline = new Deadline("Deadline description",
-            "22102025 1500");
+            LocalDateTime.of(2025,10,22,15,0));
 
     @Test
     public void testAddEvent() {

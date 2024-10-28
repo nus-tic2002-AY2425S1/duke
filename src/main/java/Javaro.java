@@ -16,17 +16,22 @@ public class Javaro {
     
     // Use constant variables to store the keyword commands
     // https://www.javatpoint.com/java-constant
-    static final String CHATBOT_NAME = "Javaro";
-    static final String LINE = "____________________________________________________________";
-    static final String NEW_LINE = "\n";
+    private static final String CHATBOT_NAME = "Javaro";
+    private static final String LINE = "____________________________________________________________";
+    private static final String NEW_LINE = "\n";
+    
+    private static final String BY="/by";
+    
+    private static final String FROM="/from";
+    private static final String TO="/to";
+    
+    private static final String DIRECTORY_PATH="./data/";
+    private static final String FILE_PATH="./data/tasks.txt";
+    
+    // Assume there will be no more than 100 tasks. Initialize an empty list of String array
+    private static ArrayList<Task> taskList;
 
-    static final String BY="/by";
-    
-    static final String FROM="/from";
-    static final String TO="/to";
-    
-    static final String DIRECTORY_PATH="./data/";
-    static final String FILE_PATH="./data/tasks.txt";
+    private static StorageFile taskFile;
 
     // Solution below adapted from https://stackoverflow.com/questions/1073787/print-spaces-with-string-format
     // https://stackoverflow.com/questions/69576641/why-would-you-use-a-stringbuilder-method-over-a-string-in-java
@@ -103,32 +108,36 @@ public class Javaro {
         printMessage(messageList);
     }
 
+    // For list command
     public static void printTaskList(ArrayList<Task> taskList) throws TaskException {
         // https://stackoverflow.com/questions/1005073/initialization-of-an-arraylist-in-one-line
         // ArrayList<String> places = new ArrayList<>(Arrays.asList("Buenos Aires", "Córdoba", "La Plata"));
         ArrayList<String> messageList = new ArrayList<>(Arrays.asList("Here are the tasks in your list:"));
+        
         int taskListSize = taskList.size();
+        
         if (taskListSize == 0) {
-            throw new TaskException("Yay! You're all caught up!");
+            throw new TaskException("Good job! You're all caught up!");
         }
+        
         for (int i = 0; i < taskListSize; i++) {
             Task current = taskList.get(i);         // taskList.get(i) contains the checkbox
             String index = Integer.toString(i + 1);
             String line = index + ". " + current;
             messageList.add(line);
         }
+        
         printMessage(messageList);
     }
 
     // TODO: Add validation checks for input, e.g. What if user just press enter without keying any words
     public static boolean checkEquals(String str1, String str2) {
-        // Check if two strings are similar irrespective of the differences in case
-        return str1.equalsIgnoreCase(str2);
+        return str1.equals(str2);
     }
 
     // Check if user input starts with a specified command
     public static boolean checkInputStartsWith(String input, String command) {
-        return input.startsWith(command);
+        return input.startsWith(command.toString());
     }
 
 
@@ -145,6 +154,168 @@ public class Javaro {
     // list will be the list of tasks that the user has entered
     // input will be the command that the user types (e.g. "mark 1")
     // TODO: What if index entered by user is greater than the number of items in the list
+    public static ArrayList<Task> markDone(ArrayList<Task> taskList, String inputIndex) throws TaskException {
+        String message;
+
+        int indexToMark = -1;
+        Task taskToMark = null;
+
+        String[] messageList = null;
+        // ArrayList<String> messageList = new ArrayList<>(Arrays.asList("Here are the tasks in your list:"));
+
+        // https://stackoverflow.com/questions/5554734/what-causes-a-java-lang-arrayindexoutofboundsexception-and-how-do-i-prevent-it
+        // https://www.geeksforgeeks.org/array-index-out-of-bounds-exception-in-java/
+        try {
+            // indexToMark = Integer.parseInt(input.substring(indexOfSpace + 1)) - 1;
+            indexToMark = Integer.parseInt(inputIndex) - 1;
+            taskToMark = taskList.get(indexToMark);
+            
+            String alreadyMarkedMessage = "The task is already marked as done. No action done.";
+            
+            // System.out.println("taskToMark getIsDone: " + taskToMark.getIsDone());
+            // System.out.println("taskToMark getIsDoneValue: " + taskToMark.getIsDoneValue());
+
+            if (taskToMark.getIsDone() == true) {
+                System.out.println("getIsDone is true");
+                // throw new TaskException(alreadyMarkedMessage.toString());
+                messageList = new String[]{alreadyMarkedMessage};
+                throw new TaskException(alreadyMarkedMessage);
+            }
+    
+            // Mark task as done
+            message = "Nice! I've marked this task as done:";
+            // messageList.add(message);
+            taskToMark.setDone(true);
+
+            taskFile.markTask(taskList, indexToMark);
+
+            // taskFile.replaceTask(taskList, taskToMark);
+            // taskToMark.writeToFile(taskFile);
+
+            // messageList.add(formatSpace(2) + taskToMark);
+            // String[] messageList = {message, formatSpace(2) + taskToMark};
+
+            messageList = new String[]{message, formatSpace(2) + taskToMark};
+
+        } catch (IndexOutOfBoundsException | NumberFormatException e) {     // handles the case where index (from input) > number of items in the list, or when index (from input) > number of items in the list
+            int taskListSize = taskList.size();
+            if (taskListSize < 1) {
+                message = "Your task list is empty. Please add a task first.";
+            } else {
+                message = "Task not found. Please enter a valid task number from 1 to " + taskList.size() + ".";
+            }
+            messageList = new String[]{message};
+            // messageList.add(message);
+            throw new TaskException(message);
+        }
+
+        // System.out.println("Now, messageList is " + messageList);
+        // Print result on CLI
+        // String[] messageList;
+        // if (taskToMark == null) {
+        //     String[] messageList = {};
+        // }
+        // System.out.println(Arrays.toString(messageList));
+        printMessage(messageList);
+
+        return taskList;
+        
+        /*
+        // Unmark task
+        StringBuilder alreadyUnmarkedMessage = new StringBuilder(alreadyMarkedMessage).append("not ");
+        alreadyUnmarkedMessage = alreadyUnmarkedMessage.append("done. No action done.");
+        if (taskToMark.getIsDone() == false) {
+                // throw new TaskException(alreadyUnmarkedMessage.toString());
+                throw new TaskException("The task is already marked as not done. No action done.");
+            }
+            // Mark task as not done
+            message = "OK, I've marked this task as not done yet:";
+            taskToMark.setDone(false);
+            // taskToMark.writeToFile(taskFile);
+        */
+
+        
+    }
+
+
+    public static ArrayList<Task> unmarkDone(ArrayList<Task> taskList, String inputIndex) throws TaskException {
+        String message;
+
+        int indexToMark = -1;
+        Task taskToMark = null;
+
+        String[] messageList = null;
+        // ArrayList<String> messageList = new ArrayList<>(Arrays.asList("Here are the tasks in your list:"));
+
+        // https://stackoverflow.com/questions/5554734/what-causes-a-java-lang-arrayindexoutofboundsexception-and-how-do-i-prevent-it
+        // https://www.geeksforgeeks.org/array-index-out-of-bounds-exception-in-java/
+        try {
+            indexToMark = Integer.parseInt(inputIndex) - 1;
+            taskToMark = taskList.get(indexToMark);
+            
+            
+            if (taskToMark.getIsDone() == false) {
+                // throw new TaskException(alreadyUnmarkedMessage.toString());
+                String alreadyUnmarkedMessage = "The task is already marked as not done. No action done.";
+                throw new TaskException(alreadyUnmarkedMessage);
+            }
+            // Mark task as not done
+            message = "OK, I've marked this task as not done yet:";
+            taskToMark.setDone(false);
+            // taskToMark.writeToFile(taskFile);
+
+            // System.out.println("taskToMark getIsDone: " + taskToMark.getIsDone());
+            // System.out.println("taskToMark getIsDoneValue: " + taskToMark.getIsDoneValue());
+
+            // if (taskToMark.getIsDone() == false) {
+            //     System.out.println("getIsDone is true");
+            //     // throw new TaskException(alreadyMarkedMessage.toString());
+            //     messageList = new String[]{alreadyUnmarkedMessage};
+            //     throw new TaskException(alreadyUnmarkedMessage);
+            // }
+    
+            // Mark task as done
+            message = "Nice! I've marked this task as not done yet:";
+            // messageList.add(message);
+            taskToMark.setDone(false);
+            
+            taskFile.markTask(taskList, indexToMark);
+
+            // taskFile.replaceTask(taskList, taskToMark);
+            // taskToMark.writeToFile(taskFile);
+
+            // messageList.add(formatSpace(2) + taskToMark);
+            // String[] messageList = {message, formatSpace(2) + taskToMark};
+
+            messageList = new String[]{message, formatSpace(2) + taskToMark};
+
+        } catch (IndexOutOfBoundsException | NumberFormatException e) {     // handles the case where index (from input) > number of items in the list, or when index (from input) > number of items in the list
+            int taskListSize = taskList.size();
+            if (taskListSize < 1) {
+                message = "Your task list is empty. Please add a task first.";
+            } else {
+                message = "Task not found. Please enter a valid task number from 1 to " + taskList.size() + ".";
+            }
+            messageList = new String[]{message};
+            // messageList.add(message);
+            throw new TaskException(message);
+        }
+
+        // System.out.println("Now, messageList is " + messageList);
+        // Print result on CLI
+        // String[] messageList;
+        // if (taskToMark == null) {
+        //     String[] messageList = {};
+        // }
+        // System.out.println(Arrays.toString(messageList));
+        printMessage(messageList);
+
+        return taskList;
+        
+    }
+
+
+    /* 
     public static void markDone(ArrayList<Task> taskList, String input) throws TaskException {
         String message;
 
@@ -192,17 +363,18 @@ public class Javaro {
         String[] messageList = {message, formatSpace(2) + taskToMark};
         printMessage(messageList);
     }
+    */
 
 
     // Note that here, input is without command in front
     public static String extractDescription(String details, String command) throws TaskException {
         String description = details.trim();
 
-        boolean isCommandEqualTodo = checkEquals(command, Command.TODO);
-        boolean isCommandEqualDeadline = checkEquals(command, Command.DEADLINE);
-        boolean isCommandEqualEvent = checkEquals(command, Command.EVENT);
+        boolean isTodo = checkEquals(command, Command.TODO);
+        boolean isDeadline = checkEquals(command, Command.DEADLINE);
+        boolean isEvent = checkEquals(command, Command.EVENT);
 
-        if (isCommandEqualTodo == true) {
+        if (isTodo == true) {
             description = details.substring(0, details.length()).trim();
         } else {
             int slashIndex = details.indexOf('/');
@@ -213,10 +385,10 @@ public class Javaro {
             String message;
     
             if (hasSlash == false) {     // User did not input /
-                if (isCommandEqualDeadline == true) {
+                if (isDeadline == true) {
                     missingInfo = BY;
                     // throw new TaskException("Error: Missing '/' in deadline command. Please enter the deadline in the format 'deadline <description> /by <due date>'.");
-                } else if (isCommandEqualEvent == true) {
+                } else if (isEvent == true) {
                     missingInfo = FROM;
                     // throw new TaskException("Error: Missing '/' in event command. Please enter the event in the format 'event <description> /from <start date/time> /to <end date/time>'.");
                 }
@@ -230,9 +402,9 @@ public class Javaro {
             boolean hasAfter = afterIndex != -1;
     
             if (hasAfter == false) {
-                if (isCommandEqualDeadline == true) {      // "Please enter the due date of the deadline"
+                if (isDeadline == true) {      // "Please enter the due date of the deadline"
                     missingInfo = "due date";
-                } else if (isCommandEqualEvent == true) {      // "Please enter the start date/time of the event"
+                } else if (isEvent == true) {      // "Please enter the start date/time of the event"
                     missingInfo = "start date/time";
                 }
                 message = "Please enter the " + missingInfo;
@@ -352,6 +524,9 @@ public class Javaro {
         }
 
         taskList.add(task);
+        // System.out.println(task.generateString());
+        taskFile.writeToFile(task.encodeTask());
+        // task.writeToFile(taskFile);
 
         int taskListSize = taskList.size();
         String taskWord = getTaskWord(taskListSize);
@@ -399,106 +574,33 @@ public class Javaro {
     }
 
     
-    // Your code must handle (i.e., if the file is missing, your code must create it) 
-    // the case where the data file doesn't exist at the start. Reason: when someone else 
-    // takes your chatbot and runs it for the first time, the required file will not exist 
-    // in their computer. Similarly, if you expect the data file to be in a specific folder 
-    // (e.g., ./data/), you must also handle the folder-does-not-exist-yet case.
-    // https://www.blackbox.ai/chat/Q2Kzags
-    public static boolean checkDataFolderExists(String filePath) {
-        // Check if "data" directory exists in current folder 
-        Path dataFolderPath = Paths.get(FILE_PATH).getParent();
-        // System.out.println(dataFolderPath);
-        // boolean isDataFolderExists = Files.exists(dataFolderPath) && Files.isDirectory(dataFolderPath);
-        File dataFolder = new File(dataFolderPath.toString());
-        boolean isDataFolderExists = dataFolder.exists() && dataFolder.isDirectory();
-
-        try {
-            // Create the directory if it does not exist
-            if (isDataFolderExists) {
-                return true;
-            } else {
-                // https://tutorialspoint.com/java/java_directories.htm
-                // The mkdir() method creates a directory, returning true on success and false on failure. Failure indicates that the path specified in the File object already exists, or that the directory cannot be created because the entire path does not exist yet.
-                boolean isDataFolderCreated = dataFolder.mkdir();
-                if (isDataFolderCreated) {
-                    System.out.println("Data directory created");
-                } else {
-                    throw new IOException("An error occurred while creating the data directory");
-                }
-            }
-        } catch (IOException ioException) {
-            System.err.println(ioException.getMessage());
-        }
-
-        return false;
-    }
-
-    public static boolean checkTaskFileExists(String filePath) {
-        File tasksFile = new File(FILE_PATH);
-        boolean isTaskFileExists = tasksFile.exists();
-        
-        try {
-            if (isTaskFileExists) {
-                return true;
-            } else {
-                boolean isFileCreated = tasksFile.createNewFile();
-                if (isFileCreated) {
-                    System.out.println("Task file created");
-                    return true;
-                } else {
-                    throw new IOException("An error occurred while creating the task file");
-                }
-            }
-        } catch (IOException ioException) {
-            System.out.println(ioException.getMessage());
-        }
-
-        return false;
-    }
-
-    /* 
-    public static void checkFileExists(String filePath) {
-        // https://stackoverflow.com/questions/15571496/how-to-check-if-a-folder-exists
-        // Check if "data" directory exists in current folder 
-        Path dataFolderPath = Paths.get(FILE_PATH).getParent();
-        // System.out.println(dataFolderPath);
-        // boolean isDataFolderExists = Files.exists(dataFolderPath) && Files.isDirectory(dataFolderPath);
-        File dataFolder = new File(dataFolderPath.toString());
-        boolean isDataFolderExists = dataFolder.exists() && dataFolder.isDirectory();
-        // File directory = new File(DIRECTORY_PATH);
-
-        // Create the folder if it does not exist
-        if (!isDataFolderExists) {
-            dataFolder.mkdirs();
-        }
-
-        File tasksFile = new File(FILE_PATH);
-        boolean isTaskFileExists = tasksFile.exists();
-        System.out.println(isDataFolderExists);
-        
-        try {
-            if (!isTaskFileExists) {
-                tasksFile.createNewFile();
-            }
-        } catch (IOException ioException) {
-            System.out.println(ioException.getMessage());
-        }
-    }
-    */
-
-    // Save the tasks in the hard disk automatically whenever the task list changes. Load the data from the hard disk when the chatbot starts up.
-    public static void save() {
-        
-    }
-
-    
     // This function echos commands entered by the user, and exits when the user types the command bye.
     public static void echo() {
         Scanner in = new Scanner(System.in);
-        
-        // Assume there will be no more than 100 tasks. Initialize an empty list of String array
-        ArrayList<Task> taskList = new ArrayList<>();
+
+        taskFile = new StorageFile();
+        // System.out.println("taskFile is " + taskFile);
+
+        // taskList = new ArrayList<>();
+
+        // Initialize taskList
+        try {
+            taskList = taskFile.loadTasks();
+        } catch (StorageFileException e) {
+            String[] messageList = {e.getMessage()};
+            printMessage(messageList);
+        }
+        // System.out.println("tasklist is " + taskList);
+
+        // String inputRaw = in.nextLine().trim();
+        // String[] input = inputRaw.split(" ", 2);
+        // // System.out.println("input 0 " + input[0]);
+        // // System.out.println("input 1 " + input[1]);
+        // String command = input[0];
+        // // System.out.println(command);
+        // String taskDetails = input[1];
+
+        // System.out.println(Command.BYE);
 
         // Continue looping indefinitely
         while (true) {
@@ -506,43 +608,144 @@ public class Javaro {
             System.out.println();
 
             // Get the input
-            String input = in.nextLine().trim();
-            
+            String inputRaw = in.nextLine().trim();
+            String[] input = inputRaw.split(" ", 2);
+            // System.out.println("input 0 " + input[0]);
+            // System.out.println("input 1 " + input[1]);
+            String command = input[0].toLowerCase();
+            // System.out.println(command);
+
+            String taskDetails = null;
+            if (input.length > 1) {
+                taskDetails = input[1];
+            }
+
+            // String taskDetails = null;
+            // try {
+            //     String taskDetails = input[1];
+            //     if (checkEquals(command, Command.BYE)) {
+            //         exit();
+            //         break;
+            //     } else if (taskDetails == null) {
+            //         // user only entered one word
+            //         throw new CommandException("Insufficient details");
+            //     }
+            // } catch (ArrayIndexOutOfBoundsException exception) {
+            //     System.out.println(exception.getMessage());
+            // }
+
+            // Command input = Command.valueOf(in.nextLine().toLowerCase().trim());
+
             // Check if the command entered by the user is valid
+            
+            // For switch commandEnum
+            // Command commandEnum;
+            // try {
+            //     commandEnum = Command.fromString(command);
+            // } catch (IllegalArgumentException e) {
+            //     String message = "Invalid command entered. " + NEW_LINE + getSpace(false, false) + 
+            //                      "Please start with 'list', 'mark', 'unmark', 'todo', 'deadline', 'event'. If you are done, please enter 'bye' to exit the chat";
+            //     throw new CommandException(message);
+            // }
+
             try {
-                if (checkEquals(input, Command.BYE)) {
+                // /* 
+                if (checkEquals(command, Command.BYE)) {
                     exit();
                     break;
-                } else if (checkEquals(input, Command.LIST)) {
+                } else if (checkEquals(command, Command.LIST)) {
                     printTaskList(taskList);
-                } else if (checkInputStartsWith(input, Command.MARK) || checkInputStartsWith(input, Command.UNMARK)) {        // Check if input contains the command "mark" or "unmark"
-                    markDone(taskList, input);
+                } else if (checkEquals(command, Command.MARK)) {        // Check if input contains the command "mark" or "unmark"
+                    markDone(taskList, taskDetails);
+                } else if (checkEquals(command, Command.UNMARK)) {        // Check if input contains the command "mark" or "unmark"
+                    unmarkDone(taskList, taskDetails);
                 } else if (
-                        checkInputStartsWith(input, Command.TODO) ||
-                        checkInputStartsWith(input, Command.DEADLINE) || 
-                        checkInputStartsWith(input, Command.EVENT)
+                    checkEquals(command, Command.TODO) ||
+                    checkEquals(command, Command.DEADLINE) || 
+                    checkEquals(command, Command.EVENT)
                     ) {
-                        taskList = addTask(taskList, input);
-                } else if (checkInputStartsWith(input, Command.DELETE)) {
-                    taskList = deleteTask(taskList, input);
+                        taskList = addTask(taskList, inputRaw);
+                } else if (checkEquals(command, Command.DELETE)) {
+                    // taskList = deleteTask(taskList, input);
                 } else {
                     String message = "Invalid command entered. " + NEW_LINE + getSpace(false, false) + 
                                         "Please start with 'list', 'mark', 'unmark', 'todo', 'deadline', 'event'. If you are done, please enter 'bye' to exit the chat";
                     throw new CommandException(message);
                 }
 
+                System.lineSeparator();
+                // */
+
+                /* 
+                switch (commandEnum) {
+                    case BYE:
+                        exit();
+                        break;
+                    case LIST:
+                        printTaskList(taskList);
+                        break;
+                    case Command.MARK:
+                    case Command.UNMARK:
+                        markDone(taskList, inputRaw);
+                        break;
+                    case Command.TODO:
+                    case Command.DEADLINE:
+                    case Command.EVENT:
+                        taskList = addTask(taskList, inputRaw);
+                        break;
+                    case Command.DELETE:
+                        taskList = deleteTask(taskList, inputRaw);
+                        break;
+                    default:
+                        String message = "Invalid command entered. " + NEW_LINE + getSpace(false, false) + 
+                                            "Please start with 'list', 'mark', 'unmark', 'todo', 'deadline', 'event'. If you are done, please enter 'bye' to exit the chat";
+                        throw new CommandException(message);
+                }
+                */
+
+                /* 
+                // https://stackoverflow.com/questions/2836286/enums-use-in-switch-case
+                switch (Command.valueOf(command)) {
+                    case BYE:
+                        exit();
+                        break;
+                    case LIST:
+                        printTaskList(taskList);
+                        break;
+                    case MARK:
+                    case UNMARK:
+                        markDone(taskList, inputRaw);
+                        break;
+                    case TODO:
+                    case DEADLINE:
+                    case EVENT:
+                        taskList = addTask(taskList, inputRaw);
+                        break;
+                    case DELETE:
+                        taskList = deleteTask(taskList, inputRaw);
+                        break;
+                    default:
+                        String message = "Invalid command entered. " + NEW_LINE + getSpace(false, false) + 
+                                            "Please start with 'list', 'mark', 'unmark', 'todo', 'deadline', 'event'. If you are done, please enter 'bye' to exit the chat";
+                        throw new CommandException(message);
+                }
+                */
+
             } catch (CommandException commandException) {     // When user enters an invalid command, e.g. gibberish
-                String[] messageList = {commandException.getMessage()};
-                printMessage(messageList);
+                // String[] messageList = {commandException.getMessage()};
+                // printMessage(messageList);
             } catch (TaskException taskException) {
                 String[] messageList = {taskException.getMessage()};
                 printMessage(messageList);
             }
         }
-        
+
+        // in.close();
     }
 
     public static void main(String[] args) {
+        // System.out.println(Command.BYE);
+        // System.out.println(Command.BYE.getClass().getName());
         greet();
         echo();
     }

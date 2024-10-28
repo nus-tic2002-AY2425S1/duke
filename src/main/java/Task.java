@@ -1,3 +1,6 @@
+import java.io.FileWriter;
+import java.io.IOException;
+
 public abstract class Task {
     protected String description;
     protected boolean isDone;
@@ -17,8 +20,16 @@ public abstract class Task {
         return description;
     }
 
-    public boolean getDone() {
+    public boolean getIsDone() {
         return isDone;
+    }
+
+    public int getIsDoneValue() {
+        int doneValue = 0;
+        if (getIsDone()) {
+            doneValue = 1;
+        }
+        return doneValue;
     }
 
     public void setDescription(String description) {
@@ -41,5 +52,31 @@ public abstract class Task {
     public String toString() {
         return "[" + getStatusIcon() + "] " + getDescription();
     }
+
+    // Generate string to write to file
+    public String encodeTask() {
+        String separator = " | ";
+        return separator + getIsDoneValue() + separator + getDescription().trim();
+        // return (separator + getIsDoneValue() + separator + getDescription()).trim();
+    }
+
+    // public void writeToFile(StorageFile file) {
+    //     String separator = " | ";
+    //     int doneValue = 0;
+    //     if (getIsDone()) {
+    //         doneValue = 1;
+    //     }
+    //     String text = separator + doneValue + separator + getDescription();
+    //     // System.out.println("text is " + text);
+
+    //     // System.out.println(file.filePath);
+    //     file.writeToFile(text);
+
+    // }
+
+
+    // Generate string to write to ArrayList as Tasks
+    // public String decodeTask() {
+    // }
 
 }

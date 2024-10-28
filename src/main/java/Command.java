@@ -4,6 +4,7 @@
 // https://stackoverflow.com/questions/23608885/how-to-define-static-constants-in-a-java-enum
 
 public enum Command {
+
     BYE_COMMAND("bye"),
     LIST_COMMAND("list"),
     MARK_COMMAND("mark"),
@@ -12,6 +13,15 @@ public enum Command {
     DEADLINE_COMMAND("deadline"),
     EVENT_COMMAND("event"),
     DELETE_COMMAND("delete");
+
+    // BYE("bye"),
+    // LIST("list"),
+    // MARK("mark"),
+    // UNMARK("unmark"),
+    // TODO("todo"),
+    // DEADLINE("deadline"),
+    // EVENT("event"),
+    // DELETE("delete");
 
     private final String command;
 
@@ -22,6 +32,15 @@ public enum Command {
     @Override
     public String toString() {
         return command;
+    }
+
+    public static Command fromString(String commandStr) {
+        for (Command command : Command.values()) {
+            if (command.command.equals(commandStr)) {
+                return command;
+            }
+        }
+        throw new IllegalArgumentException("Unknown command: " + commandStr);
     }
 
     // Static fields for easy access

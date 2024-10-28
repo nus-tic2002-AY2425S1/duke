@@ -19,7 +19,20 @@ public class Deadline extends Task {
         if (!description.endsWith(" ")) {
             description += " ";
         } 
-        return "[D]" + super.toString() + "(by: " + getDue() + ")";
+        return "[" + TaskType.DEADLINE + "]" + super.toString() + "(by: " + getDue() + ")";
+        // return "[D]" + super.toString() + "(by: " + getDue() + ")";
+    }
+
+    @Override
+    public String encodeTask() {
+        String separator = " | ";
+        // System.out.println("super: " + super.encodeTask());
+        // // System.out.println("super trim: " + super.encodeTask().trim() + " last char is " + super.encodeTask().trim().charAt(super.encodeTask().trim().length()));
+        // return TaskType.DEADLINE + super.encodeTask() + separator + getDue().trim();
+        // Get the encoded task from the superclass and trim it
+        
+        // Construct the final encoded task without leading or trailing spaces
+        return TaskType.DEADLINE + super.encodeTask() + separator + getDue().trim();
     }
 
 }

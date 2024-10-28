@@ -8,7 +8,20 @@ public class Todo extends Task {
 
     @Override
     public String toString() {
-        return "[T]" + super.toString();
+        // System.out.println("TaskType.TODO " + TaskType.TODO.getClass().getName() + " is " + TaskType.TODO);
+        return "[" + TaskType.TODO + "]" + super.toString();
+        // return "[" + TaskType.TODO + "]" + super.toString();
+        // return "[T]" + super.toString();
     }
+
+    @Override
+    public String encodeTask() {
+        return TaskType.TODO + super.encodeTask();
+    }
+
+    // @Override
+    // public void writeToFile() {
+    //     super.writeToFile(null);
+    // }
 
 }

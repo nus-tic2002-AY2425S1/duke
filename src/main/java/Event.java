@@ -26,7 +26,15 @@ public class Event extends Task {
         if (!description.endsWith(" ")) {
             description += " ";
         } 
-        return "[E]" + super.toString() + "(from: " + getStart() + " to: " + getEnd() + ")";
+        return "[" + TaskType.EVENT + "]" + super.toString() + "(from: " + getStart() + " to: " + getEnd() + ")";
+        // return "[E]" + super.toString() + "(from: " + getStart() + " to: " + getEnd() + ")";
+    }
+
+    @Override
+    public String encodeTask() {
+        String separator = " | ";
+        return TaskType.EVENT + super.encodeTask() + separator + getStart() + separator + getEnd();
+        // return TaskType.EVENT + super.encodeTask() + separator + getStart() + "-" + getEnd();
     }
 
 }

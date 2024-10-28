@@ -10,19 +10,33 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.DateTimeException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class StorageFile {
+    /**
+     * Storage file to store existing tasks
+     */
     public static File taskFile = new File("data/checkbot.txt");
 
+    /**
+     * Overwrites storage file with string input
+     *
+     * @param textToAdd tasks in String format
+     * @throws IOException IO exception when writing file
+     */
     public static void writeToFile(String textToAdd) throws IOException {
         FileWriter fw = new FileWriter(taskFile);
         fw.write(textToAdd);
         fw.close();
     }
 
+    /**
+     * Captures current taskList in String format
+     * to overwrite storage file
+     */
     public static void updateFile() {
         String textToAdd = "";
 
@@ -37,6 +51,12 @@ public class StorageFile {
         }
     }
 
+    /**
+     * Add saved tasks in storage file into taskList ArrayList
+     *
+     * @param taskFile storage file
+     * @throws FileNotFoundException No storage file found
+     */
     public static void recoverTasks(File taskFile) throws FileNotFoundException {
         Scanner scanFile = new Scanner(taskFile);
         List<String> taskList = new ArrayList<>();
@@ -62,6 +82,7 @@ public class StorageFile {
                 }
             };
 
+            // Add task using UI command
             try {
                 if (TaskList.addTask(taskCommand)) {
                     // if task added successfully, set task status

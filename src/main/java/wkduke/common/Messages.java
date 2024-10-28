@@ -12,6 +12,7 @@ public class Messages {
     public static final String MESSAGE_INVALID_TASK_ENCODED_FORMAT = "Invalid encoded task content!";
     public static final String MESSAGE_INVALID_DEADLINE_ENCODED = "duke.task.Deadline task missing 'by' information!";
     public static final String MESSAGE_INVALID_EVENT_ENCODED = "duke.task.Event task missing 'from' or 'to' information!";
+    public static final String MESSAGE_INVALID_DATETIME_FORMAT = "Expected format is {yyyy-MM-dd} or {yyyy/MM/dd} with optional time in 24-hour format {HH:mm} or {HHmm}";
 
     public static final String MESSAGE_CREATE_FILE_ERROR = "Error while creating folder or file!";
     public static final String MESSAGE_READ_FILE_ERROR = "Error while reading from file:!";

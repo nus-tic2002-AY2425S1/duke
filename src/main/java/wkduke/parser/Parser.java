@@ -5,6 +5,11 @@ import wkduke.common.Messages;
 import wkduke.exception.CommandFormatException;
 import wkduke.exception.TaskFormatException;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoField;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,6 +21,14 @@ public class Parser {
     public static final Pattern MARK_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
     public static final Pattern UNMARK_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
     public static final Pattern DELETE_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
+    public static final DateTimeFormatter FORMATTER = new DateTimeFormatterBuilder()
+            .appendPattern("[yyyy/MM/dd][yyyy-MM-dd]")
+            .optionalStart()
+            .appendPattern(" [HHmm][HH:mm]")
+            .optionalEnd()
+            .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+            .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+            .toFormatter();
 
     public static Command parseCommand(String userInput) throws CommandFormatException, TaskFormatException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
@@ -114,5 +127,18 @@ public class Parser {
             );
         }
         return new UnmarkCommand(Integer.parseInt(matcher.group("taskNumber")));
+    }
+
+    // Solution below inspired by https://stackoverflow.com/questions/50023654/java-datetimeformatterbuilder-with-optional-pattern-results-in-datetimeparseexce
+    private static LocalDateTime parseDateTime(String dateTimeString) throws TaskFormatException {
+        try {
+            return LocalDateTime.parse(dateTimeString, FORMATTER);
+        } catch (DateTimeParseException e) {
+            throw new TaskFormatException(
+                    e.getMessage(),
+                    String.format("DateTimeArguments='%s'", dateTimeString),
+                    Messages.MESSAGE_INVALID_DATETIME_FORMAT
+            );
+        }
     }
 }

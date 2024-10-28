@@ -1,6 +1,6 @@
 package checkbot;
 
-import checkbot.Parser.Parser;
+import checkbot.parser.Parser;
 import checkbot.Storage.StorageFile;
 import checkbot.Ui.TextUi;
 

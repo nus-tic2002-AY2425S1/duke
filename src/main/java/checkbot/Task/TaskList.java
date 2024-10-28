@@ -1,7 +1,7 @@
 package checkbot.Task;
 
 import checkbot.exception.*;
-import checkbot.Parser.*;
+import checkbot.parser.*;
 import checkbot.Ui.TextUi;
 import checkbot.Utils.Messages;
 

@@ -1,4 +1,4 @@
-package checkbot.Parser;
+package checkbot.parser;
 
 import checkbot.exception.CommandNotFoundException;
 import checkbot.exception.EmptyInputException;

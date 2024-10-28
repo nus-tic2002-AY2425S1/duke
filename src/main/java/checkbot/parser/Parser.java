@@ -43,16 +43,16 @@ public class Parser {
                         StorageFile.updateFile();
                         break;
                     } catch (EmptyInputException e) {
-                        System.out.println(Messages.emptyNumber);
+                        System.out.println(Messages.EMPTY_NUMBER);
                         break;
                     } catch (NumberFormatException e) {
-                        System.out.println(Messages.nonIntegerNumber);
+                        System.out.println(Messages.NON_INTEGER_NUMBER);
                         break;
                     } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-                        System.out.println(Messages.invalidTaskNumber);
+                        System.out.println(Messages.INVALID_TASK_NUMBER);
                         break;
                     } catch (CommandNotFoundException e) {
-                        System.out.println(Messages.invalidPriority);
+                        System.out.println(Messages.INVALID_PRIORITY);
                         break;
                     }
                 case "find":
@@ -78,7 +78,7 @@ public class Parser {
                         System.out.println(e.getMessage());
                         break;
                     } catch (NumberFormatException e) {
-                        System.out.println(Messages.invalidDateTime);
+                        System.out.println(Messages.INVALID_DATETIME);
                         break;
                     }
                 default:

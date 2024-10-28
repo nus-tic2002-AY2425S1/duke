@@ -109,7 +109,7 @@ public class TaskList {
             try{
                 return addDeadline(taskDetails);
             } catch (CommandNotFoundException e) {
-                System.out.println(Messages.deadlineError);
+                System.out.println(Messages.DEADLINE_ERROR);
             }
         }
 
@@ -117,7 +117,7 @@ public class TaskList {
             try{
                 return addEvent(taskDetails);
             } catch (CommandNotFoundException e) {
-                System.out.println(Messages.eventError);
+                System.out.println(Messages.EVENT_ERROR);
             }
         }
 
@@ -131,10 +131,10 @@ public class TaskList {
      */
     public static void markTask(Task task) {
         task.setDone(true);
-        System.out.println(Messages.divider + System.lineSeparator() +
+        System.out.println(Messages.DIVIDER + System.lineSeparator() +
                 "Nice! I've marked this task as done: " + System.lineSeparator() +
                 "  " + task.getListView() + System.lineSeparator() +
-                Messages.divider);
+                Messages.DIVIDER);
     }
 
     /**
@@ -144,10 +144,10 @@ public class TaskList {
      */
     public static void unmarkTask(Task task) {
         task.setDone(false);
-        System.out.println(Messages.divider + System.lineSeparator() +
+        System.out.println(Messages.DIVIDER + System.lineSeparator() +
                 "Okay, I've marked this task as not done yet: " + System.lineSeparator() +
                 "  " + task.getListView() + System.lineSeparator() +
-                Messages.divider);
+                Messages.DIVIDER);
     }
 
     /**
@@ -157,11 +157,11 @@ public class TaskList {
      */
     public static void deleteTask(Task task) {
         TaskList.tasks.remove(task);
-        System.out.println(Messages.divider + System.lineSeparator() +
+        System.out.println(Messages.DIVIDER + System.lineSeparator() +
                 "Got it. I've removed this task: " + System.lineSeparator() +
                 "  " + task.getListView() + System.lineSeparator() +
                 "Now you have " + TaskList.tasks.size() + " task(s) in the list." + System.lineSeparator() +
-                Messages.divider);
+                Messages.DIVIDER);
 
     }
 

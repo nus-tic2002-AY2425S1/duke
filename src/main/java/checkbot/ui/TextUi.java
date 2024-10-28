@@ -16,27 +16,27 @@ public class TextUi {
     }
 
     public static void printHello() {
-        System.out.println(Messages.hello);
+        System.out.println(Messages.HELLO);
     }
 
     public static void printExit() {
-        System.out.println(Messages.exit);
+        System.out.println(Messages.EXIT);
     }
 
     public static void printHelp() {
-        System.out.println(Messages.help);
+        System.out.println(Messages.HELP);
     }
 
     public static void printCommandNotFound() {
-        System.out.println(Messages.commandNotFound);
+        System.out.println(Messages.COMMAND_NOT_FOUND);
     }
 
     public static void printEmptyDescription() {
-        System.out.println(Messages.emptyDescription);
+        System.out.println(Messages.EMPTY_DESCRIPTION);
     }
 
     public static void printEmptyTime() {
-        System.out.println(Messages.emptyTime);
+        System.out.println(Messages.EMPTY_TIME);
     }
 
     /**
@@ -45,11 +45,11 @@ public class TextUi {
      * @param task Added task
      */
     public static void echoAddTask(Task task) {
-        System.out.println(Messages.divider + System.lineSeparator() +
+        System.out.println(Messages.DIVIDER + System.lineSeparator() +
                 "Got it! I've added this task:" + System.lineSeparator() +
                 "  " + task.getListView() + System.lineSeparator() +
                 "Now you have " + TaskList.tasks.size() + " task(s) in the list." + System.lineSeparator() +
-                Messages.divider);
+                Messages.DIVIDER);
     }
 
     /**
@@ -58,22 +58,22 @@ public class TextUi {
      * @param task Task with changed priority
      */
     public static void echoRankTask(Task task) {
-        System.out.println(Messages.divider + System.lineSeparator() +
+        System.out.println(Messages.DIVIDER + System.lineSeparator() +
                 "Got it! I've changed the priority of this task to: " + task.getPriorityString() + System.lineSeparator() +
                 "  " + task.getListView() + System.lineSeparator() +
-                Messages.divider);
+                Messages.DIVIDER);
     }
 
     /**
      * Prints all tasks in TaskList.tasks.
      */
     public static void printTasks() {
-        System.out.println(Messages.divider);
+        System.out.println(Messages.DIVIDER);
         System.out.println("Here are the task(s) in your list:");
         for (Task task : TaskList.tasks) {
             System.out.println(TaskList.tasks.indexOf(task)+1 + ". " + task.getListView());
         }
-        System.out.println(Messages.divider);
+        System.out.println(Messages.DIVIDER);
     }
 
     /**
@@ -83,7 +83,7 @@ public class TextUi {
      */
     public static void printMatchingTasks(String input) {
         boolean isFound = false;
-        System.out.println(Messages.divider);
+        System.out.println(Messages.DIVIDER);
         System.out.println("Here are the matching task(s) in your list:");
         for (Task task : TaskList.tasks) {
             if (task.getDescription().contains(input)) {
@@ -94,7 +94,7 @@ public class TextUi {
         if (!isFound) {
             System.out.println("Sorry, there are no matching tasks.");
         }
-        System.out.println(Messages.divider);
+        System.out.println(Messages.DIVIDER);
     }
     
     /**

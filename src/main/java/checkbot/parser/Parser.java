@@ -66,7 +66,9 @@ public class Parser {
                 try {
                     Task task = TaskList.addTask(input);
                     StorageFile.updateFile();
-                    TextUi.echoAddTask(task);
+                    if (task != null) {
+                        TextUi.echoAddTask(task);
+                    }
                     break;
                 } catch (EmptyInputException e) {
                     TextUi.printEmptyDescription();

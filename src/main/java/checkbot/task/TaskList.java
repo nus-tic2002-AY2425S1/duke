@@ -114,23 +114,26 @@ public class TaskList {
         String taskType = taskArray[0].toLowerCase();
         String taskDetails = taskArray[1];
 
-        if (taskType.equals("deadline")) {
+        switch (taskType){
+        case "todo":
+            return addTodo(taskDetails);
+        case "deadline":
             try{
                 return addDeadline(taskDetails);
             } catch (CommandNotFoundException e) {
                 System.out.println(Messages.DEADLINE_ERROR);
+                break;
             }
-        }
-
-        if (taskType.equals("event")) {
+        case "event":
             try{
                 return addEvent(taskDetails);
             } catch (CommandNotFoundException e) {
                 System.out.println(Messages.EVENT_ERROR);
+                break;
             }
         }
 
-        return addTodo(taskDetails);
+        return null;
     }
 
     /**

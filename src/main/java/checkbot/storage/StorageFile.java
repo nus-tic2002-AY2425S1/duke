@@ -1,10 +1,11 @@
-package checkbot.Storage;
+package checkbot.storage;
 
-import checkbot.Exception.*;
-import checkbot.Task.Task;
-import checkbot.Task.TaskList;
-import checkbot.Task.TaskPriority;
-import checkbot.Ui.TextUi;
+import checkbot.exception.EmptyInputException;
+import checkbot.exception.EmptyTimeException;
+import checkbot.task.Task;
+import checkbot.task.TaskList;
+import checkbot.task.TaskPriority;
+import checkbot.ui.TextUi;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,21 +17,19 @@ import java.util.List;
 import java.util.Scanner;
 
 public class StorageFile {
-    /**
-     * Storage file to store existing tasks.
-     */
+    /** Storage file to store existing tasks */
     public static File taskFile = new File("data/checkbot.txt");
 
     /**
      * Overwrites storage file with string input.
      *
-     * @param textToAdd Tasks in String format
+     * @param textToAdd All tasks in String format
      * @throws IOException IO exception when writing file
      */
     public static void writeToFile(String textToAdd) throws IOException {
-        FileWriter fw = new FileWriter(taskFile);
-        fw.write(textToAdd);
-        fw.close();
+        FileWriter fileWriter = new FileWriter(taskFile);
+        fileWriter.write(textToAdd);
+        fileWriter.close();
     }
 
     /**
@@ -52,47 +51,43 @@ public class StorageFile {
 
     /**
      * Sets status and priority of a task when recovering tasks from storage.
-     *
-     * @param task Todo, Event, Deadline
-     * @param status Done, Not Done
-     * @param priority High, Medium, Low, Not Set
      */
     public static void setTaskStatus(Task task, String status, String priority) {
         // set task status
         switch (status) {
-            case "NOT DONE":
-                task.setDone(false);
-                break;
-            case "DONE":
-                task.setDone(true);
-                break;
-            default:
-                System.out.println("Invalid task status! Please check your txt file.");
-                throw new RuntimeException();
+        case "NOT DONE":
+            task.setDone(false);
+            break;
+        case "DONE":
+            task.setDone(true);
+            break;
+        default:
+            System.out.println("Invalid task status! Please check your txt file.");
+            throw new RuntimeException();
         }
 
         // set task priority
         switch (priority) {
-            case "HIGH":
-                task.setPriority(TaskPriority.HIGH);
-                break;
-            case "MEDIUM":
-                task.setPriority(TaskPriority.MEDIUM);
-                break;
-            case "LOW":
-                task.setPriority(TaskPriority.LOW);
-                break;
-            case "NOT SET":
-                task.setPriority(TaskPriority.NOT_SET);
-                break;
-            default:
-                System.out.println("Invalid task priority! Please check your txt file.");
-                throw new RuntimeException();
+        case "HIGH":
+            task.setPriority(TaskPriority.HIGH);
+            break;
+        case "MEDIUM":
+            task.setPriority(TaskPriority.MEDIUM);
+            break;
+        case "LOW":
+            task.setPriority(TaskPriority.LOW);
+            break;
+        case "NOT SET":
+            task.setPriority(TaskPriority.NOT_SET);
+            break;
+        default:
+            System.out.println("Invalid task priority! Please check your txt file.");
+            throw new RuntimeException();
         }
     }
 
     /**
-     * Add saved tasks in storage file into tasks.
+     * Adds saved tasks in storage file into tasks.
      *
      * @param taskFile Storage file
      * @throws FileNotFoundException No storage file found
@@ -139,7 +134,8 @@ public class StorageFile {
                 throw new RuntimeException();
             } catch (NumberFormatException e) {
                 // datetime format is wrong, end the program
-                System.out.println("Invalid datetime format! It should follow DD/MM/YYYY HHMM(24H). Please check your txt file.");
+                System.out.println("Invalid datetime format! It should follow DD/MM/YYYY HHMM(24H). " +
+                        "Please check your txt file.");
                 throw new RuntimeException();
             }
         }
@@ -149,7 +145,7 @@ public class StorageFile {
     }
 
     /**
-     * Read file from existing storage file.
+     * Reads file from existing storage file.
      */
     public static void readFile() {
         try {

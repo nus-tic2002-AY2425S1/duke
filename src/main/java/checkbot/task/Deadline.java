@@ -1,6 +1,6 @@
-package checkbot.Task;
+package checkbot.task;
 
-import checkbot.Ui.TextUi;
+import checkbot.ui.TextUi;
 
 import java.time.LocalDateTime;
 
@@ -14,9 +14,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Gets due datetime in DD/MM/YYYY HHMM(24H) format.
-     *
-     * @return String
+     * Returns due datetime in DD/MM/YYYY HHMM(24H) format.
      */
     public String getDueDateTime() {
         return dueDateTime.getDayOfMonth() + "/" + dueDateTime.getMonthValue() + "/" + dueDateTime.getYear() +
@@ -24,9 +22,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Display task in list view for user to see in UI.
-     *
-     * @return String
+     * Displays task in list view for user to see in UI.
      */
     public String getListView() {
         return "[" + this.getPriorityIcon() + "][" + this.getTaskIcon() + "][" + this.getStatusIcon() + "] " +
@@ -34,9 +30,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Stringify task for storing of task in storage file.
-     *
-     * @return String
+     * Stringifies task for storing of task in storage file.
      */
     public String getFileView() {
         return this.getTaskIcon() + " | " +

@@ -1,6 +1,6 @@
-package checkbot.Task;
+package checkbot.task;
 
-import checkbot.Ui.TextUi;
+import checkbot.ui.TextUi;
 
 import java.time.LocalDateTime;
 
@@ -16,9 +16,7 @@ public class Event extends Task {
     }
 
     /**
-     * Gets start datetime in DD/MM/YYYY HHMM(24H) format.
-     *
-     * @return String
+     * Returns start datetime in DD/MM/YYYY HHMM(24H) format.
      */
     public String getStartDateTime() {
         return startDateTime.getDayOfMonth() + "/" + startDateTime.getMonthValue() + "/" + startDateTime.getYear() +
@@ -26,9 +24,7 @@ public class Event extends Task {
     }
 
     /**
-     * Gets end datetime in DD/MM/YYYY HHMM(24H) format.
-     *
-     * @return String
+     * Returns end datetime in DD/MM/YYYY HHMM(24H) format.
      */
     public String getEndDateTime() {
         return endDateTime.getDayOfMonth() + "/" + endDateTime.getMonthValue() + "/" + endDateTime.getYear() +
@@ -36,19 +32,16 @@ public class Event extends Task {
     }
 
     /**
-     * Display task in list view for user to see in UI.
-     *
-     * @return String
+     * Displays task in list view for user to see in UI.
      */
     public String getListView() {
         return "[" + this.getPriorityIcon() + "][" + this.getTaskIcon() + "][" + this.getStatusIcon() + "] " +
-                description + " (from: " + TextUi.printDateTime(startDateTime) + " to: " + TextUi.printDateTime(endDateTime) + ")";
+                description + " (from: " + TextUi.printDateTime(startDateTime) + " to: " +
+                TextUi.printDateTime(endDateTime) + ")";
     }
 
     /**
-     * Stringify task for storing of task in storage file.
-     *
-     * @return String
+     * Stringifies task for storing of task in storage file.
      */
     public String getFileView() {
         return this.getTaskIcon() + " | " +

@@ -34,8 +34,7 @@ public class StorageFile {
     }
 
     /**
-     * Captures current taskList in String format
-     * to overwrite storage file
+     * Captures current taskList in String format to overwrite storage file
      */
     public static void updateFile() {
         String textToAdd = "";
@@ -117,22 +116,28 @@ public class StorageFile {
                             throw new RuntimeException();
                     }
 
-                    // increase taskCount for next line in taskList
+                    // increase taskCount to handle next task in list
                     taskCount++;
                 } else {
-                    // command input is wrong, end the program
-                    System.out.println("Invalid task! Please check your txt file.");
+                    // task failed to be added - UI command is wrong, end the program
+                    System.out.println("Invalid task command! Please check your txt file.");
                     throw new RuntimeException();
                 }
             } catch (EmptyTimeException e) {
-                // empty time, end the program
-                TextUi.printEmptyTime();
-                System.out.println("Invalid input! Please check your txt file.");
+                // empty time in command, end the program
+                System.out.println("There's no time indicated where necessary! Please check your txt file.");
                 throw new RuntimeException();
             } catch (EmptyInputException e) {
                 // empty task, end the program
-                TextUi.printEmptyDescription();
-                System.out.println("Invalid input! Please check your txt file.");
+                System.out.println("There's missing input! Please check your txt file.");
+                throw new RuntimeException();
+            } catch (DateTimeException e) {
+                // invalid datetime indicated, end the program
+                System.out.println("There's invalid time! Please check your txt file.");
+                throw new RuntimeException();
+            } catch (NumberFormatException e) {
+                // datetime format is wrong, end the program
+                System.out.println("Invalid datetime format! It should follow DD/MM/YYYY HHMM(24H). Please check your txt file.");
                 throw new RuntimeException();
             }
         }

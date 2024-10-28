@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class TaskList {
     public static ArrayList<Task> tasks = new ArrayList<>();
 
-    public static boolean addTask(String input)
+    public static Task addTask(String input)
             throws EmptyInputException,
             EmptyTimeException,
             DateTimeException,
@@ -23,39 +23,32 @@ public class TaskList {
         String taskType = taskArray[0].toLowerCase();
         String taskDetails = taskArray[1];
 
-        switch (taskType) {
-            case "todo":
-                addTodo(taskDetails);
-                return true;
-            case "deadline":
-                try{
-                    addDeadline(taskDetails);
-                    return true;
-                } catch (CommandNotFoundException e) {
-                    System.out.println(Messages.deadlineError);
-                    break;
-                }
-            case "event":
-                try{
-                    addEvent(taskDetails);
-                    return true;
-                } catch (CommandNotFoundException e) {
-                    System.out.println(Messages.eventError);
-                    break;
-                }
-            default:
-                // do nothing
+        if (taskType.equals("deadline")) {
+            try{
+                return addDeadline(taskDetails);
+            } catch (CommandNotFoundException e) {
+                System.out.println(Messages.deadlineError);
+            }
         }
-        return false;
+
+        if (taskType.equals("event")) {
+            try{
+                return addEvent(taskDetails);
+            } catch (CommandNotFoundException e) {
+                System.out.println(Messages.eventError);
+            }
+        }
+
+        return addTodo(taskDetails);
     }
 
-    public static void addTodo(String input){
+    public static Todo addTodo(String input){
         Todo task = new Todo(input);
         TaskList.tasks.add(task);
-        TextUi.echoAddTask(task);
+        return task;
     }
 
-    public static void addDeadline(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
+    public static Deadline addDeadline(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
         // input format: <task> /by <DD/MM/YYYY HHMM(24H)>
         if (!input.contains("/by")){
             throw new CommandNotFoundException();
@@ -72,10 +65,10 @@ public class TaskList {
 
         Deadline task = new Deadline(description, Parser.parseDateTime(dueDateTime));
         TaskList.tasks.add(task);
-        TextUi.echoAddTask(task);
+        return task;
     }
 
-    public static void addEvent(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
+    public static Event addEvent(String input) throws EmptyInputException, EmptyTimeException, CommandNotFoundException {
         // input format: <event> /from <DD/MM/YYYY HHMM(24H)> /to <DD/MM/YYYY HHMM(24H)>
         if (!input.contains("/from") || !input.contains("/to")){
             throw new CommandNotFoundException();
@@ -94,7 +87,7 @@ public class TaskList {
 
         Event task = new Event(description, Parser.parseDateTime(startDateTime), Parser.parseDateTime(endDateTime));
         TaskList.tasks.add(task);
-        TextUi.echoAddTask(task);
+        return task;
     }
 
     public static void markTask(Task task) {

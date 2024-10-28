@@ -51,6 +51,47 @@ public class StorageFile {
     }
 
     /**
+     * Sets status and priority of a task when recovering tasks from storage.
+     *
+     * @param task Todo, Event, Deadline
+     * @param status Done, Not Done
+     * @param priority High, Medium, Low, Not Set
+     */
+    public static void setTaskStatus(Task task, String status, String priority) {
+        // set task status
+        switch (status) {
+            case "NOT DONE":
+                task.setDone(false);
+                break;
+            case "DONE":
+                task.setDone(true);
+                break;
+            default:
+                System.out.println("Invalid task status! Please check your txt file.");
+                throw new RuntimeException();
+        }
+
+        // set task priority
+        switch (priority) {
+            case "HIGH":
+                task.setPriority(TaskPriority.HIGH);
+                break;
+            case "MEDIUM":
+                task.setPriority(TaskPriority.MEDIUM);
+                break;
+            case "LOW":
+                task.setPriority(TaskPriority.LOW);
+                break;
+            case "NOT SET":
+                task.setPriority(TaskPriority.NOT_SET);
+                break;
+            default:
+                System.out.println("Invalid task priority! Please check your txt file.");
+                throw new RuntimeException();
+        }
+    }
+
+    /**
      * Add saved tasks in storage file into taskList ArrayList
      *
      * @param taskFile storage file
@@ -59,7 +100,6 @@ public class StorageFile {
     public static void recoverTasks(File taskFile) throws FileNotFoundException {
         Scanner scanFile = new Scanner(taskFile);
         List<String> taskList = new ArrayList<>();
-        int taskCount = 0;
 
         while (scanFile.hasNextLine()) {
             taskList.add(scanFile.nextLine());
@@ -81,48 +121,10 @@ public class StorageFile {
                 }
             };
 
-            // Add task using UI command
+            // Add task using UI command, and set task status
             try {
-                if (TaskList.addTask(taskCommand)) {
-                    // if task added successfully, set task status
-                    switch (taskArray[1].trim()) {
-                        case "NOT DONE":
-                            TaskList.tasks.get(taskCount).setDone(false);
-                            break;
-                        case "DONE":
-                            TaskList.tasks.get(taskCount).setDone(true);
-                            break;
-                        default:
-                            System.out.println("Invalid task status! Please check your txt file.");
-                            throw new RuntimeException();
-                    }
-
-                    // if task added successfully, set task priority
-                    switch (taskArray[2].trim()) {
-                        case "HIGH":
-                            TaskList.tasks.get(taskCount).setPriority(TaskPriority.HIGH);
-                            break;
-                        case "MEDIUM":
-                            TaskList.tasks.get(taskCount).setPriority(TaskPriority.MEDIUM);
-                            break;
-                        case "LOW":
-                            TaskList.tasks.get(taskCount).setPriority(TaskPriority.LOW);
-                            break;
-                        case "NOT SET":
-                            TaskList.tasks.get(taskCount).setPriority(TaskPriority.NOT_SET);
-                            break;
-                        default:
-                            System.out.println("Invalid task priority! Please check your txt file.");
-                            throw new RuntimeException();
-                    }
-
-                    // increase taskCount to handle next task in list
-                    taskCount++;
-                } else {
-                    // task failed to be added - UI command is wrong, end the program
-                    System.out.println("Invalid task command! Please check your txt file.");
-                    throw new RuntimeException();
-                }
+                Task newTask = TaskList.addTask(taskCommand);
+                setTaskStatus(newTask, taskArray[1].trim(), taskArray[2].trim());
             } catch (EmptyTimeException e) {
                 // empty time in command, end the program
                 System.out.println("There's no time indicated where necessary! Please check your txt file.");
@@ -146,8 +148,10 @@ public class StorageFile {
         TextUi.printTasks();
     }
 
+    /**
+     * Read file from existing storage file.
+     */
     public static void readFile() {
-        // read file from existing file and add into tasks
         try {
             StorageFile.recoverTasks(StorageFile.taskFile);
         } catch (FileNotFoundException e) {

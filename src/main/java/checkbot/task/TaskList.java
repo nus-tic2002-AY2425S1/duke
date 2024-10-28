@@ -1,7 +1,9 @@
 package checkbot.task;
 
-import checkbot.exception.*;
-import checkbot.parser.*;
+import checkbot.exception.CommandNotFoundException;
+import checkbot.exception.EmptyInputException;
+import checkbot.exception.EmptyTimeException;
+import checkbot.parser.Parser;
 import checkbot.ui.TextUi;
 import checkbot.utils.Messages;
 

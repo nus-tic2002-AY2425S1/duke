@@ -1,6 +1,7 @@
 package checkbot.storage;
 
-import checkbot.exception.*;
+import checkbot.exception.EmptyInputException;
+import checkbot.exception.EmptyTimeException;
 import checkbot.task.Task;
 import checkbot.task.TaskList;
 import checkbot.task.TaskPriority;

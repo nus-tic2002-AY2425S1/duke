@@ -1,9 +1,9 @@
 package checkbot.storage;
 
 import checkbot.exception.*;
-import checkbot.Task.Task;
-import checkbot.Task.TaskList;
-import checkbot.Task.TaskPriority;
+import checkbot.task.Task;
+import checkbot.task.TaskList;
+import checkbot.task.TaskPriority;
 import checkbot.Ui.TextUi;
 
 import java.io.File;

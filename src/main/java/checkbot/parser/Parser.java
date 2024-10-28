@@ -4,8 +4,8 @@ import checkbot.exception.CommandNotFoundException;
 import checkbot.exception.EmptyInputException;
 import checkbot.exception.EmptyTimeException;
 import checkbot.storage.StorageFile;
-import checkbot.Task.Task;
-import checkbot.Task.TaskList;
+import checkbot.task.Task;
+import checkbot.task.TaskList;
 import checkbot.Ui.TextUi;
 import checkbot.Utils.Messages;
 

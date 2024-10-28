@@ -1,4 +1,4 @@
-package checkbot.Task;
+package checkbot.task;
 
 public abstract class Task {
     protected String description;

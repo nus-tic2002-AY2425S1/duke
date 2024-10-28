@@ -1,4 +1,4 @@
-package checkbot.Task;
+package checkbot.task;
 
 import checkbot.Ui.TextUi;
 

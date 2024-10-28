@@ -1,4 +1,4 @@
-package checkbot.Task;
+package checkbot.task;
 
 public enum TaskStatus {
     DONE, NOT_DONE;

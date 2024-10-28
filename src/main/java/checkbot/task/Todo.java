@@ -1,4 +1,4 @@
-package checkbot.Task;
+package checkbot.task;
 
 public class Todo extends Task {
 

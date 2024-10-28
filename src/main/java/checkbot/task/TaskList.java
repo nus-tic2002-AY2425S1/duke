@@ -14,7 +14,7 @@ public class TaskList {
     public static ArrayList<Task> tasks = new ArrayList<>();
 
     /**
-     * Add todo task.
+     * Adds todo task.
      *
      * @param input Task description
      * @return Todo object
@@ -26,7 +26,7 @@ public class TaskList {
     }
 
     /**
-     * Add deadline task.
+     * Adds deadline task.
      *
      * @param input description /by datetime
      * @return Deadline object
@@ -58,7 +58,7 @@ public class TaskList {
     }
 
     /**
-     * Add event task.
+     * Adds event task.
      *
      * @param input description /from datetime /to datetime
      * @return Event object
@@ -94,7 +94,7 @@ public class TaskList {
     }
 
     /**
-     * Add task into tasks.
+     * Adds task into tasks.
      *
      * @param input task command
      * @return task object
@@ -134,9 +134,7 @@ public class TaskList {
     }
 
     /**
-     * Mark task as done. Print confirmation message.
-     *
-     * @param task Task to mark
+     * Marks task as done. Prints confirmation message.
      */
     public static void markTask(Task task) {
         task.setDone(true);
@@ -147,9 +145,7 @@ public class TaskList {
     }
 
     /**
-     * Mark task as not done. Print confirmation message.
-     *
-     * @param task Task to unmark
+     * Marks task as not done. Prints confirmation message.
      */
     public static void unmarkTask(Task task) {
         task.setDone(false);
@@ -160,9 +156,7 @@ public class TaskList {
     }
 
     /**
-     * Delete task from tasks. Print confirmation message.
-     *
-     * @param task Task to be deleted
+     * Deletes task from tasks. Prints confirmation message.
      */
     public static void deleteTask(Task task) {
         TaskList.tasks.remove(task);
@@ -203,7 +197,7 @@ public class TaskList {
     }
 
     /**
-     * Set status of task.
+     * Sets status of task.
      *
      * @param input Command
      * @throws EmptyInputException Missing input in command

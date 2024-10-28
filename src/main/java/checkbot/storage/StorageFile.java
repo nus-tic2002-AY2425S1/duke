@@ -17,15 +17,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class StorageFile {
-    /**
-     * Storage file to store existing tasks.
-     */
+    /** Storage file to store existing tasks */
     public static File taskFile = new File("data/checkbot.txt");
 
     /**
      * Overwrites storage file with string input.
      *
-     * @param textToAdd Tasks in String format
+     * @param textToAdd All tasks in String format
      * @throws IOException IO exception when writing file
      */
     public static void writeToFile(String textToAdd) throws IOException {
@@ -53,10 +51,6 @@ public class StorageFile {
 
     /**
      * Sets status and priority of a task when recovering tasks from storage.
-     *
-     * @param task Todo, Event, Deadline
-     * @param status Done, Not Done
-     * @param priority High, Medium, Low, Not Set
      */
     public static void setTaskStatus(Task task, String status, String priority) {
         // set task status
@@ -93,7 +87,7 @@ public class StorageFile {
     }
 
     /**
-     * Add saved tasks in storage file into tasks.
+     * Adds saved tasks in storage file into tasks.
      *
      * @param taskFile Storage file
      * @throws FileNotFoundException No storage file found
@@ -151,7 +145,7 @@ public class StorageFile {
     }
 
     /**
-     * Read file from existing storage file.
+     * Reads file from existing storage file.
      */
     public static void readFile() {
         try {

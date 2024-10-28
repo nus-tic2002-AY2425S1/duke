@@ -7,9 +7,9 @@ public abstract class Task {
     protected TaskPriority priority;
 
     /**
-     * Constructor for Task object. Sets status as not done and priority as not set.
+     * Constructs Task object. Sets status as not done and priority as not set.
      *
-     * @param description String
+     * @param description Task description
      */
     public Task(String description) {
         this.description = description;

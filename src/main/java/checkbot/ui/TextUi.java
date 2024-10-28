@@ -41,9 +41,7 @@ public class TextUi {
     }
 
     /**
-     * Takes in a Task type and prints confirmation of task addition.
-     *
-     * @param task Added task
+     * Takes in a Task and prints confirmation of task addition.
      */
     public static void echoAddTask(Task task) {
         System.out.println(Messages.DIVIDER + System.lineSeparator() +
@@ -54,9 +52,7 @@ public class TextUi {
     }
 
     /**
-     * Takes in a task type and prints confirmation of priority change.
-     *
-     * @param task Task with changed priority
+     * Takes in a task and prints confirmation of priority change.
      */
     public static void echoRankTask(Task task) {
         System.out.println(Messages.DIVIDER + System.lineSeparator() +
@@ -105,7 +101,7 @@ public class TextUi {
     
     /**
      * Takes in LocalDateTime object and converts into string for UI list view.
-     * E.g. of output: 26 OCTOBER 2024, 2:06AM
+     * E.g. of output: 26 OCTOBER 2024, 2:06AM.
      *
      * @param dateTime LocalDateTime object
      * @return String type dateTime in DD MONTH YYYY, HH:MM(AM/PM)

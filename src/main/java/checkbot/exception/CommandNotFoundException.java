@@ -1,4 +1,4 @@
-package checkbot.Exception;
+package checkbot.exception;
 
 public class CommandNotFoundException extends Exception {
     public CommandNotFoundException() {

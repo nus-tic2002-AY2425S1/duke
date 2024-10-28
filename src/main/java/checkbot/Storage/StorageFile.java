@@ -1,6 +1,6 @@
 package checkbot.Storage;
 
-import checkbot.Exception.*;
+import checkbot.exception.*;
 import checkbot.Task.Task;
 import checkbot.Task.TaskList;
 import checkbot.Task.TaskPriority;

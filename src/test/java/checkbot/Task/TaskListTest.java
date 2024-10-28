@@ -1,7 +1,7 @@
 package checkbot.Task;
 
-import checkbot.Exception.EmptyInputException;
-import checkbot.Exception.EmptyTimeException;
+import checkbot.exception.EmptyInputException;
+import checkbot.exception.EmptyTimeException;
 import checkbot.Utils.Messages;
 import org.junit.jupiter.api.Test;
 

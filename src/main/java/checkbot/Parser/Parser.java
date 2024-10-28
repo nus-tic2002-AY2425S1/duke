@@ -1,8 +1,8 @@
 package checkbot.Parser;
 
-import checkbot.Exception.CommandNotFoundException;
-import checkbot.Exception.EmptyInputException;
-import checkbot.Exception.EmptyTimeException;
+import checkbot.exception.CommandNotFoundException;
+import checkbot.exception.EmptyInputException;
+import checkbot.exception.EmptyTimeException;
 import checkbot.Storage.StorageFile;
 import checkbot.Task.Task;
 import checkbot.Task.TaskList;

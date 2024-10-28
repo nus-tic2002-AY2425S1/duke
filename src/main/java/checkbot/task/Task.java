@@ -52,20 +52,20 @@ public abstract class Task {
 
     public void setPriority(TaskPriority priority) {
         switch (priority) {
-            case LOW:
-                this.priority = TaskPriority.LOW;
-                break;
-            case MEDIUM:
-                this.priority = TaskPriority.MEDIUM;
-                break;
-            case HIGH:
-                this.priority = TaskPriority.HIGH;
-                break;
-            case NOT_SET:
-                this.priority = TaskPriority.NOT_SET;
-                break;
-            default:
-                // do nothing
+        case LOW:
+            this.priority = TaskPriority.LOW;
+            break;
+        case MEDIUM:
+            this.priority = TaskPriority.MEDIUM;
+            break;
+        case HIGH:
+            this.priority = TaskPriority.HIGH;
+            break;
+        case NOT_SET:
+            this.priority = TaskPriority.NOT_SET;
+            break;
+        default:
+            // do nothing
         }
     }
 

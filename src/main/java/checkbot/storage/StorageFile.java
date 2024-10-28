@@ -60,34 +60,34 @@ public class StorageFile {
     public static void setTaskStatus(Task task, String status, String priority) {
         // set task status
         switch (status) {
-            case "NOT DONE":
-                task.setDone(false);
-                break;
-            case "DONE":
-                task.setDone(true);
-                break;
-            default:
-                System.out.println("Invalid task status! Please check your txt file.");
-                throw new RuntimeException();
+        case "NOT DONE":
+            task.setDone(false);
+            break;
+        case "DONE":
+            task.setDone(true);
+            break;
+        default:
+            System.out.println("Invalid task status! Please check your txt file.");
+            throw new RuntimeException();
         }
 
         // set task priority
         switch (priority) {
-            case "HIGH":
-                task.setPriority(TaskPriority.HIGH);
-                break;
-            case "MEDIUM":
-                task.setPriority(TaskPriority.MEDIUM);
-                break;
-            case "LOW":
-                task.setPriority(TaskPriority.LOW);
-                break;
-            case "NOT SET":
-                task.setPriority(TaskPriority.NOT_SET);
-                break;
-            default:
-                System.out.println("Invalid task priority! Please check your txt file.");
-                throw new RuntimeException();
+        case "HIGH":
+            task.setPriority(TaskPriority.HIGH);
+            break;
+        case "MEDIUM":
+            task.setPriority(TaskPriority.MEDIUM);
+            break;
+        case "LOW":
+            task.setPriority(TaskPriority.LOW);
+            break;
+        case "NOT SET":
+            task.setPriority(TaskPriority.NOT_SET);
+            break;
+        default:
+            System.out.println("Invalid task priority! Please check your txt file.");
+            throw new RuntimeException();
         }
     }
 

@@ -38,9 +38,11 @@ public class TaskList {
         if (!input.contains("/by")){
             throw new CommandNotFoundException();
         }
+
         String[] deadlineArray = input.split("/by",2);
         String description = deadlineArray[0].trim();
         String dueDateTime = deadlineArray[1].trim();
+
         if (description.isEmpty()) {
             throw new EmptyInputException();
         }
@@ -68,14 +70,18 @@ public class TaskList {
         if (!input.contains("/from") || !input.contains("/to")){
             throw new CommandNotFoundException();
         }
+
         String[] eventArray = input.split("/from",2);
         String[] dateTimeArray = eventArray[1].split("/to",2);
         String description = eventArray[0].trim();
+
         if (description.isEmpty()) {
             throw new EmptyInputException();
         }
+
         String startDateTime = dateTimeArray[0].trim();
         String endDateTime = dateTimeArray[1].trim();
+
         if (startDateTime.isEmpty() || endDateTime.isEmpty()) {
             throw new EmptyTimeException();
         }
@@ -98,9 +104,11 @@ public class TaskList {
     public static Task addTask(String input)
             throws EmptyInputException, EmptyTimeException, DateTimeException, NumberFormatException {
         String[] taskArray = input.split(" ",2);
+
         if (taskArray.length < 2) {
             throw new EmptyInputException();
         }
+
         String taskType = taskArray[0].toLowerCase();
         String taskDetails = taskArray[1];
 
@@ -173,20 +181,20 @@ public class TaskList {
      */
     public static void rankTask(Task task, String priority) throws CommandNotFoundException {
         switch (priority.toLowerCase()) {
-            case "high":
-                task.setPriority(TaskPriority.HIGH);
-                break;
-            case "medium":
-                task.setPriority(TaskPriority.MEDIUM);
-                break;
-            case "low":
-                task.setPriority(TaskPriority.LOW);
-                break;
-            case "none":
-                task.setPriority(TaskPriority.NOT_SET);
-                break;
-            default:
-                throw new CommandNotFoundException();
+        case "high":
+            task.setPriority(TaskPriority.HIGH);
+            break;
+        case "medium":
+            task.setPriority(TaskPriority.MEDIUM);
+            break;
+        case "low":
+            task.setPriority(TaskPriority.LOW);
+            break;
+        case "none":
+            task.setPriority(TaskPriority.NOT_SET);
+            break;
+        default:
+            throw new CommandNotFoundException();
         }
 
         TextUi.echoRankTask(task);
@@ -201,31 +209,33 @@ public class TaskList {
      */
     public static void setStatus(String  input) throws EmptyInputException, CommandNotFoundException {
         String[] setStatusArray = input.split(" ");
+
         if (setStatusArray.length < 2) {
             throw new EmptyInputException();
         }
+
         String action = setStatusArray[0].toLowerCase();
         int taskIdx = Integer.parseInt(setStatusArray[1]) - 1;
 
         switch (action) {
-            case "mark":
-                markTask(TaskList.tasks.get(taskIdx));
-                break;
-            case "unmark":
-                unmarkTask(TaskList.tasks.get(taskIdx));
-                break;
-            case "delete":
-                deleteTask(TaskList.tasks.get(taskIdx));
-                break;
-            case "rank":
-                if (setStatusArray.length < 3) {
-                    throw new CommandNotFoundException();
-                }
-                String priority = setStatusArray[2];
-                rankTask(TaskList.tasks.get(taskIdx), priority);
-                break;
-            default:
-                // do nothing
+        case "mark":
+            markTask(TaskList.tasks.get(taskIdx));
+            break;
+        case "unmark":
+            unmarkTask(TaskList.tasks.get(taskIdx));
+            break;
+        case "delete":
+            deleteTask(TaskList.tasks.get(taskIdx));
+            break;
+        case "rank":
+            if (setStatusArray.length < 3) {
+                throw new CommandNotFoundException();
+            }
+            String priority = setStatusArray[2];
+            rankTask(TaskList.tasks.get(taskIdx), priority);
+            break;
+        default:
+            // do nothing
         }
     }
 }

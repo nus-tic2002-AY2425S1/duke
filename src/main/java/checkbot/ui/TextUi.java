@@ -84,17 +84,21 @@ public class TextUi {
      */
     public static void printMatchingTasks(String input) {
         boolean isFound = false;
+
         System.out.println(Messages.DIVIDER);
         System.out.println("Here are the matching task(s) in your list:");
+
         for (Task task : TaskList.tasks) {
             if (task.getDescription().contains(input)) {
                 System.out.println(TaskList.tasks.indexOf(task)+1 + ". " + task.getListView());
                 isFound = true;
             }
         }
+
         if (!isFound) {
             System.out.println("Sorry, there are no matching tasks.");
         }
+
         System.out.println(Messages.DIVIDER);
     }
     
@@ -112,6 +116,7 @@ public class TextUi {
         String minute = String.format("%02d", dateTime.getMinute());
         int hour;
         String meridiem;
+
         if (dateTime.getHour() == 0) {
             hour = 12;
             meridiem = "AM";
@@ -125,6 +130,7 @@ public class TextUi {
             hour = dateTime.getHour();
             meridiem = "AM";
         }
+
         return day + " " + month + " " + year + ", " + hour + ":" + minute + meridiem;
     }
 }

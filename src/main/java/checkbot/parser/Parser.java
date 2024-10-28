@@ -21,68 +21,68 @@ public class Parser {
             String keyword = input.split(" ")[0].toLowerCase();
             
             switch (keyword) {
-                case "bye":
-                    TextUi.printExit();
-                    isFinished = true;
+            case "bye":
+                TextUi.printExit();
+                isFinished = true;
+                break;
+            case "help":
+                TextUi.printHelp();
+                break;
+            case "list":
+                TextUi.printTasks();
+                break;
+            case "mark":
+                // fallthrough
+            case "unmark":
+                // fallthrough
+            case "delete":
+                // fallthrough
+            case "rank":
+                try {
+                    TaskList.setStatus(input);
+                    StorageFile.updateFile();
                     break;
-                case "help":
-                    TextUi.printHelp();
+                } catch (EmptyInputException e) {
+                    System.out.println(Messages.EMPTY_NUMBER);
                     break;
-                case "list":
-                    TextUi.printTasks();
+                } catch (NumberFormatException e) {
+                    System.out.println(Messages.NON_INTEGER_NUMBER);
                     break;
-                case "mark":
-                    // fallthrough
-                case "unmark":
-                    // fallthrough
-                case "delete":
-                    //fall through
-                case "rank":
-                    try {
-                        TaskList.setStatus(input);
-                        StorageFile.updateFile();
-                        break;
-                    } catch (EmptyInputException e) {
-                        System.out.println(Messages.EMPTY_NUMBER);
-                        break;
-                    } catch (NumberFormatException e) {
-                        System.out.println(Messages.NON_INTEGER_NUMBER);
-                        break;
-                    } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-                        System.out.println(Messages.INVALID_TASK_NUMBER);
-                        break;
-                    } catch (CommandNotFoundException e) {
-                        System.out.println(Messages.INVALID_PRIORITY);
-                        break;
-                    }
-                case "find":
-                    TextUi.printMatchingTasks(input.split(" ",2)[1].trim());
+                } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
+                    System.out.println(Messages.INVALID_TASK_NUMBER);
                     break;
-                case "todo":
-                    // fallthrough
-                case "deadline":
-                    // fallthrough
-                case "event":
-                    try {
-                        Task task = TaskList.addTask(input);
-                        StorageFile.updateFile();
-                        TextUi.echoAddTask(task);
-                        break;
-                    } catch (EmptyInputException e) {
-                        TextUi.printEmptyDescription();
-                        break;
-                    } catch (EmptyTimeException e) {
-                        TextUi.printEmptyTime();
-                        break;
-                    } catch (DateTimeException e) {
-                        System.out.println(e.getMessage());
-                        break;
-                    } catch (NumberFormatException e) {
-                        System.out.println(Messages.INVALID_DATETIME);
-                        break;
-                    }
-                default:
-                    TextUi.printCommandNotFound();
+                } catch (CommandNotFoundException e) {
+                    System.out.println(Messages.INVALID_PRIORITY);
+                    break;
+                }
+            case "find":
+                TextUi.printMatchingTasks(input.split(" ",2)[1].trim());
+                break;
+            case "todo":
+                // fallthrough
+            case "deadline":
+                // fallthrough
+            case "event":
+                try {
+                    Task task = TaskList.addTask(input);
+                    StorageFile.updateFile();
+                    TextUi.echoAddTask(task);
+                    break;
+                } catch (EmptyInputException e) {
+                    TextUi.printEmptyDescription();
+                    break;
+                } catch (EmptyTimeException e) {
+                    TextUi.printEmptyTime();
+                    break;
+                } catch (DateTimeException e) {
+                    System.out.println(e.getMessage());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println(Messages.INVALID_DATETIME);
+                    break;
+                }
+            default:
+                TextUi.printCommandNotFound();
             }
         } while (!isFinished);
     }

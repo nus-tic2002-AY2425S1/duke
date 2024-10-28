@@ -63,7 +63,7 @@ public class TaskTest {
     }
 
     @Test
-    public void testSetUnDone() {
+    public void testSetUndone() {
         testTodo.setDone(false);
         testDeadline.setDone(false);
         testEvent.setDone(false);
@@ -74,7 +74,7 @@ public class TaskTest {
     }
 
     @Test
-    public void testSetPriority_High() {
+    public void testSetPriority_high() {
         testTodo.setPriority(TaskPriority.HIGH);
         testDeadline.setPriority(TaskPriority.HIGH);
         testEvent.setPriority(TaskPriority.HIGH);
@@ -91,7 +91,7 @@ public class TaskTest {
     }
 
     @Test
-    public void testSetPriority_Medium() {
+    public void testSetPriority_medium() {
         testTodo.setPriority(TaskPriority.MEDIUM);
         testDeadline.setPriority(TaskPriority.MEDIUM);
         testEvent.setPriority(TaskPriority.MEDIUM);
@@ -108,7 +108,7 @@ public class TaskTest {
     }
 
     @Test
-    public void testSetPriority_Low() {
+    public void testSetPriority_low() {
         testTodo.setPriority(TaskPriority.LOW);
         testDeadline.setPriority(TaskPriority.LOW);
         testEvent.setPriority(TaskPriority.LOW);
@@ -125,7 +125,7 @@ public class TaskTest {
     }
 
     @Test
-    public void testSetPriority_NotSet() {
+    public void testSetPriority_notSet() {
         testTodo.setPriority(TaskPriority.NOT_SET);
         testDeadline.setPriority(TaskPriority.NOT_SET);
         testEvent.setPriority(TaskPriority.NOT_SET);

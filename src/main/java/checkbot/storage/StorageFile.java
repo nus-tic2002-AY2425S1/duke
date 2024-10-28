@@ -4,7 +4,7 @@ import checkbot.exception.*;
 import checkbot.task.Task;
 import checkbot.task.TaskList;
 import checkbot.task.TaskPriority;
-import checkbot.Ui.TextUi;
+import checkbot.ui.TextUi;
 
 import java.io.File;
 import java.io.FileNotFoundException;

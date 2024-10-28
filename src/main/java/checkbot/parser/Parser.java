@@ -6,7 +6,7 @@ import checkbot.exception.EmptyTimeException;
 import checkbot.storage.StorageFile;
 import checkbot.task.Task;
 import checkbot.task.TaskList;
-import checkbot.Ui.TextUi;
+import checkbot.ui.TextUi;
 import checkbot.Utils.Messages;
 
 import java.time.DateTimeException;

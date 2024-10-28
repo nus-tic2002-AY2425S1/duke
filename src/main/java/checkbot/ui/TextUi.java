@@ -1,4 +1,4 @@
-package checkbot.Ui;
+package checkbot.ui;
 
 import checkbot.task.*;
 import checkbot.Utils.*;

@@ -2,7 +2,7 @@ package checkbot;
 
 import checkbot.parser.Parser;
 import checkbot.storage.StorageFile;
-import checkbot.Ui.TextUi;
+import checkbot.ui.TextUi;
 
 public class Checkbot {
     public static void main(String[] args) {

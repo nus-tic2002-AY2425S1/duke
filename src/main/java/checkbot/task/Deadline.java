@@ -1,6 +1,6 @@
 package checkbot.task;
 
-import checkbot.Ui.TextUi;
+import checkbot.ui.TextUi;
 
 import java.time.LocalDateTime;
 

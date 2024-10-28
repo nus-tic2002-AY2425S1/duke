@@ -104,11 +104,17 @@ public class Parser {
         int day = Integer.parseInt(dateArray[0]);
         int month = Integer.parseInt(dateArray[1]);
         int year = Integer.parseInt(dateArray[2]);
+        int hour = 0;
+        int min = 0;
 
-        String time = dateTimeArray[1].trim();
-        int hour = Integer.parseInt(time.substring(0, 2));
-        int min = Integer.parseInt(time.substring(2, 4));
+        // if time is indicated
+        if (dateTimeArray.length == 2) {
+            String time = dateTimeArray[1].trim();
+            hour = Integer.parseInt(time.substring(0, 2));
+            min = Integer.parseInt(time.substring(2, 4));
+        }
 
+        // if time is not indicated, default time is 0000
         return LocalDateTime.of(year, month, day, hour, min);
     }
 }

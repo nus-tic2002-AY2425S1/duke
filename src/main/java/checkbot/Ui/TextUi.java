@@ -101,7 +101,7 @@ public class TextUi {
      * Takes in LocalDateTime object and converts into string for UI list view.
      * E.g. of output: 26 OCTOBER 2024, 2:06AM
      *
-     * @param dateTime
+     * @param dateTime LocalDateTime object
      * @return String type dateTime in DD MONTH YYYY, HH:MM(AM/PM)
      */
     public static String printDateTime(LocalDateTime dateTime) {

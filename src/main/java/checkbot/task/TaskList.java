@@ -3,7 +3,7 @@ package checkbot.task;
 import checkbot.exception.*;
 import checkbot.parser.*;
 import checkbot.ui.TextUi;
-import checkbot.Utils.Messages;
+import checkbot.utils.Messages;
 
 import java.time.DateTimeException;
 import java.util.ArrayList;

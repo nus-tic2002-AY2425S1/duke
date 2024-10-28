@@ -7,7 +7,7 @@ import checkbot.storage.StorageFile;
 import checkbot.task.Task;
 import checkbot.task.TaskList;
 import checkbot.ui.TextUi;
-import checkbot.Utils.Messages;
+import checkbot.utils.Messages;
 
 import java.time.DateTimeException;
 import java.time.LocalDateTime;

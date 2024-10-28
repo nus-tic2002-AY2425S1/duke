@@ -1,7 +1,7 @@
 package checkbot.ui;
 
 import checkbot.task.*;
-import checkbot.Utils.*;
+import checkbot.utils.*;
 
 import java.time.LocalDateTime;
 import java.util.Scanner;

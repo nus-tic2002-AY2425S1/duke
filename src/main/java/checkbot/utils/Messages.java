@@ -1,4 +1,4 @@
-package checkbot.Utils;
+package checkbot.utils;
 
 public class Messages {
     public static String divider = "--------------------------------------";

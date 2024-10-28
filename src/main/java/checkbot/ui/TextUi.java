@@ -32,14 +32,6 @@ public class TextUi {
         System.out.println(Messages.COMMAND_NOT_FOUND);
     }
 
-    public static void printEmptyDescription() {
-        System.out.println(Messages.EMPTY_DESCRIPTION);
-    }
-
-    public static void printEmptyTime() {
-        System.out.println(Messages.EMPTY_TIME);
-    }
-
     /**
      * Takes in a Task and prints confirmation of task addition.
      */

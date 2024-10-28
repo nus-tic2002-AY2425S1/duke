@@ -1,7 +1,6 @@
 package checkbot.storage;
 
-import checkbot.exception.EmptyInputException;
-import checkbot.exception.EmptyTimeException;
+import checkbot.exception.InvalidInputException;
 import checkbot.task.Task;
 import checkbot.task.TaskList;
 import checkbot.task.TaskPriority;
@@ -120,22 +119,17 @@ public class StorageFile {
             try {
                 Task newTask = TaskList.addTask(taskCommand);
                 setTaskStatus(newTask, taskArray[1].trim(), taskArray[2].trim());
-            } catch (EmptyTimeException e) {
-                // empty time in command, end the program
-                System.out.println("There's no time indicated where necessary! Please check your txt file.");
-                throw new RuntimeException();
-            } catch (EmptyInputException e) {
-                // empty task, end the program
-                System.out.println("There's missing input! Please check your txt file.");
-                throw new RuntimeException();
             } catch (DateTimeException e) {
                 // invalid datetime indicated, end the program
                 System.out.println("There's invalid time! Please check your txt file.");
                 throw new RuntimeException();
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException | NullPointerException e) {
                 // datetime format is wrong, end the program
                 System.out.println("Invalid datetime format! It should follow DD/MM/YYYY HHMM(24H). " +
                         "Please check your txt file.");
+                throw new RuntimeException();
+            } catch (InvalidInputException e) {
+                System.out.println("There's invalid inputs! Please check your txt file.");
                 throw new RuntimeException();
             }
         }

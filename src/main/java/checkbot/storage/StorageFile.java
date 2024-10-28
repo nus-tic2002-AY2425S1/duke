@@ -28,9 +28,9 @@ public class StorageFile {
      * @throws IOException IO exception when writing file
      */
     public static void writeToFile(String textToAdd) throws IOException {
-        FileWriter fw = new FileWriter(taskFile);
-        fw.write(textToAdd);
-        fw.close();
+        FileWriter fileWriter = new FileWriter(taskFile);
+        fileWriter.write(textToAdd);
+        fileWriter.close();
     }
 
     /**

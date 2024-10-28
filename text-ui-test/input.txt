@@ -1,30 +1,26 @@
 list
 todo
-todo read book
+todo learn a new language
+list
+unmark 1
+list
 mark 1
 mark 1
 list
 deadline
-deadline return book
+deadline return pen
 deadline /by Sunday
-deadline return book /by June 6th
-mark 2
-unmark 2
-unmark 2
+deadline /by
+deadline return pen /by Sunday
 list
-event project meeting /from: Aug 6th 2pm /to: 4pm
+mark 6
+unmark 6
+unmark 6
 list
-todo join sports club
-mark 4
+event orientation /from
+event orientation /from Jan 1st
+event orientation /from Jan 1st /to
+event orientation /to
+event orientation /to 2nd
+event orientation /from Jan 1st /to 2nd
 list
-delete 2
-list
-todo borrow book
-list
-deadline do homework /by no idea :-p
-list
-mark abc
-mark 123456789
-delete abc
-delete 123456789
-bye

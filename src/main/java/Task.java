@@ -48,6 +48,7 @@ public abstract class Task {
         }
     }
 
+    // Equivalent to 'decoded' task, i.e. tasks present in TaskList
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "] " + getDescription();

@@ -31,7 +31,7 @@ public class Javaro {
     // Assume there will be no more than 100 tasks. Initialize an empty list of String array
     private static ArrayList<Task> taskList;
 
-    private static StorageFile taskFile;
+    private static StorageFile taskFile = new StorageFile();
 
     // Solution below adapted from https://stackoverflow.com/questions/1073787/print-spaces-with-string-format
     // https://stackoverflow.com/questions/69576641/why-would-you-use-a-stringbuilder-method-over-a-string-in-java
@@ -443,6 +443,14 @@ public class Javaro {
                                     "Please enter the date/time that the event ends at after \"" + FROM + "\"";
                 throw new TaskException(message);
             }
+
+            int toIndex = input.indexOf("/to", endIndex);
+            if (toIndex != -1) {
+                String toText = input.substring(toIndex + 3).trim(); // Get text after /to
+                if (toText.isEmpty()) {
+                    throw new TaskException("End date/time is missing. Please enter the date/time that the event ends at after \"/to\".");
+                }
+            }
         } else {
             endIndex = input.length();
         }
@@ -451,6 +459,10 @@ public class Javaro {
         // System.out.println("startIndex in extractDateTime is " + startIndex);
         // System.out.println("endIndex in extractDateTime is " + endIndex);
 
+        // event orientation /from Jan 1st /to
+        // Exception in thread "main" java.lang.StringIndexOutOfBoundsException: begin 36, end 35, length 35
+        // System.out.println("At " + startIndex + " is " + input.substring(startIndex));
+        // System.out.println("At " + endIndex + " is " + input.substring(endIndex));
         String dateTime = input.substring(startIndex, endIndex).trim();
 
         if (dateTime.isEmpty()) {
@@ -554,12 +566,17 @@ public class Javaro {
             indexToDelete = Integer.parseInt(index) - 1;
             taskToDelete = taskList.get(indexToDelete);
         } catch (IndexOutOfBoundsException | NumberFormatException e) {
-            message = "Task not found. Please enter a valid task number from 1 to " + taskList.size() + ".";
+            message = "Task not found. Please enter a valid task number from 1 to " + taskList.size() + 1 + ".";
             throw new TaskException(message);
         }
 
         // System.out.println("indexToDelete is " + indexToDelete + NEW_LINE + "taskToDelete is " + taskToDelete);
         taskList.remove(indexToDelete);
+        
+        taskFile.save(taskList);
+        // taskFile.removeLine(taskToDelete);
+
+        // taskFile.markTask(taskList, indexToMark);
 
         int taskListSize = taskList.size();
         String taskWord = getTaskWord(taskListSize);
@@ -578,13 +595,14 @@ public class Javaro {
     public static void echo() {
         Scanner in = new Scanner(System.in);
 
-        taskFile = new StorageFile();
+        // taskFile = new StorageFile();
         // System.out.println("taskFile is " + taskFile);
 
         // taskList = new ArrayList<>();
 
         // Initialize taskList
         try {
+            // System.out.println("calling loadTasks");
             taskList = taskFile.loadTasks();
         } catch (StorageFileException e) {
             String[] messageList = {e.getMessage()};
@@ -666,7 +684,7 @@ public class Javaro {
                     ) {
                         taskList = addTask(taskList, inputRaw);
                 } else if (checkEquals(command, Command.DELETE)) {
-                    // taskList = deleteTask(taskList, input);
+                    taskList = deleteTask(taskList, inputRaw);
                 } else {
                     String message = "Invalid command entered. " + NEW_LINE + getSpace(false, false) + 
                                         "Please start with 'list', 'mark', 'unmark', 'todo', 'deadline', 'event'. If you are done, please enter 'bye' to exit the chat";

@@ -11,32 +11,43 @@ import java.util.Scanner;
 import java.util.Arrays;
 
 // https://github.com/se-edu/addressbook-level2/blob/master/src/seedu/addressbook/storage/StorageFile.java
+
+/*
+Summary from https://stackoverflow.com/questions/8101585/cannot-make-a-static-reference-to-the-non-static-field
+A static method cannot refer to a non-static variable. 
+A non-static variable has meaning only when it is referred through an object reference, e.g. file1.path, file2.path
+A non-static variable has no meaning when it is referred through class, e.g. file.path
+*/
+
 public class StorageFile {
     // Default file path used if the user doesn't provide the file name.
     private static final String DEFAULT_STORAGE_FILEPATH = "./data/tasks.txt";
-    protected final Path filePath;
-
-    public StorageFile(Path filePath) {
-        this.filePath = filePath;
-        checkDataFolderExists(filePath);
-        checkTaskFileExists(filePath);
-    }
+    protected Path filePath;
 
     public StorageFile() {
-        // filePath = Paths.get(DEFAULT_STORAGE_FILEPATH);
-        this(Paths.get(DEFAULT_STORAGE_FILEPATH));
+        Path filePath = Paths.get(DEFAULT_STORAGE_FILEPATH);
+        this.filePath = filePath;
+        checkDataFolderExists();
+        checkTaskFileExists();
     }
 
+    public Path getFilePath() {
+        return filePath;
+    }
+
+    public File getFile() {
+        return getFilePath().toFile();
+    }
 
     // Your code must handle (i.e., if the file is missing, your code must create it) 
     // the case where the data file doesn't exist at the start. Reason: when someone else 
     // takes your chatbot and runs it for the first time, the required file will not exist 
     // in their computer. Similarly, if you expect the data file to be in a specific folder 
     // (e.g., ./data/), you must also handle the folder-does-not-exist-yet case.
-    public static void checkDataFolderExists(Path filePath) {
+    public void checkDataFolderExists() {
         // https://stackoverflow.com/questions/15571496/how-to-check-if-a-folder-exists
         // Check if "data" directory exists in current folder 
-        Path dataFolderPath = filePath.getParent();
+        Path dataFolderPath = getFilePath().getParent();
         // System.out.println(dataFolderPath);
         // boolean isDataFolderExists = Files.exists(dataFolderPath) && Files.isDirectory(dataFolderPath);
         File dataFolder = new File(dataFolderPath.toString());
@@ -60,8 +71,8 @@ public class StorageFile {
 
     }
 
-    public static void checkTaskFileExists(Path filePath) {
-        File tasksFile = filePath.toFile();
+    public void checkTaskFileExists() {
+        File tasksFile = getFile();
         // File tasksFile = new File(filePath.toString());
         boolean isTaskFileExists = tasksFile.exists();
         
@@ -81,18 +92,18 @@ public class StorageFile {
 
     // Write all lines in tasks.txt into ArrayList
     // TODO: Handle the situation of the data file being corrupted (i.e., content not in the expected format).
-    public static ArrayList<Task> loadTasks() throws StorageFileException {
+    public ArrayList<Task> loadTasks() throws StorageFileException {
         ArrayList<Task> taskList = new ArrayList<>();
-        StorageFile file = new StorageFile();
 
+        // System.out.println("in loadTasks");
         // https://www.digitalocean.com/community/tutorials/java-read-file-line-by-line
         try {
-			Scanner scanner = new Scanner(file.filePath.toFile());
+			Scanner scanner = new Scanner(getFile());
 
 			while (scanner.hasNextLine()) {
 
                 String rawInput = scanner.nextLine().trim();
-
+                System.out.println(rawInput);
                 // Check for empty line
                 if (rawInput.isEmpty()) {
                     throw new StorageFileException("Empty line found. Please ensure that all lines in tasks.txt contain valid data.");
@@ -110,12 +121,6 @@ public class StorageFile {
                 }
 
                 Task task = null;
-
-                // for (int i = 0; i < line.length; i++) {
-                //     System.out.println(line[i]);
-                // }
-                
-                // taskType is either "T" or "D" or "E"
 
                 String taskType;
                 boolean isDone;
@@ -263,6 +268,8 @@ public class StorageFile {
 
                 // Task task = line.toString();
                 // System.out.println("this is task : " + task);
+
+                taskList.add(task);
 			}
 			
             scanner.close();
@@ -274,10 +281,31 @@ public class StorageFile {
 		} 
     }
 
-    // Save the tasks in the hard disk automatically whenever the task list changes. Load the data from the hard disk when the chatbot starts up.
-    public static void save(ArrayList<Task> taskList) {
+    public List<String> getAllLines() throws IOException {
+        Path filePath = getFilePath();
+        List<String> lines = null;
         try {
-            FileWriter fw = new FileWriter(DEFAULT_STORAGE_FILEPATH);
+            lines = Files.readAllLines(filePath);
+        } catch (IOException e) {
+            throw e;
+        }
+        return lines;
+    }
+
+    public void removeLine(Task taskToDelete) throws IOException {
+        // Read all lines from the file
+        List<String> lines = getAllLines();
+        
+        
+        for (String line : lines) {
+
+        }
+    }
+
+    // Save the tasks in the hard disk automatically whenever the task list changes. Load the data from the hard disk when the chatbot starts up.
+    public void save(ArrayList<Task> taskList) {
+        try {
+            FileWriter fw = new FileWriter(getFilePath().toString());
 
             for (int i = 0; i < taskList.size(); i++) {
                 Task currentTask = taskList.get(i);
@@ -285,7 +313,7 @@ public class StorageFile {
                 // System.out.println("task: " + currentTask);
 
                 String encodedTask = currentTask.encodeTask();
-                
+                fw.write(encodedTask + "\n");
             }
 
             // for (int i = 0; i < taskList.size(); i++) {
@@ -303,7 +331,7 @@ public class StorageFile {
     public void writeToFile(String text) {
         try {
             FileWriter fw = new FileWriter(filePath.toString(), true);
-            fw.write(text + System.lineSeparator());
+            fw.write("\n" + text.trim());
             fw.close();
         } catch (IOException ioException) {
             System.out.println(ioException.getMessage());

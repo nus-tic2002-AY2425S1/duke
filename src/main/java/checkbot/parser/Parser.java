@@ -48,7 +48,7 @@ public class Parser {
                 } catch (NumberFormatException e) {
                     System.out.println(Messages.NON_INTEGER_NUMBER);
                     break;
-                } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
+                } catch (IndexOutOfBoundsException | NullPointerException e) {
                     System.out.println(Messages.INVALID_TASK_NUMBER);
                     break;
                 } catch (CommandNotFoundException e) {

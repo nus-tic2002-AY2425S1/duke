@@ -203,7 +203,8 @@ public class TaskList {
      * @throws EmptyInputException Missing input in command
      * @throws CommandNotFoundException Missing input for priority command
      */
-    public static void setStatus(String  input) throws EmptyInputException, CommandNotFoundException {
+    public static void setStatus(String  input)
+            throws EmptyInputException, CommandNotFoundException, IndexOutOfBoundsException {
         String[] setStatusArray = input.split(" ");
 
         if (setStatusArray.length < 2) {

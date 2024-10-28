@@ -12,9 +12,13 @@ public class ExceptionHandling {
             return false;
         }
     }
+    // Remove unnecessary whitespace between words and start / end of the string
+    public static String removeSpaces(String input){
+        return input.trim().replaceAll("\\s+", " ");
+    }
     // Exception: Validates if the input contains only specified keywords or if no name has been provided for the task
     public static boolean isEmptyInput(String input) {
-        input = input.trim().replaceAll("\\s+", " ");
+        input = removeSpaces(input);
         boolean taskIsEmpty = false;
         if (input.equalsIgnoreCase("todo") || input.equalsIgnoreCase("deadline") || input.equalsIgnoreCase("event") || input.isEmpty()) {
             taskIsEmpty = true;
@@ -23,27 +27,27 @@ public class ExceptionHandling {
             String keyword = splitWord[0];
             switch (keyword) {
                 case "todo" -> {
-                    if (splitWord[1].trim().isEmpty()) {
+                    if (removeSpaces(splitWord[1]).isEmpty()) {
                         taskIsEmpty = true;
                     }
                 }
                 case "deadline" -> {
-                    input = input.replace("deadline", "").trim();
+                    input = removeSpaces(input.replace("deadline", ""));
                     if (input.contains("/by")) {
                         String[] deadlineDetails = input.split("/by");
                         // Check if the task is empty
-                        if (deadlineDetails.length == 0 || deadlineDetails[0].trim().isEmpty()) {
+                        if (deadlineDetails.length == 0 || removeSpaces(deadlineDetails[0]).isEmpty()) {
                             taskIsEmpty = true;
                         }
                     }
                 }
                 case "event" -> {
-                    input = input.replace("event", "").trim();
+                    input = removeSpaces(input.replace("event", ""));
                     if (!input.contains("/from") || !input.contains("/to")) {
                         return false;
                     }
                     String[] eventDetails = input.split("/from");
-                    if (eventDetails.length == 0 || eventDetails[0].trim().isEmpty()) {
+                    if (eventDetails.length == 0 || removeSpaces(eventDetails[0]).isEmpty()) {
                         taskIsEmpty = true;
                     }
                 }
@@ -53,35 +57,35 @@ public class ExceptionHandling {
     }
     // Exception: Validates if there are duplicate tasks, including task type, already added to the list
     public static boolean isTaskDuplicated(ArrayList<Task> todoTaskList, String newTask) {
-        newTask = newTask.trim().replaceAll("\\s+", " ");
+        newTask = removeSpaces(newTask);
         for (Task task : todoTaskList) {
             if(task instanceof ToDo){
-                newTask = newTask.replace("todo", "").trim();
+                newTask = removeSpaces(newTask.replace("todo", ""));
                 if (task.getTaskName().equalsIgnoreCase(newTask)){
                     return true;
                 }
             } else if (task instanceof Deadline){
-                newTask = newTask.replace("deadline", "");
+                newTask = removeSpaces(newTask.replace("deadline", ""));
                 if (newTask.contains("/by")){
                     String[] deadlineDetails = newTask.split("/by");
                     if (deadlineDetails.length == 2 ){
-                        String newDeadlineTask = deadlineDetails[0].trim();
-                        String deadlineOfTask = deadlineDetails[1].trim();
+                        String newDeadlineTask = removeSpaces(deadlineDetails[0]);
+                        String deadlineOfTask = removeSpaces(deadlineDetails[1]);
                         if (((Deadline) task).by.equalsIgnoreCase(deadlineOfTask) && task.getTaskName().equalsIgnoreCase(newDeadlineTask)) {
                             return true;
                         }
                     }
                 }
             } else if (task instanceof Event){
-                newTask = newTask.replace("event", "");
+                newTask = removeSpaces(newTask.replace("event", ""));
                 if (newTask.contains("/from") && newTask.contains("/to")){
                     String[] eventDetails = newTask.split("/from");
                     if (eventDetails.length == 2){
-                        String newEventTask = eventDetails[0].trim();
+                        String newEventTask = removeSpaces(eventDetails[0]);
                         String[] taskDurationDetails = eventDetails[1].split("/to");
                         if (taskDurationDetails.length == 2){
-                            String from = taskDurationDetails[0].trim();
-                            String to = taskDurationDetails[1].trim();
+                            String from = removeSpaces(taskDurationDetails[0]);
+                            String to = removeSpaces(taskDurationDetails[1]);
                             if (((Event) task).from.equalsIgnoreCase(from) && ((Event) task).to.equalsIgnoreCase(to) && task.getTaskName().equalsIgnoreCase(newEventTask)) {
                                 return true;
                             }
@@ -102,11 +106,17 @@ public class ExceptionHandling {
     }
     // Exception: Validates the keyword to categorize the task
     public static boolean isCommandKeywordPresent(String keyword){
-        return Keywords.isValidKeyword(keyword);
+        // Iterating each Enum value and check against the input keyword
+        for (Keywords keywords : Keywords.values()) {
+            if (keywords.getKeyword().equalsIgnoreCase(keyword)) {
+                return true;
+            }
+        }
+        return false;
     }
     // Exception: Validates if the provided deadline for the task is missing
     public static boolean isValidDeadlineInput(String[] deadlineDetails) {
-        return deadlineDetails.length >= 2 && !deadlineDetails[1].trim().isEmpty();
+        return deadlineDetails.length >= 2 && !removeSpaces(deadlineDetails[1]).isEmpty();
     }
     // Exception: Validates if the event period provided for the task is missing
     public static boolean isValidEventInput(String[] eventDetails) {
@@ -114,6 +124,6 @@ public class ExceptionHandling {
             return false;
         }
         String[] eventOfTask = eventDetails[1].split("/to");
-        return eventOfTask.length >= 2 && !eventOfTask[0].trim().isEmpty() && !eventOfTask[1].trim().isEmpty();
+        return eventOfTask.length >= 2 && !removeSpaces(eventOfTask[0]).isEmpty() && !removeSpaces(eventOfTask[1]).isEmpty();
     }
 }

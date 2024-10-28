@@ -9,7 +9,7 @@ public class JibberJabber {
         String todoTask;
         while(true){
             int totalNumberOfTaskObj =  Task.getTotalNumberOfTodoTask();
-            todoTask = scanner.nextLine().trim();
+            todoTask = ExceptionHandling.removeSpaces(scanner.nextLine());
             // Check for empty input string and bypass it
             if(ExceptionHandling.isEmptyInput(todoTask)){
                 Message.printEmptyMessage(false);
@@ -17,8 +17,9 @@ public class JibberJabber {
             }
             String[] splitTodoTask = todoTask.split(" ");
             String splitWord = splitTodoTask[0].toLowerCase();
+            // User input keyword per instance --> created instance method
             KeywordHandling keywordHandling = new KeywordHandling();
-            // Check if input value has task command - todos / events / deadlines
+            // Check if input value contains keywords
             if (ExceptionHandling.isCommandKeywordPresent(splitWord)){
                 switch (splitWord){
                     case "bye":
@@ -41,7 +42,7 @@ public class JibberJabber {
                             // Checks for duplicated tasks being added
                             Message.printDuplicateMessage();
                         } else {
-                            Task.addTask(todoTaskList, todoTask, splitWord);
+                            Task.addTask(todoTaskList, todoTask, splitWord, keywordHandling);
                         }
                 }
             } else {

@@ -2,7 +2,7 @@ public class Message {
     public static void printHorizontalLines(){
         System.out.println("____________________________________________________________");
     }
-    public static void printSingleMessage(String textMessage){
+    private static void printSingleMessage(String textMessage){
         printHorizontalLines();
         System.out.println(textMessage);
         printHorizontalLines();

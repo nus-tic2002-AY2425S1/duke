@@ -16,13 +16,4 @@ public enum Keywords {
     public String getKeyword() {
         return keyword;
     }
-    public static boolean isValidKeyword(String keyword) {
-        // Iterating each Enum value and check against the input keyword
-        for (Keywords keywords : Keywords.values()) {
-            if (keywords.getKeyword().equalsIgnoreCase(keyword)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

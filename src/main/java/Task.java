@@ -37,7 +37,7 @@ public class Task {
     public static void printTaskList(ArrayList<Task> todoTaskList) {
         Message.printHorizontalLines();
         System.out.println("Here are the tasks in your list:");
-        // Using totalNumberOfTodoTask as the source of truth for the number of task objects created
+        // Using totalNumberOfTodoTask as the source of truth to determine the number of task objects created
         for (int counter = 0; counter < totalNumberOfTodoTask; counter++) {
             int listIndex = counter + 1;
             Task currentTask = todoTaskList.get(counter);
@@ -45,8 +45,7 @@ public class Task {
         }
         Message.printHorizontalLines();
     }
-    public static void addTask(ArrayList<Task> todoTaskList, String todoTask, String keyword){
-        KeywordHandling keywordHandling = new KeywordHandling();
+    public static void addTask(ArrayList<Task> todoTaskList, String todoTask, String keyword, KeywordHandling keywordHandling){
         switch (keyword){
             case "todo":
                 keywordHandling.processTodoTask(todoTask, todoTaskList);

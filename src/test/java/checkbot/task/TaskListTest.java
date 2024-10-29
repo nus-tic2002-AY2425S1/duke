@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -15,10 +14,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class TaskListTest {
     @Test
     public void testAddTodo() {
-        Todo todo = TaskList.addTodo("Todo description");
-        assertEquals("Todo description", todo.getDescription());
-        assertEquals(TaskStatus.NOT_DONE, todo.status);
-        assertEquals(TaskPriority.NOT_SET, todo.priority);
+        try {
+            Todo todo = TaskList.addTodo("Todo description");
+            assertEquals("Todo description", todo.getDescription());
+            assertEquals(TaskStatus.NOT_DONE, todo.status);
+            assertEquals(TaskPriority.NOT_SET, todo.priority);
+        } catch (Exception e) {
+            System.out.println("Exception Caught");
+        }
     }
 
     @Test

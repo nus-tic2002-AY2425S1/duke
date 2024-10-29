@@ -30,6 +30,9 @@ public class Parser {
             case "list":
                 TextUi.printTasks();
                 break;
+            case "ranking":
+                TextUi.printRankedTasks();
+                break;
             case "mark":
                 // fallthrough
             case "unmark":

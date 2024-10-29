@@ -18,6 +18,7 @@ public class Messages {
             "  deadline <description> /by <DD/MM/YYYY HHMM(24H)>" + System.lineSeparator() +
             "  event <description> /from <DD/MM/YYYY HHMM(24H)> /to <DD/MM/YYYY HHMM(24H)>" + System.lineSeparator() +
             "To see the full task list: type \"list\"." + System.lineSeparator() +
+            "To see undone tasks in order of priority level, type \"ranking\"." + System.lineSeparator() +
             "To delete a task: Start with \"delete\", followed by the task number." + System.lineSeparator() +
             "To mark a task as done or undone: Start with \"mark\" or \"unmark\", followed by the task number." +
             System.lineSeparator() +

@@ -1,8 +1,7 @@
 package checkbot.parser;
 
 import checkbot.exception.CommandNotFoundException;
-import checkbot.exception.EmptyInputException;
-import checkbot.exception.EmptyTimeException;
+import checkbot.exception.InvalidInputException;
 import checkbot.storage.StorageFile;
 import checkbot.task.Task;
 import checkbot.task.TaskList;
@@ -42,20 +41,17 @@ public class Parser {
                     TaskList.setStatus(input);
                     StorageFile.updateFile();
                     break;
-                } catch (EmptyInputException e) {
-                    System.out.println(Messages.EMPTY_NUMBER);
-                    break;
                 } catch (NumberFormatException e) {
                     System.out.println(Messages.NON_INTEGER_NUMBER);
                     break;
                 } catch (IndexOutOfBoundsException | NullPointerException e) {
                     System.out.println(Messages.INVALID_TASK_NUMBER);
                     break;
-                } catch (CommandNotFoundException e) {
-                    System.out.println(Messages.INVALID_PRIORITY);
+                } catch (CommandNotFoundException | InvalidInputException e) {
+                    System.out.println(e.getMessage());
                     break;
                 }
-            case "find":
+                case "find":
                 TextUi.printMatchingTasks(input.split(" ",2)[1].trim());
                 break;
             case "todo":
@@ -70,16 +66,10 @@ public class Parser {
                         TextUi.echoAddTask(task);
                     }
                     break;
-                } catch (EmptyInputException e) {
-                    TextUi.printEmptyDescription();
-                    break;
-                } catch (EmptyTimeException e) {
-                    TextUi.printEmptyTime();
-                    break;
-                } catch (DateTimeException e) {
+                } catch (DateTimeException | InvalidInputException e) {
                     System.out.println(e.getMessage());
                     break;
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException | IndexOutOfBoundsException e) {
                     System.out.println(Messages.INVALID_DATETIME);
                     break;
                 }
@@ -96,7 +86,7 @@ public class Parser {
      * @param input Format: DD/MM/YYYY HHMM(24H)
      * @return LocalDateTime object
      */
-    public static LocalDateTime parseDateTime(String input) {
+    public static LocalDateTime parseDateTime(String input) throws NumberFormatException, NullPointerException {
         String[] dateTimeArray = input.split(" ",2);
 
         String date = dateTimeArray[0].trim();

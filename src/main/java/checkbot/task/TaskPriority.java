@@ -1,4 +1,4 @@
-package checkbot.Task;
+package checkbot.task;
 
 public enum TaskPriority {
     HIGH, MEDIUM, LOW, NOT_SET;

@@ -1,4 +1,4 @@
-package checkbot.Task;
+package checkbot.task;
 
 public abstract class Task {
     protected String description;
@@ -7,9 +7,9 @@ public abstract class Task {
     protected TaskPriority priority;
 
     /**
-     * Constructor for Task object. Sets status as not done and priority as not set.
+     * Constructs Task object. Sets status as not done and priority as not set.
      *
-     * @param description String
+     * @param description Task description
      */
     public Task(String description) {
         this.description = description;
@@ -23,6 +23,14 @@ public abstract class Task {
 
     public String getStatusIcon() {
         return status.getStatusIcon();
+    }
+
+    public TaskStatus getDone() {
+        return status;
+    }
+
+    public TaskPriority getPriority() {
+        return priority;
     }
 
     public String getTaskIcon(){
@@ -42,8 +50,8 @@ public abstract class Task {
         return priority.toString();
     }
 
-    public void setDone(boolean done) {
-        if (done) {
+    public void setDone(boolean isDone) {
+        if (isDone) {
             status = TaskStatus.DONE;
         } else {
             status = TaskStatus.NOT_DONE;
@@ -52,20 +60,20 @@ public abstract class Task {
 
     public void setPriority(TaskPriority priority) {
         switch (priority) {
-            case LOW:
-                this.priority = TaskPriority.LOW;
-                break;
-            case MEDIUM:
-                this.priority = TaskPriority.MEDIUM;
-                break;
-            case HIGH:
-                this.priority = TaskPriority.HIGH;
-                break;
-            case NOT_SET:
-                this.priority = TaskPriority.NOT_SET;
-                break;
-            default:
-                // do nothing
+        case LOW:
+            this.priority = TaskPriority.LOW;
+            break;
+        case MEDIUM:
+            this.priority = TaskPriority.MEDIUM;
+            break;
+        case HIGH:
+            this.priority = TaskPriority.HIGH;
+            break;
+        case NOT_SET:
+            this.priority = TaskPriority.NOT_SET;
+            break;
+        default:
+            // do nothing
         }
     }
 

@@ -25,6 +25,14 @@ public abstract class Task {
         return status.getStatusIcon();
     }
 
+    public TaskStatus getDone() {
+        return status;
+    }
+
+    public TaskPriority getPriority() {
+        return priority;
+    }
+
     public String getTaskIcon(){
         return taskType.getTaskIcon();
     }

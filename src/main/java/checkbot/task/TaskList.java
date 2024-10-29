@@ -18,8 +18,37 @@ public class TaskList {
      * @param input Task description
      * @return Todo object
      */
-    public static Todo addTodo(String input){
-        Todo task = new Todo(input);
+    public static Todo addTodo(String input) throws CommandNotFoundException, InvalidInputException,
+            NumberFormatException, IndexOutOfBoundsException, DateTimeException {
+        /** If input doesn't have both /between and /and keywords, it's a normal todo task */
+        if (!(input.contains("/between") || input.contains("/and"))) {
+            Todo task = new Todo(input);
+            TaskList.tasks.add(task);
+            return task;
+        }
+
+        /** If it has either one of the 2 keywords, it's a do within a period task */
+        // input format: <description> /between <DD/MM/YYYY HHMM(24H)> /and <DD/MM/YYYY HHMM(24H)>
+        if (!input.contains("/between") || !input.contains("/and")){
+            throw new CommandNotFoundException(Messages.TODO_ERROR);
+        }
+
+        String[] todoArray = input.split("/between",2);
+        String[] dateTimeArray = todoArray[1].split("/and",2);
+        String description = todoArray[0].trim();
+
+        if (description.isEmpty()) {
+            throw new InvalidInputException(Messages.EMPTY_DESCRIPTION);
+        }
+
+        String startDateTime = dateTimeArray[0].trim();
+        String endDateTime = dateTimeArray[1].trim();
+
+        if (startDateTime.isEmpty() || endDateTime.isEmpty()) {
+            throw new InvalidInputException(Messages.EMPTY_TIME);
+        }
+
+        Todo task = new Todo(description, Parser.parseDateTime(startDateTime), Parser.parseDateTime(endDateTime));
         TaskList.tasks.add(task);
         return task;
     }
@@ -166,7 +195,7 @@ public class TaskList {
         TaskList.tasks.remove(task);
         System.out.println(Messages.DIVIDER + System.lineSeparator() +
                 "Got it. I've removed this task: " + System.lineSeparator() +
-                "  " + task.getListView() + System.lineSeparator() +
+                "  " + task.getDescription() + System.lineSeparator() +
                 "Now you have " + TaskList.tasks.size() + " task(s) in the list." + System.lineSeparator() +
                 Messages.DIVIDER);
 

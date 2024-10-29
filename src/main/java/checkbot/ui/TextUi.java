@@ -2,10 +2,15 @@ package checkbot.ui;
 
 import checkbot.task.Task;
 import checkbot.task.TaskList;
+import checkbot.task.TaskStatus;
 import checkbot.utils.Messages;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Scanner;
+
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
 
 public class TextUi {
     public static Scanner scanInput = new Scanner(System.in);
@@ -61,7 +66,7 @@ public class TextUi {
         System.out.println(Messages.DIVIDER);
         System.out.println("Here are the task(s) in your list:");
         for (Task task : TaskList.tasks) {
-            System.out.println(TaskList.tasks.indexOf(task)+1 + ". " + task.getListView());
+            System.out.println(task.getListView());
         }
         System.out.println(Messages.DIVIDER);
     }
@@ -79,7 +84,7 @@ public class TextUi {
 
         for (Task task : TaskList.tasks) {
             if (task.getDescription().contains(input)) {
-                System.out.println(TaskList.tasks.indexOf(task)+1 + ". " + task.getListView());
+                System.out.println(task.getListView());
                 isFound = true;
             }
         }
@@ -90,7 +95,25 @@ public class TextUi {
 
         System.out.println(Messages.DIVIDER);
     }
-    
+
+    public static void printRankedTasks() {
+        System.out.println(Messages.DIVIDER);
+        System.out.println("Here are the undone task(s) in order of priority:");
+
+        // Code inspired from https://www.oracle.com/technical-resources/articles/java/ma14-java-se-8-streams.html
+        List<String> taskList = TaskList.tasks.stream()
+                .filter(t -> t.getDone() == TaskStatus.NOT_DONE)
+                .sorted(comparing(Task::getPriority))
+                .map(Task::getListView)
+                .toList();
+
+        for (String task : taskList) {
+            System.out.println(task);
+        }
+
+        System.out.println(Messages.DIVIDER);
+    }
+
     /**
      * Takes in LocalDateTime object and converts into string for UI list view.
      * E.g. of output: 26 OCTOBER 2024, 2:06AM.

@@ -35,7 +35,7 @@ public class Event extends Task {
      * Displays task in list view for user to see in UI.
      */
     public String getListView() {
-        return "[" + this.getPriorityIcon() + "][" + this.getTaskIcon() + "][" + this.getStatusIcon() + "] " +
+        return TaskList.tasks.indexOf(this)+1 + ". [" + this.getPriorityIcon() + "][" + this.getTaskIcon() + "][" + this.getStatusIcon() + "] " +
                 description + " (from: " + TextUi.printDateTime(startDateTime) + " to: " +
                 TextUi.printDateTime(endDateTime) + ")";
     }

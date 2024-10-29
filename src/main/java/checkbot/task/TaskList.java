@@ -166,7 +166,7 @@ public class TaskList {
         TaskList.tasks.remove(task);
         System.out.println(Messages.DIVIDER + System.lineSeparator() +
                 "Got it. I've removed this task: " + System.lineSeparator() +
-                "  " + task.getListView() + System.lineSeparator() +
+                "  " + task.getDescription() + System.lineSeparator() +
                 "Now you have " + TaskList.tasks.size() + " task(s) in the list." + System.lineSeparator() +
                 Messages.DIVIDER);
 

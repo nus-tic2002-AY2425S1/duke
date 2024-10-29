@@ -10,7 +10,7 @@ public class Event extends Task {
 
     public Event(String description, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         super(description);
-        taskType = TaskType.EVENT;
+        this.taskType = TaskType.EVENT;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
     }

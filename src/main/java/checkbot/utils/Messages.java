@@ -15,6 +15,7 @@ public class Messages {
     public final static String HELP = DIVIDER + System.lineSeparator() +
             "To add a task: Start with \"todo\", \"deadline\", or \"event\"." + System.lineSeparator() +
             "  todo <description>" + System.lineSeparator() +
+            "  todo <description> /between <DD/MM/YYYY HHMM(24H)> /and <DD/MM/YYYY HHMM(24H)>" + System.lineSeparator() +
             "  deadline <description> /by <DD/MM/YYYY HHMM(24H)>" + System.lineSeparator() +
             "  event <description> /from <DD/MM/YYYY HHMM(24H)> /to <DD/MM/YYYY HHMM(24H)>" + System.lineSeparator() +
             "To see the full task list: type \"list\"." + System.lineSeparator() +
@@ -39,14 +40,22 @@ public class Messages {
     public final static String EMPTY_DESCRIPTION = DIVIDER + System.lineSeparator() +
             "Task cannot be empty!" + System.lineSeparator() +
             "To add a Todo task: Todo <task>" + System.lineSeparator() +
+            "To add a period Todo task: Todo <task> /between <datetime> /and <datetime>" + System.lineSeparator() +
             "To add a Deadline task: Deadline <task> /by <datetime>" + System.lineSeparator() +
             "To add an Event task: Event <task> /from <datetime> /to <datetime>" + System.lineSeparator() +
             DIVIDER;
 
     public final static String EMPTY_TIME = DIVIDER + System.lineSeparator() +
             "We need to know the time! Try following the format below:" + System.lineSeparator() +
+            "To add a period Todo task: " +
+            "Todo <description> /between <DD/MM/YYYY HHMM(24H)> /and <DD/MM/YYYY HHMM(24H)>" + System.lineSeparator() +
             "To add a Deadline task: Deadline <task> /by <datetime>" + System.lineSeparator() +
             "To add an Event task: Event <task> /from <datetime> /to <datetime>" + System.lineSeparator() +
+            DIVIDER;
+
+    public final static String TODO_ERROR = DIVIDER + System.lineSeparator() +
+            "Missing keyword \"/between\" and/or \"/and\"!" + System.lineSeparator() +
+            "To add a period Todo task: Todo <task> /between <datetime> /and <datetime>" + System.lineSeparator() +
             DIVIDER;
 
     public final static String DEADLINE_ERROR = DIVIDER + System.lineSeparator() +

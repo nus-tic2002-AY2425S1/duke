@@ -9,7 +9,7 @@ public class Deadline extends Task {
 
     public Deadline(String description, LocalDateTime dueDateTime) {
         super(description);
-        taskType = TaskType.DEADLINE;
+        this.taskType = TaskType.DEADLINE;
         this.dueDateTime = dueDateTime;
     }
 

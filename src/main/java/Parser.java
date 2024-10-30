@@ -43,7 +43,7 @@ public class Parser {
 
 
     /**
-     *  switch date and time format from string to "dd/MM/yyyy HHmm" to LocalDateTime object
+     * switch date and time format from string to "dd/MM/yyyy HHmm" to LocalDateTime object
      * @param dateTimeString the date and time string to parse
      * @return LocalDateTime object which represent the parsed date and timing
      * @throws DateTimeParseException if the string cannot be parser
@@ -51,7 +51,6 @@ public class Parser {
     // Method to check date and time from "d/M/yyyy HHmm" format
     public static LocalDateTime parseDateTime(String dateTimeString) throws Exception {
         try {
-
             // Define the formatter
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
             return LocalDateTime.parse(dateTimeString, formatter);

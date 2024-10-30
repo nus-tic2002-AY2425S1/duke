@@ -115,6 +115,7 @@ public class SaveAndLoadTask {
             System.out.println("Error loading tasks: " + e.getMessage());
         }
 
+        assert taskList != null : "Task list should not be null after loading";
         return taskList;
     }
 }

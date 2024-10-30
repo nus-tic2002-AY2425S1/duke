@@ -31,6 +31,8 @@ public class May {
                 // split the input into two put one for task status other part for description
                 String[] command = input.split(" ", 2);
 
+                assert command.length > 0 : "Command should not be empty";
+
                 // Check for Exit command & output exit command message
                 if (command[0].equalsIgnoreCase("bye")) {
                     /*Exit Message*/
@@ -50,39 +52,51 @@ public class May {
 
                 // Mark the task as done
                 else if (command[0].equalsIgnoreCase("tick")) {
+                    assert command.length > 1 : "Task index required for tick command";
                     int taskIndex = Integer.parseInt(command[1]) - 1;
+                    assert taskIndex >= 0 && taskIndex < taskList.size() : "Task index out of bounds";
+                    taskList.get(taskIndex).markAsDone();
+                    System.out.println("Congratulations! You have completed the task! ");
+                    System.out.println(" " + taskList.get(taskIndex));
+                    SaveAndLoadTask.saveTasks(taskList);
                     // Check for taskIndex is within the task number
                     // If it is within the range, then we mark as done
-                    if (taskIndex < taskList.size()) {
-                        taskList.get(taskIndex).markAsDone();
-                        System.out.println("Congratulations! You have completed the task! ");
-                        System.out.println(" " + taskList.get(taskIndex));
-                        SaveAndLoadTask.saveTasks(taskList);
-                    }
-                    else {
-                        // add in error handle
-                        throw new ErrorException("Invalid task index. Please enter a valid task index.");
-                    }
+//                    if (taskIndex < taskList.size()) {
+//                        taskList.get(taskIndex).markAsDone();
+//                        System.out.println("Congratulations! You have completed the task! ");
+//                        System.out.println(" " + taskList.get(taskIndex));
+//                        SaveAndLoadTask.saveTasks(taskList);
+//                    }
+//                    else {
+//                        // add in error handle
+//                        throw new ErrorException("Invalid task index. Please enter a valid task index.");
+//                    }
                 }
 
                 // Mark the task as cross since it has not done
                 else if (command[0].equalsIgnoreCase("cross")) {
+                    assert command.length > 1 : "Task index required for cross command";
                     int taskIndex = Integer.parseInt(command[1]) - 1;
+                    assert taskIndex >= 0 && taskIndex < taskList.size() : "Task index out of bounds";
+                    taskList.get(taskIndex).unmarkAsDone();
+                    System.out.println("Task have not done, Kindly complete the task. ");
+                    System.out.println(" " + taskList.get(taskIndex));
+                    SaveAndLoadTask.saveTasks(taskList);  // Save after unmarking as done
                     // Check for taskIndex is within the task number
                     // If it is within the range, then we mark as done
-                    if (taskIndex < taskList.size()) {
-                        taskList.get(taskIndex).unmarkAsDone();
-                        System.out.println("Task have not done, Kindly complete the task. ");
-                        System.out.println(" " + taskList.get(taskIndex));
-                        SaveAndLoadTask.saveTasks(taskList);  // Save after unmarking as done
-                    }
-                    else {
-                        // add in error handle
-                        throw new ErrorException("Invalid task index. Please enter a valid task index.");
-                    }
+//                    if (taskIndex < taskList.size()) {
+//                        taskList.get(taskIndex).unmarkAsDone();
+//                        System.out.println("Task have not done, Kindly complete the task. ");
+//                        System.out.println(" " + taskList.get(taskIndex));
+//                        SaveAndLoadTask.saveTasks(taskList);  // Save after unmarking as done
+//                    }
+//                    else {
+//                        // add in error handle
+//                        throw new ErrorException("Invalid task index. Please enter a valid task index.");
+//                    }
                 }
 
-                // Create "todo-task"
+                // Create todo-task
                 else if (command[0].equalsIgnoreCase("todo")) {
                     if (command.length < 2 || command[1].trim().isEmpty()) {
                         throw new ErrorException(" 'todo' command cannot be empty.");

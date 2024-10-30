@@ -10,6 +10,7 @@ public class ManageTask {
 
     // add or update the task
     public void addOrUpdateTask(Task newTask){
+        assert newTask != null : "newTask cannot be null";
         for (int i = 0; i < taskList.size(); i++){
             if (taskList.get(i).taskName.equals(newTask.taskName)){
                 taskList.set(i, newTask);
@@ -30,6 +31,9 @@ public class ManageTask {
 
     // Add task to the task-list
     public void addTask(Task task){
+
+        assert task != null : "Task can't be null";
+
         if (isDuplicate(task.taskName)){
             System.out.println("This Task already exists: " + task.taskName);
         }
@@ -57,6 +61,8 @@ public class ManageTask {
 
     // Find task with keyword
     public void findTask(String keyword){
+
+        assert keyword != null : "keyword cannot be null";
         ArrayList<Task> matchTasks = taskList.stream().filter(task -> task.taskName.toLowerCase().contains(keyword.toLowerCase())).collect(Collectors.toCollection(ArrayList::new));
         if (matchTasks.isEmpty()){
             System.out.println("No task found with the keyword " + keyword);

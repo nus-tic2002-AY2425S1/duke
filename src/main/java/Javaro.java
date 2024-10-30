@@ -15,20 +15,39 @@ import java.util.List;
 public class Javaro {
     
     private Ui ui;
+    private Storage storage;
+    private TaskList taskList;
 
-    public Javaro(String filePath) {
+    public Javaro() {
+        
+        // Initialize Ui
         ui = new Ui();
+
+        // Initialize Storage
+        try {
+            storage = new Storage();
+        } catch (StorageOperationException storageOperationException) {
+            // ui.showError(storageOperationException);
+        }
     }
 
     public void run() {
         ui.showWelcome();
-        boolean isExit = false;
-
-        try {
-            String fullCommand = ui.readCommand();
-            ui.showLine();
-        } finally {
-            ui.showLine();
+        boolean isBye = false;
+        while (!isBye) {
+            try {
+                String userInput = ui.readInput();
+                // ui.showLine();
+                Command command = Parser.parse(userInput);
+                command.execute(ui);
+                // command.execute(taskList, ui, storage);
+                isBye = command.isBye();
+            } catch (CommandException e) {
+                // ui.showError(e.getMessage());
+                System.out.println("A command exception occurred");
+            } finally {
+                // ui.showLine();
+            }
         }
         
 
@@ -49,6 +68,6 @@ public class Javaro {
     }
 
     public static void main(String[] args) {
-        new Javaro("./data/tasks.txt").run();
+        new Javaro().run();
     }
 }

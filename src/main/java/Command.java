@@ -1,3 +1,19 @@
+public abstract class Command {
+
+    protected Command() {
+    }
+
+    public abstract void execute(Ui ui);
+    // public abstract void execute(TaskList taskList, Ui ui, Storage storage);
+
+    public boolean isBye() {
+        return true;
+    }
+}
+
+
+
+/* 
 // https://www.youtube.com/watch?v=wq9SJb8VeyM
 // https://www.simplilearn.com/tutorials/java-tutorial/enum-in-java
 // https://www.geeksforgeeks.org/java-program-to-convert-enum-to-string/
@@ -53,3 +69,4 @@ public enum Command {
     public static final String EVENT = EVENT_COMMAND.toString();
     public static final String DELETE = DELETE_COMMAND.toString();
 }
+*/

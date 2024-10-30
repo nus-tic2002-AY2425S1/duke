@@ -51,9 +51,11 @@ public class Ui {
     // Prints a horizontal line, followed by the message (may be one or multiple lines), then another horizontal line
     // https://stackoverflow.com/questions/2914695/how-can-you-write-a-function-that-accepts-multiple-types
     public <T> void printMessage(T messageList) {
+        // System.out.println("In printMessage");
         String line = getLine();        // includes space before line
         String space = getSpace(false, false);
         
+        // StringBuilder stringBuilder = new StringBuilder();
         StringBuilder stringBuilder = new StringBuilder().append(line).append(NEW_LINE);
         
         // System.out.println(messageList.getClass());
@@ -78,6 +80,7 @@ public class Ui {
             }
         }
 
+        // String text = stringBuilder.toString();
         String text = stringBuilder.append(line).toString();
         
         System.out.println(text);
@@ -90,13 +93,13 @@ public class Ui {
     }
 
     // Chatbot exits
-    public void exit() {
+    public void showBye() {
         String[] messageList = {Messages.MESSAGE_GOODBYE};
         printMessage(messageList);
     }
 
     // https://github.com/se-edu/addressbook-level2/blob/master/src/seedu/addressbook/ui/TextUi.java#L80
-    public String readCommand() {
+    public String readInput() {
         String userInput = in.nextLine().trim();
         while (userInput.isEmpty()) {
             userInput = in.nextLine().trim();

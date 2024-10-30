@@ -73,6 +73,9 @@ public class Ui {
         if (e.getDetail() != null && !e.getDetail().trim().isEmpty()) {
             messages.add(String.format(" Info: %s", e.getDetail()));
         }
+        if (e.getHelp() != null && !e.getHelp().trim().isEmpty()) {
+            messages.add(String.format(" Help: %s", e.getHelp()));
+        }
         printMessages(messages.toArray(new String[0]));
     }
 

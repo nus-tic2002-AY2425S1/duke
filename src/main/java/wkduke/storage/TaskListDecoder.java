@@ -2,8 +2,11 @@ package wkduke.storage;
 
 import wkduke.common.Messages;
 import wkduke.exception.FileContentException;
+import wkduke.exception.TaskFormatException;
+import wkduke.parser.TimeParser;
 import wkduke.task.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,11 +47,17 @@ public class TaskListDecoder {
         } catch (FileContentException e) {
             e.setDetail(String.format("EncodedTask='%s'", encodedTask));
             throw e;
+        } catch (TaskFormatException e) {
+            throw new FileContentException(
+                    e.getMessage(),
+                    String.format("EncodedTask='%s'", encodedTask),
+                    e.getHelp()
+            );
         }
 
     }
 
-    private static Task getTask(Matcher matcher, TaskType taskType) throws FileContentException {
+    private static Task getTask(Matcher matcher, TaskType taskType) throws FileContentException, TaskFormatException {
         String description = matcher.group("description");
         Task task;
         switch (taskType) {
@@ -60,7 +69,8 @@ public class TaskListDecoder {
                             Messages.MESSAGE_INVALID_DEADLINE_ENCODED
                     );
                 }
-                task = new Deadline(description, by);
+                LocalDateTime dateTime = TimeParser.parseDateTime(by);
+                task = new Deadline(description, dateTime);
             }
             case EVENT -> {
                 String from = matcher.group("from");
@@ -70,7 +80,9 @@ public class TaskListDecoder {
                             Messages.MESSAGE_INVALID_EVENT_ENCODED
                     );
                 }
-                task = new Event(description, from, to);
+                LocalDateTime fromDateTime = TimeParser.parseDateTime(from);
+                LocalDateTime toDateTime = TimeParser.parseDateTime(to);
+                task = new Event(description, fromDateTime, toDateTime);
             }
             default -> throw new AssertionError("An invalid task type scenario is already handled earlier.");
         }

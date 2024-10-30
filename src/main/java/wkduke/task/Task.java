@@ -9,6 +9,8 @@ public abstract class Task {
         this.isDone = false;
     }
 
+    public abstract String encode();
+
     public String getDescription() {
         return description;
     }

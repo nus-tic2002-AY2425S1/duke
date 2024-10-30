@@ -1,33 +1,47 @@
 package wkduke.task;
 
-public class Event extends Task {
-    protected String from;
-    protected String to;
+import wkduke.parser.TimeParser;
 
-    public Event(String description, String from, String to) {
+import java.time.LocalDateTime;
+
+public class Event extends Task {
+    protected LocalDateTime from;
+    protected LocalDateTime to;
+
+    public Event(String description, LocalDateTime from, LocalDateTime to) {
         super(description);
         this.from = from;
         this.to = to;
     }
 
-    public String getFrom() {
-        return from;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-    public String getTo() {
-        return to;
-    }
-
-    public void setTo(String to) {
-        this.to = to;
+    @Override
+    public String encode() {
+        return String.format("E | %s | %s | %s | %s",
+                isDone ? "1" : "0",
+                description,
+                from.format(TimeParser.ENCODING_FORMATTER),
+                to.format(TimeParser.ENCODING_FORMATTER)
+        );
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
+        return "[E]" + super.toString() + " (from:" + from.format(TimeParser.CLI_FORMATTER) + " to:" + to.format(TimeParser.CLI_FORMATTER) + ")";
+    }
+
+    public LocalDateTime getFrom() {
+        return from;
+    }
+
+    public void setFrom(LocalDateTime from) {
+        this.from = from;
+    }
+
+    public LocalDateTime getTo() {
+        return to;
+    }
+
+    public void setTo(LocalDateTime to) {
+        this.to = to;
     }
 }

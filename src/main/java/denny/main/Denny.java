@@ -21,6 +21,7 @@ public class Denny {
 
     /**
      * Initializes the task management application with the specified storage location.
+     *
      * @param filePath Path to the file where tasks will be stored
      */
     public Denny(String filePath) {
@@ -58,8 +59,11 @@ public class Denny {
     }
 
     /**
-     * Entry point of the application.
-     * @param args Command line arguments (not used)
+     * The main entry point of the Denny task management application.
+     * This method initializes the application with a specified file path
+     * and starts the main execution loop.
+     *
+     * @param args Command line arguments (not used).
      */
     public static void main(String[] args) {
         new Denny("data/tasks.txt").run();

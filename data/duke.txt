@@ -4,7 +4,7 @@ E | 0 | Team meeting | 23/10/2024 1000 | 23/10/2024 1100
 D | 0 | Submit paper | 22/10/2024 2359
 E | 1 | Play game | 23/10/2024 1000 | 23/10/2024 1100
 T | 0 | read book
-E | 0 | return book | 23/10/2024 1000 | 23/10/2024 1200
+D | 1 | return book | 31/10/2024 1500
 D | 0 | submit assignment | 22/10/2024 2359
-N | 0 | play game
-N | 0 | play
+D | 0 | play | 31/10/2024 1500
+E | 0 | attend meeting | 31/10/2024 1300 | 31/10/2024 1500

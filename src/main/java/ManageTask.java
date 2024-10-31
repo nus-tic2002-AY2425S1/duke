@@ -61,7 +61,7 @@ public class ManageTask {
         Task duplicateTask = isDuplicate(task.taskName);
         if (duplicateTask != null) {
             // Display the details of the duplicate task
-            System.out.println("This task already exists:");
+            System.out.println("OPS!!!! This task already exists:");
             System.out.println(" " + duplicateTask);
         }
         else{

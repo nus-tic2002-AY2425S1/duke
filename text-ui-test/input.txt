@@ -1,8 +1,7 @@
 testinvalidcommand
 todo
 todo 
-todo read book
-todo return book
+todo read book,return book
 todo buy book
 list
 mark 1

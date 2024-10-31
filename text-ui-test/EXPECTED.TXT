@@ -141,12 +141,35 @@ ____________________________________________________________
  Now you have 5 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
+Here are the matching tasks in your list:
+ 1.[T][X] read book
+ 2.[T][ ] return book
+ 3.[T][ ] borrow book
+ 4.[D][ ] return book (by: Dec 2 2019, 06:00 pm) (by: Dec 2 2019, 06:00 pm)
+____________________________________________________________
+____________________________________________________________
+Here are the matching tasks in your list:
+ 1.[E][ ] project meeting (from: Dec 2 2019, 06:00 pm to: Dec 4 2019, 09:00 am) (from: Dec 2 2019, 06:00 pm to: Dec 4 2019, 09:00 am)
+____________________________________________________________
+____________________________________________________________
  Here are the tasks in your list:
  1.[T][X] read book
  2.[T][ ] return book
  3.[T][ ] borrow book
  4.[D][ ] return book (by: Dec 2 2019, 06:00 pm) (by: Dec 2 2019, 06:00 pm)
  5.[E][ ] project meeting (from: Dec 2 2019, 06:00 pm to: Dec 4 2019, 09:00 am) (from: Dec 2 2019, 06:00 pm to: Dec 4 2019, 09:00 am)
+____________________________________________________________
+____________________________________________________________
+ Noted. I've removed these tasks:
+   [E][ ] project meeting (from: Dec 2 2019, 06:00 pm to: Dec 4 2019, 09:00 am)
+   [T][ ] borrow book
+   [T][X] read book
+ Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[T][ ] return book
+ 2.[D][ ] return book (by: Dec 2 2019, 06:00 pm) (by: Dec 2 2019, 06:00 pm)
 ____________________________________________________________
 ____________________________________________________________
  Bye. Hope to see you again soon!

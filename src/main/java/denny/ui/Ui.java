@@ -124,7 +124,7 @@ public class Ui {
      */
     public void showTaskAdded(Task task, int totalTasks) {
         System.out.println(" Got it. I've added this task:");
-        System.out.println("   " + task);
+        System.out.println("   " + task.toString().trim());
         System.out.println(" Now you have " + totalTasks + " tasks in the list.");
     }
 

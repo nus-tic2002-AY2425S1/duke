@@ -5,17 +5,19 @@ import wkduke.common.Messages;
 import wkduke.exception.CommandFormatException;
 import wkduke.exception.TaskFormatException;
 
+import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Parser {
+public class CommandParser {
     public static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
     public static final Pattern TASK_TODO_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+)");
-    public static final Pattern TASK_DEADLINE_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+) /by (?<by>[^/]+)");
-    public static final Pattern TASK_EVENT_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+) /from (?<from>[^/]+) /to (?<to>[^/]+)");
+    public static final Pattern TASK_DEADLINE_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+) /by (?<by>.+)");
+    public static final Pattern TASK_EVENT_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+) /from (?<from>.+) /to (?<to>.+)");
     public static final Pattern MARK_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
     public static final Pattern UNMARK_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
     public static final Pattern DELETE_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
+    public static final Pattern LIST_TASK_ARGS_FORMAT = Pattern.compile("/on (?<on>.+)");
 
     public static Command parseCommand(String userInput) throws CommandFormatException, TaskFormatException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
@@ -27,8 +29,8 @@ public class Parser {
         final String arguments = matcher.group("arguments").trim();
 
         return switch (commandWord) {
-            case ListCommand.COMMAND_WORD -> new ListCommand();
             case ExitCommand.COMMAND_WORD -> new ExitCommand();
+            case ListCommand.COMMAND_WORD -> prepareList(arguments);
             case AddCommand.COMMAND_WORD_TODO -> prepareAddToDo(arguments);
             case AddCommand.COMMAND_WORD_DEADLINE -> prepareAddDeadline(arguments);
             case AddCommand.COMMAND_WORD_EVENT -> prepareAddEvent(arguments);
@@ -65,7 +67,8 @@ public class Parser {
                     AddDeadlineCommand.MESSAGE_USAGE
             );
         }
-        return new AddDeadlineCommand(matcher.group("description"), matcher.group("by"));
+        LocalDateTime byDateTime = TimeParser.parseDateTime(matcher.group("by"));
+        return new AddDeadlineCommand(matcher.group("description"), byDateTime);
     }
 
     private static Command prepareAddEvent(String arguments) throws TaskFormatException {
@@ -77,7 +80,16 @@ public class Parser {
                     AddEventCommand.MESSAGE_USAGE
             );
         }
-        return new AddEventCommand(matcher.group("description"), matcher.group("from"), matcher.group("to"));
+        LocalDateTime fromDateTime = TimeParser.parseDateTime(matcher.group("from"));
+        LocalDateTime toDateTime = TimeParser.parseDateTime(matcher.group("to"));
+        if (fromDateTime.isAfter(toDateTime)) {
+            throw new TaskFormatException(
+                    Messages.MESSAGE_INVALID_TASK_ARG_FORMAT,
+                    String.format("TaskArguments='%s'", arguments),
+                    String.format(Messages.MESSAGE_INVALID_DATETIME_RANGE, fromDateTime, toDateTime)
+            );
+        }
+        return new AddEventCommand(matcher.group("description"), fromDateTime, toDateTime);
     }
 
     private static Command prepareDelete(String arguments) throws CommandFormatException {
@@ -114,5 +126,22 @@ public class Parser {
             );
         }
         return new UnmarkCommand(Integer.parseInt(matcher.group("taskNumber")));
+    }
+
+    private static Command prepareList(String arguments) throws CommandFormatException, TaskFormatException {
+        if (arguments.isEmpty()) {
+            return new ListCommand();
+        }
+
+        final Matcher matcher = LIST_TASK_ARGS_FORMAT.matcher(arguments.trim());
+        if (!matcher.matches()) {
+            throw new CommandFormatException(
+                    Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    String.format("Command='list', Arguments='%s'", arguments),
+                    ListOnCommand.MESSAGE_USAGE
+            );
+        }
+        LocalDateTime onDateTime = TimeParser.parseDateTime(matcher.group("on"));
+        return new ListOnCommand(onDateTime);
     }
 }

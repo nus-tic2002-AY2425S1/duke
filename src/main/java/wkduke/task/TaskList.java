@@ -1,5 +1,6 @@
 package wkduke.task;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +27,23 @@ public class TaskList {
         return taskList;
     }
 
+    public List<Task> getAllTaskOnDate(LocalDateTime targetDateTime) {
+        List<Task> result = new ArrayList<>();
+
+        for (Task task : taskList) {
+            if (task.isOnDate(targetDateTime)) {
+                result.add(task);
+            }
+        }
+        return result;
+    }
+
     public Task getTask(int index) {
         return taskList.get(index);
+    }
+
+    public int getTaskIndex(Task task) {
+        return taskList.indexOf(task);
     }
 
     public boolean isEmpty() {

@@ -4,7 +4,7 @@ import wkduke.command.Command;
 import wkduke.exception.FileContentException;
 import wkduke.exception.StorageOperationException;
 import wkduke.exception.WKDukeException;
-import wkduke.parser.Parser;
+import wkduke.parser.CommandParser;
 import wkduke.storage.Storage;
 import wkduke.task.TaskList;
 import wkduke.ui.Ui;
@@ -35,7 +35,7 @@ public class WKDuke {
         while (!isExit) {
             try {
                 String userInput = ui.readCommand();
-                Command c = Parser.parseCommand(userInput);
+                Command c = CommandParser.parseCommand(userInput);
                 c.execute(taskList, ui, storage);
                 isExit = c.isExit();
             } catch (StorageOperationException e) {

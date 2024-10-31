@@ -1,5 +1,7 @@
 package wkduke.task;
 
+import java.time.LocalDateTime;
+
 public abstract class Task {
     protected String description;
     protected boolean isDone;
@@ -8,6 +10,8 @@ public abstract class Task {
         this.description = description;
         this.isDone = false;
     }
+
+    public abstract String encode();
 
     public String getDescription() {
         return description;
@@ -24,6 +28,8 @@ public abstract class Task {
     public boolean isDone() {
         return isDone;
     }
+
+    public abstract boolean isOnDate(LocalDateTime targetDateTime);
 
     public void markAsDone() {
         isDone = true;

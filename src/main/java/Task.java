@@ -1,17 +1,13 @@
-
-
-/**
- * Create a task class with task name and the status
-*/
+import java.time.LocalDateTime;
 
 public class Task {
     protected String taskName;
     protected boolean isDone;
+    protected LocalDateTime completedDate;
 
 
     /**
      * Constructor which help to construct a new task with the given name
-     *
      * @param taskName which is the name of the task
      */
     public Task (String taskName) {
@@ -32,19 +28,20 @@ public class Task {
         return (isDone? "✔" : " ");
     }
 
-    /**
-     * To mark the task as done
-     */
+
     public void markAsDone(){
         isDone = true;
+        completedDate = LocalDateTime.now();
     }
 
-    /**
-     * To mark the task which had not done
-     */
     // Task have not Done set to false
     public void unmarkAsDone(){
         isDone = false;
+    }
+
+    // Getter for the complete date
+    public LocalDateTime getCompletedDate() {
+        return completedDate;
     }
 
     /**

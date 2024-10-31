@@ -3,6 +3,14 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class Parser {
+
+    /**
+     * Parser which is the command that determine the type of task we would like to create. For example a normal task
+     * or it is an event or deadline task.
+     * @param command which is the input command that user input to specific the type of the task with the details.
+     * @return a Task object based on the command type either normal task or Event or Deadline task.
+     * @throws Exception if the command does not match any know task type
+     */
     public static Task parseCommand(String command) throws Exception {
 
         // Check for normal task command

@@ -9,7 +9,6 @@ public class TaskListDecoder {
     public static TaskList decodeTaskList(List<String> encodedTaskList) throws FileContentException, TaskListDecoderException {
         TaskList decodedTasks = new TaskList();
         for (String encodedTask : encodedTaskList) {
-            // System.out.println("In loop of encoded tasks");
             Task task = decodeTaskFromString(encodedTask);
             // System.out.println("Decoded task: " + task);
             decodedTasks.addTask(task);
@@ -53,7 +52,11 @@ public class TaskListDecoder {
         
         boolean isDone;
         try {
-            isDone = Boolean.valueOf(taskData[1]);
+            if (taskData[1].equals("1")) {
+                isDone = true;
+            } else {
+                isDone = false;
+            }
         } catch (NumberFormatException e) {
             throw new FileContentException("Invalid completion status found. Expected 0 or 1, but found: " + taskData[1]);
         }

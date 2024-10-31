@@ -19,7 +19,11 @@ public class Messages {
     public static final String ERROR_SECURITY_CREATE_FILE = FAIL_CREATE_FILE + "security restrictions. Please ensure that you have sufficient permissions to create the task file";
     
     // TaskList
-    public static final String MESSAGE_TASKLIST_EMPTY = "Good job! You're all caught up!";
+    public static final String TASKLIST_EMPTY = "Good job! You're all caught up!";
+
+    public static final String INVALID_COMMAND = "Invalid command.";
+    public static final String VALID_COMMANDS = "Please start with 'list', 'mark', 'unmark', 'todo', 'deadline', 'event'. If you are done, please enter 'bye' to exit the chat";
+    public static final String INVALID_COMMAND_FORMAT = "Invalid command format.";
 
 
     // public static final String MESSAGE_INIT_FAILED = "Failed to initialise address book application. Exiting...";

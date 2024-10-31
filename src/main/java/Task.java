@@ -5,6 +5,8 @@ public abstract class Task {
     protected String description;
     protected boolean isDone;
 
+    // public abstract TaskType getTaskType();
+
     public Task(String description, boolean isDone) {
         this.description = description;
         this.isDone = isDone;
@@ -58,26 +60,6 @@ public abstract class Task {
     public String encodeTask() {
         String separator = " | ";
         return separator + getIsDoneValue() + separator + getDescription().trim();
-        // return (separator + getIsDoneValue() + separator + getDescription()).trim();
     }
-
-    // public void writeToFile(StorageFile file) {
-    //     String separator = " | ";
-    //     int doneValue = 0;
-    //     if (getIsDone()) {
-    //         doneValue = 1;
-    //     }
-    //     String text = separator + doneValue + separator + getDescription();
-    //     // System.out.println("text is " + text);
-
-    //     // System.out.println(file.filePath);
-    //     file.writeToFile(text);
-
-    // }
-
-
-    // Generate string to write to ArrayList as Tasks
-    // public String decodeTask() {
-    // }
 
 }

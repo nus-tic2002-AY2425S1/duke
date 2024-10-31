@@ -37,7 +37,7 @@ public class Javaro {
             taskList = new TaskList();
         }
 
-        System.out.println("taskList: " + taskList);
+        // System.out.println("taskList: " + taskList);
     }
 
     public void run() {
@@ -52,9 +52,10 @@ public class Javaro {
                 command.execute(taskList, ui, storage);
                 // command.execute(taskList, ui, storage);
                 isBye = command.isBye();
-            } catch (CommandException e) {
+            } catch (CommandException | StorageOperationException e) {
                 // ui.showError(e.getMessage());
-                System.out.println("A command exception occurred");
+                // System.out.println("A command exception occurred");
+                System.out.println(e.getMessage());
             } finally {
                 // ui.showLine();
             }

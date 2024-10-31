@@ -10,53 +10,46 @@ public class TaskList {
         this.taskList = new ArrayList<>();
     }
 
+    public List<Task> getTaskList() {
+        return taskList;
+    }
+
     // Gets the total number of tasks in the list
     public int getSize() {
-        return taskList.size();
+        return getTaskList().size();
     }
 
     public boolean isEmpty() {
-        return taskList.isEmpty();
+        return getTaskList().isEmpty();
     }
 
     // Gets a task at a specific index
     public Task getTask(int index) {
-        return taskList.get(index);
+        return getTaskList().get(index);
     }
 
     // Adds a new task
     public void addTask(Task task) {
         if (task != null) {
-            taskList.add(task);
+            getTaskList().add(task);
         }
     }
 
     // Removes a task from the list
     public boolean removeTask(Task task) {
-        return taskList.remove(task);
+        return getTaskList().remove(task);
     } 
 
-    public List<String> prepareTaskListToPrint() throws TaskException {
-        List<String> taskListForPrint = new ArrayList<>();
-        
-        if (isEmpty()) {
-            throw new TaskException(Messages.MESSAGE_TASKLIST_EMPTY);
+    public boolean markTask(int taskIndex) {
+        // System.out.println("Before marking " + taskList);
+        Task taskToMark = getTask(taskIndex);
+        // System.out.println("getIsDone " + taskToMark.getIsDone());
+        if (taskToMark.getIsDone() == true) {
+            return false;
+        } else {
+            taskToMark.setDone(true);
+            return true;
         }
-        
-        for (int i = 0; i < getSize(); i++) {
-            Task current = getTask(i);         // taskList.get(i) contains the checkbox
-            String index = Integer.toString(i + 1);
-            String line = index + ". " + current;
-            taskListForPrint.add(line);
-        }
-
-        return taskListForPrint;
     }
 
-    // @Override
-    // public void toString() {
-    //     for (Task task : taskList) {
-
-    //     }
-    // }
 }

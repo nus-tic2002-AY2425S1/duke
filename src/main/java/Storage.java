@@ -115,4 +115,14 @@ public class Storage {
         // }
     }
 
+    // Write all tasks in taskList into tasks.txt
+    public void saveTasks(TaskList taskList) throws StorageOperationException {
+        try {
+            List<String> encodedTaskList = TaskListEncoder.encodeTaskList(taskList);
+            Files.write(getFilePath(), encodedTaskList);
+        } catch (IOException ioe) {
+            throw new StorageOperationException("Error writing to file: " + getFilePath());
+        }
+    }
+
 }

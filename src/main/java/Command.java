@@ -3,7 +3,7 @@ public abstract class Command {
     protected Command() {
     }
 
-    public abstract void execute(TaskList taskList, Ui ui, Storage storage);
+    public abstract void execute(TaskList taskList, Ui ui, Storage storage) throws CommandException, StorageOperationException;
     // public abstract void execute(TaskList taskList, Ui ui, Storage storage);
 
     public boolean isBye() {

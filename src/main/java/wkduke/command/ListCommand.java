@@ -1,6 +1,7 @@
 package wkduke.command;
 
 import wkduke.storage.Storage;
+import wkduke.task.Task;
 import wkduke.task.TaskList;
 import wkduke.ui.Ui;
 
@@ -14,15 +15,16 @@ public class ListCommand extends Command {
 
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
-        if (taskList.isEmpty()) {
+        List<Task> tasks = taskList.getAllTask();
+        if (tasks.isEmpty()) {
             ui.printMessages(MESSAGE_FAILED);
             return;
         }
-
+        
         List<String> messages = new ArrayList<>();
         messages.add(MESSAGE_SUCCESS);
-        for (int i = 0; i < taskList.size(); i++) {
-            messages.add(String.format("%d.%s", i + 1, taskList.getTask(i)));
+        for (Task task : tasks) {
+            messages.add(String.format("%d.%s", taskList.getTaskIndex(task) + 1, task));
         }
         ui.printMessages(messages.toArray(new String[0]));
     }

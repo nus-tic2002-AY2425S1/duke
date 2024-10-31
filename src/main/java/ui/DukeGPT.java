@@ -36,7 +36,7 @@ public class DukeGPT {
     private static Map<String, CommandHandler> commandHandlerMapping = new HashMap<>();
 
     /**
-     * Initialise the command handlers
+     * Initialises the command handlers.
      */
     private static void initCommandHandlers() {
         commandHandlerMapping.put(CommandType.LIST.name().toLowerCase(), new ListCommandHandler());
@@ -87,8 +87,9 @@ public class DukeGPT {
     }
 
     /**
-     * Main method for DukeGPT Application
-     * @param args Command line arguments
+     * The main method for the DukeGPT application.
+     *
+     * @param args Command-line arguments
      */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);

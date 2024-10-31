@@ -21,14 +21,14 @@ public abstract class Task {
     }
 
     /**
-     * Mark task as done
+     * Marks the task as done.
      */
     public void markDone(){
         isDone = true;
     }
 
     /**
-     * Unmark task as done
+     * Un-marks the task as done.
      */
     public void unmarkDone(){
         isDone = false;

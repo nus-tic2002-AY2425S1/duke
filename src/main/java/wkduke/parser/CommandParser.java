@@ -9,6 +9,10 @@ import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Parses user input into command objects for execution.
+ * Uses regular expressions to match and extract command keywords and arguments.
+ */
 public class CommandParser {
     public static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
     public static final Pattern TASK_TODO_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+)");
@@ -19,6 +23,14 @@ public class CommandParser {
     public static final Pattern DELETE_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
     public static final Pattern LIST_TASK_ARGS_FORMAT = Pattern.compile("/on (?<on>.+)");
 
+    /**
+     * Parses the user input into a command.
+     *
+     * @param userInput The full user input to be parsed.
+     * @return The corresponding {@code Command} based on the user input.
+     * @throws CommandFormatException If the command format is invalid.
+     * @throws TaskFormatException    If the task format within the command is invalid.
+     */
     public static Command parseCommand(String userInput) throws CommandFormatException, TaskFormatException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
@@ -46,6 +58,13 @@ public class CommandParser {
 
     }
 
+    /**
+     * Prepares an AddToDo command from the given arguments.
+     *
+     * @param arguments The arguments provided for the ToDo task.
+     * @return A new {@code AddToDoCommand} with the specified task description.
+     * @throws TaskFormatException If the arguments format is invalid.
+     */
     private static Command prepareAddToDo(String arguments) throws TaskFormatException {
         final Matcher matcher = TASK_TODO_DATA_ARGS_FORMAT.matcher(arguments.trim());
         if (!matcher.matches()) {
@@ -58,6 +77,13 @@ public class CommandParser {
         return new AddToDoCommand(matcher.group("description"));
     }
 
+    /**
+     * Prepares an AddDeadline command from the given arguments.
+     *
+     * @param arguments The arguments provided for the Deadline task.
+     * @return A new {@code AddDeadlineCommand} with the specified description and due date.
+     * @throws TaskFormatException If the arguments format is invalid.
+     */
     private static Command prepareAddDeadline(String arguments) throws TaskFormatException {
         final Matcher matcher = TASK_DEADLINE_DATA_ARGS_FORMAT.matcher(arguments.trim());
         if (!matcher.matches()) {
@@ -71,6 +97,13 @@ public class CommandParser {
         return new AddDeadlineCommand(matcher.group("description"), byDateTime);
     }
 
+    /**
+     * Prepares an AddEvent command from the given arguments.
+     *
+     * @param arguments The arguments provided for the Event task.
+     * @return A new {@code AddEventCommand} with the specified description, start date, and end date.
+     * @throws TaskFormatException If the arguments format is invalid.
+     */
     private static Command prepareAddEvent(String arguments) throws TaskFormatException {
         final Matcher matcher = TASK_EVENT_DATA_ARGS_FORMAT.matcher(arguments.trim());
         if (!matcher.matches()) {
@@ -92,6 +125,13 @@ public class CommandParser {
         return new AddEventCommand(matcher.group("description"), fromDateTime, toDateTime);
     }
 
+    /**
+     * Prepares a DeleteCommand from the given arguments.
+     *
+     * @param arguments The arguments provided to specify which task to delete.
+     * @return A new {@code DeleteCommand} with the specified task number.
+     * @throws CommandFormatException If the arguments format is invalid.
+     */
     private static Command prepareDelete(String arguments) throws CommandFormatException {
         final Matcher matcher = DELETE_TASK_ARGS_FORMAT.matcher(arguments.trim());
         if (!matcher.matches()) {
@@ -104,6 +144,13 @@ public class CommandParser {
         return new DeleteCommand(Integer.parseInt(matcher.group("taskNumber")));
     }
 
+    /**
+     * Prepares a MarkCommand from the given arguments.
+     *
+     * @param arguments The arguments provided to specify which task to mark as done.
+     * @return A new {@code MarkCommand} with the specified task number.
+     * @throws CommandFormatException If the arguments format is invalid.
+     */
     private static Command prepareMark(String arguments) throws CommandFormatException {
         final Matcher matcher = MARK_TASK_ARGS_FORMAT.matcher(arguments.trim());
         if (!matcher.matches()) {
@@ -116,6 +163,13 @@ public class CommandParser {
         return new MarkCommand(Integer.parseInt(matcher.group("taskNumber")));
     }
 
+    /**
+     * Prepares an UnmarkCommand from the given arguments.
+     *
+     * @param arguments The arguments provided to specify which task to unmark.
+     * @return A new {@code UnmarkCommand} with the specified task number.
+     * @throws CommandFormatException If the arguments format is invalid.
+     */
     private static Command prepareUnmark(String arguments) throws CommandFormatException {
         final Matcher matcher = UNMARK_TASK_ARGS_FORMAT.matcher(arguments.trim());
         if (!matcher.matches()) {
@@ -128,6 +182,14 @@ public class CommandParser {
         return new UnmarkCommand(Integer.parseInt(matcher.group("taskNumber")));
     }
 
+    /**
+     * Prepares a ListCommand or ListOnCommand based on the arguments.
+     *
+     * @param arguments The arguments specifying a date for filtering, if provided.
+     * @return A {@code ListCommand} if no date is provided, or a {@code ListOnCommand} if a date is specified.
+     * @throws CommandFormatException If the arguments format is invalid.
+     * @throws TaskFormatException    If the date format is invalid.
+     */
     private static Command prepareList(String arguments) throws CommandFormatException, TaskFormatException {
         if (arguments.isEmpty()) {
             return new ListCommand();

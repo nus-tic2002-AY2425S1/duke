@@ -93,6 +93,7 @@ public class DukeGPT {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         initCommandHandlers();
+        assert !commandHandlerMapping.isEmpty() : "Command handlers should be initialized";
         printGreetings(chatbotName);
         tasks = loadTasksFromFile();
 

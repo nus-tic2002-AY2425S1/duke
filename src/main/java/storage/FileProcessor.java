@@ -48,12 +48,15 @@ public class FileProcessor {
                 Task task;
                 switch (taskParts[0]){
                     case "T":
+                        assert taskParts.length == 4 : "Todo task must have 3 parts";
                         task = new ToDo(taskParts[2]);
                         break;
                     case "D":
+                        assert taskParts.length == 4 : "Deadline task must have 4 parts";
                         task =  new Deadline(taskParts[2], parseDateTime(taskParts[3]));
                         break;
                     case "E":
+                        assert taskParts.length == 5 : "Event task must have 5 parts";
                         task = new Event(taskParts[2], parseDateTime(taskParts[3]), parseDateTime(taskParts[4]));
                         break;
                     default:

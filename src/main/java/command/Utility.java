@@ -17,6 +17,7 @@ public class Utility {
      * @throws DukeException If the index is not a valid index in the task or is an invalid integer
      */
     public static int parseTaskIndex(String userInput) throws DukeException {
+        assert userInput != null && !userInput.trim().isEmpty() : "User input cannot be null or empty";
         try {
             String[] parts = userInput.split(" ");
             if (parts.length < 2) {
@@ -35,6 +36,7 @@ public class Utility {
      * @return Boolean value if task index is valid or not
      */
     public static boolean isValidIndex(int taskIndex, List<Task> tasks){
+        assert tasks != null : "Tasks list cannot be null";
         return taskIndex >= 0 && taskIndex < tasks.size();
     }
 

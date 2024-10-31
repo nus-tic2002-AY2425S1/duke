@@ -38,4 +38,13 @@ public class TaskParser {
         return updateParts[3];
     }
 
+    public static String [] parseFixedDuration(String parseFixedDurationString) throws DukeException{
+        String[] fixedDurationParts= parseFixedDurationString.split(" /duration ");
+        if (fixedDurationParts.length != 2) {
+            throw new DukeException("OOPS!! The FixedDuration description is improperly formatted. Please try again!");
+        }
+        fixedDurationParts[0] = fixedDurationParts[0].trim();
+        return fixedDurationParts;
+    }
+
 }

@@ -1,9 +1,6 @@
 package storage;
 
-import tasks.Task;
-import tasks.ToDo;
-import tasks.Deadline;
-import tasks.Event;
+import tasks.*;
 import exception.DukeException;
 
 import java.io.File;
@@ -58,6 +55,10 @@ public class FileProcessor {
                     case "E":
                         assert taskParts.length == 5 : "Event task must have 5 parts";
                         task = new Event(taskParts[2], parseDateTime(taskParts[3]), parseDateTime(taskParts[4]));
+                        break;
+                    case "FD":
+                        assert taskParts.length == 4 : "FixedDuration task must have 4 parts";
+                        task = new FixedDuration(taskParts[2], Integer.parseInt(taskParts[3]));
                         break;
                     default:
                         throw new DukeException("Invalid task type in file");

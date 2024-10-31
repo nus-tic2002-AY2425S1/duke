@@ -4,3 +4,4 @@ E|0|project meeting|2/12/2019 1500|2/12/2019 1800
 T|0|borrow book
 D|0|return book|2/12/2019 1500
 E|0|not project meeting|2/12/2019 1500|2/12/2019 1800
+FD|0|not Read report|5

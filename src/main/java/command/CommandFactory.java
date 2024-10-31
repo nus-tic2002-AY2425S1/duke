@@ -4,10 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import exception.DukeException;
-import tasks.Task;
-import tasks.ToDo;
-import tasks.Event;
-import tasks.Deadline;
+import tasks.*;
 
 
 import static parser.TaskParser.parseTask;
@@ -21,6 +18,7 @@ public class CommandFactory {
         taskMap.put("todo", new ToDo(null));
         taskMap.put("event", new Event(null,null,null));
         taskMap.put("deadline", new Deadline(null,null));
+        taskMap.put("fixedduration", new FixedDuration(null,null));
     }
 
     /**

@@ -31,4 +31,6 @@ find project meeting
 update 1 todo not read book
 update 2 deadline not return book /by 2/12/2019 1500
 update 6 event not project meeting /from 2/12/2019 1500 /to 2/12/2019 1800
+fixedDuration Read report /duration 2
+update 7 fixedDuration not Read report /duration 5
 bye

@@ -1,19 +1,21 @@
-public class TodoCommand extends Command {
-    
-    public static final String COMMAND_WORD = "todo";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " <description>";
+public class DeadlineCommand extends Command {
+
+    public static final String COMMAND_WORD = "deadline";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " <description> /by <due date>";
     public static final String MESSAGE_ADD_SUCCESS_PRE = "Got it. I've added this task:";
-
+    
     protected final String description;
+    protected final String by;
 
-    public TodoCommand(String description) {
+    public DeadlineCommand(String description, String by) {
         this.description = description;
+        this.by = by;
     }
 
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws CommandException, TaskException, StorageOperationException {
         
-        Task task = new Todo(description);
+        Task task = new Deadline(description, by);
         taskList.addTask(task);
         storage.saveTasks(taskList);
         

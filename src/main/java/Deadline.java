@@ -9,6 +9,11 @@ public class Deadline extends Task {
         this.due = due;
     }
 
+    public Deadline(String description, String due) {
+        this.description = description;
+        this.due = due;
+    }
+
     public String getDue() {
         return due;
     }
@@ -35,4 +40,8 @@ public class Deadline extends Task {
         return TaskType.DEADLINE + super.encodeTask() + separator + getDue().trim();
     }
 
+    // @Override
+    // public TaskType getTaskType() {
+    //     return TaskType.DEADLINE;
+    // }
 }

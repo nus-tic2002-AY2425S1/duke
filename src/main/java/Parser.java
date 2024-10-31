@@ -18,6 +18,9 @@ public class Parser {
     public static final String DEADLINE_COMMAND_ARGS_REGEX = "^(?<description>.+) /by (?<due>.+)$";
     public static final Pattern DEADLINE_COMMAND_ARGS_FORMAT = Pattern.compile(DEADLINE_COMMAND_ARGS_REGEX);
     
+    public static final String EVENT_COMMAND_ARGS_REGEX = "^(?<description>.+) /from (?<start>.+) /to (?<end>.+)$";
+    public static final Pattern EVENT_COMMAND_ARGS_FORMAT = Pattern.compile(EVENT_COMMAND_ARGS_REGEX);
+    
     public static Command parse(String userInput) throws CommandException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         
@@ -48,6 +51,8 @@ public class Parser {
                 return prepareTodo(cleanArgs);
             case DeadlineCommand.COMMAND_WORD:
                 return prepareDeadline(cleanArgs);
+            case EventCommand.COMMAND_WORD:
+                return prepareEvent(cleanArgs);
             default:
                 throw new CommandException(
                     Messages.INVALID_COMMAND,
@@ -166,4 +171,32 @@ public class Parser {
         return new DeadlineCommand(description.trim(), due.trim());
     }
 
+    private static Command prepareEvent(String args) throws CommandException {
+
+        // Check if args (description) is empty
+        if (args.isEmpty()) {
+            throw new CommandException(
+                Messages.INVALID_COMMAND_FORMAT + EventCommand.COMMAND_WORD + ".",
+                Messages.MESSAGE_EMPTY_DESCRIPTION_PRE,
+                String.format("Example usage: `%s`", EventCommand.MESSAGE_USAGE)
+            );
+        }
+        
+        final Matcher matcher = EVENT_COMMAND_ARGS_FORMAT.matcher(args);
+        
+        // Validate arg string format
+        if (!matcher.matches()) {
+            throw new CommandException(
+                Messages.INVALID_COMMAND_FORMAT + EventCommand.COMMAND_WORD + ".",
+                String.format("Received `%s`", args),
+                String.format("Example usage: `%s`", EventCommand.MESSAGE_USAGE)
+            );
+        }
+        
+        // System.out.println("this is args " + args);
+        String description = matcher.group("description");
+        String startTime = matcher.group("start");
+        String endTime = matcher.group("end");
+        return new EventCommand(description.trim(), startTime.trim(), endTime.trim());
+    }
 }

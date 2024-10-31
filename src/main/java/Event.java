@@ -12,6 +12,12 @@ public class Event extends Task {
         this.end = end;
     }
 
+    public Event(String description, String start, String end) {
+        this.description = description;
+        this.start = start;
+        this.end = end;
+    }
+
     public String getStart() {
         return start;
     }
@@ -36,5 +42,10 @@ public class Event extends Task {
         return TaskType.EVENT + super.encodeTask() + separator + getStart() + separator + getEnd();
         // return TaskType.EVENT + super.encodeTask() + separator + getStart() + "-" + getEnd();
     }
+
+    // @Override
+    // public TaskType getTaskType() {
+    //     return TaskType.EVENT;
+    // }
 
 }

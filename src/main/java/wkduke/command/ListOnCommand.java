@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a command to list all tasks occurring on a specified date.
+ */
 public class ListOnCommand extends Command {
     public static final String COMMAND_WORD = "list";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " /on {dateTime}";
@@ -17,10 +20,23 @@ public class ListOnCommand extends Command {
     public static final String MESSAGE_FAILED = "Your task list is currently empty on '%s'.";
     protected LocalDateTime on;
 
+    /**
+     * Constructs a ListOnCommand with the specified date and time to filter tasks.
+     *
+     * @param on The date and time for which tasks should be listed.
+     */
     public ListOnCommand(LocalDateTime on) {
         this.on = on;
     }
 
+    /**
+     * Executes the list command by retrieving all tasks occurring on the specified date.
+     * Displays the list of tasks or a message if no tasks are found.
+     *
+     * @param taskList The task list containing all tasks.
+     * @param ui       The user interface for displaying messages to the user.
+     * @param storage  The storage being used (not used in this command).
+     */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
         List<Task> tasks = taskList.getAllTaskOnDate(on);

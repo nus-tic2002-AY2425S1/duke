@@ -1,5 +1,9 @@
 package wkduke.common;
 
+/**
+ * Contains common messages used throughout the application.
+ * These messages are displayed to the user's CLI for guidance, feedback, or error handling.
+ */
 public class Messages {
     public static final String MESSAGE_WELCOME = "Hello! I'm WKDuke. What can I do for you?";
     public static final String MESSAGE_GOODBYE = "Bye. Hope to see you again soon!";

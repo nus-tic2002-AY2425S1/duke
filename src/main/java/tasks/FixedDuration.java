@@ -31,8 +31,8 @@ public class FixedDuration extends Task{
     /**
      * Parse user input and create FixedDuration object.
      * @param fixedDurationString User input
-     * @return Event object
-     * @throws DukeException If event user input is improperly formatted
+     * @return FixedDuration object
+     * @throws DukeException If FixedDuration user input is improperly formatted
      */
     @Override
     public Task createTask(String fixedDurationString) throws DukeException {

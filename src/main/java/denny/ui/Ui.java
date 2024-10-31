@@ -166,4 +166,18 @@ public class Ui {
     public void showExitMessage() {
         System.out.println(" Bye. Hope to see you again soon!");
     }
+
+    /**
+     * Displays a message indicating that multiple tasks have been deleted.
+     *
+     * @param deletedTasks The list of tasks that were deleted.
+     * @param remainingTasks The total number of tasks remaining after deletion.
+     */
+    public void showBulkTasksDeleted(List<Task> deletedTasks, int remainingTasks) {
+        System.out.println(" Noted. I've removed these tasks:");
+        for (Task task : deletedTasks) {
+            System.out.println("   " + task);
+        }
+        System.out.println(" Now you have " + remainingTasks + " tasks in the list.");
+    }
 }

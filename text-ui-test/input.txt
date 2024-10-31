@@ -30,4 +30,6 @@ delete
 delete
 delete 3
 list
+bulk-delete 1,3,5
+list
 bye

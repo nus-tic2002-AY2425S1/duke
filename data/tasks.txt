@@ -1,5 +1,0 @@
-T | 1 | read book
-T | 0 | return book
-T | 0 | buy book
-D | 0 | hihi | 2019-12-02 18:00
-E | 0 | project meeting | 2019-12-02 18:00 | 2019-12-04 09:00

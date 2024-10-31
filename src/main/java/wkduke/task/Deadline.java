@@ -22,6 +22,11 @@ public class Deadline extends Task {
     }
 
     @Override
+    public boolean isOnDate(LocalDateTime targetDateTime) {
+        return targetDateTime.isEqual(by);
+    }
+
+    @Override
     public String toString() {
         return "[D]" + super.toString() + " (by:" + by.format(TimeParser.CLI_FORMATTER) + ")";
     }

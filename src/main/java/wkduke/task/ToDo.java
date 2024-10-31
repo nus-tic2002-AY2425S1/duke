@@ -1,5 +1,7 @@
 package wkduke.task;
 
+import java.time.LocalDateTime;
+
 public class ToDo extends Task {
     public ToDo(String description) {
         super(description);
@@ -12,6 +14,12 @@ public class ToDo extends Task {
                 description
         );
     }
+
+    @Override
+    public boolean isOnDate(LocalDateTime targetDateTime) {
+        return false;
+    }
+
 
     @Override
     public String toString() {

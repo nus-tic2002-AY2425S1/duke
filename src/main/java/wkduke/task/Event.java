@@ -25,6 +25,11 @@ public class Event extends Task {
     }
 
     @Override
+    public boolean isOnDate(LocalDateTime targetDateTime) {
+        return targetDateTime.isAfter(from) && targetDateTime.isBefore(to);
+    }
+
+    @Override
     public String toString() {
         return "[E]" + super.toString() + " (from:" + from.format(TimeParser.CLI_FORMATTER) + " to:" + to.format(TimeParser.CLI_FORMATTER) + ")";
     }

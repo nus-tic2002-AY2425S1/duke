@@ -15,10 +15,10 @@ import static parser.TaskParser.parseTask;
 public class CommandFactory {
     public static final Map<String, Task> taskMap = new HashMap<>();
     static {
-        taskMap.put("todo", new ToDo(null));
-        taskMap.put("event", new Event(null,null,null));
-        taskMap.put("deadline", new Deadline(null,null));
-        taskMap.put("fixedduration", new FixedDuration(null,null));
+        taskMap.put(CommandType.TODO.name().toLowerCase(), new ToDo(null));
+        taskMap.put(CommandType.EVENT.name().toLowerCase(), new Event(null,null,null));
+        taskMap.put(CommandType.DEADLINE.name().toLowerCase(), new Deadline(null,null));
+        taskMap.put(CommandType.FIXEDDURATION.name().toLowerCase(), new FixedDuration(null,null));
     }
 
     /**

@@ -4,10 +4,6 @@ import java.util.regex.Pattern;
 
 public class Parser {
 
-    // "^(?<commandWord>\\S+)(?:\\s+(?<remainingWords>.*))?$";
-    // ^(?<commandWord>\S+)(?<arguments>.*)
-    // public static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
-    
     // Regex generated with the help of ChatGPT
     public static final String BASIC_COMMAND_REGEX = "^(?<commandWord>\\S+)(?<arguments>.*)";
     public static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile(BASIC_COMMAND_REGEX);
@@ -28,6 +24,8 @@ public class Parser {
         switch (commandWord) {
             case ByeCommand.COMMAND_WORD:
                 return new ByeCommand();
+            case ListCommand.COMMAND_WORD:
+                return new ListCommand();
             default:
                 throw new CommandException("Unknown command: " + commandWord);
         }

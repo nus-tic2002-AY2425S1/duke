@@ -3,11 +3,11 @@ public abstract class Command {
     protected Command() {
     }
 
-    public abstract void execute(Ui ui);
+    public abstract void execute(TaskList taskList, Ui ui, Storage storage);
     // public abstract void execute(TaskList taskList, Ui ui, Storage storage);
 
     public boolean isBye() {
-        return true;
+        return false;
     }
 }
 

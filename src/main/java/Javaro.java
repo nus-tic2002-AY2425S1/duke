@@ -22,13 +22,22 @@ public class Javaro {
         
         // Initialize Ui
         ui = new Ui();
-
+        
         // Initialize Storage
         try {
             storage = new Storage();
+            taskList = storage.loadTasks();
         } catch (StorageOperationException storageOperationException) {
+            // TODO Auto-generated catch block
+            storageOperationException.printStackTrace();
             // ui.showError(storageOperationException);
+        } catch (IOException | FileContentException | TaskListDecoderException loadTaskException) {
+            // ui.showLoadingError();
+            // System.out.println(loadTaskException.getMessage());
+            taskList = new TaskList();
         }
+
+        System.out.println("taskList: " + taskList);
     }
 
     public void run() {
@@ -39,7 +48,8 @@ public class Javaro {
                 String userInput = ui.readInput();
                 // ui.showLine();
                 Command command = Parser.parse(userInput);
-                command.execute(ui);
+                // System.out.println("taskList: " + taskList);
+                command.execute(taskList, ui, storage);
                 // command.execute(taskList, ui, storage);
                 isBye = command.isBye();
             } catch (CommandException e) {
@@ -49,21 +59,6 @@ public class Javaro {
                 // ui.showLine();
             }
         }
-        
-
-        // while (!isExit) {
-        //     try {
-        //         String fullCommand = ui.readCommand();
-        //         ui.showLine(); // show the divider line ("_______")
-        //         Command c = Parser.parse(fullCommand);
-        //         c.execute(tasks, ui, storage);
-        //         isExit = c.isExit();
-        //     } catch (DukeException e) {
-        //         ui.showError(e.getMessage());
-        //     } finally {
-        //         ui.showLine();
-        //     }
-        // }
         
     }
 

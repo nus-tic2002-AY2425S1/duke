@@ -38,8 +38,9 @@ application {
 }
 
 shadowJar {
-    archiveBaseName = "duke"
+    archiveBaseName = "DukeGPT"
     archiveClassifier = null
+    archiveVersion = "1.0.0"
 }
 
 

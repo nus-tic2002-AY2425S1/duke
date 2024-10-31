@@ -23,8 +23,7 @@ public class DateTimeParser {
     public static LocalDateTime parseDateTime(String dateTimeString) throws DukeException {
         try{
             return LocalDateTime.parse(dateTimeString.trim(),inputFormatter);
-        }
-        catch (DateTimeParseException e){
+        } catch (DateTimeParseException e){
             throw new DukeException("OOPSS!! Please provide a valid date and time in the format d/M/yyyy HHmm");
         }
     }

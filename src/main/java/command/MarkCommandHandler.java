@@ -23,8 +23,7 @@ public class MarkCommandHandler implements CommandHandler{
         if(isValidIndex(taskIndex, tasks)){
             tasks.get(taskIndex).markDone();
             printMarkDone(taskIndex,tasks);
-        }
-        else {
+        } else {
             throw new DukeException("OOPS!! Task number is out of range!");
         }
     }

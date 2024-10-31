@@ -24,8 +24,7 @@ public class UnmarkCommandHandler implements CommandHandler{
         if(isValidIndex(taskIndex, tasks)){
             tasks.get(taskIndex).unmarkDone();
             printUnmarkDone(taskIndex,tasks);
-        }
-        else {
+        } else {
             throw new DukeException("OOPS!! Task number is out of range!");
         }
     }

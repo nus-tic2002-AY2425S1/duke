@@ -10,7 +10,7 @@ public class Deadline extends Task {
     }
 
     public Deadline(String description, String due) {
-        super();
+        this.description = description;
         this.due = due;
     }
 

@@ -31,9 +31,6 @@ public class Parser {
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
         
-        System.out.println("cmd: " + commandWord);
-        System.out.println("args: " + arguments);
-
         String cleanArgs = arguments.trim();
 
         switch (commandWord) {
@@ -68,15 +65,13 @@ public class Parser {
         // Validate arg string format
         if (!matcher.matches()) {
             throw new CommandException(
-                Messages.INVALID_COMMAND_FORMAT,
-                String.format("Command=%s,Arguments=%s", MarkCommand.COMMAND_WORD, args),
-                MarkCommand.MESSAGE_USAGE
+                String.format("%s%s", Messages.INVALID_COMMAND_FORMAT, MarkCommand.COMMAND_WORD),
+                String.format("Received `%s %s`", MarkCommand.COMMAND_WORD, args),
+                String.format("Example usage: %s", MarkCommand.MESSAGE_USAGE)
             );
         }
 
         int taskNumber = Integer.parseInt(matcher.group("taskNumber"));
-        // int taskNumber = Integer.parseInt(args);
-        // System.out.println("taskNumber: " + taskNumber);
         return new MarkCommand(taskNumber);
     }
 
@@ -86,15 +81,13 @@ public class Parser {
         // Validate arg string format
         if (!matcher.matches()) {
             throw new CommandException(
-                Messages.INVALID_COMMAND_FORMAT,
-                String.format("Command=%s,Arguments=%s", UnmarkCommand.COMMAND_WORD, args),
-                UnmarkCommand.MESSAGE_USAGE
+                String.format("%s%s", Messages.INVALID_COMMAND_FORMAT, UnmarkCommand.COMMAND_WORD),
+                String.format("Received `%s %s`", UnmarkCommand.COMMAND_WORD, args),
+                String.format("Example usage: %s", UnmarkCommand.MESSAGE_USAGE)
             );
         }
 
         int taskNumber = Integer.parseInt(matcher.group("taskNumber"));
-        // int taskNumber = Integer.parseInt(args);
-        // System.out.println("taskNumber: " + taskNumber);
         return new UnmarkCommand(taskNumber);
     }
 
@@ -104,15 +97,13 @@ public class Parser {
         // Validate arg string format
         if (!matcher.matches()) {
             throw new CommandException(
-                Messages.INVALID_COMMAND_FORMAT,
-                String.format("Command=%s,Arguments=%s", DeleteCommand.COMMAND_WORD, args),
-                DeleteCommand.MESSAGE_USAGE
+                String.format("%s%s", Messages.INVALID_COMMAND_FORMAT, DeleteCommand.COMMAND_WORD),
+                String.format("Received `%s %s`", DeleteCommand.COMMAND_WORD, args),
+                String.format("Example usage: `%s`", DeleteCommand.MESSAGE_USAGE)
             );
         }
 
         int taskNumber = Integer.parseInt(matcher.group("taskNumber"));
-        // int taskNumber = Integer.parseInt(args);
-        System.out.println("taskNumber: " + taskNumber);
         return new DeleteCommand(taskNumber);
     }
 
@@ -145,6 +136,9 @@ public class Parser {
 
     private static Command prepareDeadline(String args) throws CommandException {
 
+        final String MESSAGE_EMPTY_DUEDATE_PRE = "The task is missing a due date.";
+        final String BY_KEYWORD = "/by";
+
         // Check if args (description) is empty
         if (args.isEmpty()) {
             throw new CommandException(
@@ -154,24 +148,36 @@ public class Parser {
             );
         }
         
+        if (!args.contains(BY_KEYWORD)) {
+            throw new CommandException(
+                Messages.INVALID_COMMAND_FORMAT + DeadlineCommand.COMMAND_WORD + ".",
+                MESSAGE_EMPTY_DUEDATE_PRE,
+                String.format("Example usage: `%s`", DeadlineCommand.MESSAGE_USAGE)
+            );
+        }
+
         final Matcher matcher = DEADLINE_COMMAND_ARGS_FORMAT.matcher(args);
         
         // Validate arg string format
         if (!matcher.matches()) {
             throw new CommandException(
                 Messages.INVALID_COMMAND_FORMAT + DeadlineCommand.COMMAND_WORD + ".",
-                String.format("Received `%s`", args),
+                String.format("Received `%s`", DeadlineCommand.COMMAND_WORD + " " + args),
                 String.format("Example usage: `%s`", DeadlineCommand.MESSAGE_USAGE)
             );
         }
         
-        // System.out.println("this is args " + args);
         String description = matcher.group("description");
         String due = matcher.group("due");
         return new DeadlineCommand(description.trim(), due.trim());
     }
 
     private static Command prepareEvent(String args) throws CommandException {
+
+        final String MESSAGE_EMPTY_STARTDATETIME_PRE = "The task is missing a start date/time.";
+        final String MESSAGE_EMPTY_ENDDATETIME_PRE = "The task is missing an end date/time.";
+        final String FROM_KEYWORD = "/from";
+        final String TO_KEYWORD = "/to";
 
         // Check if args (description) is empty
         if (args.isEmpty()) {
@@ -182,6 +188,22 @@ public class Parser {
             );
         }
         
+        if (!args.contains(FROM_KEYWORD)) {
+            throw new CommandException(
+                Messages.INVALID_COMMAND_FORMAT + EventCommand.COMMAND_WORD + ".",
+                MESSAGE_EMPTY_STARTDATETIME_PRE,
+                String.format("Example usage: `%s`", EventCommand.MESSAGE_USAGE)
+            );
+        }
+        
+        if (!args.contains(TO_KEYWORD)) {
+            throw new CommandException(
+                Messages.INVALID_COMMAND_FORMAT + EventCommand.COMMAND_WORD + ".",
+                MESSAGE_EMPTY_ENDDATETIME_PRE,
+                String.format("Example usage: `%s`", EventCommand.MESSAGE_USAGE)
+            );
+        }
+
         final Matcher matcher = EVENT_COMMAND_ARGS_FORMAT.matcher(args);
         
         // Validate arg string format

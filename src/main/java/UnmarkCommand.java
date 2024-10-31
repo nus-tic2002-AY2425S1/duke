@@ -2,7 +2,7 @@ public class UnmarkCommand extends Command {
 
     public static final String COMMAND_WORD = "unmark";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " <task number>";
-    public static final String MESSAGE_UNMARK_SUCCESS = "Nice! I've marked this task as done:";
+    public static final String MESSAGE_UNMARK_SUCCESS = "OK, I've marked this task as not done yet:";
     public static final String MESSAGE_EMPTY_TASKLIST = "The task list is empty. Please add a task first.";
     
     protected int taskNumber;

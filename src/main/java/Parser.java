@@ -28,15 +28,19 @@ public class Parser {
         // System.out.println("cmd: " + commandWord);
         // System.out.println("args: " + arguments);
 
+        String cleanArgs = arguments.trim();
+
         switch (commandWord) {
             case ByeCommand.COMMAND_WORD:
                 return new ByeCommand();
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
             case MarkCommand.COMMAND_WORD:
-                return prepareMark(arguments.trim());
+                return prepareMark(cleanArgs);
             case UnmarkCommand.COMMAND_WORD:
-                return prepareUnmark(arguments.trim());
+                return prepareUnmark(cleanArgs);
+            case DeleteCommand.COMMAND_WORD:
+                return prepareDelete(cleanArgs);
             default:
                 throw new CommandException(
                     Messages.INVALID_COMMAND,
@@ -69,9 +73,6 @@ public class Parser {
     private static Command prepareUnmark(String args) throws CommandException {
         final Matcher matcher = TASK_NUMBER_FORMAT.matcher(args);
         
-        // System.out.println("matching? " + matcher.matches());
-        // System.out.println("args is " + args);
-        
         // Validate arg string format
         if (!matcher.matches()) {
             throw new CommandException(
@@ -84,5 +85,22 @@ public class Parser {
         int taskNumber = Integer.parseInt(args);
         // System.out.println("taskNumber: " + taskNumber);
         return new UnmarkCommand(taskNumber);
+    }
+
+    private static Command prepareDelete(String args) throws CommandException {
+        final Matcher matcher = TASK_NUMBER_FORMAT.matcher(args);
+        
+        // Validate arg string format
+        if (!matcher.matches()) {
+            throw new CommandException(
+                Messages.INVALID_COMMAND_FORMAT,
+                String.format("Command=%s,Arguments=%s", DeleteCommand.COMMAND_WORD, args),
+                DeleteCommand.MESSAGE_USAGE
+            );
+        }
+
+        int taskNumber = Integer.parseInt(args);
+        // System.out.println("taskNumber: " + taskNumber);
+        return new DeleteCommand(taskNumber);
     }
 }

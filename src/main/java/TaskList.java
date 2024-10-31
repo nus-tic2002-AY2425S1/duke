@@ -60,4 +60,12 @@ public class TaskList {
         }
     }
 
+    public String getTaskWord(int taskListSize) {
+        StringBuilder taskWordStringBuilder = new StringBuilder(" task");
+        if (taskListSize > 1) {
+            taskWordStringBuilder.append("s");
+        }
+        String taskWord = taskWordStringBuilder.toString();
+        return taskWord;
+    }
 }

@@ -20,8 +20,7 @@ public class May {
         String input;
 
         /*Welcome Message*/
-        System.out.println("Hello! I'm May");
-        System.out.println("What can I do for you?");
+        WelcomeMessage.printWelcomeMessage();
 
         while(true){
             try {
@@ -51,7 +50,7 @@ public class May {
                 }
 
                 // Mark the task as done
-                else if (command[0].equalsIgnoreCase("tick")) {
+                else if (command[0].equalsIgnoreCase("done")) {
                     assert command.length > 1 : "Task index required for tick command";
                     int taskIndex = Integer.parseInt(command[1]) - 1;
                     assert taskIndex >= 0 && taskIndex < taskList.size() : "Task index out of bounds";
@@ -59,22 +58,10 @@ public class May {
                     System.out.println("Congratulations! You have completed the task! ");
                     System.out.println(" " + taskList.get(taskIndex));
                     SaveAndLoadTask.saveTasks(taskList);
-                    // Check for taskIndex is within the task number
-                    // If it is within the range, then we mark as done
-//                    if (taskIndex < taskList.size()) {
-//                        taskList.get(taskIndex).markAsDone();
-//                        System.out.println("Congratulations! You have completed the task! ");
-//                        System.out.println(" " + taskList.get(taskIndex));
-//                        SaveAndLoadTask.saveTasks(taskList);
-//                    }
-//                    else {
-//                        // add in error handle
-//                        throw new ErrorException("Invalid task index. Please enter a valid task index.");
-//                    }
                 }
 
                 // Mark the task as cross since it has not done
-                else if (command[0].equalsIgnoreCase("cross")) {
+                else if (command[0].equalsIgnoreCase("undone")) {
                     assert command.length > 1 : "Task index required for cross command";
                     int taskIndex = Integer.parseInt(command[1]) - 1;
                     assert taskIndex >= 0 && taskIndex < taskList.size() : "Task index out of bounds";
@@ -82,18 +69,6 @@ public class May {
                     System.out.println("Task have not done, Kindly complete the task. ");
                     System.out.println(" " + taskList.get(taskIndex));
                     SaveAndLoadTask.saveTasks(taskList);  // Save after unmarking as done
-                    // Check for taskIndex is within the task number
-                    // If it is within the range, then we mark as done
-//                    if (taskIndex < taskList.size()) {
-//                        taskList.get(taskIndex).unmarkAsDone();
-//                        System.out.println("Task have not done, Kindly complete the task. ");
-//                        System.out.println(" " + taskList.get(taskIndex));
-//                        SaveAndLoadTask.saveTasks(taskList);  // Save after unmarking as done
-//                    }
-//                    else {
-//                        // add in error handle
-//                        throw new ErrorException("Invalid task index. Please enter a valid task index.");
-//                    }
                 }
 
                 // Create todo-task
@@ -152,6 +127,19 @@ public class May {
                     }
                     String keyword = command[1].trim();
                     taskManager.findTask(keyword);
+                }
+
+                // Check for task that had completed in the past week
+                else if (command[0].equalsIgnoreCase("completed")) {
+                    ArrayList<Task> completedTasks = taskManager.getTasksCompletedInPastWeek();
+                    if (completedTasks.isEmpty()) {
+                        System.out.println("You have not completed any tasks in the past week.");
+                    } else {
+                        System.out.println("Tasks completed in the past week:");
+                        for (Task task : completedTasks) {
+                            System.out.println(task);
+                        }
+                    }
                 }
 
                 // Unknown command

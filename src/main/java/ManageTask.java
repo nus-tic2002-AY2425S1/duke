@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 
 public class ManageTask {
@@ -24,9 +26,31 @@ public class ManageTask {
         addTask(newTask);
     }
 
-    // Add in feature C-DetectDuplicates
-    public boolean isDuplicate(String taskName){
-        return taskList.stream().anyMatch(task -> task.taskName.equalsIgnoreCase(taskName));
+    /**
+     * Checks if a task with the given name is already exists in the current task list
+     * @param taskName the name of the task to check for duplicates
+     * @return the first task object which match the task which we plan to add in the list
+     *         or return null if no duplicate task is found
+     */
+    public Task isDuplicate(String taskName) {
+        return taskList.stream()
+                .filter(task -> task.taskName.equalsIgnoreCase(taskName))
+                .findFirst()
+                .orElse(null);
+    }
+
+    // Method to get the number of tasks completed in the past week
+    public ArrayList<Task> getTasksCompletedInPastWeek() {
+        ArrayList<Task> completedTasks = new ArrayList<>();
+        LocalDateTime oneWeekAgo = LocalDateTime.now().minusWeeks(1);
+
+        for (Task task : taskList) {
+            if (task.isDone && task.getCompletedDate() != null &&
+                    task.getCompletedDate().isAfter(oneWeekAgo)) {
+                completedTasks.add(task);
+            }
+        }
+        return completedTasks;
     }
 
     // Add task to the task-list
@@ -34,8 +58,11 @@ public class ManageTask {
 
         assert task != null : "Task can't be null";
 
-        if (isDuplicate(task.taskName)){
-            System.out.println("This Task already exists: " + task.taskName);
+        Task duplicateTask = isDuplicate(task.taskName);
+        if (duplicateTask != null) {
+            // Display the details of the duplicate task
+            System.out.println("This task already exists:");
+            System.out.println(" " + duplicateTask);
         }
         else{
             taskList.add(task);
@@ -59,7 +86,11 @@ public class ManageTask {
         }
     }
 
-    // Find task with keyword
+    /**
+     * Search for the tasks that contain some specified words within the tasks and
+     * display all those task that contain that name. if no task match, a message will be display
+     * @param keyword the keyword to search for in a task
+     */
     public void findTask(String keyword){
 
         assert keyword != null : "keyword cannot be null";

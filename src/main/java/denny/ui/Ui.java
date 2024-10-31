@@ -180,4 +180,16 @@ public class Ui {
         }
         System.out.println(" Now you have " + remainingTasks + " tasks in the list.");
     }
+
+    public void showFoundTasks(List<Task> foundTasks) {
+        System.out.println("Here are the matching tasks in your list:");
+        for (int i = 0; i < foundTasks.size(); i++) {
+            Task task = foundTasks.get(i);
+            System.out.printf(" %d.%s%n", i + 1, formatTaskWithDates(task));
+        }
+    }
+
+    public void showNoMatchingTasksFound() {
+        System.out.println("No tasks matching your search were found.");
+    }
 }

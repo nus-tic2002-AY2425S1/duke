@@ -36,6 +36,8 @@ public class Parser {
                 return new DeleteCommand(arguments);
             case "bulk-delete":
                 return new BulkDeleteCommand(arguments);
+            case "find":
+                return new FindCommand(arguments);
             case "bye":
                 return new ExitCommand();
             default:

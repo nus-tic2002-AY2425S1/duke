@@ -108,8 +108,8 @@ public class Ui {
     }
 
     // TODO: Add code for displaying error message
-    public void showError(JavaroException e) {
-        
+    public void showError(ArrayList<String> e) {
+        printMessage(e);
     }
 
 }

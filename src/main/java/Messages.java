@@ -21,9 +21,16 @@ public class Messages {
     // TaskList
     public static final String TASKLIST_EMPTY = "Good job! You're all caught up!";
 
+    // Parser
     public static final String INVALID_COMMAND = "Invalid command.";
     public static final String VALID_COMMANDS = "Please start with 'list', 'mark', 'unmark', 'todo', 'deadline', 'event'. If you are done, please enter 'bye' to exit the chat";
-    public static final String INVALID_COMMAND_FORMAT = "Invalid command format.";
+    public static final String INVALID_COMMAND_FORMAT = "Invalid command format for command ";
+
+    // Todo, Deadline, Event
+    public static final String MESSAGE_EMPTY_DESCRIPTION_PRE = "The description of a task cannot be empty.";
+    public static final String NEW_LINE = "\n";
+    public static final String MESSAGE_EMPTY_DESCRIPTION_MID = "Please add a description for the task. Example: \"";
+    public static final String MESSAGE_EMPTY_DESCRIPTION_POST = " borrow book\"";
 
 
     // public static final String MESSAGE_INIT_FAILED = "Failed to initialise address book application. Exiting...";

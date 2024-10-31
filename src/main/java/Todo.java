@@ -2,6 +2,11 @@
 
 public class Todo extends Task {
 
+    public Todo(String description) {
+        super();
+        this.description = description;
+    }
+
     public Todo(String description, boolean isDone) {
         super(description, isDone);
     }
@@ -18,6 +23,11 @@ public class Todo extends Task {
     public String encodeTask() {
         return TaskType.TODO + super.encodeTask();
     }
+
+    // @Override
+    // public TaskType getTaskType() {
+    //     return TaskType.TODO;
+    // }
 
     // @Override
     // public void writeToFile() {

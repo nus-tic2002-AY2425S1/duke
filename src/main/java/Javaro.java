@@ -48,14 +48,17 @@ public class Javaro {
                 String userInput = ui.readInput();
                 // ui.showLine();
                 Command command = Parser.parse(userInput);
-                // System.out.println("taskList: " + taskList);
                 command.execute(taskList, ui, storage);
-                // command.execute(taskList, ui, storage);
                 isBye = command.isBye();
-            } catch (CommandException | StorageOperationException e) {
-                // ui.showError(e.getMessage());
-                // System.out.println("A command exception occurred");
-                System.out.println(e.getMessage());
+            } catch (CommandException e) {
+                // System.out.println("CommandException caught: " + e.getMessage());
+                ui.showError(e.getMessageList());
+            } catch (StorageOperationException e) {
+                System.out.println("StorageOperationException caught: " + e.getMessage());
+                // ui.showError(e.getMessageList());
+            } catch (TaskException e) {
+                System.out.println("TaskException caught: " + e.getMessage());
+                // ui.showError(e.getMessageList());
             } finally {
                 // ui.showLine();
             }

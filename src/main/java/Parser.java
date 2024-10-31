@@ -35,6 +35,8 @@ public class Parser {
                 return new ListCommand();
             case MarkCommand.COMMAND_WORD:
                 return prepareMark(arguments.trim());
+            case UnmarkCommand.COMMAND_WORD:
+                return prepareUnmark(arguments.trim());
             default:
                 throw new CommandException(
                     Messages.INVALID_COMMAND,
@@ -62,5 +64,25 @@ public class Parser {
         int taskNumber = Integer.parseInt(args);
         // System.out.println("taskNumber: " + taskNumber);
         return new MarkCommand(taskNumber);
+    }
+
+    private static Command prepareUnmark(String args) throws CommandException {
+        final Matcher matcher = TASK_NUMBER_FORMAT.matcher(args);
+        
+        // System.out.println("matching? " + matcher.matches());
+        // System.out.println("args is " + args);
+        
+        // Validate arg string format
+        if (!matcher.matches()) {
+            throw new CommandException(
+                Messages.INVALID_COMMAND_FORMAT,
+                String.format("Command=%s,Arguments=%s", UnmarkCommand.COMMAND_WORD, args),
+                UnmarkCommand.MESSAGE_USAGE
+            );
+        }
+
+        int taskNumber = Integer.parseInt(args);
+        // System.out.println("taskNumber: " + taskNumber);
+        return new UnmarkCommand(taskNumber);
     }
 }

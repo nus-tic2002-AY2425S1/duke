@@ -41,13 +41,21 @@ public class TaskList {
     } 
 
     public boolean markTask(int taskIndex) {
-        // System.out.println("Before marking " + taskList);
         Task taskToMark = getTask(taskIndex);
-        // System.out.println("getIsDone " + taskToMark.getIsDone());
         if (taskToMark.getIsDone() == true) {
             return false;
         } else {
             taskToMark.setDone(true);
+            return true;
+        }
+    }
+
+    public boolean unmarkTask(int indexToUnmark) {
+        Task taskToUnmark = getTask(indexToUnmark);
+        if (taskToUnmark.getIsDone() == false) {
+            return false;
+        } else {
+            taskToUnmark.setDone(false);
             return true;
         }
     }

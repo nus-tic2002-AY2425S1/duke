@@ -27,17 +27,15 @@ public class Javaro {
         try {
             storage = new Storage();
             taskList = storage.loadTasks();
-        } catch (StorageOperationException storageOperationException) {
-            // TODO Auto-generated catch block
-            storageOperationException.printStackTrace();
-            // ui.showError(storageOperationException);
-        } catch (IOException | FileContentException | TaskListDecoderException loadTaskException) {
-            // ui.showLoadingError();
-            // System.out.println(loadTaskException.getMessage());
+        } catch (StorageOperationException | FileContentException | TaskListDecoderException e) {
+            // storageOperationException.printStackTrace();
+            ui.showError(e.getMessageList());
+            taskList = new TaskList();
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
             taskList = new TaskList();
         }
 
-        // System.out.println("taskList: " + taskList);
     }
 
     public void run() {

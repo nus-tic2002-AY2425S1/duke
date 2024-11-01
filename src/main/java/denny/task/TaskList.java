@@ -28,6 +28,7 @@ public class TaskList {
      * @param task Task to be added
      */
     public void addTask(Task task) {
+        assert task != null : "Cannot add null task";
         tasks.add(task);
     }
 
@@ -36,6 +37,7 @@ public class TaskList {
      * @param index Index of the task to delete
      */
     public void deleteTask(int index) {
+        assert index >= 0 && index < tasks.size() : "Invalid task index for deletion";
         tasks.remove(index);
     }
 
@@ -45,6 +47,7 @@ public class TaskList {
      * @return The task at the specified index
      */
     public Task getTask(int index) {
+        assert index >= 0 && index < tasks.size() : "Invalid task index for retrieval";
         return tasks.get(index);
     }
 

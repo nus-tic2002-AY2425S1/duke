@@ -23,8 +23,11 @@ public class Event extends Task {
     public Event(String description, String from, String to) throws IllegalArgumentException {
         super(description);
         try {
+            assert from != null && to != null : "Event start and end times cannot be null";
             this.from = LocalDateTime.parse(from, INPUT_FORMATTER);
             this.to = LocalDateTime.parse(to, INPUT_FORMATTER);
+            assert this.from != null && this.to != null : "Failed to parse event dates";
+            assert !this.to.isBefore(this.from) : "End time cannot be before start time";
             if (this.to.isBefore(this.from)) {
                 throw new IllegalArgumentException("End time cannot be before start time");
             }

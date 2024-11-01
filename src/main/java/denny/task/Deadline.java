@@ -21,7 +21,10 @@ public class Deadline extends Task {
     public Deadline(String description, String by) throws IllegalArgumentException {
         super(description);
         try {
+            assert by != null : "Deadline date cannot be null";
             this.by = LocalDateTime.parse(by, INPUT_FORMATTER);
+            assert this.by != null : "Failed to parse deadline date";
+            assert this.by.isAfter(LocalDateTime.now().minusSeconds(1)) : "Deadline cannot be in the past";
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Date should be in format: d/M/yyyy HHmm");
         }

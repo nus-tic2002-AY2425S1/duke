@@ -47,6 +47,7 @@ public class Storage {
     public List<Task> loadTasks() throws IOException {
         List<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
+        assert filePath != null : "File path cannot be null";
         if (!file.exists()) {
             return tasks;
         }
@@ -69,6 +70,7 @@ public class Storage {
      * @throws IOException if there are errors writing to the file
      */
     public void saveTasks(List<Task> tasks) throws IOException {
+        assert tasks != null : "Task list cannot be null";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             for (Task task : tasks) {
                 writer.write(formatTask(task));

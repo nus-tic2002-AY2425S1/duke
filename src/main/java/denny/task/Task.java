@@ -16,9 +16,11 @@ public class Task {
      * @param description The description of the task
      */
     public Task(String description) {
+        assert description != null && !description.trim().isEmpty() : "Task description cannot be null or empty";
         this.description = description;
         this.isDone = false;
         this.createdAt = LocalDateTime.now();
+        assert this.createdAt != null : "Creation timestamp must be set";
     }
 
     /**
@@ -33,6 +35,7 @@ public class Task {
      * Marks the task as completed.
      */
     public void markAsDone() {
+        assert !isDone : "Task is already marked as done";
         this.isDone = true;
     }
 
@@ -40,6 +43,7 @@ public class Task {
      * Marks the task as not completed.
      */
     public void markAsNotDone() {
+        assert isDone : "Task is already marked as not done";
         this.isDone = false;
     }
 

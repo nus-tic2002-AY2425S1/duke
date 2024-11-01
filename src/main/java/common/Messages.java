@@ -1,3 +1,5 @@
+package common;
+
 public class Messages {
     
     public static final String SPACE = " ";

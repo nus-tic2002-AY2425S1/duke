@@ -1,3 +1,5 @@
+package exception;
+
 public class FileContentException extends JavaroException {
     public FileContentException(String error) {
         super(error);

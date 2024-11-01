@@ -1,3 +1,5 @@
+package task;
+
 // Events are tasks that start at a specific date/time and ends at a specific date/time
 // e.g., (a) team project meeting 2/10/2019 2-4pm (b) orientation week 4/10/2019 to 11/10/2019
 
@@ -33,19 +35,12 @@ public class Event extends Task {
             description += " ";
         } 
         return "[" + TaskType.EVENT + "]" + super.toString() + "(from: " + getStart() + " to: " + getEnd() + ")";
-        // return "[E]" + super.toString() + "(from: " + getStart() + " to: " + getEnd() + ")";
     }
 
     @Override
     public String encodeTask() {
         String separator = " | ";
         return TaskType.EVENT + super.encodeTask() + separator + getStart() + separator + getEnd();
-        // return TaskType.EVENT + super.encodeTask() + separator + getStart() + "-" + getEnd();
     }
-
-    // @Override
-    // public TaskType getTaskType() {
-    //     return TaskType.EVENT;
-    // }
 
 }

@@ -1,3 +1,4 @@
+package task;
 // Deadlines are tasks that need to be done before a specific date/time e.g., submit report by 11/10/2019 5pm
 
 public class Deadline extends Task {
@@ -31,17 +32,8 @@ public class Deadline extends Task {
     @Override
     public String encodeTask() {
         String separator = " | ";
-        // System.out.println("super: " + super.encodeTask());
-        // // System.out.println("super trim: " + super.encodeTask().trim() + " last char is " + super.encodeTask().trim().charAt(super.encodeTask().trim().length()));
-        // return TaskType.DEADLINE + super.encodeTask() + separator + getDue().trim();
-        // Get the encoded task from the superclass and trim it
-        
         // Construct the final encoded task without leading or trailing spaces
         return TaskType.DEADLINE + super.encodeTask() + separator + getDue().trim();
     }
 
-    // @Override
-    // public TaskType getTaskType() {
-    //     return TaskType.DEADLINE;
-    // }
 }

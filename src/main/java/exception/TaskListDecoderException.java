@@ -1,3 +1,5 @@
+package exception;
+
 public class TaskListDecoderException extends JavaroException {
     public TaskListDecoderException(String error) {
         super(error);

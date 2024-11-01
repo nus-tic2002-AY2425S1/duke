@@ -1,21 +1,32 @@
-public class DeadlineCommand extends Command {
+package commands;
+import exception.CommandException;
+import exception.StorageOperationException;
+import exception.TaskException;
+import storage.Storage;
+import task.Event;
+import task.Task;
+import task.TaskList;
+import ui.Ui;
 
-    public static final String COMMAND_WORD = "deadline";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " <description> /by <due date>";
+public class EventCommand extends Command {
+    public static final String COMMAND_WORD = "event";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " <description> /from <start date/time> /to <end date/time>";
     public static final String MESSAGE_ADD_SUCCESS_PRE = "Got it. I've added this task:";
     
     protected final String description;
-    protected final String by;
+    protected final String startTime;
+    protected final String endTime;
 
-    public DeadlineCommand(String description, String by) {
+    public EventCommand(String description, String startTime, String endTime) {
         this.description = description;
-        this.by = by;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws CommandException, TaskException, StorageOperationException {
         
-        Task task = new Deadline(description, by);
+        Task task = new Event(description, startTime, endTime);
         taskList.addTask(task);
         storage.saveTasks(taskList);
         
@@ -27,5 +38,4 @@ public class DeadlineCommand extends Command {
         ui.printMessage(messageList);
 
     }
-
 }

@@ -1,4 +1,8 @@
+package ui;
 import java.util.Scanner;
+
+import common.Messages;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 

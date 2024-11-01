@@ -1,6 +1,4 @@
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
+package exception;
 
 public class StorageOperationException extends JavaroException {
     public StorageOperationException(String error) {

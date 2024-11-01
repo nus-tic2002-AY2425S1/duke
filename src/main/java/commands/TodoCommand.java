@@ -1,22 +1,29 @@
-public class EventCommand extends Command {
-    public static final String COMMAND_WORD = "event";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " <description> /from <start date/time> /to <end date/time>";
-    public static final String MESSAGE_ADD_SUCCESS_PRE = "Got it. I've added this task:";
-    
-    protected final String description;
-    protected final String startTime;
-    protected final String endTime;
+package commands;
+import exception.CommandException;
+import exception.StorageOperationException;
+import exception.TaskException;
+import storage.Storage;
+import task.Task;
+import task.TaskList;
+import task.Todo;
+import ui.Ui;
 
-    public EventCommand(String description, String startTime, String endTime) {
+public class TodoCommand extends Command {
+    
+    public static final String COMMAND_WORD = "todo";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " <description>";
+    public static final String MESSAGE_ADD_SUCCESS_PRE = "Got it. I've added this task:";
+
+    protected final String description;
+
+    public TodoCommand(String description) {
         this.description = description;
-        this.startTime = startTime;
-        this.endTime = endTime;
     }
 
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws CommandException, TaskException, StorageOperationException {
         
-        Task task = new Event(description, startTime, endTime);
+        Task task = new Todo(description);
         taskList.addTask(task);
         storage.saveTasks(taskList);
         
@@ -28,4 +35,5 @@ public class EventCommand extends Command {
         ui.printMessage(messageList);
 
     }
+
 }

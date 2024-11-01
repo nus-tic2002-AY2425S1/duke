@@ -1,6 +1,19 @@
+package parser;
 // deals with making sense of the user command
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import commands.ByeCommand;
+import commands.Command;
+import commands.DeadlineCommand;
+import commands.DeleteCommand;
+import commands.EventCommand;
+import commands.ListCommand;
+import commands.MarkCommand;
+import commands.TodoCommand;
+import commands.UnmarkCommand;
+import common.Messages;
+import exception.CommandException;
 
 public class Parser {
 

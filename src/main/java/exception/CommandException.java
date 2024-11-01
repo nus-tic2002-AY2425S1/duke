@@ -1,8 +1,6 @@
 // https://stackoverflow.com/questions/8423700/how-to-create-a-custom-exception-type-in-java
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Arrays;
+package exception;
 
 public class CommandException extends JavaroException {
     public CommandException(String error) {

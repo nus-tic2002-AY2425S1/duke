@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class JosBot {
 
@@ -23,7 +24,8 @@ public class JosBot {
     public static void main(String[] args) {
 
         printInfo("Start");
-        Task[] list = new Task[100];
+        //Task[] list = new Task[100];
+        ArrayList<Task> list = new ArrayList<>();
         int list_count = 0;
         Scanner in = new Scanner(System.in);
         String user_input = in.nextLine().trim();
@@ -37,7 +39,8 @@ public class JosBot {
                 if (user_input.equals("list")) {
                     System.out.println("Here are the tasks in your list:");
                     for (int i = 1; i < list_count + 1; i++) {
-                        System.out.println(i + ". " + list[i - 1].toString());
+                        //System.out.println(i + ". " + list[i - 1].toString());
+                        System.out.println(i + ". " + list.get(i - 1).toString());
                     }
                 } else if (user_input.startsWith("mark") || user_input.startsWith("unmark")) {
                    //to check if current list is not empty
@@ -47,13 +50,16 @@ public class JosBot {
                         if (user_input.startsWith("mark")) {
                             last_digit = Integer.valueOf(user_input.substring(4).trim()) - 1;
                             System.out.println("Nice! I've marked this task as done:");
-                            list[last_digit].markAsDone();
+                            //list[last_digit].markAsDone();
+                            list.get(last_digit).markAsDone();
                         } else if (user_input.startsWith("unmark")) {
                             last_digit = Integer.valueOf(user_input.substring(6).trim()) - 1;
                             System.out.println("OK, I've marked this task as not done yet:");
-                            list[last_digit].markAsNotDone();
+                            //list[last_digit].markAsNotDone();
+                            list.get(last_digit).markAsNotDone();
                         }
-                        System.out.println("[" + list[last_digit].getStatusIcon() + "] " + list[last_digit].getDescription());
+                        //System.out.println("[" + list[last_digit].getStatusIcon() + "] " + list[last_digit].getDescription());
+                        System.out.println("[" + list.get(last_digit).getStatusIcon() + "] " + list.get(last_digit).getDescription());
                     }
                     else
                     {
@@ -69,7 +75,8 @@ public class JosBot {
                         if (user_input.startsWith("todo")) {
                             String todo_txt = user_input.replace("todo ", "");
                             Task t = new Todo(todo_txt);
-                            list[list_count] = t;
+                            //list[list_count] = t;
+                            list.add(t);
                             list_count++;
                             System.out.println(t.toString());
                         } else if (user_input.startsWith("deadline")) {
@@ -78,7 +85,8 @@ public class JosBot {
                             deadline_txt = split_txt[0].trim();
                             //task name and deadline day
                             Task t = new Deadline(split_txt[0].trim(), split_txt[1].trim());
-                            list[list_count] = t;
+                            //list[list_count] = t;
+                            list.add(t);
                             list_count++;
                             System.out.println(t.toString());
                         } else if (user_input.startsWith("event")) {
@@ -88,7 +96,8 @@ public class JosBot {
                             String event_from = split_txt[1].replace("from ", "").trim();
                             String event_to = split_txt[2].replace("to ", "").trim();
                             Task t = new Event(event_name, event_from, event_to);
-                            list[list_count] = t;
+                            //list[list_count] = t;
+                            list.add(t);
                             list_count++;
                             System.out.println(t.toString());
                         }
@@ -100,7 +109,27 @@ public class JosBot {
                         throw new JosBotException("missing_description");
                     }
 
-                } else {
+                }
+                else if (user_input.startsWith("delete"))
+                {
+                    String[] fw = user_input.split(" ");
+                    if(fw.length > 1)
+                    {
+                        System.out.println("Noted. I've removed this task:");
+                        Integer last_digit = 0;
+                        last_digit = Integer.valueOf(user_input.substring(6).trim()) - 1;
+                        System.out.println(list.get(last_digit).toString());
+                        list.remove(last_digit);
+                        list_count--;
+                        System.out.println("Now you have " + list_count + " tasks in the list.");
+
+                    }
+                    else
+                    {
+                        throw new JosBotException("missing_description");
+                    }
+                }
+                else {
                     throw new JosBotException("missing_task");
                 }
                 //end of try

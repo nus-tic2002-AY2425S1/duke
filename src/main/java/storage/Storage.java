@@ -20,7 +20,8 @@ import task.TaskList;
 public class Storage {
 
     // Default file path used if the user doesn't provide the file name.
-    private static final String DEFAULT_STORAGE_FILEPATH = "./data/tasks.txt";
+    private static final String DEFAULT_STORAGE_FILEPATH = System.getProperty("storage.file", "./data/tasks.txt");
+    // private static final String DEFAULT_STORAGE_FILEPATH = "./data/tasks.txt";
     protected final Path filePath;
 
     public Storage() throws StorageOperationException {

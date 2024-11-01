@@ -17,6 +17,8 @@ mark 6
 unmark 6
 unmark 6
 list
+event
+event orientation
 event orientation /from
 event orientation /from Jan 1st
 event orientation /from Jan 1st /to
@@ -24,3 +26,17 @@ event orientation /to
 event orientation /to 2nd
 event orientation /from Jan 1st /to 2nd
 list
+delete 6
+list
+deadline do homework /by no idea :-p
+list
+mark abc
+mark 123456789
+unmark abc
+unmark 123456789
+delete abc
+delete 123456789
+delete 7
+delete 6
+delete 5
+bye

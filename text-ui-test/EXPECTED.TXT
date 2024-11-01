@@ -1,101 +1,6 @@
     ____________________________________________________________
-     Hello, I'm Javaro.
-     What can I do for you?
+     Greetings! It's Javaro at your service. What can I do for you?
     ____________________________________________________________
-
-    ____________________________________________________________
-     Good job! You're all caught up!
-    ____________________________________________________________
-
-    ____________________________________________________________
-     The description of a task cannot be empty. 
-     Please add a description for the task. Example: "todo borrow book"
-    ____________________________________________________________
-
-    ____________________________________________________________
-     Got it. I've added this task:
-       [T][ ] read book
-     Now you have 1 task in the list.
-    ____________________________________________________________
-
-    ____________________________________________________________
-     Nice! I've marked this task as done:
-       [T][X] read book
-    ____________________________________________________________
-
-    ____________________________________________________________
-     The task is already marked as done. No action done.
-    ____________________________________________________________
-
-    ____________________________________________________________
-     Here are the tasks in your list:
-     1. [T][X] read book
-    ____________________________________________________________
-
-    ____________________________________________________________
-     The description of a task cannot be empty. 
-     Please add a description for the task. Example: "deadline borrow book"
-    ____________________________________________________________
-
-    ____________________________________________________________
-     Please enter /by information
-    ____________________________________________________________
-
-    ____________________________________________________________
-     The description of a task cannot be empty. 
-     Please add a description for the task. Example: "deadline borrow book"
-    ____________________________________________________________
-
-    ____________________________________________________________
-     Got it. I've added this task:
-       [D][ ] return book (by: June 6th)
-     Now you have 2 tasks in the list.
-    ____________________________________________________________
-
-    ____________________________________________________________
-     Nice! I've marked this task as done:
-       [D][X] return book (by: June 6th)
-    ____________________________________________________________
-
-    ____________________________________________________________
-     OK, I've marked this task as not done yet:
-       [D][ ] return book (by: June 6th)
-    ____________________________________________________________
-
-    ____________________________________________________________
-     The task is already marked as not done. No action done.
-    ____________________________________________________________
-
-    ____________________________________________________________
-     Here are the tasks in your list:
-     1. [T][X] read book
-     2. [D][ ] return book (by: June 6th)
-    ____________________________________________________________
-
-    ____________________________________________________________
-     Got it. I've added this task:
-       [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
-     Now you have 3 tasks in the list.
-    ____________________________________________________________
-
-    ____________________________________________________________
-     Here are the tasks in your list:
-     1. [T][X] read book
-     2. [D][ ] return book (by: June 6th)
-     3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
-    ____________________________________________________________
-
-    ____________________________________________________________
-     Got it. I've added this task:
-       [T][ ] join sports club
-     Now you have 4 tasks in the list.
-    ____________________________________________________________
-
-    ____________________________________________________________
-     Nice! I've marked this task as done:
-       [T][X] join sports club
-    ____________________________________________________________
-
     ____________________________________________________________
      Here are the tasks in your list:
      1. [T][X] read book
@@ -103,65 +8,229 @@
      3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
      4. [T][X] join sports club
     ____________________________________________________________
-
     ____________________________________________________________
-     Noted. I've removed this task:
-       [D][ ] return book (by: June 6th)
-     Now you have 3 tasks in the list.
+     Error: Invalid command format for command todo.
+     The description of a task cannot be empty.
+     Example usage: `todo <description>`
     ____________________________________________________________
-
-    ____________________________________________________________
-     Here are the tasks in your list:
-     1. [T][X] read book
-     2. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
-     3. [T][X] join sports club
-    ____________________________________________________________
-
     ____________________________________________________________
      Got it. I've added this task:
-       [T][ ] borrow book
-     Now you have 4 tasks in the list.
+       [T][ ] learn a new language
+     Now you have 5 tasks in the list.
     ____________________________________________________________
-
     ____________________________________________________________
      Here are the tasks in your list:
      1. [T][X] read book
-     2. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
-     3. [T][X] join sports club
-     4. [T][ ] borrow book
+     2. [D][ ] return book (by: June 6th)
+     3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+     4. [T][X] join sports club
+     5. [T][ ] learn a new language
     ____________________________________________________________
-
+    ____________________________________________________________
+     OK, I've marked this task as not done yet:
+       [T][ ] read book
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1. [T][ ] read book
+     2. [D][ ] return book (by: June 6th)
+     3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+     4. [T][X] join sports club
+     5. [T][ ] learn a new language
+    ____________________________________________________________
+    ____________________________________________________________
+     Nice! I've marked this task as done:
+       [T][X] read book
+    ____________________________________________________________
+    ____________________________________________________________
+     The task `[T][X] read book` is already marked as done. No action done.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1. [T][X] read book
+     2. [D][ ] return book (by: June 6th)
+     3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+     4. [T][X] join sports club
+     5. [T][ ] learn a new language
+    ____________________________________________________________
+    ____________________________________________________________
+     Error: Invalid command format for command deadline.
+     The description of a task cannot be empty.
+     Example usage: `deadline <description> /by <due date>`
+    ____________________________________________________________
+    ____________________________________________________________
+     Error: Invalid command format for command deadline.
+     The task is missing a due date.
+     Example usage: `deadline <description> /by <due date>`
+    ____________________________________________________________
+    ____________________________________________________________
+     Error: Invalid command format for command deadline.
+     Received `deadline /by Sunday`
+     Example usage: `deadline <description> /by <due date>`
+    ____________________________________________________________
+    ____________________________________________________________
+     Error: Invalid command format for command deadline.
+     Received `deadline /by`
+     Example usage: `deadline <description> /by <due date>`
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [D][ ] return pen (by: Sunday)
+     Now you have 6 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1. [T][X] read book
+     2. [D][ ] return book (by: June 6th)
+     3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+     4. [T][X] join sports club
+     5. [T][ ] learn a new language
+     6. [D][ ] return pen (by: Sunday)
+    ____________________________________________________________
+    ____________________________________________________________
+     Nice! I've marked this task as done:
+       [D][X] return pen (by: Sunday)
+    ____________________________________________________________
+    ____________________________________________________________
+     OK, I've marked this task as not done yet:
+       [D][ ] return pen (by: Sunday)
+    ____________________________________________________________
+    ____________________________________________________________
+     The task `[D][ ] return pen (by: Sunday)` is already marked as not done. No action done.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1. [T][X] read book
+     2. [D][ ] return book (by: June 6th)
+     3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+     4. [T][X] join sports club
+     5. [T][ ] learn a new language
+     6. [D][ ] return pen (by: Sunday)
+    ____________________________________________________________
+    ____________________________________________________________
+     Error: Invalid command format for command event.
+     The description of a task cannot be empty.
+     Example usage: `event <description> /from <start date/time> /to <end date/time>`
+    ____________________________________________________________
+    ____________________________________________________________
+     Error: Invalid command format for command event.
+     The task is missing a start date/time.
+     Example usage: `event <description> /from <start date/time> /to <end date/time>`
+    ____________________________________________________________
+    ____________________________________________________________
+     Error: Invalid command format for command event.
+     The task is missing an end date/time.
+     Example usage: `event <description> /from <start date/time> /to <end date/time>`
+    ____________________________________________________________
+    ____________________________________________________________
+     Error: Invalid command format for command event.
+     The task is missing an end date/time.
+     Example usage: `event <description> /from <start date/time> /to <end date/time>`
+    ____________________________________________________________
+    ____________________________________________________________
+     Error: Invalid command format for command event.
+     Received `event orientation /from Jan 1st /to`
+     Example usage: `event <description> /from <start date/time> /to <end date/time>`
+    ____________________________________________________________
+    ____________________________________________________________
+     Error: Invalid command format for command event.
+     The task is missing a start date/time.
+     Example usage: `event <description> /from <start date/time> /to <end date/time>`
+    ____________________________________________________________
+    ____________________________________________________________
+     Error: Invalid command format for command event.
+     The task is missing a start date/time.
+     Example usage: `event <description> /from <start date/time> /to <end date/time>`
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [E][ ] orientation (from: Jan 1st to: 2nd)
+     Now you have 7 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1. [T][X] read book
+     2. [D][ ] return book (by: June 6th)
+     3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+     4. [T][X] join sports club
+     5. [T][ ] learn a new language
+     6. [D][ ] return pen (by: Sunday)
+     7. [E][ ] orientation (from: Jan 1st to: 2nd)
+    ____________________________________________________________
+    ____________________________________________________________
+     Noted. I've removed this task:
+       [D][ ] return pen (by: Sunday)
+     Now you have 6 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1. [T][X] read book
+     2. [D][ ] return book (by: June 6th)
+     3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+     4. [T][X] join sports club
+     5. [T][ ] learn a new language
+     6. [E][ ] orientation (from: Jan 1st to: 2nd)
+    ____________________________________________________________
     ____________________________________________________________
      Got it. I've added this task:
        [D][ ] do homework (by: no idea :-p)
-     Now you have 5 tasks in the list.
+     Now you have 7 tasks in the list.
     ____________________________________________________________
-
     ____________________________________________________________
      Here are the tasks in your list:
      1. [T][X] read book
-     2. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
-     3. [T][X] join sports club
-     4. [T][ ] borrow book
-     5. [D][ ] do homework (by: no idea :-p)
+     2. [D][ ] return book (by: June 6th)
+     3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+     4. [T][X] join sports club
+     5. [T][ ] learn a new language
+     6. [E][ ] orientation (from: Jan 1st to: 2nd)
+     7. [D][ ] do homework (by: no idea :-p)
     ____________________________________________________________
-
     ____________________________________________________________
-     Task not found. Please enter a valid task number from 1 to 5.
+     Error: Invalid command format for command mark
+     Received `mark abc`
+     Example usage: mark
     ____________________________________________________________
-
     ____________________________________________________________
-     Task not found. Please enter a valid task number from 1 to 5.
+     Error: Task does not exist
+     Task number 123456789 cannot be found.
+     Please enter a valid task number from 1 to 7.
     ____________________________________________________________
-
     ____________________________________________________________
-     Task not found. Please enter a valid task number from 1 to 5.
+     Error: Invalid command format for command unmark
+     Received `unmark abc`
+     Example usage: unmark <task number>
     ____________________________________________________________
-
     ____________________________________________________________
-     Task not found. Please enter a valid task number from 1 to 5.
+     Error: Task does not exist
+     Task number 123456789 cannot be found.
+     Please enter a valid task number from 1 to 7.
     ____________________________________________________________
-
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Error: Invalid command format for command delete
+     Received `delete abc`
+     Example usage: delete <task number>
+    ____________________________________________________________
+    ____________________________________________________________
+     Error: Task does not exist
+     Task number 123456789 cannot be found.
+     Please enter a valid task number from 1 to 7.
+    ____________________________________________________________
+    ____________________________________________________________
+     Noted. I've removed this task:
+       [D][ ] do homework (by: no idea :-p)
+     Now you have 6 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Noted. I've removed this task:
+       [E][ ] orientation (from: Jan 1st to: 2nd)
+     Now you have 5 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Noted. I've removed this task:
+       [T][ ] learn a new language
+     Now you have 4 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Good bye! Hope to see you again soon
     ____________________________________________________________

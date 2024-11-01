@@ -38,8 +38,8 @@ public class Storage {
         // https://stackoverflow.com/questions/15571496/how-to-check-if-a-folder-exists
         // Check if "data" directory exists in current folder 
         Path dataFolderPath = getFilePath().getParent();
-        // System.out.println(dataFolderPath);
-        File dataFolder = new File(dataFolderPath.toString());
+        String dataFolderPathString = dataFolderPath.toString();
+        File dataFolder = new File(dataFolderPathString);
         boolean isDataFolderExists = dataFolder.exists() && dataFolder.isDirectory();
         // boolean isDataFolderExists = Files.exists(dataFolderPath) && Files.isDirectory(dataFolderPath);
 
@@ -48,10 +48,11 @@ public class Storage {
             // https://tutorialspoint.com/java/java_directories.htm
             // The mkdir() method creates a directory, returning true on success and false on failure. Failure indicates that the path specified in the File object already exists, or that the directory cannot be created because the entire path does not exist yet.
             boolean isDataFolderCreated = dataFolder.mkdir();
-            if (isDataFolderCreated) {
-                System.out.println("Data directory created");
-            } else {
-                throw new StorageOperationException(Messages.ERROR_CREATE_FOLDER);
+            if (!isDataFolderCreated) {
+                throw new StorageOperationException(
+                    String.format("%s at %s", Messages.ERROR_CREATE_FOLDER_PRE, dataFolderPathString),
+                    Messages.ERROR_CREATE_FOLDER_POST
+                );
             }
         }
     }
@@ -66,12 +67,21 @@ public class Storage {
             try {
                 boolean isFileCreated = taskFile.createNewFile();
                 if (!isFileCreated) {
-                    throw new StorageOperationException(Messages.ERROR_CREATE_FILE);
+                    throw new StorageOperationException(
+                        String.format("%s at %s", Messages.ERROR_CREATE_FILE_PRE, getFilePath().toString()),
+                        Messages.ERROR_CREATE_FILE_POST
+                    );
                 }
             } catch (IOException e) {
-                throw new StorageOperationException(Messages.ERROR_IO_CREATE_FILE);
+                throw new StorageOperationException(
+                    String.format("%s at %s", Messages.ERROR_CREATE_FILE_PRE, getFilePath().toString()),
+                    Messages.ERROR_IO_CREATE_FILE
+                );
             } catch (SecurityException e) {
-                throw new StorageOperationException(Messages.ERROR_SECURITY_CREATE_FILE);
+                throw new StorageOperationException(
+                    String.format("%s at %s due to ", Messages.ERROR_CREATE_FILE_PRE, getFilePath().toString(), Messages.ERROR_SECURITY_CREATE_FILE),
+                    Messages.ERROR_SECURITY_CREATE_FILE
+                );
             }
         }
     }
@@ -87,32 +97,17 @@ public class Storage {
         return lines;
     }
 
-    // public static decodeTaskList
-
     // Write all lines in tasks.txt into TaskList
-    // TODO: Handle the situation of the data file being corrupted (i.e., content not in the expected format).
     public TaskList loadTasks() throws IOException, FileContentException, TaskListDecoderException {
         TaskList taskList = new TaskList();
         List<String> lines = null;
         try {
             lines = getAllLines();
-            // System.out.println("lines from getAllLines() is " + lines.toString());
             taskList = TaskListDecoder.decodeTaskList(lines);
         } catch (IOException e) {
             throw new IOException(Messages.ERROR_READ_FILE);
         } 
         return taskList;
-
-        // try {
-        //     return TaskListDecoder.decodeTaskList(Files.readAllLines(filePath));
-        // } catch (FileNotFoundException e) {
-        //     throw new AssertionError("A non-existent file scenario is already handled earlier");
-        // } catch (IOException e) {
-        //     throw new StorageOperationException(
-        //             Messages.MESSAGE_READ_FILE_ERROR,
-        //             String.format("FilePath='%s", filePath)
-        //     );
-        // }
     }
 
     // Write all tasks in taskList into tasks.txt
@@ -121,7 +116,10 @@ public class Storage {
             List<String> encodedTaskList = TaskListEncoder.encodeTaskList(taskList);
             Files.write(getFilePath(), encodedTaskList);
         } catch (IOException ioe) {
-            throw new StorageOperationException("Error writing to file: " + getFilePath());
+            throw new StorageOperationException(
+                String.format("%s at %s", Messages.ERROR_WRITE_FILE, getFilePath().toString()),
+                String.format("%s write to the task file", Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE)
+            );
         }
     }
 

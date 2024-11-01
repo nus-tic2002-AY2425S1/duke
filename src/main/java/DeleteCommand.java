@@ -2,7 +2,6 @@ public class DeleteCommand extends Command {
     public static final String COMMAND_WORD = "delete";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " <task number>";
     public static final String MESSAGE_DELETE_SUCCESS_PRE = "Noted. I've removed this task:";
-    public static final String MESSAGE_EMPTY_TASKLIST = "The task list is empty. Please add a task first.";
     
     protected int taskNumber;
     
@@ -19,17 +18,20 @@ public class DeleteCommand extends Command {
         
         int taskNumber = getTaskNumber();
         int taskListSize = taskList.getSize();
-        final String MESSAGE_NONEXISTENT_TASK = "Task number " + taskNumber + " not found. Please enter a valid task number from 1 to " + taskListSize + ".";
         
         String taskWord = taskList.getTaskWord(taskListSize);
-        final String MESSAGE_DELETE_SUCCESS_POST = "Now you have " + (taskListSize - 1) + taskWord + " in the list.";
+        final String MESSAGE_DELETE_SUCCESS_POST = Messages.MESSAGE_NOW_YOU_HAVE + (taskListSize - 1) + taskWord + Messages.MESSAGE_IN_THE_LIST;
 
         int indexToDelete = taskNumber - 1;
         Task taskToDelete = null;
         try {
             taskToDelete = taskList.getTask(indexToDelete);
         } catch (IndexOutOfBoundsException ioobe) {
-            throw new CommandException(MESSAGE_NONEXISTENT_TASK);
+            throw new CommandException(
+                Messages.ERROR_TASK_NONEXISTENT,
+                    String.format("%s %s %s", Messages.MESSAGE_NONEXISTENT_TASK_PRE, taskNumber, Messages.MESSAGE_NONEXISTENT_TASK_POST),
+                    String.format("%s %s.", Messages.MESSAGE_ENTER_VALID_TASK_NUMBER, taskListSize)
+            );
         }
         
         String[] messageList = null;

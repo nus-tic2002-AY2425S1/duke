@@ -25,7 +25,7 @@ public class Parser {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         
         if (!matcher.matches()) {
-            throw new CommandException(Messages.INVALID_COMMAND_FORMAT);
+            throw new CommandException(String.format("%s", Messages.ERROR_INVALID_COMMAND_FORMAT));
         }
 
         final String commandWord = matcher.group("commandWord");
@@ -52,86 +52,83 @@ public class Parser {
                 return prepareEvent(cleanArgs);
             default:
                 throw new CommandException(
-                    Messages.INVALID_COMMAND,
+                    Messages.ERROR_INVALID_COMMAND,
                     String.format("Command=%s", commandWord),
                     Messages.VALID_COMMANDS
                 );
         }
     }
 
-    private static Command prepareMark(String args) throws CommandException {
+    private static int prepareTaskNumberForCommand(String commandWord, String args, String messageUsage) throws CommandException {
         final Matcher matcher = TASK_NUMBER_ARGS_FORMAT.matcher(args);
-        
-        // Validate arg string format
         if (!matcher.matches()) {
             throw new CommandException(
-                String.format("%s%s", Messages.INVALID_COMMAND_FORMAT, MarkCommand.COMMAND_WORD),
-                String.format("Received `%s %s`", MarkCommand.COMMAND_WORD, args),
-                String.format("Example usage: %s", MarkCommand.MESSAGE_USAGE)
+                String.format("%s%s", Messages.ERROR_INVALID_COMMAND_FORMAT, commandWord),
+                String.format("Received `%s %s`", commandWord, args),
+                String.format("Example usage: %s", messageUsage)
             );
         }
-
         int taskNumber = Integer.parseInt(matcher.group("taskNumber"));
+        return taskNumber;
+    }
+
+    private static Command prepareMark(String args) throws CommandException {
+        int taskNumber = prepareTaskNumberForCommand(MarkCommand.COMMAND_WORD, args, MarkCommand.COMMAND_WORD);
         return new MarkCommand(taskNumber);
     }
 
     private static Command prepareUnmark(String args) throws CommandException {
-        final Matcher matcher = TASK_NUMBER_ARGS_FORMAT.matcher(args);
-        
-        // Validate arg string format
-        if (!matcher.matches()) {
-            throw new CommandException(
-                String.format("%s%s", Messages.INVALID_COMMAND_FORMAT, UnmarkCommand.COMMAND_WORD),
-                String.format("Received `%s %s`", UnmarkCommand.COMMAND_WORD, args),
-                String.format("Example usage: %s", UnmarkCommand.MESSAGE_USAGE)
-            );
-        }
-
-        int taskNumber = Integer.parseInt(matcher.group("taskNumber"));
+        int taskNumber = prepareTaskNumberForCommand(UnmarkCommand.COMMAND_WORD, args, UnmarkCommand.MESSAGE_USAGE);
         return new UnmarkCommand(taskNumber);
     }
 
     private static Command prepareDelete(String args) throws CommandException {
-        final Matcher matcher = TASK_NUMBER_ARGS_FORMAT.matcher(args);
-        
-        // Validate arg string format
-        if (!matcher.matches()) {
+        int taskNumber = prepareTaskNumberForCommand(DeleteCommand.COMMAND_WORD, args, DeleteCommand.MESSAGE_USAGE);
+        return new DeleteCommand(taskNumber);
+    }
+
+    public static void checkEmptyDescriptionForTaskCommand(String args, String commandWord, String infoMessage, String messageUsage) throws CommandException {
+        if (args.isEmpty()) {
             throw new CommandException(
-                String.format("%s%s", Messages.INVALID_COMMAND_FORMAT, DeleteCommand.COMMAND_WORD),
-                String.format("Received `%s %s`", DeleteCommand.COMMAND_WORD, args),
-                String.format("Example usage: `%s`", DeleteCommand.MESSAGE_USAGE)
+                Messages.ERROR_INVALID_COMMAND_FORMAT + commandWord + ".",
+                infoMessage,
+                String.format("Example usage: `%s`", messageUsage)
             );
         }
+    }
 
-        int taskNumber = Integer.parseInt(matcher.group("taskNumber"));
-        return new DeleteCommand(taskNumber);
+    public static void validateArgsFormat(Matcher matcher, String commandWord, String args, String messageUsage) throws CommandException {
+        if (!matcher.matches()) {
+            throw new CommandException(
+                Messages.ERROR_INVALID_COMMAND_FORMAT + commandWord + ".",
+                String.format("Received `%s %s`", commandWord, args),
+                String.format("Example usage: `%s`", messageUsage)
+            );
+        }
     }
 
     private static Command prepareTodo(String args) throws CommandException {
 
         // Check if args (description) is empty
-        if (args.isEmpty()) {
-            throw new CommandException(
-                Messages.INVALID_COMMAND_FORMAT + TodoCommand.COMMAND_WORD + ".",
-                Messages.MESSAGE_EMPTY_DESCRIPTION_PRE,
-                String.format("Example usage: `%s`", TodoCommand.MESSAGE_USAGE)
-            );
-        }
+        checkEmptyDescriptionForTaskCommand(args, TodoCommand.COMMAND_WORD, Messages.MESSAGE_EMPTY_DESCRIPTION_PRE, TodoCommand.MESSAGE_USAGE);
         
         final Matcher matcher = TODO_COMMAND_ARGS_FORMAT.matcher(args);
         
         // Validate arg string format
-        if (!matcher.matches()) {
-            throw new CommandException(
-                Messages.INVALID_COMMAND_FORMAT + TodoCommand.COMMAND_WORD + ".",
-                String.format("Received `%s`", args),
-                String.format("Example usage: `%s`", TodoCommand.MESSAGE_USAGE)
-            );
-        }
+        validateArgsFormat(matcher, TodoCommand.COMMAND_WORD, args, TodoCommand.MESSAGE_USAGE);
         
-        // System.out.println("this is args " + args);
         String description = matcher.group("description");
         return new TodoCommand(description.trim());
+    }
+
+    private static void checkArgsContainsKeyword(String args, String keyword, String commandWord, String infoMessage, String messageUsage) throws CommandException {
+        if (!args.contains(keyword)) {
+            throw new CommandException(
+                Messages.ERROR_INVALID_COMMAND_FORMAT + commandWord + ".",
+                infoMessage,
+                String.format("Example usage: `%s`", messageUsage)
+            );
+        }
     }
 
     private static Command prepareDeadline(String args) throws CommandException {
@@ -140,32 +137,14 @@ public class Parser {
         final String BY_KEYWORD = "/by";
 
         // Check if args (description) is empty
-        if (args.isEmpty()) {
-            throw new CommandException(
-                Messages.INVALID_COMMAND_FORMAT + DeadlineCommand.COMMAND_WORD + ".",
-                Messages.MESSAGE_EMPTY_DESCRIPTION_PRE,
-                String.format("Example usage: `%s`", DeadlineCommand.MESSAGE_USAGE)
-            );
-        }
+        checkEmptyDescriptionForTaskCommand(args, DeadlineCommand.COMMAND_WORD, Messages.MESSAGE_EMPTY_DESCRIPTION_PRE, DeadlineCommand.MESSAGE_USAGE);
         
-        if (!args.contains(BY_KEYWORD)) {
-            throw new CommandException(
-                Messages.INVALID_COMMAND_FORMAT + DeadlineCommand.COMMAND_WORD + ".",
-                MESSAGE_EMPTY_DUEDATE_PRE,
-                String.format("Example usage: `%s`", DeadlineCommand.MESSAGE_USAGE)
-            );
-        }
-
+        checkArgsContainsKeyword(args, BY_KEYWORD, DeadlineCommand.COMMAND_WORD, MESSAGE_EMPTY_DUEDATE_PRE, DeadlineCommand.MESSAGE_USAGE);
+        
         final Matcher matcher = DEADLINE_COMMAND_ARGS_FORMAT.matcher(args);
         
         // Validate arg string format
-        if (!matcher.matches()) {
-            throw new CommandException(
-                Messages.INVALID_COMMAND_FORMAT + DeadlineCommand.COMMAND_WORD + ".",
-                String.format("Received `%s`", DeadlineCommand.COMMAND_WORD + " " + args),
-                String.format("Example usage: `%s`", DeadlineCommand.MESSAGE_USAGE)
-            );
-        }
+        validateArgsFormat(matcher, DeadlineCommand.COMMAND_WORD, args, DeadlineCommand.MESSAGE_USAGE);
         
         String description = matcher.group("description");
         String due = matcher.group("due");
@@ -180,42 +159,17 @@ public class Parser {
         final String TO_KEYWORD = "/to";
 
         // Check if args (description) is empty
-        if (args.isEmpty()) {
-            throw new CommandException(
-                Messages.INVALID_COMMAND_FORMAT + EventCommand.COMMAND_WORD + ".",
-                Messages.MESSAGE_EMPTY_DESCRIPTION_PRE,
-                String.format("Example usage: `%s`", EventCommand.MESSAGE_USAGE)
-            );
-        }
-        
-        if (!args.contains(FROM_KEYWORD)) {
-            throw new CommandException(
-                Messages.INVALID_COMMAND_FORMAT + EventCommand.COMMAND_WORD + ".",
-                MESSAGE_EMPTY_STARTDATETIME_PRE,
-                String.format("Example usage: `%s`", EventCommand.MESSAGE_USAGE)
-            );
-        }
-        
-        if (!args.contains(TO_KEYWORD)) {
-            throw new CommandException(
-                Messages.INVALID_COMMAND_FORMAT + EventCommand.COMMAND_WORD + ".",
-                MESSAGE_EMPTY_ENDDATETIME_PRE,
-                String.format("Example usage: `%s`", EventCommand.MESSAGE_USAGE)
-            );
-        }
+        checkEmptyDescriptionForTaskCommand(args, EventCommand.COMMAND_WORD, Messages.MESSAGE_EMPTY_DESCRIPTION_PRE, EventCommand.MESSAGE_USAGE);
+
+        checkArgsContainsKeyword(args, FROM_KEYWORD, EventCommand.COMMAND_WORD, MESSAGE_EMPTY_STARTDATETIME_PRE, EventCommand.MESSAGE_USAGE);
+                
+        checkArgsContainsKeyword(args, TO_KEYWORD, EventCommand.COMMAND_WORD, MESSAGE_EMPTY_ENDDATETIME_PRE, EventCommand.MESSAGE_USAGE);
 
         final Matcher matcher = EVENT_COMMAND_ARGS_FORMAT.matcher(args);
         
         // Validate arg string format
-        if (!matcher.matches()) {
-            throw new CommandException(
-                Messages.INVALID_COMMAND_FORMAT + EventCommand.COMMAND_WORD + ".",
-                String.format("Received `%s`", args),
-                String.format("Example usage: `%s`", EventCommand.MESSAGE_USAGE)
-            );
-        }
-        
-        // System.out.println("this is args " + args);
+        validateArgsFormat(matcher, EventCommand.COMMAND_WORD, args, EventCommand.MESSAGE_USAGE);
+
         String description = matcher.group("description");
         String startTime = matcher.group("start");
         String endTime = matcher.group("end");

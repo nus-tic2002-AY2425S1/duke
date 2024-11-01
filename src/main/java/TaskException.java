@@ -1,5 +1,5 @@
 // https://stackoverflow.com/questions/8423700/how-to-create-a-custom-exception-type-in-java
-public class TaskException extends Exception {
+public class TaskException extends JavaroException {
     public TaskException(String message) {
         super(message);
     }

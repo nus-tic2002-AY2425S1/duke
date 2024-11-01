@@ -20,14 +20,18 @@ public class UnmarkCommand extends Command {
         
         int taskNumber = getTaskNumber();
         int taskListSize = taskList.getSize();
-        final String MESSAGE_NONEXISTENT_TASK = "Task number " + taskNumber + " not found. Please enter a valid task number from 1 to " + taskListSize + ".";
+        // final String MESSAGE_NONEXISTENT_TASK = "Task number " + taskNumber + " not found. Please enter a valid task number from 1 to " + taskListSize + ".";
 
         int indexToUnmark = taskNumber - 1;
         Task taskToUnmark = null;
         try {
             taskToUnmark = taskList.getTask(indexToUnmark);
         } catch (IndexOutOfBoundsException ioobe) {
-            throw new CommandException(MESSAGE_NONEXISTENT_TASK);
+            throw new CommandException(
+                    Messages.ERROR_TASK_NONEXISTENT,
+                    String.format("%s %s %s", Messages.MESSAGE_NONEXISTENT_TASK_PRE, taskNumber, Messages.MESSAGE_NONEXISTENT_TASK_POST),
+                    String.format("%s %s.", Messages.MESSAGE_ENTER_VALID_TASK_NUMBER, taskListSize)
+                );
         }
         final String MESSAGE_ALREADY_UNMARKED = "The task `" + taskToUnmark + "` is already marked as not done. No action done.";
         

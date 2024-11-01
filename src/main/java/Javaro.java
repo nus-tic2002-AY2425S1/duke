@@ -54,11 +54,11 @@ public class Javaro {
                 // System.out.println("CommandException caught: " + e.getMessage());
                 ui.showError(e.getMessageList());
             } catch (StorageOperationException e) {
-                System.out.println("StorageOperationException caught: " + e.getMessage());
-                // ui.showError(e.getMessageList());
+                // System.out.println("StorageOperationException caught: " + e.getMessage());
+                ui.showError(e.getMessageList());
             } catch (TaskException e) {
-                System.out.println("TaskException caught: " + e.getMessage());
-                // ui.showError(e.getMessageList());
+                // System.out.println("TaskException caught: " + e.getMessage());
+                ui.showError(e.getMessageList());
             } finally {
                 // ui.showLine();
             }

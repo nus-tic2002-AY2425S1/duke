@@ -28,6 +28,7 @@ public class DeleteCommand extends Command {
             tasks.remove(getInstruction());
 
         } else{
+            assert getIndex() < tasks.size() : "index of arraylist shouldn't be bigger than the arraylist";
             Task task = tasks.get(getIndex());
             tasks.remove(getIndex());
             System.out.println("Noted. I've removed this task:");

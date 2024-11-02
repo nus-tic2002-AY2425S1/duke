@@ -20,6 +20,7 @@ public class FindCommand extends Command{
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws IOException, NoArgsException {
+        assert !getInstruction().isEmpty() : "Search word(s) shouldn't be empty";
         tasks.printTasks(getInstruction());
     }
 

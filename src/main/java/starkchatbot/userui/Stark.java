@@ -36,8 +36,8 @@ public class Stark {
     public static void main(String[] args) {
 
     try {
-//        Stark.runChatBot();
-        DateTimeParser.parseDateTime("2001-09-08 1813");
+        Stark.runChatBot();
+//        DateTimeParser.parseDateTime("2001-09-08 1813");
     }catch (Exception e){
         System.out.println(e.getMessage());
     }

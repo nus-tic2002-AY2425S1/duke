@@ -9,24 +9,23 @@ import java.time.format.DateTimeParseException;
 
 public class DateTimeParser {
 
-    private static String readableDate;
-    private static String readableTime;
+    private static String readableDate ;
+    private static String readableTime ;
 
 
     public static String parseDateTime(String dateTime) {
+        readableDate = "";
+        readableTime = "";
         try{
             if(dateTime.length() == 15) {
                 LocalDateTime localDateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern("yyyy-M-dd HHmm"));
                 readableDate = localDateTime.format(DateTimeFormatter.ofPattern("MMMM dd yyyy"));
                 readableTime = localDateTime.format(DateTimeFormatter.ofPattern("hh:mm a"));
-                System.out.println(readableDate);
-                System.out.println(readableTime);
 
             }else{
 
                 LocalDate localDate = LocalDate.parse(dateTime,DateTimeFormatter.ofPattern("yyyy-M-dd"));
                 readableDate = localDate.format(DateTimeFormatter.ofPattern("MMMM dd yyyy"));
-                System.out.println(readableDate);
             }
             return readableDate + " " + readableTime;
         } catch (DateTimeParseException e) {

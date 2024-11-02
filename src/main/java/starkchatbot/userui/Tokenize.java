@@ -30,17 +30,19 @@ public class Tokenize {
            } else if (tokens[0].equalsIgnoreCase("deadline")){
                     if (!(Arrays.asList(tokens).contains("/by"))) {
                         throw new StarkException.InvalidDescriptionException(" OOPS!!! \"DEADLINE\" tasks need to be done before a specific date/time " +
-                                                                            System.lineSeparator() +"\t\t \"eg: deadline return book /by Sunday\" ");
+                                                                            System.lineSeparator() +"\t\t \"eg: deadline return book /by 2011-03-11 1700\" ");
                     }
            }else if (tokens[0].equalsIgnoreCase("event")){
                if (!((Arrays.asList(tokens).contains("/from"))
                        && (Arrays.asList(tokens).contains("/to")))) {
                    throw new StarkException.InvalidDescriptionException(" OOPS!!! \"EVENT\" tasks need to start and ends at a specific date/time " +
-                                                                        System.lineSeparator() + "\t\t \"eg: event project meeting /from Mon 2pm /to 4pm\" ");
+                                                                        System.lineSeparator() + "\t\t \"eg: event project meeting /from 2011-03-11 1700 /to 2011-03-11 1900\" ");
                }
            }else if (tokens[0].equalsIgnoreCase("mark") || tokens[0].equalsIgnoreCase("unmark")
                     || tokens[0].equalsIgnoreCase("delete")){
+
                String query = tokens[0].toLowerCase();
+
                if(tokens.length > 2){
                    throw new StarkException.InvalidCommandException(" OOPS!!! ( \"" + tokens[0].toUpperCase() + "\" is not valid query or input" +
                                                                         System.lineSeparator()+ "\t\t \"eg: "+query+" 2\" )");

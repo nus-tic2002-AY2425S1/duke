@@ -1,7 +1,8 @@
 package alice.command;
 
 import alice.storage.Storage;
-import alice.task.*;
+import alice.task.Task;
+import alice.task.TaskList;
 import alice.ui.Ui;
 
 import java.io.IOException;

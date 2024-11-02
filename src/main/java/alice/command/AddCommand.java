@@ -24,7 +24,7 @@ import java.util.Locale;
  *
  * @author  Jarrel Bin
  * @version 1.0
- * @since   2024-10-16
+ * @since   2024-11-02
  */
 public class AddCommand extends Command {
 
@@ -57,6 +57,7 @@ public class AddCommand extends Command {
     public boolean isExit() {
         return false;
     }
+
     /**
      * This method is used to create acceptable datetime format for the /by
      * parameter in deadline
@@ -78,8 +79,9 @@ public class AddCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws IOException, NoArgsException {
 
-        if (getInstruction().isEmpty())
+        if (getInstruction().isEmpty()) {
             throw new NoArgsException("arguments");
+        }
 
         switch (getAction()) {
             case "todo":
@@ -88,9 +90,9 @@ public class AddCommand extends Command {
                 ui.showSize(tasks.size());
                 break;
             case "deadline":
-                if (!getInstruction().contains(" /by "))
+                if (!getInstruction().contains(" /by ")) {
                     throw new NoArgsException("/by");
-
+                }
                 ArrayList<String> deadlineInstruction = new ArrayList<>(Arrays.asList(getInstruction().split(" /by ")));
                 try {
                     tasks.add(new Deadline(deadlineInstruction.get(0), LocalDate.parse(deadlineInstruction.get(deadlineInstruction.size()-1), buildFormatter())));
@@ -101,10 +103,11 @@ public class AddCommand extends Command {
                 }
                 break;
             case "event":
-                if (!getInstruction().contains(" /from "))
+                if (!getInstruction().contains(" /from ")) {
                     throw new NoArgsException("/from");
-                else if (!getInstruction().contains(" /to "))
+                } else if (!getInstruction().contains(" /to ")) {
                     throw new NoArgsException("/to");
+                }
 
                 ArrayList<String> eventInstruction = new ArrayList<>(Arrays.asList(getInstruction().split(" /from ")));
                 ArrayList<String> eventInstruction2 = new ArrayList<>(Arrays.asList(eventInstruction.get(eventInstruction.size()-1).split(" /to ")));

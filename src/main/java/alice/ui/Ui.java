@@ -44,12 +44,11 @@ public class Ui {
 
     public String readCommand(){
         Scanner input = new Scanner(System.in);
-        //String[] instruction = line.split(" ");
         return input.nextLine();
     }
 
     public void showError(String message) {
-        System.out.println("Oops! An error occured: " + message);
+        System.out.println("Oops! An error occurred: " + message);
     }
 
     public void showSize(int size){

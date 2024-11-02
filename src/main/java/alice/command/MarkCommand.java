@@ -8,8 +8,8 @@ import java.io.IOException;
 
 public class MarkCommand extends Command {
 
-    public MarkCommand(int index, boolean bool){
-        super(index, bool);
+    public MarkCommand(int index, boolean isDone){
+        super(index, isDone);
     }
     @Override
     public boolean isExit() {
@@ -19,11 +19,12 @@ public class MarkCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws IOException {
         Task task_mark = tasks.get(getIndex());
-        task_mark.setDone(getBool());
-        if (getBool())
+        task_mark.setDone(getDone());
+        if (getDone()) {
             System.out.println("Nice! I've marked this task as done:)");
-        else
+        } else {
             System.out.println("I've unmarked this task as done:)");
+        }
         System.out.println(task_mark.print());
     }
 }

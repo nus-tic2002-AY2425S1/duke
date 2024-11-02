@@ -30,8 +30,7 @@ public class ListCommand extends Command {
         if (dateQuery != null){
             System.out.println("Here are the tasks in the date "+ dateQuery.format(DateTimeFormatter.ofPattern("MMM d yyyy")) +":");
             tasks.printTasks(dateQuery);
-        }
-        else {
+        } else {
             System.out.println("Here are the tasks in your list:");
             tasks.printTasks();
         }

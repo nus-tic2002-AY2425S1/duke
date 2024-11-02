@@ -1,23 +1,14 @@
 package alice.task;
 
-import org.junit.jupiter.api.Test;
+public class Todo extends Task {
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class TodoTest extends Task {
-
-    public TodoTest(String description) {
+    public Todo(String description) {
         super(description);
         this.isDone = false;
     }
 
-    public TodoTest(String description, boolean isDone) {
+    public Todo(String description, boolean isDone) {
         super(description,isDone);
-    }
-
-
-    public boolean isDone() {
-        return isDone;
     }
 
     @Override

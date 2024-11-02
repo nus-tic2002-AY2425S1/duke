@@ -2,13 +2,13 @@ package alice.parser;
 
 import alice.command.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Parser {
 
     public static Command parse(String fullCommand){
         ArrayList<String> instruction = new ArrayList<>(Arrays.asList(fullCommand.split(" ")));
-        //break the alice.command into args
         String action = instruction.get(0);
         instruction.remove(0);
 
@@ -19,7 +19,9 @@ public class Parser {
                 if (instruction.isEmpty())
                     return new ListCommand();
                 else
-                    return new ListCommand(action, String.join(" ", instruction));
+                    return new ListCommand(String.join(" ", instruction));
+            case "find":
+                return new FindCommand(action, String.join(" ", instruction));
             case "delete":
                 try {
                     return new DeleteCommand(Integer.parseInt(instruction.get(0))-1);
@@ -39,7 +41,7 @@ public class Parser {
                     return new IncorrectCommand();
                 }
             case "todo", "deadline", "event":
-                return new AddCommandTest(action, String.join(" ", instruction));
+                return new AddCommand(action, String.join(" ", instruction));
             case "help":
                 return new HelpCommand();
             default:

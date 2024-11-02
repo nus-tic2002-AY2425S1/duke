@@ -3,21 +3,17 @@ package alice.task;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class DeadlineTest extends Task {
+public class Deadline extends Task {
     private String by;
 
 
-    public DeadlineTest(String description, LocalDate by) {
+    public Deadline(String description, LocalDate by) {
         super(description);
         this.isDone = false;
         this.by = by.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
     }
 
-    public DeadlineTest(String description, boolean isDone, LocalDate by) {
+    public Deadline(String description, boolean isDone, LocalDate by) {
         super(description, isDone);
         this.by = by.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
     }

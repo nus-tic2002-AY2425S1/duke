@@ -4,22 +4,18 @@ import alice.command.Command;
 import alice.exception.NoArgsException;
 import alice.parser.Parser;
 import alice.storage.Storage;
-import alice.task.*;
+import alice.task.TaskList;
 import alice.ui.Ui;
 
 import java.io.IOException;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class AliceTest {
+public class Alice {
     private static TaskList tasks;
     private static Storage storage;
     private static Ui ui;
 
 
-    public AliceTest(String filePath) {
+    public Alice(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
         tasks = new TaskList();
@@ -30,8 +26,8 @@ public class AliceTest {
             tasks = new TaskList();
         }
     }
-    @Test
-    void run() {
+
+    public static void run() {
         ui.showWelcome();
         boolean isExit = false;
         while (!isExit) {
@@ -47,10 +43,9 @@ public class AliceTest {
                 ui.showLine();
             }
         }
-        //assertEquals();
     }
 
     public static void main(String[] args) {
-        new AliceTest("data/tasks.txt").run();
+        new Alice("data/tasks.txt").run();
     }
 }

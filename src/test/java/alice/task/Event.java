@@ -1,21 +1,20 @@
 package alice.task;
 
-import org.junit.jupiter.api.Test;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class EventTest extends Task {
+public class Event extends Task {
     protected String from;
     protected String to;
 
-    public EventTest(String description, String from, String to) {
+    public Event(String description, LocalDate from, LocalDate to) {
         super(description);
         this.isDone = false;
-        this.from = from;
-        this.to = to;
+        this.from = from.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+        this.to = to.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
     }
 
-    public EventTest(String description, boolean isDone, String from, String to) {
+    public Event(String description, boolean isDone, String from, String to) {
         super(description, isDone);
         this.from = from;
         this.to = to;

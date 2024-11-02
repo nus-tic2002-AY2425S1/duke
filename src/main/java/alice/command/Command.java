@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public abstract class Command {
     private int index = -1;
-    private boolean bool;
+    private boolean isDone;
     private String action;
     private String instruction;
 
@@ -19,9 +19,9 @@ public abstract class Command {
     public Command(){
     }
 
-    public Command(int index, boolean bool) {
+    public Command(int index, boolean isDone) {
         this.setIndex(index);
-        this.setBool(bool);
+        this.setDone(isDone);
     }
 
     public Command(String action, String instruction){
@@ -42,12 +42,12 @@ public abstract class Command {
         this.index = index;
     }
 
-    public boolean getBool() {
-        return bool;
+    public boolean getDone() {
+        return isDone;
     }
 
-    public void setBool(boolean bool) {
-        this.bool = bool;
+    public void setDone(boolean done) {
+        this.isDone = done;
     }
 
     public String getInstruction() {

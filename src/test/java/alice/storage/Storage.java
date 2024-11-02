@@ -1,8 +1,13 @@
 package alice.storage;
 
-import alice.task.*;
+import alice.task.Deadline;
+import alice.task.Event;
+import alice.task.Task;
+import alice.task.Todo;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -12,8 +17,6 @@ import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class Storage {
     private File f;
@@ -86,7 +89,7 @@ public class Storage {
                         i++;
                     }
                     System.out.println(body.toString() + instruction[1]);
-                    loadList.add(new TodoTest(body.toString(), Boolean.parseBoolean(instruction[1])));
+                    loadList.add(new Todo(body.toString(), Boolean.parseBoolean(instruction[1])));
                     break;
                 case "D":
                     if (instruction.length == 1) {
@@ -117,7 +120,7 @@ public class Storage {
                         i++;
                     }
                     try {
-                        loadList.add(new DeadlineTest(body.toString(), Boolean.parseBoolean(instruction[1]), LocalDate.parse(param, buildFormatter())));
+                        loadList.add(new Deadline(body.toString(), Boolean.parseBoolean(instruction[1]), LocalDate.parse(param, buildFormatter())));
                     } catch (DateTimeParseException e){
                         System.out.println("Wrong datetime input!");
                     }
@@ -162,7 +165,7 @@ public class Storage {
                         param2.append(" ").append(instruction[i]);
                         i++;
                     }
-                    loadList.add(new EventTest(body.toString(), Boolean.parseBoolean(instruction[1]), param.toString(), param2.toString()));
+                    loadList.add(new Event(body.toString(), Boolean.parseBoolean(instruction[1]), param.toString(), param2.toString()));
                     break;
                 default:
                     System.out.println("Please put an instruction I can understand :(");

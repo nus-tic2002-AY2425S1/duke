@@ -28,7 +28,7 @@ public class Ui {
     }
 
     public void showHelp(){
-        String help = "These are the commands available for you:\nlist\nmark (list number)\nunmark (list number)\ntodo (task)\ndeadline (task) /by (date)\nevent (task) /from (date) /to (date)\ndelete (list number)\nbye";
+        String help = "These are the commands available for you:\nlist\nlist (date)\nfind (word)\nmark (list number)\nunmark (list number)\ntodo (task)\ndeadline (task) /by (date)\nevent (task) /from (date) /to (date)\ndelete (list number)\nbye";
         System.out.println(help);
     }
 
@@ -44,12 +44,11 @@ public class Ui {
 
     public String readCommand(){
         Scanner input = new Scanner(System.in);
-        //String[] instruction = line.split(" ");
         return input.nextLine();
     }
 
     public void showError(String message) {
-        System.out.println("Oops! An error occured: " + message);
+        System.out.println("Oops! An error occurred: " + message);
     }
 
     public void showSize(int size){

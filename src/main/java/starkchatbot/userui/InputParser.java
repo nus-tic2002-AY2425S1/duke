@@ -1,6 +1,6 @@
-package StarkChatbot.UserUI;
+package starkchatbot.userui;
 
-import StarkChatbot.TaskManager.TaskList;
+import starkchatbot.taskmanager.TaskList;
 
 public class InputParser {
 

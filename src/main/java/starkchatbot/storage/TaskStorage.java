@@ -1,7 +1,7 @@
-package StarkChatbot.Storage;
+package starkchatbot.storage;
 
-import StarkChatbot.TaskManager.Task;
-import StarkChatbot.UserUI.StarkException;
+import starkchatbot.taskmanager.Task;
+import starkchatbot.userui.StarkException;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

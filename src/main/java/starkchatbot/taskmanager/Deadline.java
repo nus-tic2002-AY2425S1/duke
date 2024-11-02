@@ -1,4 +1,4 @@
-package StarkChatbot.TaskManager;
+package starkchatbot.taskmanager;
 
 public class Deadline extends Task{
 

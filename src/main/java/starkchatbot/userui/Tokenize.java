@@ -1,4 +1,4 @@
-package StarkChatbot.UserUI;
+package starkchatbot.userui;
 
 import java.util.Arrays;
 

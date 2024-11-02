@@ -1,4 +1,4 @@
-package StarkChatbot.Storage;
+package starkchatbot.storage;
 
 import java.io.File;
 import java.io.FileNotFoundException;

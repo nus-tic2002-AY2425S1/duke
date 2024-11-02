@@ -1,12 +1,12 @@
-package StarkChatbot.UserUI;
+package starkchatbot.userui;
 
-import StarkChatbot.TaskManager.Task;
-import StarkChatbot.TaskManager.TaskList;
+import starkchatbot.taskmanager.Task;
+import starkchatbot.taskmanager.TaskList;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static StarkChatbot.UserUI.InputParser.userInputParser;
+import static starkchatbot.userui.InputParser.userInputParser;
 
 public class CommandLineUI {
 
@@ -22,7 +22,7 @@ public class CommandLineUI {
 
     private void welcomeMsg() {
         lineBreak();
-        System.out.println("Hello! I'm Stark \n" +
+        System.out.println("Hello! I'm StarkChatbot.UserUI.Stark \n" +
                 "What can I do for you?");
         lineBreak();
     }

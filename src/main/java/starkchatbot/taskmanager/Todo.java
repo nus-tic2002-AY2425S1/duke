@@ -1,4 +1,4 @@
-package StarkChatbot.TaskManager;
+package starkchatbot.taskmanager;
 
 public class Todo extends Task{
     public Todo(String description){

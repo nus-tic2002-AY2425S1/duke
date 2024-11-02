@@ -1,6 +1,6 @@
-package StarkChatbot.TaskManager;
+package starkchatbot.taskmanager;
 
-import StarkChatbot.UserUI.StarkException;
+import starkchatbot.userui.StarkException;
 
 import java.util.ArrayList;
 

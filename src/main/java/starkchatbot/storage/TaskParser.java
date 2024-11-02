@@ -1,7 +1,7 @@
-package StarkChatbot.Storage;
+package starkchatbot.storage;
 
-import StarkChatbot.TaskManager.*;
-import StarkChatbot.UserUI.StarkException;
+import starkchatbot.taskmanager.*;
+import starkchatbot.userui.StarkException;
 
 import java.util.regex.PatternSyntaxException;
 

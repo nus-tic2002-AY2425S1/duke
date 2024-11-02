@@ -1,4 +1,4 @@
-package StarkChatbot.TaskManager;
+package starkchatbot.taskmanager;
 
 public class Task {
     private final String description;

@@ -1,7 +1,9 @@
-import StarkChatbot.Storage.SaveToFile;
-import StarkChatbot.Storage.TaskStorage;
-import StarkChatbot.TaskManager.Task;
-import StarkChatbot.UserUI.CommandLineUI;
+package starkchatbot.userui;
+
+import starkchatbot.storage.SaveToFile;
+import starkchatbot.storage.TaskStorage;
+import starkchatbot.taskmanager.Task;
+
 import java.util.ArrayList;
 
 
@@ -26,10 +28,14 @@ public class Stark {
         }
     }
 
+    public Stark(String fileLocation){
+        this.fileLocation = fileLocation;
+    }
 
     public static void main(String[] args) {
+
     try {
-        runChatBot();
+        Stark.runChatBot();
     }catch (Exception e){
         System.out.println(e.getMessage());
     }

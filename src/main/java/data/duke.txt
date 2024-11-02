@@ -1,0 +1,7 @@
+T|1|read book
+D|0|return book (by: June 6th)
+E|0|project (from: Aug 6th 2pm to: 4pm)
+T|1|join sports club
+T|0|apply exam
+D|0|submit assignment(by: mon 2359)
+E|0|project meeting(from: 5pm to: 10pm)

@@ -1,20 +1,21 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.util.*;
+import java.io.IOException;
 
 public class PistaMint {
     public static int length = 50;
     public static String line = "-".repeat(length);
     public static String input = "";
-    //public static String[] listItems=new String[100];
     public static Task[] taskList = new Task[100];
     public static ArrayList<Task> taskArrayList = new ArrayList<Task>();
     public static int itemCount = 0;
-
+    public static String directoryPath = "./data";
+    public static String filePath = directoryPath + "/duke.txt";
     public static void greetings() {
         System.out.println("\t" + line + "\n\tNi Hao! I'm PistaMint\n\tWhat can I do for you?\n\t" + line);
     }
-
     public static void exit() {
         System.out.println("\t" + line + "\n\tXie Xie! Hope to see you again soon~\n\t" + line);
     }
@@ -24,23 +25,23 @@ public class PistaMint {
             return;
         }
         System.out.println("\t" + line + "\n\tGot it! I've added this task ");
-
         System.out.println("\t" + "[" + symbol + "]" + "[" + taskArrayList.get(itemCount - 1).getStatusIcon() + "] " + taskArrayList.get(itemCount - 1).getDescription());
-
         System.out.println("\tNow you have " + itemCount + " task(s) in the list.\n\t" + line);
-
-
     }
 
-    public static void addTask(Task t) {
+    public static void addTask(Task t,boolean fromFile) throws IOException {
         taskArrayList.add(t);
         itemCount++;
+        if (!fromFile) {
+            appendToFile(filePath,t);
+        }
     }
-    /*public static Task[] addList(Task t) {
-        taskList[itemCount] = t;
-        itemCount++;
-        return Arrays.copyOf(taskList, itemCount);
-    }*/
+    public static void appendToFile(String filePath,Task t) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
+        String task= t.getSymbol()+"|"+(t.getStatusIcon().equals("X") ? "1":"0")+"|"+t.getDescription();
+        fw.write(System.lineSeparator()+task);
+        fw.close();
+    }
 
     public static void printItems() {
         System.out.println("\t" + line);
@@ -66,31 +67,33 @@ public class PistaMint {
     public static void processTask(String input, String task) {
         String action, timeline, from, to = "";
         try {
-            if (task.equalsIgnoreCase("todo")) {
-                action = input.substring(input.indexOf(" ") + 1);
-                Todo todo = new Todo(action, 'T');
-                addTask(todo);
-                //addList(todo);
-                echo('T');
+            if (task.equalsIgnoreCase("todo") ) {
+                    action = input.substring(input.indexOf(" "));
+                    Todo todo = new Todo(action.trim(), 'T');
+                    addTask(todo,false);
+                    echo('T');
             } else {
-                String description = input.substring(input.indexOf(" ") + 1, input.indexOf("/"));
+                String description;
                 if (task.equalsIgnoreCase("deadline")) {
+                    description= input.substring(input.indexOf(" "), input.indexOf("/by"));
                     timeline = input.substring(input.indexOf("/by") + 3);
-                    Deadline deadline = new Deadline(description, 'D', timeline);
-                    addTask(deadline);
-                    //addList(deadline);
+                    Deadline deadline = new Deadline(description.trim(), 'D', timeline);
+                    addTask(deadline,false);
                     echo('D');
                 } else if (task.equalsIgnoreCase("event")) {
+                    description= input.substring(input.indexOf(" "), input.indexOf("/from"));
                     from = input.substring(input.indexOf("/from") + 5, input.indexOf("/to"));
                     to = input.substring(input.indexOf("/to") + 3);
-                    Event event = new Event(description, 'E', from, to);
-                    addTask(event);
-                    //addList(event);
+                    Event event = new Event(description.trim(), 'E', from, to);
+                    addTask(event,false);
                     echo('E');
                 }
             }
+
         } catch (StringIndexOutOfBoundsException ex) {
             System.out.println("\t" + line + "\n\tOOPS!!! The description of " + task + " is incomplete.\n\t" + line);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
     public static void removeTask(int index) {
@@ -101,16 +104,65 @@ public class PistaMint {
                 System.out.println("\t" + line + "\n\tNoted! I've removed this task \n\t" + "[" +taskArrayList.get(index-1).getSymbol()+ "]" + "[" + taskArrayList.get(index- 1).getStatusIcon() + "] " + taskArrayList.get(index- 1).getDescription());
                 System.out.println("\t" + "Now you have "+itemCount+" task(s) in the list.\n\t" + line);
                 taskArrayList.remove(t);
-            }
-            else{
+            } else{
                 System.out.println("\t" + line + "\n\tItem is out of range. You currently only have " + itemCount + " items.\n\t" + line);
             }
         } catch (IndexOutOfBoundsException e) {
             System.out.println("\t" + line + "\n\tItem is out of range. You currently only have " + itemCount + " items.\n\t" + line);
         }
     }
+    public static void processFile(char task, String mark,String description) throws IOException {
+        if(task=='T'){
+            Todo todo=new Todo(description,task);
+            addTask(todo,true);
+        } else if(task=='D'){
+            Deadline deadline=new Deadline(description,task);
+            addTask(deadline,true);
+        } else{
+            Event event=new Event(description,task);
+            addTask(event,true);
+        }
+        if(mark.equals("1")){
+            taskArrayList.get(taskArrayList.size()-1).markAsDone();
+        }
+    }
 
     public static void main(String[] args) throws DukeException {
+        File directory = new File(directoryPath);
+        File file = new File(filePath);
+        try {
+            if (!directory.exists()) {
+                System.out.println("Directory does not exist. Creating directory...");
+                boolean createDir = directory.mkdir();
+                if (!createDir) {
+                    System.out.println("Failed to create directory.");
+                    return;
+                } else{
+                    System.out.println("Directory created successfully.");
+                }
+            }
+            // Check if the file exists, if not create it
+            if (!file.exists()) {
+                System.out.println("File does not exist. Creating file...");
+                boolean createFile = file.createNewFile();
+                if (!createFile) {
+                    System.out.println("Failed to create file.");
+                } else {
+                    System.out.println("File created successfully.");
+                }
+            }
+            Scanner s= new Scanner(file);
+            while (s.hasNext()) {
+                String line=s.nextLine();
+                    char task = (line.split("\\|")[0]).charAt(0);
+                    String mark = line.split("\\|")[1];
+                    String description = line.split("\\|")[2];
+                    processFile(task, mark, description);
+            }
+
+        } catch (IOException e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
         greetings();
         while (!input.equalsIgnoreCase("bye")) {
             Scanner in = new Scanner(System.in);
@@ -124,8 +176,7 @@ public class PistaMint {
                 } else if (task.equalsIgnoreCase("mark") || task.equalsIgnoreCase("unmark")) {
                     try{
                         markTask(task, Integer.parseInt(input.split(" ")[1]));
-                    }
-                    catch (NumberFormatException | IndexOutOfBoundsException e ) {
+                    } catch (NumberFormatException | IndexOutOfBoundsException e ) {
                         System.out.println("\t" + line+"\n\tYour input might be incorrect / out of range, please input the command 'mark/unmark/' follow by an Integer\n\teg. mark 1 OR unmark 1\n\t" + line);
                     }
                 } else if (task.equalsIgnoreCase("todo") || task.equalsIgnoreCase("deadline") || task.equalsIgnoreCase("event")) {
@@ -135,12 +186,10 @@ public class PistaMint {
                 } else if (task.equalsIgnoreCase("delete")){
                     try {
                         removeTask(Integer.parseInt(input.split(" ")[1]));
-                    }
-                    catch (NumberFormatException | IndexOutOfBoundsException e) {
+                    } catch (NumberFormatException | IndexOutOfBoundsException e) {
                         System.out.println("\t" + line+"\n\tYour input is incorrect, please input the command 'delete' follow by an Integer\n\teg.delete 1\n\t" + line);
                     }
-                }
-                else {
+                } else {
                     throw new DukeException("\t" + line + "\n\tOOPS!! I'm sorry, but I don't know what that means :(\n\t" + line);
                 }
             } catch (DukeException ex) {

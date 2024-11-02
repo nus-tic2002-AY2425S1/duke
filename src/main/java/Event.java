@@ -5,8 +5,18 @@ public class Event extends Task{
         super(description, symbol);
         this.from = "(from:"+from;
         this.to = "to:"+to+")";
+        this.isDone=false;
     }
-
+    public Event(String description, char symbol){
+        super(description, symbol);
+        String from,to;
+        from=description.substring(description.indexOf("(from:")+7,description.indexOf("to"));
+        to=description.substring(description.indexOf("to:")+4,description.indexOf(")"));
+        this.from="(from:"+from;
+        this.to="to:"+to+")";
+        this.isDone=false;
+        setDescription(description.substring(0,description.indexOf("(")));
+    }
     public String getFrom() {
         return from;
     }

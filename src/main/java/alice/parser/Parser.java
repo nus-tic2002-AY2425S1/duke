@@ -27,6 +27,8 @@ public class Parser {
                     return new DeleteCommand(Integer.parseInt(instruction.get(0))-1);
                 } catch (ArrayIndexOutOfBoundsException e){
                     return new IncorrectCommand();
+                } catch (NumberFormatException e){
+                    return new DeleteCommand(action, String.join(" ", instruction));
                 }
             case "mark":
                 try {

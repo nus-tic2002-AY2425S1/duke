@@ -23,8 +23,9 @@ public class TaskList {
 
     public void printTasks(String searchWord){
         for (int i = 0; i < tasks.size(); i++){
-            if (tasks.get(i).print().contains(searchWord))
-                System.out.println((i+1) + "." + tasks.get(i).print());
+            if (tasks.get(i).print().contains(searchWord)) {
+                System.out.println((i + 1) + "." + tasks.get(i).print());
+            }
         }
     }
 
@@ -49,6 +50,18 @@ public class TaskList {
 
     public void remove(int i) {
         tasks.remove(i);;
+    }
+
+    public void remove(String removeWord) {
+        ArrayList<Task> tasksToRemove = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.print().contains(removeWord)) {
+                tasksToRemove.add(task);
+                System.out.println(task.print());
+            }
+        }
+        tasks.removeAll(tasksToRemove);
+
     }
 
     public int size() {

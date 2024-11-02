@@ -85,7 +85,6 @@ public class Storage {
                         body.append(" ").append(instruction[i]);
                         i++;
                     }
-                    System.out.println(body.toString() + instruction[1]);
                     loadList.add(new Todo(body.toString(), Boolean.parseBoolean(instruction[1])));
                     break;
                 case "D":
@@ -165,7 +164,7 @@ public class Storage {
                     loadList.add(new Event(body.toString(), Boolean.parseBoolean(instruction[1]), param.toString(), param2.toString()));
                     break;
                 default:
-                    System.out.println("Please put an instruction I can understand :(");
+                    System.out.println("Incorrect instruction format!");
             }
 
         }

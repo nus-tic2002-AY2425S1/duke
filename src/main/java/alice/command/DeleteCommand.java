@@ -11,6 +11,11 @@ public class DeleteCommand extends Command {
     public DeleteCommand(int index){
         super(index);
     }
+
+    public DeleteCommand(String action, String instruction){
+        super(action, instruction);
+    }
+
     @Override
     public boolean isExit() {
         return false;
@@ -18,10 +23,16 @@ public class DeleteCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws IOException {
-        Task task = tasks.get(getIndex());
-        tasks.remove(getIndex());
-        System.out.println("Noted. I've removed this task:");
-        System.out.println(task.print());
+        if (getIndex() == -1){
+            System.out.println("Noted. I've removed these tasks:");
+            tasks.remove(getInstruction());
+
+        } else{
+            Task task = tasks.get(getIndex());
+            tasks.remove(getIndex());
+            System.out.println("Noted. I've removed this task:");
+            System.out.println(task.print());
+        }
         ui.showSize(tasks.size());
     }
 }

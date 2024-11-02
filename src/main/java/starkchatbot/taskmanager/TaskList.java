@@ -24,7 +24,7 @@ public class TaskList {
                 tasks.add(new Deadline(str[0],str[1]));
             }catch (StarkException.InvalidIndexException e){
                 throw new StarkException.InvalidIndexException(" OOPS!!! \"DEADLINE\" tasks need to be done before a specific date/time " +
-                        System.lineSeparator() +"\t\t \"eg: deadline return book /by Sunday\" ");
+                                                                System.lineSeparator() +"\t\t \"eg: deadline return book /by Sunday\" ");
             }
             totalTasks++;
         }else if (type.equalsIgnoreCase("Event")){
@@ -37,7 +37,7 @@ public class TaskList {
                 tasks.add(new Event(action,startTime,endTime));
             }catch (StarkException.InvalidIndexException e){
                 throw new StarkException.InvalidIndexException(" OOPS!!! \"EVENT\" tasks need to start and ends at a specific date/time " +
-                        System.lineSeparator() + "\t\t \"eg: event project meeting /from Mon 2pm /to 4pm\" ");
+                                                                System.lineSeparator() + "\t\t \"eg: event project meeting /from Mon 2pm /to 4pm\" ");
             }
 
 
@@ -56,7 +56,7 @@ public class TaskList {
         }
     }
 
-    public void statusChange(String done, int number) {
+    public void editTask(String done, int number) {
         if(tasks.size() >= number && number > 0) {
             Task requiredTask = tasks.get(number - 1);
 
@@ -74,16 +74,16 @@ public class TaskList {
                 tasks.remove(number - 1);
                 totalTasks--;
                 System.out.println("Noted. I've removed this task:" + System.lineSeparator()
-                        + "  " + requiredTask.printTask() + System.lineSeparator()
-                        + "Now you have "+ totalTasks +" tasks in the list");
+                                    + "  " + requiredTask.printTask() + System.lineSeparator()
+                                    + "Now you have "+ totalTasks +" tasks in the list");
             }
         }else{
             if(tasks.isEmpty()){
-                throw new StarkException.InvalidIndexException("OOPS! Task list is empty!"+
-                                                     System.lineSeparator() + " \t\t please add tasks");
+                throw new StarkException.InvalidIndexException("OOPS! Task list is empty!"
+                                                                + System.lineSeparator() + " \t\t please add tasks");
             }else {
-                throw new StarkException.InvalidIndexException("OOPS! input task number is invalid " +
-                                                     System.lineSeparator() +" Valid range is 1 to " + totalTasks);
+                throw new StarkException.InvalidIndexException("OOPS! input task number is invalid "
+                                                                + System.lineSeparator() +" Valid range is 1 to " + totalTasks);
             }
         }
     }

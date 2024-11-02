@@ -11,6 +11,7 @@ public class Task {
     public String getDescription() {
         return description;
     }
+
     public void setStatus(String status) {
         if (status.equalsIgnoreCase("mark")) {
             this.status = "X";
@@ -18,6 +19,7 @@ public class Task {
             this.status = " ";
         }
     }
+
     public String getStatus() {
         return status;
     }

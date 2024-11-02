@@ -40,7 +40,9 @@ public class Tokenize {
                }
            }else if (tokens[0].equalsIgnoreCase("mark") || tokens[0].equalsIgnoreCase("unmark")
                     || tokens[0].equalsIgnoreCase("delete")){
+
                String query = tokens[0].toLowerCase();
+
                if(tokens.length > 2){
                    throw new StarkException.InvalidCommandException(" OOPS!!! ( \"" + tokens[0].toUpperCase() + "\" is not valid query or input" +
                                                                         System.lineSeparator()+ "\t\t \"eg: "+query+" 2\" )");

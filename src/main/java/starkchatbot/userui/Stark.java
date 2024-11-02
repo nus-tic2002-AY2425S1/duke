@@ -2,6 +2,7 @@ package starkchatbot.userui;
 
 import starkchatbot.storage.SaveToFile;
 import starkchatbot.storage.TaskStorage;
+import starkchatbot.taskmanager.DateTimeParser;
 import starkchatbot.taskmanager.Task;
 
 import java.util.ArrayList;
@@ -35,7 +36,8 @@ public class Stark {
     public static void main(String[] args) {
 
     try {
-        Stark.runChatBot();
+//        Stark.runChatBot();
+        DateTimeParser.parseDateTime("2001-09-08 1813");
     }catch (Exception e){
         System.out.println(e.getMessage());
     }

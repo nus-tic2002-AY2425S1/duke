@@ -5,10 +5,10 @@ import Chad.Storage.Storage;
 import Chad.TaskList.TaskList;
 import Chad.Ui.Ui;
 
-public class UnmarkTask extends Command {
+public class UnmarkTaskCommand extends Command {
     private int taskIndex; // The index of the task to unmark
 
-    public UnmarkTask(int taskIndex) {
+    public UnmarkTaskCommand(int taskIndex) {
         this.taskIndex = taskIndex; // Capture the index from the input
     }
 

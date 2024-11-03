@@ -1,5 +1,6 @@
 package Chad.TaskList;
 
+import Chad.Parser.ChadDate;
 import java.util.ArrayList;
 
 public class TaskList {
@@ -9,6 +10,39 @@ public class TaskList {
         tasks = new ArrayList<>();
     }
 
+    public TaskList getTaskbyDeadline(String inputDate)
+    {
+        //deadline should be checked correct date type. and extracted day if needed.
+        //check deadlineDate before pass as parameter
+        //if incorrect deadlineDate, should call exception(user wrong input not program error)
+        String inputDateToCheck = ChadDate.parseDate(inputDate);
+        TaskList tasksByDate = new TaskList();
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+    
+            if (task instanceof Deadline) {
+                // If the task is a Deadline, check its due date
+                Deadline deadlineTask = (Deadline) task;
+                String deadlineDuedate = ((Deadline) task).getDuedate();
+                //the dueDate here is of 03 NOV 2024 format, cant be parsed...
+                //better pase again and compare string
+                boolean sameDay = inputDateToCheck.equals(deadlineDuedate);
+                if (sameDay) {
+                    tasksByDate.addTask(deadlineTask); // Add it to the list of tasks if dates match
+                }
+            } else if (task instanceof Event) {
+                // If the task is an Event, check its date range
+                Event eventTask = (Event) task;
+                String eventEnddate = ((Event) task).getEnddate();
+                boolean sameDay = inputDateToCheck.equals(eventEnddate);
+                if (sameDay) {
+                    tasksByDate.addTask(eventTask); // Add it to the list of tasks if the end date matches
+                }
+            }
+        }
+    
+        return tasksByDate; // Return the filtered TaskList
+    }
 
     public void addTask(Task task) {
         tasks.add(task);

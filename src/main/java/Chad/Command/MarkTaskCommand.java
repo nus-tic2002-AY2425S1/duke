@@ -5,10 +5,10 @@ import Chad.Storage.Storage;
 import Chad.TaskList.TaskList;
 import Chad.Ui.Ui;
 
-public class MarkTask extends Command {
+public class MarkTaskCommand extends Command {
     private int taskIndex; // The index of the task to mark
 
-    public MarkTask(int taskIndex) {
+    public MarkTaskCommand(int taskIndex) {
         this.taskIndex = taskIndex; // Capture the index from the input
     }
 

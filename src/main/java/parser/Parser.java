@@ -2,6 +2,9 @@ package parser;
 // deals with making sense of the user command
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 import commands.ByeCommand;
 import commands.Command;
@@ -13,7 +16,9 @@ import commands.MarkCommand;
 import commands.TodoCommand;
 import commands.UnmarkCommand;
 import common.Messages;
+
 import exception.CommandException;
+import exception.DateTimeParserException;
 
 public class Parser {
 
@@ -34,7 +39,7 @@ public class Parser {
     public static final String EVENT_COMMAND_ARGS_REGEX = "^(?<description>.+) /from (?<start>.+) /to (?<end>.+)$";
     public static final Pattern EVENT_COMMAND_ARGS_FORMAT = Pattern.compile(EVENT_COMMAND_ARGS_REGEX);
     
-    public static Command parse(String userInput) throws CommandException {
+    public static Command parse(String userInput) throws CommandException, DateTimeParserException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         
         if (!matcher.matches()) {
@@ -144,7 +149,7 @@ public class Parser {
         }
     }
 
-    private static Command prepareDeadline(String args) throws CommandException {
+    private static Command prepareDeadline(String args) throws CommandException, DateTimeParserException {
 
         final String MESSAGE_EMPTY_DUEDATE_PRE = "The task is missing a due date.";
         final String BY_KEYWORD = "/by";
@@ -160,8 +165,33 @@ public class Parser {
         validateArgsFormat(matcher, DeadlineCommand.COMMAND_WORD, args, DeadlineCommand.MESSAGE_USAGE);
         
         String description = matcher.group("description");
-        String due = matcher.group("due");
-        return new DeadlineCommand(description.trim(), due.trim());
+
+        /*
+         * Teach the chatbot how to understand dates and times. For example, if the command is 
+         * deadline return book /by 2/12/2019 1800, 
+         * the chatbot should understand 2/12/2019 1800 as 2nd of December 2019, 6pm, 
+         * instead of treating it as just a String.
+         * 
+         * Store deadline dates as a java.time.LocalDate (or java.time.LocalDateTime) in your 
+         * task objects. Accept dates in a format such as yyyy-mm-dd format (e.g., 2019-10-15) 
+         * and print in a different format such as MMM dd yyyy e.g., (Oct 15 2019).
+         */
+
+        // When add deadline task, user enters the date in yyyy-mm-dd HHmm format (e.g., 2019-10-15 1800)
+        // parser validates the date & format, then converts the date to MMM dd yyyy HHmm format (e.g., Oct 15 2019 1800)
+        // Format when save to tasklist / file is MMM dd yyyy HHmm format
+        // Restrictions: Deadline must have date, but time can be optional (or if no time given, assume 0000 hours). Event must have both date and time 
+        // deadline return book /by 2019-10-15 1800
+
+        String dueString = matcher.group("due").trim();
+        // System.out.println("localdatetime " + DateTimeParser.parseDateTime(dueString));
+        LocalDateTime due = DateTimeParser.parseDateTime(dueString);
+        // System.out.println("LocalDateTime due " + due);
+        // LocalDateTime due = LocalDateTime.parse(matcher.group("due").trim());
+
+        // check if dates in a format such as yyyy-mm-dd format (e.g., 2019-10-15)
+
+        return new DeadlineCommand(description.trim(), due);
     }
 
     private static Command prepareEvent(String args) throws CommandException {
@@ -184,8 +214,10 @@ public class Parser {
         validateArgsFormat(matcher, EventCommand.COMMAND_WORD, args, EventCommand.MESSAGE_USAGE);
 
         String description = matcher.group("description");
-        String startTime = matcher.group("start");
-        String endTime = matcher.group("end");
-        return new EventCommand(description.trim(), startTime.trim(), endTime.trim());
+        // String startTime = matcher.group("start");
+        LocalDateTime startDateTime = LocalDateTime.parse(matcher.group("start").trim());
+        // String endTime = matcher.group("end");
+        LocalDateTime endDateTime = LocalDateTime.parse(matcher.group("end").trim());
+        return new EventCommand(description.trim(), startDateTime, endDateTime);
     }
 }

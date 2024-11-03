@@ -8,6 +8,8 @@ import task.Task;
 import task.TaskList;
 import ui.Ui;
 
+import java.time.LocalDateTime;
+
 public class DeadlineCommand extends Command {
 
     public static final String COMMAND_WORD = "deadline";
@@ -15,9 +17,9 @@ public class DeadlineCommand extends Command {
     public static final String MESSAGE_ADD_SUCCESS_PRE = "Got it. I've added this task:";
     
     protected final String description;
-    protected final String by;
+    protected final LocalDateTime by;
 
-    public DeadlineCommand(String description, String by) {
+    public DeadlineCommand(String description, LocalDateTime by) {
         this.description = description;
         this.by = by;
     }

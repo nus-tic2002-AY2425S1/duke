@@ -1,22 +1,31 @@
 package task;
+import java.time.LocalDateTime;
+
+import exception.DateTimeParserException;
+import parser.DateTimeParser;
+
 // Deadlines are tasks that need to be done before a specific date/time e.g., submit report by 11/10/2019 5pm
 
 public class Deadline extends Task {
 
-    protected String due;
+    protected LocalDateTime due;
 
-    public Deadline(String description, boolean isDone, String due) {
+    public Deadline(String description, boolean isDone, LocalDateTime due) {
         super(description, isDone);
         this.due = due;
     }
 
-    public Deadline(String description, String due) {
+    public Deadline(String description, LocalDateTime due) {
         this.description = description;
         this.due = due;
     }
 
-    public String getDue() {
+    public LocalDateTime getDue() {
         return due;
+    }
+
+    public String getFormattedDue() {
+        return DateTimeParser.formatDateTime(due);
     }
 
     @Override
@@ -25,7 +34,8 @@ public class Deadline extends Task {
         if (!description.endsWith(" ")) {
             description += " ";
         } 
-        return "[" + TaskType.DEADLINE + "]" + super.toString() + "(by: " + getDue() + ")";
+        // String formattedDue = DateTimeParser.formatDateTime(due);
+        return "[" + TaskType.DEADLINE + "]" + super.toString() + "(by: " + getFormattedDue() + ")";
         // return "[D]" + super.toString() + "(by: " + getDue() + ")";
     }
 
@@ -33,7 +43,7 @@ public class Deadline extends Task {
     public String encodeTask() {
         String separator = " | ";
         // Construct the final encoded task without leading or trailing spaces
-        return TaskType.DEADLINE + super.encodeTask() + separator + getDue().trim();
+        return TaskType.DEADLINE + super.encodeTask() + separator + getFormattedDue();
     }
 
 }

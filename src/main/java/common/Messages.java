@@ -59,6 +59,8 @@ public class Messages {
     // public static final String MESSAGE_NONEXISTENT_TASK_POST = "not found.";
     public static final String MESSAGE_ENTER_VALID_TASK_NUMBER = "Please enter a valid task number from 1 to";
 
+    public static final String ERROR_INVALID_DATETIME_FORMAT = ERROR + "Invalid date/time format";
+
 
     // public static final String MESSAGE_INIT_FAILED = "Failed to initialise address book application. Exiting...";
     // public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";

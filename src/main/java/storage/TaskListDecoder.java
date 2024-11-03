@@ -1,10 +1,14 @@
 package storage;
 import java.util.Arrays;
 import java.util.List;
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
 
 import common.Messages;
+import exception.DateTimeParserException;
 import exception.FileContentException;
 import exception.TaskListDecoderException;
+import parser.DateTimeParser;
 import task.Deadline;
 import task.Event;
 import task.Task;
@@ -16,9 +20,10 @@ public class TaskListDecoder {
 
     // https://github.com/se-edu/addressbook-level2/blob/master/src/seedu/addressbook/storage/AddressBookDecoder.java#L34
     // Decodes {@code encodedTaskList} into an {@code TaskList} containing the decoded tasks.
-    public static TaskList decodeTaskList(List<String> encodedTaskList) throws FileContentException, TaskListDecoderException {
+    public static TaskList decodeTaskList(List<String> encodedTaskList) throws FileContentException, TaskListDecoderException, DateTimeParserException {
         TaskList decodedTasks = new TaskList();
         for (String encodedTask : encodedTaskList) {
+            // System.out.println("encodedTask: " + encodedTask);
             Task task = decodeTaskFromString(encodedTask);
             // System.out.println("Decoded task: " + task);
             decodedTasks.addTask(task);
@@ -28,7 +33,7 @@ public class TaskListDecoder {
 
     // Decodes {@code encodedTask} from tasks.txt into a {@code Task}
     // Example encodedTask: T | 1 | read book
-    private static Task decodeTaskFromString(String encodedTask) throws FileContentException, TaskListDecoderException {
+    private static Task decodeTaskFromString(String encodedTask) throws FileContentException, TaskListDecoderException, DateTimeParserException {
         
         final String EXPECTED_FORMAT_TODO = "T | 0 | <task description>";
         final String EXPECTED_FORMAT_DEADLINE = "D | 0 | <task description> | <task deadline>";
@@ -109,7 +114,18 @@ public class TaskListDecoder {
                         String.format("Expected format: `%s`", EXPECTED_FORMAT_DEADLINE)
                     );
                 }
-                String due = taskData[3];
+                String dueString = taskData[3].trim();
+                // System.out.println("dueString: " + dueString);
+                LocalDateTime due = DateTimeParser.decodeDateTime(dueString);
+                // System.out.println("due is " + due);
+                // LocalDateTime due = DateTimeParser.parseDateTime(dueString);
+                // try {
+                //     // due = DateTimeParser.decodeDateTime(dueString);
+                //     due = DateTimeParser.parseDateTime(dueString);
+                // } catch (IllegalArgumentException e) {
+                //     System.out.println(e.getMessage());
+                // }
+                // LocalDateTime due = LocalDateTime.parse(taskData[3].trim());
                 task = new Deadline(description, isDone, due);
                 break;
             case EVENT:     // case "E":
@@ -121,14 +137,25 @@ public class TaskListDecoder {
                         String.format("Expected format: `%s`", EXPECTED_FORMAT_EVENT)
                     );
                 }
-                String start = taskData[3];
-                String end = taskData[4];
-                task = new Event(description, isDone, start, end);
+                // String start = taskData[3];
+                // System.out.println("taskData 3 " + taskData[3] + " of type " + taskData[3].getClass().getName());
+                // LocalDateTime startDateTime = LocalDateTime.parse(taskData[3].trim());
+                
+                LocalDateTime startDateTime = DateTimeParser.decodeDateTime(taskData[3].trim());
+                
+                // String end = taskData[4];
+                // System.out.println("taskData 4 " + taskData[4]);
+                // LocalDateTime endDateTime = LocalDateTime.parse(taskData[4].trim());
+                
+                LocalDateTime endDateTime = DateTimeParser.decodeDateTime(taskData[4].trim());
+                
+                task = new Event(description, isDone, startDateTime, endDateTime);
                 break;
             default:
                 throw new TaskListDecoderException("Invalid task type: " + taskType);
         }
 
+        // System.out.println("task is " + task);
         task.setDone(isDone);
         return task;
     }

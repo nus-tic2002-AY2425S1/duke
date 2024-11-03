@@ -8,25 +8,27 @@ import task.Task;
 import task.TaskList;
 import ui.Ui;
 
+import java.time.LocalDateTime;
+
 public class EventCommand extends Command {
     public static final String COMMAND_WORD = "event";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " <description> /from <start date/time> /to <end date/time>";
     public static final String MESSAGE_ADD_SUCCESS_PRE = "Got it. I've added this task:";
     
     protected final String description;
-    protected final String startTime;
-    protected final String endTime;
+    protected final LocalDateTime startDateTime;
+    protected final LocalDateTime endDateTime;
 
-    public EventCommand(String description, String startTime, String endTime) {
+    public EventCommand(String description, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         this.description = description;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
     }
 
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws CommandException, TaskException, StorageOperationException {
         
-        Task task = new Event(description, startTime, endTime);
+        Task task = new Event(description, startDateTime, endDateTime);
         taskList.addTask(task);
         storage.saveTasks(taskList);
         

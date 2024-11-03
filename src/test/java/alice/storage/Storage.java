@@ -20,7 +20,7 @@ import java.util.Scanner;
 
 public class Storage {
     private File f;
-    public static final String defaultName = "data/duke.txt";
+    public static final String DEFAULT_NAME = "data/duke.txt";
     private static final String[] DATE_PATTERNS = {
             "yyyy-MM-dd",
             "yyyy-M-d",
@@ -55,7 +55,7 @@ public class Storage {
     }
 
     public Storage(){
-        this(defaultName);
+        this(DEFAULT_NAME);
     }
     public Storage(String filePath){
         f = new File(filePath);

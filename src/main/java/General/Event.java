@@ -1,15 +1,18 @@
+package General;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 public class Event extends Task{
     private String from;
     private String to;
     public Event(String description, char symbol,String from, String to){
         super(description, symbol);
-        this.from = "(from:"+from;
+        this.from ="(from:"+from.toString();
         this.to = "to:"+to+")";
         this.isDone=false;
     }
     public Event(String description, char symbol){
         super(description, symbol);
-        String from,to;
         from=description.substring(description.indexOf("(from:")+7,description.indexOf("to"));
         to=description.substring(description.indexOf("to:")+4,description.indexOf(")"));
         this.from="(from:"+from;

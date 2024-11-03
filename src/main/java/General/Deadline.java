@@ -1,3 +1,7 @@
+package General;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 public class Deadline extends Task {
     private String deadline;
 
@@ -10,7 +14,7 @@ public class Deadline extends Task {
     public Deadline(String description, char symbol) {
         super(description, symbol);
         String timeline;
-        timeline = description.substring(description.indexOf("(by:")+4, description.indexOf(")"));
+        timeline =description.substring(description.indexOf("(by:")+4, description.indexOf(")"));
         this.deadline = "(by:" + timeline + ")";
         setDescription(description.substring(0, description.indexOf("(")));
         this.isDone = false;

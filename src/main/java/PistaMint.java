@@ -1,56 +1,54 @@
-import java.io.File;
+import General.DukeException;
+import General.Task;
+import TaskList.TaskList;
+import Ui.Ui;
+import Storage.Storage;
+import Parser.Parser;
+
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.util.*;
-import java.io.IOException;
 
 public class PistaMint {
+
+    private Ui ui;
+    private Storage storage;
+    private TaskList tasks;
     public static int length = 50;
     public static String line = "-".repeat(length);
     public static String input = "";
     public static Task[] taskList = new Task[100];
     public static ArrayList<Task> taskArrayList = new ArrayList<Task>();
     public static int itemCount = 0;
-    public static String directoryPath = "./data";
+    public static String directoryPath = "data";
     public static String filePath = directoryPath + "/duke.txt";
-    public static void greetings() {
+       public PistaMint(String filePath) throws FileNotFoundException {
+        storage=new Storage(directoryPath,filePath);
+        tasks=new TaskList(storage);
+        storage.load();
+
+    }
+    /*public static void greetings() {
         System.out.println("\t" + line + "\n\tNi Hao! I'm PistaMint\n\tWhat can I do for you?\n\t" + line);
     }
     public static void exit() {
         System.out.println("\t" + line + "\n\tXie Xie! Hope to see you again soon~\n\t" + line);
     }
-
     public static void echo(char symbol) {
         if (input.equalsIgnoreCase("bye")) {
             return;
         }
-        System.out.println("\t" + line + "\n\tGot it! I've added this task ");
+        System.out.println("\n\tGot it! I've added this task ");
         System.out.println("\t" + "[" + symbol + "]" + "[" + taskArrayList.get(itemCount - 1).getStatusIcon() + "] " + taskArrayList.get(itemCount - 1).getDescription());
         System.out.println("\tNow you have " + itemCount + " task(s) in the list.\n\t" + line);
-    }
-
-    public static void addTask(Task t,boolean fromFile) throws IOException {
-        taskArrayList.add(t);
-        itemCount++;
-        if (!fromFile) {
-            appendToFile(filePath,t);
-        }
-    }
-    public static void appendToFile(String filePath,Task t) throws IOException {
-        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
-        String task= t.getSymbol()+"|"+(t.getStatusIcon().equals("X") ? "1":"0")+"|"+t.getDescription();
-        fw.write(System.lineSeparator()+task);
-        fw.close();
-    }
-
-    public static void printItems() {
+    }*/
+    /*public static void printItems() {
         System.out.println("\t" + line);
         for (int i = 0; i < itemCount; i++) {
             System.out.println("\t" + (i + 1) + ".[" + taskArrayList.get(i).getSymbol() + "][" + taskArrayList.get(i).getStatusIcon() + "] " + taskArrayList.get(i).getDescription());
         }
         System.out.println("\t" + line);
-    }
-    public static void markTask(String word, int index) {
+    }*/
+    /*public static void markTask(String word, int index) {
         try {
             if (word.equalsIgnoreCase("mark")) {
                 taskArrayList.get(index - 1).markAsDone();
@@ -62,16 +60,37 @@ public class PistaMint {
         } catch (IndexOutOfBoundsException | NullPointerException e) {
             System.out.println("\t" + line + "\n\tItem is out of range. You currently only have " + itemCount + " items.\n\t" + line);
         }
-    }
-
-    public static void processTask(String input, String task) {
+    }*/
+    /*public static void removeTask(int index) {
+        try {
+            Task t= taskArrayList.get(index-1);
+            if(t !=null){
+                itemCount--;
+                System.out.println("\t" + line + "\n\tNoted! I've removed this task \n\t" + "[" +taskArrayList.get(index-1).getSymbol()+ "]" + "[" + taskArrayList.get(index- 1).getStatusIcon() + "] " + taskArrayList.get(index- 1).getDescription());
+                System.out.println("\t" + "Now you have "+itemCount+" task(s) in the list.\n\t" + line);
+                taskArrayList.remove(t);
+            } else{
+                System.out.println("\t" + line + "\n\tItem is out of range. You currently only have " + itemCount + " items.\n\t" + line);
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("\t" + line + "\n\tItem is out of range. You currently only have " + itemCount + " items.\n\t" + line);
+        }
+    }*/
+    /*public static void addTask(Task t, boolean fromFile) throws IOException {
+        taskArrayList.add(t);
+        itemCount++;
+        if (!fromFile) {
+            appendToFile(filePath,t);
+        }
+    }*/
+    /*public static void processTask(String input, String task) {
         String action, timeline, from, to = "";
         try {
             if (task.equalsIgnoreCase("todo") ) {
-                    action = input.substring(input.indexOf(" "));
-                    Todo todo = new Todo(action.trim(), 'T');
-                    addTask(todo,false);
-                    echo('T');
+                action = input.substring(input.indexOf(" "));
+                Todo todo = new Todo(action.trim(), 'T');
+                addTask(todo,false);
+                echo('T');
             } else {
                 String description;
                 if (task.equalsIgnoreCase("deadline")) {
@@ -95,23 +114,15 @@ public class PistaMint {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-    public static void removeTask(int index) {
-        try {
-            Task t= taskArrayList.get(index-1);
-            if(t !=null){
-                itemCount--;
-                System.out.println("\t" + line + "\n\tNoted! I've removed this task \n\t" + "[" +taskArrayList.get(index-1).getSymbol()+ "]" + "[" + taskArrayList.get(index- 1).getStatusIcon() + "] " + taskArrayList.get(index- 1).getDescription());
-                System.out.println("\t" + "Now you have "+itemCount+" task(s) in the list.\n\t" + line);
-                taskArrayList.remove(t);
-            } else{
-                System.out.println("\t" + line + "\n\tItem is out of range. You currently only have " + itemCount + " items.\n\t" + line);
-            }
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("\t" + line + "\n\tItem is out of range. You currently only have " + itemCount + " items.\n\t" + line);
-        }
-    }
-    public static void processFile(char task, String mark,String description) throws IOException {
+    }*/
+    /*public static void appendToFile(String filePath, Task t) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
+        String task= t.getSymbol()+"|"+(t.getStatusIcon().equals("X") ? "1":"0")+"|"+t.getDescription();
+        fw.write(System.lineSeparator()+task);
+        fw.close();
+    }*/
+
+   /* public static void processFile(char task, String mark,String description) throws IOException {
         if(task=='T'){
             Todo todo=new Todo(description,task);
             addTask(todo,true);
@@ -125,10 +136,22 @@ public class PistaMint {
         if(mark.equals("1")){
             taskArrayList.get(taskArrayList.size()-1).markAsDone();
         }
+    }*/
+    public void run() {
+        Ui.showGreeting();
+        Scanner scanner=new Scanner(System.in);
+        while(!input.equalsIgnoreCase("bye")){
+            input = scanner.nextLine();
+            Parser.parseCommand(input);
+        }
     }
-
-    public static void main(String[] args) throws DukeException {
-        File directory = new File(directoryPath);
+    public static void main(String[] args) throws FileNotFoundException {
+        Storage storage=new Storage(directoryPath,filePath);
+        TaskList taskList = new TaskList(storage);   // Instantiate TaskList
+        Parser parser = new Parser(taskList);
+        Ui ui = new Ui(taskList);
+        new PistaMint("./data/duke.txt").run();
+        /*File directory = new File(directoryPath);
         File file = new File(filePath);
         try {
             if (!directory.exists()) {
@@ -154,10 +177,10 @@ public class PistaMint {
             Scanner s= new Scanner(file);
             while (s.hasNext()) {
                 String line=s.nextLine();
-                    char task = (line.split("\\|")[0]).charAt(0);
-                    String mark = line.split("\\|")[1];
-                    String description = line.split("\\|")[2];
-                    processFile(task, mark, description);
+                char task = (line.split("\\|")[0]).charAt(0);
+                String mark = line.split("\\|")[1];
+                String description = line.split("\\|")[2];
+                processFile(task, mark, description);
             }
 
         } catch (IOException e) {
@@ -197,6 +220,6 @@ public class PistaMint {
             }
 
 
-        }
+        }*/
     }
 }

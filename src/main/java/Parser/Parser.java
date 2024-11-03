@@ -6,6 +6,7 @@ import General.*;
 import TaskList.TaskList;
 import Ui.Ui;
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
 
 public class Parser {
     private static TaskList taskList;
@@ -47,6 +48,7 @@ public class Parser {
                 taskList.addTask(todo, false);
             } else {
                 String description;
+                try{
                 if (task.equalsIgnoreCase("deadline")) {
                     description = input.substring(input.indexOf(" "), input.indexOf("/by"));
                     timeline = LocalDate.parse(input.substring(input.indexOf("/by") + 3).trim());
@@ -57,14 +59,17 @@ public class Parser {
                     description = input.substring(input.indexOf(" "), input.indexOf("/from"));
                     from = LocalDate.parse(input.substring(input.indexOf("/from") + 5, input.indexOf("/to")).trim());
                     to = LocalDate.parse(input.substring(input.indexOf("/to") + 3).trim());
-                    String eFrom=from.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
-                    String eTo=to.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+                    String eFrom = from.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+                    String eTo = to.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
                     Event event = new Event(description.trim(), 'E', eFrom, eTo);
                     taskList.addTask(event, false);
                 }
+                }catch(DateTimeParseException e){
+                    System.out.println(Ui.start+"\n\tThe date format you have keyed in is invalid. Please key in the following format 'yyyy-MM-dd'"+Ui.end);
+                    return false;
+                }
             }
             return true;
-
         } catch (StringIndexOutOfBoundsException ex) {
             System.out.println(Ui.start + "\n\tOOPS!!! The description of " + task + " is incomplete." + Ui.end);
         } catch (IOException e) {

@@ -7,16 +7,16 @@ public class Deadline extends Task {
 
     public Deadline(String description, char symbol, String deadline) {
         super(description, symbol);
-        this.deadline = "(by:" + deadline + ")";
+        this.deadline = " (by:" + deadline + ")";
         this.isDone = false;
     }
 
     public Deadline(String description, char symbol) {
         super(description, symbol);
         String timeline;
-        timeline =description.substring(description.indexOf("(by:")+4, description.indexOf(")"));
+        timeline =description.substring(description.indexOf("(by:")+4, description.lastIndexOf(")"));
         this.deadline = "(by:" + timeline + ")";
-        setDescription(description.substring(0, description.indexOf("(")));
+        setDescription(description.substring(0, description.lastIndexOf("(")));
         this.isDone = false;
     }
 
@@ -30,6 +30,6 @@ public class Deadline extends Task {
 
     @Override
     public String getDescription() {
-        return super.getDescription() + deadline;
+        return super.getDescription() + getDeadline();
     }
 }

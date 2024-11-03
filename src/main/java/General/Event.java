@@ -7,18 +7,20 @@ public class Event extends Task{
     private String to;
     public Event(String description, char symbol,String from, String to){
         super(description, symbol);
-        this.from ="(from:"+from.toString();
-        this.to = "to:"+to+")";
+        this.from =" (from:"+from;
+        this.to = " to:"+to+")";
         this.isDone=false;
     }
     public Event(String description, char symbol){
         super(description, symbol);
-        from=description.substring(description.indexOf("(from:")+7,description.indexOf("to"));
-        to=description.substring(description.indexOf("to:")+4,description.indexOf(")"));
+        String from,to;
+        //System.out.println(description.lastIndexOf("to"));
+        from=description.substring(description.indexOf("(from:")+6,description.lastIndexOf("to"));
+        to=description.substring(description.indexOf("to:")+3,description.lastIndexOf(")"));
         this.from="(from:"+from;
         this.to="to:"+to+")";
         this.isDone=false;
-        setDescription(description.substring(0,description.indexOf("(")));
+        setDescription(description.substring(0,description.lastIndexOf("(")));
     }
     public String getFrom() {
         return from;
@@ -34,6 +36,6 @@ public class Event extends Task{
     }
     @Override
     public String getDescription(){
-        return super.getDescription()+from+to;
+        return super.getDescription()+getFrom()+getTo();
     }
 }

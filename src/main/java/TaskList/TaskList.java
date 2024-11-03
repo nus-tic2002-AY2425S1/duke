@@ -44,9 +44,10 @@ public class TaskList {
     }
 
     public void addTask(Task task,boolean fromFile) throws IOException {
+        //System.out.println(Ui.start+ "\n\tAdding task " + task.getDescription()+Ui.end);
         tasks.add(task);
         if (!fromFile) {
-            storage.appendToFile(task);
+            Storage.appendToFile(task);
         }
     }
     public void removeTask(int index){
@@ -59,37 +60,5 @@ public class TaskList {
     public ArrayList<Task> getTasks() {
         return tasks;
     }
-
-    /*public  void processTask(String input, String task) {
-        String action, timeline, from, to = "";
-        try {
-            if (task.equalsIgnoreCase("todo") ) {
-                action = input.substring(input.indexOf(" "));
-                Todo todo = new Todo(action.trim(), 'T');
-                addTask(todo,false);
-                Ui.showTaskAdded(todo,input);
-            } else {
-                String description;
-                if (task.equalsIgnoreCase("deadline")) {
-                    description= input.substring(input.indexOf(" "), input.indexOf("/by"));
-                    timeline = input.substring(input.indexOf("/by") + 3);
-                    Deadline deadline = new Deadline(description.trim(), 'D', timeline);
-                    addTask(deadline,false);
-                    Ui.showTaskAdded(deadline,input);
-                } else if (task.equalsIgnoreCase("event")) {
-                    description= input.substring(input.indexOf(" "), input.indexOf("/from"));
-                    from = input.substring(input.indexOf("/from") + 5, input.indexOf("/to"));
-                    to = input.substring(input.indexOf("/to") + 3);
-                    Event event = new Event(description.trim(), 'E', from, to);
-                    addTask(event,false);
-                    Ui.showTaskAdded(event,input);
-                }
-            }
-
-        } catch (StringIndexOutOfBoundsException | IOException ex) {
-            System.out.println(Ui.start+ "\n\tOOPS!!! The description of " + task + " is incomplete." +Ui.end);
-        }
-    }*/
-
 
 }

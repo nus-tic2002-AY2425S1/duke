@@ -23,7 +23,7 @@ public class Ui {
             showGoodbye();
             return;
         }
-        System.out.println("\n\tGot it! I've added this task ");
+        System.out.println(start+"\n\tGot it! I've added this task ");
         System.out.println("\t" + "[" + task.getSymbol() + "]" + "[" + task.getStatusIcon() + "] " + task.getDescription());
         System.out.println("\tNow you have " + taskList.getSize()  + " task(s) in the list.\n\t" + line);
 

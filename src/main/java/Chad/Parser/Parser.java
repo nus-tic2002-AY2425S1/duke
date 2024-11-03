@@ -31,10 +31,10 @@ public class Parser {
                 return createUnmark(parts);
 
             case "bye":
-                return new ExitCommand(); // Exit command
+                return new ExitCommand(); 
 
             case "list":
-                return new ListCommand(); // List command
+                return createList(fullCommand);
 
             default:
                 return createGeneralTask(fullCommand); // Add normal task
@@ -56,11 +56,11 @@ public class Parser {
         if (deadlineParts.length < 2) {
             throw new ChadException("Deadline must have a '/by' time.");
         }
-        
         String deadlineDescription = deadlineParts[0].trim();
         String deadlineTime = deadlineParts[1].trim();
-        
-        return new AddCommand(new Deadline(deadlineDescription, deadlineTime));
+        String parsedDeadlineTime = ChadDate.parseDate(deadlineTime);
+
+        return new AddCommand(new Deadline(deadlineDescription, parsedDeadlineTime));
     }
 
     private static Command createEvent(String[] parts) throws ChadException {
@@ -71,9 +71,11 @@ public class Parser {
         String[] fromToParts = parts[1].split("/to", 2);
         String eventDescription = fromToParts[0].split("/from", 2)[0].trim();
         String eventTimeFrom = fromToParts[0].split("/from", 2)[1].trim();
+        String parsedTimefrom = ChadDate.parseDate(eventTimeFrom);
         String eventTimeTo = fromToParts[1].trim();
+        String parsedTimeto = ChadDate.parseDate(eventTimeTo);
         
-        return new AddCommand(new Event(eventDescription, eventTimeFrom, eventTimeTo));
+        return new AddCommand(new Event(eventDescription, parsedTimefrom, parsedTimeto));
     }
 
     private static Command createDelete(String[] parts) throws ChadException {
@@ -82,16 +84,39 @@ public class Parser {
         return new DeleteCommand(index);
     }
 
+    private static Command createList(String fullcommand) throws ChadException {
+
+    // Split the command into parts
+    String[] parts = fullcommand.split(" ", 2); // Split into at most 2 parts
+
+    // Check if there is a substring beyond "list"
+    if (parts.length > 1) {
+        String parameter = parts[1].trim(); // Get and trim the "something" part
+
+        if (ChadDate.isDate(parameter)) {
+            // If "something" is a date, create a ListByDateCommand
+            return new ListByDateCommand(parameter);
+        } else {
+            return new ListCommand();
+        }
+    }
+    // If there's no "something" part, return a normal ListCommand
+    return new ListCommand();
+        
+
+    }
+
+
     private static Command createMark(String[] parts) throws ChadException {
         validateTaskIndex(parts);
         int index = Integer.parseInt(parts[1]) - 1;  // Convert to zero-based index
-        return new MarkTask(index);
+        return new MarkTaskCommand(index);
     }
 
     private static Command createUnmark(String[] parts) throws ChadException {
         validateTaskIndex(parts);
         int index = Integer.parseInt(parts[1]) - 1;  // Convert to zero-based index
-        return new UnmarkTask(index);
+        return new UnmarkTaskCommand(index);
     }
 
     private static Command createGeneralTask(String inpuString) throws ChadException {
@@ -114,4 +139,6 @@ public class Parser {
             throw new ChadException("Please provide a task index.");
         }
     }
+
+
 }

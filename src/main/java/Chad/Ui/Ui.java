@@ -2,6 +2,10 @@ package Chad.Ui;
 import Chad.TaskList.*;
 
 public interface Ui {
+
+    static  void showMsg(String myMsg){
+        System.out.println(myMsg);
+    }
     void showWelcome();
     String readCommand();
     void showLine();

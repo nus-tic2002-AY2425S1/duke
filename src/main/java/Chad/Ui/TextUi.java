@@ -49,6 +49,12 @@ public class TextUi implements Ui {
         System.out.println(myline);
     }
 
+    //@Override
+   // public  void showMsg(String msgString) {
+
+       // System.out.println(msgString);
+    //}
+
     @Override
     public void showDeleteTask(Task task, int noOfTask) {
         displayTaskAction("removed", task, noOfTask);

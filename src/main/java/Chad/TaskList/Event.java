@@ -11,8 +11,14 @@ public class Event extends Task {
         this.endsAt=endsAt;
     }
 
+    public String getEnddate()
+    {
+        return endsAt;
+    }
+
+
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " from: " + startsAt + "to:" + endsAt;
+        return "[E]" + super.toString() + " from: " + startsAt + " to: " + endsAt;
     }
 }

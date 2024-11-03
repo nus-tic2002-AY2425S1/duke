@@ -3,6 +3,17 @@ package alice.task;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * <h1>Event</h1>
+ * The Event class details the implementation
+ * of event task object which consists of
+ * description, /from date and /to date.
+ * <p>
+ *
+ * @author  Jarrel Bin
+ * @version 1.0
+ * @since   2024-11-02
+ */
 public class Event extends Task {
     protected String from;
     protected String to;

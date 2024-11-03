@@ -9,6 +9,17 @@ import alice.ui.Ui;
 
 import java.io.IOException;
 
+/**
+ * <h1>Alice</h1>
+ * The Alice class is the main class where
+ * the main method is found and will be the
+ * entry point of the program.
+ * <p>
+ *
+ * @author  Jarrel Bin
+ * @version 1.0
+ * @since   2024-11-02
+ */
 public class Alice {
     private static TaskList tasks;
     private static Storage storage;

@@ -15,6 +15,18 @@ import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * <h1>Storage</h1>
+ * The Storage class is responsible for
+ * retrieving any existing data, create
+ * new txt file or saves existing data
+ * into the txt file.
+ * <p>
+ *
+ * @author  Jarrel Bin
+ * @version 1.0
+ * @since   2024-11-02
+ */
 public class Storage {
     private File f;
     public static final String defaultName = "data/duke.txt";

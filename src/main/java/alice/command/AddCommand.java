@@ -18,8 +18,8 @@ import java.util.Locale;
 
 /**
  * <h1>Add Command</h1>
- * The AddCommand program implements an application that
- * allows the user to add tasks into the tasklist.
+ * The AddCommand class allows the user to add
+ * tasks into the tasklist.
  * <p>
  *
  * @author  Jarrel Bin
@@ -79,6 +79,9 @@ public class AddCommand extends Command {
         return builder.toFormatter().withResolverStyle(ResolverStyle.SMART);
     }
 
+    /**
+     * This method is used to add tasks into the tasklist.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws IOException, NoArgsException {
 

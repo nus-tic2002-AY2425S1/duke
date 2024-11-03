@@ -5,6 +5,17 @@ import alice.command.*;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * <h1>Parser</h1>
+ * The Parser class parses the input given
+ * by the user into the program and behaves
+ * according to the input.
+ * <p>
+ *
+ * @author  Jarrel Bin
+ * @version 1.0
+ * @since   2024-11-02
+ */
 public class Parser {
 
     public static Command parse(String fullCommand){

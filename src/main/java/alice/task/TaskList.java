@@ -5,6 +5,17 @@ import java.util.ArrayList;
 
 import static alice.command.AddCommand.buildFormatter;
 
+/**
+ * <h1>Tasklist</h1>
+ * The Tasklist class details the implementation
+ * of an arrayList task object which keeps track
+ * of the tasks currently in memory.
+ * <p>
+ *
+ * @author  Jarrel Bin
+ * @version 1.0
+ * @since   2024-11-02
+ */
 public class TaskList {
     protected ArrayList<Task> tasks;
 

@@ -7,6 +7,15 @@ import alice.ui.Ui;
 
 import java.io.IOException;
 
+/**
+ * <h1>Find Command</h1>
+ * The FindCommand class finds tasks that contain the search term(s)
+ * <p>
+ *
+ * @author  Jarrel Bin
+ * @version 1.0
+ * @since   2024-11-02
+ */
 public class FindCommand extends Command{
 
     public FindCommand(String action, String instruction) {

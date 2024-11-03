@@ -4,6 +4,16 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
+/**
+ * <h1>Ui</h1>
+ * The Ui class details the output the user
+ * may see based on the actions by the user.
+ * <p>
+ *
+ * @author  Jarrel Bin
+ * @version 1.0
+ * @since   2024-11-02
+ */
 public class Ui {
     private final Scanner in;
     private final PrintStream out;
@@ -51,6 +61,9 @@ public class Ui {
         System.out.println("Oops! An error occurred: " + message);
     }
 
+    /**
+     * This method prints out the size of the Task list whenever it is called.
+     */
     public void showSize(int size){
         System.out.println("Now you have "+ size +" in the list.");
     }

@@ -6,6 +6,17 @@ import alice.ui.Ui;
 
 import java.io.IOException;
 
+/**
+ * <h1>Mark Command</h1>
+ * The MarkCommand class implements an application that
+ * allows the user to mark or unmark tasks in the tasklist
+ * as done or not done.
+ * <p>
+ *
+ * @author  Jarrel Bin
+ * @version 1.0
+ * @since   2024-11-02
+ */
 public class MarkCommand extends Command {
 
     public MarkCommand(int index, boolean isDone){

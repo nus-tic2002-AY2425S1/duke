@@ -23,6 +23,8 @@ public class Task {
         isDone = false;
     }
 
+    public String getType(){ return "";};
+
     public String toString(){
         return "["+getStatusIcon()+"] "+description;
     }

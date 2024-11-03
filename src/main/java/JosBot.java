@@ -1,5 +1,9 @@
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.File;
 
 public class JosBot {
 
@@ -21,12 +25,111 @@ public class JosBot {
 
     }
 
+    public static String parseListToString(ArrayList<Task> file_list)
+    {
+        String list_string = "";
+        for(int i = 0; i < file_list.size(); i++)
+        {
+            list_string += file_list.get(i).getType() + ",";
+            if(file_list.get(i).getStatusIcon().equals("X"))
+            {
+                list_string += "1,";
+            }
+            else
+            {
+                list_string += "0,";
+            }
+            list_string += file_list.get(i).getDescription();
+
+            //deadline
+            if(file_list.get(i).getType().equals("D"))
+            {
+               Deadline d = (Deadline) file_list.get(i);
+               list_string += ","+d.getBy();
+            }
+            else if(file_list.get(i).getType().equals("E"))
+            {
+                Event e = (Event) file_list.get(i);
+                list_string += ","+e.getFrom() + "," + e.getTo();
+            }
+
+            list_string += "\n";
+        }
+        //System.out.println(list_string);
+        return list_string;
+
+    }
+
+    public static ArrayList<Task> loadFromFile(String filepath) throws FileNotFoundException {
+        ArrayList<Task> load_list = new ArrayList<>();
+
+        File f = new File(filepath); // create a File for the given file path
+        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+        while (s.hasNext()) {
+            String[] line = s.nextLine().split(",");
+            //System.out.println(line);
+            Task t = null;
+
+            if(line[0].equals("T"))
+            {
+                t = new Todo(line[2]);
+            }
+            else if(line[0].equals("D"))
+            {
+                t = new Deadline(line[2], line[3]);
+            }
+            else if(line[0].equals("E"))
+            {
+                t = new Event(line[2], line[3], line[4]);
+            }
+
+            if(line[1].equals("1"))
+            {
+                t.markAsDone();
+            }
+
+            load_list.add(t);
+        }
+
+        return load_list;
+    }
+
+    public static void saveToFile(String list_string) {
+        String filepath = "data/JosBotList.txt";
+        File f = new File(filepath);
+        //System.out.println("full path: " + f.getAbsolutePath());
+        try{
+            if(f.exists()){
+                FileWriter fw = new FileWriter(filepath);
+                fw.write(list_string);
+                fw.close();
+            }
+            else
+            {
+                throw new JosBotException("");
+            }
+        }
+        catch(Exception e){
+            System.out.println("Error : No save file was found!");
+        }
+    }
+
     public static void main(String[] args) {
 
         printInfo("Start");
-        //Task[] list = new Task[100];
         ArrayList<Task> list = new ArrayList<>();
         int list_count = 0;
+        try{
+            list = loadFromFile("data/JosBotList.txt");
+            list_count = list.size();
+        }
+        catch(Exception e){
+            System.out.println("Error : No save file was found!");
+        }
+
+
+        //load function
+
         Scanner in = new Scanner(System.in);
         String user_input = in.nextLine().trim();
 
@@ -59,7 +162,10 @@ public class JosBot {
                             list.get(last_digit).markAsNotDone();
                         }
                         //System.out.println("[" + list[last_digit].getStatusIcon() + "] " + list[last_digit].getDescription());
-                        System.out.println("[" + list.get(last_digit).getStatusIcon() + "] " + list.get(last_digit).getDescription());
+                        //System.out.println("[" + list.get(last_digit).getStatusIcon() + "] " + list.get(last_digit).getDescription());
+                        System.out.println(list.get(last_digit).toString());
+                        //save function
+                        saveToFile(parseListToString(list));
                     }
                     else
                     {
@@ -79,6 +185,7 @@ public class JosBot {
                             list.add(t);
                             list_count++;
                             System.out.println(t.toString());
+
                         } else if (user_input.startsWith("deadline")) {
                             String deadline_txt = user_input.replace("deadline ", "");
                             String[] split_txt = deadline_txt.split("/by", 2);
@@ -103,6 +210,8 @@ public class JosBot {
                         }
 
                         System.out.println("Now you have " + list_count + " task in the list.");
+                        //save function
+                        saveToFile(parseListToString(list));
                     }
                     else
                     {
@@ -122,7 +231,8 @@ public class JosBot {
                         list.remove(last_digit);
                         list_count--;
                         System.out.println("Now you have " + list_count + " tasks in the list.");
-
+                        //save function
+                        saveToFile(parseListToString(list));
                     }
                     else
                     {
@@ -146,6 +256,9 @@ public class JosBot {
                         break;
                     case "missing_description":
                         error_message = "The description of the task cannot be empty! Please add a description to your task";
+                        break;
+                    case "missing_file":
+                        error_message = "Save file cannot be found!";
                         break;
                     default:
                         error_message = "unknown error";

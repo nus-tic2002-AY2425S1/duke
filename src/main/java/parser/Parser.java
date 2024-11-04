@@ -2,6 +2,7 @@ package parser;
 // deals with making sense of the user command
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -13,6 +14,7 @@ import commands.DeleteCommand;
 import commands.EventCommand;
 import commands.ListCommand;
 import commands.MarkCommand;
+import commands.ShowCommand;
 import commands.TodoCommand;
 import commands.UnmarkCommand;
 import common.Messages;
@@ -67,6 +69,8 @@ public class Parser {
                 return prepareDeadline(cleanArgs);
             case EventCommand.COMMAND_WORD:
                 return prepareEvent(cleanArgs);
+            case ShowCommand.COMMAND_WORD:
+                return prepareShow(cleanArgs);
             default:
                 throw new CommandException(
                     Messages.ERROR_INVALID_COMMAND,
@@ -221,12 +225,15 @@ public class Parser {
         // LocalDateTime endDateTime = LocalDateTime.parse(matcher.group("end").trim());
         LocalDateTime endDateTime = DateTimeParser.parseInputEventDateTime(endDateTimeString);
         
-        // TODO: Handle the case where end date comes before start date
-        // Error: Start date/time must be before end date/time
         if (endDateTime.isBefore(startDateTime)) {
             throw new CommandException(Messages.ERROR_END_BEFORE_START);
         }
         
         return new EventCommand(description.trim(), startDateTime, endDateTime);
+    }
+
+    private static Command prepareShow(String args) throws CommandException {
+        LocalDate date = DateTimeParser.parseInputShowDate(args);
+        return new ShowCommand(date);
     }
 }

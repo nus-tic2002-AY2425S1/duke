@@ -1,5 +1,6 @@
 package parser;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -32,6 +33,9 @@ public class DateTimeParser {
                                                                 .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
                                                                 .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
                                                                 .toFormatter();
+
+    public static final String SHOW_DATE_PATTERN = "yyyy-MM-dd";
+    public static final DateTimeFormatter SHOW_DATE_FORMAT = DateTimeFormatter.ofPattern(SHOW_DATE_PATTERN);
 
     // Convert "yyyy-MM-dd HHmm" in String to "MMM dd yyyy HHmm" in LocalDateTime
     public static LocalDateTime parseOutputDateTime(String input) throws CommandException {
@@ -69,6 +73,19 @@ public class DateTimeParser {
             );
         }
     }
+
+    public static LocalDate parseInputShowDate(String input) throws CommandException {
+        try {
+            return LocalDate.parse(input, SHOW_DATE_FORMAT);
+        } catch (DateTimeParseException e) {
+            // System.out.println(e.getMessage());
+            throw new CommandException(Messages.ERROR_INVALID_DATETIME_FORMAT, 
+                                       String.format("Received `%s`", input),
+                                       String.format("Expected format: %s. Example: 2019-10-15 1800", INPUT_DATETIME_PATTERN)
+            );
+        }
+    }
+
 
     /* 
     // Parse to output format

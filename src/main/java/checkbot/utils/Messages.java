@@ -29,6 +29,7 @@ public class Messages {
             "  rank <task number> medium" + System.lineSeparator() +
             "  rank <task number> low" + System.lineSeparator() +
             "  rank <task number> none" + System.lineSeparator() +
+            "To search for tasks, type \"find\", followed by keywords." + System.lineSeparator() +
             "To end this session, type \"bye\"." + System.lineSeparator() +
             DIVIDER;
 
@@ -71,6 +72,10 @@ public class Messages {
     public final static String EMPTY_NUMBER = DIVIDER + System.lineSeparator() +
             "We need to know which task you are referring to! Please include the task number in numerical digits." +
             System.lineSeparator() +
+            DIVIDER;
+
+    public final static String EMPTY_SEARCH = DIVIDER + System.lineSeparator() +
+            "Search keyword is empty!" + System.lineSeparator() +
             DIVIDER;
 
     public final static String NON_INTEGER_NUMBER = DIVIDER + System.lineSeparator() +

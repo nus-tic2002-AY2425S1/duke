@@ -54,8 +54,12 @@ public class Parser {
                     System.out.println(e.getMessage());
                     break;
                 }
-                case "find":
-                TextUi.printMatchingTasks(input.split(" ",2)[1].trim());
+            case "find":
+                try{
+                    TextUi.printMatchingTasks(input.split(" ",2)[1].trim());
+                } catch (IndexOutOfBoundsException e) {
+                    System.out.println(Messages.EMPTY_SEARCH);
+                }
                 break;
             case "todo":
                 // fallthrough

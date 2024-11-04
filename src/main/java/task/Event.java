@@ -1,9 +1,9 @@
 package task;
 
 import common.Messages;
-import exception.DateTimeParserException;
 import parser.DateTimeParser;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 // Events are tasks that start at a specific date/time and ends at a specific date/time
@@ -61,6 +61,14 @@ public class Event extends Task {
     public String encodeTask() {
         String separator = " | ";
         return TaskType.EVENT + super.encodeTask() + separator + getFormattedStartDateTime() + separator + getFormattedEndDateTime();
+    }
+
+    @Override
+    public boolean isOnDate(LocalDate date) {
+        // return getDue().isEqual(due);
+        // return startDate.isEqual(getStartDateTime().toLocalDate()) && endDate.isEqual(getEndDateTime().toLocalDate());
+        return getStartDateTime().toLocalDate().isEqual(date) || 
+               getEndDateTime().toLocalDate().isEqual(date);
     }
 
 }

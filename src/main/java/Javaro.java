@@ -4,7 +4,6 @@ import exception.FileContentException;
 import exception.StorageOperationException;
 import exception.TaskException;
 import exception.TaskListDecoderException;
-import exception.DateTimeParserException;
 import parser.Parser;
 import storage.Storage;
 import task.TaskList;
@@ -28,7 +27,7 @@ public class Javaro {
             storage = new Storage();
             taskList = storage.loadTasks();
         } catch (StorageOperationException | FileContentException | 
-                 TaskListDecoderException | DateTimeParserException e) {
+                 TaskListDecoderException | CommandException e) {
             // storageOperationException.printStackTrace();
             ui.showError(e.getMessageList());
             taskList = new TaskList();
@@ -57,9 +56,6 @@ public class Javaro {
                 ui.showError(e.getMessageList());
             } catch (TaskException e) {
                 // System.out.println("TaskException caught: " + e.getMessage());
-                ui.showError(e.getMessageList());
-            } catch (DateTimeParserException e) {
-                // System.out.println("StorageOperationException caught: " + e.getMessage());
                 ui.showError(e.getMessageList());
             } finally {
                 // ui.showLine();

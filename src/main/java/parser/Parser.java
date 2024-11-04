@@ -18,7 +18,6 @@ import commands.UnmarkCommand;
 import common.Messages;
 
 import exception.CommandException;
-import exception.DateTimeParserException;
 
 public class Parser {
 
@@ -39,7 +38,7 @@ public class Parser {
     public static final String EVENT_COMMAND_ARGS_REGEX = "^(?<description>.+) /from (?<start>.+) /to (?<end>.+)$";
     public static final Pattern EVENT_COMMAND_ARGS_FORMAT = Pattern.compile(EVENT_COMMAND_ARGS_REGEX);
     
-    public static Command parse(String userInput) throws CommandException, DateTimeParserException {
+    public static Command parse(String userInput) throws CommandException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         
         if (!matcher.matches()) {
@@ -149,7 +148,7 @@ public class Parser {
         }
     }
 
-    private static Command prepareDeadline(String args) throws CommandException, DateTimeParserException {
+    private static Command prepareDeadline(String args) throws CommandException {
 
         final String MESSAGE_EMPTY_DUEDATE_PRE = "The task is missing a due date.";
         final String BY_KEYWORD = "/by";
@@ -178,14 +177,14 @@ public class Parser {
          */
 
         // When add deadline task, user enters the date in yyyy-mm-dd HHmm format (e.g., 2019-10-15 1800)
-        // parser validates the date & format, then converts the date to MMM dd yyyy HHmm format (e.g., Oct 15 2019 1800)
-        // Format when save to tasklist / file is MMM dd yyyy HHmm format
-        // Restrictions: Deadline must have date, but time can be optional (or if no time given, assume 0000 hours). Event must have both date and time 
+        // parser validates the date & format, then converts the date to MMM dd yyyy HHmm format (e.g., Oct 15 2019 1800) then saves to taskList and tasks.txt
+        // TODO: Restrictions: Deadline must have date, but time can be optional (or if no time given, assume 0000 hours). Event must have both date and time 
         // deadline return book /by 2019-10-15 1800
 
         String dueString = matcher.group("due").trim();
         // System.out.println("localdatetime " + DateTimeParser.parseDateTime(dueString));
-        LocalDateTime due = DateTimeParser.parseDateTime(dueString);
+        // System.out.println("LocalDateTime due " + dueString);
+        LocalDateTime due = DateTimeParser.parseInputDeadlineDateTime(dueString);
         // System.out.println("LocalDateTime due " + due);
         // LocalDateTime due = LocalDateTime.parse(matcher.group("due").trim());
 
@@ -214,10 +213,20 @@ public class Parser {
         validateArgsFormat(matcher, EventCommand.COMMAND_WORD, args, EventCommand.MESSAGE_USAGE);
 
         String description = matcher.group("description");
-        // String startTime = matcher.group("start");
-        LocalDateTime startDateTime = LocalDateTime.parse(matcher.group("start").trim());
-        // String endTime = matcher.group("end");
-        LocalDateTime endDateTime = LocalDateTime.parse(matcher.group("end").trim());
+        String startDateTimeString = matcher.group("start");
+        // LocalDateTime startDateTime = LocalDateTime.parse(matcher.group("start").trim());
+        LocalDateTime startDateTime = DateTimeParser.parseInputEventDateTime(startDateTimeString);
+        
+        String endDateTimeString = matcher.group("end");
+        // LocalDateTime endDateTime = LocalDateTime.parse(matcher.group("end").trim());
+        LocalDateTime endDateTime = DateTimeParser.parseInputEventDateTime(endDateTimeString);
+        
+        // TODO: Handle the case where end date comes before start date
+        // Error: Start date/time must be before end date/time
+        if (endDateTime.isBefore(startDateTime)) {
+            throw new CommandException(Messages.ERROR_END_BEFORE_START);
+        }
+        
         return new EventCommand(description.trim(), startDateTime, endDateTime);
     }
 }

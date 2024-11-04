@@ -8,8 +8,9 @@ import java.nio.file.Paths;
 
 import java.util.List;
 
+import commands.Command;
 import common.Messages;
-import exception.DateTimeParserException;
+import exception.CommandException;
 import exception.FileContentException;
 import exception.StorageOperationException;
 import exception.TaskListDecoderException;
@@ -105,7 +106,7 @@ public class Storage {
     }
 
     // Write all lines in tasks.txt into TaskList
-    public TaskList loadTasks() throws IOException, FileContentException, TaskListDecoderException, DateTimeParserException {
+    public TaskList loadTasks() throws IOException, FileContentException, TaskListDecoderException, CommandException {
         TaskList taskList = new TaskList();
         List<String> lines = null;
         try {

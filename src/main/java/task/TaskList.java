@@ -1,6 +1,7 @@
 package task;
 import java.util.List;
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 // contains the task list e.g., it has operations to add/delete tasks in the list
 public class TaskList {
@@ -68,5 +69,15 @@ public class TaskList {
         }
         String taskWord = taskWordStringBuilder.toString();
         return taskWord;
+    }
+
+    public List<Task> getAllTasksOnDate(LocalDate date) {
+        List<Task> tasksOnDate = new ArrayList<>();
+        for (Task task : getTaskList()) {
+            if (task.isOnDate(date)) {
+                tasksOnDate.add(task);
+            }
+        }
+        return tasksOnDate;
     }
 }

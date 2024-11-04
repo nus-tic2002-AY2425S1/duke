@@ -5,7 +5,7 @@ import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
 import common.Messages;
-import exception.DateTimeParserException;
+import exception.CommandException;
 import exception.FileContentException;
 import exception.TaskListDecoderException;
 import parser.DateTimeParser;
@@ -20,7 +20,7 @@ public class TaskListDecoder {
 
     // https://github.com/se-edu/addressbook-level2/blob/master/src/seedu/addressbook/storage/AddressBookDecoder.java#L34
     // Decodes {@code encodedTaskList} into an {@code TaskList} containing the decoded tasks.
-    public static TaskList decodeTaskList(List<String> encodedTaskList) throws FileContentException, TaskListDecoderException, DateTimeParserException {
+    public static TaskList decodeTaskList(List<String> encodedTaskList) throws FileContentException, TaskListDecoderException, CommandException {
         TaskList decodedTasks = new TaskList();
         for (String encodedTask : encodedTaskList) {
             // System.out.println("encodedTask: " + encodedTask);
@@ -33,7 +33,7 @@ public class TaskListDecoder {
 
     // Decodes {@code encodedTask} from tasks.txt into a {@code Task}
     // Example encodedTask: T | 1 | read book
-    private static Task decodeTaskFromString(String encodedTask) throws FileContentException, TaskListDecoderException, DateTimeParserException {
+    private static Task decodeTaskFromString(String encodedTask) throws FileContentException, TaskListDecoderException, CommandException {
         
         final String EXPECTED_FORMAT_TODO = "T | 0 | <task description>";
         final String EXPECTED_FORMAT_DEADLINE = "D | 0 | <task description> | <task deadline>";
@@ -50,7 +50,7 @@ public class TaskListDecoder {
         }
         
         String[] taskData = encodedTask.split(" \\| ");
-        // System.out.println("taskData is " + Arrays.toString(taskData));
+        // System.out.    ("taskData is " + Arrays.toString(taskData));
 
         if (taskData.length < 3) {
             // "Task data has missing components. Please check tasks.txt. Expected format: [T|D|E] | [0|1] | description [| additional info]. Found: " + taskData
@@ -116,7 +116,13 @@ public class TaskListDecoder {
                 }
                 String dueString = taskData[3].trim();
                 // System.out.println("dueString: " + dueString);
-                LocalDateTime due = DateTimeParser.decodeDateTime(dueString);
+
+                /*
+                 * tasks.txt contains a String representation of the time
+                 * To create a deadline task, need to parse String to dateTime
+                 */
+
+                LocalDateTime due = DateTimeParser.parseOutputDateTime(dueString);
                 // System.out.println("due is " + due);
                 // LocalDateTime due = DateTimeParser.parseDateTime(dueString);
                 // try {
@@ -137,17 +143,19 @@ public class TaskListDecoder {
                         String.format("Expected format: `%s`", EXPECTED_FORMAT_EVENT)
                     );
                 }
+
                 // String start = taskData[3];
+                
+                // Jul 06 2024 1800
                 // System.out.println("taskData 3 " + taskData[3] + " of type " + taskData[3].getClass().getName());
                 // LocalDateTime startDateTime = LocalDateTime.parse(taskData[3].trim());
-                
-                LocalDateTime startDateTime = DateTimeParser.decodeDateTime(taskData[3].trim());
+                LocalDateTime startDateTime = DateTimeParser.parseOutputDateTime(taskData[3].trim());
                 
                 // String end = taskData[4];
                 // System.out.println("taskData 4 " + taskData[4]);
                 // LocalDateTime endDateTime = LocalDateTime.parse(taskData[4].trim());
                 
-                LocalDateTime endDateTime = DateTimeParser.decodeDateTime(taskData[4].trim());
+                LocalDateTime endDateTime = DateTimeParser.parseOutputDateTime(taskData[4].trim());
                 
                 task = new Event(description, isDone, startDateTime, endDateTime);
                 break;

@@ -2,11 +2,13 @@ package parser;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoField;
 
 import common.Constants;
 import common.Messages;
-import exception.DateTimeParserException;
+import exception.CommandException;
 
 // Accept dates in a format such as yyyy-mm-dd format (e.g., 2019-10-15) and 
 // print in a different format such as MMM dd yyyy e.g., (Oct 15 2019).
@@ -14,29 +16,59 @@ import exception.DateTimeParserException;
 public class DateTimeParser {
 
     public static final String TIME_PATTERN = "HHmm";
+    
     public static final String INPUT_DATETIME_PATTERN = "yyyy-MM-dd" + Constants.SPACE + TIME_PATTERN;
     public static final DateTimeFormatter INPUT_DATETIME_FORMAT = DateTimeFormatter.ofPattern(INPUT_DATETIME_PATTERN);
+    
     public static final String OUTPUT_DATETIME_PATTERN = "MMM dd yyyy" + Constants.SPACE + TIME_PATTERN;
     public static final DateTimeFormatter OUTPUT_DATETIME_FORMAT = DateTimeFormatter.ofPattern(OUTPUT_DATETIME_PATTERN);
 
+    // Deadline must have date but time is optional
+    public static final DateTimeFormatter deadlineFormatter = new DateTimeFormatterBuilder()
+                                                                .appendPattern("yyyy-MM-dd")
+                                                                .optionalStart()
+                                                                .appendPattern(" HHmm")
+                                                                .optionalEnd()
+                                                                .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+                                                                .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+                                                                .toFormatter();
+
     // Convert "yyyy-MM-dd HHmm" in String to "MMM dd yyyy HHmm" in LocalDateTime
-    public static LocalDateTime decodeDateTime(String input) throws DateTimeParserException {
+    public static LocalDateTime parseOutputDateTime(String input) throws CommandException {
         try {
             // return LocalDateTime.parse(input, INPUT_DATETIME_FORMAT);
             return LocalDateTime.parse(input, OUTPUT_DATETIME_FORMAT);
         } catch (DateTimeParseException e) {
-            throw new DateTimeParserException(Messages.ERROR_INVALID_DATETIME_FORMAT);
+            throw new CommandException(Messages.ERROR_INVALID_DATETIME_FORMAT);
         }
     }
 
-    public static LocalDateTime parseDateTime(String input) throws DateTimeParserException {
+    // For adding deadline tasks
+    public static LocalDateTime parseInputDeadlineDateTime(String input) throws CommandException {
+        try {
+            return LocalDateTime.parse(input, deadlineFormatter);
+            // return LocalDateTime.parse(input, INPUT_DATETIME_FORMAT);
+        } catch (DateTimeParseException e) {
+            // System.out.println(e.getMessage());
+            throw new CommandException(Messages.ERROR_INVALID_DATETIME_FORMAT, 
+                                       String.format("Received `%s`", input),
+                                       String.format("Expected format: %s. Example: 2019-10-15 [1800]", INPUT_DATETIME_PATTERN)
+            );
+        }
+    }
+    
+    // For adding event tasks
+    public static LocalDateTime parseInputEventDateTime(String input) throws CommandException {
         try {
             return LocalDateTime.parse(input, INPUT_DATETIME_FORMAT);
         } catch (DateTimeParseException e) {
-            throw new DateTimeParserException(Messages.ERROR_INVALID_DATETIME_FORMAT);
+            // System.out.println(e.getMessage());
+            throw new CommandException(Messages.ERROR_INVALID_DATETIME_FORMAT, 
+                                       String.format("Received `%s`", input),
+                                       String.format("Expected format: %s. Example: 2019-10-15 1800", INPUT_DATETIME_PATTERN)
+            );
         }
     }
-
 
     /* 
     // Parse to output format

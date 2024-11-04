@@ -1,6 +1,8 @@
 package task;
 // Todos are tasks without any date/time attached to it e.g., visit new theme park
 
+import java.time.LocalDate;
+
 public class Todo extends Task {
 
     public Todo(String description) {
@@ -20,6 +22,11 @@ public class Todo extends Task {
     @Override
     public String encodeTask() {
         return TaskType.TODO + super.encodeTask();
+    }
+
+    @Override
+    public boolean isOnDate(LocalDate date) {
+        return false;
     }
 
 }

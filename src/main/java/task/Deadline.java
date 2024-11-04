@@ -1,7 +1,7 @@
 package task;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import exception.DateTimeParserException;
 import parser.DateTimeParser;
 
 // Deadlines are tasks that need to be done before a specific date/time e.g., submit report by 11/10/2019 5pm
@@ -44,6 +44,12 @@ public class Deadline extends Task {
         String separator = " | ";
         // Construct the final encoded task without leading or trailing spaces
         return TaskType.DEADLINE + super.encodeTask() + separator + getFormattedDue();
+    }
+
+    @Override
+    // https://www.geeksforgeeks.org/compare-dates-in-java/
+    public boolean isOnDate(LocalDate date) {
+        return getDue().toLocalDate().isEqual(date);
     }
 
 }

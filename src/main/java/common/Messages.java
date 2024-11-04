@@ -60,6 +60,7 @@ public class Messages {
     public static final String MESSAGE_ENTER_VALID_TASK_NUMBER = "Please enter a valid task number from 1 to";
 
     public static final String ERROR_INVALID_DATETIME_FORMAT = ERROR + "Invalid date/time format";
+    public static final String ERROR_END_BEFORE_START = ERROR + "Start date/time must be before end date/time";
 
 
     // public static final String MESSAGE_INIT_FAILED = "Failed to initialise address book application. Exiting...";

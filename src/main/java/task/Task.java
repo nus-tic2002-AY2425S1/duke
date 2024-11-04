@@ -1,12 +1,13 @@
 package task;
 
-import exception.DateTimeParserException;
+import java.time.LocalDate;
 
 public abstract class Task {
     protected String description;
     protected boolean isDone;
 
     // public abstract TaskType getTaskType();
+    public abstract boolean isOnDate(LocalDate date);
 
     public Task(String description, boolean isDone) {
         this.description = description;

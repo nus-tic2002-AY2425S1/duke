@@ -2,7 +2,6 @@ import commands.Command;
 import exception.CommandException;
 import exception.FileContentException;
 import exception.StorageOperationException;
-import exception.TaskException;
 import exception.TaskListDecoderException;
 import parser.Parser;
 import storage.Storage;

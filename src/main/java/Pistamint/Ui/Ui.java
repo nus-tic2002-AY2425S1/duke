@@ -2,6 +2,7 @@ package Pistamint.Ui;
 import Pistamint.General.Task;
 import Pistamint.TaskList.TaskList;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Ui {
@@ -63,7 +64,7 @@ public class Ui {
      * @param task refers to the task that is to be unmarked
      */
     public static void showTaskUnMarked(Task task) {
-        System.out.println("\t"+line+"\n\tOK, I've marked this task as not done yet!\n\t[" + task.getStatusIcon() + "] " + task.getDescription()+"\n\t"+line);
+        System.out.println(start+"\n\tOK, I've marked this task as not done yet!\n\t[" + task.getStatusIcon() + "] " + task.getDescription()+end);
     }
 
     /**
@@ -76,6 +77,17 @@ public class Ui {
             System.out.println("\t" + (i + 1) + ".[" + tasks.get(i).getSymbol() + "][" + tasks.get(i).getStatusIcon() + "] " + tasks.get(i).getDescription());
         }
         System.out.println(Ui.start);
+    }
+    public static void printMatchingTask(ArrayList<Task> arrayList){
+        if(arrayList.size()>0) {
+            System.out.println(Ui.start + "\n\tHere are the matching tasks in your list:");
+            for (int i = 0; i < arrayList.size(); i++) {
+                System.out.println("\t" + (i + 1) + ".[" + arrayList.get(i).getSymbol() + "][" + arrayList.get(i).getStatusIcon() + "] " + arrayList.get(i).getDescription());
+            }
+            System.out.println(Ui.start);
+        }else{
+            System.out.println(Ui.start + "\n\tThere is not matching tasks in your list."+end);
+        }
     }
 
     /**

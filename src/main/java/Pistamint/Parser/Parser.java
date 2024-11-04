@@ -7,6 +7,7 @@ import Pistamint.TaskList.TaskList;
 import Pistamint.Ui.Ui;
 import java.io.IOException;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 
 public class Parser {
     private static TaskList taskList;
@@ -143,10 +144,16 @@ public class Parser {
                     Ui.runTimeException(e.getMessage());
                 }
                 break;
+            case "find":
+                ArrayList<Task> resultTasks=new ArrayList<>();
+                resultTasks=taskList.findTask(input.substring(command.length()+1));
+                Ui.printMatchingTask(resultTasks);
+                break;
             default:
                 System.out.println(Ui.start+ "\n\tOOPS!! I'm sorry, but I don't know what that means :("+Ui.end);
         }
     }
+
 
 
 }

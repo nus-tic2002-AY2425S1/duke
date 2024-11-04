@@ -2,6 +2,9 @@ package Pistamint.TaskList;
 import Pistamint.General.Task;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import Pistamint.Ui.Ui;
 import Pistamint.Storage.Storage;
 public class TaskList {
@@ -86,6 +89,18 @@ public class TaskList {
      */
     public ArrayList<Task> getTasks() {
         return tasks;
+    }
+
+    public ArrayList<Task> findTask(String keyword){
+        ArrayList<Task> matchedTask = new ArrayList<>();
+        for (Task task : tasks) {
+            Pattern pattern = Pattern.compile(keyword, Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(task.getDescription());
+            if (matcher.find()) {
+                matchedTask.add(task);
+            }
+        }
+        return matchedTask;
     }
 
 }

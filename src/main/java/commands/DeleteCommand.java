@@ -7,6 +7,14 @@ import task.Task;
 import task.TaskList;
 import ui.Ui;
 
+/**
+ * Represents a command to delete a task from the task list.
+ * 
+ * <p>
+ * The DeleteCommand class is responsible for removing a specified task from the task list based on its task number. 
+ * It also interacts with the user interface to provide feedback on the task addition and saves the updated task list to storage.
+ * </p>
+ */
 public class DeleteCommand extends Command {
     public static final String COMMAND_WORD = "delete";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " <task number>";
@@ -14,14 +22,32 @@ public class DeleteCommand extends Command {
     
     protected int taskNumber;
     
+    /**
+     * Constructs a DeleteCommand with the specified task number.
+     * 
+     * @param taskNumber represents the 1-based index of the task to be deleted
+     */
     public DeleteCommand(int taskNumber) {
         this.taskNumber = taskNumber;
     }
     
+    /**
+     * Retrieves the task number associated with this command.
+     * @return the task number
+     */
     public int getTaskNumber() {
         return taskNumber;
     }
     
+    /**
+     * Executes the command to delete the specified task from the task list.
+     * 
+     * @param taskList represents the list of tasks to delete the task from
+     * @param ui represents the user interface to interact with the user
+     * @param storage represents the storage to save the updated task list
+     * @throws CommandException if the task number is invalid or the task does not exist
+     * @throws StorageOperationException if an error occurs while saving the taskList to storage
+     */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws CommandException, StorageOperationException {
         

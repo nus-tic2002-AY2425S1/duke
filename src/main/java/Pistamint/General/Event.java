@@ -1,7 +1,5 @@
-package General;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+package Pistamint.General;
+
 public class Event extends Task{
     private String from;
     private String to;

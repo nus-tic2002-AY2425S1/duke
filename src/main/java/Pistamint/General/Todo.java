@@ -1,4 +1,4 @@
-package General;
+package Pistamint.General;
 
 public class Todo extends Task {
 

@@ -1,21 +1,28 @@
-package Parser;
+package Pistamint.Parser;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import General.*;
-import TaskList.TaskList;
-import Ui.Ui;
+import Pistamint.General.*;
+import Pistamint.Storage.Storage;
+import Pistamint.TaskList.TaskList;
+import Pistamint.Ui.Ui;
 import java.io.IOException;
 import java.time.format.DateTimeParseException;
 
 public class Parser {
     private static TaskList taskList;
 
-    //private static Ui ui;
+    //private static Pistamint.Ui ui;
     public Parser(TaskList taskList) {
         this.taskList = taskList;
     }
 
+    /**
+     * This method is used to process tasks in the duke.txt
+     * by taking in the taskData argument, splits up the data into three parts
+     * to identify which task class it belongs to, assign and adds into the tasklist.
+     * @param taskData are each line stored in duke.txt storage file
+     * @throws IOException when there's issues with the file
+     */
     public static void parseTask(String taskData) throws IOException {
         char symbol = taskData.charAt(0);
         String[] dataParts = taskData.split("\\|");
@@ -38,6 +45,17 @@ public class Parser {
         }
     }
 
+    /**
+     * This method returns true if the commands have been successfully processed (added to tasklist and also the file storoage)
+     * return false if otherwise. It parses the user input timeline in "yyyy-MM-dd" for event /deadlines task
+     * into Date Format "MMM dd yyyy"
+     *
+     * @param input the entire line of command keyed in by the user including activities
+     * @param task the key command that user wants to do
+     * @return true/false
+     * @throws DateTimeParseException if the date time is in invalid format to be parsed.
+     * @throws StringIndexOutOfBoundsException if the user did not complete the command input for event/deadline/todo.
+     */
     public static boolean processTask(String input, String task) {
         String action = "";
         LocalDate timeline,to,from;
@@ -72,12 +90,16 @@ public class Parser {
             return true;
         } catch (StringIndexOutOfBoundsException ex) {
             System.out.println(Ui.start + "\n\tOOPS!!! The description of " + task + " is incomplete." + Ui.end);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
         return false;
     }
 
+    /**
+     * This method is used to process different type of inputs that user have keyed into the system.
+     * For each of the commands keyed, it will call different Parser/Ui/Storage methods.
+     * @param input takes in user input for processing.
+     * @throws NumberFormatException for commands like mark/unmark/delete
+     */
     public static void parseCommand(String input) {
         String command = input.split(" ")[0];
         switch (command.toLowerCase()) {
@@ -112,10 +134,13 @@ public class Parser {
                 try {
                     Ui.showTaskRemoved(taskList.getTasks().get(Integer.parseInt(input.split(" ")[1])-1));
                     taskList.removeTask(Integer.parseInt(input.split(" ")[1])-1);
+                    Storage.removeFromFile(taskList.getTasks());
                     break;
 
                 }catch (NumberFormatException e) {
                     System.out.println(Ui.start+"\n\tYour input is incorrect, please input the command 'delete' follow by an Integer\n\teg.delete 1"+Ui.end);
+                } catch (IOException e) {
+                    Ui.runTimeException(e.getMessage());
                 }
                 break;
             default:

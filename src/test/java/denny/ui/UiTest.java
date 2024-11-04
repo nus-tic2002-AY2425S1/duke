@@ -1,8 +1,5 @@
 package denny.ui;
 
-import denny.task.Task;
-import denny.task.Deadline;
-import denny.task.Event;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;

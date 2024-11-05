@@ -1,8 +1,18 @@
 package Chad.Parser;
 
-import Chad.Command.*;
+import Chad.Command.AddCommand;
+import Chad.Command.Command;
+import Chad.Command.DeleteCommand;
+import Chad.Command.ExitCommand;
+import Chad.Command.ListByDateCommand;
+import Chad.Command.ListCommand;
+import Chad.Command.MarkTaskCommand;
+import Chad.Command.UnmarkTaskCommand;
 import Chad.Exception.ChadException;
-import Chad.TaskList.*;
+import Chad.TaskList.Deadline;
+import Chad.TaskList.Event;
+import Chad.TaskList.Task;
+import Chad.TaskList.Todo;
 
 public class Parser {
 
@@ -11,33 +21,26 @@ public class Parser {
         String[] parts = fullCommand.split(" ", 2);
         String commandWord = parts[0]; // The first part is the command
 
+        // No Fallthrough indicated and no break, because each case is a return will terminate the case
         switch (commandWord) {
-            case "todo":
-                return createTodo(parts);
-
-            case "deadline":
-                return createDeadline(parts);
-
-            case "event":
-                return createEvent(parts);
-
-            case "delete":
-                return createDelete(parts);
-
-            case "mark":
-                return createMark(parts);
-
-            case "unmark":
-                return createUnmark(parts);
-
-            case "bye":
-                return new ExitCommand(); 
-
-            case "list":
-                return createList(fullCommand);
-
-            default:
-                return createGeneralTask(fullCommand); // Add normal task
+        case "todo":
+            return createTodo(parts);
+        case "deadline":
+            return createDeadline(parts);
+        case "event":
+            return createEvent(parts);
+        case "delete":
+            return createDelete(parts);
+        case "mark":
+            return createMark(parts);
+        case "unmark":
+            return createUnmark(parts);
+        case "bye":
+            return new ExitCommand(); 
+        case "list":
+            return createList(fullCommand);
+        default:
+            return createGeneralTask(fullCommand); // Add normal task
         }
     }
 

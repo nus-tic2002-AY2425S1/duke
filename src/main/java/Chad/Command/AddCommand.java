@@ -1,9 +1,10 @@
 package Chad.Command;
 
-import Chad.Exception.*;
-import Chad.Storage.*;
-import Chad.TaskList.*;
-import Chad.Ui.*;
+import Chad.Exception.ChadException;
+import Chad.Storage.Storage;
+import Chad.TaskList.Task;
+import Chad.TaskList.TaskList;
+import Chad.Ui.Ui;
 
 public class AddCommand extends Command {
     private Task taskToAdd;

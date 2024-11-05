@@ -36,4 +36,7 @@ public class Event extends Task{
     public String getDescription(){
         return super.getDescription()+getFrom()+getTo();
     }
+    public String getOnlyDescription(){
+        return super.getDescription();
+    }
 }

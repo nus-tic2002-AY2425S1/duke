@@ -30,4 +30,8 @@ public class Deadline extends Task {
     public String getDescription() {
         return super.getDescription() + getDeadline();
     }
+
+    public String getOnlyDescription(){
+        return super.getDescription();
+    }
 }

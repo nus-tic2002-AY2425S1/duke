@@ -11,7 +11,6 @@ import Pistamint.Ui.Ui;
 import java.io.IOException;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Parser {
@@ -113,23 +112,32 @@ public class Parser {
         Scanner input;
         LocalDate to, from;
         try {
-            System.out.print(Ui.start);
-
-            if (reader.equalsIgnoreCase("1")) {
-                System.out.print("\n\tNew From:");
-                input = new Scanner(System.in);
-                from = LocalDate.parse(input.nextLine());
-                event.setFrom(from.format(DateTimeFormatter.ofPattern("MMM dd yyyy")));
-            } else if (reader.equalsIgnoreCase("2")) {
-                System.out.print("\n\tNew To:");
-                input = new Scanner(System.in);
-                to = LocalDate.parse(input.nextLine());
-                event.setTo(to.format(DateTimeFormatter.ofPattern("MMM dd yyyy")));
-            } else {
-                System.out.print("\n\tNew Description:");
-                input = new Scanner(System.in);
-                event.setDescription(input.nextLine()+ " ");
+            while(reader!=null) {
+                System.out.print(Ui.start);
+                if (reader.equalsIgnoreCase("1")) {
+                    System.out.print("\n\tNew From:");
+                    input = new Scanner(System.in);
+                    from = LocalDate.parse(input.nextLine());
+                    event.setFrom(from.format(DateTimeFormatter.ofPattern("MMM dd yyyy")));
+                    break;
+                } else if (reader.equalsIgnoreCase("2")) {
+                    System.out.print("\n\tNew To:");
+                    input = new Scanner(System.in);
+                    to = LocalDate.parse(input.nextLine());
+                    event.setTo(to.format(DateTimeFormatter.ofPattern("MMM dd yyyy")));
+                    break;
+                } else if (reader.equalsIgnoreCase("3")) {
+                    System.out.print("\n\tNew Description:");
+                    input = new Scanner(System.in);
+                    event.setDescription(input.nextLine() + " ");
+                    break;
+                }else {
+                    System.out.print("\n\tPlease only select within selection: ");
+                    input = new Scanner(System.in);
+                    reader = input.nextLine();
+                }
             }
+
             Storage.refreshFile(taskList.getTasks());
             Ui.showTaskUpdated((Task) event);
         } catch (IOException e) {
@@ -142,7 +150,6 @@ public class Parser {
     /**
      * This module is used to process the update of event details without user having to delete the
      * entry and re-add a new one.
-     *
      * @param dL     specifies the specific event that needs to be updated
      * @param reader contains the user input to which entry that needs to be updated
      * @throws DateTimeParseException when user inputs an invalid date format
@@ -152,16 +159,25 @@ public class Parser {
         Scanner input;
         LocalDate deadline;
         try {
-            System.out.print(Ui.start);
-            if (reader.equalsIgnoreCase("1")) {
-                System.out.print("\n\tNew From:");
-                input = new Scanner(System.in);
-                deadline = LocalDate.parse(input.nextLine());
-                dL.setDeadline(deadline.format(DateTimeFormatter.ofPattern("MMM dd yyyy")));
-            } else {
-                System.out.print("\n\tNew Description:");
-                input = new Scanner(System.in);
-                dL.setDescription(input.nextLine() + " ");
+            while(reader!=null) {
+                System.out.print(Ui.start);
+                if (reader.equalsIgnoreCase("1")) {
+                    System.out.print("\n\tNew From:");
+                    input = new Scanner(System.in);
+                    deadline = LocalDate.parse(input.nextLine());
+                    dL.setDeadline(deadline.format(DateTimeFormatter.ofPattern("MMM dd yyyy")));
+                    break;
+                } else if (reader.equalsIgnoreCase("2")) {
+                    System.out.print("\n\tNew Description:");
+                    input = new Scanner(System.in);
+                    dL.setDescription(input.nextLine() + " ");
+                    break;
+                }
+                else {
+                    System.out.print("\n\tPlease only select within selection: ");
+                    input=new Scanner(System.in);
+                    reader=input.nextLine();
+                }
             }
             Storage.refreshFile(taskList.getTasks());
             Ui.showTaskUpdated((Task) dL);
@@ -171,7 +187,13 @@ public class Parser {
             Ui.dateTimeException();
         }
     }
-
+    public static boolean isExit(String reader){
+        if(reader.equalsIgnoreCase("exit")){
+            System.out.println(Ui.start);
+            return false;
+        }
+        return true;
+    }
     /**
      * This method takes in the task that is being selected for update
      *
@@ -179,26 +201,35 @@ public class Parser {
      */
     public static void parseUpdate(Task task) {
         try {
+            String input;
             Scanner reader;
             if (task.getSymbol() == 'T') {
-                System.out.print(Ui.start + "\n\tNew Description:");
+                System.out.println(Ui.start +"[Current:("+task.getDescription().trim()+")]");
+                System.out.print("\n\tNew Description:");
                 reader = new Scanner(System.in);
                 task.setDescription(reader.nextLine());
                 Storage.refreshFile(taskList.getTasks());
                 Ui.showTaskUpdated((Task) task);
             } else if (task.getSymbol() == 'D') {
-                System.out.println(Ui.start + "\n\tWhich detail do you want to update?");
-                System.out.println("\t    1.Deadline (by)");
-                System.out.print("\t    2.Description\n\tPlease enter number:");
+                System.out.println(Ui.start + "\n\tWhich detail do you want to update? Type 'exit' if you do not wish to update");
+                System.out.println("\t    1.Deadline [Current:"+((Deadline)task).getDeadline()+"]");
+                System.out.print("\t    2.Description [Current:("+((Deadline)task).getOnlyDescription().trim()+")]\n\tPlease enter number:");
                 reader = new Scanner(System.in);
-                processUpdateDeadline((Deadline) task, reader.nextLine());
+                input=reader.nextLine();
+                if(isExit(input)){
+                    processUpdateDeadline((Deadline) task,input);
+                }
+
             } else {
-                System.out.println(Ui.start + "\n\tWhich detail do you want to update?");
-                System.out.println("\t    1.From");
-                System.out.println("\t    2.To");
-                System.out.print("\t    3.Description\n\tPlease enter number:");
+                System.out.println(Ui.start + "\n\tWhich detail do you want to update? Type 'exit' if you do not wish to update");
+                System.out.println("\t    1.From [Current:"+((Event)task).getFrom().trim()+")]");
+                System.out.println("\t    2.To [Current:("+((Event)task).getTo()+"]");
+                System.out.print("\t    3.Description [Current:("+((Event)task).getOnlyDescription().trim()+")]\n\tPlease enter number:");
                 reader = new Scanner(System.in);
-                processUpdateEvent((Event) task, reader.nextLine());
+                input=reader.nextLine();
+                if(isExit(input)){
+                    processUpdateEvent((Event) task,input);
+                }
             }
         } catch (IOException e) {
             Ui.runTimeException(e.getMessage());

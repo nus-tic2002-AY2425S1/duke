@@ -1,5 +1,6 @@
 package Chad.Ui;
-import Chad.TaskList.*;
+import Chad.TaskList.Task;
+import Chad.TaskList.TaskList;
 
 public interface Ui {
 
@@ -16,4 +17,5 @@ public interface Ui {
     void showAddTask(Task task,int noOfTask);
     void showMarkTask(Task task);
     void showUnMarkTask(Task task);
+    void showHelp(String helpContent);
 }

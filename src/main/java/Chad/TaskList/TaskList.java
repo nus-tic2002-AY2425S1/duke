@@ -33,10 +33,19 @@ public class TaskList {
 
         TaskList tasksByDate = new TaskList(); // Create a new TaskList for tasks matching the date
         for (Task task : tasks) {
-            addMatchingTask(task, parsedInputDate, tasksByDate); // Add matching tasks to the new list
+            addMatchingTaskbyDate(task, parsedInputDate, tasksByDate); // Add matching tasks to the new list
         }
 
         return tasksByDate; // Return the filtered TaskList
+    }
+    public TaskList findTaskbyIdx(String desptionIdx) throws ChadException {
+        // check null input ... should be done before call
+        TaskList tasksByIdx = new TaskList(); // Create a new TaskList for tasks matching the date
+        for (Task task : tasks) {
+            addMatchingTaskbyIdx(task, desptionIdx, tasksByIdx); // Add matching tasks to the new list
+        }
+
+        return tasksByIdx; // Return the filtered TaskList
     }
 
     /**
@@ -61,12 +70,18 @@ public class TaskList {
      * @param inputDate The date to match against.
      * @param tasksByDate The TaskList to add matching tasks to.
      */
-    private void addMatchingTask(Task task, String inputDate, TaskList tasksByDate) {
+    private void addMatchingTaskbyDate(Task task, String inputDate, TaskList tasksByDate) {
         if (task instanceof Deadline) {
             handleDeadline((Deadline) task, inputDate, tasksByDate); // Check and add deadline tasks
         } else if (task instanceof Event) {
             handleEvent((Event) task, inputDate, tasksByDate); // Check and add event tasks
         }
+    }
+    private void addMatchingTaskbyIdx(Task task, String inpuidx, TaskList tasksByIdx) {
+        if (task.getDescription().contains(inpuidx)) {
+            tasksByIdx.addTask(task);
+        }
+
     }
 
     /**

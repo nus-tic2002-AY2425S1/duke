@@ -4,6 +4,8 @@ import Chad.Command.AddCommand;
 import Chad.Command.Command;
 import Chad.Command.DeleteCommand;
 import Chad.Command.ExitCommand;
+import Chad.Command.FindCommand;
+import Chad.Command.HelpCommand;
 import Chad.Command.ListByDateCommand;
 import Chad.Command.ListCommand;
 import Chad.Command.MarkTaskCommand;
@@ -20,7 +22,7 @@ public class Parser {
     public static Command parse(String fullCommand) throws ChadException {
         String[] parts = fullCommand.split(" ", 2);
         String commandWord = parts[0]; // The first part is the command
-
+        commandWord=commandWord.toLowerCase();
         // No Fallthrough indicated and no break, because each case is a return will terminate the case
         switch (commandWord) {
         case "todo":
@@ -39,8 +41,10 @@ public class Parser {
             return new ExitCommand(); 
         case "list":
             return createList(fullCommand);
+        case "find":
+            return createFind(fullCommand);
         default:
-            return createGeneralTask(fullCommand); // Add normal task
+            return createGeneralTask(fullCommand); // Add normal task 
         }
     }
 
@@ -88,7 +92,7 @@ public class Parser {
     }
 
     private static Command createList(String fullcommand) throws ChadException {
-
+    
     // Split the command into parts
     String[] parts = fullcommand.split(" ", 2); // Split into at most 2 parts
 
@@ -105,9 +109,20 @@ public class Parser {
     }
     // If there's no "something" part, return a normal ListCommand
     return new ListCommand();
-        
-
     }
+    private static Command createFind(String fullcommand) throws ChadException {
+    
+        // Split the command into parts
+        String[] parts = fullcommand.split(" ", 2); // Split into at most 2 parts
+    
+        // Check if there is a substring beyond "find"
+        if (parts.length > 1) {
+            String parameter = parts[1].trim(); // Get and trim the "something" part
+            return new FindCommand(parameter);
+        }
+        // If there's no "something" part, return a normal ListCommand
+        return new HelpCommand("FIND");
+        }
 
 
     private static Command createMark(String[] parts) throws ChadException {

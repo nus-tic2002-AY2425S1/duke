@@ -1,7 +1,9 @@
 package Chad.Ui;
 
-import Chad.TaskList.*;
 import java.util.Scanner;
+
+import Chad.TaskList.Task;
+import Chad.TaskList.TaskList;
 
 public class TextUi implements Ui {
     // Attributes for UI
@@ -49,11 +51,12 @@ public class TextUi implements Ui {
         System.out.println(myline);
     }
 
-    //@Override
-   // public  void showMsg(String msgString) {
-
-       // System.out.println(msgString);
-    //}
+    @Override
+    public  void showHelp(String helpContentString) {
+        System.out.println(System.lineSeparator());
+        System.out.println(helpContentString);
+        System.out.println(System.lineSeparator());
+    }
 
     @Override
     public void showDeleteTask(Task task, int noOfTask) {

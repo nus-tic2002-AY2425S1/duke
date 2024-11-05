@@ -126,15 +126,17 @@ public class Parser {
         // If there's no "something" part, return a normal ListCommand
         return new HelpCommand("FIND");
         }
-        private static Command createStaticsCommand(String fullcommand) throws ChadException {
+    private static Command createStaticsCommand(String fullcommand) throws ChadException {
     
             // Split the command into parts
             String[] parts = fullcommand.split(" ", 2); // Split into at most 2 parts
         
             // Check if there is a substring beyond "find"
             if (parts.length > 1) {
-                String parameter = parts[1].trim(); // Get and trim the "something" part
+                String parameter = parts[1]; // Get and trim the "something" part
+                //Ui.showMsg(parameter);
                 return new StatisticsCommand(parameter);
+                
             }
             // If there's no "something" part, return a normal ListCommand
             return new HelpCommand("SUMMARY");

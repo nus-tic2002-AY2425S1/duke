@@ -9,6 +9,7 @@ import Chad.Command.HelpCommand;
 import Chad.Command.ListByDateCommand;
 import Chad.Command.ListCommand;
 import Chad.Command.MarkTaskCommand;
+import Chad.Command.StatisticsCommand;
 import Chad.Command.UnmarkTaskCommand;
 import Chad.Exception.ChadException;
 import Chad.TaskList.Deadline;
@@ -43,6 +44,8 @@ public class Parser {
             return createList(fullCommand);
         case "find":
             return createFind(fullCommand);
+        case "summary":
+            return createStaticsCommand(fullCommand);
         default:
             return createGeneralTask(fullCommand); // Add normal task 
         }
@@ -123,7 +126,19 @@ public class Parser {
         // If there's no "something" part, return a normal ListCommand
         return new HelpCommand("FIND");
         }
-
+        private static Command createStaticsCommand(String fullcommand) throws ChadException {
+    
+            // Split the command into parts
+            String[] parts = fullcommand.split(" ", 2); // Split into at most 2 parts
+        
+            // Check if there is a substring beyond "find"
+            if (parts.length > 1) {
+                String parameter = parts[1].trim(); // Get and trim the "something" part
+                return new StatisticsCommand(parameter);
+            }
+            // If there's no "something" part, return a normal ListCommand
+            return new HelpCommand("SUMMARY");
+            }
 
     private static Command createMark(String[] parts) throws ChadException {
         validateTaskIndex(parts);

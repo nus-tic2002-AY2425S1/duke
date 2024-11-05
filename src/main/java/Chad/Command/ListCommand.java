@@ -10,7 +10,7 @@ public class ListCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws ChadException {
         ui.showTaskList(tasks); // UI method to display the task list
-        storage.save(tasks.toString());
+        //storage.save(tasks.toString());
     }
 
 }

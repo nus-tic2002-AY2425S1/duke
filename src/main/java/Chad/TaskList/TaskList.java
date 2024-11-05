@@ -1,5 +1,7 @@
 package Chad.TaskList;
 
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.ArrayList;
 
 import Chad.Exception.ChadException;
@@ -38,6 +40,36 @@ public class TaskList {
 
         return tasksByDate; // Return the filtered TaskList
     }
+
+    /**
+     * Returns a TaskList containing tasks that have marked completion times 
+     * within the specified time range from the given start time.
+     *
+     * @param statisCheckTime The start time for the range.
+     * @param checkPeriod The duration representing the time range.
+     * @return A TaskList of tasks that have been completed within the specified time range.
+     */
+    public TaskList getTaskByTimeRange(LocalDateTime statisCheckTime, Period checkPeriod) {
+        TaskList tasksInRange = new TaskList();
+        LocalDateTime startDateTime = statisCheckTime.minus(checkPeriod); // Calculate the start date based on the period
+
+        // Iterate over tasks to find those whose complete time falls within the range
+        for (Task task : tasks) {
+            LocalDateTime completeTime = task.getCompleteTime(); // Assuming Task has a getCompleteAt() method
+
+            // Check if completeTime is not null and falls within the time range
+            if (completeTime != null && completeTime.isAfter(startDateTime) && completeTime.isBefore(statisCheckTime.plus(checkPeriod))) {
+                tasksInRange.addTask(task); // Add to list if it meets criteria
+            }
+        }
+
+        return tasksInRange; // Return the filtered TaskList
+    }
+
+    // Add other methods (addTask, deleteTask, etc.) as necessary...
+
+
+
     public TaskList findTaskbyIdx(String desptionIdx) throws ChadException {
         // check null input ... should be done before call
         TaskList tasksByIdx = new TaskList(); // Create a new TaskList for tasks matching the date

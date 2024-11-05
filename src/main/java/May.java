@@ -22,7 +22,7 @@ public class May {
         /*Welcome Message*/
         WelcomeMessage.printWelcomeMessage();
 
-        while(true){
+        while (true) {
             try {
                 // Scan for user input
                 input = scan.nextLine();
@@ -121,8 +121,8 @@ public class May {
                 }
 
                 // Find task with keyword
-                else if (command[0].equalsIgnoreCase("find")){
-                    if (command.length < 2 || command[1].trim().isEmpty()){
+                else if (command[0].equalsIgnoreCase("find")) {
+                    if (command.length < 2 || command[1].trim().isEmpty()) {
                         throw new ErrorException("'find' command cannot be empty.");
                     }
                     String keyword = command[1].trim();
@@ -149,15 +149,15 @@ public class May {
             }
 
             // Handle custom error
-            catch (ErrorException e){
+            catch (ErrorException e) {
                 System.out.println("OOPS!!! " + e.getMessage());
             }
             //Handle tick and cross index error
-            catch (NumberFormatException e){
+            catch (NumberFormatException e) {
                 System.out.println("Please enter a valid number.");
             }
             //Handle other unexpected error
-            catch (Exception e){
+            catch (Exception e) {
                 System.out.println("Something went wrong. Please try again.");
             }
 

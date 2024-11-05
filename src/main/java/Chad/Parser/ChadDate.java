@@ -1,9 +1,11 @@
 package Chad.Parser;
 
-
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import Chad.Ui.Ui;
 
@@ -43,6 +45,63 @@ public class ChadDate {
         LocalDate d1 = LocalDate.parse(date1);
         LocalDate d2 = LocalDate.parse(date2);
         return d1.equals(d2);
+    }
+
+    /**
+     * Converts a string representation of a time period into a Period object.
+     * It understands formats like "1 week", "3 days", "last week", etc.
+     *
+     * @param timePeriodString The string representing the time period (e.g., "1 week", "last day").
+     * @return The corresponding Period object.
+     */
+    public static Period findPeriodByString(String timePeriodString) {
+        // Prepare to look for specific patterns in the string
+        Pattern pattern = Pattern.compile("(\\d+)\\s*(days?|weeks?|months?)|last\\s*(day|week|month)", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(timePeriodString);
+
+        Period totalPeriod = Period.ZERO; // Start with a zero period
+
+        while (matcher.find()) {
+            // Check for numeric periods first
+            if (matcher.group(1) != null) {
+                int amount = Integer.parseInt(matcher.group(1)); // Get the amount (number) before the unit
+                String unit = matcher.group(2).toLowerCase(); // Get the unit
+                
+                switch (unit) {
+                    case "day":
+                    //Fallthrough
+                    case "days":
+                        totalPeriod = totalPeriod.plusDays(amount); // Add days to the total period
+                        break;
+                    case "week":
+                    case "weeks":
+                        totalPeriod = totalPeriod.plus(Period.ofWeeks(amount)); // Add weeks to the total period
+                        break;
+                    case "month":
+                    case "months":
+                        totalPeriod = totalPeriod.plusMonths(amount); // Add months to the total period
+                        break;
+                }
+            }
+
+            // For phrases with "last"
+            if (matcher.group(3) != null) { // Check matched group for "last day/week/month"
+                String lastUnit = matcher.group(3).toLowerCase();
+                switch (lastUnit) {
+                    case "day":
+                        totalPeriod = totalPeriod.plusDays(1); // Add one day for last day
+                        break;
+                    case "week":
+                        totalPeriod = totalPeriod.plus(Period.ofWeeks(1)); // Add one week for last week
+                        break;
+                    case "month":
+                        totalPeriod = totalPeriod.plusMonths(1); // Add one month for last month
+                        break;
+                }
+            }
+        }
+
+        return totalPeriod; // Return the constructed Period
     }
 
 }

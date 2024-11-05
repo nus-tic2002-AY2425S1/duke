@@ -20,7 +20,7 @@ public class ListByDateCommand extends Command {
         //ArrayList<Task> taskTolist = tasks.getTaskbyDeadline(listDate);
         TaskList taskTolist = tasks.getTaskbyDeadline(listDate);
         ui.showTaskList(taskTolist); // UI method to display the task list
-        storage.save(tasks.toString());
+        //storage.save(tasks.toString());
     }
 
 }

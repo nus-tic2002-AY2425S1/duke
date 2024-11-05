@@ -29,11 +29,7 @@ public class TaskList {
      * @throws IndexOutOfBoundsException when user input the index of item is out of range.
      */
     public void markAsDone(int index) {
-        try {
-            tasks.get(index).markAsDone();
-        }catch (IndexOutOfBoundsException e){
-            System.out.println(Ui.start+ "\n\tItem is out of range. You currently only have " + tasks.size() + " items."+Ui.end);
-        }
+        tasks.get(index).markAsDone();
     }
 
     /**
@@ -42,11 +38,8 @@ public class TaskList {
      * @throws IndexOutOfBoundsException when user input the index of item is out of range.
      */
     public void markAsUnDone(int index) {
-        try {
-            tasks.get(index).markAsUnDone();
-        }catch (IndexOutOfBoundsException e){
-            System.out.println(Ui.start+ "\n\tItem is out of range. You currently only have " + tasks.size() + " items."+Ui.end);
-        }
+        tasks.get(index).markAsUnDone();
+
     }
 
     /**
@@ -74,18 +67,12 @@ public class TaskList {
      * @throws IndexOutOfBoundsException when user input the index of item is out of range.
      */
     public void removeTask(int index){
-        try {
-            tasks.remove(index);
-
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println(Ui.start+ "\n\tItem is out of range. You currently only have " + (tasks.size()) + " items."+Ui.end);
-        }
+        tasks.remove(index);
     }
 
     /**
      * This method get the list of task of in the task list
      * @return an ArrayList of tasks that is currently stored in the tasklist.
-     * @throws IndexOutOfBoundsException when user input the index of item is out of range.
      */
     public ArrayList<Task> getTasks() {
         return tasks;

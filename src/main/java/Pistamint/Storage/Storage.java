@@ -77,7 +77,7 @@ public class Storage {
      * Remove specific line of data from file storage when user initiates to delete of the task.
      * @throws IOException when there is IO issues when processing the entry.
      */
-    public static void removeFromFile(ArrayList<Task> taskList) throws IOException {
+    public static void refreshFile(ArrayList<Task> taskList) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         for (Task task : taskList) {
             fw.write(task.getSymbol()+"|"+(task.getStatusIcon().equals("X") ? "1":"0")+"|"+task.getDescription());

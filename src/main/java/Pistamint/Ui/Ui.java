@@ -40,7 +40,10 @@ public class Ui {
         System.out.println("\tNow you have " + taskList.getSize()  + " task(s) in the list.\n\t" + line);
 
     }
-
+    public static void showTaskUpdated(Task task) {
+        System.out.println(start+"\n\tGot it! I've updated this task ");
+        System.out.println("\t" + "[" + task.getSymbol() + "]" + "[" + task.getStatusIcon() + "] " + task.getDescription()+end);
+    }
     /**
      * Prints out the task information of the task that is going to be removed
      * @param task refers to the task that is to be removed
@@ -73,21 +76,31 @@ public class Ui {
     public static void printItems() {
         System.out.println(Ui.start);
         ArrayList<Task> tasks=taskList.getTasks();
-        for(int i=0;i<tasks.size();i++) {
-            System.out.println("\t" + (i + 1) + ".[" + tasks.get(i).getSymbol() + "][" + tasks.get(i).getStatusIcon() + "] " + tasks.get(i).getDescription());
-        }
-        System.out.println(Ui.start);
+        loopArray(tasks);
     }
+
+    /**
+     * prints out task information on the matching items that user have searched for
+     * @param arrayList contains all the task entries that match user searched for
+     */
     public static void printMatchingTask(ArrayList<Task> arrayList){
-        if(arrayList.size()>0) {
+        if(!arrayList.isEmpty()) {
             System.out.println(Ui.start + "\n\tHere are the matching tasks in your list:");
-            for (int i = 0; i < arrayList.size(); i++) {
-                System.out.println("\t" + (i + 1) + ".[" + arrayList.get(i).getSymbol() + "][" + arrayList.get(i).getStatusIcon() + "] " + arrayList.get(i).getDescription());
-            }
-            System.out.println(Ui.start);
+            loopArray(arrayList);
         }else{
             System.out.println(Ui.start + "\n\tThere is not matching tasks in your list."+end);
         }
+    }
+
+    /**
+     * loop through array to print out items in the ArrayList
+     * @param arrayList stores the task in the ArrayList
+     */
+    private static void loopArray(ArrayList<Task> arrayList) {
+        for (int i = 0; i < arrayList.size(); i++) {
+            System.out.println("\t" + (i + 1) + ".[" + arrayList.get(i).getSymbol() + "][" + arrayList.get(i).getStatusIcon() + "] " + arrayList.get(i).getDescription());
+        }
+        System.out.println(Ui.start);
     }
 
     /**
@@ -96,5 +109,18 @@ public class Ui {
      */
     public static void runTimeException(String e){
         System.out.println(Ui.start+"\n\tRunTime exception occurred. Error is due to: "+e+Ui.end);
+    }
+
+    public static void indexOutOfBound(){
+        System.out.println(Ui.start+ "\n\tItem is out of range. You currently only have " + (taskList.getSize()) + " items."+Ui.end);
+    }
+    public static void numberFormat(String command){
+        System.out.println(Ui.start+"\n\tYour input is incorrect, please input the command '"+command+"' follow by an Integer\n\teg. "+command+" 1"+Ui.end);
+    }
+    public static void dateTimeException(){
+        System.out.println(Ui.start + "\n\tThe date format you have keyed in is invalid. Please key in the following format 'yyyy-MM-dd'" + Ui.end);
+    }
+    public static void stringIndexOutOfBound(String t){
+        System.out.println(Ui.start + "\n\tOOPS!!! The description of " + t + " is incomplete." + Ui.end);
     }
 }

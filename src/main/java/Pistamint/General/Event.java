@@ -27,10 +27,10 @@ public class Event extends Task{
         return to;
     }
     public void setFrom(String from) {
-        this.from = from;
+        this.from = "(from:"+from+" ";
     }
     public void setTo(String to) {
-        this.to = to;
+        this.to = "to:"+to+")";
     }
     @Override
     public String getDescription(){

@@ -59,25 +59,6 @@ public class CommandParser {
     }
 
     /**
-     * Prepares an AddToDo command from the given arguments.
-     *
-     * @param arguments The arguments provided for the ToDo task.
-     * @return A new {@code AddToDoCommand} with the specified task description.
-     * @throws TaskFormatException If the arguments format is invalid.
-     */
-    private static Command prepareAddToDo(String arguments) throws TaskFormatException {
-        final Matcher matcher = TASK_TODO_DATA_ARGS_FORMAT.matcher(arguments.trim());
-        if (!matcher.matches()) {
-            throw new TaskFormatException(
-                    Messages.MESSAGE_INVALID_TASK_FORMAT,
-                    String.format("TaskArguments='%s'", arguments),
-                    AddToDoCommand.MESSAGE_USAGE
-            );
-        }
-        return new AddToDoCommand(matcher.group("description"));
-    }
-
-    /**
      * Prepares an AddDeadline command from the given arguments.
      *
      * @param arguments The arguments provided for the Deadline task.
@@ -126,6 +107,25 @@ public class CommandParser {
     }
 
     /**
+     * Prepares an AddToDo command from the given arguments.
+     *
+     * @param arguments The arguments provided for the ToDo task.
+     * @return A new {@code AddToDoCommand} with the specified task description.
+     * @throws TaskFormatException If the arguments format is invalid.
+     */
+    private static Command prepareAddToDo(String arguments) throws TaskFormatException {
+        final Matcher matcher = TASK_TODO_DATA_ARGS_FORMAT.matcher(arguments.trim());
+        if (!matcher.matches()) {
+            throw new TaskFormatException(
+                    Messages.MESSAGE_INVALID_TASK_FORMAT,
+                    String.format("TaskArguments='%s'", arguments),
+                    AddToDoCommand.MESSAGE_USAGE
+            );
+        }
+        return new AddToDoCommand(matcher.group("description"));
+    }
+
+    /**
      * Prepares a DeleteCommand from the given arguments.
      *
      * @param arguments The arguments provided to specify which task to delete.
@@ -142,6 +142,38 @@ public class CommandParser {
             );
         }
         return new DeleteCommand(Integer.parseInt(matcher.group("taskNumber")));
+    }
+
+    /**
+     * Prepares a ListCommand or ListOnCommand based on the arguments.
+     *
+     * @param arguments The arguments specifying a date for filtering, if provided.
+     * @return A {@code ListCommand} if no date is provided, or a {@code ListOnCommand} if a date is specified.
+     * @throws CommandFormatException If the arguments format is invalid.
+     */
+    private static Command prepareList(String arguments) throws CommandFormatException {
+        if (arguments.isEmpty()) {
+            return new ListCommand();
+        }
+
+        final Matcher matcher = LIST_TASK_ARGS_FORMAT.matcher(arguments.trim());
+        if (!matcher.matches()) {
+            throw new CommandFormatException(
+                    Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    String.format("Command='list', Arguments='%s'", arguments),
+                    ListOnCommand.MESSAGE_USAGE
+            );
+        }
+        try {
+            LocalDateTime onDateTime = TimeParser.parseDateTime(matcher.group("on"));
+            return new ListOnCommand(onDateTime);
+        } catch (TaskFormatException e) {
+            throw new CommandFormatException(
+                    e.getMessage(),
+                    e.getDetail(),
+                    e.getHelp()
+            );
+        }
     }
 
     /**
@@ -180,30 +212,5 @@ public class CommandParser {
             );
         }
         return new UnmarkCommand(Integer.parseInt(matcher.group("taskNumber")));
-    }
-
-    /**
-     * Prepares a ListCommand or ListOnCommand based on the arguments.
-     *
-     * @param arguments The arguments specifying a date for filtering, if provided.
-     * @return A {@code ListCommand} if no date is provided, or a {@code ListOnCommand} if a date is specified.
-     * @throws CommandFormatException If the arguments format is invalid.
-     * @throws TaskFormatException    If the date format is invalid.
-     */
-    private static Command prepareList(String arguments) throws CommandFormatException, TaskFormatException {
-        if (arguments.isEmpty()) {
-            return new ListCommand();
-        }
-
-        final Matcher matcher = LIST_TASK_ARGS_FORMAT.matcher(arguments.trim());
-        if (!matcher.matches()) {
-            throw new CommandFormatException(
-                    Messages.MESSAGE_INVALID_COMMAND_FORMAT,
-                    String.format("Command='list', Arguments='%s'", arguments),
-                    ListOnCommand.MESSAGE_USAGE
-            );
-        }
-        LocalDateTime onDateTime = TimeParser.parseDateTime(matcher.group("on"));
-        return new ListOnCommand(onDateTime);
     }
 }

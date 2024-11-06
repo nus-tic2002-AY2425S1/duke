@@ -29,6 +29,21 @@ public class DeleteCommand extends Command {
     }
 
     /**
+     * Checks if this DeleteCommand is equal to another object.
+     * A DeleteCommand is considered equal if it is of the same type and has the same task number.
+     *
+     * @param obj The object to compare with this DeleteCommand.
+     * @return {@code true} if the specified object is a DeleteCommand and has an equal task number; otherwise, {@code false}.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof DeleteCommand command)) {
+            return false;
+        }
+        return taskNumber == command.taskNumber;
+    }
+
+    /**
      * Executes the delete command by removing the specified task from the task list,
      * saving the updated list to storage, and displaying a success message.
      *

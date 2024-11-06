@@ -17,6 +17,18 @@ public class ListCommand extends Command {
     public static final String MESSAGE_FAILED = "Your task list is currently empty.";
 
     /**
+     * Checks if this ListCommand is equal to another object.
+     * A ListCommand is considered equal to another object if the specified object is also a ListCommand.
+     *
+     * @param obj The object to compare with this ListCommand.
+     * @return {@code true} if the specified object is a ListCommand; otherwise, {@code false}.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof ListCommand;
+    }
+
+    /**
      * Executes the list command by retrieving all tasks from the task list
      * and displaying them to the user. If the task list is empty, a message
      * indicating this is displayed.

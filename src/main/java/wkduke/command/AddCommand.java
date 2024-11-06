@@ -20,6 +20,21 @@ public abstract class AddCommand extends Command {
     protected Task task;
 
     /**
+     * Checks if this AddCommand is equal to another object.
+     * An AddCommand is considered equal if it is of the same type and has the same task.
+     *
+     * @param obj The object to compare with this AddCommand.
+     * @return {@code true} if the specified object is an AddCommand and has an equal task; otherwise, {@code false}.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof AddCommand command)) {
+            return false;
+        }
+        return task.equals(command.task);
+    }
+
+    /**
      * Executes the add command by adding a task to the task list, saving it to storage, and displaying a success message.
      *
      * @param taskList The task list to which the task will be added.

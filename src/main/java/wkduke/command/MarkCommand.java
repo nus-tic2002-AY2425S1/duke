@@ -29,6 +29,21 @@ public class MarkCommand extends Command {
     }
 
     /**
+     * Checks if this MarkCommand is equal to another object.
+     * A MarkCommand is considered equal if it is of the same type and has the same task number.
+     *
+     * @param obj The object to compare with this MarkCommand.
+     * @return {@code true} if the specified object is a MarkCommand with an equal task number; otherwise, {@code false}.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof MarkCommand command)) {
+            return false;
+        }
+        return taskNumber == command.taskNumber;
+    }
+
+    /**
      * Executes the mark command by marking the specified task as done, saving the updated
      * task list to storage, and displaying a success or failure message.
      *

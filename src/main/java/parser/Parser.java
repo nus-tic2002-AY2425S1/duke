@@ -1,11 +1,10 @@
 package parser;
+
 // deals with making sense of the user command
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
 import commands.ByeCommand;
 import commands.Command;
@@ -17,10 +16,20 @@ import commands.MarkCommand;
 import commands.ShowCommand;
 import commands.TodoCommand;
 import commands.UnmarkCommand;
+
 import common.Messages;
 
 import exception.CommandException;
 
+/**
+ * Parses user input commands
+ * 
+ * <p>
+ * The Parser class provides methods to interpret user input commands and arguments, validate their formats, and create corresponding command objects. 
+ * It uses regular expressions to validate user input strings by matching command patterns and extract arguments. 
+ * This ensures that the input adheres to the expected formats for various commands.
+ * </p>
+ */
 public class Parser {
 
     // Regex below generated with the help of ChatGPT
@@ -40,6 +49,12 @@ public class Parser {
     public static final String EVENT_COMMAND_ARGS_REGEX = "^(?<description>.+) /from (?<start>.+) /to (?<end>.+)$";
     public static final Pattern EVENT_COMMAND_ARGS_FORMAT = Pattern.compile(EVENT_COMMAND_ARGS_REGEX);
     
+    /**
+     * Parses the user input and returns the corresponding Command object. This creates the Command object
+     * @param userInput represents the input string from the user
+     * @return a Command object corresponding to the parsed user input
+     * @throws CommandException if the input string is not in the expected format, i.e. invalid input string, or cannot be parsed into a command.
+     */
     public static Command parse(String userInput) throws CommandException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         
@@ -80,6 +95,14 @@ public class Parser {
         }
     }
 
+    /**
+     * Prepares the task number for commands that require it, i.e. mark, unmark, and delete.
+     * @param commandWord represents the command word being processed, e.g. mark
+     * @param args represents the arguments string containing the task number
+     * @param messageUsage represents the usage instructions for the command. It is part of the message displayed when an error occurs
+     * @return the parsed task number
+     * @throws CommandException if the task number is invalid, i.e. the arguments do not match the expected format
+     */
     private static int prepareTaskNumberForCommand(String commandWord, String args, String messageUsage) throws CommandException {
         final Matcher matcher = TASK_NUMBER_ARGS_FORMAT.matcher(args);
         if (!matcher.matches()) {
@@ -93,32 +116,66 @@ public class Parser {
         return taskNumber;
     }
 
+    /**
+     * Prepares a MarkCommand based on the provided arguments
+     * @param args represents the arguments string that contains the task number
+     * @return a MarkCommand object
+     * @throws CommandException if the task number is invalid, i.e. the arguments do not match the expected format
+     */
     private static Command prepareMark(String args) throws CommandException {
-        int taskNumber = prepareTaskNumberForCommand(MarkCommand.COMMAND_WORD, args, MarkCommand.COMMAND_WORD);
+        int taskNumber = prepareTaskNumberForCommand(MarkCommand.COMMAND_WORD, args, MarkCommand.MESSAGE_USAGE);
         return new MarkCommand(taskNumber);
     }
 
+    /**
+     * Prepares an UnmarkCommand based on the provided arguments
+     * @param args represents the arguments string that contains the task number
+     * @return an UnmarkCommand object
+     * @throws CommandException if the task number is invalid, i.e. the arguments do not match the expected format
+     */
     private static Command prepareUnmark(String args) throws CommandException {
         int taskNumber = prepareTaskNumberForCommand(UnmarkCommand.COMMAND_WORD, args, UnmarkCommand.MESSAGE_USAGE);
         return new UnmarkCommand(taskNumber);
     }
 
+    /**
+     * Prepares a DeleteCommand based on the provided arguments
+     * @param args represents the arguments string that contains the task number
+     * @return a DeleteCommand object
+     * @throws CommandException if the task number is invalid, i.e. the arguments do not match the expected format
+     */
     private static Command prepareDelete(String args) throws CommandException {
         int taskNumber = prepareTaskNumberForCommand(DeleteCommand.COMMAND_WORD, args, DeleteCommand.MESSAGE_USAGE);
         return new DeleteCommand(taskNumber);
     }
 
-    public static void checkEmptyDescriptionForTaskCommand(String args, String commandWord, String infoMessage, String messageUsage) throws CommandException {
+    /**
+     * Checks if the description for a task command is empty.
+     * @param args represents the arguments string that contains the description
+     * @param commandWord represents the command word that is being processed, e.g. mark
+     * @param infoMessage represents the information message to display when an error occurs
+     * @param messageUsage represents the usage instructions for the command when an error occurs
+     * @throws CommandException if the description is empty
+     */
+    public static void checkEmptyDescriptionForTaskCommand(String args, String commandWord, String messageUsage) throws CommandException {
         if (args.isEmpty()) {
             throw new CommandException(
                 Messages.ERROR_INVALID_COMMAND_FORMAT + commandWord + ".",
-                infoMessage,
+                Messages.MESSAGE_EMPTY_DESCRIPTION_PRE,
                 String.format("Example usage: `%s`", messageUsage)
             );
         }
     }
 
-    public static void validateArgsFormat(Matcher matcher, String commandWord, String args, String messageUsage) throws CommandException {
+    /**
+     * Validates the format of the arguments string using regular expression matcher.
+     * @param matcher represents the Matcher object that is used to validate the arguments. It contains the result of matching the command arguments
+     * @param commandWord represents the command word being processed
+     * @param args represents the arguments string that was provided by the user
+     * @param messageUsage represents the usage message to display for the command, providing an example of correct usage. It is shown when an error occurs
+     * @throws CommandException if the arguments string do not match the expected format
+     */
+    private static void validateArgsFormat(Matcher matcher, String commandWord, String args, String messageUsage) throws CommandException {
         if (!matcher.matches()) {
             throw new CommandException(
                 Messages.ERROR_INVALID_COMMAND_FORMAT + commandWord + ".",
@@ -128,10 +185,17 @@ public class Parser {
         }
     }
 
+    /**
+     * Prepares a TodoCommand object based on the provided arguments.
+     * 
+     * @param args represents the arguments string that contains the description
+     * @return a TodoCommand object
+     * @throws CommandException if the arguments string (description) is invalid (empty), i.e. the arguments do not match the expected format
+     */
     private static Command prepareTodo(String args) throws CommandException {
 
         // Check if args (description) is empty
-        checkEmptyDescriptionForTaskCommand(args, TodoCommand.COMMAND_WORD, Messages.MESSAGE_EMPTY_DESCRIPTION_PRE, TodoCommand.MESSAGE_USAGE);
+        checkEmptyDescriptionForTaskCommand(args, TodoCommand.COMMAND_WORD, TodoCommand.MESSAGE_USAGE);
         
         final Matcher matcher = TODO_COMMAND_ARGS_FORMAT.matcher(args);
         
@@ -142,6 +206,16 @@ public class Parser {
         return new TodoCommand(description.trim());
     }
 
+    /**
+     * Checks if the arguments contain a specific keyword (e.g. "/by", "/from", "/to") and throws an exception if it does not.
+     *
+     * @param args represents the arguments string to check.
+     * @param keyword represents the keyword to look for in the arguments.
+     * @param commandWord represents the command word being processed.
+     * @param infoMessage represents the message to display if the keyword is missing.
+     * @param messageUsage represents the usage message to display in case of an error.
+     * @throws CommandException if the keyword is not found in the arguments.
+     */
     private static void checkArgsContainsKeyword(String args, String keyword, String commandWord, String infoMessage, String messageUsage) throws CommandException {
         if (!args.contains(keyword)) {
             throw new CommandException(
@@ -152,13 +226,19 @@ public class Parser {
         }
     }
 
+    /**
+     * Prepares a DeadlineCommand object based on the provided arguments.
+     * @param args represents the arguments string that contains the description and due date of the task
+     * @return a DeadlineCommand object
+     * @throws CommandException if the arguments string (description and due date received) are invalid / missing, i.e. the arguments do not match the expected format
+     */
     private static Command prepareDeadline(String args) throws CommandException {
 
         final String MESSAGE_EMPTY_DUEDATE_PRE = "The task is missing a due date.";
         final String BY_KEYWORD = "/by";
 
         // Check if args (description) is empty
-        checkEmptyDescriptionForTaskCommand(args, DeadlineCommand.COMMAND_WORD, Messages.MESSAGE_EMPTY_DESCRIPTION_PRE, DeadlineCommand.MESSAGE_USAGE);
+        checkEmptyDescriptionForTaskCommand(args, DeadlineCommand.COMMAND_WORD, DeadlineCommand.MESSAGE_USAGE);
         
         checkArgsContainsKeyword(args, BY_KEYWORD, DeadlineCommand.COMMAND_WORD, MESSAGE_EMPTY_DUEDATE_PRE, DeadlineCommand.MESSAGE_USAGE);
         
@@ -169,34 +249,19 @@ public class Parser {
         
         String description = matcher.group("description");
 
-        /*
-         * Teach the chatbot how to understand dates and times. For example, if the command is 
-         * deadline return book /by 2/12/2019 1800, 
-         * the chatbot should understand 2/12/2019 1800 as 2nd of December 2019, 6pm, 
-         * instead of treating it as just a String.
-         * 
-         * Store deadline dates as a java.time.LocalDate (or java.time.LocalDateTime) in your 
-         * task objects. Accept dates in a format such as yyyy-mm-dd format (e.g., 2019-10-15) 
-         * and print in a different format such as MMM dd yyyy e.g., (Oct 15 2019).
-         */
-
-        // When add deadline task, user enters the date in yyyy-mm-dd HHmm format (e.g., 2019-10-15 1800)
-        // parser validates the date & format, then converts the date to MMM dd yyyy HHmm format (e.g., Oct 15 2019 1800) then saves to taskList and tasks.txt
-        // TODO: Restrictions: Deadline must have date, but time can be optional (or if no time given, assume 0000 hours). Event must have both date and time 
-        // deadline return book /by 2019-10-15 1800
-
         String dueString = matcher.group("due").trim();
-        // System.out.println("localdatetime " + DateTimeParser.parseDateTime(dueString));
-        // System.out.println("LocalDateTime due " + dueString);
-        LocalDateTime due = DateTimeParser.parseInputDeadlineDateTime(dueString);
-        // System.out.println("LocalDateTime due " + due);
-        // LocalDateTime due = LocalDateTime.parse(matcher.group("due").trim());
 
-        // check if dates in a format such as yyyy-mm-dd format (e.g., 2019-10-15)
+        LocalDateTime due = DateTimeParser.parseInputDeadlineDateTime(dueString);
 
         return new DeadlineCommand(description.trim(), due);
     }
 
+    /** Prepares an EventCommand object based on the provided arguments.
+     * 
+     * @param args represents the arguments string that contains the description, start date/time, and end date/time of the event
+     * @return an EventCommand object
+     * @throws CommandException if the arguments string (description, start date/time, and end date/time) are invalid, i.e. the arguments do not match the expected format, or if the start date/time is after the end date/time
+     */
     private static Command prepareEvent(String args) throws CommandException {
 
         final String MESSAGE_EMPTY_STARTDATETIME_PRE = "The task is missing a start date/time.";
@@ -205,7 +270,7 @@ public class Parser {
         final String TO_KEYWORD = "/to";
 
         // Check if args (description) is empty
-        checkEmptyDescriptionForTaskCommand(args, EventCommand.COMMAND_WORD, Messages.MESSAGE_EMPTY_DESCRIPTION_PRE, EventCommand.MESSAGE_USAGE);
+        checkEmptyDescriptionForTaskCommand(args, EventCommand.COMMAND_WORD, EventCommand.MESSAGE_USAGE);
 
         checkArgsContainsKeyword(args, FROM_KEYWORD, EventCommand.COMMAND_WORD, MESSAGE_EMPTY_STARTDATETIME_PRE, EventCommand.MESSAGE_USAGE);
                 
@@ -232,6 +297,13 @@ public class Parser {
         return new EventCommand(description.trim(), startDateTime, endDateTime);
     }
 
+    /**
+     * Prepares a ShowCommand object based on the provided arguments.
+     * 
+     * @param args represents the arguments string that contains the date for which the user wishes to list the deadlines and events
+     * @return a ShowCommand object
+     * @throws CommandException if the date is invalid, or cannot be parsed
+     */
     private static Command prepareShow(String args) throws CommandException {
         LocalDate date = DateTimeParser.parseInputShowDate(args);
         return new ShowCommand(date);

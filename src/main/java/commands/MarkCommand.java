@@ -20,7 +20,7 @@ import ui.Ui;
 public class MarkCommand extends Command {
 
     public static final String COMMAND_WORD = "mark";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + Constants.OPEN_ANGLE_BRACKET + Constants.TASK_NUMBER + Constants.CLOSE_ANGLE_BRACKET;
+    public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE + Constants.OPEN_ANGLE_BRACKET + Constants.TASK_NUMBER + Constants.CLOSE_ANGLE_BRACKET;
     public static final String MESSAGE_MARK_SUCCESS = "Nice! I've marked this task as done:";
     
     protected int taskNumber;

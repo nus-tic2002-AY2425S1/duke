@@ -20,14 +20,14 @@ public class DateTimeParser {
             if (dateTime.length() == 15) {
                 LocalDateTime localDateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern("yyyy-M-dd HHmm"));
                 readableDate = localDateTime.format(DateTimeFormatter.ofPattern("MMMM dd yyyy"));
-                readableTime = localDateTime.format(DateTimeFormatter.ofPattern("hh:mm a"));
+                readableTime = " " + localDateTime.format(DateTimeFormatter.ofPattern("hh:mm a"));
 
             } else {
 
                 LocalDate localDate = LocalDate.parse(dateTime, DateTimeFormatter.ofPattern("yyyy-M-dd"));
                 readableDate = localDate.format(DateTimeFormatter.ofPattern("MMMM dd yyyy"));
             }
-            return readableDate + " " + readableTime;
+            return readableDate + readableTime;
         } catch (DateTimeParseException e) {
             throw new StarkException.InvalidDescriptionException("Unable to parse Date/Time. Input a valid Date-Time" + System.lineSeparator()
                                                                 + " \t eg : \"YYYY-MM-DD HHmm\" or \"YYYY-MM-DD\" ");

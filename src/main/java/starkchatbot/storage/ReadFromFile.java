@@ -25,7 +25,7 @@ public class ReadFromFile {
                 }
                 scanner.close();
                 System.out.println("Tasks read from the file completed");
-            }else{
+            } else {
                 System.out.println("File does not exist");
             }
             return taskDetail;

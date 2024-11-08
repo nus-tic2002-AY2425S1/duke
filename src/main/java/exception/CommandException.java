@@ -21,6 +21,15 @@ public class CommandException extends JavaroException {
     }
 
     /**
+     * Constructs a CommandException with the specified error message and additional information.
+     * @param error represents the error message associated with the exception
+     * @param info represents the additional information about the error
+     */
+    public CommandException(String error, String info) {
+        super(error, info);
+    }
+
+    /**
      * Constructs a CommandException with the specified error message, additional information, and usage instructions.
      * @param error represents the error message associated with the exception
      * @param info represents the additional information about the error

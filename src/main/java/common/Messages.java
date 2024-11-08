@@ -70,4 +70,5 @@ public class Messages {
     public static final String ERROR_INVALID_DATETIME_FORMAT = ERROR + "Invalid date/time format";
     public static final String ERROR_END_BEFORE_START = ERROR + "Start date/time must be before end date/time";
 
+    public static final String ERROR_EMPTY_INPUT = ERROR + "Input cannot be empty."; 
 }

@@ -7,7 +7,7 @@ import Chad.Ui.Ui;
 
 public class FindCommand extends Command {
 
-    private String findIdx;
+    private final String findIdx;
 
     public FindCommand(String findIdx) {
         this.findIdx = findIdx;

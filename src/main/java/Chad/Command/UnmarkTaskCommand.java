@@ -6,7 +6,7 @@ import Chad.TaskList.TaskList;
 import Chad.Ui.Ui;
 
 public class UnmarkTaskCommand extends Command {
-    private int taskIndex; // The index of the task to unmark
+    private final int taskIndex; // The index of the task to unmark
 
     public UnmarkTaskCommand(int taskIndex) {
         this.taskIndex = taskIndex; // Capture the index from the input
@@ -18,7 +18,7 @@ public class UnmarkTaskCommand extends Command {
             throw new ChadException("Invalid task index: " + (taskIndex + 1));
         }
         tasks.unmarkTask(taskIndex); // Unmark the specified task
-        ui.showDeleteTask(tasks.getTaskById(taskIndex),tasks.getNoOfTask()); // Show the result
+        ui.showDeleteTask(tasks.getTaskById(taskIndex), tasks.getNoOfTask()); // Show the result
         storage.save(tasks.toString()); // Optionally save changes to the storage if required
     }
 }

@@ -9,8 +9,7 @@ public class Deadline extends Task {
         this.by = by;
     }
 
-    public String getDuedate()
-    {
+    public String getDuedate() {
         return by;
     }
 

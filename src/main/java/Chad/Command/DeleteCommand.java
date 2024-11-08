@@ -1,12 +1,13 @@
 package Chad.Command;
 
-import Chad.Exception.*;
+import Chad.Exception.ChadException;
 import Chad.Storage.Storage;
-import Chad.TaskList.*;
+import Chad.TaskList.Task;
+import Chad.TaskList.TaskList;
 import Chad.Ui.Ui;
 
 public class DeleteCommand extends Command {
-    private int taskIndex;
+    private final int taskIndex;
     private Task taskToDelete;
 
     public DeleteCommand(int taskIndex) {
@@ -17,13 +18,13 @@ public class DeleteCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task task = tasks.getTaskById(taskIndex);
         tasks.deleteTask(taskIndex);
-        ui.showDeleteTask(task,tasks.getNoOfTask());
-        try{
+        ui.showDeleteTask(task, tasks.getNoOfTask());
+        try {
             storage.save(tasks.toString());
-        }catch (ChadException e){
+        } catch (ChadException e) {
             //do sth here
         }
-        
+
     }
 
 }

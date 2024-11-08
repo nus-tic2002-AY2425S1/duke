@@ -1,5 +1,7 @@
 package Chad.Parser;
 
+import Chad.Ui.Ui;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -7,11 +9,9 @@ import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import Chad.Ui.Ui;
-
 public class ChadDate {
 
-    public static String parseDate(String inputDate){
+    public static String parseDate(String inputDate) {
 
 
         try {
@@ -28,7 +28,7 @@ public class ChadDate {
 
     }
 
-    public static boolean isDate(String inputDate){
+    public static boolean isDate(String inputDate) {
 
         try {
             LocalDate.parse(inputDate);
@@ -40,8 +40,7 @@ public class ChadDate {
 
     }
 
-    public static boolean sameDay(String date1,String date2)
-    {
+    public static boolean sameDay(String date1, String date2) {
         LocalDate d1 = LocalDate.parse(date1);
         LocalDate d2 = LocalDate.parse(date2);
         return d1.equals(d2);
@@ -66,10 +65,10 @@ public class ChadDate {
             if (matcher.group(1) != null) {
                 int amount = Integer.parseInt(matcher.group(1)); // Get the amount (number) before the unit
                 String unit = matcher.group(2).toLowerCase(); // Get the unit
-                
+
                 switch (unit) {
                     case "day":
-                    //Fallthrough
+                        //Fallthrough
                     case "days":
                         totalPeriod = totalPeriod.plusDays(amount); // Add days to the total period
                         break;

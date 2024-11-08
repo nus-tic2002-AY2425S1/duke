@@ -4,8 +4,8 @@
     ____________________________________________________________
      Here are the tasks in your list:
      1. [T][X] read book
-     2. [D][ ] return book (by: June 6th)
-     3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+     2. [D][ ] return book (by: Jul 06 2024 1800)
+     3. [E][ ] project meeting (from: Jun 09 2024 1400 to: Jun 09 2024 1600)
      4. [T][X] join sports club
     ____________________________________________________________
     ____________________________________________________________
@@ -21,8 +21,8 @@
     ____________________________________________________________
      Here are the tasks in your list:
      1. [T][X] read book
-     2. [D][ ] return book (by: June 6th)
-     3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+     2. [D][ ] return book (by: Jul 06 2024 1800)
+     3. [E][ ] project meeting (from: Jun 09 2024 1400 to: Jun 09 2024 1600)
      4. [T][X] join sports club
      5. [T][ ] learn a new language
     ____________________________________________________________
@@ -33,8 +33,8 @@
     ____________________________________________________________
      Here are the tasks in your list:
      1. [T][ ] read book
-     2. [D][ ] return book (by: June 6th)
-     3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+     2. [D][ ] return book (by: Jul 06 2024 1800)
+     3. [E][ ] project meeting (from: Jun 09 2024 1400 to: Jun 09 2024 1600)
      4. [T][X] join sports club
      5. [T][ ] learn a new language
     ____________________________________________________________
@@ -48,8 +48,8 @@
     ____________________________________________________________
      Here are the tasks in your list:
      1. [T][X] read book
-     2. [D][ ] return book (by: June 6th)
-     3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+     2. [D][ ] return book (by: Jul 06 2024 1800)
+     3. [E][ ] project meeting (from: Jun 09 2024 1400 to: Jun 09 2024 1600)
      4. [T][X] join sports club
      5. [T][ ] learn a new language
     ____________________________________________________________
@@ -74,38 +74,40 @@
      Example usage: `deadline <description> /by <due date>`
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
-       [D][ ] return pen (by: Sunday)
-     Now you have 6 tasks in the list.
+     Error: Invalid date/time format
+     Received `Sunday`
+     Expected format: yyyy-MM-dd HHmm. Example: 2019-10-15 [1800]
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
      1. [T][X] read book
-     2. [D][ ] return book (by: June 6th)
-     3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+     2. [D][ ] return book (by: Jul 06 2024 1800)
+     3. [E][ ] project meeting (from: Jun 09 2024 1400 to: Jun 09 2024 1600)
      4. [T][X] join sports club
      5. [T][ ] learn a new language
-     6. [D][ ] return pen (by: Sunday)
     ____________________________________________________________
     ____________________________________________________________
-     Nice! I've marked this task as done:
-       [D][X] return pen (by: Sunday)
+     Error: Task does not exist
+     Task number 6 cannot be found.
+     Please enter a valid task number from 1 to 5.
     ____________________________________________________________
     ____________________________________________________________
-     OK, I've marked this task as not done yet:
-       [D][ ] return pen (by: Sunday)
+     Error: Task does not exist
+     Task number 6 cannot be found.
+     Please enter a valid task number from 1 to 5.
     ____________________________________________________________
     ____________________________________________________________
-     The task `[D][ ] return pen (by: Sunday)` is already marked as not done. No action done.
+     Error: Task does not exist
+     Task number 6 cannot be found.
+     Please enter a valid task number from 1 to 5.
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
      1. [T][X] read book
-     2. [D][ ] return book (by: June 6th)
-     3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+     2. [D][ ] return book (by: Jul 06 2024 1800)
+     3. [E][ ] project meeting (from: Jun 09 2024 1400 to: Jun 09 2024 1600)
      4. [T][X] join sports club
      5. [T][ ] learn a new language
-     6. [D][ ] return pen (by: Sunday)
     ____________________________________________________________
     ____________________________________________________________
      Error: Invalid command format for command event.
@@ -143,58 +145,53 @@
      Example usage: `event <description> /from <start date/time> /to <end date/time>`
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
-       [E][ ] orientation (from: Jan 1st to: 2nd)
-     Now you have 7 tasks in the list.
+     Error: Invalid date/time format
+     Received `Jan 1st`
+     Expected format: yyyy-MM-dd HHmm. Example: 2019-10-15 1800
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
      1. [T][X] read book
-     2. [D][ ] return book (by: June 6th)
-     3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+     2. [D][ ] return book (by: Jul 06 2024 1800)
+     3. [E][ ] project meeting (from: Jun 09 2024 1400 to: Jun 09 2024 1600)
      4. [T][X] join sports club
      5. [T][ ] learn a new language
-     6. [D][ ] return pen (by: Sunday)
-     7. [E][ ] orientation (from: Jan 1st to: 2nd)
     ____________________________________________________________
     ____________________________________________________________
-     Noted. I've removed this task:
-       [D][ ] return pen (by: Sunday)
-     Now you have 6 tasks in the list.
+     Error: Task does not exist
+     Task number 6 cannot be found.
+     Please enter a valid task number from 1 to 5.
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
      1. [T][X] read book
-     2. [D][ ] return book (by: June 6th)
-     3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+     2. [D][ ] return book (by: Jul 06 2024 1800)
+     3. [E][ ] project meeting (from: Jun 09 2024 1400 to: Jun 09 2024 1600)
      4. [T][X] join sports club
      5. [T][ ] learn a new language
-     6. [E][ ] orientation (from: Jan 1st to: 2nd)
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
-       [D][ ] do homework (by: no idea :-p)
-     Now you have 7 tasks in the list.
+     Error: Invalid date/time format
+     Received `no idea :-p`
+     Expected format: yyyy-MM-dd HHmm. Example: 2019-10-15 [1800]
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
      1. [T][X] read book
-     2. [D][ ] return book (by: June 6th)
-     3. [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+     2. [D][ ] return book (by: Jul 06 2024 1800)
+     3. [E][ ] project meeting (from: Jun 09 2024 1400 to: Jun 09 2024 1600)
      4. [T][X] join sports club
      5. [T][ ] learn a new language
-     6. [E][ ] orientation (from: Jan 1st to: 2nd)
-     7. [D][ ] do homework (by: no idea :-p)
     ____________________________________________________________
     ____________________________________________________________
      Error: Invalid command format for command mark
      Received `mark abc`
-     Example usage: mark
+     Example usage: mark <task number>
     ____________________________________________________________
     ____________________________________________________________
      Error: Task does not exist
      Task number 123456789 cannot be found.
-     Please enter a valid task number from 1 to 7.
+     Please enter a valid task number from 1 to 5.
     ____________________________________________________________
     ____________________________________________________________
      Error: Invalid command format for command unmark
@@ -204,7 +201,7 @@
     ____________________________________________________________
      Error: Task does not exist
      Task number 123456789 cannot be found.
-     Please enter a valid task number from 1 to 7.
+     Please enter a valid task number from 1 to 5.
     ____________________________________________________________
     ____________________________________________________________
      Error: Invalid command format for command delete
@@ -214,17 +211,17 @@
     ____________________________________________________________
      Error: Task does not exist
      Task number 123456789 cannot be found.
-     Please enter a valid task number from 1 to 7.
+     Please enter a valid task number from 1 to 5.
     ____________________________________________________________
     ____________________________________________________________
-     Noted. I've removed this task:
-       [D][ ] do homework (by: no idea :-p)
-     Now you have 6 tasks in the list.
+     Error: Task does not exist
+     Task number 7 cannot be found.
+     Please enter a valid task number from 1 to 5.
     ____________________________________________________________
     ____________________________________________________________
-     Noted. I've removed this task:
-       [E][ ] orientation (from: Jan 1st to: 2nd)
-     Now you have 5 tasks in the list.
+     Error: Task does not exist
+     Task number 6 cannot be found.
+     Please enter a valid task number from 1 to 5.
     ____________________________________________________________
     ____________________________________________________________
      Noted. I've removed this task:

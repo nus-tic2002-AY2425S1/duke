@@ -34,6 +34,7 @@ public class CommandLineUI {
 
 
     public ArrayList<Task> readUserInputs() {
+        lineBreak();
         welcomeMsg();
         TaskList taskList = new TaskList(tasks);
         Scanner inputQuery = new Scanner(System.in);

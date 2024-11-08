@@ -22,6 +22,7 @@ public class TaskList {
 
     /**
      * Returns the list of tasks.
+     * 
      * @return the list of tasks in the {@code TaskList}
      */
     public List<Task> getTaskList() {
@@ -30,6 +31,7 @@ public class TaskList {
 
     /**
      * Retrieves the size of the {@code TaskList}.
+     * 
      * @return the total number of tasks in the {@code TaskList}
      */
     public int getSize() {
@@ -38,6 +40,7 @@ public class TaskList {
 
     /**
      * Checks if the {@code TaskList} is empty.
+     * 
      * @return true if the {@code TaskList} is empty; false otherwise
      */
     public boolean isEmpty() {
@@ -46,6 +49,7 @@ public class TaskList {
 
     /**
      * Retrieves the task at a specific index in the {@code TaskList}.
+     * 
      * @param index represents the index of the task to retrieve
      * @return the task at the specified index
      */
@@ -55,6 +59,7 @@ public class TaskList {
 
     /**
      * Adds a new task to the {@code TaskList}
+     * 
      * @param task represents the task to be added. If it is null, the task will not be added
      */
     // Adds a new task
@@ -66,6 +71,7 @@ public class TaskList {
 
     /**
      * Removes a task from the list 
+     * 
      * @param task represents the task to be removed from the {@code TaskList}
      * @return true if the task is removed successfully; false otherwise
      */
@@ -76,6 +82,7 @@ public class TaskList {
     /**
      * Makes a task at a specified index as done. 
      * Returns false if the task has already been marked done before this method is called.
+     * 
      * @param taskIndex represents the index of the task to mark
      * @return true if the task is marked successfully; false otherwise
      */
@@ -92,6 +99,7 @@ public class TaskList {
     /**
      * Marks a task at a specified index as not done.
      * Returns false if the task has already been marked as not done before this method is called.
+     * 
      * @param indexToUnmark represents the index of the task to unmark
      * @return true if the task is unmarked successfully; false otherwise
      */
@@ -107,6 +115,7 @@ public class TaskList {
 
     /**
      * Returns the appropriate word for "task" based on the number of tasks in the {@code TaskList}
+     * 
      * @return "task" if there is only one task in the {@code TaskList}; "tasks" if there are multiple
      */
     public String getTaskWord() {
@@ -120,6 +129,7 @@ public class TaskList {
 
     /**
      * Retrieves all tasks that occur on a specific date
+     * 
      * @param date represents the date to check against
      * @return a list of tasks that occur on a specified date
      */

@@ -31,6 +31,7 @@ public class Storage {
     /**
      * Constructs an instance of Storage and initializes the file path to the default value.
      * The constructor checks for the existence of the data folder and task file, and creates them if they don't exist.
+     * 
      * @throws StorageOperationException if an error occurs while creating the data folder or task file
      */
     public Storage() throws StorageOperationException {
@@ -42,6 +43,7 @@ public class Storage {
 
     /**
      * Retrieves the file path for the storage, i.e. the task file.
+     * 
      * @return the file path of the task file as a Path object
      */
     public Path getFilePath() {
@@ -49,7 +51,8 @@ public class Storage {
     }
 
     /**
-     * Retrieves the task file associated with the storage
+     * Retrieves the task file associated with the storage.
+     * 
      * @return the file object of the task file as a File object
      */
     public File getFile() {
@@ -58,7 +61,8 @@ public class Storage {
 
     /**
      * Checks if the data folder exists. Handles missing data folder by creating it.
-     * The data folder is expected to be in the `/data` directory. It must match the file path exactly
+     * The data folder is expected to be in the `/data` directory. It must match the file path exactly.
+     * 
      * @throws StorageOperationException if an error occurs while checking or creating the data folder, e.g. folder cannot be created
      */ 
     public void checkDataFolderExists() throws StorageOperationException {
@@ -86,6 +90,7 @@ public class Storage {
 
     /**
      * Checks if the task file exists and creates it if it does not.
+     * 
      * @throws StorageOperationException if an error occurs while creating the task file
      */
     // Handles missing data file by creating it
@@ -119,6 +124,7 @@ public class Storage {
 
     /**
      * Reads all lines from the task file.
+     * 
      * @return a list of strings representing the lines in the task file
      * @throws IOException if an error occurs while reading the file
      */
@@ -135,6 +141,7 @@ public class Storage {
 
     /**
      * Loads all tasks from the task file into a {@code TaskList} object.
+     * 
      * @return a TaskList containing the loaded tasks.
      * @throws IOException if an error occurs while reading the file
      * @throws FileContentException if the content of the file is invalid

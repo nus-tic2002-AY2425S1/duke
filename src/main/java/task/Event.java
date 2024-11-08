@@ -20,6 +20,7 @@ public class Event extends Task {
     /**
      * Constructs an {@code Event} task with the specified description, completion status, start date and time, and end date and time
      * The {@code Event} task is initially marked as not done.
+     * 
      * @param description represents the description of the {@code Event} task
      * @param isDone represents the completion status of the {@code Event} task
      * @param startDateTime represents the start date and time of the {@code Event} task
@@ -32,7 +33,8 @@ public class Event extends Task {
     }
 
     /**
-     * Constructs an {@code Event} task with the specified description, start date and time, and end date and time
+     * Constructs an {@code Event} task with the specified description, start date and time, and end date and time.
+     * 
      * @param description represents the description of the {@code Event} task
      * @param startDateTime represents the start date and time of the {@code Event} task
      * @param endDateTime represents the end date and time of the {@code Event} task
@@ -44,7 +46,8 @@ public class Event extends Task {
     }
 
     /**
-     * Retrieves the start date and time of the {@code Event} task
+     * Retrieves the start date and time of the {@code Event} task.
+     * 
      * @return the start date and time of the {@code Event} task
      */
     public LocalDateTime getStartDateTime() {
@@ -52,8 +55,9 @@ public class Event extends Task {
     }
 
     /**
-     * Gets the formatted start date and time of the {@code Event} task
+     * Gets the formatted start date and time of the {@code Event} task.
      * The format is determined by the {@link DateTimeParser#formatDateTime(LocalDateTime)} method.
+     * 
      * @return the formatted start date and time of the {@code Event} task
      */
     public String getFormattedStartDateTime() {
@@ -61,7 +65,8 @@ public class Event extends Task {
     }
 
     /**
-     * Retrieves the end date and time of the {@code Event} task
+     * Retrieves the end date and time of the {@code Event} task.
+     * 
      * @return the end date and time as a {@code LocalDateTime} object.
      */
     public LocalDateTime getEndDateTime() {
@@ -69,8 +74,9 @@ public class Event extends Task {
     }
 
     /**
-     * Gets the formatted end date and time of the {@code Event} task
+     * Gets the formatted end date and time of the {@code Event} task.
      * The format is determined by the {@link DateTimeParser#formatDateTime(LocalDateTime)} method.
+     * 
      * @return the formatted end date and time of the {@code Event} task
      */
     public String getFormattedEndDateTime() {
@@ -80,6 +86,8 @@ public class Event extends Task {
     /**
      * Returns a string representation of the {@code Event} task.
      * This includes the task type (Event), completion status, description, start date and time, and end date and time
+     * 
+     * @return a string representation of the {@code Event} task
      */
     @Override
     public String toString() {
@@ -95,6 +103,7 @@ public class Event extends Task {
 
     /**
      * Encodes the {@code Event} task into a string for storage, i.e. writing to the tasks file.
+     * 
      * @return encoded string representation of the {@code Event} task
      */
     @Override
@@ -106,6 +115,7 @@ public class Event extends Task {
     /**
      * Checks if the {@code Event} task occurs on a specified date
      * The Event is considered to occur on a specific date if its start date and time or end date and time matches the specified date.
+     * 
      * @param date represents the date to check against
      * @return true if the {@code Event} task occurs on a specific date; false otherwise
      */

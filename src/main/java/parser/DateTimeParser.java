@@ -13,19 +13,23 @@ import exception.CommandException;
 
 /**
  * Utility class for parsing and formatting date and time strings.
+ * 
  * <p>
  * This class provides methods to convert date and time strings in various formats to {@link LocalDateTime} 
  * and {@link LocalDate} objects, as well as to format these objects back into strings. 
  * It supports specific input and output patterns for deadlines, events, and general date display.
+ * </p>
  */
-// Accept dates in a format such as yyyy-mm-dd format (e.g., 2019-10-15) and 
-// print in a different format such as MMM dd yyyy e.g., (Oct 15 2019).
+
+// Accept dates in a format such as yyyy-mm-dd format (e.g., 2019-10-15).
+// Print in a different format such as MMM dd yyyy e.g., (Oct 15 2019).
 
 public class DateTimeParser {
 
+    public static final String INPUT_DATE_FORMAT = "yyyy-MM-dd";
     public static final String TIME_PATTERN = "HHmm";
     
-    public static final String INPUT_DATETIME_PATTERN = "yyyy-MM-dd" + Constants.SPACE + TIME_PATTERN;
+    public static final String INPUT_DATETIME_PATTERN = INPUT_DATE_FORMAT + Constants.SPACE + TIME_PATTERN;
     public static final DateTimeFormatter INPUT_DATETIME_FORMAT = DateTimeFormatter.ofPattern(INPUT_DATETIME_PATTERN);
     
     public static final String OUTPUT_DATETIME_PATTERN = "MMM dd yyyy" + Constants.SPACE + TIME_PATTERN;
@@ -33,9 +37,11 @@ public class DateTimeParser {
 
     // Deadline must have date but time is optional
     public static final DateTimeFormatter deadlineFormatter = new DateTimeFormatterBuilder()
-                                                                .appendPattern("yyyy-MM-dd")
+                                                                .appendPattern(INPUT_DATE_FORMAT)
+                                                                // .appendPattern("yyyy-MM-dd")
                                                                 .optionalStart()
-                                                                .appendPattern(" HHmm")
+                                                                .appendPattern(Constants.SPACE + TIME_PATTERN)
+                                                                // .appendPattern(" HHmm")
                                                                 .optionalEnd()
                                                                 .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
                                                                 .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)

@@ -24,6 +24,7 @@ public class TodoCommand extends Command {
 
     /**
      * Constructs a TodoCommand class with the specified description.
+     * 
      * @param description represents the description of the Todo task
      */
     public TodoCommand(String description) {
@@ -36,6 +37,7 @@ public class TodoCommand extends Command {
 
     /**
      * Executes the command to add a Todo task to the task list.
+     * 
      * @param taskList represents the list of tasks to add the new Todo task to
      * @param ui represents the user interface to interact with the user
      * @param storage represents the storage to save the updated task list

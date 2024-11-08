@@ -50,7 +50,8 @@ public class Parser {
     public static final Pattern EVENT_COMMAND_ARGS_FORMAT = Pattern.compile(EVENT_COMMAND_ARGS_REGEX);
     
     /**
-     * Parses the user input and returns the corresponding Command object. This creates the Command object
+     * Parses the user input and returns the corresponding Command object. This creates the Command object.
+     * 
      * @param userInput represents the input string from the user
      * @return a Command object corresponding to the parsed user input
      * @throws CommandException if the input string is not in the expected format, i.e. invalid input string, or cannot be parsed into a command.
@@ -97,6 +98,7 @@ public class Parser {
 
     /**
      * Prepares the task number for commands that require it, i.e. mark, unmark, and delete.
+     * 
      * @param commandWord represents the command word being processed, e.g. mark
      * @param args represents the arguments string containing the task number
      * @param messageUsage represents the usage instructions for the command. It is part of the message displayed when an error occurs
@@ -117,7 +119,8 @@ public class Parser {
     }
 
     /**
-     * Prepares a MarkCommand based on the provided arguments
+     * Prepares a MarkCommand based on the provided arguments.
+     * 
      * @param args represents the arguments string that contains the task number
      * @return a MarkCommand object
      * @throws CommandException if the task number is invalid, i.e. the arguments do not match the expected format
@@ -128,7 +131,8 @@ public class Parser {
     }
 
     /**
-     * Prepares an UnmarkCommand based on the provided arguments
+     * Prepares an UnmarkCommand based on the provided arguments.
+     * 
      * @param args represents the arguments string that contains the task number
      * @return an UnmarkCommand object
      * @throws CommandException if the task number is invalid, i.e. the arguments do not match the expected format
@@ -139,7 +143,8 @@ public class Parser {
     }
 
     /**
-     * Prepares a DeleteCommand based on the provided arguments
+     * Prepares a DeleteCommand based on the provided arguments.
+     * 
      * @param args represents the arguments string that contains the task number
      * @return a DeleteCommand object
      * @throws CommandException if the task number is invalid, i.e. the arguments do not match the expected format
@@ -151,6 +156,7 @@ public class Parser {
 
     /**
      * Checks if the description for a task command is empty.
+     * 
      * @param args represents the arguments string that contains the description
      * @param commandWord represents the command word that is being processed, e.g. mark
      * @param infoMessage represents the information message to display when an error occurs
@@ -169,6 +175,7 @@ public class Parser {
 
     /**
      * Validates the format of the arguments string using regular expression matcher.
+     * 
      * @param matcher represents the Matcher object that is used to validate the arguments. It contains the result of matching the command arguments
      * @param commandWord represents the command word being processed
      * @param args represents the arguments string that was provided by the user
@@ -228,6 +235,7 @@ public class Parser {
 
     /**
      * Prepares a DeadlineCommand object based on the provided arguments.
+     * 
      * @param args represents the arguments string that contains the description and due date of the task
      * @return a DeadlineCommand object
      * @throws CommandException if the arguments string (description and due date received) are invalid / missing, i.e. the arguments do not match the expected format

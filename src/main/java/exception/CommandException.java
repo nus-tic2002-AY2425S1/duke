@@ -14,6 +14,7 @@ public class CommandException extends JavaroException {
 
     /**
      * Constructs a CommandException with the specified error message.
+     * 
      * @param error represents the error message associated with the exception
      */
     public CommandException(String error) {
@@ -22,6 +23,7 @@ public class CommandException extends JavaroException {
 
     /**
      * Constructs a CommandException with the specified error message and additional information.
+     * 
      * @param error represents the error message associated with the exception
      * @param info represents the additional information about the error
      */
@@ -31,6 +33,7 @@ public class CommandException extends JavaroException {
 
     /**
      * Constructs a CommandException with the specified error message, additional information, and usage instructions.
+     * 
      * @param error represents the error message associated with the exception
      * @param info represents the additional information about the error
      * @param usage represents the usage instructions for the command

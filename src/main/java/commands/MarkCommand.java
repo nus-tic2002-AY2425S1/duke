@@ -27,6 +27,7 @@ public class MarkCommand extends Command {
     
     /**
      * Constructor to create a MarkCommand with the specified task number.
+     * 
      * @param taskNumber represents the 1-based index of the task to be marked as done
      */
     public MarkCommand(int taskNumber) {
@@ -35,6 +36,7 @@ public class MarkCommand extends Command {
     
     /**
      * Retrieves the task number specified in the command.
+     * 
      * @return the task number
      */
     public int getTaskNumber() {
@@ -43,6 +45,7 @@ public class MarkCommand extends Command {
     
     /**
      * Executes the command to mark the specified task as done in the task list. 
+     * 
      * @param taskList represents the list of tasks to mark the task in
      * @param ui represents the user interface to interact with the user
      * @param storage represents the storage to save the updated task list

@@ -29,6 +29,7 @@ public class ShowCommand extends Command {
     
     /**
      * Constructs a ShowCommand with the specified date.
+     * 
      * @param date represents the date for which to show deadlines and events
      */
     public ShowCommand(LocalDate date) {
@@ -37,6 +38,7 @@ public class ShowCommand extends Command {
     
     /**
      * Retrieves the date associated with the command
+     * 
      * @return the date
      */
     public LocalDate getDate() {
@@ -45,6 +47,7 @@ public class ShowCommand extends Command {
     
     /**
      * Executes the command to display tasks that are scheduled on a specific date.
+     * 
      * @param taskList represents the list of tasks to check for the specified date
      * @param ui represents the user interface to interact with the user
      * @param storage represents the storage (not used in this command)

@@ -27,6 +27,7 @@ public class EventCommand extends Command {
 
     /**
      * Constructs an EventCommand with the specified description, start date/time, and end date/time.
+     * 
      * @param description represents the description of the Event task
      * @param startDateTime represents the start date/time of the Event task
      * @param endDateTime represents the end date/time of the Event task

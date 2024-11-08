@@ -11,7 +11,8 @@ package exception;
 public class FileContentException extends JavaroException {
 
     /**
-     * Constructs a FileContentException with the specified error message, additional information, and usage instructions
+     * Constructs a FileContentException with the specified error message, additional information, and usage instructions.
+     * 
      * @param errorMessage the main error message associated with the exception
      * @param detailedInfo additional details about the error
      * @param expectedFormat usage instructions related to the expected format

@@ -46,6 +46,7 @@ public class Ui {
      * Determines the appropriate number of spaces to insert before text or lines.
      * This is dependent on the context of the output, i.e. whether the space is for a horizontal line or for tasks.
      * It is used to align the output in the command-line.
+     * 
      * @param isLine indicates whether the space is to come before a horizontal line
      * @param isTask indicates whether the space is to come before a a line of text representing a task
      * @return a string containing the appropriate number of leading spaces
@@ -84,6 +85,7 @@ public class Ui {
     /**
      * Prints a horizontal line, followed by the message(s), and ends with another horizontal line.
      * There will be spaces before each line.
+     * 
      * @param <T> represents the type of the messageList
      * @param messageList represents the list of message(s) to print. It can be an array or ArrayList
      */
@@ -158,16 +160,6 @@ public class Ui {
     // Inside the loop, `if (userInput.isEmpty())` checks if the user entered an empty string and, if so, prompt them to enter a valid input. There is a custom feedback for the user ("Input cannot be empty. Please try again.").
     // The condition is checked after the input is read, making it ideal for cases where you want to keep reading until the input is non-empty.
     public String readInput() throws CommandException {
-        // String userInput = in.nextLine().trim();
-        // System.out.println("userinput is " + userInput);
-        // if (userInput.isEmpty()) {
-        //     throw new IllegalArgumentException("Input cannot be empty.");
-        // }
-
-        // while (userInput.isEmpty()) {
-        //     userInput = in.nextLine().trim();
-        // }
-        
         String userInput;
         // Keep asking for input until a non-empty string is entered
         do {
@@ -184,6 +176,7 @@ public class Ui {
 
     /**
      * Displays an error message to the user
+     * 
      * @param errorMessage represents a list of error messages to display
      */
     public void showError(ArrayList<String> errorMessage) {

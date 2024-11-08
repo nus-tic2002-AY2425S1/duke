@@ -7,12 +7,14 @@ import task.TaskList;
 import java.util.ArrayList;
 
 /**
- * The TaskListEncoder class is responsible for encoding a {@code TaskList} into a list of strings that represents the tasks in a format that is suitable for storage, i.e. writing / saving to the tasks file.
+ * The TaskListEncoder class is responsible for encoding a {@code TaskList} into a list of strings.
+ * The list represents the tasks in a format that is suitable for storage, i.e. writing / saving to the tasks file.
  */
 public class TaskListEncoder {
 
     /**
-     * Encodes the given {@code TaskList} into a list of strings, where each string represents an encoded task
+     * Encodes the given {@code TaskList} into a list of strings, where each string represents an encoded task.
+     * 
      * @param taskList represents the {@code TaskList} to be encoded
      * @return a list of strings representing the encoded tasks
      */
@@ -25,7 +27,8 @@ public class TaskListEncoder {
     }
 
     /**
-     * Encodes a single {@code Task} into its string representation
+     * Encodes a single {@code Task} into its string representation.
+     * 
      * @param task represents the {@code Task} to be encoded
      * @return a string representation of the encoded {@code Task}
      */

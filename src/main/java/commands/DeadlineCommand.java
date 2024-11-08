@@ -27,6 +27,7 @@ public class DeadlineCommand extends Command {
 
     /**
      * Constructs a DeadlineCommand with the specified description and due date.
+     * 
      * @param description The description of the deadline task.
      * @param by The due date of the deadline task. The time is optional.
      */

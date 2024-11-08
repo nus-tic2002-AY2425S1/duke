@@ -17,12 +17,13 @@ import task.Todo;
 
 /**
  * The TaskListDecoder is responsible for decoding a list of encoded tasks into a {@code TaskList} object.
- * This class interprets the specific format of each task and decodes the task in different formats before creating the corresponding Task objects.
+ * This class interprets the specific format of each task and decodes the task in different formats before creating the corresponding {@code Task} objects.
  */
 public class TaskListDecoder {
 
     /**
      * Decodes a list of encoded tasks into a {@code TaskList} object, which will contain the decoded tasks.
+     * 
      * @param encodedTaskList represents a list of strings that contain the encoded tasks
      * @return a {@code TaskList} object that contains the decoded tasks
      * @throws FileContentException if an error occurs while decoding the task on a specific line, i.e. the file content is invalid
@@ -42,7 +43,8 @@ public class TaskListDecoder {
     }
 
     /**
-     * Decodes a single line of {@code encodedTask} String (from tasks file) into a {@code Task} object
+     * Decodes a single line of {@code encodedTask} String (from tasks file) into a {@code Task} object.
+     * 
      * @param encodedTask represents a String containing the encoded task
      * @return a {@code Task} object that corresponds to the {@code encodedTask} String
      * @throws FileContentException if the encoded task format is invalid

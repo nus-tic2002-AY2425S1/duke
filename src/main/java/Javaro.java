@@ -9,8 +9,6 @@ import task.TaskList;
 import ui.Ui;   
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * The Javaro class represents the main application class / entry point for the Javaro task management system.
@@ -98,6 +96,7 @@ public class Javaro {
      * The main entry point of the Javaro application.
      * Initializes the Javaro program and starts the main loop.
      * This method is called when the program is executed from the command-line.
+     * 
      * @param args command line arguments (not used here)
      */
     public static void main(String[] args) {

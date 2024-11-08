@@ -2,7 +2,8 @@ package task;
 
 /**
  * Represents the different types of tasks that can be created.
- * Each task has a corresponding code, i.e. TODO is represented by "T", DEADLINE is represented by "D", and EVENT is represented by "E"
+ * Each task has a corresponding code, 
+ * i.e. TODO is represented by "T", DEADLINE is represented by "D", and EVENT is represented by "E"
  */
 public enum TaskType {
     TODO("T"),
@@ -23,6 +24,7 @@ public enum TaskType {
 
     /**
      * Returns the string code representing the {@code TaskType}.
+     * 
      * @return the string code associated with the {@code TaskType}
      */
     @Override
@@ -31,12 +33,13 @@ public enum TaskType {
     }
 
     /**
-     * Retrieves the corresponding {@code TaskType} based on the given string code
+     * Retrieves the corresponding {@code TaskType} based on the given string code.
+     * 
      * @param code represents the string code that corresponds to the {@code TaskType}, i.e. "T", "D", or "E"
      * @return the {@code TaskType} that is associated with the given code
      * @throws IllegalArgumentException if the given code does not match an existing {@code TaskType}
      */
-    // https://stackoverflow.com/questions/604424/how-to-get-an-enum-value-from-a-string-value-in-java
+    // Solution below adapted from https://stackoverflow.com/questions/604424/how-to-get-an-enum-value-from-a-string-value-in-java
     public static TaskType getTaskType(String code) {
         for (TaskType taskType : TaskType.values()) {
             if (taskType.type.equals(code)) {

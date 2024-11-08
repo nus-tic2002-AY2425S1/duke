@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import parser.DateTimeParser;
 
 /**
- * Deadlines are tasks that need to be done before a specific date/time e.g., submit report by 11/10/2019 5pm
+ * Deadlines are tasks that need to be done before a specific date/time, e.g., submit report by 11/10/2019 5pm.
  * The {@code Deadline} class represents a task with a specific due date and time.
  * It extends from the {@code Task} class and provides additional functionality for managing deadlines.
  * It encapsulates the task description, completion status, and due date.
@@ -16,6 +16,7 @@ public class Deadline extends Task {
 
     /**
      * Constructs a {@code Deadline} task with the specified description, completion status, and due date / time.
+     * 
      * @param description represents the description of the {@code Deadline} task
      * @param isDone represents the completion status of the {@code Deadline} task
      * @param due represents the due date / time of the {@code Deadline} task
@@ -27,6 +28,7 @@ public class Deadline extends Task {
 
     /**
      * Constructs a {@code Deadline} task with the specified description and due date / time.
+     * 
      * @param description represents the description of the {@code Deadline} task
      * @param due represents the due date / time of the {@code Deadline} task
      */
@@ -38,6 +40,7 @@ public class Deadline extends Task {
 
     /**
      * Retrieves the due date / time of the {@code Deadline} task.
+     * 
      * @return the due date / time of the {@code Deadline} task as a LocalDateTime object
      */
     public LocalDateTime getDue() {
@@ -46,6 +49,7 @@ public class Deadline extends Task {
 
     /**
      * Returns the formatted due date / time as a String
+     * 
      * @return a string representing the formatted due date / time
      */
     public String getFormattedDue() {
@@ -55,6 +59,7 @@ public class Deadline extends Task {
     /**
      * Returns a String representation of the {@code Deadline} task object.
      * The format includes the task type (Deadline), description, completion status, and due date / time.
+     * 
      * @return a string representation of the {@code Deadline} task.
      */
     @Override
@@ -71,6 +76,7 @@ public class Deadline extends Task {
     /**
      * Encodes the {@code Deadline} task into a String format that is suitable for storage.
      * The format includes the task type (Deadline), completion status, description, and due date / time.
+     * 
      * @return a String representation of the encoded {@code Deadline} task
      */
     @Override
@@ -82,6 +88,7 @@ public class Deadline extends Task {
 
     /**
      * Checks if the task is due on a specified date.
+     * 
      * @param date the date to check against
      * @return true if the task is due on the specified date, false otherwise
      */

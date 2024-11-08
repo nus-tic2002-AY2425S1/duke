@@ -30,7 +30,6 @@ public abstract class Command {
      * 
      * @throws CommandException if an error occurs during command execution.
      * @throws StorageOperationException if an error occurs while accessing (loading tasks from / saving tasks from) storage.
-     * @throws TaskException if an error related to the task occurs.
      */
     public abstract void execute(TaskList taskList, Ui ui, Storage storage) throws CommandException, StorageOperationException;
 

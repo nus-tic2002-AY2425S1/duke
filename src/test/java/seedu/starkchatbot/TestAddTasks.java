@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class AddTasksTest {
+public class TestAddTasks {
     ArrayList<Task> tasks = new ArrayList<>();
     TaskList taskLists = new TaskList(this.tasks);
     @Test

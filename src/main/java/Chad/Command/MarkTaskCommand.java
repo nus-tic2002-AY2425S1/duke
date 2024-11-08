@@ -6,7 +6,7 @@ import Chad.TaskList.TaskList;
 import Chad.Ui.Ui;
 
 public class MarkTaskCommand extends Command {
-    private int taskIndex; // The index of the task to mark
+    private final int taskIndex; // The index of the task to mark
 
     public MarkTaskCommand(int taskIndex) {
         this.taskIndex = taskIndex; // Capture the index from the input
@@ -18,7 +18,7 @@ public class MarkTaskCommand extends Command {
             throw new ChadException("Invalid task index: " + (taskIndex + 1));
         }
         tasks.markTask(taskIndex); // Mark the specified task
-        ui.showAddTask(tasks.getTaskById(taskIndex),tasks.getNoOfTask()); // Adjust this as necessary for how you want to show the result
+        ui.showAddTask(tasks.getTaskById(taskIndex), tasks.getNoOfTask()); // Adjust this as necessary for how you want to show the result
         storage.save(tasks.toString()); // Optionally save changes to the storage if required
     }
 

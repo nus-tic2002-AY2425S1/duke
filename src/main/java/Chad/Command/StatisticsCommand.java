@@ -1,17 +1,18 @@
 package Chad.Command;
 
-import java.time.LocalDateTime;
-import java.time.Period;
-import Chad.Parser.ChadDate;
 import Chad.Exception.ChadException;
+import Chad.Parser.ChadDate;
 import Chad.Storage.Storage;
 import Chad.TaskList.TaskList;
 import Chad.Ui.Ui;
 
+import java.time.LocalDateTime;
+import java.time.Period;
+
 public class StatisticsCommand extends Command {
 
-    private LocalDateTime statisCheckTime;
-    private String timePeriod;
+    private final LocalDateTime statisCheckTime;
+    private final String timePeriod;
 
     // Constructor that initializes the timePeriod and sets the check time to now
     public StatisticsCommand(String timePeriod) {
@@ -31,7 +32,7 @@ public class StatisticsCommand extends Command {
         }
         TaskList taskListWithStatistics = tasks.getTaskByTimeRange(statisCheckTime, checkPeriod);
         // Display the tasks to the user
-        Ui.showMsg("You have complete "+taskListWithStatistics.getNoOfTask()+" task(s) since "+timePeriod);
+        Ui.showMsg("You have complete " + taskListWithStatistics.getNoOfTask() + " task(s) since " + timePeriod);
         ui.showTaskList(taskListWithStatistics);
     }
 }

@@ -7,7 +7,8 @@ import Chad.Ui.Ui;
 
 public abstract class Command {
     public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws ChadException;
-    public boolean isExit(){
+
+    public boolean isExit() {
         return false;
     }
 }

@@ -53,7 +53,7 @@ public class EventCommand extends Command {
         storage.saveTasks(taskList);
         
         int taskListSize = taskList.getSize();
-        String taskWord = taskList.getTaskWord(taskListSize);
+        String taskWord = taskList.getTaskWord();
         final String MESSAGE_ADD_SUCCESS_POST = "Now you have " + taskListSize + taskWord + " in the list.";
         
         String[] messageList = {MESSAGE_ADD_SUCCESS_PRE, ui.formatSpace(2) + task, MESSAGE_ADD_SUCCESS_POST};

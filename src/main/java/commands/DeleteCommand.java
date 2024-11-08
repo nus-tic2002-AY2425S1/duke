@@ -54,7 +54,7 @@ public class DeleteCommand extends Command {
         int taskNumber = getTaskNumber();
         int taskListSize = taskList.getSize();
         
-        String taskWord = taskList.getTaskWord(taskListSize);
+        String taskWord = taskList.getTaskWord();
         final String MESSAGE_DELETE_SUCCESS_POST = Messages.MESSAGE_NOW_YOU_HAVE + (taskListSize - 1) + taskWord + Messages.MESSAGE_IN_THE_LIST;
 
         int indexToDelete = taskNumber - 1;

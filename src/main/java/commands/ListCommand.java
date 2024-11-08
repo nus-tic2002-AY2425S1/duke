@@ -46,6 +46,7 @@ public class ListCommand extends Command {
         // Iterate through the task list and format each task for display
         for (int i = 0; i < taskListSize; i++) {
             Task current = taskList.getTask(i);
+            // System.out.println("This is current " + current);
             String index = Integer.toString(i + 1);
             String line = index + ". " + current;
             messageList.add(line);

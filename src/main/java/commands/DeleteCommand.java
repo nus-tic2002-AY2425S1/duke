@@ -1,4 +1,5 @@
 package commands;
+import common.Constants;
 import common.Messages;
 import exception.CommandException;
 import exception.StorageOperationException;
@@ -17,7 +18,7 @@ import ui.Ui;
  */
 public class DeleteCommand extends Command {
     public static final String COMMAND_WORD = "delete";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " <task number>";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE + OPEN_ANGLE_BRACKET + Constants.TASK_NUMBER + CLOSE_ANGLE_BRACKET;
     public static final String MESSAGE_DELETE_SUCCESS_PRE = "Noted. I've removed this task:";
     
     protected int taskNumber;

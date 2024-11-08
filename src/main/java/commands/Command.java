@@ -1,5 +1,6 @@
 package commands;
 
+import common.Constants;
 import exception.CommandException;
 import exception.StorageOperationException;
 import storage.Storage;
@@ -15,6 +16,10 @@ import ui.Ui;
  * </p>
  */
 public abstract class Command {
+
+    public static final String SPACE = Constants.SPACE;
+    public static final String OPEN_ANGLE_BRACKET = Constants.OPEN_ANGLE_BRACKET;
+    public static final String CLOSE_ANGLE_BRACKET = Constants.CLOSE_ANGLE_BRACKET;
 
     /**
      * Constructs a Command instance.

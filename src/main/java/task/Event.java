@@ -1,6 +1,6 @@
 package task;
 
-import common.Messages;
+import common.Constants;
 import parser.DateTimeParser;
 
 import java.time.LocalDate;
@@ -91,14 +91,20 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        final String SPACE = Messages.SPACE;
+        final String SPACE = Constants.SPACE;
+        final String COLON = Constants.COLON;
         // If description does not end with a space, add a space behind it
         if (!description.endsWith(SPACE)) {
             description += SPACE;
         } 
         // String formattedEndDateTime = DateTimeParser.formatDateTime(endDateTime);
 
-        return "[" + TaskType.EVENT + "]" + super.toString() + "(from: " + getFormattedStartDateTime() + " to: " + getFormattedEndDateTime() + ")";
+        return Constants.OPEN_SQUARE_BRACKET + TaskType.EVENT + Constants.CLOSE_SQUARE_BRACKET + 
+               super.toString() + 
+               Constants.OPEN_ROUND_BRACKET + Constants.FROM + COLON + SPACE + getFormattedStartDateTime() +                 //    "(from: " + getFormattedStartDateTime() + " to: " + getFormattedEndDateTime() + Constants.CLOSE_SQUARE_BRACKET;
+               SPACE + Constants.TO + COLON + SPACE + getFormattedEndDateTime() + Constants.CLOSE_ROUND_BRACKET
+               ;
+            
     }
 
     /**
@@ -108,7 +114,7 @@ public class Event extends Task {
      */
     @Override
     public String encodeTask() {
-        String separator = " | ";
+        String separator = Constants.ENCODE_TASK_SEPARATOR;
         return TaskType.EVENT + super.encodeTask() + separator + getFormattedStartDateTime() + separator + getFormattedEndDateTime();
     }
 

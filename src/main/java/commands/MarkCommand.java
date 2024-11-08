@@ -1,5 +1,6 @@
 package commands;
 
+import common.Constants;
 import common.Messages;
 import exception.CommandException;
 import exception.StorageOperationException;
@@ -19,9 +20,8 @@ import ui.Ui;
 public class MarkCommand extends Command {
 
     public static final String COMMAND_WORD = "mark";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " <task number>";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + Constants.OPEN_ANGLE_BRACKET + Constants.TASK_NUMBER + Constants.CLOSE_ANGLE_BRACKET;
     public static final String MESSAGE_MARK_SUCCESS = "Nice! I've marked this task as done:";
-    public static final String MESSAGE_EMPTY_TASKLIST = "The task list is empty. Please add a task first.";
     
     protected int taskNumber;
     
@@ -57,6 +57,11 @@ public class MarkCommand extends Command {
         
         int taskNumber = getTaskNumber();
         int taskListSize = taskList.getSize();
+        boolean isTaskListEmpty = taskList.isEmpty();
+
+        if (isTaskListEmpty) {
+            throw new CommandException(Messages.MESSAGE_EMPTY_TASKLIST);
+        }
 
         int indexToMark = taskNumber - 1;
         Task taskToMark = null;

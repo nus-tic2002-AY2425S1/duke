@@ -1,14 +1,16 @@
 package task;
 
+import common.Constants;
+
 /**
  * Represents the different types of tasks that can be created.
  * Each task has a corresponding code, 
  * i.e. TODO is represented by "T", DEADLINE is represented by "D", and EVENT is represented by "E"
  */
 public enum TaskType {
-    TODO("T"),
-    DEADLINE("D"),
-    EVENT("E");
+    TODO(Constants.T),
+    DEADLINE(Constants.D),
+    EVENT(Constants.E);
 
     private final String type;
 

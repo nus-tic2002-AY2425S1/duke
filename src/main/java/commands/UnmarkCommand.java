@@ -1,4 +1,5 @@
 package commands;
+import common.Constants;
 import common.Messages;
 import exception.CommandException;
 import exception.StorageOperationException;
@@ -18,9 +19,8 @@ import ui.Ui;
 public class UnmarkCommand extends Command {
 
     public static final String COMMAND_WORD = "unmark";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " <task number>";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE + OPEN_ANGLE_BRACKET + Constants.TASK_NUMBER + CLOSE_ANGLE_BRACKET;
     public static final String MESSAGE_UNMARK_SUCCESS = "OK, I've marked this task as not done yet:";
-    public static final String MESSAGE_EMPTY_TASKLIST = "The task list is empty. Please add a task first.";
     
     protected int taskNumber;
     
@@ -58,6 +58,12 @@ public class UnmarkCommand extends Command {
         int taskListSize = taskList.getSize();
         // final String MESSAGE_NONEXISTENT_TASK = "Task number " + taskNumber + " not found. Please enter a valid task number from 1 to " + taskListSize + ".";
 
+        boolean isTaskListEmpty = taskList.isEmpty();
+
+        if (isTaskListEmpty) {
+            throw new CommandException(Messages.MESSAGE_EMPTY_TASKLIST);
+        }
+        
         int indexToUnmark = taskNumber - 1;
         Task taskToUnmark = null;
         

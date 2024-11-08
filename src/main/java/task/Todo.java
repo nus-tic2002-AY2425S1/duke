@@ -2,6 +2,8 @@ package task;
 
 import java.time.LocalDate;
 
+import common.Constants;
+
 /**
  * Represents a {@code Todo} task, which is a subclass of {@link Task}, i.e. a specific type of {@link Task}.
  * Todos are tasks without any date/time attached to it, e.g., visit new theme park.
@@ -38,7 +40,7 @@ public class Todo extends Task {
      */
     @Override
     public String toString() {
-        return "[" + TaskType.TODO + "]" + super.toString();
+        return Constants.OPEN_SQUARE_BRACKET + TaskType.TODO + Constants.CLOSE_SQUARE_BRACKET + super.toString();
     }
 
     /**

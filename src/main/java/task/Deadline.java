@@ -2,6 +2,7 @@ package task;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import common.Constants;
 import parser.DateTimeParser;
 
 /**
@@ -64,12 +65,17 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
+        final String SPACE = Constants.SPACE;
         // If description does not end with a space, add a space behind it
-        if (!description.endsWith(" ")) {
-            description += " ";
+        if (!description.endsWith(SPACE)) {
+            description += SPACE;
         } 
         // String formattedDue = DateTimeParser.formatDateTime(due);
-        return "[" + TaskType.DEADLINE + "]" + super.toString() + "(by: " + getFormattedDue() + ")";
+        return Constants.OPEN_SQUARE_BRACKET + TaskType.DEADLINE + Constants.CLOSE_SQUARE_BRACKET + 
+               super.toString() + 
+               Constants.OPEN_ROUND_BRACKET + Constants.BY + Constants.COLON + 
+               Constants.SPACE + getFormattedDue() + Constants.CLOSE_ROUND_BRACKET;
+        // return "[" + TaskType.DEADLINE + "]" + super.toString() + "(by: " + getFormattedDue() + ")";
         // return "[D]" + super.toString() + "(by: " + getDue() + ")";
     }
 
@@ -81,7 +87,7 @@ public class Deadline extends Task {
      */
     @Override
     public String encodeTask() {
-        String separator = " | ";
+        String separator = Constants.ENCODE_TASK_SEPARATOR;
         // Construct the final encoded task without leading or trailing spaces
         return TaskType.DEADLINE + super.encodeTask() + separator + getFormattedDue();
     }

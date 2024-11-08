@@ -2,6 +2,7 @@ package commands.add;
 
 import java.time.LocalDateTime;
 
+import common.Constants;
 import task.Task;
 import task.Event;
 
@@ -14,7 +15,11 @@ import task.Event;
  */
 public class EventCommand extends AddTaskCommand {
     public static final String COMMAND_WORD = "event";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " <description> /from <start date/time> /to <end date/time>";
+    
+    public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE + 
+                                               OPEN_ANGLE_BRACKET + Constants.DESCRIPTION + CLOSE_ANGLE_BRACKET + SPACE +
+                                               Constants.SLASH_FROM + SPACE + OPEN_ANGLE_BRACKET + Constants.START_DATE_TIME + CLOSE_ANGLE_BRACKET + SPACE +
+                                               Constants.SLASH_TO + SPACE + OPEN_ANGLE_BRACKET + Constants.END_DATE_TIME + CLOSE_ANGLE_BRACKET;
     
     protected final LocalDateTime startDateTime;
     protected final LocalDateTime endDateTime;

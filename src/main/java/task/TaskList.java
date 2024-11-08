@@ -1,5 +1,8 @@
 package task;
 import java.util.List;
+
+import common.Constants;
+
 import java.util.ArrayList;
 import java.time.LocalDate;
 
@@ -119,9 +122,9 @@ public class TaskList {
      * @return "task" if there is only one task in the {@code TaskList}; "tasks" if there are multiple
      */
     public String getTaskWord() {
-        StringBuilder taskWordStringBuilder = new StringBuilder(" task");
+        StringBuilder taskWordStringBuilder = new StringBuilder(Constants.SPACE + Constants.TASK);
         if (getSize() > 1) {
-            taskWordStringBuilder.append("s");
+            taskWordStringBuilder.append(Constants.S);
         }
         String taskWord = taskWordStringBuilder.toString();
         return taskWord;

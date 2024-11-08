@@ -2,6 +2,8 @@ package task;
 
 import java.time.LocalDate;
 
+import common.Constants;
+
 /**
  * This abstract Task class represents the base class for all tasks. 
  * Subclasses like Todo, Deadline, and Event will extend from this class.
@@ -26,7 +28,7 @@ public abstract class Task {
      * Default constructor that initializes the task with empty string description and set the task to be undone
      */
     public Task() {
-        description = "";
+        description = Constants.EMPTY_STRING;
         isDone = false;
     }
 
@@ -85,10 +87,10 @@ public abstract class Task {
      * @return "X" if the {@code Task} is done; otherwise it returns a space
      */
     public String getStatusIcon() {
-        if (isDone) {
-            return "X";
+        if (getIsDone()) {
+            return Constants.X;
         } else {
-            return " ";
+            return Constants.SPACE;
         }
     }
 
@@ -101,7 +103,8 @@ public abstract class Task {
     // Equivalent to 'decoded' task, i.e. tasks present in TaskList
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "] " + getDescription();
+        return Constants.OPEN_SQUARE_BRACKET + getStatusIcon() + Constants.CLOSE_SQUARE_BRACKET + 
+                Constants.SPACE + getDescription();
     }
 
     /**
@@ -111,7 +114,7 @@ public abstract class Task {
      * @return encoded string representation of the {@code Task}
      */
     public String encodeTask() {
-        String separator = " | ";
+        String separator = Constants.ENCODE_TASK_SEPARATOR;
         return separator + getIsDoneValue() + separator + getDescription().trim();
     }
 

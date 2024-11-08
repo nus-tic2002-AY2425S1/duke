@@ -2,6 +2,7 @@ package commands.add;
 
 import java.time.LocalDateTime;
 
+import common.Constants;
 import task.Task;
 import task.Deadline;
 
@@ -15,7 +16,10 @@ import task.Deadline;
 public class DeadlineCommand extends AddTaskCommand {
 
     public static final String COMMAND_WORD = "deadline";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " <description> /by <due date>";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE + 
+                                               OPEN_ANGLE_BRACKET + Constants.DESCRIPTION + CLOSE_ANGLE_BRACKET + SPACE +
+                                               Constants.SLASH_BY + SPACE +
+                                               OPEN_ANGLE_BRACKET + Constants.DUE_DATE + CLOSE_ANGLE_BRACKET;
     
     protected final LocalDateTime by;
 

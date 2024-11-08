@@ -1,6 +1,8 @@
 package commands.add;
 
 import commands.Command;
+import common.Constants;
+import common.Messages;
 import exception.StorageOperationException;
 import storage.Storage;
 import task.Task;
@@ -59,7 +61,7 @@ public abstract class AddTaskCommand extends Command {
         // Prepare the success message
         int taskListSize = taskList.getSize();
         String taskWord = taskList.getTaskWord();
-        return "Now you have " + taskListSize + taskWord + " in the list.";
+        return Messages.MESSAGE_NOW_YOU_HAVE + taskListSize + taskWord + Messages.MESSAGE_IN_THE_LIST;
     }
 
     /**

@@ -2,6 +2,7 @@ package ui;
 import java.util.Scanner;
 
 import common.Messages;
+import common.Constants;
 import exception.CommandException;
 
 import java.lang.reflect.Array;
@@ -16,7 +17,6 @@ public class Ui {
     // Constant variables
     // https://www.javatpoint.com/java-constant
     private static final String LINE = "____________________________________________________________";
-    private static final String NEW_LINE = "\n";
 
     private final Scanner in;
 
@@ -37,8 +37,8 @@ public class Ui {
     // https://stackoverflow.com/questions/69576641/why-would-you-use-a-stringbuilder-method-over-a-string-in-java
     public String formatSpace(int numberOfSpace) {
         // String space = String.format("%" + numberOfSpace + "s", "");
-        String format = "%" + numberOfSpace + "s";
-        String space = String.format(format, "");
+        String format = Constants.PERCENT + numberOfSpace + Constants.S;
+        String space = String.format(format, Constants.EMPTY_STRING);
         return space;
     }
 
@@ -61,7 +61,7 @@ public class Ui {
         } else if (isLine == false && isTask == false) {
             return formatSpace(5);      // General space
         } else {
-            return "";      // No space
+            return Constants.EMPTY_STRING;      // No space
         }
     }
 
@@ -96,7 +96,7 @@ public class Ui {
         String space = getSpace(false, false);
         
         // StringBuilder stringBuilder = new StringBuilder();
-        StringBuilder stringBuilder = new StringBuilder().append(line).append(NEW_LINE);
+        StringBuilder stringBuilder = new StringBuilder().append(line).append(Constants.NEW_LINE);
         
         // System.out.println(messageList.getClass());
 
@@ -106,7 +106,7 @@ public class Ui {
             for (int i = 0; i < Array.getLength(messageList); i++) {
                 stringBuilder.append(space)
                              .append(Array.get(messageList, i))
-                             .append(NEW_LINE);
+                             .append(Constants.NEW_LINE);
             }
         } 
         
@@ -118,7 +118,7 @@ public class Ui {
                                                 ((ArrayList<?>) messageList)
                                                 .get(i)
                                             )
-                                           .append(NEW_LINE);
+                                           .append(Constants.NEW_LINE);
             }
         }
 

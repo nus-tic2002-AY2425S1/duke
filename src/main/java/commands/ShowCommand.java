@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import common.Constants;
 import storage.Storage;
 import task.Task;
 import task.TaskList;
@@ -20,10 +21,11 @@ import ui.Ui;
  */
 public class ShowCommand extends Command {
     public static final String COMMAND_WORD = "show";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " <date>";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + Constants.SPACE + Constants.OPEN_ANGLE_BRACKET + Constants.DATE + Constants.CLOSE_ANGLE_BRACKET;
     // public static final String MESSAGE_DELETE_SUCCESS_PRE = "Noted. I've removed this task:";
-    public static final String MESSAGE_EMPTY_LIST = "You have no deadlines / events on ";
-    public static final String MESSAGE_SHOW_SUCCESS_PRE = "Here are the deadlines / events on ";
+    public static final String DEADLINES_EVENTS_ON = "deadlines / events on";
+    public static final String MESSAGE_EMPTY_LIST = "You have no" + SPACE + DEADLINES_EVENTS_ON + SPACE;
+    public static final String MESSAGE_SHOW_SUCCESS_PRE = "Here are the" + SPACE + DEADLINES_EVENTS_ON + SPACE;
 
     protected LocalDate date;
     

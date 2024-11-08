@@ -1,5 +1,6 @@
 package commands.add;
 
+import common.Constants;
 import task.Task;
 import task.Todo;
 
@@ -12,7 +13,8 @@ import task.Todo;
 public class TodoCommand extends AddTaskCommand {
     
     public static final String COMMAND_WORD = "todo";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " <description>";
+    
+    public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE + OPEN_ANGLE_BRACKET + Constants.DESCRIPTION + CLOSE_ANGLE_BRACKET;
     
     /**
      * Constructs a {@code TodoCommand} with the specified description.

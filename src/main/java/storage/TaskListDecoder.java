@@ -1,7 +1,6 @@
 package storage;
 import java.util.Arrays;
 import java.util.List;
-import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
 import common.Messages;
@@ -16,10 +15,21 @@ import task.TaskList;
 import task.TaskType;
 import task.Todo;
 
+/**
+ * The TaskListDecoder is responsible for decoding a list of encoded tasks into a {@code TaskList} object.
+ * This class interprets the specific format of each task and decodes the task in different formats before creating the corresponding Task objects.
+ */
 public class TaskListDecoder {
 
-    // https://github.com/se-edu/addressbook-level2/blob/master/src/seedu/addressbook/storage/AddressBookDecoder.java#L34
-    // Decodes {@code encodedTaskList} into an {@code TaskList} containing the decoded tasks.
+    /**
+     * Decodes a list of encoded tasks into a {@code TaskList} object, which will contain the decoded tasks.
+     * @param encodedTaskList represents a list of strings that contain the encoded tasks
+     * @return a {@code TaskList} object that contains the decoded tasks
+     * @throws FileContentException if an error occurs while decoding the task on a specific line, i.e. the file content is invalid
+     * @throws TaskListDecoderException if an error occurs while decoding the task on a specific line
+     * @throws CommandException if an error occurs while processing the command
+     */
+    // Solution below referenced from https://github.com/se-edu/addressbook-level2/blob/master/src/seedu/addressbook/storage/AddressBookDecoder.java#L34
     public static TaskList decodeTaskList(List<String> encodedTaskList) throws FileContentException, TaskListDecoderException, CommandException {
         TaskList decodedTasks = new TaskList();
         for (String encodedTask : encodedTaskList) {
@@ -31,7 +41,14 @@ public class TaskListDecoder {
         return decodedTasks;
     }
 
-    // Decodes {@code encodedTask} from tasks.txt into a {@code Task}
+    /**
+     * Decodes a single line of {@code encodedTask} String (from tasks file) into a {@code Task} object
+     * @param encodedTask represents a String containing the encoded task
+     * @return a {@code Task} object that corresponds to the {@code encodedTask} String
+     * @throws FileContentException if the encoded task format is invalid
+     * @throws TaskListDecoderException if an error occurs while decoding the task list, i.e. format of the encoded task (String) is invalid
+     * @throws CommandException if an error related to command processing occurs, i.e. there is an issue while parsing date/time
+     */
     // Example encodedTask: T | 1 | read book
     private static Task decodeTaskFromString(String encodedTask) throws FileContentException, TaskListDecoderException, CommandException {
         
@@ -106,7 +123,7 @@ public class TaskListDecoder {
             case TODO:
                 task = new Todo(description, isDone);
                 break;
-            case DEADLINE:      // case "D":
+            case DEADLINE:
                 if (taskDataLength < 4) {
                     throw new TaskListDecoderException(
                         Messages.ERROR_INVALID_TASK_FORMAT,
@@ -117,11 +134,7 @@ public class TaskListDecoder {
                 String dueString = taskData[3].trim();
                 // System.out.println("dueString: " + dueString);
 
-                /*
-                 * tasks.txt contains a String representation of the time
-                 * To create a deadline task, need to parse String to dateTime
-                 */
-
+                // The tasks file contains a String representation of the time. To create a deadline task, we need to parse the String into a LocalDateTime object.
                 LocalDateTime due = DateTimeParser.parseOutputDateTime(dueString);
                 // System.out.println("due is " + due);
                 // LocalDateTime due = DateTimeParser.parseDateTime(dueString);
@@ -134,7 +147,7 @@ public class TaskListDecoder {
                 // LocalDateTime due = LocalDateTime.parse(taskData[3].trim());
                 task = new Deadline(description, isDone, due);
                 break;
-            case EVENT:     // case "E":
+            case EVENT:
                 if (taskDataLength < 5) {
                     // throw new TaskListDecoderException("Invalid Event format");
                     throw new TaskListDecoderException(

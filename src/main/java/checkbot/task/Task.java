@@ -21,18 +21,38 @@ public abstract class Task {
         return description;
     }
 
+    /**
+     * Returns status icon for list view.
+     *
+     * @return 'X' if task is done, ' ' if task is undone.
+     */
     public String getStatusIcon() {
         return status.getStatusIcon();
     }
 
+    /**
+     * Returns TaskStatus enum.
+     *
+     * @return DONE or NOT_DONE
+     */
     public TaskStatus getDone() {
         return status;
     }
 
+    /**
+     * Returns TaskPriority enum.
+     *
+     * @return HIGH, MEDIUM, LOW, NOT_SET
+     */
     public TaskPriority getPriority() {
         return priority;
     }
 
+    /**
+     * Returns task type icon for list view and file view.
+     *
+     * @return 'T', 'D', 'E'
+     */
     public String getTaskIcon(){
         return taskType.getTaskIcon();
     }
@@ -46,6 +66,11 @@ public abstract class Task {
         return priority.getPriorityIcon();
     }
 
+    /**
+     * Returns priority in string.
+     *
+     * @return 'HIGH, 'MEDIUM', 'LOW', 'NOT SET'
+     */
     public String getPriorityString(){
         return priority.toString();
     }

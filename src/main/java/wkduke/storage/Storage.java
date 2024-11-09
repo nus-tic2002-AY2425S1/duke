@@ -70,6 +70,15 @@ public class Storage {
     }
 
     /**
+     * Retrieves the file path where tasks are stored.
+     *
+     * @return The {@code Path} representing the storage file location.
+     */
+    public Path getFilePath() {
+        return filePath;
+    }
+
+    /**
      * Loads the task list from the storage file.
      *
      * @return A {@code TaskList} containing tasks read from the file.

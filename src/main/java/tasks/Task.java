@@ -4,7 +4,7 @@ import exception.DukeException;
 import lombok.Getter;
 
 /**
- * An abstract task class
+ * An abstract task class with description and completion status
  */
 @Getter
 public abstract class Task {
@@ -54,7 +54,7 @@ public abstract class Task {
     public abstract void update (String updateInput) throws DukeException;
 
     /**
-     * Convert task to a format for file saving
+     * Convert task to a format for file saving format for file storage
      * @return String in the format to save task into a file
      * @throws DukeException If an error occur during the conversion
      */

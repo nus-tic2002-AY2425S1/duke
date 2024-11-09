@@ -25,7 +25,7 @@ public class CommandFactory {
      * Generate a Task object based on user input
      * @param userInput user input in string
      * @return The generate Task object.
-     * @throws DukeException If the command is invalid or description is emoty.
+     * @throws DukeException If the command is invalid or description is empty.
      */
     public static Task generateTask(String userInput) throws DukeException {
         String [] taskParts = parseTask(userInput);

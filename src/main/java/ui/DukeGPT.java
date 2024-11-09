@@ -27,7 +27,7 @@ import static output.OutputHandler.printGoodbye;
 import static output.OutputHandler.printAddedItems;
 
 /**
- * Main class for DukeGPT Application
+ * Represent the main class for DukeGPT Application
  */
 public class DukeGPT {
     private static final String chatbotName = "DukeGPT";
@@ -36,7 +36,7 @@ public class DukeGPT {
     private static Map<String, CommandHandler> commandHandlerMapping = new HashMap<>();
 
     /**
-     * Initialises the command handlers.
+     * Initialises the command handlers by mapping commands to their respective handlers
      */
     private static void initCommandHandlers() {
         commandHandlerMapping.put(CommandType.LIST.name().toLowerCase(), new ListCommandHandler());
@@ -87,7 +87,7 @@ public class DukeGPT {
     }
 
     /**
-     * The main method for the DukeGPT application.
+     * The entry point of DukeGPT application.
      *
      * @param args Command-line arguments
      */

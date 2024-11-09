@@ -8,10 +8,6 @@ Got it. I've added this task:
 Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
-  [T][X] read book
-____________________________________________________________
-____________________________________________________________
 Got it. I've added this task:
   [D][ ] return book (by: 02 Dec 2019, 3:00 PM)
 Now you have 2 tasks in the list.
@@ -23,35 +19,93 @@ Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-  [T][ ] join sports club
+  [FD][ ] Read report (needs: 2 hours)
 Now you have 4 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
-  [T][X] join sports club
-____________________________________________________________
-____________________________________________________________
 Got it. I've added this task:
-  [T][ ] borrow book
+  [T][ ] read book
 Now you have 5 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+  1.[T][ ] read book
+  2.[D][ ] return book (by: 02 Dec 2019, 3:00 PM)
+  3.[E][ ] project meeting (from: 02 Dec 2019, 3:00 PM to: 02 Dec 2019, 6:00 PM)
+  4.[FD][ ] Read report (needs: 2 hours)
+  5.[T][ ] read book
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+  [T][X] read book
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+  [FD][X] Read report (needs: 2 hours)
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
   1.[T][X] read book
   2.[D][ ] return book (by: 02 Dec 2019, 3:00 PM)
   3.[E][ ] project meeting (from: 02 Dec 2019, 3:00 PM to: 02 Dec 2019, 6:00 PM)
-  4.[T][X] join sports club
-  5.[T][ ] borrow book
+  4.[FD][X] Read report (needs: 2 hours)
+  5.[T][ ] read book
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
-  [D][ ] return book (by: 02 Dec 2019, 3:00 PM)
-Now you have 6 tasks in the list.
+OK, I've marked this task as not done yet:
+  [T][ ] read book
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
-  [E][ ] project meeting (from: 02 Dec 2019, 3:00 PM to: 02 Dec 2019, 6:00 PM)
-Now you have 7 tasks in the list.
+Here are the tasks in your list:
+  1.[T][ ] read book
+  2.[D][ ] return book (by: 02 Dec 2019, 3:00 PM)
+  3.[E][ ] project meeting (from: 02 Dec 2019, 3:00 PM to: 02 Dec 2019, 6:00 PM)
+  4.[FD][X] Read report (needs: 2 hours)
+  5.[T][ ] read book
+____________________________________________________________
+____________________________________________________________
+Noted. I've removed this task:
+  [T][ ] read book
+Now you have 4 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+  1.[T][ ] read book
+  2.[D][ ] return book (by: 02 Dec 2019, 3:00 PM)
+  3.[E][ ] project meeting (from: 02 Dec 2019, 3:00 PM to: 02 Dec 2019, 6:00 PM)
+  4.[FD][X] Read report (needs: 2 hours)
+____________________________________________________________
+____________________________________________________________
+Noted. I've updated this task:
+  [T][ ] not read book
+____________________________________________________________
+____________________________________________________________
+Noted. I've updated this task:
+  [D][ ] not return book (by: 02 Dec 2019, 3:00 PM)
+____________________________________________________________
+____________________________________________________________
+Noted. I've updated this task:
+  [E][ ] not project meeting (from: 02 Dec 2019, 3:00 PM to: 02 Dec 2019, 6:00 PM)
+____________________________________________________________
+____________________________________________________________
+Noted. I've updated this task:
+  [FD][X] not Read report (needs: 5 hours)
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+  1.[T][ ] not read book
+  2.[D][ ] not return book (by: 02 Dec 2019, 3:00 PM)
+  3.[E][ ] not project meeting (from: 02 Dec 2019, 3:00 PM to: 02 Dec 2019, 6:00 PM)
+  4.[FD][X] not Read report (needs: 5 hours)
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+  1.[T][ ] not read book
+  2.[D][ ] not return book (by: 02 Dec 2019, 3:00 PM)
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+  1.[E][ ] not project meeting (from: 02 Dec 2019, 3:00 PM to: 02 Dec 2019, 6:00 PM)
 ____________________________________________________________
 ____________________________________________________________
 OOPS!!! Input cannot be empty!
@@ -72,6 +126,9 @@ ____________________________________________________________
 OOPS!! The Event description is improperly formatted. Please try again!
 ____________________________________________________________
 ____________________________________________________________
+OOPS!! The FixedDuration description is improperly formatted. Please try again!
+____________________________________________________________
+____________________________________________________________
 OOPS!!! I don't know what the command "testfail" means
 ____________________________________________________________
 ____________________________________________________________
@@ -87,36 +144,12 @@ ____________________________________________________________
 OOPS!! The task number must be a valid integer!
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
-  1.[T][X] read book
-  2.[D][ ] return book (by: 02 Dec 2019, 3:00 PM)
-  3.[E][ ] project meeting (from: 02 Dec 2019, 3:00 PM to: 02 Dec 2019, 6:00 PM)
-  4.[T][X] join sports club
-  5.[T][ ] borrow book
-  6.[D][ ] return book (by: 02 Dec 2019, 3:00 PM)
-  7.[E][ ] project meeting (from: 02 Dec 2019, 3:00 PM to: 02 Dec 2019, 6:00 PM)
-____________________________________________________________
-____________________________________________________________
-Noted. I've removed this task:
-  [T][X] join sports club
-Now you have 6 tasks in the list.
-____________________________________________________________
-____________________________________________________________
 OOPS!! Task number is out of range!
 ____________________________________________________________
 ____________________________________________________________
 OOPS!! The task number must be a valid integer!
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
-  1.[T][X] read book
-  2.[D][ ] return book (by: 02 Dec 2019, 3:00 PM)
-  3.[E][ ] project meeting (from: 02 Dec 2019, 3:00 PM to: 02 Dec 2019, 6:00 PM)
-  4.[T][ ] borrow book
-  5.[D][ ] return book (by: 02 Dec 2019, 3:00 PM)
-  6.[E][ ] project meeting (from: 02 Dec 2019, 3:00 PM to: 02 Dec 2019, 6:00 PM)
-____________________________________________________________
-____________________________________________________________
 OOPSS!! Please provide a valid date and time in the format d/M/yyyy HHmm
 ____________________________________________________________
 ____________________________________________________________
@@ -124,36 +157,10 @@ OOPSS!! Please provide a valid date and time in the format d/M/yyyy HHmm
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
-  1.[T][X] read book
-  2.[D][ ] return book (by: 02 Dec 2019, 3:00 PM)
-  3.[T][ ] borrow book
-  4.[D][ ] return book (by: 02 Dec 2019, 3:00 PM)
-____________________________________________________________
-____________________________________________________________
-Here are the tasks in your list:
-  1.[E][ ] project meeting (from: 02 Dec 2019, 3:00 PM to: 02 Dec 2019, 6:00 PM)
-  2.[E][ ] project meeting (from: 02 Dec 2019, 3:00 PM to: 02 Dec 2019, 6:00 PM)
-____________________________________________________________
-____________________________________________________________
-Noted. I've updated this task:
-  [T][X] not read book
-____________________________________________________________
-____________________________________________________________
-Noted. I've updated this task:
-  [D][ ] not return book (by: 02 Dec 2019, 3:00 PM)
-____________________________________________________________
-____________________________________________________________
-Noted. I've updated this task:
-  [E][ ] not project meeting (from: 02 Dec 2019, 3:00 PM to: 02 Dec 2019, 6:00 PM)
-____________________________________________________________
-____________________________________________________________
-Got it. I've added this task:
-  [FD][ ] Read report (needs: 2 hours)
-Now you have 7 tasks in the list.
-____________________________________________________________
-____________________________________________________________
-Noted. I've updated this task:
-  [FD][ ] not Read report (needs: 5 hours)
+  1.[T][ ] not read book
+  2.[D][ ] not return book (by: 02 Dec 2019, 3:00 PM)
+  3.[E][ ] not project meeting (from: 02 Dec 2019, 3:00 PM to: 02 Dec 2019, 6:00 PM)
+  4.[FD][X] not Read report (needs: 5 hours)
 ____________________________________________________________
 ____________________________________________________________
  Bye. Hope to see you again soon!

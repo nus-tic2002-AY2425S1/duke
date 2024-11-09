@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class OutputHandler {
     /**
-     * Print line separator
+     * Prints a line separator to the console for better readability
      */
     private static void printSeparator() {
         System.out.println("____________________________________________________________");

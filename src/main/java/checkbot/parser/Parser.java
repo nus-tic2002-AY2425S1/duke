@@ -43,17 +43,14 @@ public class Parser {
                 try {
                     TaskList.setStatus(input);
                     StorageFile.updateFile();
-                    break;
                 } catch (NumberFormatException e) {
                     System.out.println(Messages.NON_INTEGER_NUMBER);
-                    break;
                 } catch (IndexOutOfBoundsException | NullPointerException e) {
                     System.out.println(Messages.INVALID_TASK_NUMBER);
-                    break;
                 } catch (CommandNotFoundException | InvalidInputException e) {
                     System.out.println(e.getMessage());
-                    break;
                 }
+                break;
             case "find":
                 try{
                     TextUi.printMatchingTasks(input.split(" ",2)[1].trim());
@@ -72,14 +69,12 @@ public class Parser {
                     if (task != null) {
                         TextUi.echoAddTask(task);
                     }
-                    break;
                 } catch (DateTimeException | InvalidInputException e) {
                     System.out.println(e.getMessage());
-                    break;
                 } catch (NumberFormatException | IndexOutOfBoundsException e) {
                     System.out.println(Messages.INVALID_DATETIME);
-                    break;
                 }
+                break;
             default:
                 TextUi.printCommandNotFound();
             }

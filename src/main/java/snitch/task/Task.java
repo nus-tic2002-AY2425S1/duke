@@ -1,6 +1,8 @@
+package snitch.task;
+
 public abstract class Task {
-    protected String description;
-    protected boolean isDone;
+    public String description;
+    public boolean isDone;
 
     public Task(String description) {
         this.description = description;

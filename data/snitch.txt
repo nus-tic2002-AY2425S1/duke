@@ -2,3 +2,4 @@ T | 0 | sleep
 D | 0 | return book | June 16
 T | 0 | dota
 E | 0 | project meeting | Mon 2pm | 4pm
+T | 0 | sleep

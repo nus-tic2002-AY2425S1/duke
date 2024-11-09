@@ -1,3 +1,9 @@
+package snitch;
+
+import snitch.task.TaskList;
+import snitch.task.Task;
+import java.util.Scanner;
+
 import java.util.Scanner;
 
 public class Ui {

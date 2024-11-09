@@ -1,3 +1,14 @@
+package snitch.command;
+
+import snitch.task.TaskList;
+import snitch.task.Deadline;
+import snitch.task.Todo;
+import snitch.task.Event;
+import snitch.Ui;
+import snitch.Storage;
+import snitch.SnitchException;
+import snitch.task.Task;
+
 public class AddCommand implements Command {
     private final String fullCommand;
 

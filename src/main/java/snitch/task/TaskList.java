@@ -1,3 +1,5 @@
+package snitch.task;
+
 import java.util.ArrayList;
 
 public class TaskList {

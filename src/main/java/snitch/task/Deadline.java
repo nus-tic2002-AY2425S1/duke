@@ -1,5 +1,7 @@
+package snitch.task;
+
 public class Deadline extends Task {
-    protected String by;
+    public String by;
 
     public Deadline(String description, String by) {
         super(description);

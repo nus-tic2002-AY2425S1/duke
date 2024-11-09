@@ -1,6 +1,17 @@
+package snitch;
+
+import snitch.task.Task;
+import snitch.task.Deadline;
+import snitch.task.Todo;
+import snitch.task.Event;
+import snitch.task.TaskList;
+
 import java.io.*;
 import java.nio.file.*;
 import java.util.ArrayList;
+import snitch.task.*;
+
+
 
 public class Storage {
     private final Path filePath;

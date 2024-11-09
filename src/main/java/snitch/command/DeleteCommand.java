@@ -1,3 +1,12 @@
+package snitch.command;
+
+
+import snitch.task.TaskList;
+import snitch.Ui;
+import snitch.Storage;
+import snitch.SnitchException;
+import snitch.task.Task;
+
 public class DeleteCommand implements Command {
     private final int taskIndex;
 

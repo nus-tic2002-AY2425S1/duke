@@ -1,3 +1,8 @@
+package snitch;
+
+import snitch.command.Command;
+import snitch.task.TaskList;
+
 public class Snitch {
     private Storage storage;
     private TaskList tasks;
@@ -5,10 +10,11 @@ public class Snitch {
 
     public Snitch(String filePath) {
         ui = new Ui();
+        ui.showWelcome();
         storage = new Storage(filePath);
         try {
             tasks = new TaskList(storage.load());
-            System.out.println("Tasks loaded successfully.");
+            System.out.println("Previous Tasks loaded successfully.");
         } catch (SnitchException e) {
             System.out.println("Failed to load tasks: " + e.getMessage());
             tasks = new TaskList(); // Default to empty task list if loading fails
@@ -16,7 +22,7 @@ public class Snitch {
     }
 
     public void run() {
-        ui.showWelcome(); // Display welcome message
+        //ui.showWelcome(); // Display welcome message
         while (true) {
             try {
                 String userInput = ui.readCommand(); // Get user input

@@ -137,4 +137,12 @@ public class TaskList {
         task.markAsUndone();
         return true;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof TaskList taskListObject)) {
+            return false;
+        }
+        return taskList.equals(taskListObject.getAllTask());
+    }
 }

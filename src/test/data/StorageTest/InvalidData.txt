@@ -1,0 +1,5 @@
+X | 0 | Unknown task type
+D | 0 | Submit report
+E | 0 | Attend workshop | | 17:00
+E | 0 | Attend workshop | 09:00 |
+D | 0 | Submit report | invalid-date

@@ -23,6 +23,24 @@ public class Deadline extends Task {
     }
 
     /**
+     * Retrieves the date and time by which the task is due.
+     *
+     * @return The due date and time as a {@code LocalDateTime}.
+     */
+    public LocalDateTime getBy() {
+        return by;
+    }
+
+    /**
+     * Sets the due date and time for the task.
+     *
+     * @param by The new due date and time.
+     */
+    public void setBy(LocalDateTime by) {
+        this.by = by;
+    }
+
+    /**
      * Encodes the {@code Deadline} task into a string format for file storage.
      *
      * @return A {@code String} representing the encoded task.
@@ -48,6 +66,25 @@ public class Deadline extends Task {
     }
 
     /**
+     * Checks if this Deadline task is equal to another object.
+     * A Deadline task is considered equal if it is of the same type, has the same description,
+     * completion status, and due date as the specified task.
+     *
+     * @param obj The object to compare with this Deadline task.
+     * @return {@code true} if the specified object is a Deadline task and is equal to this task; otherwise, {@code false}.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Deadline task)) {
+            return false;
+        }
+        if (!by.equals(task.by)) {
+            return false;
+        }
+        return super.equals(obj);
+    }
+
+    /**
      * Returns a string representation of the task, including its type and due date.
      *
      * @return A {@code String} representing the task.
@@ -55,23 +92,5 @@ public class Deadline extends Task {
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by:" + by.format(TimeParser.CLI_FORMATTER) + ")";
-    }
-
-    /**
-     * Retrieves the date and time by which the task is due.
-     *
-     * @return The due date and time as a {@code LocalDateTime}.
-     */
-    public LocalDateTime getBy() {
-        return by;
-    }
-
-    /**
-     * Sets the due date and time for the task.
-     *
-     * @param by The new due date and time.
-     */
-    public void setBy(LocalDateTime by) {
-        this.by = by;
     }
 }

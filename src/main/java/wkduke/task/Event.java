@@ -26,42 +26,6 @@ public class Event extends Task {
     }
 
     /**
-     * Encodes the {@code Event} task into a string format for file storage.
-     *
-     * @return A {@code String} representing the encoded event task.
-     */
-    @Override
-    public String encode() {
-        return String.format("E | %s | %s | %s | %s",
-                isDone ? "1" : "0",
-                description,
-                from.format(TimeParser.ENCODING_FORMATTER),
-                to.format(TimeParser.ENCODING_FORMATTER)
-        );
-    }
-
-    /**
-     * Checks if the event is occurring on the specified date.
-     *
-     * @param targetDateTime The date to check against the event's time range.
-     * @return {@code true} if the specified date falls within the event's time range; {@code false} otherwise.
-     */
-    @Override
-    public boolean isOnDate(LocalDateTime targetDateTime) {
-        return targetDateTime.isAfter(from) && targetDateTime.isBefore(to);
-    }
-
-    /**
-     * Returns a string representation of the event, including its type, time range, and description.
-     *
-     * @return A {@code String} representing the event.
-     */
-    @Override
-    public String toString() {
-        return "[E]" + super.toString() + " (from:" + from.format(TimeParser.CLI_FORMATTER) + " to:" + to.format(TimeParser.CLI_FORMATTER) + ")";
-    }
-
-    /**
      * Retrieves the start date and time of the event.
      *
      * @return The start date and time as a {@code LocalDateTime}.
@@ -95,5 +59,63 @@ public class Event extends Task {
      */
     public void setTo(LocalDateTime to) {
         this.to = to;
+    }
+
+    /**
+     * Encodes the {@code Event} task into a string format for file storage.
+     *
+     * @return A {@code String} representing the encoded event task.
+     */
+    @Override
+    public String encode() {
+        return String.format("E | %s | %s | %s | %s",
+                isDone ? "1" : "0",
+                description,
+                from.format(TimeParser.ENCODING_FORMATTER),
+                to.format(TimeParser.ENCODING_FORMATTER)
+        );
+    }
+
+    /**
+     * Checks if the event is occurring on the specified date.
+     *
+     * @param targetDateTime The date to check against the event's time range.
+     * @return {@code true} if the specified date falls within the event's time range; {@code false} otherwise.
+     */
+    @Override
+    public boolean isOnDate(LocalDateTime targetDateTime) {
+        return targetDateTime.isAfter(from) && targetDateTime.isBefore(to);
+    }
+
+    /**
+     * Checks if this Event task is equal to another object.
+     * An Event task is considered equal if it is of the same type, has the same description,
+     * completion status, start date, and end date as the specified task.
+     *
+     * @param obj The object to compare with this Event task.
+     * @return {@code true} if the specified object is an Event task and is equal to this task; otherwise, {@code false}.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Event task)) {
+            return false;
+        }
+        if (!from.equals(task.from)) {
+            return false;
+        }
+        if (!to.equals(task.to)) {
+            return false;
+        }
+        return super.equals(obj);
+    }
+
+    /**
+     * Returns a string representation of the event, including its type, time range, and description.
+     *
+     * @return A {@code String} representing the event.
+     */
+    @Override
+    public String toString() {
+        return "[E]" + super.toString() + " (from:" + from.format(TimeParser.CLI_FORMATTER) + " to:" + to.format(TimeParser.CLI_FORMATTER) + ")";
     }
 }

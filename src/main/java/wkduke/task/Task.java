@@ -87,6 +87,24 @@ public abstract class Task {
     }
 
     /**
+     * Checks if this task is equal to another object.
+     * Two tasks are considered equal if they have the same description and completion status.
+     *
+     * @param obj The object to compare with this task.
+     * @return {@code true} if the specified object is equal to this task, otherwise {@code false}.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Task task)) {
+            return false;
+        }
+        if (!description.equals(task.description)) {
+            return false;
+        }
+        return isDone == task.isDone;
+    }
+
+    /**
      * Returns a string representation of the task, including its status and description.
      *
      * @return A {@code String} representing the task.
@@ -95,4 +113,5 @@ public abstract class Task {
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
     }
+
 }

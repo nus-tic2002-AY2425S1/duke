@@ -29,6 +29,21 @@ public class UnmarkCommand extends Command {
     }
 
     /**
+     * Checks if this UnmarkCommand is equal to another object.
+     * An UnmarkCommand is considered equal if it is of the same type and has the same task number.
+     *
+     * @param obj The object to compare with this UnmarkCommand.
+     * @return {@code true} if the specified object is an UnmarkCommand with an equal task number; otherwise, {@code false}.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof UnmarkCommand command)) {
+            return false;
+        }
+        return taskNumber == command.taskNumber;
+    }
+
+    /**
      * Executes the unmark command by marking the specified task as not done, saving the updated
      * task list to storage, and displaying a success or failure message.
      *

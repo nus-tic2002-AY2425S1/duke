@@ -30,6 +30,21 @@ public class ListOnCommand extends Command {
     }
 
     /**
+     * Checks if this ListOnCommand is equal to another object.
+     * A ListOnCommand is considered equal if it is of the same type and has the same date for listing tasks.
+     *
+     * @param obj The object to compare with this ListOnCommand.
+     * @return {@code true} if the specified object is a ListOnCommand with an equal date; otherwise, {@code false}.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ListOnCommand command)) {
+            return false;
+        }
+        return on.equals(command.on);
+    }
+
+    /**
      * Executes the list command by retrieving all tasks occurring on the specified date.
      * Displays the list of tasks or a message if no tasks are found.
      *

@@ -13,8 +13,18 @@ public class Snitch {
         // Set up for user input
         Scanner scanner = new Scanner(System.in);
 
-        // Use ArrayList to store tasks dynamically
-        ArrayList<Task> tasks = new ArrayList<>();
+        // Initialize storage
+        Storage storage = new Storage("./data/snitch.txt");
+        ArrayList<Task> tasks;
+
+        // Load tasks from file
+        try {
+            tasks = storage.load();
+            System.out.println("Tasks loaded successfully.");
+        } catch (SnitchException e) {
+            System.out.println("Failed to load tasks: " + e.getMessage());
+            tasks = new ArrayList<>();
+        }
 
         // Keep accepting user input
         while (true) {
@@ -56,7 +66,7 @@ public class Snitch {
                 else if (userInput.startsWith("deadline")) {
                     String[] parts = userInput.split("/by ");
                     if (parts.length < 2) {
-                        throw new SnitchException("Come on man!!! The deadline description cannot be empty or the format is wrong.");
+                        throw new SnitchException("Come on man!!! The deadline description cannot be empty or the format is wrong. (Do it like this: deadline task /by xxxx)");
                     }
                     String description = parts[0].substring(9).trim();
                     String by = parts[1].trim();
@@ -97,6 +107,10 @@ public class Snitch {
                 else {
                     throw new SnitchException("Come on man!!! I don't know what that means.");
                 }
+
+                // Save tasks after every modification
+                storage.save(tasks);
+
             } catch (SnitchException e) {
                 System.out.println("____________________________________________________________");
                 System.out.println(e.getMessage());

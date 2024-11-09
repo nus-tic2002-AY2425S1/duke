@@ -57,13 +57,8 @@ public class Chad {
      * Runs the main application loop, displaying the welcome message
      * and executing user commands until termination.
      */
-    public void run() {
-        ui.showWelcome(); // Show the welcome message to the user
-        isExit = false; // Set exit condition to false to enter the loop
-        while (!isExit) {
-            String fullCommand = ui.readCommand();
-            isExit = executeUserCommand(fullCommand); // Main change
-        }
+    public boolean shallExit() {
+        return isExit;
     }
 
 
@@ -73,7 +68,7 @@ public class Chad {
     boolean executeUserCommand(String fullCommand) {
         try {
             // Read the command from the user
-            ui.showLine(); // Show the divider line
+            //ui.showLine(); // Show the divider line
             Command command = Parser.parse(fullCommand); // Parse the command string into a Command object
             command.execute(tasks, ui, storage); // Execute the command with the current task list, UI, and storage
             return command.isExit();
@@ -81,9 +76,7 @@ public class Chad {
         } catch (ChadException e) {
             ui.showError(e.getMessage()); // Display error message to the user
             return false;
-        } finally {
-            ui.showLine(); // Show the divider line regardless of outcome
-        }
+        } 
     }
 
     /**
@@ -98,7 +91,14 @@ public class Chad {
      *
      * @param args Command-line arguments (not used in this implementation).
      */
-    public static void main(String[] args) {
-        new Chad(filePath).run(); // Create a new instance of Chad and start the application
+
+
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String fullCommand) {
+
+        isExit = executeUserCommand(fullCommand);
+        return ui.getChadResponse();
     }
 }

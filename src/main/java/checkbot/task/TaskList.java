@@ -61,7 +61,7 @@ public class TaskList {
      * @throws CommandNotFoundException Missing /by command
      * @throws InvalidInputException Empty description / time
      * @throws NumberFormatException Wrong format of datetime
-     * @throws NullPointerException Wrong format of datetime
+     * @throws IndexOutOfBoundsException Wrong format of datetime
      * @throws DateTimeException Invalid datetime
      */
     public static Deadline addDeadline(String input)
@@ -96,7 +96,7 @@ public class TaskList {
      * @throws CommandNotFoundException Missing /from or /to command
      * @throws InvalidInputException Empty description / time
      * @throws NumberFormatException Wrong format of datetime
-     * @throws NullPointerException Wrong format of datetime
+     * @throws IndexOutOfBoundsException Wrong format of datetime
      * @throws DateTimeException Invalid datetime
      */
     public static Event addEvent(String input)
@@ -134,7 +134,7 @@ public class TaskList {
      * @return task object
      * @throws DateTimeException Invalid datetime
      * @throws NumberFormatException Wrong format of datetime
-     * @throws NullPointerException Wrong format of datetime
+     * @throws IndexOutOfBoundsException Wrong format of datetime
      * @throws InvalidInputException Empty description
      */
     public static Task addTask(String input)

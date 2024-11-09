@@ -96,6 +96,9 @@ public class TextUi {
         System.out.println(Messages.DIVIDER);
     }
 
+    /**
+     * Prints all undone tasks in order of priority.
+     */
     public static void printRankedTasks() {
         System.out.println(Messages.DIVIDER);
         System.out.println("Here are the undone task(s) in order of priority:");

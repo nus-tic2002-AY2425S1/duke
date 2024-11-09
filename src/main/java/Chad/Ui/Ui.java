@@ -5,15 +5,13 @@ import Chad.TaskList.TaskList;
 
 public interface Ui {
 
-    static void showMsg(String myMsg) {
-        System.out.println(myMsg);
-    }
+    
 
-    void showWelcome();
+    String showWelcome();
 
-    String readCommand();
+    //String readCommand();
 
-    void showLine();
+    void showMsg(String msg);
 
     void showError(String errmsg);
 

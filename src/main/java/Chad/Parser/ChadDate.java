@@ -1,7 +1,5 @@
 package Chad.Parser;
 
-import Chad.Ui.Ui;
-
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -22,7 +20,7 @@ public class ChadDate {
             // should allow user put any thing, example "/by im not sure"
             //how to notify user without throw exception(break the code run)
             // can I just print a line here, but will vilate single responsibility principle
-            Ui.showMsg("Opps!!date not recongized,however I'll record it. correct date format: YYYY-MM-DD");
+            //ui.showMsg("Opps!!date not recongized,however I'll record it. correct date format: YYYY-MM-DD");
             return inputDate;
         }
 

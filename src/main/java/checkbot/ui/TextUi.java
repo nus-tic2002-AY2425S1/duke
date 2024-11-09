@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import static java.util.Comparator.comparing;
-import static java.util.stream.Collectors.toList;
 
 public class TextUi {
     public static Scanner scanInput = new Scanner(System.in);

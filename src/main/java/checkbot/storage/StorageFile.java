@@ -141,16 +141,12 @@ public class StorageFile {
     /**
      * Reads file from existing storage file.
      */
-    public static void readFile() {
+    public static void readFile() throws IOException {
         try {
             StorageFile.recoverTasks(StorageFile.taskFile);
         } catch (FileNotFoundException e) {
-            try {
-                StorageFile.taskFile.getParentFile().mkdir();
-                StorageFile.taskFile.createNewFile();
-            } catch (IOException ioe) {
-                throw new RuntimeException(ioe);
-            }
+            StorageFile.taskFile.getParentFile().mkdir();
+            StorageFile.taskFile.createNewFile();
         }
     }
 }

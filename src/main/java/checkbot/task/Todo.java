@@ -8,6 +8,7 @@ public class Todo extends Task {
     protected LocalDateTime startDateTime;
     protected LocalDateTime endDateTime;
 
+    // normal todo task
     public Todo(String description) {
         super(description);
         this.taskType = TaskType.TODO;
@@ -15,6 +16,7 @@ public class Todo extends Task {
         this.endDateTime = null;
     }
 
+    // period todo task
     public Todo(String description, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         super(description);
         this.taskType = TaskType.TODO;
@@ -59,11 +61,13 @@ public class Todo extends Task {
      */
     public String getFileView() {
         if (startDateTime == null && endDateTime == null) {
+            // normal todo task
             return this.getTaskIcon() + " | " +
                     this.status.toString() + " | " +
                     this.priority.toString() + " | " +
                     this.getDescription();
         } else {
+            // period todo task
             return this.getTaskIcon() + " | " +
                     this.status.toString() + " | " +
                     this.priority.toString() + " | " +

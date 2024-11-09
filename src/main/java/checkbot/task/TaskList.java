@@ -13,22 +13,19 @@ public class TaskList {
     public static ArrayList<Task> tasks = new ArrayList<>();
 
     /**
-     * Adds todo task.
+     * Adds period todo task.
      *
-     * @param input Task description
+     * @param input Task description /between time /and time
      * @return Todo object
+     * @throws CommandNotFoundException Missing /between or /and command
+     * @throws InvalidInputException Missing description
+     * @throws NumberFormatException Wrong format of datetime
+     * @throws IndexOutOfBoundsException Wrong format of datetime
+     * @throws DateTimeException Invalid datetime
      */
-    public static Todo addTodo(String input) throws CommandNotFoundException, InvalidInputException,
+    public static Todo addPeriodTodo(String input) throws CommandNotFoundException, InvalidInputException,
             NumberFormatException, IndexOutOfBoundsException, DateTimeException {
-        /** If input doesn't have both /between and /and keywords, it's a normal todo task */
-        if (!(input.contains("/between") || input.contains("/and"))) {
-            Todo task = new Todo(input);
-            TaskList.tasks.add(task);
-            return task;
-        }
-
-        /** If it has either one of the 2 keywords, it's a do within a period task */
-        // input format: <description> /between <DD/MM/YYYY HHMM(24H)> /and <DD/MM/YYYY HHMM(24H)>
+        //input format: <description> /between <DD/MM/YYYY HHMM(24H)> /and <DD/MM/YYYY HHMM(24H)>
         if (!input.contains("/between") || !input.contains("/and")){
             throw new CommandNotFoundException(Messages.TODO_ERROR);
         }
@@ -49,6 +46,29 @@ public class TaskList {
         }
 
         Todo task = new Todo(description, Parser.parseDateTime(startDateTime), Parser.parseDateTime(endDateTime));
+        TaskList.tasks.add(task);
+        return task;
+    }
+
+    /**
+     * Adds todo task.
+     *
+     * @param input Task description
+     * @return Todo object
+     * @throws CommandNotFoundException Missing /between or /and command
+     * @throws InvalidInputException Missing description
+     * @throws NumberFormatException Wrong format of datetime
+     * @throws IndexOutOfBoundsException Wrong format of datetime
+     * @throws DateTimeException Invalid datetime
+     */
+    public static Todo addTodo(String input) throws CommandNotFoundException, InvalidInputException,
+            NumberFormatException, IndexOutOfBoundsException, DateTimeException {
+        // If input contains /between or /and, it's a period task
+        if (input.contains("/between") || input.contains("/and")){
+            return addPeriodTodo(input);
+        }
+
+        Todo task = new Todo(input);
         TaskList.tasks.add(task);
         return task;
     }

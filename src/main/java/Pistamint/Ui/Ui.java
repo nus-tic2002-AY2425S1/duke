@@ -123,4 +123,9 @@ public class Ui {
     public static void stringIndexOutOfBound(String t){
         System.out.println(Ui.start + "\n\tOOPS!!! The description of " + t + " is incomplete." + Ui.end);
     }
+    public static void showItemCloned(Task task){
+        System.out.println("\tItem successfully cloned and added to list");
+        System.out.println("\t" + "[" + task.getSymbol() + "]" + "[" + task.getStatusIcon() + "] " + task.getDescription());
+        System.out.println("\tNow you have " + taskList.getSize()  + " task(s) in the list.\n\t" + line);
+    }
 }

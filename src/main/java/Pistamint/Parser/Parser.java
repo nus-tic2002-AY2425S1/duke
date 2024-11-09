@@ -29,24 +29,26 @@ public class Parser {
      * @param taskData are each line stored in duke.txt storage file
      */
     public static void parseTask(String taskData) {
-        char symbol = taskData.charAt(0);
-        String[] dataParts = taskData.split("\\|");
-        boolean isDone = dataParts[1].equals("1");
-        String description = dataParts[2];
-        Task task;
-        if (symbol == 'T') {
-            task = new Todo(description, symbol);
-            taskList.addTask(task, true);
+        if(!taskData.trim().isEmpty()) {
+            char symbol = taskData.charAt(0);
+            String[] dataParts = taskData.split("\\|");
+            boolean isDone = dataParts[1].equals("1");
+            String description = dataParts[2];
+            Task task;
+            if (symbol == 'T') {
+                task = new Todo(description, symbol);
+                taskList.addTask(task, true);
 
-        } else if (symbol == 'D') {
-            task = new Deadline(description, symbol);
-            taskList.addTask(task, true);
-        } else {
-            task = new Event(description, symbol);
-            taskList.addTask(task, true);
-        }
-        if (isDone) {
-            task.markAsDone();
+            } else if (symbol == 'D') {
+                task = new Deadline(description, symbol);
+                taskList.addTask(task, true);
+            } else {
+                task = new Event(description, symbol);
+                taskList.addTask(task, true);
+            }
+            if (isDone) {
+                task.markAsDone();
+            }
         }
     }
 
@@ -162,7 +164,7 @@ public class Parser {
             while(reader!=null) {
                 System.out.print(Ui.start);
                 if (reader.equalsIgnoreCase("1")) {
-                    System.out.print("\n\tNew From:");
+                    System.out.print("\n\tNew Deadline:");
                     input = new Scanner(System.in);
                     deadline = LocalDate.parse(input.nextLine());
                     dL.setDeadline(deadline.format(DateTimeFormatter.ofPattern("MMM dd yyyy")));
@@ -204,7 +206,7 @@ public class Parser {
             String input;
             Scanner reader;
             if (task.getSymbol() == 'T') {
-                System.out.println(Ui.start +"[Current:("+task.getDescription().trim()+")]");
+                System.out.println(Ui.start +"\n\t[Current:("+task.getDescription().trim()+")]");
                 System.out.print("\n\tNew Description:");
                 reader = new Scanner(System.in);
                 task.setDescription(reader.nextLine());
@@ -236,7 +238,15 @@ public class Parser {
         }
 
     }
-
+    public static void cloneTask(Task t) {
+        try {
+            taskList.addTask(t, false);
+            Storage.refreshFile(taskList.getTasks());
+        }
+        catch (IOException e) {
+            Ui.runTimeException(e.getMessage());
+        }
+    }
     /**
      * This method is used to process different type of inputs that user have keyed into the system.
      * For each of the commands keyed, it will call different Parser/Ui/Storage methods.
@@ -320,7 +330,31 @@ public class Parser {
                     Ui.indexOutOfBound();
                 }
                 break;
-
+            case "clone":
+                try {
+                    if (input.length() == command.length()) {
+                        System.out.println(Ui.start + "\n\tHere is the list of items that you have in your list currently");
+                        Ui.printItems();
+                        System.out.println("\tWhich item do you want to clone? Please indicate 'clone follow by an Integer eg. clone 1'" + Ui.end);
+                    } else {
+                        int index = Integer.parseInt(input.split(" ")[1]) - 1;
+                        Task task = taskList.getTasks().get(index);
+                        cloneTask(task);
+                        Ui.showItemCloned(taskList.getTasks().get(taskList.getSize()-1));
+                        System.out.println("\tDo you wish to update this item?(Y/N)"+Ui.end);
+                        Scanner reader = new Scanner(System.in);
+                        if(reader.nextLine().equalsIgnoreCase("y")){
+                            parseUpdate(taskList.getTasks().get(taskList.getSize() - 1));
+                        }else{
+                            System.out.println(Ui.end);
+                        }
+                    }
+                } catch (NumberFormatException e) {
+                    Ui.numberFormat(command);
+                } catch (IndexOutOfBoundsException e) {
+                    Ui.indexOutOfBound();
+                }
+                break;
             default:
                 System.out.println(Ui.start + "\n\tOOPS!! I'm sorry, but I don't know what that means :(" + Ui.end);
         }

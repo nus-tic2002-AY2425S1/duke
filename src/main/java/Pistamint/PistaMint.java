@@ -1,5 +1,4 @@
 package Pistamint;
-import Pistamint.General.Task;
 import Pistamint.TaskList.TaskList;
 import Pistamint.Ui.Ui;
 import Pistamint.Storage.Storage;
@@ -16,7 +15,7 @@ public class PistaMint {
     public static int length = 50;
     public static String line = "-".repeat(length);
     public static String input = "";
-    public static String directoryPath = "data";
+    public static String directoryPath = "../../../data";
     public static String filePath = directoryPath + "/duke.txt";
     public PistaMint(String filePath) throws FileNotFoundException {
         storage=new Storage(directoryPath,filePath);
@@ -41,6 +40,6 @@ public class PistaMint {
         TaskList taskList = new TaskList(storage);   // Instantiate Pistamint.TaskList
         Parser parser = new Parser(taskList);
         Ui ui = new Ui(taskList);
-        new PistaMint("./data/duke.txt").run();
+        new PistaMint("../../../data/duke.txt").run();
     }
 }

@@ -1,4 +1,6 @@
-public class Todo extends Task{
+package josbot.task;
+
+public class Todo extends Task {
 
     public Todo(String description)
     {

@@ -1,3 +1,5 @@
+package josbot;
+
 public class JosBotException extends Exception {
 
     public JosBotException(String message) {

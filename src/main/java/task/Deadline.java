@@ -34,9 +34,8 @@ public class Deadline extends Task {
      * @param due represents the due date / time of the {@code Deadline} task
      */
     public Deadline(String description, LocalDateTime due) {
-        this.description = description;
+        super(description);
         this.due = due;
-        // isDone = false;
     }
 
     /**

@@ -24,12 +24,17 @@ public abstract class Task {
         this.isDone = isDone;
     }
 
+    public Task(String description) {
+        this.description = description;
+        this.isDone = false;
+    }
+
     /**
      * Default constructor that initializes the task with empty string description and set the task to be undone
      */
     public Task() {
         description = Constants.EMPTY_STRING;
-        isDone = false;
+        this.isDone = false;
     }
 
     /**

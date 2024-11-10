@@ -40,7 +40,7 @@ public class Event extends Task {
      * @param endDateTime represents the end date and time of the {@code Event} task
      */
     public Event(String description, LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        this.description = description;
+        super(description);
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
     }

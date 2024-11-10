@@ -25,7 +25,9 @@ public class Ui {
      * @return The user input as a String.
      */
     public String readCommand() {
-        return scanner.nextLine();
+        String input = scanner.nextLine();
+        assert input != null && !input.trim().isEmpty() : "Input command cannot be null or empty"; // Valid command
+        return input;
     }
 
     /**

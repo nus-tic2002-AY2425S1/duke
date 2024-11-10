@@ -37,7 +37,7 @@ public class AddCommand implements Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws SnitchException {
         if (fullCommand.startsWith("todo")) {
-            String description = fullCommand.substring(5).trim();
+            String description = fullCommand.substring(4).trim();
             if (description.isEmpty()) {
                 throw new SnitchException("Come on man!!! The description of a todo cannot be empty.");
             }

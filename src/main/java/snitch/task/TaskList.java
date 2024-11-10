@@ -4,6 +4,7 @@ import snitch.command.FuzzySearch;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+
 /**
  * Represents a list of tasks.
  * Provides methods to add, retrieve, and remove tasks.
@@ -16,6 +17,7 @@ public class TaskList {
      */
     public TaskList() {
         this.tasks = new ArrayList<>();
+        assert this.tasks != null : "Task list should be initialized as non-null";
     }
 
     /**
@@ -24,6 +26,7 @@ public class TaskList {
      * @param tasks An ArrayList of tasks to initialize the TaskList with.
      */
     public TaskList(ArrayList<Task> tasks) {
+        assert tasks != null : "Provided task list should not be null";
         this.tasks = tasks;
     }
 
@@ -33,6 +36,7 @@ public class TaskList {
      * @param task The task to be added.
      */
     public void add(Task task) {
+        assert task != null : "Task to add should not be null";
         tasks.add(task);
     }
 
@@ -44,6 +48,7 @@ public class TaskList {
      * @throws IndexOutOfBoundsException If the index is out of range.
      */
     public Task get(int index) {
+        assert index >= 0 && index < tasks.size() : "Index out of bounds for get method";
         return tasks.get(index);
     }
 
@@ -55,6 +60,7 @@ public class TaskList {
      * @throws IndexOutOfBoundsException If the index is out of range.
      */
     public Task remove(int index) {
+        assert index >= 0 && index < tasks.size() : "Index out of bounds for remove method";
         return tasks.remove(index);
     }
 
@@ -82,8 +88,10 @@ public class TaskList {
      * @return An ArrayList containing all tasks.
      */
     public ArrayList<Task> getAllTasks() {
+        assert tasks != null : "Task list should not be null when fetching all tasks";
         return tasks;
     }
+
     /**
      * Finds tasks whose descriptions approximately match the specified keyword.
      *
@@ -91,6 +99,8 @@ public class TaskList {
      * @return A TaskList containing tasks that partially match the keyword.
      */
     public TaskList findTasksContaining(String keyword) {
+        assert keyword != null && !keyword.isEmpty() : "Search keyword should not be null or empty";
+
         final int MAX_DISTANCE = 2;
 
         ArrayList<Task> matchingTasks = tasks.stream()

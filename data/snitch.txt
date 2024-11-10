@@ -1,5 +1,4 @@
 T | 0 | sleep
-T | 0 | deadline
 D | 0 | eat | 28/12/1991 1600
 E | 0 | movie | 28/11/1900 1600 | 28/12/1991 1400
 T | 0 | return book

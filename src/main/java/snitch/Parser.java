@@ -23,8 +23,12 @@ public class Parser {
         } else if (input.startsWith("todo") || input.startsWith("deadline") || input.startsWith("event")) {
             return new AddCommand(input);
         } else if (input.startsWith("delete")) {
+            String argument = input.substring(6).trim(); // Extracts everything after "delete"
+            if (argument.isEmpty()) {
+                throw new SnitchException("Invalid command. Try delete xxx (Task number).");
+            }
             try {
-                return new DeleteCommand(Integer.parseInt(input.substring(7).trim()));
+                return new DeleteCommand(Integer.parseInt(argument));
             } catch (NumberFormatException e) {
                 throw new SnitchException("Invalid task number format. Please enter a valid number.");
             }

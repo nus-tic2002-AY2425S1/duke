@@ -27,6 +27,7 @@ public class Storage {
      * @param filePath The relative path to the file where tasks will be stored.
      */
     public Storage(String filePath) {
+        assert filePath != null && !filePath.isEmpty() : "File path must not be null or empty";
         this.filePath = Paths.get(filePath);
     }
 
@@ -38,8 +39,9 @@ public class Storage {
      * @throws SnitchException If an error occurs while loading tasks.
      */
     public ArrayList<Task> load() throws SnitchException {
-        ArrayList<Task> tasks = new ArrayList<>();
+        assert filePath != null : "File path must not be null";
 
+        ArrayList<Task> tasks = new ArrayList<>();
         if (!Files.exists(filePath)) {
             createFile(); // Create file if it doesn't exist
             return tasks;
@@ -54,6 +56,7 @@ public class Storage {
             throw new SnitchException("Failed to load tasks from file.");
         }
 
+        assert tasks != null : "Loaded tasks must not be null";
         return tasks;
     }
 
@@ -64,8 +67,11 @@ public class Storage {
      * @throws SnitchException If an error occurs while saving tasks.
      */
     public void save(ArrayList<Task> tasks) throws SnitchException {
+        assert tasks != null : "Tasks to save must not be null";
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath.toFile()))) {
             for (Task task : tasks) {
+                assert task != null : "Task to save must not be null";
                 writer.write(taskToFileString(task));
                 writer.newLine();
             }
@@ -80,6 +86,8 @@ public class Storage {
      * @throws SnitchException If an error occurs while creating the file.
      */
     private void createFile() throws SnitchException {
+        assert filePath != null : "File path must not be null";
+
         try {
             Files.createDirectories(filePath.getParent());
             Files.createFile(filePath);
@@ -96,7 +104,11 @@ public class Storage {
      * @throws SnitchException If the line format is unrecognized.
      */
     private Task parseTask(String line) throws SnitchException {
+        assert line != null && !line.isEmpty() : "Line to parse must not be null or empty";
+
         String[] parts = line.split(" \\| ");
+        assert parts.length >= 3 : "Line must have at least 3 parts";
+
         String type = parts[0];
         boolean isDone = parts[1].equals("1");
         String description = parts[2];
@@ -128,6 +140,8 @@ public class Storage {
      * @return The formatted string representation of the task.
      */
     private String taskToFileString(Task task) {
+        assert task != null : "Task to serialize must not be null";
+
         if (task instanceof Todo) {
             return "T | " + (task.isDone() ? "1" : "0") + " | " + task.getDescription();
         } else if (task instanceof Deadline) {

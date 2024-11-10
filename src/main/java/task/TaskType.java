@@ -13,16 +13,16 @@ public enum TaskType {
     EVENT(Constants.E),
     FIXED_DURATION(Constants.FD);
 
-    private final String type;
+    private final String code;
 
     /**
      * Constructor for the {@code TaskType} enum. 
      * Constructs a {@code TaskType} with the specified code.
      * 
-     * @param type represents the string code that represents the {@code TaskType}
+     * @param code represents the string code that represents the {@code TaskType}
      */
-    TaskType(String type) {
-        this.type = type;
+    TaskType(String code) {
+        this.code = code;
     }
 
     /**
@@ -32,7 +32,7 @@ public enum TaskType {
      */
     @Override
     public String toString() {
-        return type;
+        return code;
     }
 
     /**
@@ -45,10 +45,22 @@ public enum TaskType {
     // Solution below adapted from https://stackoverflow.com/questions/604424/how-to-get-an-enum-value-from-a-string-value-in-java
     public static TaskType getTaskType(String code) {
         for (TaskType taskType : TaskType.values()) {
-            if (taskType.type.equals(code)) {
+            if (taskType.code.equals(code)) {
                 return taskType;
             }
         }
         throw new IllegalArgumentException("No constant with text " + code + " found");
+    }
+
+    public static String getValidTaskType() {
+        StringBuilder validTaskTypes = new StringBuilder();
+        for (TaskType taskType : TaskType.values()) {
+            // System.out.println(taskType.code);
+            validTaskTypes.append("`").append(taskType.code).append("`").append(",");
+        }
+        if (validTaskTypes.length() > 0) {
+            validTaskTypes.setLength(validTaskTypes.length() - 1);
+        }
+        return validTaskTypes.toString();
     }
 }

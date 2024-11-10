@@ -9,6 +9,11 @@ public class FixedDuration extends Task {
     private double duration;
     private static final String SPACE = Constants.SPACE;
 
+    public FixedDuration(String description, boolean isDone, double duration) {
+        super(description, isDone);
+        this.duration = duration;
+    }
+
     public FixedDuration(String description, double duration) {
         super(description);
         this.duration = duration;

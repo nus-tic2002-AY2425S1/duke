@@ -10,6 +10,7 @@ import exception.TaskListDecoderException;
 import parser.DateTimeParser;
 import task.Deadline;
 import task.Event;
+import task.FixedDuration;
 import task.Task;
 import task.TaskList;
 import task.TaskType;
@@ -24,6 +25,7 @@ public class TaskListDecoder {
     private static final String EXPECTED_FORMAT_TODO = "T | 0 | <task description>";
     private static final String EXPECTED_FORMAT_DEADLINE = "D | 0 | <task description> | <task deadline>";
     private static final String EXPECTED_FORMAT_EVENT = "E | 0 | <task description> | <event start date/time> | <event end date/time>";
+    private static final String EXPECTED_FORMAT_FD = "FD | 0 | <task description> | <required duration in hours>";
     
     /**
      * Decodes a list of encoded tasks into a {@code TaskList} object, which will contain the decoded tasks.
@@ -53,8 +55,8 @@ public class TaskListDecoder {
             throw new FileContentException(
                 String.format("%s. %s.", Messages.MESSAGE_EMPTY_LINE, Messages.MESSAGE_INVALID_TASKS_DATA),
                 String.format("Received `%s`", encodedTask),
-                String.format("Expected format: `%s` or `%s` or `%s`", EXPECTED_FORMAT_TODO, 
-                              EXPECTED_FORMAT_DEADLINE, EXPECTED_FORMAT_EVENT)
+                String.format("Expected format: `%s` or `%s` or `%s` or `%s`", EXPECTED_FORMAT_TODO, 
+                              EXPECTED_FORMAT_DEADLINE, EXPECTED_FORMAT_EVENT, EXPECTED_FORMAT_FD)
             );
         }
     }
@@ -79,7 +81,9 @@ public class TaskListDecoder {
 
     private static TaskType getTaskType(String taskTypeString) throws FileContentException {
         final String ERROR_GET_TASKTYPE = "Error: Unknown task type.";
-        final String VALID_TASK_TYPE = "`T`, `D`, or `E`";
+        final String VALID_TASK_TYPE = TaskType.getValidTaskType();
+        // System.out.println("Valid task types are " + VALID_TASK_TYPE);
+        // final String VALID_TASK_TYPE = "`T`, `D`, `E`, `FD`";
 
         TaskType taskType;
         
@@ -176,6 +180,15 @@ public class TaskListDecoder {
                 
                 task = new Event(description, isDone, startDateTime, endDateTime);
                 break;
+
+            case FIXED_DURATION:
+
+                validateTaskDataLength(taskDataLength, 4, taskData, EXPECTED_FORMAT_FD);
+                String[] durationString = taskData[3].split(" ");
+                double duration = Double.parseDouble(durationString[0]);
+                task = new FixedDuration(description, isDone, duration);
+                break;
+
             default:
                 throw new TaskListDecoderException("Invalid task type: " + taskType);
         }

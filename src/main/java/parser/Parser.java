@@ -49,10 +49,6 @@ public class Parser {
     public static final String EVENT_COMMAND_ARGS_REGEX = "^(?<description>.+) /from (?<start>.+) /to (?<end>.+)$";
     public static final Pattern EVENT_COMMAND_ARGS_FORMAT = Pattern.compile(EVENT_COMMAND_ARGS_REGEX);
     
-    // public static final String FD_COMMAND_ARGS_REGEX = "^fd\s+([^\s/]+(?:\s+[^\s/]+)*)\s+/duration\s+(\d+(\.\d+)?)\s*$";
-    // public static final String FD_COMMAND_ARGS_REGEX = "^fd\\s+(?<taskDescription>.+?)\\s+/duration\\s+(?<duration>\\d+(\\.\\d+)?)\\s*$";
-    // public static final String FD_COMMAND_ARGS_REGEX = "^(?<description>.+) /duration (?<duration>.+)$";
-    // public static final String FD_COMMAND_ARGS_REGEX = "^(?<description>.+?) /duration (?<duration>\\d+)";
     public static final String FD_COMMAND_ARGS_REGEX = "^(?<description>.+?) /duration (?<duration>\\d+(\\.\\d+)?)";
     public static final Pattern FD_COMMAND_ARGS_FORMAT = Pattern.compile(FD_COMMAND_ARGS_REGEX);
 

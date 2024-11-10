@@ -33,7 +33,7 @@ public class TaskListEncoderTest {
     public void encodeTaskList_singleTask() {
         TypicalTasks typicalTasks = new TypicalTasks();
         Task task = typicalTasks.todo_buyGroceries;
-        // TaskList taskList = new TaskList();
+        
         taskList.addTask(task);
         
         List<String> encodedTaskList = TaskListEncoder.encodeTaskList(taskList);
@@ -48,7 +48,6 @@ public class TaskListEncoderTest {
         Task task1 = typicalTasks.deadline_submitReport;
         Task task2 = typicalTasks.deadline_resolveCustomerTicket;
 
-        // TaskList taskList = new TaskList();
         taskList.addTask(task1);
         taskList.addTask(task2);
         

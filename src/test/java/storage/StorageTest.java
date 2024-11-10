@@ -3,7 +3,6 @@ package storage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-// import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -47,7 +46,6 @@ public class StorageTest {
         String dataFolderPath = Paths.get(tasksFilePath).getParent().toString();
         Files.deleteIfExists(Paths.get(FILE_STORAGE_PATH));
         Files.deleteIfExists(Paths.get(dataFolderPath));
-        // Files.deleteIfExists(Paths.get("./data"));
     }
 
     @Test
@@ -80,8 +78,6 @@ public class StorageTest {
             // Create the data folder if it doesn't exist
             dataFolder.mkdirs();
         }
-
-        // Files.deleteIfExists(dataFolder.toPath());
         
         storage.checkDataFolderExists();
         assertTrue(dataFolder.exists(), "Data folder should exist after the execution of the checkDataFolderExists method");
@@ -92,9 +88,6 @@ public class StorageTest {
         // Ensure the task file does not exist
         File tasksFile = storage.getFile();
         Files.deleteIfExists(tasksFile.toPath());
-        // if (taskFile.exists()) {
-        //     taskFile.delete();
-        // }
 
         storage.checkTaskFileExists();
         assertTrue(tasksFile.exists(), "Task file should be created");
@@ -161,7 +154,6 @@ public class StorageTest {
         sampleTaskList.addTask(typicalTasks.event_projectLaunch);
 
         // Prepare the task file with sample data
-        // Files.write(storage.getFilePath(), sampleTaskList);
         storage.saveTasks(sampleTaskList);
 
         TaskList taskList = storage.loadTasks();

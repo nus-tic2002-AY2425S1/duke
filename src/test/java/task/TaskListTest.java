@@ -14,8 +14,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-// import java.time.LocalDateTime;
-
 public class TaskListTest {
     
     private TypicalTasks typicalTasks = new TypicalTasks();
@@ -49,33 +47,6 @@ public class TaskListTest {
 
         emptyTaskList = new TaskList();
         
-        // todo_doHomework = new Todo("Do homework", true);
-        // todo_buyGroceries = new Todo("Buy groceries", false);
-        // todo_washDishes = new Todo("Wash dishes", true);
-
-        // deadline_submitReport = new Deadline("Submit report", false, LocalDateTime.of(2021, 4, 24, 14, 33));
-        // deadline_resolveCustomerTicket = new Deadline("Resolve customer ticket", true, LocalDateTime.of(2022, 8, 4, 9, 15));
-        // deadline_finalizeGuestList = new Deadline("Finalize guest list", false, LocalDateTime.of(2021, 6, 24, 14, 33));
-
-        // event_projectLaunch = new Event("Project launch", true, LocalDateTime.of(2024, 11, 9, 14, 30), LocalDateTime.of(2026, 12, 25, 9, 0));
-        // event_birthday = new Event("Birthday", false, LocalDateTime.of(2024, 11, 9, 18, 45), LocalDateTime.of(2024, 11, 9, 22, 45));
-        // event_anniversary = new Event("Anniversary", true, LocalDateTime.of(2025, 1, 1, 0, 0), LocalDateTime.of(2025, 1, 1, 23, 59));
-
-        // emptyTaskList = new TaskList();
-        // defaultTaskList = new TaskList();
-
-        // defaultTaskList.addTask(todo_doHomework);           // Index 0
-        // defaultTaskList.addTask(todo_buyGroceries);         // Index 1
-        // // defaultTaskList.addTask(todo_washDishes);
-
-        // defaultTaskList.addTask(deadline_submitReport);     // Index 2
-        // defaultTaskList.addTask(deadline_resolveCustomerTicket);        // Index 3
-        // // defaultTaskList.addTask(deadline_finalizeGuestList);
-
-        // defaultTaskList.addTask(event_projectLaunch);       // Index 4
-        // defaultTaskList.addTask(event_birthday);            // Index 5
-        // // defaultTaskList.addTask(event_anniversary);
-
     }
 
     @Test
@@ -161,20 +132,6 @@ public class TaskListTest {
 
         assertFalse(todo_buyGroceries.getIsDone());
         markTask_success(todo_buyGroceries, 1);
-
-        // int index_todo_doHomework = 0;
-        // int index_todo_buyGroceries = 1;
-        
-        // assertNotNull(todo_doHomework);
-        // assertNotNull(todo_buyGroceries);
-        
-        // // Value of isDone for todo_doHomework is originally true
-        // // Value of isDone for todo_buyGroceries is originally false
-        // assertTrue(todo_doHomework.getIsDone());
-        // assertFalse(todo_buyGroceries.getIsDone());
-
-        // assertFalse(defaultTaskList.markTask(0));
-        // assertTrue(defaultTaskList.markTask(1));
     }
 
     @Test
@@ -184,19 +141,6 @@ public class TaskListTest {
         
         assertTrue(deadline_resolveCustomerTicket.getIsDone());
         markTask_success(deadline_resolveCustomerTicket, 3);
-
-        // // Value of isDone for deadline_submitReport (index 0) is originally false
-        // // Value of isDone for deadline_resolveCustomerTicket (index 1) is originally true
-        // int index_deadline_submitReport = 2;
-        // int index_deadline_resolveCustomerTicket = 3;
-
-        // assertNotNull(deadline_submitReport);
-        // assertFalse(deadline_submitReport.getIsDone());
-        // assertTrue(defaultTaskList.markTask(index_deadline_submitReport));
-        
-        // assertNotNull(deadline_resolveCustomerTicket);
-        // assertTrue(deadline_resolveCustomerTicket.getIsDone());
-        // assertFalse(defaultTaskList.markTask(index_deadline_resolveCustomerTicket));
 
     }
 

@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import common.Constants;
 import common.Messages;
 import exception.FileContentException;
 import task.Event;
@@ -65,7 +66,7 @@ public class TaskListDecoderTest {
 
     @Test
     public void decodeTaskList_emptyTask() {
-        encodedTasks = Arrays.asList("");
+        encodedTasks = Arrays.asList(Constants.EMPTY_STRING);
         FileContentException exception = assertThrows(FileContentException.class, () -> {
             TaskListDecoder.decodeTaskList(encodedTasks);
         });
@@ -83,8 +84,6 @@ public class TaskListDecoderTest {
             TaskListDecoder.decodeTaskList(encodedTasks);
         });
 
-        //Task data has missing components. Please ensure that all lines in ./data/tasks.txt contain valid data.
-        //Task data has missing components. Please ensure that all lines in ./data/tasks.txt contain valid data
         assertEquals(
             String.format("%s. %s.", Messages.MESSAGE_TASK_MISSING_COMPONENTS, Messages.MESSAGE_INVALID_TASKS_DATA),
             exception.getMessage()

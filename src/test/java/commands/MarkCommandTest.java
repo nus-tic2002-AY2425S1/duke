@@ -13,7 +13,6 @@ import common.Messages;
 import exception.CommandException;
 import exception.StorageOperationException;
 import storage.Storage;
-// import task.Task;
 import task.TaskList;
 import task.Todo;
 import ui.Ui;
@@ -62,7 +61,6 @@ public class MarkCommandTest {
         markCommand = new MarkCommand(99999);
 
         // Referenced from https://howtodoinjava.com/junit5/expected-exception-example/
-        // IndexOutOfBoundsException
         CommandException exception = assertThrows(CommandException.class, () -> {
             markCommand.execute(taskList, ui, storage);
         }, "CommandException expected");
@@ -90,7 +88,6 @@ public class MarkCommandTest {
         markCommand = new MarkCommand(2);
         markCommand.execute(taskList, ui, storage);
         assertTrue(sampleTodo.getIsDone(), "After executing the mark command, the task should be marked as done");
-        // assertTrue(taskList.getTask(1).getIsDone());
 
     }
 

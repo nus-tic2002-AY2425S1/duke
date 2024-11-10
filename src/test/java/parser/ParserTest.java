@@ -127,32 +127,6 @@ public class ParserTest {
         assertEquals(Messages.ERROR_INVALID_DATETIME_FORMAT, exception.getMessage());
     }
 
-    /*
-    @Test
-    public void prepareTaskNumberForCommand_throwsCommandException() {
-
-        // Test Case: Invalid Task Number (Out of range)
-        // CommandException invalidTaskNumber = assertThrows(CommandException.class, 
-        //                                              () -> new MarkCommand(99999));
-        
-
-        // CommandException commandException = assertThrows(CommandException.class, () -> {
-        //     Parser.parse("mark 99999");
-        // });
-        
-        // assertEquals(Messages.ERROR_INVALID_COMMAND_FORMAT, commandException.getMessage());
-
-        
-        // Test Case: Invalid Task Number (Out of range)
-        CommandException commandException = assertThrows(CommandException.class, () -> {
-            Parser.parse("mark 99999"); // Assuming 99999 is out of valid range
-        });
-
-        // Check that the exception message matches the expected error message for invalid command format
-        assertEquals(Messages.ERROR_INVALID_COMMAND_FORMAT + "mark", commandException.getMessage());
-    }
-    */
-
     public void parse_invalidTaskNumber_throwsCommandException(String command) {
         // Test Case: Invalid Task Number Format (not a number)
         CommandException commandException = assertThrows(CommandException.class, () -> {

@@ -2,7 +2,6 @@ package commands.add;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-// import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
@@ -43,52 +42,5 @@ public class DeadlineCommandTest {
         assertEquals(TEST_DUE, ((Deadline) deadline).getDue());
         assertEquals(DateTimeParser.formatDateTime(TEST_DUE), ((Deadline) deadline).getFormattedDue());
     }
-
-    // Tests that passing a null description to the constructor throws an IllegalArgumentException
-    // @Test
-    // public void constructor_nullDescription_throwsException() {
-    //     Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-    //         new DeadlineCommand(null, TEST_DUE);
-    //     });
-    //     assertEquals("Description cannot be null", exception.getMessage());
-    // }
-
-    // Tests that passing an empty string as a description throws an IllegalArgumentException
-    // @Test
-    // public void constructor_emptyDescription_throwsException() {
-    //     Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-    //         new DeadlineCommand("", TEST_DUE);
-    //     });
-    //     assertEquals("Description cannot be empty", exception.getMessage());
-    // }
-
-    // Tests that passing a null due date to the constructor throws an IllegalArgumentException
-    // @Test
-    // public void constructor_nullDueDate_throwsException() {
-    //     Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-    //         new DeadlineCommand(TEST_DESCRIPTION, null);
-    //     });
-    //     assertEquals("Due date cannot be null", exception.getMessage());
-    // }
-
-    // Tests that calling createTask() with a null description throws an IllegalArgumentException
-    // @Test
-    // public void createTask_nullDescription_throwsException() {
-    //     deadlineCommand = new DeadlineCommand(null, TEST_DUE);
-    //     Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-    //         deadlineCommand.createTask();
-    //     });
-    //     assertEquals("Description cannot be null", exception.getMessage());
-    // }
-
-    // Tests that calling createTask() with a null due date throws an IllegalArgumentException
-    // @Test
-    // public void createTask_nullDueDate_throwsException() {
-    //     deadlineCommand = new DeadlineCommand(TEST_DESCRIPTION, null);
-    //     Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-    //         deadlineCommand.createTask();
-    //     });
-    //     assertEquals("Due date cannot be null", exception.getMessage());
-    // }
 
 }

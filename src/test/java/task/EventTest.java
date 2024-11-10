@@ -106,7 +106,6 @@ public class EventTest {
     public void toString_descriptionEndsWithSpace() {
         Event event = new Event("Event without space", startDateTime, endDateTime);
         assertNotEquals(event.toString(), "Event without space ");
-        // assertFalse(event.toString().contains("Event without space ")); // Check that it doesn't have trailing space
     }
 
 }

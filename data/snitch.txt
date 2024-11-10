@@ -1,5 +1,5 @@
 T | 0 | sleep
-D | 0 | eat | 28/12/1991 1600
-E | 0 | movie | 28/11/1900 1600 | 28/12/1991 1400
-T | 0 | return book
-T | 0 | read book
+T | 0 | dota
+T | 0 | study
+D | 1 | return boook | Sunday
+D | 0 | return mouse | Dec 28 1991, 4:00 pm

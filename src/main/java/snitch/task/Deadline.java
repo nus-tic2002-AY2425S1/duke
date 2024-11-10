@@ -2,42 +2,69 @@ package snitch.task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
- * Represents a task with a deadline.
- * A deadline task has a description and must be completed by a specific date and time.
+ * Task with a deadline.
  */
 public class Deadline extends Task {
-    protected LocalDateTime by;
+    protected String by;
+    private LocalDateTime dateTime;
 
     /**
-     * Constructs a new Deadline task with the specified description and deadline.
+     * Constructs a Deadline task.
      *
      * @param description The description of the task.
-     * @param by The deadline in the format "d/M/yyyy HHmm".
+     * @param by The deadline, which can be a date/time or plain text.
+     * @throws IllegalArgumentException if the date format is invalid and not plain text.
      */
     public Deadline(String description, String by) {
         super(description);
-        this.by = LocalDateTime.parse(by, DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+
+        if (looksLikeDate(by)) {
+            if (isValidDate(by)) {
+                this.dateTime = LocalDateTime.parse(by, DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+                this.by = dateTime.format(DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a"));
+            } else {
+                throw new IllegalArgumentException("Invalid date format or value for deadline. Use d/M/yyyy HHmm.");
+            }
+        } else {
+            this.by = by; // Treat as plain text
+            this.dateTime = null;
+        }
     }
 
     /**
-     * Returns the deadline of the task in "d/M/yyyy HHmm" format.
+     * Checks if the input is a valid date format.
      *
-     * @return The deadline as a formatted string.
+     * @param input The input string.
+     * @return True if the input is a valid date.
      */
+    private boolean isValidDate(String input) {
+        try {
+            LocalDateTime.parse(input, DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if the input looks like a date (matches the expected pattern).
+     *
+     * @param input The input string.
+     * @return True if the input looks like a date.
+     */
+    private boolean looksLikeDate(String input) {
+        return input.matches("\\d{1,2}/\\d{1,2}/\\d{4} \\d{4}");
+    }
+
     public String getBy() {
-        return by.format(DateTimeFormatter.ofPattern("d/M/yyyy HHmm"));
+        return by;
     }
 
-    /**
-     * Returns a string representation of the Deadline task.
-     * The string includes the task type, status, description, and deadline.
-     *
-     * @return A string representing the Deadline task.
-     */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by.format(DateTimeFormatter.ofPattern("MMM dd yyyy, h:mm a")) + ")";
+        return "[D]" + super.toString() + " (by: " + by + ")";
     }
 }

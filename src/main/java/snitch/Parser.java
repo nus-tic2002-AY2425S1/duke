@@ -3,7 +3,18 @@ package snitch;
 import snitch.command.*;
 import snitch.SnitchException;
 
+/**
+ * Parses user input and returns the appropriate command to be executed.
+ */
 public class Parser {
+
+    /**
+     * Parses the user input and returns the corresponding Command object.
+     *
+     * @param input The user input as a string.
+     * @return The Command object corresponding to the user input.
+     * @throws SnitchException If the input is unrecognized or contains an error.
+     */
     public static Command parse(String input) throws SnitchException {
         if (input.equalsIgnoreCase("bye")) {
             return new ByeCommand();
@@ -18,7 +29,7 @@ public class Parser {
                 throw new SnitchException("Invalid task number format. Please enter a valid number.");
             }
         } else {
-            throw new SnitchException("Come on man!!! I don't know what that means.");
+            throw new SnitchException("MEOW! Come on man!!! I don't know what that means.");
         }
     }
 }

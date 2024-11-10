@@ -1,75 +1,141 @@
 package snitch;
 
 import snitch.task.Task;
-import snitch.task.Deadline;
 import snitch.task.Todo;
+import snitch.task.Deadline;
 import snitch.task.Event;
-import snitch.task.TaskList;
+import snitch.SnitchException;
 
 import java.io.*;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import snitch.task.*;
 
-
-
+/**
+ * Handles saving and loading tasks to/from a file.
+ * Provides methods to persist tasks and retrieve them on startup.
+ */
 public class Storage {
     private final Path filePath;
 
+    /**
+     * Constructs a Storage instance for managing tasks in a specified file.
+     *
+     * @param filePath The relative path to the file where tasks will be stored.
+     */
     public Storage(String filePath) {
         this.filePath = Paths.get(filePath);
     }
 
+    /**
+     * Loads tasks from the file.
+     * If the file does not exist, it will be created.
+     *
+     * @return A list of tasks loaded from the file.
+     * @throws SnitchException If an error occurs while loading tasks.
+     */
     public ArrayList<Task> load() throws SnitchException {
         ArrayList<Task> tasks = new ArrayList<>();
+
         if (!Files.exists(filePath)) {
-            try {
-                Files.createDirectories(filePath.getParent());
-                Files.createFile(filePath);
-            } catch (IOException e) {
-                throw new SnitchException("Error creating storage file: " + e.getMessage());
-            }
+            createFile(); // Create file if it doesn't exist
             return tasks;
         }
 
-        try (BufferedReader reader = Files.newBufferedReader(filePath)) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(" \\| ");
-                Task task;
-                switch (parts[0]) {
-                    case "T": task = new Todo(parts[2]); break;
-                    case "D": task = new Deadline(parts[2], parts[3]); break;
-                    case "E": task = new Event(parts[2], parts[3], parts[4]); break;
-                    default: throw new SnitchException("Corrupted data in file.");
-                }
-                if (parts[1].equals("1")) task.markAsDone();
-                tasks.add(task);
+                tasks.add(parseTask(line));
             }
         } catch (IOException e) {
-            throw new SnitchException("Error reading storage file: " + e.getMessage());
+            throw new SnitchException("Failed to load tasks from file.");
         }
+
         return tasks;
     }
 
-    public void save(TaskList tasks) throws SnitchException {
-        try (BufferedWriter writer = Files.newBufferedWriter(filePath)) {
-            for (Task task : tasks.getAllTasks()) {
-                writer.write(taskToFileFormat(task));
+    /**
+     * Saves the current tasks to the file.
+     *
+     * @param tasks A list of tasks to be saved.
+     * @throws SnitchException If an error occurs while saving tasks.
+     */
+    public void save(ArrayList<Task> tasks) throws SnitchException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath.toFile()))) {
+            for (Task task : tasks) {
+                writer.write(taskToFileString(task));
                 writer.newLine();
             }
         } catch (IOException e) {
-            throw new SnitchException("Error writing to storage file: " + e.getMessage());
+            throw new SnitchException("Failed to save tasks to file.");
         }
     }
 
-    private String taskToFileFormat(Task task) {
+    /**
+     * Creates the file and necessary directories if they do not exist.
+     *
+     * @throws SnitchException If an error occurs while creating the file.
+     */
+    private void createFile() throws SnitchException {
+        try {
+            Files.createDirectories(filePath.getParent());
+            Files.createFile(filePath);
+        } catch (IOException e) {
+            throw new SnitchException("Failed to create file.");
+        }
+    }
+
+    /**
+     * Parses a line from the file into a Task object.
+     *
+     * @param line The line representing a task in the file.
+     * @return The parsed Task object.
+     * @throws SnitchException If the line format is unrecognized.
+     */
+    private Task parseTask(String line) throws SnitchException {
+        String[] parts = line.split(" \\| ");
+        String type = parts[0];
+        boolean isDone = parts[1].equals("1");
+        String description = parts[2];
+
+        switch (type) {
+            case "T":
+                Todo todo = new Todo(description);
+                if (isDone) todo.markAsDone();
+                return todo;
+            case "D":
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+                LocalDateTime deadlineDate = LocalDateTime.parse(parts[3], formatter);
+                Deadline deadline = new Deadline(description, deadlineDate.format(formatter));
+                if (isDone) deadline.markAsDone();
+                return deadline;
+            case "E":
+                Event event = new Event(description, parts[3], parts[4]);
+                if (isDone) event.markAsDone();
+                return event;
+            default:
+                throw new SnitchException("Unrecognized task format: " + line);
+        }
+    }
+
+    /**
+     * Converts a Task object into a formatted string for saving in the file.
+     *
+     * @param task The task to be converted.
+     * @return The formatted string representation of the task.
+     */
+    private String taskToFileString(Task task) {
         if (task instanceof Todo) {
-            return "T | " + (task.isDone ? "1" : "0") + " | " + task.description;
+            return "T | " + (task.isDone() ? "1" : "0") + " | " + task.getDescription();
         } else if (task instanceof Deadline) {
-            return "D | " + (task.isDone ? "1" : "0") + " | " + task.description + " | " + ((Deadline) task).by;
+            Deadline deadline = (Deadline) task;
+            return "D | " + (deadline.isDone() ? "1" : "0") + " | " + deadline.getDescription() + " | " + deadline.getBy();
         } else if (task instanceof Event) {
-            return "E | " + (task.isDone ? "1" : "0") + " | " + task.description + " | " + ((Event) task).from + " | " + ((Event) task).to;
+            Event event = (Event) task;
+            return "E | " + (event.isDone() ? "1" : "0") + " | " + event.getDescription() + " | " + event.getFrom() + " | " + event.getTo();
         }
         return "";
     }

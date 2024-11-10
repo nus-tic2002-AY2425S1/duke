@@ -2,12 +2,24 @@ package snitch;
 
 import snitch.command.Command;
 import snitch.task.TaskList;
+import snitch.Storage;
+import snitch.Ui;
+import snitch.SnitchException;
+import snitch.Parser;
 
+/**
+ * The main class for the Snitch chatbot.
+ * Handles initialization, running the chatbot, and processing user commands.
+ */
 public class Snitch {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Constructs a Snitch chatbot.
+     * Initializes the user interface, storage, and task list.
+     */
     public Snitch(String filePath) {
         ui = new Ui();
         ui.showWelcome();
@@ -21,8 +33,11 @@ public class Snitch {
         }
     }
 
+    /**
+     * Runs the Snitch chatbot.
+     * Continuously reads and processes user input until the "bye" command is received.
+     */
     public void run() {
-        //ui.showWelcome(); // Display welcome message
         while (true) {
             try {
                 String userInput = ui.readCommand(); // Get user input
@@ -50,6 +65,9 @@ public class Snitch {
         }
     }
 
+    /**
+     * The main entry point for the Snitch chatbot.
+     */
     public static void main(String[] args) {
         new Snitch("./data/snitch.txt").run(); // Start the app
     }

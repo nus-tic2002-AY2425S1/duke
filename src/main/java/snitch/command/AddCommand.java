@@ -1,21 +1,39 @@
 package snitch.command;
 
 import snitch.task.TaskList;
+import snitch.task.Task;
 import snitch.task.Deadline;
 import snitch.task.Todo;
 import snitch.task.Event;
 import snitch.Ui;
 import snitch.Storage;
 import snitch.SnitchException;
-import snitch.task.Task;
 
+/**
+ * Represents a command to add a task.
+ * This command handles adding Tdo, Deadline, and Event task.
+ */
 public class AddCommand implements Command {
     private final String fullCommand;
 
+    /**
+     * Constructs an AddCommand with the given user input.
+     *
+     * @param fullCommand The full user input representing the add command.
+     */
     public AddCommand(String fullCommand) {
         this.fullCommand = fullCommand;
     }
 
+    /**
+     * Executes the AddCommand by adding a task to the task list.
+     * Supports adding Todo, Deadline, and Event tasks based on the command type.
+     *
+     * @param tasks   The TaskList to which the task will be added.
+     * @param ui      The Ui instance for interacting with the user.
+     * @param storage The Storage instance for saving the updated task list.
+     * @throws SnitchException If the command format is invalid or the task description is empty.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws SnitchException {
         if (fullCommand.startsWith("todo")) {
@@ -23,36 +41,31 @@ public class AddCommand implements Command {
             if (description.isEmpty()) {
                 throw new SnitchException("Come on man!!! The description of a todo cannot be empty.");
             }
-            Task newTask = new Todo(description);
-            tasks.add(newTask);
-            ui.showTaskAdded(newTask, tasks.size());
+            tasks.add(new Todo(description));
         } else if (fullCommand.startsWith("deadline")) {
             String[] parts = fullCommand.split("/by ");
             if (parts.length < 2) {
-                throw new SnitchException("Come on man!!! The deadline description cannot be empty or the format is wrong. (Do it like this: deadline task /by xxxx)");
+                throw new SnitchException("Invalid format. Use: deadline task /by d/M/yyyy HHmm");
             }
             String description = parts[0].substring(9).trim();
             String by = parts[1].trim();
-            Task newTask = new Deadline(description, by);
-            tasks.add(newTask);
-            ui.showTaskAdded(newTask, tasks.size());
+            tasks.add(new Deadline(description, by));
         } else if (fullCommand.startsWith("event")) {
             String[] parts = fullCommand.split("/from ");
             if (parts.length < 2 || !parts[1].contains("/to ")) {
-                throw new SnitchException("Come on man!!! The event format is incorrect.");
+                throw new SnitchException("Invalid format. Use: event task /from d/M/yyyy HHmm /to d/M/yyyy HHmm");
             }
             String description = parts[0].substring(6).trim();
             String[] timeParts = parts[1].split(" /to ");
-            String from = timeParts[0].trim();
-            String to = timeParts[1].trim();
-            Task newTask = new Event(description, from, to);
-            tasks.add(newTask);
-            ui.showTaskAdded(newTask, tasks.size());
+            tasks.add(new Event(description, timeParts[0].trim(), timeParts[1].trim()));
         } else {
             throw new SnitchException("Invalid command for adding tasks.");
         }
 
-        // Save tasks after adding
-        storage.save(tasks);
+        // Display the added task
+        ui.showTaskAdded(tasks.get(tasks.size() - 1), tasks.size());
+
+        // Save using the internal ArrayList
+        storage.save(tasks.getAllTasks());
     }
 }

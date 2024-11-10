@@ -39,7 +39,7 @@ public class InputParser {
                 taskList.addTask(queryTokens[0], String.join(" ", query));
             }
         } catch (Exception e) {
-            throw new StarkException.InvalidCommandException("Query parsing error: " + e.getMessage());
+            throw new StarkException.InvalidCommandException( e.getMessage());
         }
     }
 

@@ -65,7 +65,7 @@
     ____________________________________________________________
     ____________________________________________________________
      Error: Invalid command format for command deadline.
-     Received `deadline /by Sunday`
+     Received `deadline /by 2024-01-01`
      Example usage: `deadline <description> /by <due date>`
     ____________________________________________________________
     ____________________________________________________________
@@ -75,31 +75,18 @@
     ____________________________________________________________
     ____________________________________________________________
      Error: Invalid date/time format
-     Received `Sunday`
+     Received `1 Jan 2024`
      Expected format: yyyy-MM-dd HHmm. Example: 2019-10-15 [1800]
     ____________________________________________________________
     ____________________________________________________________
-     Here are the tasks in your list:
-     1. [T][X] read book
-     2. [D][ ] return book (by: Jul 06 2024 1800)
-     3. [E][ ] project meeting (from: Jun 09 2024 1400 to: Jun 09 2024 1600)
-     4. [T][X] join sports club
-     5. [T][ ] learn a new language
+     Got it. I've added this task:
+       [D][ ] return pen (by: Jan 01 2024 0000)
+     Now you have 6 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
-     Error: Task does not exist
-     Task number 6 cannot be found.
-     Please enter a valid task number from 1 to 5.
-    ____________________________________________________________
-    ____________________________________________________________
-     Error: Task does not exist
-     Task number 6 cannot be found.
-     Please enter a valid task number from 1 to 5.
-    ____________________________________________________________
-    ____________________________________________________________
-     Error: Task does not exist
-     Task number 6 cannot be found.
-     Please enter a valid task number from 1 to 5.
+     Got it. I've added this task:
+       [D][ ] return pen with date (by: Jan 01 2024 1800)
+     Now you have 7 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
@@ -108,6 +95,29 @@
      3. [E][ ] project meeting (from: Jun 09 2024 1400 to: Jun 09 2024 1600)
      4. [T][X] join sports club
      5. [T][ ] learn a new language
+     6. [D][ ] return pen (by: Jan 01 2024 0000)
+     7. [D][ ] return pen with date (by: Jan 01 2024 1800)
+    ____________________________________________________________
+    ____________________________________________________________
+     Nice! I've marked this task as done:
+       [D][X] return pen (by: Jan 01 2024 0000)
+    ____________________________________________________________
+    ____________________________________________________________
+     OK, I've marked this task as not done yet:
+       [D][ ] return pen (by: Jan 01 2024 0000)
+    ____________________________________________________________
+    ____________________________________________________________
+     The task `[D][ ] return pen (by: Jan 01 2024 0000)` is already marked as not done. No action done.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1. [T][X] read book
+     2. [D][ ] return book (by: Jul 06 2024 1800)
+     3. [E][ ] project meeting (from: Jun 09 2024 1400 to: Jun 09 2024 1600)
+     4. [T][X] join sports club
+     5. [T][ ] learn a new language
+     6. [D][ ] return pen (by: Jan 01 2024 0000)
+     7. [D][ ] return pen with date (by: Jan 01 2024 1800)
     ____________________________________________________________
     ____________________________________________________________
      Error: Invalid command format for command event.
@@ -131,7 +141,17 @@
     ____________________________________________________________
     ____________________________________________________________
      Error: Invalid command format for command event.
+     The task is missing an end date/time.
+     Example usage: `event <description> /from <start date/time> /to <end date/time>`
+    ____________________________________________________________
+    ____________________________________________________________
+     Error: Invalid command format for command event.
      Received `event orientation /from Jan 1st /to`
+     Example usage: `event <description> /from <start date/time> /to <end date/time>`
+    ____________________________________________________________
+    ____________________________________________________________
+     Error: Invalid command format for command event.
+     Received `event orientation /from 2024-03-05 /to`
      Example usage: `event <description> /from <start date/time> /to <end date/time>`
     ____________________________________________________________
     ____________________________________________________________
@@ -150,30 +170,9 @@
      Expected format: yyyy-MM-dd HHmm. Example: 2019-10-15 1800
     ____________________________________________________________
     ____________________________________________________________
-     Here are the tasks in your list:
-     1. [T][X] read book
-     2. [D][ ] return book (by: Jul 06 2024 1800)
-     3. [E][ ] project meeting (from: Jun 09 2024 1400 to: Jun 09 2024 1600)
-     4. [T][X] join sports club
-     5. [T][ ] learn a new language
-    ____________________________________________________________
-    ____________________________________________________________
-     Error: Task does not exist
-     Task number 6 cannot be found.
-     Please enter a valid task number from 1 to 5.
-    ____________________________________________________________
-    ____________________________________________________________
-     Here are the tasks in your list:
-     1. [T][X] read book
-     2. [D][ ] return book (by: Jul 06 2024 1800)
-     3. [E][ ] project meeting (from: Jun 09 2024 1400 to: Jun 09 2024 1600)
-     4. [T][X] join sports club
-     5. [T][ ] learn a new language
-    ____________________________________________________________
-    ____________________________________________________________
      Error: Invalid date/time format
-     Received `no idea :-p`
-     Expected format: yyyy-MM-dd HHmm. Example: 2019-10-15 [1800]
+     Received `2024-03-05`
+     Expected format: yyyy-MM-dd HHmm. Example: 2019-10-15 1800
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
@@ -182,6 +181,77 @@
      3. [E][ ] project meeting (from: Jun 09 2024 1400 to: Jun 09 2024 1600)
      4. [T][X] join sports club
      5. [T][ ] learn a new language
+     6. [D][ ] return pen (by: Jan 01 2024 0000)
+     7. [D][ ] return pen with date (by: Jan 01 2024 1800)
+    ____________________________________________________________
+    ____________________________________________________________
+     Error: Invalid command format for command fd.
+     The description of a task cannot be empty.
+     Example usage: `fd <description> /duration <duration in hours>`
+    ____________________________________________________________
+    ____________________________________________________________
+     Error: Invalid command format for command fd.
+     Received `fd reading the sales report`
+     Example usage: `fd <description> /duration <duration in hours>`
+    ____________________________________________________________
+    ____________________________________________________________
+     Error: Invalid command format for command fd.
+     Received `fd reading the sales report /duration`
+     Example usage: `fd <description> /duration <duration in hours>`
+    ____________________________________________________________
+    ____________________________________________________________
+     Error: Invalid command format for command fd.
+     Received `fd reading the sales report /duration invalidDuration`
+     Example usage: `fd <description> /duration <duration in hours>`
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [FD][ ] reading the sales report (duration: 2.0 hours)
+     Now you have 8 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Noted. I've removed this task:
+       [D][ ] return pen (by: Jan 01 2024 0000)
+     Now you have 7 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1. [T][X] read book
+     2. [D][ ] return book (by: Jul 06 2024 1800)
+     3. [E][ ] project meeting (from: Jun 09 2024 1400 to: Jun 09 2024 1600)
+     4. [T][X] join sports club
+     5. [T][ ] learn a new language
+     6. [D][ ] return pen with date (by: Jan 01 2024 1800)
+     7. [FD][ ] reading the sales report (duration: 2.0 hours)
+    ____________________________________________________________
+    ____________________________________________________________
+     Error: Invalid command format for command find.
+     The description of a task cannot be empty.
+     Example usage: `find <description>`
+    ____________________________________________________________
+    ____________________________________________________________
+     There are no matching tasks in your list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the matching tasks in your list:
+     1. [T][X] read book
+     2. [D][ ] return book (by: Jul 06 2024 1800)
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the matching tasks in your list:
+    ____________________________________________________________
+    ____________________________________________________________
+     There are no matching tasks in your list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1. [T][X] read book
+     2. [D][ ] return book (by: Jul 06 2024 1800)
+     3. [E][ ] project meeting (from: Jun 09 2024 1400 to: Jun 09 2024 1600)
+     4. [T][X] join sports club
+     5. [T][ ] learn a new language
+     6. [D][ ] return pen with date (by: Jan 01 2024 1800)
+     7. [FD][ ] reading the sales report (duration: 2.0 hours)
     ____________________________________________________________
     ____________________________________________________________
      Error: Invalid command format for command mark
@@ -191,7 +261,7 @@
     ____________________________________________________________
      Error: Task does not exist
      Task number 123456789 cannot be found.
-     Please enter a valid task number from 1 to 5.
+     Please enter a valid task number from 1 to 7.
     ____________________________________________________________
     ____________________________________________________________
      Error: Invalid command format for command unmark
@@ -201,7 +271,7 @@
     ____________________________________________________________
      Error: Task does not exist
      Task number 123456789 cannot be found.
-     Please enter a valid task number from 1 to 5.
+     Please enter a valid task number from 1 to 7.
     ____________________________________________________________
     ____________________________________________________________
      Error: Invalid command format for command delete
@@ -211,17 +281,17 @@
     ____________________________________________________________
      Error: Task does not exist
      Task number 123456789 cannot be found.
-     Please enter a valid task number from 1 to 5.
+     Please enter a valid task number from 1 to 7.
     ____________________________________________________________
     ____________________________________________________________
-     Error: Task does not exist
-     Task number 7 cannot be found.
-     Please enter a valid task number from 1 to 5.
+     Noted. I've removed this task:
+       [FD][ ] reading the sales report (duration: 2.0 hours)
+     Now you have 6 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
-     Error: Task does not exist
-     Task number 6 cannot be found.
-     Please enter a valid task number from 1 to 5.
+     Noted. I've removed this task:
+       [D][ ] return pen with date (by: Jan 01 2024 1800)
+     Now you have 5 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
      Noted. I've removed this task:

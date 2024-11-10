@@ -9,9 +9,11 @@ mark 1
 list
 deadline
 deadline return pen
-deadline /by Sunday
+deadline /by 2024-01-01
 deadline /by
-deadline return pen /by Sunday
+deadline return pen /by 1 Jan 2024
+deadline return pen /by 2024-01-01
+deadline return pen with date /by 2024-01-01 1800
 list
 mark 6
 unmark 6
@@ -21,14 +23,26 @@ event
 event orientation
 event orientation /from
 event orientation /from Jan 1st
+event orientation /from 2024-03-05
 event orientation /from Jan 1st /to
+event orientation /from 2024-03-05 /to
 event orientation /to
 event orientation /to 2nd
 event orientation /from Jan 1st /to 2nd
+event orientation /from 2024-03-05 /to 2024-03-07
 list
+fd
+fd reading the sales report
+fd reading the sales report /duration
+fd reading the sales report /duration invalidDuration
+fd reading the sales report /duration 2
 delete 6
 list
-deadline do homework /by no idea :-p
+find
+find asdf
+find book
+find pen
+find orientation
 list
 mark abc
 mark 123456789

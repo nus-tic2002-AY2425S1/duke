@@ -67,7 +67,7 @@ public class TaskListDecoder {
         if (taskData.length < 3) {
             // "Task data has missing components. Please check tasks.txt. Expected format: [T|D|E] | [0|1] | description [| additional info]. Found: " + taskData
             throw new FileContentException(
-                String.format("%s %s", Messages.MESSAGE_TASK_MISSING_COMPONENTS, Messages.MESSAGE_INVALID_TASKS_DATA),
+                String.format("%s. %s.", Messages.MESSAGE_TASK_MISSING_COMPONENTS, Messages.MESSAGE_INVALID_TASKS_DATA),
                 String.format("Received `%s`", Arrays.toString(taskData)),
                 String.format("Expected format: `%s` or `%s` or `%s`", EXPECTED_FORMAT_TODO, 
                               EXPECTED_FORMAT_DEADLINE, EXPECTED_FORMAT_EVENT)
@@ -103,19 +103,19 @@ public class TaskListDecoder {
         final String MESSAGE_INVALID_COMPLETION_STATUS = "Task has invalid completion status";
         final String VALID_COMPLETION_STATUS = "`1` or `0`";
 
-        try {
-            if (isDoneString.equals("1")) {
+        switch (isDoneString) {
+            case "1":
                 isDone = true;
-            } else {
+                break;
+            case "0":
                 isDone = false;
-            }
-        } catch (NumberFormatException e) {
-            // "Invalid completion status found. Expected 0 or 1, but found: " + taskData[1]
-            throw new FileContentException(
-                MESSAGE_INVALID_COMPLETION_STATUS,
-                String.format("Received `%s`", isDoneString),
-                String.format("Expected %s", VALID_COMPLETION_STATUS)
-            );
+                break;
+            default:
+                throw new FileContentException(
+                    MESSAGE_INVALID_COMPLETION_STATUS,
+                    String.format("Received `%s`", isDoneString),
+                    String.format("Expected %s", VALID_COMPLETION_STATUS)
+                );
         }
 
         return isDone;

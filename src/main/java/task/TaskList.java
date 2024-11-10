@@ -153,4 +153,15 @@ public class TaskList {
         }
         return tasksOnDate;
     }
+
+    public List<Task> getAllTasksWithMatchingDescription(String description) {
+        List<Task> tasksWithMatchingDescription = new ArrayList<>();
+        for (Task task : getTaskList()) {
+            String taskDescription = task.getDescription();
+            if (taskDescription.contains(description)) {
+                tasksWithMatchingDescription.add(task);
+            }
+        }
+        return tasksWithMatchingDescription;
+    }
 }

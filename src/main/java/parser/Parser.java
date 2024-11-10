@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import commands.ByeCommand;
 import commands.Command;
 import commands.DeleteCommand;
+import commands.FindCommand;
 import commands.ListCommand;
 import commands.MarkCommand;
 import commands.ShowCommand;
@@ -52,6 +53,9 @@ public class Parser {
     public static final String FD_COMMAND_ARGS_REGEX = "^(?<description>.+?) /duration (?<duration>\\d+(\\.\\d+)?)";
     public static final Pattern FD_COMMAND_ARGS_FORMAT = Pattern.compile(FD_COMMAND_ARGS_REGEX);
 
+    public static final String FIND_COMMAND_ARGS_REGEX = TODO_COMMAND_ARGS_REGEX;
+    public static final Pattern FIND_COMMAND_ARGS_FORMAT = Pattern.compile(FIND_COMMAND_ARGS_REGEX);
+
     /**
      * Parses the user input and returns the corresponding Command object. This creates the Command object.
      * 
@@ -92,6 +96,8 @@ public class Parser {
                 return prepareShow(cleanArgs);
             case FixedDurationCommand.COMMAND_WORD:
                 return prepareFixedDuration(cleanArgs);
+            case FindCommand.COMMAND_WORD:
+                return prepareFind(cleanArgs);
             default:
                 throw new CommandException(
                     Messages.ERROR_INVALID_COMMAND,
@@ -340,5 +346,18 @@ public class Parser {
         // System.out.println("duration is " + duration);
 
         return new FixedDurationCommand(description, duration);
+    }
+
+    private static Command prepareFind(String args) throws CommandException {
+        // Check if args (description) is empty
+        checkEmptyDescriptionForTaskCommand(args, FindCommand.COMMAND_WORD, FindCommand.MESSAGE_USAGE);
+        
+        final Matcher matcher = FIND_COMMAND_ARGS_FORMAT.matcher(args);
+        
+        // Validate arg string format
+        validateArgsFormat(matcher, FindCommand.COMMAND_WORD, args, FindCommand.MESSAGE_USAGE);
+        
+        String description = matcher.group("description");
+        return new FindCommand(description);
     }
 }

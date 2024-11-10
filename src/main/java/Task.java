@@ -1,31 +1,36 @@
+/**
+ * Class to handle all task actions from instructions/commands
+ */
 public class Task {
     protected String description;
     protected boolean isDone;
 
-    //initial Task
     public Task(String description) {
         this.description = description;
-        this.isDone = false;//default all item set to not done
+        //set all item to not done by default
+        this.isDone = false;
     }
 
-    // get item status
     public String getStatusIcon() {
+        //return task status
         return (isDone ? "X" : " ");
     }
 
-    //mark item as done
+    
     public void markDone() {
+        //mark item as done
         isDone = true; 
     }
 
-    //unmark item, set not done
+    
     public void unmarkDone() {
+        //unmark item, set not done
         isDone = false; 
     }
 
     @Override
-    //convert into string msg
     public String toString() {
+        //return formatted string
         return "[" + getStatusIcon() + "] " + description; 
     }
 }

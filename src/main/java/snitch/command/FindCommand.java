@@ -31,12 +31,12 @@ public class FindCommand implements Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws SnitchException {
         if (keyword.isEmpty()) {
-            throw new SnitchException("Keyword cannot be empty. Please provide a valid keyword.");
+            throw new SnitchException("Meow. Keyword cannot be empty. Please provide a valid keyword.");
         }
 
         TaskList matchingTasks = tasks.findTasksContaining(keyword);
         if (matchingTasks.isEmpty()) {
-            throw new SnitchException("No matching tasks found for keyword: " + keyword);
+            throw new SnitchException("Meow. No matching tasks found for keyword: " + keyword);
         }
 
         ui.showMatchingTasks(matchingTasks);

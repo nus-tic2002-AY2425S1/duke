@@ -39,7 +39,7 @@ public class AddCommand implements Command {
         if (fullCommand.startsWith("todo")) {
             String description = fullCommand.substring(4).trim();
             if (description.isEmpty()) {
-                throw new SnitchException("Come on man!!! The description of a todo cannot be empty.");
+                throw new SnitchException("MEOW!! Come on man!!! The description of a todo cannot be empty.");
             }
             tasks.add(new Todo(description));
         } else if (fullCommand.startsWith("deadline")) {

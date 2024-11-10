@@ -16,13 +16,13 @@ import java.util.ArrayList;
 
 /**
  * Handles saving and loading tasks to/from a file.
- * Provides methods to persist tasks and retrieve them on startup.
+ * Provides methods to save tasks and retrieve them on startup.
  */
 public class Storage {
     private final Path filePath;
 
     /**
-     * Constructs a Storage instance for managing tasks in a specified file.
+     * Constructs a Storage instance for tasks in a specified file.
      *
      * @param filePath The relative path to the file where tasks will be stored.
      */

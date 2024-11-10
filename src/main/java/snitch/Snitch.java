@@ -49,7 +49,7 @@ public class Snitch {
 
                 if (userInput.equalsIgnoreCase("list")) {
                     if (tasks.isEmpty()) {
-                        throw new SnitchException("Your task list is empty.");
+                        throw new SnitchException("Meow. Your task list is empty.");
                     }
                     ui.showTasks(tasks);
                 } else {

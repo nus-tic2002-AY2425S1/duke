@@ -7,7 +7,7 @@ import snitch.Storage;
 import snitch.SnitchException;
 
 /**
- * Represents a command to delete a task from the task list.
+ * command to delete a task from the task list.
  */
 public class DeleteCommand implements Command {
     private final int taskIndex;

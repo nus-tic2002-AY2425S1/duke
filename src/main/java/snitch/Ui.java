@@ -45,7 +45,19 @@ public class Ui {
                         "                       \n";
 
         System.out.println(logo);
-        System.out.println("Hello! I'm Snitch tha ChATbot!\nWhat can I do for you? (meow)\n");
+        System.out.println("Hello! I'm Snitch tha ChATbot! Meow!");
+
+        System.out.println("\nHere are some things I can do for you:");
+        System.out.println("1. Add a ToDo: todo <task description>");
+        System.out.println("2. Add a Deadline: deadline <task description> /by <d/M/yyyy HHmm>");
+        System.out.println("3. Add an Event: event <task description> /from <d/M/yyyy HHmm> /to <d/M/yyyy HHmm>");
+        System.out.println("4. Delete a task: delete <task number>");
+        System.out.println("5. List all tasks: list");
+        System.out.println("6. Find tasks by keyword: find <keyword>");
+        System.out.println("Type 'bye' to exit the chatbot.");
+
+        System.out.println("\nWhat can I do for you? (meow)\n");
+        System.out.println("____________________________________________________________\n");
     }
 
     /**

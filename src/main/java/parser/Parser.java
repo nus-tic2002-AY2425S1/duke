@@ -15,6 +15,7 @@ import commands.ShowCommand;
 import commands.UnmarkCommand;
 import commands.add.DeadlineCommand;
 import commands.add.EventCommand;
+import commands.add.FixedDurationCommand;
 import commands.add.TodoCommand;
 import common.Messages;
 
@@ -48,6 +49,13 @@ public class Parser {
     public static final String EVENT_COMMAND_ARGS_REGEX = "^(?<description>.+) /from (?<start>.+) /to (?<end>.+)$";
     public static final Pattern EVENT_COMMAND_ARGS_FORMAT = Pattern.compile(EVENT_COMMAND_ARGS_REGEX);
     
+    // public static final String FD_COMMAND_ARGS_REGEX = "^fd\s+([^\s/]+(?:\s+[^\s/]+)*)\s+/duration\s+(\d+(\.\d+)?)\s*$";
+    // public static final String FD_COMMAND_ARGS_REGEX = "^fd\\s+(?<taskDescription>.+?)\\s+/duration\\s+(?<duration>\\d+(\\.\\d+)?)\\s*$";
+    // public static final String FD_COMMAND_ARGS_REGEX = "^(?<description>.+) /duration (?<duration>.+)$";
+    // public static final String FD_COMMAND_ARGS_REGEX = "^(?<description>.+?) /duration (?<duration>\\d+)";
+    public static final String FD_COMMAND_ARGS_REGEX = "^(?<description>.+?) /duration (?<duration>\\d+(\\.\\d+)?)";
+    public static final Pattern FD_COMMAND_ARGS_FORMAT = Pattern.compile(FD_COMMAND_ARGS_REGEX);
+
     /**
      * Parses the user input and returns the corresponding Command object. This creates the Command object.
      * 
@@ -86,6 +94,8 @@ public class Parser {
                 return prepareEvent(cleanArgs);
             case ShowCommand.COMMAND_WORD:
                 return prepareShow(cleanArgs);
+            case FixedDurationCommand.COMMAND_WORD:
+                return prepareFixedDuration(cleanArgs);
             default:
                 throw new CommandException(
                     Messages.ERROR_INVALID_COMMAND,
@@ -314,5 +324,25 @@ public class Parser {
     private static Command prepareShow(String args) throws CommandException {
         LocalDate date = DateTimeParser.parseInputShowDate(args);
         return new ShowCommand(date);
+    }
+
+    private static Command prepareFixedDuration(String args) throws CommandException {
+        // Check if args (description) is empty
+        checkEmptyDescriptionForTaskCommand(args, FixedDurationCommand.COMMAND_WORD, FixedDurationCommand.MESSAGE_USAGE);
+        
+        final Matcher matcher = FD_COMMAND_ARGS_FORMAT.matcher(args);
+        
+        // Validate arg string format
+        validateArgsFormat(matcher, FixedDurationCommand.COMMAND_WORD, args, FixedDurationCommand.MESSAGE_USAGE);
+        
+        String description = matcher.group("description");
+        // System.out.println("description is " + description);
+        String durationString = matcher.group("duration");
+        // System.out.println("duration is " + duration);
+        
+        double duration = Double.parseDouble(durationString);
+        // System.out.println("duration is " + duration);
+
+        return new FixedDurationCommand(description, duration);
     }
 }

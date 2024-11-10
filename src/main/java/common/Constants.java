@@ -17,6 +17,7 @@ public class Constants {
     public static final String T = "T";
     public static final String D = "D";
     public static final String E = "E";
+    public static final String FD = "FD";
     public static final String X = "X";
 
     public static final String SPACE = " ";
@@ -41,6 +42,9 @@ public class Constants {
     public static final String TO = "to";
     public static final String END_DATE_TIME = "end date/time";
     public static final String SLASH_TO = SLASH + TO;
+    public static final String DURATION = "duration";
+    public static final String HOURS = "hours";
+    public static final String SLASH_DURATION = SLASH + DURATION;
     public static final String TASK = "task";
     public static final String TASK_NUMBER = TASK + SPACE + "number";
     public static final String DATE = "date";

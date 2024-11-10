@@ -10,7 +10,8 @@ import common.Constants;
 public enum TaskType {
     TODO(Constants.T),
     DEADLINE(Constants.D),
-    EVENT(Constants.E);
+    EVENT(Constants.E),
+    FIXED_DURATION(Constants.FD);
 
     private final String type;
 

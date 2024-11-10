@@ -54,6 +54,7 @@ public class Ui {
         System.out.println("4. Delete a task: delete <task number>");
         System.out.println("5. List all tasks: list");
         System.out.println("6. Find tasks by keyword: find <keyword>");
+        System.out.println("7. Mark and Unmark Tasks: mark/unmark <task number>");
         System.out.println("Type 'bye' to exit the chatbot.");
 
         System.out.println("\nWhat can I do for you? (meow)\n");

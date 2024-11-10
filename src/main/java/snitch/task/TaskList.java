@@ -1,7 +1,9 @@
 package snitch.task;
 
-import java.util.ArrayList;
+import snitch.command.FuzzySearch;
 
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 /**
  * Represents a list of tasks.
  * Provides methods to add, retrieve, and remove tasks.
@@ -81,5 +83,23 @@ public class TaskList {
      */
     public ArrayList<Task> getAllTasks() {
         return tasks;
+    }
+    /**
+     * Finds tasks whose descriptions approximately match the specified keyword.
+     *
+     * @param keyword The keyword to search for.
+     * @return A TaskList containing tasks that partially match the keyword.
+     */
+    public TaskList findTasksContaining(String keyword) {
+        final int MAX_DISTANCE = 2;
+
+        ArrayList<Task> matchingTasks = tasks.stream()
+                .filter(task -> {
+                    String description = task.getDescription().toLowerCase();
+                    return description.contains(keyword.toLowerCase()) ||
+                            FuzzySearch.levenshteinRecursive(description, keyword.toLowerCase(), description.length(), keyword.length()) <= MAX_DISTANCE;
+                })
+                .collect(Collectors.toCollection(ArrayList::new));
+        return new TaskList(matchingTasks);
     }
 }

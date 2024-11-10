@@ -99,4 +99,10 @@ public class Ui {
         System.out.println("  " + task);
         System.out.println("Now you have " + taskCount + " tasks in the list.");
     }
+    public void showMatchingTasks(TaskList tasks) {
+        System.out.println("Here are the matching tasks in your list (meow):");
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println((i + 1) + "." + tasks.get(i));
+        }
+    }
 }

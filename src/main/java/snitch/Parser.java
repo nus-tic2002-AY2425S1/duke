@@ -28,8 +28,11 @@ public class Parser {
             } catch (NumberFormatException e) {
                 throw new SnitchException("Invalid task number format. Please enter a valid number.");
             }
+        } else if (input.startsWith("find")) {
+            String keyword = input.substring(4).trim();
+            return new FindCommand(keyword);
         } else {
-            throw new SnitchException("MEOW! Come on man!!! I don't know what that means.");
+            throw new SnitchException("Come on man!!! I don't know what that means.");
         }
     }
 }

@@ -50,6 +50,10 @@ public class TaskList {
         return getTaskList().isEmpty();
     }
 
+    public boolean contains(Task task) {
+        return getTaskList().contains(task);
+    }
+
     /**
      * Retrieves the task at a specific index in the {@code TaskList}.
      * 
@@ -79,7 +83,11 @@ public class TaskList {
      * @return true if the task is removed successfully; false otherwise
      */
     public boolean removeTask(Task task) {
-        return getTaskList().remove(task);
+        if (getTaskList().contains(task)) {
+            return getTaskList().remove(task);
+        } else {
+            return false;
+        }
     } 
 
     /**

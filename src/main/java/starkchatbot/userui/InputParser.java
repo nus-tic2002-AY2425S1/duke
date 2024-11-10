@@ -1,6 +1,9 @@
 package starkchatbot.userui;
 
+import starkchatbot.taskmanager.TaskFinder;
 import starkchatbot.taskmanager.TaskList;
+
+import java.util.Arrays;
 
 
 /**
@@ -20,17 +23,23 @@ public class InputParser {
      */
 
     public static void userInputParser(TaskList taskList, String query) {
+        try {
+            String[] queryTokens = Tokenize.tokenize(query); // for checking the input are valid
 
-        String[] queryTokens = Tokenize.tokenize(query); // for checking the input are valid
-
-        if (queryTokens[0].equalsIgnoreCase("list")) {
-            taskList.printAllTasks();
-        } else if (queryTokens[0].equalsIgnoreCase("mark")
-                || queryTokens[0].equalsIgnoreCase("unmark")
-                || queryTokens[0].equalsIgnoreCase("delete")) {
-            taskList.editTask(queryTokens[0], Integer.parseInt(queryTokens[1]));
-        } else {
-            taskList.addTask(queryTokens[0], String.join(" ", query));
+            if (queryTokens[0].equalsIgnoreCase("list")) {
+                taskList.printAllTasks();
+            } else if (queryTokens[0].equalsIgnoreCase("mark")
+                    || queryTokens[0].equalsIgnoreCase("unmark")
+                    || queryTokens[0].equalsIgnoreCase("delete")) {
+                taskList.editTask(queryTokens[0], Integer.parseInt(queryTokens[1]));
+            } else if (queryTokens[0].equalsIgnoreCase("find")) {
+                String detail = String.join(" ", Arrays.asList(queryTokens).subList(1, queryTokens.length));
+                taskList.findTasks(detail);
+            } else {
+                taskList.addTask(queryTokens[0], String.join(" ", query));
+            }
+        } catch (Exception e) {
+            throw new StarkException.InvalidCommandException("Query parsing error: " + e.getMessage());
         }
     }
 

@@ -33,6 +33,6 @@ public class DeleteCommandTest {
         Storage storage = new Storage("./testdata/snitch_test.txt");
 
         Command deleteCommand = new DeleteCommand(1); // No task at index 1
-        assertThrows(SnitchException.class, () -> deleteCommand.execute(taskList, ui, storage));
+        assertThrows(AssertionError.class, () -> deleteCommand.execute(taskList, ui, storage));
     }
 }

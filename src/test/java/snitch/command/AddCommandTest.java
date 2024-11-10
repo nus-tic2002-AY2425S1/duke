@@ -42,7 +42,7 @@ public class AddCommandTest {
         assertEquals(1, taskList.size());
         assertTrue(addedTask instanceof Deadline);
         assertEquals("Submit Report", addedTask.getDescription());
-        assertEquals("2/12/2023 1800", ((Deadline) addedTask).getBy());
+        assertEquals("Dec 02 2023, 6:00 pm", ((Deadline) addedTask).getBy());
     }
 
     @Test

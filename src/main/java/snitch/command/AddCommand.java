@@ -37,15 +37,15 @@ public class AddCommand implements Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws SnitchException {
         if (fullCommand.startsWith("todo")) {
-            String description = fullCommand.substring(4).trim();
+            String description = fullCommand.substring(5).trim();
             if (description.isEmpty()) {
-                throw new SnitchException("MEOW!! Come on man!!! The description of a todo cannot be empty.");
+                throw new SnitchException("Come on man!!! The description of a todo cannot be empty.");
             }
             tasks.add(new Todo(description));
         } else if (fullCommand.startsWith("deadline")) {
             String[] parts = fullCommand.split("/by ");
-            if (parts.length < 2) {
-                throw new SnitchException("Invalid format. Use: deadline task /by d/M/yyyy HHmm");
+            if (parts.length < 2 || parts[0].substring(9).trim().isEmpty()) {
+                throw new SnitchException("Come on man!!! The description of a deadline cannot be empty.");
             }
             String description = parts[0].substring(9).trim();
             String by = parts[1].trim();
@@ -53,11 +53,16 @@ public class AddCommand implements Command {
         } else if (fullCommand.startsWith("event")) {
             String[] parts = fullCommand.split("/from ");
             if (parts.length < 2 || !parts[1].contains("/to ")) {
-                throw new SnitchException("Invalid format. Use: event task /from d/M/yyyy HHmm /to d/M/yyyy HHmm");
+                throw new SnitchException("Invalid event format. Use: event task /from d/M/yyyy HHmm /to d/M/yyyy HHmm.");
             }
             String description = parts[0].substring(6).trim();
+            if (description.isEmpty()) {
+                throw new SnitchException("Come on man!!! The description of an event cannot be empty.");
+            }
             String[] timeParts = parts[1].split(" /to ");
-            tasks.add(new Event(description, timeParts[0].trim(), timeParts[1].trim()));
+            String from = timeParts[0].trim();
+            String to = timeParts[1].trim();
+            tasks.add(new Event(description, from, to));
         } else {
             throw new SnitchException("Invalid command for adding tasks.");
         }
@@ -65,7 +70,7 @@ public class AddCommand implements Command {
         // Display the added task
         ui.showTaskAdded(tasks.get(tasks.size() - 1), tasks.size());
 
-        // Save using the internal ArrayList
+        // Save tasks
         storage.save(tasks.getAllTasks());
     }
 }

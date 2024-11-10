@@ -1,5 +1,1 @@
-T | 0 | sleep
-T | 0 | dota
-T | 0 | study
-D | 1 | return boook | Sunday
-D | 0 | return mouse | Dec 28 1991, 4:00 pm
+T | 0 | sleep todo wakeup todo nothing else

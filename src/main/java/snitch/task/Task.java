@@ -25,7 +25,12 @@ public abstract class Task {
     public void markAsDone() {
         isDone = true;
     }
-
+    /**
+     * Unmarks the task.
+     */
+    public void markAsNotDone() {
+        isDone = false;
+    }
     /**
      * Returns whether the task is marked as done.
      *

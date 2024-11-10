@@ -32,6 +32,18 @@ public class Parser {
             } catch (NumberFormatException e) {
                 throw new SnitchException("Invalid task number format. Please enter a valid number.");
             }
+        } else if (input.startsWith("mark")) {
+            try {
+                return new MarkCommand(Integer.parseInt(input.substring(5).trim()));
+            } catch (NumberFormatException e) {
+                throw new SnitchException("Invalid task number format. Try: mark <Task number>");
+            }
+        } else if (input.startsWith("unmark")) {
+            try {
+                return new UnmarkCommand(Integer.parseInt(input.substring(7).trim()));
+            } catch (NumberFormatException e) {
+                throw new SnitchException("Invalid task number format. Try: unmark <Task number>");
+            }
         } else if (input.startsWith("find")) {
             String keyword = input.substring(4).trim();
             return new FindCommand(keyword);

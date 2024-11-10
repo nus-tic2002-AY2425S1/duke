@@ -89,6 +89,17 @@ public class Ui {
             System.out.println((i + 1) + "." + tasks.get(i));
         }
     }
+    /**
+     * Marks/unmarks tasks
+     */
+    public void showTaskMarked(Task task, boolean isDone) {
+        if (isDone) {
+            System.out.println("Nice! I've marked this task as done:");
+        } else {
+            System.out.println("OK, I've marked this task as not done yet:");
+        }
+        System.out.println("  " + task);
+    }
 
     /**
      * Displays a message when a task is added.

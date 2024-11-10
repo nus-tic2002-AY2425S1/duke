@@ -34,7 +34,7 @@ public class Task {
     public void setStatus(String status) {
         if (status.equalsIgnoreCase("mark")) {
             this.status = "X";
-        }else if(status.equalsIgnoreCase("unmark")){
+        } else if (status.equalsIgnoreCase("unmark")) {
             this.status = " ";
         }
     }

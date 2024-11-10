@@ -3,7 +3,7 @@ package starkchatbot.taskmanager;
 
 /**
  * Represents a deadline task with a specific due date/time.
- * This class extends {@link Task} and includes additional attributes
+ * This class extends Task and includes additional attributes
  */
 public class Deadline extends Task{
 
@@ -13,7 +13,7 @@ public class Deadline extends Task{
 
     /**
      * Constructs a Deadline task with the specified description and due date/time.
-     * The due date/time is converted to human-readable format using {@link DateTimeParser}.
+     * The due date/time is converted to human-readable format using DateTimeParser.
      *
      * @param task   The description of the deadline task.
      * @param doneBy The due date/time for the task in raw format.

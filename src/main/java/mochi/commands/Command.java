@@ -5,6 +5,8 @@ import mochi.ui.*;
 import mochi.common.*;
 import mochi.common.exception.*;
 
+import java.util.Objects;
+
 public class Command {
   private final TaskList taskList;
   public Command(TaskList taskList) {
@@ -40,6 +42,15 @@ public class Command {
 
   public void listTask() {
     taskList.printTaskList();
+  }
+
+  public void listTask(String type, String op, String date) {
+    if (Objects.equals(type, "event"))
+      taskList.printTaskList("E",op,date);
+    else if (Objects.equals(type, "deadline"))
+      taskList.printTaskList("D",op,date);
+    else
+      Ui.response(DialogMessages.LIST_TASK_EMPTY.getValue());
   }
   public void markTask(String[] token) {
     try {

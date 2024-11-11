@@ -4,6 +4,7 @@ package mochi.tasks;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 import mochi.common.exception.*;
 import mochi.parsers.*;
@@ -135,6 +136,18 @@ public class TaskList implements AutoCloseable {
     System.out.println(DialogMessages.LIST_TASK.getValue());
     for (Task i : _list) {
       System.out.println(_list.indexOf(i)+1 + "." + i.toString());
+    }
+    System.out.println("____________________________________________________________");
+  }
+  public void printTaskList(String type, String op, String date) {
+    System.out.println("____________________________________________________________");
+    System.out.println(DialogMessages.LIST_TASK_FILTERED.getValue());
+    for (Task i : _list) {
+      if (Objects.equals(i.getType(), type)) {
+        if (i.compare(op,date)) {
+          System.out.println(_list.indexOf(i)+1 + "." + i.toString());
+        }
+      }
     }
     System.out.println("____________________________________________________________");
   }

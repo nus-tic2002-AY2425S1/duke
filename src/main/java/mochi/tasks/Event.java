@@ -22,7 +22,16 @@ public class Event extends Task {
   public String toString() {
     return "[" + _type + "]" + super.toString() + " (from: " + _from + " to: "+ _to +  ")";
   }
-
+  @Override
+  public boolean compare(String op, String date) {
+    LocalDateTime checkDate = DateTime.parse(date);
+    if (op.equalsIgnoreCase("/before")) {
+      return this._to.isBefore(checkDate);
+    } else if (op.equalsIgnoreCase("/after")) {
+      return this._from.isAfter(checkDate);
+    }
+    return false;
+  }
   @Override
   public String toDBString() {
     return _type

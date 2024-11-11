@@ -7,6 +7,7 @@ import mochi.common.*;
 import mochi.common.exception.*;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class InputProcessor {
   private Command cmd;
@@ -33,7 +34,26 @@ public class InputProcessor {
         Ui.response(DialogMessages.BYE.getValue());
         break;
       case LIST:
-        cmd.listTask();
+        if (token.length == 1) {
+          cmd.listTask();
+        }
+        else {
+          String tmpDate = "";
+          if (Objects.equals(token[2], "/before")) {
+            tmpDate = Utils.trimStringArrayWithStartEnd(token,"/before",""," ");
+          }
+          if (Objects.equals(token[2], "/after")) {
+            tmpDate = Utils.trimStringArrayWithStartEnd(token,"/after",""," ");
+          }
+          LocalDateTime isDate = DateTime.parse(tmpDate);
+          if (isDate != null) {
+            cmd.listTask(token[1],token[2],tmpDate);
+          }
+          else {
+            Ui.response(tmpDate + " " + DialogMessages.INVALID_TASK.getValue());
+          }
+        }
+
         break;
       case DEADLINE:
         String d_name = Utils.trimStringArrayWithStartEnd(token,"deadline","/by"," ");

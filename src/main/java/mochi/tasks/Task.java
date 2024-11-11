@@ -10,12 +10,16 @@ public class Task {
     _type = type;
     _status = false;
   }
-
+  public boolean compare(String op, String date) {
+    return false;
+  }
   @Override
   public String toString() {
     return "[" + getStatusIcon() + "] " + _name;
   }
-
+  public String getType() {
+    return _type;
+  }
   public String toDBString() {
     return _type
       + TaskList._saveDelimiter

@@ -8,7 +8,7 @@ import task.Deadline;
 
 
 /**
- * {@code DeadlineCommand} extends from {@code AddTaskCommand}. 
+ * Extends from {@code AddTaskCommand}. 
  * It is a subclass of {@code AddTaskCommand} which provides the general structure of adding a task.
  * It takes the description and due date for the {@code Deadline} task, creates a {@code Deadline} task,
  * adds it to the {@code TaskList}, and saves the updated {@code TaskList} to {@code Storage}.
@@ -17,17 +17,16 @@ public class DeadlineCommand extends AddTaskCommand {
 
     public static final String COMMAND_WORD = "deadline";
     public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE + 
-                                               OPEN_ANGLE_BRACKET + Constants.DESCRIPTION + CLOSE_ANGLE_BRACKET + SPACE +
-                                               Constants.SLASH_BY + SPACE +
-                                               OPEN_ANGLE_BRACKET + Constants.DUE_DATE + CLOSE_ANGLE_BRACKET;
+        OPEN_ANGLE_BRACKET + Constants.DESCRIPTION + CLOSE_ANGLE_BRACKET + SPACE + Constants.SLASH_BY + SPACE +
+        OPEN_ANGLE_BRACKET + Constants.DUE_DATE + CLOSE_ANGLE_BRACKET;
     
     protected final LocalDateTime by;
 
     /**
      * Constructs a {@code DeadlineCommand} with the specified description and due date.
      * 
-     * @param description represents the description of the {@code Deadline} task
-     * @param by represents the due date of the {@code Deadline} task
+     * @param description represents the description of the {@code Deadline} task.
+     * @param by represents the due date of the {@code Deadline} task.
      */
     public DeadlineCommand(String description, LocalDateTime by) {
         super(description);
@@ -36,17 +35,13 @@ public class DeadlineCommand extends AddTaskCommand {
 
     /**
      * Returns the due date and time of the {@code Deadline} task.
-     * 
-     * @return due date and time of {@code Deadline} task
      */
     public LocalDateTime getBy() {
         return by;
     }
 
     /**
-     * Creates a new {@code Deadline} task with the provided description and due date.
-     * 
-     * @return the newly created {@code Deadline} task
+     * Returns a new {@code Deadline} task with the provided description and due date.
      */
     @Override
     protected Task createTask() {

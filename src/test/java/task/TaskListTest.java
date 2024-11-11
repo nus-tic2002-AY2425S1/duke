@@ -212,17 +212,17 @@ public class TaskListTest {
     }
 
     @Test
-    public void getAllTasksOnDate_emptyList_returnsEmptyList() {
+    public void getScheduledTasksOnDate_emptyList_returnsEmptyList() {
         LocalDate date = LocalDate.of(2023, 10, 31);
-        List<Task> tasksOnDate = defaultTaskList.getAllTasksOnDate(date);
+        List<Task> tasksOnDate = defaultTaskList.getScheduledTasksOnDate(date);
         assertTrue(tasksOnDate.isEmpty());
     }
 
     @Test
-    public void getAllTasksOnDate_withTasks_returnsCorrectTasks() {
+    public void getScheduledTasksOnDate_withTasks_returnsCorrectTasks() {
         LocalDate date = LocalDate.of(2024, 11, 9);
 
-        List<Task> tasksOnDate = defaultTaskList.getAllTasksOnDate(date);
+        List<Task> tasksOnDate = defaultTaskList.getScheduledTasksOnDate(date);
 
         assertEquals(2, tasksOnDate.size());
         assertTrue(tasksOnDate.contains(event_projectLaunch));

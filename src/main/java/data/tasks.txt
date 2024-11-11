@@ -1,4 +1,7 @@
 T | 1 | read book
 D | 0 | return book | Jul 06 2024 1800
 E | 0 | project meeting | Jun 09 2024 1400 | Jun 09 2024 1600
+D | 0 | submit assignment | Jun 09 2024 1100
+E | 0 | lunch | Jun 09 2024 1200 | Jun 09 2024 1400
 T | 1 | join sports club
+FD | 0 | read sales report | 2

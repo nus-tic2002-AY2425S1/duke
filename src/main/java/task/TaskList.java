@@ -1,7 +1,12 @@
 package task;
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import common.Constants;
 
+import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +37,7 @@ public class TaskList {
 
     /**
      * Retrieves the size of the {@code TaskList}.
-     *
+     * 
      * @return the total number of tasks in the {@code TaskList}.
      */
     public int getSize() {
@@ -41,7 +46,7 @@ public class TaskList {
 
     /**
      * Checks if the {@code TaskList} is empty.
-     *
+     * 
      * @return true if the {@code TaskList} is empty; false otherwise.
      */
     public boolean isEmpty() {
@@ -54,7 +59,7 @@ public class TaskList {
 
     /**
      * Retrieves the task at a specific index in the {@code TaskList}.
-     *
+     * 
      * @param index represents the index of the task to retrieve.
      * @return the task at the specified index.
      */
@@ -64,7 +69,7 @@ public class TaskList {
 
     /**
      * Adds a new task to the {@code TaskList}.
-     *
+     * 
      * @param task represents the task to be added. If it is null, the task will not be added.
      */
     // Adds a new task
@@ -76,7 +81,7 @@ public class TaskList {
 
     /**
      * Removes a task from the list.
-     *
+     * 
      * @param task represents the task to be removed from the {@code TaskList}.
      * @return true if the task is removed successfully; false otherwise.
      */
@@ -86,12 +91,12 @@ public class TaskList {
         } else {
             return false;
         }
-    }
+    } 
 
     /**
-     * Makes a task at a specified index as done.
+     * Makes a task at a specified index as done. 
      * Returns false if the task has already been marked done before this method is called.
-     *
+     * 
      * @param taskIndex represents the index of the task to mark.
      * @return true if the task is marked successfully; false otherwise.
      */
@@ -108,7 +113,7 @@ public class TaskList {
     /**
      * Marks a task at a specified index as not done.
      * Returns false if the task has already been marked as not done before this method is called.
-     *
+     * 
      * @param indexToUnmark represents the index of the task to unmark.
      * @return true if the task is unmarked successfully; false otherwise.
      */
@@ -124,7 +129,7 @@ public class TaskList {
 
     /**
      * Returns the appropriate word for "task" based on the number of tasks in the {@code TaskList}.
-     *
+     * 
      * @return "task" if there is only one task in the {@code TaskList}; "tasks" if there are multiple.
      */
     public String getTaskWord() {
@@ -141,7 +146,7 @@ public class TaskList {
      * @param date represents the date to check against.
      * @return a list of tasks that occur on a specified date.
      */
-    public List<Task> getAllTasksOnDate(LocalDate date) {
+    public List<Task> getTasksOnDate(LocalDate date) {
         List<Task> tasksOnDate = new ArrayList<>();
         for (Task task : getTaskList()) {
             if (task.isOnDate(date)) {
@@ -151,9 +156,52 @@ public class TaskList {
         return tasksOnDate;
     }
 
+    public List<Task> getScheduledTasks(TaskList taskList, LocalDate date) {
+        // Retrieve all tasks scheduled on the specified date
+        List<Task> tasksOnDate = taskList.getTasksOnDate(date);
+
+        // Sort the tasks by their LocalDateTime
+        // https://stackoverflow.com/questions/2784514/sort-arraylist-of-custom-objects-by-property
+        Collections.sort(tasksOnDate, new Comparator<Task>() {
+            @Override
+            public int compare(Task taskA, Task taskB) {
+                LocalDateTime dateTimeA = null;
+                LocalDateTime dateTimeB = null;
+
+                if (taskA instanceof Deadline) {
+                    dateTimeA = ((Deadline) taskA).getDue();
+                } else if (taskA instanceof Event) {
+                    dateTimeA = ((Event) taskA).getStartDateTime();
+                }
+
+                if (taskB instanceof Deadline) {
+                    dateTimeB = ((Deadline) taskB).getDue();
+                } else if (taskB instanceof Event) {
+                    dateTimeB = ((Event) taskB).getStartDateTime();
+                }
+
+                // https://www.javatpoint.com/compare-time-in-java
+                // If dateTimeA.compareTo(dateTimeB) > 0, then dateTimeA > dateTimeB, i.e. dateTimeA is after dateTimeB
+                // Handle null values. Deadlines can have no time.
+                if (dateTimeA == null && dateTimeB == null) {
+                    return 0;
+                } else if (dateTimeA == null) {
+                    return 1;       // Put dateTimeA before dateTimeB
+                } else if (dateTimeB == null) {
+                    return -1;      // Put dateTimeB after dateTimeA
+                }
+
+                // show 2024-06-09
+                // System.out.println(dateTimeA + " of task " + taskA + ", compare to " + dateTimeB + " of task " + taskB + " is " + dateTimeA.compareTo(dateTimeB));
+                return dateTimeA.compareTo(dateTimeB);
+            }
+        });
+        return tasksOnDate;
+    }
+
     /**
      * Retrieves all tasks that matches the specified description.
-     *
+     * 
      * @param description represents the description t o check against.
      * @return a list of tasks that has the same description as the specified one.
      */

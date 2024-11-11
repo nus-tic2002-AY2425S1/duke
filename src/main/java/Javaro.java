@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 import commands.Command;
 import exception.CommandException;
 import exception.FileContentException;
@@ -8,11 +10,10 @@ import storage.Storage;
 import task.TaskList;
 import ui.Ui;   
 
-import java.io.IOException;
-
 /**
- * The Javaro class represents the main application class / entry point for the Javaro task management system.
- * The class initializes the user interface, storage, and task list, and runs the main application logic. It processes the commands issued by the user.
+ * Represents the main application class / entry point for the Javaro task management system.
+ * The class initializes the user interface, storage, and task list, and runs the main application logic. 
+ * It processes the commands issued by the user.
  * It reads commands from the user, parses and executes them, and displays appropriate feedback to the user. 
  * The application handles errors related to task storage, command parsing, and general exceptions gracefully.
  */
@@ -26,7 +27,8 @@ public class Javaro {
      * Constructs a Javaro instance. 
      * Setting up the Javaro application initializing the user interface, storage, and task list.
      * It handles any initialization errors that occur. 
-     * If it fails to load tasks list from storage (tasks file), then it initializes an empty task list and displays an error message.
+     * If it fails to load tasks list from storage (tasks file), 
+     * then it initializes an empty task list and displays an error message.
      */
     public Javaro() {
         
@@ -45,8 +47,8 @@ public class Javaro {
             taskList = new TaskList();      // Initialize an empty task list
         } catch (IOException ioe) {
             // Handle IOExceptions (e.g., file not found)
-            String[] messageList = {ioe.getMessage()};
-            ui.printMessage(messageList);
+            String[] messages = {ioe.getMessage()};
+            ui.printMessage(messages);
             taskList = new TaskList();      // Initialize an empty task list
         }
 
@@ -84,20 +86,17 @@ public class Javaro {
                 // Handle storage operation errors
                 // System.out.println("StorageOperationException caught: " + e.getMessage());
                 ui.showError(e.getMessageList());
-            } finally {
-                // For any cleanup or final actions
-                // ui.showLine();
             }
         }
         
     }
 
     /**
-     * The main entry point of the Javaro application.
      * Initializes the Javaro program and starts the main loop.
+     * The main entry point of the Javaro application.
      * This method is called when the program is executed from the command-line.
      * 
-     * @param args command line arguments (not used here)
+     * @param args command line arguments (not used here).
      */
     public static void main(String[] args) {
         new Javaro().run();

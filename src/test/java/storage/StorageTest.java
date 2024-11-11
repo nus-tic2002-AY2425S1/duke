@@ -31,7 +31,7 @@ public class StorageTest {
     private Storage storage;
 
     @BeforeEach
-    public void setUp() throws StorageOperationException, IOException {
+    public void setUp() throws StorageOperationException {
         // Set the system property for testing
         System.setProperty("storage.file", FILE_STORAGE_PATH);
         storage = new Storage();
@@ -42,8 +42,7 @@ public class StorageTest {
     @AfterEach
     public void cleanUp() throws IOException {
         // Clean up the test files and directories
-        String tasksFilePath = FILE_STORAGE_PATH;
-        String dataFolderPath = Paths.get(tasksFilePath).getParent().toString();
+        String dataFolderPath = Paths.get(FILE_STORAGE_PATH).getParent().toString();
         Files.deleteIfExists(Paths.get(FILE_STORAGE_PATH));
         Files.deleteIfExists(Paths.get(dataFolderPath));
     }
@@ -69,10 +68,9 @@ public class StorageTest {
         if (dataFolder.exists()) {
             // Delete all files in the directory
             File[] files = dataFolder.listFiles();
-            if (files.length > 0) {
-                for (File file : files) {
-                    Files.delete(file.toPath());
-                }
+            assert files != null;
+            for (File file : files) {
+                Files.delete(file.toPath());
             }
         } else {
             // Create the data folder if it doesn't exist
@@ -135,7 +133,7 @@ public class StorageTest {
 
     @Test
     public void writeToFile_writeTasksFromTasksList() throws StorageOperationException, IOException {
-        TaskList taskList = new TaskList();
+        TaskList taskList;
         TypicalTasks typicalTasks = new TypicalTasks();
         taskList = typicalTasks.initDefaultTaskList();
 

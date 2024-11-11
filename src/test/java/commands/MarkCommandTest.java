@@ -48,10 +48,8 @@ public class MarkCommandTest {
     @Test
     public void execute_emptyTaskList_throwsCommandException() {
         markCommand = new MarkCommand(0);
-        assertTrue(taskList.getSize() == 0);
-        CommandException exception = assertThrows(CommandException.class, () -> {
-            markCommand.execute(taskList, ui, storage);
-        }, "CommandException expected");
+        assertEquals(0, taskList.getSize());
+        CommandException exception = assertThrows(CommandException.class, () -> markCommand.execute(taskList, ui, storage), "CommandException expected");
         assertEquals(Messages.MESSAGE_EMPTY_TASKLIST, exception.getMessage());
     }
 
@@ -61,15 +59,12 @@ public class MarkCommandTest {
         markCommand = new MarkCommand(99999);
 
         // Referenced from https://howtodoinjava.com/junit5/expected-exception-example/
-        CommandException exception = assertThrows(CommandException.class, () -> {
-            markCommand.execute(taskList, ui, storage);
-        }, "CommandException expected");
+        CommandException exception = assertThrows(CommandException.class, () -> markCommand.execute(taskList, ui, storage), "CommandException expected");
         assertEquals(Messages.ERROR_TASK_NONEXISTENT, exception.getMessage());
     }
 
     @Test
-    public void execute_taskAlreadyMarked_showsAlreadyMarkedMessage() 
-        throws CommandException, StorageOperationException {
+    public void execute_taskAlreadyMarked_showsAlreadyMarkedMessage() {
         taskList = initTypicalTasks();
         
         Todo sampleTodo = typicalTasks.todo_doHomework;

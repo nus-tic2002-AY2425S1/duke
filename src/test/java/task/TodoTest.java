@@ -12,16 +12,15 @@ import common.Constants;
 import util.TypicalTasks;
 
 public class TodoTest {
-    
-    private TypicalTasks typicalTasks;
+
     private Todo todoDone;
-    private String TODO_DONE_DESCRIPTION = "Do homework";
+    private final String TODO_DONE_DESCRIPTION = "Do homework";
     private Todo todoNotDone;
-    private String TODO_NOTDONE_DESCRIPTION = "Buy groceries";
+    private final String TODO_NOTDONE_DESCRIPTION = "Buy groceries";
 
     @BeforeEach
     public void setUp() {
-        typicalTasks = new TypicalTasks();
+        TypicalTasks typicalTasks = new TypicalTasks();
         todoDone = typicalTasks.todo_doHomework;
         todoNotDone = typicalTasks.todo_buyGroceries;
     }

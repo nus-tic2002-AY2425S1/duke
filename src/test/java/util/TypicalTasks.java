@@ -10,21 +10,23 @@ import task.TaskList;
 // Solution below inspired by https://github.com/se-edu/addressbook-level2/blob/master/test/java/seedu/addressbook/util/TypicalPersons.java
 public class TypicalTasks {
 
-    public Todo todo_doHomework = new Todo("Do homework", true);
-    public Todo todo_buyGroceries = new Todo("Buy groceries", false);
-    public Todo todo_washDishes = new Todo("Wash dishes", true);
+    public final Todo todo_doHomework = new Todo("Do homework", true);
+    public final Todo todo_buyGroceries = new Todo("Buy groceries", false);
+    public final Todo todo_washDishes = new Todo("Wash dishes", true);
 
-    public Deadline deadline_submitReport = new Deadline("Submit report", false, LocalDateTime.of(2021, 4, 24, 14, 33));
-    public Deadline deadline_resolveCustomerTicket = 
+    public final Deadline deadline_submitReport = new Deadline("Submit report", false, LocalDateTime.of(2021, 4, 24, 14, 33));
+    public final Deadline deadline_resolveCustomerTicket =
         new Deadline("Resolve customer ticket", true, LocalDateTime.of(2022, 8, 4, 9, 15));
-    public Deadline deadline_finalizeGuestList = 
-        new Deadline("Finalize guest list", false, LocalDateTime.of(2021, 6, 24, 14, 33));
+// --Commented out by Inspection START (11/11/24, 6:35 pm):
+//    public Deadline deadline_finalizeGuestList =
+//        new Deadline("Finalize guest list", false, LocalDateTime.of(2021, 6, 24, 14, 33));
+// --Commented out by Inspection STOP (11/11/24, 6:35 pm)
 
-    public Event event_projectLaunch = 
+    public final Event event_projectLaunch =
         new Event("Project launch", true, LocalDateTime.of(2024, 11, 9, 14, 30), LocalDateTime.of(2026, 12, 25, 9, 0));
-    public Event event_birthday = 
+    public final Event event_birthday =
         new Event("Birthday", false, LocalDateTime.of(2024, 11, 9, 18, 45), LocalDateTime.of(2024, 11, 9, 22, 45));
-    public Event event_anniversary = 
+    public final Event event_anniversary =
         new Event("Anniversary", true, LocalDateTime.of(2025, 1, 1, 0, 0), LocalDateTime.of(2025, 1, 1, 23, 59));
     
     public TaskList initDefaultTaskList() {

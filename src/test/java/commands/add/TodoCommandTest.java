@@ -1,14 +1,15 @@
 package commands.add;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import common.Constants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import task.Task;
 import task.Todo;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 public class TodoCommandTest {
     
@@ -39,7 +40,7 @@ public class TodoCommandTest {
         assertNotNull(task);
 
         // Asserts that the task must be a Todo task
-        assertTrue(task instanceof Todo);
+        assertInstanceOf(Todo.class, task);
 
         // Asset that the description is set correctly
         constructor_validDescription_createTodoCommand();
@@ -48,11 +49,11 @@ public class TodoCommandTest {
     // Tests that creating a task with an empty description does not throw an exception and that the task is created with an empty description
     @Test
     public void createTask_emptyDescription_createsTodoTaskWithEmptyDescription() {
-        todoCommand = new TodoCommand("");
+        todoCommand = new TodoCommand(Constants.EMPTY_STRING);
         Task task = todoCommand.createTask();
         assertNotNull(task);
-        assertTrue(task instanceof Todo);
-        assertEquals("", task.getDescription());
+        assertInstanceOf(Todo.class, task);
+        assertEquals(Constants.EMPTY_STRING, task.getDescription());
     }
 
 }

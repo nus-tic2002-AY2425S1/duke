@@ -15,7 +15,7 @@ import util.TypicalTasks;
 
 public class TaskListTest {
     
-    private TypicalTasks typicalTasks = new TypicalTasks();
+    private final TypicalTasks typicalTasks = new TypicalTasks();
     private Todo todo_doHomework;
     private Todo todo_buyGroceries;
     private Todo todo_washDishes;
@@ -157,7 +157,7 @@ public class TaskListTest {
 
     public void unmarkTask_success(Task task, int taskIndex) {
         assertNotNull(task);
-        if (task.getIsDone() == false) {
+        if (!task.getIsDone()) {
             assertFalse(defaultTaskList.unmarkTask(taskIndex));
         } else {
             assertTrue(defaultTaskList.unmarkTask(taskIndex));

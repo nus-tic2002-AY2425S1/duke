@@ -22,8 +22,6 @@ public class EventTest {
     private LocalDateTime endDateTime;
     private final String AGM = "Annual General Meeting";
     private final String TL = "Team Lunch";
-    private final String SPACE = Constants.SPACE;
-    private final String SEPARATOR = Constants.ENCODE_TASK_SEPARATOR;
 
     @BeforeEach
     public void setUp() {
@@ -72,7 +70,8 @@ public class EventTest {
         final String OPEN_SQUARE_BRACKET = Constants.OPEN_SQUARE_BRACKET;
         final String CLOSE_SQUARE_BRACKET = Constants.CLOSE_SQUARE_BRACKET;
 
-        String expectedString = OPEN_SQUARE_BRACKET + Constants.E + CLOSE_SQUARE_BRACKET + 
+        String SPACE = Constants.SPACE;
+        String expectedString = OPEN_SQUARE_BRACKET + Constants.E + CLOSE_SQUARE_BRACKET +
             OPEN_SQUARE_BRACKET + Constants.X + CLOSE_SQUARE_BRACKET + SPACE + 
             AGM + SPACE + OPEN_ROUND_BRACKET + Constants.FROM + Constants.COLON + SPACE + 
             eventWithDone.getFormattedStartDateTime() + SPACE + Constants.TO + Constants.COLON + SPACE +
@@ -83,7 +82,8 @@ public class EventTest {
     // Tests the encoding of the Event object to ensure it returns the expected string format.
     @Test
     public void encodeTask_eventWithDone_correctFormat() {
-        String expectedEncoded = TaskType.EVENT + SEPARATOR + "1" + SEPARATOR + AGM + SEPARATOR + 
+        String SEPARATOR = Constants.ENCODE_TASK_SEPARATOR;
+        String expectedEncoded = TaskType.EVENT + SEPARATOR + "1" + SEPARATOR + AGM + SEPARATOR +
             eventWithDone.getFormattedStartDateTime() + SEPARATOR + eventWithDone.getFormattedEndDateTime();
         assertEquals(expectedEncoded, eventWithDone.encodeTask());
     }

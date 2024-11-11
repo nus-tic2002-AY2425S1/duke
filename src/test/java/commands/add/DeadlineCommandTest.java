@@ -1,9 +1,5 @@
 package commands.add;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import parser.DateTimeParser;
 import task.Deadline;
-import task.Task;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 public class DeadlineCommandTest {
     private DeadlineCommand deadlineCommand;
@@ -28,19 +27,19 @@ public class DeadlineCommandTest {
     @Test
     public void constructor_validInput_createDeadlineCommand() {
         assertEquals(TEST_DESCRIPTION, deadlineCommand.getDescription());
-        assertEquals(TEST_DUE, deadlineCommand.getBy());
+        assertEquals(TEST_DUE, deadlineCommand.getDueDate());
         assertNotNull(deadlineCommand);
     }
 
     // Tests that the createTask() method correctly creates a Deadline task with the given description and due date
     @Test
     public void createTask_validInput_createDeadlineTask() {
-        Task deadline = new Deadline(TEST_DESCRIPTION, TEST_DUE);
+        Deadline deadline = new Deadline(TEST_DESCRIPTION, TEST_DUE);
         assertNotNull(deadline);
-        assertTrue(deadline instanceof Deadline);
+        assertInstanceOf(Deadline.class, deadline);
         assertEquals(TEST_DESCRIPTION, deadline.getDescription());
-        assertEquals(TEST_DUE, ((Deadline) deadline).getDue());
-        assertEquals(DateTimeParser.formatDateTime(TEST_DUE), ((Deadline) deadline).getFormattedDue());
+        assertEquals(TEST_DUE, deadline.getDue());
+        assertEquals(DateTimeParser.formatDateTime(TEST_DUE), deadline.getFormattedDue());
     }
 
 }

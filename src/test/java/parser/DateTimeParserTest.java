@@ -22,9 +22,7 @@ public class DateTimeParserTest {
 
     @Test
     public void parseOutputDateTime_invalidFormat_throwsCommandException() {
-        CommandException commandException = assertThrows(CommandException.class, () -> {
-            DateTimeParser.parseOutputDateTime("01-10-2023 1800");
-        });
+        CommandException commandException = assertThrows(CommandException.class, () -> DateTimeParser.parseOutputDateTime("01-10-2023 1800"));
         assertEquals(Messages.ERROR_INVALID_DATETIME_FORMAT, commandException.getMessage());
     }
 
@@ -44,9 +42,7 @@ public class DateTimeParserTest {
 
     @Test
     public void parseInputDeadlineDateTime_invalidDateFormat_throwsCommandException() {
-        CommandException commandException = assertThrows(CommandException.class, () -> {
-            DateTimeParser.parseInputDeadlineDateTime("2023/10/01");
-        });
+        CommandException commandException = assertThrows(CommandException.class, () -> DateTimeParser.parseInputDeadlineDateTime("2023/10/01"));
         assertEquals(Messages.ERROR_INVALID_DATETIME_FORMAT, commandException.getMessage());
     }
 
@@ -59,9 +55,7 @@ public class DateTimeParserTest {
 
     @Test
     public void parseInputEventDateTime_invalidFormat_throwsCommandException() {
-        CommandException commandException = assertThrows(CommandException.class, () -> {
-            DateTimeParser.parseInputEventDateTime("01-10-2023 1800");
-        });
+        CommandException commandException = assertThrows(CommandException.class, () -> DateTimeParser.parseInputEventDateTime("01-10-2023 1800"));
         assertEquals(Messages.ERROR_INVALID_DATETIME_FORMAT, commandException.getMessage());
     }
 
@@ -74,9 +68,7 @@ public class DateTimeParserTest {
 
     @Test
     public void parseInputShowDate_invalidFormat_throwsCommandException() {
-        CommandException commandException = assertThrows(CommandException.class, () -> {
-            DateTimeParser.parseInputShowDate("01-10-2023");
-        });
+        CommandException commandException = assertThrows(CommandException.class, () -> DateTimeParser.parseInputShowDate("01-10-2023"));
         assertEquals(Messages.ERROR_INVALID_DATETIME_FORMAT, commandException.getMessage());
     }
 

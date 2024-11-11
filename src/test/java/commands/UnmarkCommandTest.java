@@ -48,10 +48,8 @@ public class UnmarkCommandTest {
     @Test
     public void execute_emptyTaskList_throwsCommandException() {
         unmarkCommand = new UnmarkCommand(0);
-        assertTrue(taskList.getSize() == 0);
-        CommandException exception = assertThrows(CommandException.class, () -> {
-            unmarkCommand.execute(taskList, ui, storage);
-        }, "CommandException expected");
+        assertEquals(0, taskList.getSize());
+        CommandException exception = assertThrows(CommandException.class, () -> unmarkCommand.execute(taskList, ui, storage), "CommandException expected");
         assertEquals(Messages.MESSAGE_EMPTY_TASKLIST, exception.getMessage());
     }
 
@@ -61,14 +59,12 @@ public class UnmarkCommandTest {
         unmarkCommand = new UnmarkCommand(99999);
 
         // Referenced from https://howtodoinjava.com/junit5/expected-exception-example/
-        CommandException exception = assertThrows(CommandException.class, () -> {
-            unmarkCommand.execute(taskList, ui, storage);
-        }, "CommandException expected");
+        CommandException exception = assertThrows(CommandException.class, () -> unmarkCommand.execute(taskList, ui, storage), "CommandException expected");
         assertEquals(Messages.ERROR_TASK_NONEXISTENT, exception.getMessage());
     }
 
     @Test
-    public void execute_taskAlreadyUnmarked_doesNotChangeIsDone() throws CommandException, StorageOperationException {
+    public void execute_taskAlreadyUnmarked_doesNotChangeIsDone() {
         taskList = initTypicalTasks();
         
         Todo sampleTodo = typicalTasks.todo_buyGroceries;

@@ -28,3 +28,4 @@ Prerequisites: JDK 17, update Intellij to the most recent version.
    |____/ \__,_|_|\_\___|
    ```
 4. Duke is released under an MIT license.
+#The cat image used to represent the user in the app,cat's name is Nono.And cat owned by Yuanyuan

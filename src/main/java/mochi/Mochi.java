@@ -15,13 +15,13 @@ public class Mochi {
     TaskList taskList = new TaskList();
     InputProcessor inputProcessor = new InputProcessor(taskList);
     Scanner in = new Scanner(System.in);
-    boolean bye = false;
-    while (!bye) {
+    boolean shouldExit = false;
+    while (!shouldExit) {
       String input = in.nextLine();
       try {
         inputProcessor.processInput(input);
         if (CommandEnum.getValue(input) == CommandEnum.BYE) {
-          bye = true;
+          shouldExit = true;
         }
       } catch (Exception e) {
         Ui.response(e.getMessage());

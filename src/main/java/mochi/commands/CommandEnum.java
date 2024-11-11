@@ -1,8 +1,10 @@
-enum Command {
+package mochi.commands;
+
+public enum CommandEnum {
   DELETE, MARK, UNMARK, BYE, LIST, DEADLINE, EVENT, TODO, UNKNOWN;
-  public static Command getValue(String c) {
+  public static CommandEnum getValue(String c) {
     try {
-      return Command.valueOf(c.toUpperCase());
+      return CommandEnum.valueOf(c.toUpperCase());
     } catch (IllegalArgumentException e) {
       return UNKNOWN;
     }

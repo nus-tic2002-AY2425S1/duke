@@ -49,13 +49,13 @@ public class StorageTest {
     }
 
     @Test
-    public void constructor_checkDataFileExists() {
+    public void constructor_checkDataFileExists_tasksFileExists() {
         File tasksFile = storage.getFile();
         assertTrue(tasksFile.exists(), "Tasks file should exist after the storage has been initialized");
     }
 
     @Test
-    public void constructor_checkDataFolderExists() {
+    public void constructor_checkDataFolderExists_dataFolderExists() {
         // https://www.geeksforgeeks.org/get-the-files-parent-directory-in-java/
         File dataFolder = storage.getFile().getParentFile();
         assertTrue(dataFolder.exists(), "Data folder should exist after the storage has been initialized");
@@ -80,7 +80,8 @@ public class StorageTest {
         }
         
         storage.checkDataFolderExists();
-        assertTrue(dataFolder.exists(), "Data folder should exist after the execution of the checkDataFolderExists method");
+        assertTrue(dataFolder.exists(), 
+            "Data folder should exist after the execution of the checkDataFolderExists method");
     }
 
     @Test
@@ -141,12 +142,14 @@ public class StorageTest {
         storage.saveTasks(taskList);
 
         List<String> lines = storage.getAllLines();
-        assertEquals(taskList.getSize(), lines.size(), "Task list should contain the same number of tasks in the tasks file");
+        assertEquals(taskList.getSize(), lines.size(), 
+            "Task list should contain the same number of tasks in the tasks file");
         
     }
 
     @Test
-    public void loadTasks_readTasksFromFile() throws IOException, FileContentException, TaskListDecoderException, CommandException, StorageOperationException {
+    public void loadTasks_readTasksFromFile() throws IOException, FileContentException, 
+        TaskListDecoderException, CommandException, StorageOperationException {
         TypicalTasks typicalTasks = new TypicalTasks();
         TaskList sampleTaskList = new TaskList();
         sampleTaskList.addTask(typicalTasks.todo_doHomework);
@@ -158,7 +161,8 @@ public class StorageTest {
 
         TaskList taskList = storage.loadTasks();
         assertNotNull(taskList, "Loaded tasks should not be null");
-        assertEquals(sampleTaskList.getSize(), taskList.getSize(), "Task list should contain the same number of tasks in the tasks file");
+        assertEquals(sampleTaskList.getSize(), taskList.getSize(), 
+            "Task list should contain the same number of tasks in the tasks file");
     }
 
 }

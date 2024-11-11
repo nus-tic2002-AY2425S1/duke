@@ -73,7 +73,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parse_emptyTodoDescription_throwsCommandException() {
+    public void parse_invalidTodoCommandFormat_throwsCommandException() {
         CommandException exception = assertThrows(CommandException.class, () -> {
             Parser.parse("todo ");
         });
@@ -81,7 +81,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parse_emptyDeadlineCommand_throwsCommandException() {
+    public void parse_invalidDeadlineCommandFormat_throwsCommandException() {
         CommandException exception = assertThrows(CommandException.class, () -> {
             Parser.parse("deadline ");
         });
@@ -89,7 +89,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parse_emptyEventCommand_throwsCommandException() {
+    public void parse_invalidEventCommandFormat_throwsCommandException() {
         CommandException exception = assertThrows(CommandException.class, () -> {
             Parser.parse("event ");
         });
@@ -97,7 +97,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parse_invalidDeadlineFormat_throwsCommandException() {
+    public void parse_invalidDeadlineFormat_invalidDateFormat_throwsCommandException() {
         CommandException exception = assertThrows(CommandException.class, () -> {
             Parser.parse("deadline email clients for feedback /by invalidDate");
         });

@@ -68,7 +68,8 @@ public class MarkCommandTest {
     }
 
     @Test
-    public void execute_taskAlreadyMarked_showsAlreadyMarkedMessage() throws CommandException, StorageOperationException {
+    public void execute_taskAlreadyMarked_showsAlreadyMarkedMessage() 
+        throws CommandException, StorageOperationException {
         taskList = initTypicalTasks();
         
         Todo sampleTodo = typicalTasks.todo_doHomework;
@@ -78,7 +79,8 @@ public class MarkCommandTest {
     }
 
     @Test
-    public void execute_taskSuccessfullyMarked_showsSuccessMessage() throws CommandException, StorageOperationException {
+    public void execute_taskSuccessfullyMarked_showsSuccessMessage() 
+        throws CommandException, StorageOperationException {
         taskList = initTypicalTasks();
         
         Todo sampleTodo = typicalTasks.todo_buyGroceries;       // Index 1

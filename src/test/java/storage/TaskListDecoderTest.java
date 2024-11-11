@@ -26,7 +26,7 @@ public class TaskListDecoderTest {
     private TaskList decodedTasks;
 
     @Test
-    public void decodeTaskList_validTodo() throws Exception {
+    public void decodeTaskList_validTodo_decodesSuccessfully() throws Exception {
         encodedTasks = Arrays.asList("T | 0 | learn magic");
         decodedTasks = TaskListDecoder.decodeTaskList(encodedTasks);
 
@@ -38,7 +38,7 @@ public class TaskListDecoderTest {
     }
 
     @Test
-    public void decodeTaskList_validDeadline() throws Exception {
+    public void decodeTaskList_validDeadline_decodesSuccessfully() throws Exception {
         encodedTasks = Arrays.asList("D | 0 | prepare for presentation | Oct 10 2024 1000");
         decodedTasks = TaskListDecoder.decodeTaskList(encodedTasks);
 
@@ -51,7 +51,7 @@ public class TaskListDecoderTest {
     }
 
     @Test
-    public void decodeTaskList_validEvent() throws Exception {
+    public void decodeTaskList_validEvent_decodesSuccessfully() throws Exception {
         encodedTasks = Arrays.asList("E | 0 | networking lunch | Sep 11 2024 1200 | Sep 11 2024 1400");
         decodedTasks = TaskListDecoder.decodeTaskList(encodedTasks);
 
@@ -60,12 +60,14 @@ public class TaskListDecoderTest {
         assertTrue(task instanceof Event);
         assertEquals("networking lunch", task.getDescription());
         assertFalse(task.getIsDone());
-        assertEquals(LocalDateTime.of(2024, 9, 11, 12, 0), ((Event) task).getStartDateTime());
-        assertEquals(LocalDateTime.of(2024, 9, 11, 14, 0), ((Event) task).getEndDateTime());
+        assertEquals(LocalDateTime.of(2024, 9, 11, 12, 0), 
+            ((Event) task).getStartDateTime());
+        assertEquals(LocalDateTime.of(2024, 9, 11, 14, 0), 
+            ((Event) task).getEndDateTime());
     }
 
     @Test
-    public void decodeTaskList_emptyTask() {
+    public void decodeTaskList_emptyTask_throwsException() {
         encodedTasks = Arrays.asList(Constants.EMPTY_STRING);
         FileContentException exception = assertThrows(FileContentException.class, () -> {
             TaskListDecoder.decodeTaskList(encodedTasks);
@@ -78,7 +80,7 @@ public class TaskListDecoderTest {
     }
 
     @Test
-    public void decodeTaskList_invalidFormat() {
+    public void decodeTaskList_invalidFormat_throwsException() {
         List<String> encodedTasks = Arrays.asList("T | 0");
         Exception exception = assertThrows(FileContentException.class, () -> {
             TaskListDecoder.decodeTaskList(encodedTasks);
@@ -91,7 +93,7 @@ public class TaskListDecoderTest {
     }
 
     @Test
-    public void decodeTaskList_unknownTaskType() {
+    public void decodeTaskList_unknownTaskType_throwsException() {
         List<String> encodedTasks = Arrays.asList("X | 0 | unknown task");
         Exception exception = assertThrows(FileContentException.class, () -> {
             TaskListDecoder.decodeTaskList(encodedTasks);
@@ -104,7 +106,7 @@ public class TaskListDecoderTest {
     }
 
     @Test
-    public void decodeTaskList_invalidCompletionStatus() {
+    public void decodeTaskList_invalidCompletionStatus_throwsException() {
         List<String> encodedTasks = Arrays.asList("T | 2 | invalid status task");
         Exception exception = assertThrows(FileContentException.class, () -> {
             TaskListDecoder.decodeTaskList(encodedTasks);

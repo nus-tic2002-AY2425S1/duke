@@ -68,7 +68,7 @@ public class UnmarkCommandTest {
     }
 
     @Test
-    public void execute_taskAlreadyUnmarked() throws CommandException, StorageOperationException {
+    public void execute_taskAlreadyUnmarked_doesNotChangeIsDone() throws CommandException, StorageOperationException {
         taskList = initTypicalTasks();
         
         Todo sampleTodo = typicalTasks.todo_buyGroceries;
@@ -78,7 +78,8 @@ public class UnmarkCommandTest {
     }
 
     @Test
-    public void execute_taskSuccessfullyMarked_showsSuccessMessage() throws CommandException, StorageOperationException {
+    public void execute_taskSuccessfullyMarked_showsSuccessMessage() 
+        throws CommandException, StorageOperationException {
         taskList = initTypicalTasks();
         
         Todo sampleTodo = typicalTasks.todo_doHomework;       // Index 1
@@ -87,7 +88,8 @@ public class UnmarkCommandTest {
         // Task number is 2 because taskNumber = index of task + 1. User doesn't know that the list is 0-based index
         unmarkCommand = new UnmarkCommand(1);
         unmarkCommand.execute(taskList, ui, storage);
-        assertFalse(sampleTodo.getIsDone(), "After executing the unmark command, the task should be marked as not done");
+        assertFalse(sampleTodo.getIsDone(), 
+            "After executing the unmark command, the task should be marked as not done");
 
     }
 

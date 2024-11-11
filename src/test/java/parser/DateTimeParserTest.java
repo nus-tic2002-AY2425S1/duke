@@ -43,7 +43,7 @@ public class DateTimeParserTest {
     }
 
     @Test
-    public void parseInputDeadlineDateTime_invalidFormat_throwsCommandException() {
+    public void parseInputDeadlineDateTime_invalidDateFormat_throwsCommandException() {
         CommandException commandException = assertThrows(CommandException.class, () -> {
             DateTimeParser.parseInputDeadlineDateTime("2023/10/01");
         });

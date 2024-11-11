@@ -27,7 +27,7 @@ public class EventCommandTest {
 
     // Tests that the constructor correctly initializes the EventCommand with valid parameters
     @Test
-    public void constructor_validInput_success() {
+    public void constructor_validInput_createsEventCommand() {
         assertNotNull(eventCommand);
         assertEquals(TEST_DESCRIPTION, eventCommand.getDescription());
         assertEquals(TEST_STARTDATETIME, eventCommand.getStartDateTime());
@@ -36,7 +36,7 @@ public class EventCommandTest {
 
     // Tests that the createTask() method correctly creates an Event task with the given description, start date and time, and end date and time
     @Test
-    public void createTask_createsEventCommand_success() {
+    public void createTask_validInput_createsEventCommand() {
         Task event = new Event(TEST_DESCRIPTION, TEST_STARTDATETIME, TEST_ENDDATETIME);
         
         assertNotNull(event);

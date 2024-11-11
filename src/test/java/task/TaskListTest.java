@@ -3,16 +3,15 @@ package task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import util.TypicalTasks;
-
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import util.TypicalTasks;
 
 public class TaskListTest {
     
@@ -50,7 +49,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void isEmpty_success() {
+    public void isEmpty_emptyTaskList_zeroTasks() {
         assertEquals(0, emptyTaskList.getSize(), "Empty task list should contain 0 tasks.");
     }
 
@@ -59,16 +58,18 @@ public class TaskListTest {
         int numberOfTasksBeforeAddition = defaultTaskList.getSize();
         defaultTaskList.addTask(task);
         int numberOfTasksAfterAddition = defaultTaskList.getSize();
-        assertEquals(numberOfTasksBeforeAddition, numberOfTasksAfterAddition - 1, "Task list should contain one more task after adding a new task");
+        assertEquals(numberOfTasksBeforeAddition, numberOfTasksAfterAddition - 1, 
+            "Task list should contain one more task after adding a new task");
     }
 
     @Test
-    public void addTask_null_fail() {
+    public void addTask_nullTask_noChangeInSize() {
         Task task = null;
         int numberOfTasksBeforeAddition = defaultTaskList.getSize();
         defaultTaskList.addTask(task);
         int numberOfTasksAfterAddition = defaultTaskList.getSize();
-        assertEquals(numberOfTasksBeforeAddition, numberOfTasksAfterAddition, "Size should not change after adding a null task");
+        assertEquals(numberOfTasksBeforeAddition, numberOfTasksAfterAddition, 
+            "Size should not change after adding a null task");
     }
 
     @Test
@@ -88,11 +89,12 @@ public class TaskListTest {
 
     public void removeTask_success(Task task) {
         assertNotNull(defaultTaskList);
-        assertTrue(defaultTaskList.contains(task));
+        assertTrue(defaultTaskList.hasTask(task));
         int numberOfTasksBeforeRemoval = defaultTaskList.getSize();
         assertTrue(defaultTaskList.removeTask(task), "Task should be successfully removed");
         int numberOfTasksAfterRemoval = defaultTaskList.getSize();
-        assertEquals(numberOfTasksBeforeRemoval - 1, numberOfTasksAfterRemoval, "Task list should contain one less task after removing a task");
+        assertEquals(numberOfTasksBeforeRemoval - 1, numberOfTasksAfterRemoval, 
+            "Task list should contain one less task after removing a task");
     }
 
     @Test
@@ -111,7 +113,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void removeTask_event_nonExistentTask() {
+    public void removeTask_nonExistentTask_returnsFalse() {
         assertFalse(defaultTaskList.removeTask(todo_washDishes), 
             "Removing a non-existent task should return false.");
     }
@@ -126,7 +128,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void markTask_todo() {
+    public void markTask_todo_success() {
         assertTrue(todo_doHomework.getIsDone());
         markTask_success(todo_doHomework, 0);
 
@@ -135,7 +137,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void markTask_deadline() {
+    public void markTask_deadline_success() {
         assertFalse(deadline_submitReport.getIsDone());
         markTask_success(deadline_submitReport, 2);
         
@@ -145,7 +147,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void markTask_event() {
+    public void markTask_event_success() {
         assertTrue(event_projectLaunch.getIsDone());
         markTask_success(event_projectLaunch, 4);
         
@@ -163,7 +165,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void unmarkTask_todo() {
+    public void unmarkTask_todo_success() {
         assertTrue(todo_doHomework.getIsDone());
         unmarkTask_success(todo_doHomework, 0);
 
@@ -172,7 +174,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void unmarkTask_deadline() {
+    public void unmarkTask_deadline_success() {
         assertFalse(deadline_submitReport.getIsDone());
         unmarkTask_success(deadline_submitReport, 2);
 
@@ -181,7 +183,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void unmarkTask_event() {
+    public void unmarkTask_event_success() {
         assertTrue(event_projectLaunch.getIsDone());
         unmarkTask_success(event_projectLaunch, 4);
 
@@ -190,13 +192,13 @@ public class TaskListTest {
     }
 
     @Test
-    public void getTaskWord_noTasks() {
+    public void getTaskWord_noTasks_returnsSingular() {
         assertTrue(emptyTaskList.isEmpty(), "Task list has no tasks");
         assertEquals(" task", emptyTaskList.getTaskWord());
     }
 
     @Test
-    public void getTaskWord_singleTask() {
+    public void getTaskWord_singleTask_returnsSingular() {
         defaultTaskList = new TaskList();
         defaultTaskList.addTask(todo_doHomework);
         assertEquals(defaultTaskList.getSize(), 1);
@@ -204,20 +206,20 @@ public class TaskListTest {
     }
 
     @Test
-    public void getTaskWord_multipleTasks() {
+    public void getTaskWord_multipleTasks_returnsPlural() {
         assertTrue(defaultTaskList.getSize() > 1, "Task list has more than one task");
         assertEquals(" tasks", defaultTaskList.getTaskWord());
     }
 
     @Test
-    public void testGetAllTasksOnDate_EmptyList() {
+    public void getAllTasksOnDate_emptyList_returnsEmptyList() {
         LocalDate date = LocalDate.of(2023, 10, 31);
         List<Task> tasksOnDate = defaultTaskList.getAllTasksOnDate(date);
         assertTrue(tasksOnDate.isEmpty());
     }
 
     @Test
-    public void testGetAllTasksOnDate_WithTasks() {
+    public void getAllTasksOnDate_withTasks_returnsCorrectTasks() {
         LocalDate date = LocalDate.of(2024, 11, 9);
 
         List<Task> tasksOnDate = defaultTaskList.getAllTasksOnDate(date);
@@ -228,6 +230,5 @@ public class TaskListTest {
         assertFalse(tasksOnDate.contains(deadline_submitReport));
         assertFalse(tasksOnDate.contains(todo_doHomework));
     }
-
 
 }

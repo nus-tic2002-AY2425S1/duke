@@ -22,15 +22,13 @@ public class TaskListEncoderTest {
     }
 
     @Test
-    public void encodeTaskList_emptyTaskList() {
-        
+    public void encodeTaskList_emptyTaskList_returnsEmptyList() {
         List<String> encodedTaskList = TaskListEncoder.encodeTaskList(taskList);
-        
         assertTrue(encodedTaskList.isEmpty(), "Expected an empty list for an empty task list");
     }
 
     @Test
-    public void encodeTaskList_singleTask() {
+    public void encodeTaskList_singleTask_returnsEncodedTask() {
         TypicalTasks typicalTasks = new TypicalTasks();
         Task task = typicalTasks.todo_buyGroceries;
         
@@ -39,11 +37,12 @@ public class TaskListEncoderTest {
         List<String> encodedTaskList = TaskListEncoder.encodeTaskList(taskList);
         
         assertEquals(taskList.getSize(), encodedTaskList.size(), "Expected a list with one encoded task");
-        assertEquals("T | 0 | Buy groceries", encodedTaskList.get(0), "Expected the correct encoded string for the task");
+        assertEquals("T | 0 | Buy groceries", encodedTaskList.get(0), 
+            "Expected the correct encoded string for the task");
     }
 
     @Test
-    public void encodeTaskList_multipleTasks() {
+    public void encodeTaskList_multipleTasks_returnsEncodedTasks() {
         TypicalTasks typicalTasks = new TypicalTasks();
         Task task1 = typicalTasks.deadline_submitReport;
         Task task2 = typicalTasks.deadline_resolveCustomerTicket;
@@ -54,8 +53,10 @@ public class TaskListEncoderTest {
         List<String> result = TaskListEncoder.encodeTaskList(taskList);
         
         assertEquals(taskList.getSize(), result.size(), "Expected a list with two encoded tasks");
-        assertEquals("D | 0 | Submit report | Apr 24 2021 1433", result.get(0), "Expected the correct encoded string for the first deadline task");
-        assertEquals("D | 1 | Resolve customer ticket | Aug 04 2022 0915", result.get(1), "Expected the correct encoded string for the second deadline task");
+        assertEquals("D | 0 | Submit report | Apr 24 2021 1433", result.get(0), 
+            "Expected the correct encoded string for the first deadline task");
+        assertEquals("D | 1 | Resolve customer ticket | Aug 04 2022 0915", result.get(1), 
+            "Expected the correct encoded string for the second deadline task");
     }
 
 }

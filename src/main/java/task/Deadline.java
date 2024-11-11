@@ -68,8 +68,7 @@ public class Deadline extends Task {
 
         // String formattedDue = DateTimeParser.formatDateTime(due);
         return Constants.OPEN_SQUARE_BRACKET + TaskType.DEADLINE + Constants.CLOSE_SQUARE_BRACKET +
-            super.toString() +
-            Constants.OPEN_ROUND_BRACKET + Constants.BY + Constants.COLON +
+            super.toString() + Constants.OPEN_ROUND_BRACKET + Constants.BY + Constants.COLON +
             Constants.SPACE + getFormattedDue() + Constants.CLOSE_ROUND_BRACKET;
     }
 

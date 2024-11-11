@@ -95,7 +95,8 @@ public class Deadline extends Task {
     @Override
     // https://www.geeksforgeeks.org/compare-dates-in-java/
     public boolean isOnDate(LocalDate date) {
-        return getDue().toLocalDate().isEqual(date);
+        LocalDate dueDate = getDue().toLocalDate();
+        return dueDate != null && dueDate.isEqual(date);
     }
 
 }

@@ -1,12 +1,13 @@
 package task;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import common.Constants;
 
 /**
  * Represents the base class for all tasks. 
- * Subclasses like Todo, Deadline, and Event will extend from this abstract class.
+ * Subclasses like Todo, Deadline, Event, and Fixed Duration will extend from this abstract class.
  * The Task class contains a description and completion status, which is common to all tasks.
  */
 public abstract class Task {

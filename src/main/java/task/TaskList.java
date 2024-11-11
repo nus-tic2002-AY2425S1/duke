@@ -1,4 +1,6 @@
 package task;
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 import common.Constants;
@@ -142,7 +144,7 @@ public class TaskList {
      * @param date represents the date to check against.
      * @return a list of tasks that occur on a specified date.
      */
-    public List<Task> getAllTasksOnDate(LocalDate date) {
+    public List<Task> getTasksOnDate(LocalDate date) {
         List<Task> tasksOnDate = new ArrayList<>();
         for (Task task : getTaskList()) {
             if (task.isOnDate(date)) {
@@ -151,6 +153,8 @@ public class TaskList {
         }
         return tasksOnDate;
     }
+
+//    public List<Task> getScheduledTasks(LocalD)
 
     /**
      * Retrieves all tasks that matches the specified description.

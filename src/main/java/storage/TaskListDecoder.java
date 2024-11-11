@@ -6,7 +6,13 @@ import exception.CommandException;
 import exception.FileContentException;
 import exception.TaskListDecoderException;
 import parser.DateTimeParser;
-import task.*;
+import task.TaskList;
+import task.Task;
+import task.Todo;
+import task.TaskType;
+import task.Deadline;
+import task.Event;
+import task.FixedDuration;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -117,8 +123,23 @@ public class TaskListDecoder {
         return isDone;
     }
 
-    private static void validateTaskDataLength(int taskDataLength, int expectedTaskDataLength,
-                                               String[] taskData, String expectedFormat) throws TaskListDecoderException {
+    private static void validateTaskDataLength(int taskDataLength, TaskType taskType,
+                                               String[] taskData) throws TaskListDecoderException {
+
+        int expectedTaskDataLength = 0;
+        String expectedFormat = null;
+
+        if (taskType.equals(TaskType.DEADLINE)) {
+            expectedTaskDataLength = Constants.FOUR;
+            expectedFormat = EXPECTED_FORMAT_DEADLINE;
+        } else if (taskType.equals(TaskType.EVENT)) {
+            expectedTaskDataLength = Constants.FIVE;
+            expectedFormat = EXPECTED_FORMAT_EVENT;
+        } else if (taskType.equals(TaskType.FIXED_DURATION)) {
+            expectedTaskDataLength = Constants.FOUR;
+            expectedFormat = EXPECTED_FORMAT_FD;
+        }
+
         if (taskDataLength < expectedTaskDataLength) {
             throw new TaskListDecoderException(Messages.ERROR_INVALID_TASK_FORMAT,
                 String.format("Received `%s`", Arrays.toString(taskData)),
@@ -142,45 +163,35 @@ public class TaskListDecoder {
         throws FileContentException, TaskListDecoderException, CommandException {
 
         validateEncodedTask(encodedTask);
+
         String[] taskData = splitEncodedTask(encodedTask);
 
         Task task;
         TaskType taskType = getTaskType(taskData[0].trim());
-
         boolean isDone = getIsDone(taskData[1].trim());
-
         String description = taskData[2].trim();
-        int taskDataLength = taskData.length;
+
+        validateTaskDataLength(taskData.length, taskType, taskData);
 
         switch (taskType) {
             case TODO:
                 task = new Todo(description, isDone);
                 break;
+
             case DEADLINE:
-
-                validateTaskDataLength(taskDataLength, 4, taskData, EXPECTED_FORMAT_DEADLINE);
-
-                String dueString = taskData[3].trim();
-
                 // The tasks file contains a String representation of the time.
                 // To create a deadline task, we need to parse the String into a LocalDateTime object.
-                LocalDateTime due = DateTimeParser.parseOutputDateTime(dueString);
+                LocalDateTime due = DateTimeParser.parseOutputDateTime(taskData[3].trim());
                 task = new Deadline(description, isDone, due);
                 break;
 
             case EVENT:
-
-                validateTaskDataLength(taskDataLength, 5, taskData, EXPECTED_FORMAT_EVENT);
-
                 LocalDateTime startDateTime = DateTimeParser.parseOutputDateTime(taskData[3].trim());
                 LocalDateTime endDateTime = DateTimeParser.parseOutputDateTime(taskData[4].trim());
-
                 task = new Event(description, isDone, startDateTime, endDateTime);
                 break;
 
             case FIXED_DURATION:
-
-                validateTaskDataLength(taskDataLength, 4, taskData, EXPECTED_FORMAT_FD);
                 String[] durationString = taskData[3].split(Constants.EMPTY_STRING);
                 double duration = Double.parseDouble(durationString[0].trim());
                 task = new FixedDuration(description, isDone, duration);
@@ -193,6 +204,7 @@ public class TaskListDecoder {
 
         task.setDone(isDone);
         return task;
+
     }
 
 }

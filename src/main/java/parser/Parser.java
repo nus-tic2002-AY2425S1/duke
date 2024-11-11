@@ -2,7 +2,14 @@ package parser;
 
 // deals with making sense of the user command
 
-import commands.*;
+import commands.Command;
+import commands.ByeCommand;
+import commands.ListCommand;
+import commands.MarkCommand;
+import commands.UnmarkCommand;
+import commands.DeleteCommand;
+import commands.ShowCommand;
+import commands.FindCommand;
 import commands.add.DeadlineCommand;
 import commands.add.EventCommand;
 import commands.add.FixedDurationCommand;
@@ -18,11 +25,9 @@ import java.util.regex.Pattern;
 
 /**
  * Parses user input commands.
- * <p>
  * The Parser class provides methods to interpret user input commands and arguments,
  * validate their formats, and create corresponding command objects.
- * It uses regular expressions to validate user input strings.
- * by matching command patterns and extract arguments.
+ * It uses regular expressions to validate user input strings by matching command patterns and extract arguments.
  * This ensures that the input adheres to the expected formats for various commands.
  */
 public class Parser {
@@ -111,7 +116,7 @@ public class Parser {
      * @throws CommandException if the task number is invalid, i.e. the arguments do not match the expected format.
      */
     private static int prepareTaskNumberForCommand
-    (String commandWord, String args, String messageUsage) throws CommandException {
+        (String commandWord, String args, String messageUsage) throws CommandException {
         final Matcher matcher = TASK_NUMBER_ARGS_FORMAT.matcher(args);
         if (!matcher.matches()) {
             throw new CommandException(
@@ -234,7 +239,7 @@ public class Parser {
      * @throws CommandException if the keyword is not found in the arguments.
      */
     private static void checkArgsContainsKeyword
-    (String args, String keyword, String commandWord, String infoMessage, String messageUsage)
+        (String args, String keyword, String commandWord, String infoMessage, String messageUsage)
         throws CommandException {
         if (!args.contains(keyword)) {
             throw new CommandException(

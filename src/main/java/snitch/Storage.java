@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 /**
@@ -104,32 +105,34 @@ public class Storage {
      * @throws SnitchException If the line format is unrecognized.
      */
     private Task parseTask(String line) throws SnitchException {
-        assert line != null && !line.isEmpty() : "Line to parse must not be null or empty";
-
         String[] parts = line.split(" \\| ");
-        assert parts.length >= 3 : "Line must have at least 3 parts";
-
         String type = parts[0];
         boolean isDone = parts[1].equals("1");
         String description = parts[2];
 
-        switch (type) {
-            case "T":
-                Todo todo = new Todo(description);
-                if (isDone) todo.markAsDone();
-                return todo;
-            case "D":
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
-                LocalDateTime deadlineDate = LocalDateTime.parse(parts[3], formatter);
-                Deadline deadline = new Deadline(description, deadlineDate.format(formatter));
-                if (isDone) deadline.markAsDone();
-                return deadline;
-            case "E":
-                Event event = new Event(description, parts[3], parts[4]);
-                if (isDone) event.markAsDone();
-                return event;
-            default:
-                throw new SnitchException("Unrecognized task format: " + line);
+        try {
+            switch (type) {
+                case "T":
+                    Todo todo = new Todo(description);
+                    if (isDone) todo.markAsDone();
+                    return todo;
+
+                case "D":
+                    String by = parts[3];
+                    Deadline deadline = new Deadline(description, by);
+                    if (isDone) deadline.markAsDone();
+                    return deadline;
+
+                case "E":
+                    Event event = new Event(description, parts[3], parts[4]);
+                    if (isDone) event.markAsDone();
+                    return event;
+
+                default:
+                    throw new SnitchException("Unrecognized task format: " + line);
+            }
+        } catch (Exception e) {
+            throw new SnitchException("Failed to parse task: " + description);
         }
     }
 
@@ -140,8 +143,6 @@ public class Storage {
      * @return The formatted string representation of the task.
      */
     private String taskToFileString(Task task) {
-        assert task != null : "Task to serialize must not be null";
-
         if (task instanceof Todo) {
             return "T | " + (task.isDone() ? "1" : "0") + " | " + task.getDescription();
         } else if (task instanceof Deadline) {

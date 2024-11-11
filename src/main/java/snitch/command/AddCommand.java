@@ -37,7 +37,7 @@ public class AddCommand implements Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws SnitchException {
         if (fullCommand.startsWith("todo")) {
-            String description = fullCommand.substring(5).trim();
+            String description = fullCommand.substring(4).trim();
             if (description.isEmpty()) {
                 throw new SnitchException("Come on man!!! The description of a todo cannot be empty.");
             }
@@ -45,7 +45,7 @@ public class AddCommand implements Command {
         } else if (fullCommand.startsWith("deadline")) {
             String[] parts = fullCommand.split("/by ");
             if (parts.length < 2 || parts[0].substring(9).trim().isEmpty()) {
-                throw new SnitchException("Come on man!!! The description of a deadline cannot be empty.");
+                throw new SnitchException("Come on man!!! Thats the wrong format. Use: deadline <task description> /by <d/M/yyyy HHmm>");
             }
             String description = parts[0].substring(9).trim();
             String by = parts[1].trim();

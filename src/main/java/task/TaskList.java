@@ -1,6 +1,7 @@
 package task;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import common.Constants;
@@ -154,7 +155,48 @@ public class TaskList {
         return tasksOnDate;
     }
 
-//    public List<Task> getScheduledTasks(LocalD)
+    public List<Task> getScheduledTasks(TaskList taskList, LocalDate date) {
+        // Retrieve all tasks scheduled on the specified date
+        List<Task> tasksOnDate = taskList.getTasksOnDate(date);
+
+        // Sort the tasks by their LocalDateTime
+        // https://stackoverflow.com/questions/2784514/sort-arraylist-of-custom-objects-by-property
+        Collections.sort(tasksOnDate, new Comparator<Task>() {
+            @Override
+            public int compare(Task taskA, Task taskB) {
+                LocalDateTime dateTimeA = null;
+                LocalDateTime dateTimeB = null;
+
+                if (taskA instanceof Deadline) {
+                    dateTimeA = ((Deadline) taskA).getDue();
+                } else if (taskA instanceof Event) {
+                    dateTimeA = ((Event) taskA).getStartDateTime();
+                }
+
+                if (taskB instanceof Deadline) {
+                    dateTimeB = ((Deadline) taskB).getDue();
+                } else if (taskB instanceof Event) {
+                    dateTimeB = ((Event) taskB).getStartDateTime();
+                }
+
+                // https://www.javatpoint.com/compare-time-in-java
+                // If dateTimeA.compareTo(dateTimeB) > 0, then dateTimeA > dateTimeB, i.e. dateTimeA is after dateTimeB
+                // Handle null values. Deadlines can have no time.
+                if (dateTimeA == null && dateTimeB == null) {
+                    return 0;
+                } else if (dateTimeA == null) {
+                    return 1;       // Put dateTimeA before dateTimeB
+                } else if (dateTimeB == null) {
+                    return -1;      // Put dateTimeB after dateTimeA
+                }
+
+                // show 2024-06-09
+                // System.out.println(dateTimeA + " of task " + taskA + ", compare to " + dateTimeB + " of task " + taskB + " is " + dateTimeA.compareTo(dateTimeB));
+                return dateTimeA.compareTo(dateTimeB);
+            }
+        });
+        return tasksOnDate;
+    }
 
     /**
      * Retrieves all tasks that matches the specified description.

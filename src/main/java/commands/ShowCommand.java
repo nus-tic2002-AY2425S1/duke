@@ -57,6 +57,7 @@ public class ShowCommand extends Command {
     public void execute(TaskList taskList, Ui ui, Storage storage) {
         LocalDate date = getDate();
 
+        /*
         // Retrieve all tasks scheduled on the specified date
         List<Task> tasksOnDate = taskList.getTasksOnDate(date);
 
@@ -96,11 +97,14 @@ public class ShowCommand extends Command {
                 return dateTimeA.compareTo(dateTimeB);
             }
         });
+        */
+
+        List<Task> scheduledTasks = taskList.getScheduledTasks(taskList, date);
         
         // System.out.println("after sort " + tasksOnDate);
 
         // Check if there are no tasks on the specified date
-        if (tasksOnDate.isEmpty()) {
+        if (scheduledTasks.isEmpty()) {
             String[] messages = {MESSAGE_EMPTY_LIST + date};
             ui.printMessage(messages);
             return;
@@ -113,10 +117,10 @@ public class ShowCommand extends Command {
         int taskListSize = taskList.getSize();
 
         // Iterate through the task list and add tasks scheduled on the specified date
-        for (int i = 0; i < tasksOnDate.size(); i++) {
-            Task current = tasksOnDate.get(i);         // taskList.get(i) contains the checkbox
+        for (int i = 0; i < scheduledTasks.size(); i++) {
+            Task current = scheduledTasks.get(i);         // taskList.get(i) contains the checkbox
             String index = Integer.toString(i + 1);
-            String line = index + ". " + current;
+            String line = index + Constants.DOT_SPACE + current;
             messages.add(line);
         }
         

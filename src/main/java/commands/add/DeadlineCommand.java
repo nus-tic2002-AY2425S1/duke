@@ -6,7 +6,6 @@ import task.Task;
 
 import java.time.LocalDateTime;
 
-
 /**
  * Extends from {@code AddTaskCommand}.
  * It is a subclass of {@code AddTaskCommand} which provides the general structure of adding a task.
@@ -18,9 +17,8 @@ public class DeadlineCommand extends AddTaskCommand {
     public static final String COMMAND_WORD = "deadline";
 
     // deadline <description> /by <due date>
-    public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE +
-            DESCRIPTION_IN_ANGLE_BRACKETS + SPACE + Constants.SLASH_BY + SPACE +
-            Constants.DUE_DATE_IN_ANGLE_BRACKETS;
+    public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE + DESCRIPTION_IN_ANGLE_BRACKETS + SPACE +
+        Constants.SLASH_BY + SPACE + Constants.DUE_DATE_IN_ANGLE_BRACKETS;
 
     protected final LocalDateTime dueDate;
 

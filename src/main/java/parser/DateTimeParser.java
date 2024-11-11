@@ -34,9 +34,9 @@ public class DateTimeParser {
 
     // Deadline must have date but time is optional
     public static final DateTimeFormatter deadlineFormatter = new DateTimeFormatterBuilder()
-            .appendPattern(INPUT_DATE_FORMAT).optionalStart().appendPattern(Constants.SPACE + TIME_PATTERN)
-            .optionalEnd().parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
-            .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0).toFormatter();
+        .appendPattern(INPUT_DATE_FORMAT).optionalStart().appendPattern(Constants.SPACE + TIME_PATTERN)
+        .optionalEnd().parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+        .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0).toFormatter();
 
     public static final String SHOW_DATE_PATTERN = "yyyy-MM-dd";
     public static final DateTimeFormatter SHOW_DATE_FORMAT = DateTimeFormatter.ofPattern(SHOW_DATE_PATTERN);
@@ -79,8 +79,8 @@ public class DateTimeParser {
         } catch (DateTimeParseException e) {
             // System.out.println(e.getMessage());
             throw new CommandException(Messages.ERROR_INVALID_DATETIME_FORMAT,
-                    String.format("Received `%s`", input),
-                    String.format("Expected format: %s. Example: 2019-10-15 [1800]", INPUT_DATETIME_PATTERN)
+                String.format("Received `%s`", input),
+                String.format("Expected format: %s. Example: 2019-10-15 [1800]", INPUT_DATETIME_PATTERN)
             );
         }
     }
@@ -99,8 +99,8 @@ public class DateTimeParser {
         } catch (DateTimeParseException e) {
             // System.out.println(e.getMessage());
             throw new CommandException(Messages.ERROR_INVALID_DATETIME_FORMAT,
-                    String.format("Received `%s`", input),
-                    String.format("Expected format: %s. Example: 2019-10-15 1800", INPUT_DATETIME_PATTERN)
+                String.format("Received `%s`", input),
+                String.format("Expected format: %s. Example: 2019-10-15 1800", INPUT_DATETIME_PATTERN)
             );
         }
     }
@@ -118,8 +118,8 @@ public class DateTimeParser {
         } catch (DateTimeParseException e) {
             // System.out.println(e.getMessage());
             throw new CommandException(Messages.ERROR_INVALID_DATETIME_FORMAT,
-                    String.format("Received `%s`", input),
-                    String.format("Expected format: %s. Example: 2019-10-15 1800", INPUT_DATETIME_PATTERN)
+                String.format("Received `%s`", input),
+                String.format("Expected format: %s. Example: 2019-10-15 1800", INPUT_DATETIME_PATTERN)
             );
         }
     }

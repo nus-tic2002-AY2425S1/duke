@@ -15,7 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 public class EventCommandTest {
     private EventCommand eventCommand;
     private final String TEST_DESCRIPTION = "This is a sample description of an Event task.";
-    private final LocalDateTime TEST_STARTDATETIME = LocalDateTime.of(2024, 4, 16, 12, 0);
+    private final LocalDateTime TEST_STARTDATETIME =
+        LocalDateTime.of(2024, 4, 16, 12, 0);
     private final LocalDateTime TEST_ENDDATETIME = LocalDateTime.of(2024, 5, 16, 12, 0);
 
     // Initializes an EventCommand with valid description, start date and time, and end date and time

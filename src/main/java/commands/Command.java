@@ -28,7 +28,7 @@ public abstract class Command {
      * @throws StorageOperationException if an error occurs while accessing (loading / saving tasks from) storage.
      */
     public abstract void execute(TaskList taskList, Ui ui, Storage storage)
-            throws CommandException, StorageOperationException;
+        throws CommandException, StorageOperationException;
 
     /**
      * Indicates whether the command is a bye command, i.e. a command that terminates the application.

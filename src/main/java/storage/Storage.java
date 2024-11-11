@@ -71,7 +71,7 @@ public class Storage {
         String dataFolderPathString = dataFolderPath.toString();
         File dataFolder = new File(dataFolderPathString);
         boolean isDataFolderExists = dataFolder.exists() && dataFolder.isDirectory();
-        
+
         // Create the directory if it does not exist
         if (!isDataFolderExists) {
             // https://tutorialspoint.com/java/java_directories.htm
@@ -81,8 +81,8 @@ public class Storage {
             boolean isDataFolderCreated = dataFolder.mkdir();
             if (!isDataFolderCreated) {
                 throw new StorageOperationException(
-                        String.format("%s at %s", Messages.ERROR_CREATE_FOLDER_PRE, dataFolderPathString),
-                        Messages.ERROR_CREATE_FOLDER_POST
+                    String.format("%s at %s", Messages.ERROR_CREATE_FOLDER_PRE, dataFolderPathString),
+                    Messages.ERROR_CREATE_FOLDER_POST
                 );
             }
         }
@@ -106,20 +106,20 @@ public class Storage {
                 boolean isFileCreated = taskFile.createNewFile();
                 if (!isFileCreated) {
                     throw new StorageOperationException(
-                            String.format("%s at %s", Messages.ERROR_CREATE_FILE_PRE, getFilePath().toString()),
-                            Messages.ERROR_CREATE_FILE_POST
+                        String.format("%s at %s", Messages.ERROR_CREATE_FILE_PRE, getFilePath().toString()),
+                        Messages.ERROR_CREATE_FILE_POST
                     );
                 }
             } catch (IOException e) {
                 throw new StorageOperationException(
-                        String.format("%s at %s", Messages.ERROR_CREATE_FILE_PRE, getFilePath().toString()),
-                        Messages.ERROR_IO_CREATE_FILE
+                    String.format("%s at %s", Messages.ERROR_CREATE_FILE_PRE, getFilePath().toString()),
+                    Messages.ERROR_IO_CREATE_FILE
                 );
             } catch (SecurityException e) {
                 throw new StorageOperationException(
-                        String.format("%s at %s due to %s", Messages.ERROR_CREATE_FILE_PRE,
-                                getFilePath().toString(), Messages.ERROR_SECURITY_CREATE_FILE),
-                        String.format("%s create a new file.", Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE)
+                    String.format("%s at %s due to %s", Messages.ERROR_CREATE_FILE_PRE,
+                        getFilePath().toString(), Messages.ERROR_SECURITY_CREATE_FILE),
+                    String.format("%s create a new file.", Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE)
                 );
             }
         }
@@ -173,8 +173,8 @@ public class Storage {
             Files.write(getFilePath(), encodedTaskList);
         } catch (IOException ioe) {
             throw new StorageOperationException(
-                    String.format("%s at %s", Messages.ERROR_WRITE_FILE, getFilePath().toString()),
-                    String.format("%s write to the task file", Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE)
+                String.format("%s at %s", Messages.ERROR_WRITE_FILE, getFilePath().toString()),
+                String.format("%s write to the task file", Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE)
             );
         }
     }

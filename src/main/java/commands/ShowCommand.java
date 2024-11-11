@@ -63,7 +63,7 @@ public class ShowCommand extends Command {
 
         // Prepare the message to display to the user
         ArrayList<String> messages =
-                new ArrayList<>(List.of(String.format("%s%s:", MESSAGE_SHOW_SUCCESS_PRE, inputDate)));
+            new ArrayList<>(List.of(String.format("%s%s:", MESSAGE_SHOW_SUCCESS_PRE, inputDate)));
 
         int taskListSize = taskList.getSize();
 

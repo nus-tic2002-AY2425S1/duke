@@ -17,8 +17,8 @@ public class FixedDurationCommand extends AddTaskCommand {
     // fd <task description> /hours <number of hours needed> /minutes <number of minutes needed>
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE +
-            DESCRIPTION_IN_ANGLE_BRACKETS + SPACE + Constants.SLASH_DURATION + SPACE +
-            Constants.DURATION_IN_HOURS_IN_ANGLE_BRACKETS;
+        DESCRIPTION_IN_ANGLE_BRACKETS + SPACE + Constants.SLASH_DURATION + SPACE +
+        Constants.DURATION_IN_HOURS_IN_ANGLE_BRACKETS;
 
     private final double duration;
 

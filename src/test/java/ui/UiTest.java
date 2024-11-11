@@ -14,7 +14,7 @@ public class UiTest {
 
     @Test
     public void formatSpace() {
-        assertEquals(FOUR_SPACES, ui.formatSpace(4));
+        assertEquals(FOUR_SPACES, ui.formatSpace(Constants.FOUR));
         assertEquals(SEVEN_SPACES, ui.formatSpace(7));
         assertEquals(FIVE_SPACES, ui.formatSpace(5));
     }

@@ -56,10 +56,10 @@ public class DeleteCommand extends Command {
             taskToDelete = taskList.getTask(indexToDelete);
         } catch (IndexOutOfBoundsException ioobe) {
             throw new CommandException(
-                    Messages.ERROR_TASK_NONEXISTENT,
-                    String.format("%s %s %s",
-                            Messages.MESSAGE_NONEXISTENT_TASK_PRE, taskNumber, Messages.MESSAGE_NONEXISTENT_TASK_POST),
-                    String.format("%s %s.", Messages.MESSAGE_ENTER_VALID_TASK_NUMBER, taskList.getSize())
+                Messages.ERROR_TASK_NONEXISTENT,
+                String.format("%s %s %s",
+                    Messages.MESSAGE_NONEXISTENT_TASK_PRE, taskNumber, Messages.MESSAGE_NONEXISTENT_TASK_POST),
+                String.format("%s %s.", Messages.MESSAGE_ENTER_VALID_TASK_NUMBER, taskList.getSize())
             );
         }
 
@@ -68,12 +68,12 @@ public class DeleteCommand extends Command {
         boolean isDeletedSuccess = taskList.removeTask(taskToDelete);
         String taskWord = taskList.getTaskWord();
         final String MESSAGE_DELETE_SUCCESS_POST = Messages.MESSAGE_NOW_YOU_HAVE +
-                taskList.getSize() + taskWord + Messages.MESSAGE_IN_THE_LIST;
+            taskList.getSize() + taskWord + Messages.MESSAGE_IN_THE_LIST;
 
         if (isDeletedSuccess) {
             storage.saveTasks(taskList);
             messages = new String[]{MESSAGE_DELETE_SUCCESS_PRE,
-                    ui.formatSpace(Constants.TWO) + taskToDelete, MESSAGE_DELETE_SUCCESS_POST};
+                ui.formatSpace(Constants.TWO) + taskToDelete, MESSAGE_DELETE_SUCCESS_POST};
         }
 
         ui.printMessage(messages);

@@ -97,8 +97,8 @@ public class Event extends Task {
         // String formattedEndDateTime = DateTimeParser.formatDateTime(endDateTime);
 
         return Constants.OPEN_SQUARE_BRACKET + TaskType.EVENT + Constants.CLOSE_SQUARE_BRACKET + super.toString() +
-                Constants.OPEN_ROUND_BRACKET + Constants.FROM + COLON + SPACE + getFormattedStartDateTime() +
-                SPACE + Constants.TO + COLON + SPACE + getFormattedEndDateTime() + Constants.CLOSE_ROUND_BRACKET;
+            Constants.OPEN_ROUND_BRACKET + Constants.FROM + COLON + SPACE + getFormattedStartDateTime() +
+            SPACE + Constants.TO + COLON + SPACE + getFormattedEndDateTime() + Constants.CLOSE_ROUND_BRACKET;
 
     }
 
@@ -111,7 +111,7 @@ public class Event extends Task {
     public String encodeTask() {
         String separator = Constants.ENCODE_TASK_SEPARATOR;
         return TaskType.EVENT + super.encodeTask() + separator +
-                getFormattedStartDateTime() + separator + getFormattedEndDateTime();
+            getFormattedStartDateTime() + separator + getFormattedEndDateTime();
     }
 
     /**

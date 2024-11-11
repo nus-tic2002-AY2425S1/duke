@@ -107,7 +107,7 @@ public abstract class Task {
     @Override
     public String toString() {
         return Constants.OPEN_SQUARE_BRACKET + getStatusIcon() + Constants.CLOSE_SQUARE_BRACKET +
-                Constants.SPACE + getDescription();
+            Constants.SPACE + getDescription();
     }
 
     /**

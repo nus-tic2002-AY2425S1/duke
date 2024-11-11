@@ -154,8 +154,8 @@ public class Ui {
             userInput = in.nextLine().trim(); // Read and trim the input
             if (userInput.isEmpty()) {
                 throw new CommandException(
-                        Messages.ERROR_EMPTY_INPUT,
-                        Messages.VALID_COMMANDS
+                    Messages.ERROR_EMPTY_INPUT,
+                    Messages.VALID_COMMANDS
                 );
             }
         } while (userInput.isEmpty());          // Continue looping as long as the input is empty

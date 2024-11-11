@@ -52,8 +52,8 @@ public class FixedDuration extends Task {
     @Override
     public String toString() {
         return Constants.OPEN_SQUARE_BRACKET + TaskType.FIXED_DURATION + Constants.CLOSE_SQUARE_BRACKET +
-                super.toString() + SPACE + Constants.OPEN_ROUND_BRACKET + Constants.DURATION + Constants.COLON +
-                SPACE + getDuration() + SPACE + Constants.HOURS + Constants.CLOSE_ROUND_BRACKET;
+            super.toString() + SPACE + Constants.OPEN_ROUND_BRACKET + Constants.DURATION + Constants.COLON +
+            SPACE + getDuration() + SPACE + Constants.HOURS + Constants.CLOSE_ROUND_BRACKET;
     }
 
     /**
@@ -65,7 +65,7 @@ public class FixedDuration extends Task {
     @Override
     public String encodeTask() {
         return TaskType.FIXED_DURATION + super.encodeTask() + Constants.ENCODE_TASK_SEPARATOR +
-                getDuration() + SPACE + Constants.HOURS;
+            getDuration() + SPACE + Constants.HOURS;
     }
 
     /**

@@ -6,13 +6,7 @@ import exception.CommandException;
 import exception.FileContentException;
 import exception.TaskListDecoderException;
 import parser.DateTimeParser;
-import task.Deadline;
-import task.Event;
-import task.FixedDuration;
-import task.Task;
-import task.TaskList;
-import task.TaskType;
-import task.Todo;
+import task.*;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -28,7 +22,7 @@ public class TaskListDecoder {
     private static final String EXPECTED_FORMAT_TODO = "T | 0 | <task description>";
     private static final String EXPECTED_FORMAT_DEADLINE = "D | 0 | <task description> | <task deadline>";
     private static final String EXPECTED_FORMAT_EVENT =
-            "E | 0 | <task description> | <event start date/time> | <event end date/time>";
+        "E | 0 | <task description> | <event start date/time> | <event end date/time>";
     private static final String EXPECTED_FORMAT_FD = "FD | 0 | <task description> | <required duration in hours>";
 
     // Add a private constructor to hide the implicit public one.
@@ -48,7 +42,7 @@ public class TaskListDecoder {
      */
     // Solution below referenced from https://github.com/se-edu/addressbook-level2/blob/master/src/seedu/addressbook/storage/AddressBookDecoder.java#L34
     public static TaskList decodeTaskList(List<String> encodedTaskList)
-            throws FileContentException, TaskListDecoderException, CommandException {
+        throws FileContentException, TaskListDecoderException, CommandException {
         TaskList decodedTasks = new TaskList();
         for (String encodedTask : encodedTaskList) {
             // System.out.println("encodedTask: " + encodedTask);
@@ -62,10 +56,10 @@ public class TaskListDecoder {
     private static void validateEncodedTask(String encodedTask) throws FileContentException {
         if (encodedTask.isEmpty()) {
             throw new FileContentException(
-                    String.format("%s. %s.", Messages.MESSAGE_EMPTY_LINE, Messages.MESSAGE_INVALID_TASKS_DATA),
-                    String.format("Received `%s`", encodedTask),
-                    String.format("Expected format: `%s` or `%s` or `%s` or `%s`", EXPECTED_FORMAT_TODO,
-                            EXPECTED_FORMAT_DEADLINE, EXPECTED_FORMAT_EVENT, EXPECTED_FORMAT_FD)
+                String.format("%s. %s.", Messages.MESSAGE_EMPTY_LINE, Messages.MESSAGE_INVALID_TASKS_DATA),
+                String.format("Received `%s`", encodedTask),
+                String.format("Expected format: `%s` or `%s` or `%s` or `%s`", EXPECTED_FORMAT_TODO,
+                    EXPECTED_FORMAT_DEADLINE, EXPECTED_FORMAT_EVENT, EXPECTED_FORMAT_FD)
             );
         }
     }
@@ -76,11 +70,11 @@ public class TaskListDecoder {
 
         if (taskData.length < 3) {
             throw new FileContentException(
-                    String.format("%s. %s.", Messages.MESSAGE_TASK_MISSING_COMPONENTS,
-                            Messages.MESSAGE_INVALID_TASKS_DATA),
-                    String.format("Received `%s`", Arrays.toString(taskData)),
-                    String.format("Expected format: `%s` or `%s` or `%s`", EXPECTED_FORMAT_TODO,
-                            EXPECTED_FORMAT_DEADLINE, EXPECTED_FORMAT_EVENT)
+                String.format("%s. %s.", Messages.MESSAGE_TASK_MISSING_COMPONENTS,
+                    Messages.MESSAGE_INVALID_TASKS_DATA),
+                String.format("Received `%s`", Arrays.toString(taskData)),
+                String.format("Expected format: `%s` or `%s` or `%s`", EXPECTED_FORMAT_TODO,
+                    EXPECTED_FORMAT_DEADLINE, EXPECTED_FORMAT_EVENT)
             );
         }
 
@@ -97,8 +91,8 @@ public class TaskListDecoder {
         } catch (IllegalArgumentException e) {
             // throw new FileContentException("Unknown task type: " + taskData[0].trim());
             throw new FileContentException(ERROR_GET_TASKTYPE,
-                    String.format("Received `%s`", taskTypeString.trim()),
-                    String.format("Expected `%s`", VALID_TASK_TYPE)
+                String.format("Received `%s`", taskTypeString.trim()),
+                String.format("Expected `%s`", VALID_TASK_TYPE)
             );
         }
 
@@ -115,8 +109,8 @@ public class TaskListDecoder {
             case "1" -> true;
             case "0" -> false;
             default -> throw new FileContentException(MESSAGE_INVALID_COMPLETION_STATUS,
-                    String.format("Received `%s`", isDoneString),
-                    String.format("Expected %s", VALID_COMPLETION_STATUS)
+                String.format("Received `%s`", isDoneString),
+                String.format("Expected %s", VALID_COMPLETION_STATUS)
             );
         };
 
@@ -127,8 +121,8 @@ public class TaskListDecoder {
                                                String[] taskData, String expectedFormat) throws TaskListDecoderException {
         if (taskDataLength < expectedTaskDataLength) {
             throw new TaskListDecoderException(Messages.ERROR_INVALID_TASK_FORMAT,
-                    String.format("Received `%s`", Arrays.toString(taskData)),
-                    String.format("Expected format: `%s`", expectedFormat));
+                String.format("Received `%s`", Arrays.toString(taskData)),
+                String.format("Expected format: `%s`", expectedFormat));
         }
     }
 
@@ -145,7 +139,7 @@ public class TaskListDecoder {
      */
     // Example encodedTask: T | 1 | read book
     private static Task decodeTaskFromString(String encodedTask)
-            throws FileContentException, TaskListDecoderException, CommandException {
+        throws FileContentException, TaskListDecoderException, CommandException {
 
         validateEncodedTask(encodedTask);
         String[] taskData = splitEncodedTask(encodedTask);

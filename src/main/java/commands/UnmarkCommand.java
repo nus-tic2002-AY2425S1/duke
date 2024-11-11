@@ -20,7 +20,7 @@ public class UnmarkCommand extends Command {
 
     public static final String COMMAND_WORD = "unmark";
     public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE +
-            OPEN_ANGLE_BRACKET + Constants.TASK_NUMBER + CLOSE_ANGLE_BRACKET;
+        OPEN_ANGLE_BRACKET + Constants.TASK_NUMBER + CLOSE_ANGLE_BRACKET;
     public static final String MESSAGE_UNMARK_SUCCESS = "OK, I've marked this task as not done yet:";
 
     protected final int taskNumber;
@@ -70,14 +70,14 @@ public class UnmarkCommand extends Command {
             taskToUnmark = taskList.getTask(indexToUnmark);
         } catch (IndexOutOfBoundsException ioobe) {
             throw new CommandException(Messages.ERROR_TASK_NONEXISTENT,
-                    String.format("%s %s %s", Messages.MESSAGE_NONEXISTENT_TASK_PRE,
-                            taskNumber, Messages.MESSAGE_NONEXISTENT_TASK_POST),
-                    String.format("%s %s.", Messages.MESSAGE_ENTER_VALID_TASK_NUMBER, taskListSize)
+                String.format("%s %s %s", Messages.MESSAGE_NONEXISTENT_TASK_PRE,
+                    taskNumber, Messages.MESSAGE_NONEXISTENT_TASK_POST),
+                String.format("%s %s.", Messages.MESSAGE_ENTER_VALID_TASK_NUMBER, taskListSize)
             );
         }
 
         final String MESSAGE_ALREADY_UNMARKED = "The task `" + taskToUnmark +
-                "` is already marked as not done. No action done.";
+            "` is already marked as not done. No action done.";
 
         String[] messages;
 

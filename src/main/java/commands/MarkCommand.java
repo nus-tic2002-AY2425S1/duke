@@ -11,7 +11,6 @@ import ui.Ui;
 
 /**
  * Represents a command to mark a task as done in the task list.
- * <p>
  * The MarkCommand class is responsible for updating the status of a
  * specified task in the task list to indicate that it has been completed.
  * It provides feedback to the user about the result of the operation.
@@ -20,8 +19,8 @@ public class MarkCommand extends Command {
 
     public static final String COMMAND_WORD = "mark";
     public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE +
-            OPEN_ANGLE_BRACKET + Constants.TASK_NUMBER + CLOSE_ANGLE_BRACKET;
-    public static final String MESSAGE_MARK_SUCCESS = "Nice! I've marked this task as done:";
+        OPEN_ANGLE_BRACKET + Constants.TASK_NUMBER + CLOSE_ANGLE_BRACKET;
+    protected static final String MESSAGE_MARK_SUCCESS = "Nice! I've marked this task as done:";
 
     protected final int taskNumber;
 
@@ -67,22 +66,22 @@ public class MarkCommand extends Command {
             taskToMark = taskList.getTask(indexToMark);
         } catch (IndexOutOfBoundsException ioobe) {
             throw new CommandException(
-                    Messages.ERROR_TASK_NONEXISTENT,
-                    String.format("%s %s %s", Messages.MESSAGE_NONEXISTENT_TASK_PRE,
-                            inputTaskNumber, Messages.MESSAGE_NONEXISTENT_TASK_POST),
-                    String.format("%s %s.", Messages.MESSAGE_ENTER_VALID_TASK_NUMBER, taskListSize)
+                Messages.ERROR_TASK_NONEXISTENT,
+                String.format("%s %s %s", Messages.MESSAGE_NONEXISTENT_TASK_PRE,
+                    inputTaskNumber, Messages.MESSAGE_NONEXISTENT_TASK_POST),
+                String.format("%s %s.", Messages.MESSAGE_ENTER_VALID_TASK_NUMBER, taskListSize)
             );
         }
 
         final String MESSAGE_ALREADY_MARKED = "The task `" + taskToMark +
-                "` is already marked as done. No action done.";
+            "` is already marked as done. No action done.";
 
         String[] messages;
 
         boolean isMarkedSuccess = taskList.markTask(indexToMark);
         if (isMarkedSuccess) {
             storage.saveTasks(taskList);
-            messages = new String[]{MESSAGE_MARK_SUCCESS, ui.formatSpace(2) + taskToMark};
+            messages = new String[]{MESSAGE_MARK_SUCCESS, ui.formatSpace(Constants.TWO) + taskToMark};
         } else {
             messages = new String[]{MESSAGE_ALREADY_MARKED};
         }

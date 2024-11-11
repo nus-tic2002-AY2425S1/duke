@@ -191,7 +191,7 @@
     ____________________________________________________________
     ____________________________________________________________
      Error: Invalid command format for command fd.
-     Received `fd reading the sales report`
+     The task is missing a duration.
      Example usage: `fd <description> /duration <duration in hours>`
     ____________________________________________________________
     ____________________________________________________________

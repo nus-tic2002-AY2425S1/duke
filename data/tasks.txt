@@ -1,0 +1,7 @@
+T | 0 | Do homework
+T | 0 | Buy groceries
+D | 0 | Submit report | Apr 24 2021 1433
+D | 1 | Resolve customer ticket | Aug 04 2022 0915
+E | 1 | Project launch | Nov 09 2024 1430 | Dec 25 2026 0900
+E | 0 | Birthday | Nov 09 2024 1845 | Nov 09 2024 2245
+E | 1 | Anniversary | Jan 01 2025 0000 | Jan 01 2025 2359

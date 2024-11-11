@@ -75,5 +75,11 @@ public class UI {
         System.out.println(t.toString());
     }
 
+    public void showDeleteMessage(String message, int count){
+        System.out.println("Noted. I've removed this task:");
+        System.out.println(message);
+        System.out.println("Now you have " + count + " tasks in the list.");
+    }
+
 
 }

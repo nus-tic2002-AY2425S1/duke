@@ -14,6 +14,8 @@ public class Parser {
 
 
         switch(fullCommandType){
+            case "delete":
+                return parseDelete(fullCommandType, description);
             case "list":
                 return new ListCommand();
             case "mark":
@@ -48,6 +50,18 @@ public class Parser {
             Command mark = new MarkCommand();
             mark.setCommandType(fullCommandType, description);
             return mark;
+        }
+    }
+
+    private static Command parseDelete(String fullCommandType, String description) throws JosBotException {
+        //potential enhancement to allow multiple delete
+        if(description.equals("") || description == null || description.isEmpty()){
+            return new InvalidCommand("missing_mark_number");
+        }else
+        {
+            Command delete = new DeleteCommand();
+            delete.setCommandType(fullCommandType, description);
+            return delete;
         }
     }
 }

@@ -25,5 +25,9 @@ public class TaskList {
         tasks.add(task);
     }
 
+    public void removeTask(int task_number) {
+        tasks.remove(task_number);
+    }
+
 
 }

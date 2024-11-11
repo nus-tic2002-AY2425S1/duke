@@ -1,16 +1,13 @@
 package commands;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import common.Constants;
-import exception.CommandException;
-import exception.StorageOperationException;
 import storage.Storage;
 import task.Task;
 import task.TaskList;
 import ui.Ui;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a command to find tasks in a task list based on a specified description.
@@ -19,16 +16,15 @@ import ui.Ui;
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE + OPEN_ANGLE_BRACKET + 
-        Constants.DESCRIPTION + CLOSE_ANGLE_BRACKET;
-    public static final String MESSAGE_EMPTY_LIST = "There are no matching tasks in your list.";
-    public static final String MESSAGE_SHOW_SUCCESS_PRE = "Here are the matching tasks in your list:";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE + Constants.DESCRIPTION_IN_ANGLE_BRACKETS;
+    private static final String MESSAGE_EMPTY_LIST = "There are no matching tasks in your list.";
+    private static final String MESSAGE_SHOW_SUCCESS_PRE = "Here are the matching tasks in your list:";
 
-    private String description;
+    private final String description;
 
     /**
      * Constructs a FindCommand with the given description.
-     * 
+     *
      * @param description represents the description to search for in the task list.
      */
     public FindCommand(String description) {
@@ -37,26 +33,25 @@ public class FindCommand extends Command {
 
     /**
      * Returns the description associated with the FindCommand.
+     *
      * @return the description that this command will search for in the task list.
      */
-    public String getDescription() {
+    private String getDescription() {
         return description;
     }
 
     /**
      * Executes the find command and searches for tasks in the task list that matches the given description.
-     * 
+     *
      * @param taskList represents the task list to search for matching tasks descriptions.
-     * @param ui represents the user interface to print messages to the user.
-     * @param storage represents the storage to handle any storage operations (not used in this command).
-     * @throws CommandException if an error occurs while executing the command.
-     * @throws StorageOperationException if an error occurs during storage operations.
+     * @param ui       represents the user interface to print messages to the user.
+     * @param storage  represents the storage to handle any storage operations (not used in this command).
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws CommandException, StorageOperationException {
-        String description = getDescription();
+    public void execute(TaskList taskList, Ui ui, Storage storage) {
 
-        List<Task> tasksWithMatchingDescription = taskList.getAllTasksWithMatchingDescription(description);
+        String taskDescription = getDescription();
+        List<Task> tasksWithMatchingDescription = taskList.getAllTasksWithMatchingDescription(taskDescription);
 
         // Check if there are no tasks with the specified description
         if (tasksWithMatchingDescription.isEmpty()) {
@@ -66,14 +61,14 @@ public class FindCommand extends Command {
         }
 
         // Prepare the message to display to the user
-        ArrayList<String> messages = new ArrayList<>(Arrays.asList(MESSAGE_SHOW_SUCCESS_PRE));
+        ArrayList<String> messages = new ArrayList<>(List.of(MESSAGE_SHOW_SUCCESS_PRE));
 
         for (int i = 0; i < tasksWithMatchingDescription.size(); i++) {
-            Task task = taskList.getTask(i);         // taskList.get(i) contains the checkbox
-            String taskDescription = task.getDescription();
-            if (taskDescription.contains(description)) {
+            Task currentTask = taskList.getTask(i);         // taskList.get(i) contains the checkbox
+            String currentTaskDescription = currentTask.getDescription();
+            if (currentTaskDescription.contains(taskDescription)) {
                 String index = Integer.toString(i + 1);
-                String line = index + Constants.DOT_SPACE + task;
+                String line = index + Constants.DOT_SPACE + currentTask;
                 messages.add(line);
             }
         }
@@ -81,5 +76,5 @@ public class FindCommand extends Command {
         ui.printMessage(messages);
 
     }
-    
+
 }

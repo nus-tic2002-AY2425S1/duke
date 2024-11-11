@@ -1,25 +1,25 @@
 package task;
 
-import java.time.LocalDate;
-
 import common.Constants;
 
+import java.time.LocalDate;
+
 /**
- * Represents a task with a fixed duration. 
- * Extends from the {@link Task} class and includes a duration attribute 
+ * Represents a task with a fixed duration.
+ * Extends from the {@link Task} class and includes a duration attribute
  * that specifies how long the task is expected to take.
  */
 public class FixedDuration extends Task {
 
-    private double duration;
+    private final double duration;
     private static final String SPACE = Constants.SPACE;
 
     /**
      * Constructs a FixedDuration task with the specified description, completion status, and duration.
-     * 
+     *
      * @param description represents a brief description of the task.
-     * @param isDone indicates whether the task is completed.
-     * @param duration represents the amount of time that the task requires, in hours.
+     * @param isDone      indicates whether the task is completed.
+     * @param duration    represents the amount of time that the task requires, in hours.
      */
     public FixedDuration(String description, boolean isDone, double duration) {
         super(description, isDone);
@@ -29,9 +29,9 @@ public class FixedDuration extends Task {
     /**
      * Constructs a FixedDuration task with the specified description and duration.
      * The task is initialized as not done.
-     * 
+     *
      * @param description represents a brief description of the task.
-     * @param duration represents the amount of time that the task requires, in hours.
+     * @param duration    represents the amount of time that the task requires, in hours.
      */
     public FixedDuration(String description, double duration) {
         super(description);
@@ -51,9 +51,9 @@ public class FixedDuration extends Task {
      */
     @Override
     public String toString() {
-        return Constants.OPEN_SQUARE_BRACKET + TaskType.FIXED_DURATION + Constants.CLOSE_SQUARE_BRACKET + 
-            super.toString() + SPACE + Constants.OPEN_ROUND_BRACKET + Constants.DURATION + Constants.COLON + 
-            SPACE + getDuration() + SPACE + Constants.HOURS + Constants.CLOSE_ROUND_BRACKET;
+        return Constants.OPEN_SQUARE_BRACKET + TaskType.FIXED_DURATION + Constants.CLOSE_SQUARE_BRACKET +
+                super.toString() + SPACE + Constants.OPEN_ROUND_BRACKET + Constants.DURATION + Constants.COLON +
+                SPACE + getDuration() + SPACE + Constants.HOURS + Constants.CLOSE_ROUND_BRACKET;
     }
 
     /**
@@ -64,14 +64,14 @@ public class FixedDuration extends Task {
      */
     @Override
     public String encodeTask() {
-        return TaskType.FIXED_DURATION + super.encodeTask() + Constants.ENCODE_TASK_SEPARATOR + 
-            getDuration() + SPACE + Constants.HOURS;
+        return TaskType.FIXED_DURATION + super.encodeTask() + Constants.ENCODE_TASK_SEPARATOR +
+                getDuration() + SPACE + Constants.HOURS;
     }
 
     /**
      * Determines whether the task is scheduled for a specific date.
      * For FixedDuration tasks, this method always returns false as they do not have a specific date.
-     * 
+     *
      * @param date represents the date to check against.
      * @return false, indicating that the task is not scheduled for any specific date.
      */

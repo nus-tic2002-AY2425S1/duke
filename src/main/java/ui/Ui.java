@@ -1,12 +1,12 @@
 package ui;
 
+import common.Constants;
+import common.Messages;
+import exception.CommandException;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import common.Messages;
-import common.Constants;
-import exception.CommandException;
 
 /**
  * Represents the user interface that is responsible for handling interactions with the user.
@@ -36,27 +36,26 @@ public class Ui {
     public String formatSpace(int numberOfSpace) {
         // String space = String.format("%" + numberOfSpace + "s", "");
         String format = Constants.PERCENT + numberOfSpace + Constants.S;
-        String space = String.format(format, Constants.EMPTY_STRING);
-        return space;
+        return String.format(format, Constants.EMPTY_STRING);
     }
 
     /**
      * Determines the appropriate number of spaces to insert before text or lines.
      * This is dependent on the context of the output, i.e. whether the space is for a horizontal line or for tasks.
      * It is used to align the output in the command-line.
-     * 
+     *
      * @param isLine indicates whether the space is to come before a horizontal line.
      * @param isTask indicates whether the space is to come before a a line of text representing a task.
      * @return a string containing the appropriate number of leading spaces.
      */
     public String getSpace(boolean isLine, boolean isTask) {
         // If space is to come before a horizontal line, use "    "
-        if (isLine == true && isTask == false) {
+        if (isLine && !isTask) {
             return formatSpace(4);      // Space before horizontal line
-        } else if (isLine == false && isTask == true) {        // If space is to come before a line of text, use "     "
+        } else if (!isLine && isTask) {        // If space is to come before a line of text, use "     "
             // For printing task
             return formatSpace(7);      // Space before task text
-        } else if (isLine == false && isTask == false) {
+        } else if (!isLine && !isTask) {
             return formatSpace(5);      // General space
         } else {
             return Constants.EMPTY_STRING;      // No space
@@ -65,7 +64,7 @@ public class Ui {
 
     /**
      * Creates a horizontal line with the appropriate number of leading spaces before the horizontal line.
-     * 
+     *
      * @return a formatted string representing the horizontal line with leading spaces.
      */
     public String getLine() {
@@ -83,8 +82,8 @@ public class Ui {
     /**
      * Prints a horizontal line, followed by the message(s), and ends with another horizontal line.
      * There will be spaces before each line.
-     * 
-     * @param <T> represents the type of the messages.
+     *
+     * @param <T>      represents the type of the messages.
      * @param messages represents the list of message(s) to print. It can be an array or ArrayList.
      */
     // Solution below inspired by https://stackoverflow.com/questions/2914695/how-can-you-write-a-function-that-accepts-multiple-types
@@ -92,10 +91,10 @@ public class Ui {
         // System.out.println("In printMessage");
         String line = getLine();        // includes space before line
         String space = getSpace(false, false);
-        
+
         // StringBuilder stringBuilder = new StringBuilder();
         StringBuilder stringBuilder = new StringBuilder().append(line).append(Constants.NEW_LINE);
-        
+
         // System.out.println(messageList.getClass());
 
         // Checks if the messageList is an array. Iterates and appends each item to the StringBuilder
@@ -104,8 +103,8 @@ public class Ui {
             for (int i = 0; i < Array.getLength(messages); i++) {
                 stringBuilder.append(space).append(Array.get(messages, i)).append(Constants.NEW_LINE);
             }
-        } 
-        
+        }
+
         // Checks if the messageList is an ArrayList. Iterates and appends each item to the StringBuilder
         // https://stackoverflow.com/questions/14674027/checking-if-object-is-instance-of-listobject
         else if (messages instanceof ArrayList<?>) {
@@ -116,7 +115,7 @@ public class Ui {
 
         // Append the closing line after the message
         String text = stringBuilder.append(line).toString();
-        
+
         // Print out the final formatted message to the command line
         System.out.println(text);
     }
@@ -140,13 +139,13 @@ public class Ui {
     /**
      * Reads a line of input from the user and trims any leading or trailing whitespace.
      * It ensures that the input is not empty.
-     * When the user provides an empty input, it will display an error message, 
+     * When the user provides an empty input, it will display an error message,
      * requesting for the user to enter a non-empty input.
-     * It will continue to prompt the user until a valid inupt (non-empty string) is received.
-     * 
+     * It will continue to prompt the user until a valid input (non-empty string) is received.
+     *
      * @return the trimmed user input (without any leading whitespaces).
      * @throws CommandException when the user inputs an invalid string.
-    */
+     */
     // https://github.com/se-edu/addressbook-level2/blob/master/src/seedu/addressbook/ui/TextUi.java#L80
     public String readInput() throws CommandException {
         String userInput;
@@ -155,8 +154,8 @@ public class Ui {
             userInput = in.nextLine().trim(); // Read and trim the input
             if (userInput.isEmpty()) {
                 throw new CommandException(
-                    Messages.ERROR_EMPTY_INPUT,
-                    Messages.VALID_COMMANDS
+                        Messages.ERROR_EMPTY_INPUT,
+                        Messages.VALID_COMMANDS
                 );
             }
         } while (userInput.isEmpty());          // Continue looping as long as the input is empty
@@ -165,7 +164,7 @@ public class Ui {
 
     /**
      * Displays an error message to the user.
-     * 
+     *
      * @param errorMessage represents a list of error messages to display.
      */
     public void showError(ArrayList<String> errorMessage) {

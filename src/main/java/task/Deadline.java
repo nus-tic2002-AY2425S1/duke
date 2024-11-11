@@ -1,10 +1,10 @@
 package task;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import common.Constants;
 import parser.DateTimeParser;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Represents a task with a specific due date and time.
@@ -14,14 +14,14 @@ import parser.DateTimeParser;
  */
 public class Deadline extends Task {
 
-    protected LocalDateTime due;
+    protected final LocalDateTime due;
 
     /**
      * Constructs a {@code Deadline} task with the specified description, completion status, and due date / time.
-     * 
+     *
      * @param description represents the description of the {@code Deadline} task.
-     * @param isDone represents the completion status of the {@code Deadline} task.
-     * @param due represents the due date / time of the {@code Deadline} task.
+     * @param isDone      represents the completion status of the {@code Deadline} task.
+     * @param due         represents the due date / time of the {@code Deadline} task.
      */
     public Deadline(String description, boolean isDone, LocalDateTime due) {
         super(description, isDone);
@@ -30,9 +30,9 @@ public class Deadline extends Task {
 
     /**
      * Constructs a {@code Deadline} task with the specified description and due date / time.
-     * 
+     *
      * @param description represents the description of the {@code Deadline} task.
-     * @param due represents the due date / time of the {@code Deadline} task.
+     * @param due         represents the due date / time of the {@code Deadline} task.
      */
     public Deadline(String description, LocalDateTime due) {
         super(description);
@@ -60,23 +60,23 @@ public class Deadline extends Task {
     @Override
     public String toString() {
         final String SPACE = Constants.SPACE;
-        
+
         // If description does not end with a space, add a space behind it
         if (!description.endsWith(SPACE)) {
             description += SPACE;
-        } 
+        }
 
         // String formattedDue = DateTimeParser.formatDateTime(due);
-        return Constants.OPEN_SQUARE_BRACKET + TaskType.DEADLINE + Constants.CLOSE_SQUARE_BRACKET + 
-            super.toString() + 
-            Constants.OPEN_ROUND_BRACKET + Constants.BY + Constants.COLON + 
-            Constants.SPACE + getFormattedDue() + Constants.CLOSE_ROUND_BRACKET;
+        return Constants.OPEN_SQUARE_BRACKET + TaskType.DEADLINE + Constants.CLOSE_SQUARE_BRACKET +
+                super.toString() +
+                Constants.OPEN_ROUND_BRACKET + Constants.BY + Constants.COLON +
+                Constants.SPACE + getFormattedDue() + Constants.CLOSE_ROUND_BRACKET;
     }
 
     /**
      * Encodes the {@code Deadline} task into a String format that is suitable for storage.
      * The format includes the task type (Deadline), completion status, description, and due date / time.
-     * 
+     *
      * @return a String representation of the encoded {@code Deadline} task.
      */
     @Override
@@ -88,7 +88,7 @@ public class Deadline extends Task {
 
     /**
      * Checks if the task is due on a specified date.
-     * 
+     *
      * @param date the date to check against.
      * @return true if the task is due on the specified date, false otherwise.
      */

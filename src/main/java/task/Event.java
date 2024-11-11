@@ -9,25 +9,25 @@ import java.time.LocalDateTime;
 // e.g., (a) team project meeting 2/10/2019 2-4pm (b) orientation week 4/10/2019 to 11/10/2019
 
 /**
- * Extends from the Task class. It encapsulates the task description, 
+ * Extends from the Task class. It encapsulates the task description,
  * completion status, start date and time, and end date and time.
- * Events are tasks that occur over a period of time, 
+ * Events are tasks that occur over a period of time,
  * starting at a specific date and time and ending at a specific date and time.
  */
 public class Event extends Task {
 
-    protected LocalDateTime startDateTime;
-    protected LocalDateTime endDateTime;
+    protected final LocalDateTime startDateTime;
+    protected final LocalDateTime endDateTime;
 
     /**
-     * Constructs an {@code Event} task with the specified description, 
+     * Constructs an {@code Event} task with the specified description,
      * completion status, start date and time, and end date and time
      * The {@code Event} task is initially marked as not done.
-     * 
-     * @param description represents the description of the {@code Event} task.
-     * @param isDone represents the completion status of the {@code Event} task.
+     *
+     * @param description   represents the description of the {@code Event} task.
+     * @param isDone        represents the completion status of the {@code Event} task.
      * @param startDateTime represents the start date and time of the {@code Event} task.
-     * @param endDateTime represents the end date and time of the {@code Event} task.
+     * @param endDateTime   represents the end date and time of the {@code Event} task.
      */
     public Event(String description, boolean isDone, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         super(description, isDone);
@@ -37,10 +37,10 @@ public class Event extends Task {
 
     /**
      * Constructs an {@code Event} task with the specified description, start date and time, and end date and time.
-     * 
-     * @param description represents the description of the {@code Event} task.
+     *
+     * @param description   represents the description of the {@code Event} task.
      * @param startDateTime represents the start date and time of the {@code Event} task.
-     * @param endDateTime represents the end date and time of the {@code Event} task.
+     * @param endDateTime   represents the end date and time of the {@code Event} task.
      */
     public Event(String description, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         super(description);
@@ -65,7 +65,7 @@ public class Event extends Task {
 
     /**
      * Retrieves the end date and time of the {@code Event} task.
-     * 
+     *
      * @return the end date and time as a {@code LocalDateTime} object.
      */
     public LocalDateTime getEndDateTime() {
@@ -92,33 +92,33 @@ public class Event extends Task {
         // If description does not end with a space, add a space behind it
         if (!description.endsWith(SPACE)) {
             description += SPACE;
-        } 
-        
+        }
+
         // String formattedEndDateTime = DateTimeParser.formatDateTime(endDateTime);
 
-        return Constants.OPEN_SQUARE_BRACKET + TaskType.EVENT + Constants.CLOSE_SQUARE_BRACKET + super.toString() + 
-            Constants.OPEN_ROUND_BRACKET + Constants.FROM + COLON + SPACE + getFormattedStartDateTime() +
-            SPACE + Constants.TO + COLON + SPACE + getFormattedEndDateTime() + Constants.CLOSE_ROUND_BRACKET;
-            
+        return Constants.OPEN_SQUARE_BRACKET + TaskType.EVENT + Constants.CLOSE_SQUARE_BRACKET + super.toString() +
+                Constants.OPEN_ROUND_BRACKET + Constants.FROM + COLON + SPACE + getFormattedStartDateTime() +
+                SPACE + Constants.TO + COLON + SPACE + getFormattedEndDateTime() + Constants.CLOSE_ROUND_BRACKET;
+
     }
 
     /**
      * Encodes the {@code Event} task into a string for storage, i.e. writing to the tasks file.
-     * 
+     *
      * @return encoded string representation of the {@code Event} task.
      */
     @Override
     public String encodeTask() {
         String separator = Constants.ENCODE_TASK_SEPARATOR;
-        return TaskType.EVENT + super.encodeTask() + separator + 
-            getFormattedStartDateTime() + separator + getFormattedEndDateTime();
+        return TaskType.EVENT + super.encodeTask() + separator +
+                getFormattedStartDateTime() + separator + getFormattedEndDateTime();
     }
 
     /**
      * Checks if the {@code Event} task occurs on a specified date
-     * The Event is considered to occur on a specific date if its 
+     * The Event is considered to occur on a specific date if its
      * start date and time or end date and time matches the specified date.
-     * 
+     *
      * @param date represents the date to check against.
      * @return true if the {@code Event} task occurs on a specific date; false otherwise.
      */

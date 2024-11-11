@@ -1,37 +1,36 @@
 package commands.add;
 
-import java.time.LocalDateTime;
-
 import common.Constants;
-import task.Task;
 import task.Event;
+import task.Task;
+
+import java.time.LocalDateTime;
 
 /**
  * Extends from {@code AddTaskCommand} and is a subclass of {@code AddTaskCommand}.
  * {@code AddTaskCommand} provides the general structure for adding a task to the {@code TaskList}.
  * It represents a command that is used to add an {@code Event} task to the {@code TaskList}.
- * The command takes a description, start date/time, and end date/time, creates an {@code Event} task, 
+ * The command takes a description, start date/time, and end date/time, creates an {@code Event} task,
  * adds it to the {@code TaskList} and saves the updated {@code TaskList} to {@code Storage}.
  */
 public class EventCommand extends AddTaskCommand {
     public static final String COMMAND_WORD = "event";
-    
-    public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE + OPEN_ANGLE_BRACKET + Constants.DESCRIPTION + 
-        CLOSE_ANGLE_BRACKET + SPACE + Constants.SLASH_FROM + SPACE + 
-        OPEN_ANGLE_BRACKET + Constants.START_DATE_TIME + CLOSE_ANGLE_BRACKET + SPACE + 
-        Constants.SLASH_TO + SPACE + 
-        OPEN_ANGLE_BRACKET + Constants.END_DATE_TIME + CLOSE_ANGLE_BRACKET;
-    
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE +
+            DESCRIPTION_IN_ANGLE_BRACKETS + SPACE + Constants.SLASH_FROM + SPACE +
+            Constants.START_DATE_TIME_IN_ANGLE_BRACKETS + SPACE + Constants.SLASH_TO + SPACE +
+            Constants.END_DATE_TIME_IN_ANGLE_BRACKETS;
+
     protected final LocalDateTime startDateTime;
     protected final LocalDateTime endDateTime;
 
     /**
-     * Constructs an {@code EventCommand} with the specified task description, 
+     * Constructs an {@code EventCommand} with the specified task description,
      * start date and time, and end date and time.
-     * 
-     * @param description represents the description of the {@code Event} task.
+     *
+     * @param description   represents the description of the {@code Event} task.
      * @param startDateTime represents the start date and time of the {@code Event} task.
-     * @param endDateTime represents the end date and time of the {@code Event} task.
+     * @param endDateTime   represents the end date and time of the {@code Event} task.
      */
     public EventCommand(String description, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         super(description);
@@ -58,11 +57,10 @@ public class EventCommand extends AddTaskCommand {
      */
     @Override
     protected Task createTask() {
-        String description = getDescription();
-        LocalDateTime startDateTime = getStartDateTime();
-        LocalDateTime endDateTime = getEndDateTime();
-        Event task = new Event(description, startDateTime, endDateTime);
-        return task;
+        String eventDescription = getDescription();
+        LocalDateTime eventStartDateTime = getStartDateTime();
+        LocalDateTime eventEndDateTime = getEndDateTime();
+        return new Event(eventDescription, eventStartDateTime, eventEndDateTime);
     }
 
 }

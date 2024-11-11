@@ -1,5 +1,3 @@
-import java.io.IOException;
-
 import commands.Command;
 import exception.CommandException;
 import exception.FileContentException;
@@ -8,38 +6,40 @@ import exception.TaskListDecoderException;
 import parser.Parser;
 import storage.Storage;
 import task.TaskList;
-import ui.Ui;   
+import ui.Ui;
+
+import java.io.IOException;
 
 /**
  * Represents the main application class / entry point for the Javaro task management system.
- * The class initializes the user interface, storage, and task list, and runs the main application logic. 
+ * The class initializes the user interface, storage, and task list, and runs the main application logic.
  * It processes the commands issued by the user.
- * It reads commands from the user, parses and executes them, and displays appropriate feedback to the user. 
+ * It reads commands from the user, parses and executes them, and displays appropriate feedback to the user.
  * The application handles errors related to task storage, command parsing, and general exceptions gracefully.
  */
 public class Javaro {
-    
-    private Ui ui;
+
+    private final Ui ui;
     private Storage storage;
     private TaskList taskList;
 
     /**
-     * Constructs a Javaro instance. 
+     * Constructs a Javaro instance.
      * Setting up the Javaro application initializing the user interface, storage, and task list.
-     * It handles any initialization errors that occur. 
-     * If it fails to load tasks list from storage (tasks file), 
+     * It handles any initialization errors that occur.
+     * If it fails to load tasks list from storage (tasks file),
      * then it initializes an empty task list and displays an error message.
      */
     public Javaro() {
-        
+
         // Initialize Ui
         ui = new Ui();
-        
+
         // Initialize Storage and load tasks to TaskList
         try {
             storage = new Storage();
-            taskList = storage.loadTasks();     // Attempt to load task frmo storage (tasks file)
-        } catch (StorageOperationException | FileContentException | 
+            taskList = storage.loadTasks();     // Attempt to load task from storage (tasks file)
+        } catch (StorageOperationException | FileContentException |
                  TaskListDecoderException | CommandException e) {
             // Handle common exceptions related to task loading
             // storageOperationException.printStackTrace();
@@ -56,7 +56,7 @@ public class Javaro {
 
     /**
      * Runs the main application logic.
-     * Repeatedly reads input from the user, parses the input received from the user and 
+     * Repeatedly reads input from the user, parses the input received from the user and
      * executes it until the user issues a command to exit, which stops the program.
      * Any exceptions that occur will be caught and an error message will be displayed to the user.
      */
@@ -88,14 +88,14 @@ public class Javaro {
                 ui.showError(e.getMessageList());
             }
         }
-        
+
     }
 
     /**
      * Initializes the Javaro program and starts the main loop.
      * The main entry point of the Javaro application.
      * This method is called when the program is executed from the command-line.
-     * 
+     *
      * @param args command line arguments (not used here).
      */
     public static void main(String[] args) {

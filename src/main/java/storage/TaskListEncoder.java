@@ -1,10 +1,10 @@
 package storage;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import task.Task;
 import task.TaskList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Encodes a {@code TaskList} into a list of strings.
@@ -12,9 +12,14 @@ import task.TaskList;
  */
 public class TaskListEncoder {
 
+    // Add a private constructor to hide the implicit public one.
+    private TaskListEncoder() {
+
+    }
+
     /**
      * Encodes the given {@code TaskList} into a list of strings, where each string represents an encoded task.
-     * 
+     *
      * @param taskList represents the {@code TaskList} to be encoded.
      * @return a list of strings representing the encoded tasks.
      */
@@ -28,7 +33,7 @@ public class TaskListEncoder {
 
     /**
      * Encodes a single {@code Task} into its string representation.
-     * 
+     *
      * @param task represents the {@code Task} to be encoded.
      * @return a string representation of the encoded {@code Task}.
      */

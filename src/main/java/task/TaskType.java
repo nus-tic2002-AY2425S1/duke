@@ -4,8 +4,8 @@ import common.Constants;
 
 /**
  * Represents the different types of tasks that can be created.
- * Each task has a corresponding code, 
- * i.e. TODO is represented by "T", DEADLINE is represented by "D", 
+ * Each task has a corresponding code,
+ * i.e. TODO is represented by "T", DEADLINE is represented by "D",
  * EVENT is represented by "E" and FIXED_DURATION is represented by "FD"
  */
 public enum TaskType {
@@ -17,9 +17,9 @@ public enum TaskType {
     private final String code;
 
     /**
-     * Constructs the {@code TaskType} enum. 
+     * Constructs the {@code TaskType} enum.
      * Constructs a {@code TaskType} with the specified code.
-     * 
+     *
      * @param code represents the string code that represents the {@code TaskType}.
      */
     TaskType(String code) {
@@ -36,7 +36,7 @@ public enum TaskType {
 
     /**
      * Retrieves the corresponding {@code TaskType} based on the given string code.
-     * 
+     *
      * @param code represents the string code that corresponds to the {@code TaskType}, i.e. "T", "D", or "E".
      * @return the {@code TaskType} that is associated with the given code.
      * @throws IllegalArgumentException if the given code does not match an existing {@code TaskType}.
@@ -52,8 +52,8 @@ public enum TaskType {
     }
 
     /**
-     * Retrives the valid types of task.
-     * 
+     * Retrieves the valid types of task.
+     *
      * @return a String representation of the list of the types of tasks.
      */
     public static String getValidTaskType() {
@@ -62,7 +62,7 @@ public enum TaskType {
             // System.out.println(taskType.code);
             validTaskTypes.append("`").append(taskType.code).append("`").append(",");
         }
-        if (validTaskTypes.length() > 0) {
+        if (!validTaskTypes.isEmpty()) {
             validTaskTypes.setLength(validTaskTypes.length() - 1);
         }
         return validTaskTypes.toString();

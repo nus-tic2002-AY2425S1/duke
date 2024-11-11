@@ -19,8 +19,7 @@ public class Command {
         + "  " + task
       );
       Ui.response(" Now you have " + taskList.getTaskListSize() + " tasks in the list");
-    }
-    catch (MochiException e) {
+    } catch (MochiException e) {
       Ui.response(e.getMessage());
     }
   }
@@ -52,11 +51,9 @@ public class Command {
       );
     } catch (NumberFormatException e) {
       Ui.response(ExceptionMessages.NUMBER_FORMAT_EXCEPTION);
-    }
-    catch (IndexOutOfBoundsException e) {
+    } catch (IndexOutOfBoundsException e) {
       Ui.response(ExceptionMessages.TASK_ID_NOT_FOUND);
-    }
-    catch (MochiException e) {
+    } catch (MochiException e) {
       Ui.response(e.getMessage());
     }
   }
@@ -65,11 +62,9 @@ public class Command {
       taskList.markTask(id);
     } catch (NumberFormatException e) {
       Ui.response(ExceptionMessages.NUMBER_FORMAT_EXCEPTION);
-    }
-    catch (IndexOutOfBoundsException e) {
+    } catch (IndexOutOfBoundsException e) {
       Ui.response(ExceptionMessages.TASK_ID_NOT_FOUND);
-    }
-    catch (MochiException e) {
+    } catch (MochiException e) {
       Ui.response(e.getMessage());
     }
   }
@@ -84,11 +79,9 @@ public class Command {
         + "  " + tempTask
       );
       Ui.response(" Now you have " + taskList.getTaskListSize() + " tasks in the list");
-    }
-    catch (IndexOutOfBoundsException e) {
+    } catch (IndexOutOfBoundsException e) {
       Ui.response(ExceptionMessages.TASK_ID_NOT_FOUND);
-    }
-    catch (MochiException e) {
+    } catch (MochiException e) {
       Ui.response(e.getMessage());
     }
   }
@@ -102,11 +95,9 @@ public class Command {
       );
     } catch (NumberFormatException e) {
       Ui.response(ExceptionMessages.NUMBER_FORMAT_EXCEPTION);
-    }
-    catch (IndexOutOfBoundsException e) {
+    } catch (IndexOutOfBoundsException e) {
       Ui.response(ExceptionMessages.TASK_ID_NOT_FOUND);
-    }
-    catch (MochiException e) {
+    } catch (MochiException e) {
       Ui.response(e.getMessage());
     }
   }

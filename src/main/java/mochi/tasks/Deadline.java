@@ -1,17 +1,20 @@
 package mochi.tasks;
 
+import java.time.LocalDateTime;
+import mochi.common.*;
+
 public class Deadline extends Task{
-  protected String _by;
+  protected LocalDateTime _by;
   public Deadline(String name, String by) {
     super(name,"D");
-    this._by = by;
+    this._by = DateTime.parse(by);
   }
   public String getBy() {
-    return this._by;
+    return DateTime.toString(this._by);
   }
   @Override
   public String toString() {
-    return "[" + _type + "]" + super.toString() + " (by " + this._by + ")";
+    return "[" + _type + "]" + super.toString() + " (by " + DateTime.toString(this._by) + ")";
   }
   @Override
   public String toDBString() {
@@ -21,6 +24,6 @@ public class Deadline extends Task{
       + TaskList._saveDelimiter
       + _name
       + TaskList._saveDelimiter
-      + _by;
+      + DateTime.toDBString(_by);
   }
 }

@@ -11,10 +11,10 @@ public enum DialogMessages {
    LIST_TASK("Here are the tasks in your list:"),
    MARK_TASK("Nice! I've marked this task as done:"),
    DELETE_TASK("Noted. I've removed this task:"),
+   INVALID_TASK("parameter is in wrong date format, this will not be added!"),
    UNMARK_TASK("OK, I've marked this task as not done yet:"),
    BYE("Bye. Hope to see you again soon!"),
    TASK_ADDED("Got it. I've added this task:"),
-
    TASK_LOADED("Loaded:"),
    COMMANDS_LIST("""
             1. todo X                               - Adds a new to-do task. Example: todo Buy groceries

@@ -1,18 +1,22 @@
 package mochi.tasks;
 
+import mochi.common.DateTime;
+
+import java.time.LocalDateTime;
+
 public class Event extends Task {
-  protected String _from;
-  protected String _to;
+  protected LocalDateTime _from;
+  protected LocalDateTime _to;
   public Event(String name, String from, String to) {
     super(name,"E");
-    this._from = from;
-    this._to = to;
+    this._from = DateTime.parse(from);
+    this._to = DateTime.parse(to);
   }
   public String getFrom() {
-    return this._from;
+    return DateTime.toString(this._from);
   }
   public String getTo() {
-    return this._to;
+    return DateTime.toString(this._from);
   }
   @Override
   public String toString() {
@@ -27,8 +31,8 @@ public class Event extends Task {
       + TaskList._saveDelimiter
       + _name
       + TaskList._saveDelimiter
-      + _from
+      + DateTime.toDBString(_from)
       + TaskList._saveDelimiter
-      + _to;
+      + DateTime.toDBString(_to);
   }
 }

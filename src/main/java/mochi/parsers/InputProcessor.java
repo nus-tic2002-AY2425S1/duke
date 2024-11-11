@@ -6,6 +6,8 @@ import mochi.ui.*;
 import mochi.common.*;
 import mochi.common.exception.*;
 
+import java.time.LocalDateTime;
+
 public class InputProcessor {
   private Command cmd;
   public InputProcessor(TaskList taskList) {
@@ -36,13 +38,27 @@ public class InputProcessor {
       case DEADLINE:
         String d_name = Utils.trimStringArrayWithStartEnd(token,"deadline","/by"," ");
         String by = Utils.trimStringArrayWithStartEnd(token,"/by",""," ");
-        cmd.addTask(new Deadline(d_name,by));
+        LocalDateTime isDate = DateTime.parse(by);
+        if (isDate != null) {
+          cmd.addTask(new Deadline(d_name,by));
+        } else {
+          Ui.response("/by " + DialogMessages.INVALID_TASK.getValue());
+        }
         break;
       case EVENT:
         String e_name = Utils.trimStringArrayWithStartEnd(token,"event","/from"," ");
         String from = Utils.trimStringArrayWithStartEnd(token,"/from","/to"," ");
         String to = Utils.trimStringArrayWithStartEnd(token,"/to",""," ");
-        cmd.addTask(new Event(e_name,from,to));
+
+        LocalDateTime isFromDate = DateTime.parse(from);
+        LocalDateTime isToDate = DateTime.parse(to);
+        if ((isFromDate != null) && (isToDate != null)) {
+          cmd.addTask(new Event(e_name,from,to));
+        } else if (isFromDate == null) {
+          Ui.response("/from " + DialogMessages.INVALID_TASK.getValue());
+        } else {
+          Ui.response("/to " + DialogMessages.INVALID_TASK.getValue());
+        }
         break;
       case TODO:
         String t_name = Utils.trimStringArrayWithStartEnd(token,"todo",""," ");

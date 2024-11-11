@@ -59,9 +59,9 @@ public abstract class Task {
      * @return 1 if the {@code Task} is done; 0 otherwise.
      */
     public int getIsDoneValue() {
-        int doneValue = 0;
+        int doneValue = Constants.ZERO;
         if (getIsDone()) {
-            doneValue = 1;
+            doneValue = Constants.ONE;
         }
         return doneValue;
     }

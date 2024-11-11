@@ -1,3 +1,6 @@
+package mochi.common;
+import mochi.Mochi;
+
 public enum DialogMessages {
    GREETINGS("Hello! I'm " + Mochi._name + System.lineSeparator()
      + "What can I do for you?"),

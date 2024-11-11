@@ -1,4 +1,6 @@
-enum TaskType {
+package mochi.tasks;
+
+public enum TaskType {
   T, D, E, UNKNOWN;
   public static TaskType getValue(String c) {
     try {

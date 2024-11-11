@@ -1,3 +1,5 @@
+package mochi.common;
+
 public class Utils {
   public static String trimStringArrayWithStartEnd(String[] s, String start, String end, String delimiter) {
     String body = "";

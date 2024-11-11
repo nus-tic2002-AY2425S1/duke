@@ -1,3 +1,5 @@
+package mochi.tasks;
+
 public class Deadline extends Task{
   protected String _by;
   public Deadline(String name, String by) {

@@ -1,4 +1,10 @@
-import mochi.commands.Command;
+package mochi.parsers;
+
+import mochi.commands.*;
+import mochi.tasks.*;
+import mochi.ui.*;
+import mochi.common.*;
+import mochi.common.exception.*;
 
 public class InputProcessor {
   private Command cmd;

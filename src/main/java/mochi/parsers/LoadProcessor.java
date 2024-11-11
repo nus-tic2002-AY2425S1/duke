@@ -1,4 +1,9 @@
-import mochi.commands.Command;
+package mochi.parsers;
+
+import mochi.commands.*;
+import mochi.common.*;
+import mochi.common.exception.*;
+import mochi.tasks.*;
 
 public class LoadProcessor {
   private final Command cmd;

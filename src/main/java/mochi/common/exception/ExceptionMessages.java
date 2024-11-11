@@ -1,3 +1,5 @@
+package mochi.common.exception;
+
 public class ExceptionMessages {
   public static final String TASK_EXIST = "Input task name exist in the system, please use another task name";
   public static final String INDEX_OUT_OF_RANGE = "Input parameters is not correct, please check your number of parameters";

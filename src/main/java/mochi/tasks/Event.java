@@ -1,3 +1,5 @@
+package mochi.tasks;
+
 public class Event extends Task {
   protected String _from;
   protected String _to;

@@ -1,5 +1,10 @@
 package mochi.commands;
-package 
+
+import mochi.tasks.*;
+import mochi.ui.*;
+import mochi.common.*;
+import mochi.common.exception.*;
+
 public class Command {
   private final TaskList taskList;
   public Command(TaskList taskList) {

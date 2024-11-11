@@ -1,4 +1,6 @@
-enum CommandEnum {
+package mochi.commands;
+
+public enum CommandEnum {
   DELETE, MARK, UNMARK, BYE, LIST, DEADLINE, EVENT, TODO, UNKNOWN;
   public static CommandEnum getValue(String c) {
     try {

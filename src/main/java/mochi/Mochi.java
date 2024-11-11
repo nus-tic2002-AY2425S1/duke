@@ -1,6 +1,14 @@
+package mochi;
+
+import mochi.commands.*;
+import mochi.common.*;
+import mochi.parsers.*;
+import mochi.tasks.*;
+import mochi.ui.*;
+
 import java.util.Scanner;
 public class Mochi {
-  final static String _name = "Mochi";
+  public final static String _name = "Mochi";
 
   public static void main(String[] args) {
     Ui.response(DialogMessages.GREETINGS.getValue());

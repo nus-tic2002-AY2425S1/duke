@@ -1,3 +1,5 @@
+package mochi.tasks;
+
 public class Task {
   protected String _name;
   protected boolean _status;

@@ -6,11 +6,13 @@ public class TaskList implements AutoCloseable {
   protected ArrayList<Task> _list = new ArrayList<>();
   protected HashMap<String,Integer> _taskNameToIndexMap = new HashMap<>();
   final static String _saveDelimiter = "||";
+  private SaveManager saveManger;
   public TaskList() {
     try {
+      saveManger = new SaveManager();
       loadTasks();
     } catch (Exception e) {
-      Conversation.response(e.getMessage());
+      Ui.response(e.getMessage());
     }
   }
   @Override
@@ -18,7 +20,7 @@ public class TaskList implements AutoCloseable {
     try {
       saveTasks();
     } catch (Exception e) {
-      Conversation.response(e.getMessage());
+      Ui.response(e.getMessage());
     }
   }
     private void saveTasks() throws MochiException {
@@ -27,16 +29,16 @@ public class TaskList implements AutoCloseable {
       tasksToDbString.add(task.toDBString());
     }
     try {
-      SaveManager.save(tasksToDbString);
+      saveManger.save(tasksToDbString);
     } catch (Exception e) {
-      Conversation.response(e.getMessage());
+      Ui.response(e.getMessage());
     }
   }
   private void loadTasks() throws MochiException {
     try {
-      ArrayList<String> tmp = SaveManager.load();
+      ArrayList<String> tmp = saveManger.load();
       if (tmp == null) {
-        Conversation.response(DialogMessages.SAVE_TASK_NOT_FOUND.getValue());
+        Ui.response(DialogMessages.SAVE_TASK_NOT_FOUND.getValue());
       } else {
         int line = 1;
         for (String s : tmp) {
@@ -49,12 +51,12 @@ public class TaskList implements AutoCloseable {
             line++;
           }
         }
-        Conversation.response(DialogMessages.SAVE_TASK_FOUND.getValue());
+        Ui.response(DialogMessages.SAVE_TASK_FOUND.getValue());
       }
     } catch (IOException e) {
-      Conversation.response(e.getMessage());
+      Ui.response(e.getMessage());
     } catch (MochiException e) {
-      Conversation.response(DialogMessages.LOAD_TASK_ERROR.getValue());
+      Ui.response(DialogMessages.LOAD_TASK_ERROR.getValue());
     }
   }
   public void addTask(Task task) throws MochiException {

@@ -18,7 +18,7 @@ public class MarkTaskCommand extends Command {
             throw new ChadException("Invalid task index: " + (taskIndex + 1));
         }
         tasks.markTask(taskIndex); // Mark the specified task
-        ui.showAddTask(tasks.getTaskById(taskIndex), tasks.getNoOfTask()); // Adjust this as necessary for how you want to show the result
+        ui.showMarkTask(tasks.getTaskById(taskIndex)); // Adjust this as necessary for how you want to show the result
         storage.save(tasks.toString()); // Optionally save changes to the storage if required
     }
 

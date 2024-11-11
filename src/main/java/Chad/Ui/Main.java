@@ -1,5 +1,4 @@
 package Chad.Ui;
-import java.io.IOException;
 
 import Chad.Chad;
 import javafx.application.Application;
@@ -8,12 +7,15 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+
 /**
  * A GUI for Chad using FXML.
  */
 public class Main extends Application {
 
-    private Chad chad = new Chad("./data/chad.txt");
+    private final Chad chad = new Chad("./data/chad.txt");
 
     @Override
     public void start(Stage stage) {

@@ -1,5 +1,5 @@
 .root {
-    main-color: rgb(237, 255, 242);       /* Create a looked-up color called "main-color" within root. */
+    main-color: rgb(237, 255, 242); /* Create a looked-up color called "main-color" within root. */
     -fx-background-color: main-color;
     -fx-background-image: url("../images/background.jpg"); /* Set image */
     -fx-background-size: stretch;
@@ -7,7 +7,10 @@
 
 .text-field {
     -fx-background-color: #a3d3f3;
-    -fx-font: 20px "Arial";
+    -fx-font-family: "a"; /* Specify the name of your custom font */
+    -fx-font-size: 20px; /* Change to your desired font size */
+    -fx-font-weight: bold; /* This makes the text bold */
+    -fx-text-fill: #fc0580; /* Set the text color to black (change as needed) */
 }
 
 .button {
@@ -16,12 +19,12 @@
 }
 
 .button:hover {
-    -fx-background-color:rgb(188, 173, 243);
+    -fx-background-color: rgb(188, 173, 243);
     -fx-font-size: 18px;
 }
 
 .button:pressed {
-    -fx-background-color:rgb(1, 92, 39);
+    -fx-background-color: rgb(1, 92, 39);
     -fx-font-size: 20px;
 }
 
@@ -31,7 +34,7 @@
 }
 
 .scroll-bar {
-    -fx-font-size: 10px;  /* Change width of scroll bar. */
+    -fx-font-size: 10px; /* Change width of scroll bar. */
     -fx-background-color: main-color;
 }
 

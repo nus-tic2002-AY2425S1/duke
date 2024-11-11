@@ -76,7 +76,7 @@ public class Chad {
         } catch (ChadException e) {
             ui.showError(e.getMessage()); // Display error message to the user
             return false;
-        } 
+        }
     }
 
     /**

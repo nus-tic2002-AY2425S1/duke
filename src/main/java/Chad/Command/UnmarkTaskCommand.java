@@ -18,7 +18,7 @@ public class UnmarkTaskCommand extends Command {
             throw new ChadException("Invalid task index: " + (taskIndex + 1));
         }
         tasks.unmarkTask(taskIndex); // Unmark the specified task
-        ui.showDeleteTask(tasks.getTaskById(taskIndex), tasks.getNoOfTask()); // Show the result
+        ui.showUnMarkTask(tasks.getTaskById(taskIndex)); // Show the result
         storage.save(tasks.toString()); // Optionally save changes to the storage if required
     }
 }

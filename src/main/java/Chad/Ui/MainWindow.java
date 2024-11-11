@@ -11,7 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration; 
+import javafx.util.Duration;
+
 /**
  * Controller for the main GUI.
  */
@@ -27,8 +28,8 @@ public class MainWindow extends AnchorPane {
 
     private Chad chad;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image chadImage = new Image(this.getClass().getResourceAsStream("/images/DaChad.png"));
+    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
+    private final Image chadImage = new Image(this.getClass().getResourceAsStream("/images/DaChad.png"));
 
     @FXML
     public void initialize() {
@@ -37,7 +38,9 @@ public class MainWindow extends AnchorPane {
 
     }
 
-    /** Injects the Chad instance */
+    /**
+     * Injects the Chad instance
+     */
     public void setChad(Chad c) {
         chad = c;
     }
@@ -54,10 +57,10 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getChadDialog(response, chadImage)
         );
-        
+
         boolean shallExit = chad.shallExit();
-        if(shallExit){
-            
+        if (shallExit) {
+
             // Create Timeline to wait 5 seconds before exiting
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), event -> {
                 Platform.exit(); // This will close the application
@@ -69,7 +72,7 @@ public class MainWindow extends AnchorPane {
         userInput.clear();
     }
 
-        /**
+    /**
      * Show welcome message in the dialog container.
      */
     private void showWelcome() {

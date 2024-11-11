@@ -5,7 +5,6 @@ import Chad.TaskList.TaskList;
 
 public interface Ui {
 
-    
 
     String showWelcome();
 

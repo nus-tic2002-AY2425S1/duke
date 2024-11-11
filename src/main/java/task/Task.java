@@ -3,6 +3,7 @@ package task;
 import common.Constants;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Represents the base class for all tasks. 
@@ -131,4 +132,13 @@ public abstract class Task {
      */
     public abstract boolean isOnDate(LocalDate date);
 
+    public LocalDateTime getTaskDateTime() {
+        Task task = this;
+        if (task instanceof Deadline) {
+            return ((Deadline) task).getDue();
+        } else if (task instanceof Event) {
+            return ((Event) task).getStartDateTime();
+        }
+        return null;
+    }
 }

@@ -8,8 +8,6 @@ import common.Constants;
 
 import java.util.ArrayList;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents a list of tasks.
@@ -165,20 +163,8 @@ public class TaskList {
         Collections.sort(tasksOnDate, new Comparator<Task>() {
             @Override
             public int compare(Task taskA, Task taskB) {
-                LocalDateTime dateTimeA = null;
-                LocalDateTime dateTimeB = null;
-
-                if (taskA instanceof Deadline) {
-                    dateTimeA = ((Deadline) taskA).getDue();
-                } else if (taskA instanceof Event) {
-                    dateTimeA = ((Event) taskA).getStartDateTime();
-                }
-
-                if (taskB instanceof Deadline) {
-                    dateTimeB = ((Deadline) taskB).getDue();
-                } else if (taskB instanceof Event) {
-                    dateTimeB = ((Event) taskB).getStartDateTime();
-                }
+                LocalDateTime dateTimeA = taskA.getTaskDateTime();
+                LocalDateTime dateTimeB = taskB.getTaskDateTime();
 
                 // https://www.javatpoint.com/compare-time-in-java
                 // If dateTimeA.compareTo(dateTimeB) > 0, then dateTimeA > dateTimeB, i.e. dateTimeA is after dateTimeB
@@ -196,13 +182,14 @@ public class TaskList {
                 return dateTimeA.compareTo(dateTimeB);
             }
         });
+
         return tasksOnDate;
     }
 
     /**
      * Retrieves all tasks that matches the specified description.
      * 
-     * @param description represents the description t o check against.
+     * @param description represents the description to check against.
      * @return a list of tasks that has the same description as the specified one.
      */
     public List<Task> getAllTasksWithMatchingDescription(String description) {

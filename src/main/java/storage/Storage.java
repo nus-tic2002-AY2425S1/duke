@@ -19,8 +19,8 @@ import task.TaskList;
 
 /**
  * Represents the storage file used to manage storage of tasks data.
- * Handles the creation, verification, and management of the task file and its directory {@code data}
- * Deals with loading tasks from the task file and saving tasks in the task file
+ * Handles the creation, verification, and management of the task file and its directory {@code data}.
+ * Deals with loading tasks from the task file and saving tasks in the task file.
  */
 public class Storage {
 
@@ -32,7 +32,7 @@ public class Storage {
      * Constructs an instance of Storage and initializes the file path to the default value.
      * The constructor checks for the existence of the data folder and task file, and creates them if they don't exist.
      * 
-     * @throws StorageOperationException if an error occurs while creating the data folder or task file
+     * @throws StorageOperationException if an error occurs while creating the data folder or task file.
      */
     public Storage() throws StorageOperationException {
         Path filePath = Paths.get(DEFAULT_STORAGE_FILEPATH);
@@ -44,7 +44,7 @@ public class Storage {
     /**
      * Retrieves the file path for the storage, i.e. the task file.
      * 
-     * @return the file path of the task file as a Path object
+     * @return the file path of the task file as a Path object.
      */
     public Path getFilePath() {
         return filePath;
@@ -63,7 +63,8 @@ public class Storage {
      * Checks if the data folder exists. Handles missing data folder by creating it.
      * The data folder is expected to be in the `/data` directory. It must match the file path exactly.
      * 
-     * @throws StorageOperationException if an error occurs while checking or creating the data folder, e.g. folder cannot be created
+     * @throws StorageOperationException if an error occurs while checking or creating the data folder, 
+     * e.g. folder cannot be created
      */ 
     public void checkDataFolderExists() throws StorageOperationException {
         // https://stackoverflow.com/questions/15571496/how-to-check-if-a-folder-exists
@@ -77,7 +78,9 @@ public class Storage {
         // Create the directory if it does not exist
         if (!isDataFolderExists) {
             // https://tutorialspoint.com/java/java_directories.htm
-            // The mkdir() method creates a directory, returning true on success and false on failure. Failure indicates that the path specified in the File object already exists, or that the directory cannot be created because the entire path does not exist yet.
+            // The mkdir() method creates a directory, returning true on success and false on failure. 
+            // Failure indicates that the path specified in the File object already exists, 
+            // or that the directory cannot be created because the entire path does not exist yet.
             boolean isDataFolderCreated = dataFolder.mkdir();
             if (!isDataFolderCreated) {
                 throw new StorageOperationException(
@@ -91,12 +94,14 @@ public class Storage {
     /**
      * Checks if the task file exists and creates it if it does not.
      * 
-     * @throws StorageOperationException if an error occurs while creating the task file
+     * @throws StorageOperationException if an error occurs while creating the task file.
      */
     // Handles missing data file by creating it
     public void checkTaskFileExists() throws StorageOperationException {
         File taskFile = getFile();
-        // Note: It is intentional that I do not check that the file ends with txt. The file.exists() method checks for the existence of the exact file specified by the full path, including the filename and its extension. It is looking for a file named "tasks.txt" specifically.
+        // Note: It is intentional that I do not check that the file ends with txt. 
+        // The file.exists() method checks for the existence of the exact file specified by the full path, 
+        // including the filename and its extension. It is looking for a file named "tasks.txt" specifically.
         boolean isTaskFileExists = taskFile.exists();
         
         if (!isTaskFileExists) {
@@ -115,7 +120,8 @@ public class Storage {
                 );
             } catch (SecurityException e) {
                 throw new StorageOperationException(
-                    String.format("%s at %s due to ", Messages.ERROR_CREATE_FILE_PRE, getFilePath().toString(), Messages.ERROR_SECURITY_CREATE_FILE),
+                    String.format("%s at %s due to ", Messages.ERROR_CREATE_FILE_PRE, 
+                        getFilePath().toString(), Messages.ERROR_SECURITY_CREATE_FILE),
                     String.format("%s create a new file.", Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE)
                 );
             }
@@ -125,8 +131,8 @@ public class Storage {
     /**
      * Reads all lines from the task file.
      * 
-     * @return a list of strings representing the lines in the task file
-     * @throws IOException if an error occurs while reading the file
+     * @return a list of strings representing the lines in the task file.
+     * @throws IOException if an error occurs while reading the file.
      */
     public List<String> getAllLines() throws IOException {
         Path filePath = getFilePath();
@@ -143,10 +149,10 @@ public class Storage {
      * Loads all tasks from the task file into a {@code TaskList} object.
      * 
      * @return a TaskList containing the loaded tasks.
-     * @throws IOException if an error occurs while reading the file
-     * @throws FileContentException if the content of the file is invalid
-     * @throws TaskListDecoderException if an error occurs while decoding the task list
-     * @throws CommandException if an error occurs while processing the command
+     * @throws IOException if an error occurs while reading the file.
+     * @throws FileContentException if the content of the file is invalid.
+     * @throws TaskListDecoderException if an error occurs while decoding the task list.
+     * @throws CommandException if an error occurs while processing the command.
      */
     // Write all lines in tasks.txt into TaskList
     public TaskList loadTasks() throws IOException, FileContentException, TaskListDecoderException, CommandException {
@@ -164,8 +170,8 @@ public class Storage {
     /**
      * Saves all tasks from the {@code TaskList} object into the task file.
      * 
-     * @param taskList represents the task list object to be saved
-     * @throws StorageOperationException if an error occurs while writing to the file
+     * @param taskList represents the task list object to be saved.
+     * @throws StorageOperationException if an error occurs while writing to the file.
      */
     // Write all tasks in taskList into tasks.txt
     public void saveTasks(TaskList taskList) throws StorageOperationException {

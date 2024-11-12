@@ -151,7 +151,7 @@ public class TaskList {
      * Adds task into tasks.
      *
      * @param input task command
-     * @return task object
+     * @return task object, null is returned if failed to add task
      * @throws DateTimeException Invalid datetime
      * @throws NumberFormatException Wrong format of datetime
      * @throws IndexOutOfBoundsException Wrong format of datetime
@@ -160,6 +160,7 @@ public class TaskList {
     public static Task addTask(String input)
             throws DateTimeException, NumberFormatException, IndexOutOfBoundsException, InvalidInputException {
         String[] taskArray = input.split(" ",2);
+        assert taskArray.length > 0 : "Input cannot be blank, task type is required in front.";
 
         if (taskArray.length < 2) {
             throw new InvalidInputException(Messages.EMPTY_DESCRIPTION);
@@ -260,6 +261,7 @@ public class TaskList {
     public static void setStatus(String  input)
             throws CommandNotFoundException, IndexOutOfBoundsException, InvalidInputException {
         String[] setStatusArray = input.split(" ");
+        assert setStatusArray.length > 0 : "Input cannot be blank, action type is required in front.";
 
         if (setStatusArray.length < 2) {
             throw new InvalidInputException(Messages.EMPTY_NUMBER);

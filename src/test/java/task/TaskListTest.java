@@ -118,82 +118,82 @@ public class TaskListTest {
             "Removing a non-existent task should return false.");
     }
 
-    public void markTask_success(Task task, int taskIndex) {
+    public void markTask_success(Task task) {
         assertNotNull(task);
         if (task.getIsDone()) {
-            assertFalse(defaultTaskList.markTask(taskIndex));
+            assertFalse(defaultTaskList.markTask(task));
         } else {
-            assertTrue(defaultTaskList.markTask(taskIndex));
+            assertTrue(defaultTaskList.markTask(task));
         }
     }
 
     @Test
     public void markTask_todo_success() {
         assertTrue(todo_doHomework.getIsDone());
-        markTask_success(todo_doHomework, 0);
+        markTask_success(todo_doHomework);
 
         assertFalse(todo_buyGroceries.getIsDone());
-        markTask_success(todo_buyGroceries, 1);
+        markTask_success(todo_buyGroceries);
     }
 
     @Test
     public void markTask_deadline_success() {
         assertFalse(deadline_submitReport.getIsDone());
-        markTask_success(deadline_submitReport, 2);
+        markTask_success(deadline_submitReport);
         
         assertTrue(deadline_resolveCustomerTicket.getIsDone());
-        markTask_success(deadline_resolveCustomerTicket, 3);
+        markTask_success(deadline_resolveCustomerTicket);
 
     }
 
     @Test
     public void markTask_event_success() {
         assertTrue(event_projectLaunch.getIsDone());
-        markTask_success(event_projectLaunch, 4);
+        markTask_success(event_projectLaunch);
         
         assertFalse(event_birthday.getIsDone());
-        markTask_success(event_birthday, 5);
+        markTask_success(event_birthday);
     }
 
-    public void unmarkTask_success(Task task, int taskIndex) {
+    public void unmarkTask_success(Task task) {
         assertNotNull(task);
         if (!task.getIsDone()) {
-            assertFalse(defaultTaskList.unmarkTask(taskIndex));
+            assertFalse(defaultTaskList.unmarkTask(task));
         } else {
-            assertTrue(defaultTaskList.unmarkTask(taskIndex));
+            assertTrue(defaultTaskList.unmarkTask(task));
         }
     }
 
     @Test
     public void unmarkTask_todo_success() {
         assertTrue(todo_doHomework.getIsDone());
-        unmarkTask_success(todo_doHomework, 0);
+        unmarkTask_success(todo_doHomework);
 
         assertFalse(todo_buyGroceries.getIsDone());
-        unmarkTask_success(todo_buyGroceries, 1);
+        unmarkTask_success(todo_buyGroceries);
     }
 
     @Test
     public void unmarkTask_deadline_success() {
         assertFalse(deadline_submitReport.getIsDone());
-        unmarkTask_success(deadline_submitReport, 2);
+        unmarkTask_success(deadline_submitReport);
 
         assertTrue(deadline_resolveCustomerTicket.getIsDone());
-        unmarkTask_success(deadline_resolveCustomerTicket, 3);
+        unmarkTask_success(deadline_resolveCustomerTicket);
     }
 
     @Test
     public void unmarkTask_event_success() {
         assertTrue(event_projectLaunch.getIsDone());
-        unmarkTask_success(event_projectLaunch, 4);
+        unmarkTask_success(event_projectLaunch);
 
         assertFalse(event_birthday.getIsDone());
-        unmarkTask_success(event_birthday, 5);
+        unmarkTask_success(event_birthday);
     }
 
     @Test
     public void getTaskWord_noTasks_returnsSingular() {
-        assertTrue(emptyTaskList.isEmpty(), "Task list has no tasks");
+        assertTrue(emptyTaskList.isTaskListEmpty(), "Task list has no tasks");
         assertEquals(" task", emptyTaskList.getTaskWord());
     }
 
@@ -214,21 +214,21 @@ public class TaskListTest {
     @Test
     public void getScheduledTasksOnDate_emptyList_returnsEmptyList() {
         LocalDate date = LocalDate.of(2023, 10, 31);
-        List<Task> tasksOnDate = defaultTaskList.getScheduledTasksOnDate(date);
-        assertTrue(tasksOnDate.isEmpty());
+        TaskList tasksOnDate = defaultTaskList.getScheduledTasks(date);
+        assertTrue(tasksOnDate.isTaskListEmpty());
     }
 
     @Test
     public void getScheduledTasksOnDate_withTasks_returnsCorrectTasks() {
         LocalDate date = LocalDate.of(2024, 11, 9);
 
-        List<Task> tasksOnDate = defaultTaskList.getScheduledTasksOnDate(date);
+        TaskList tasksOnDate = defaultTaskList.getScheduledTasks(date);
 
-        assertEquals(2, tasksOnDate.size());
-        assertTrue(tasksOnDate.contains(event_projectLaunch));
-        assertTrue(tasksOnDate.contains(event_birthday));
-        assertFalse(tasksOnDate.contains(deadline_submitReport));
-        assertFalse(tasksOnDate.contains(todo_doHomework));
+        assertEquals(2, tasksOnDate.getSize());
+        assertTrue(tasksOnDate.getTaskList().contains(event_projectLaunch));
+        assertTrue(tasksOnDate.getTaskList().contains(event_birthday));
+        assertFalse(tasksOnDate.getTaskList().contains(deadline_submitReport));
+        assertFalse(tasksOnDate.getTaskList().contains(todo_doHomework));
     }
 
 }

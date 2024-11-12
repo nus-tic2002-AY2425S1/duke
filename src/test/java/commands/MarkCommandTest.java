@@ -70,7 +70,8 @@ public class MarkCommandTest {
         Todo sampleTodo = typicalTasks.todo_doHomework;
         assertTrue(sampleTodo.getIsDone());
 
-        assertFalse(taskList.markTask(0));
+        assertFalse(taskList.markTask(sampleTodo));
+//        assertFalse(taskList.markTask(0));
     }
 
     @Test

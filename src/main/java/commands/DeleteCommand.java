@@ -50,26 +50,16 @@ public class DeleteCommand extends Command {
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws CommandException, StorageOperationException {
 
-        int indexToDelete = getTaskNumber() - 1;
-        Task taskToDelete;
-        try {
-            taskToDelete = taskList.getTask(indexToDelete);
-        } catch (IndexOutOfBoundsException ioobe) {
-            throw new CommandException(
-                Messages.ERROR_TASK_NONEXISTENT,
-                String.format("%s %s %s",
-                    Messages.MESSAGE_NONEXISTENT_TASK_PRE, taskNumber, Messages.MESSAGE_NONEXISTENT_TASK_POST),
-                String.format("%s %s.", Messages.MESSAGE_ENTER_VALID_TASK_NUMBER, taskList.getSize())
-            );
-        }
-
-        String[] messages = null;
+        Task taskToDelete = taskList.getTaskForOperation(getTaskNumber());
 
         boolean isDeletedSuccess = taskList.removeTask(taskToDelete);
+
+        int taskListSize = taskList.getSize();
         String taskWord = taskList.getTaskWord();
         final String MESSAGE_DELETE_SUCCESS_POST = Messages.MESSAGE_NOW_YOU_HAVE +
-            taskList.getSize() + taskWord + Messages.MESSAGE_IN_THE_LIST;
+            taskListSize + taskWord + Messages.MESSAGE_IN_THE_LIST;
 
+        String[] messages = null;
         if (isDeletedSuccess) {
             storage.saveTasks(taskList);
             messages = new String[]{MESSAGE_DELETE_SUCCESS_PRE,

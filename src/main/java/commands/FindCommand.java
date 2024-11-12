@@ -51,27 +51,12 @@ public class FindCommand extends Command {
     public void execute(TaskList taskList, Ui ui, Storage storage) {
 
         String taskDescription = getDescription();
-        List<Task> tasksWithMatchingDescription = taskList.getAllTasksWithMatchingDescription(taskDescription);
+        TaskList tasksWithMatchingDescription = taskList.getAllTasksWithMatchingDescription(taskDescription);
 
         // Check if there are no tasks with the specified description
-        if (tasksWithMatchingDescription.isEmpty()) {
-            String[] messages = {MESSAGE_EMPTY_LIST};
-            ui.printMessage(messages);
-            return;
-        }
+        ui.printEmptyListMessage(tasksWithMatchingDescription, MESSAGE_EMPTY_LIST);
 
-        // Prepare the message to display to the user
-        ArrayList<String> messages = new ArrayList<>(List.of(MESSAGE_SHOW_SUCCESS_PRE));
-
-        for (int i = 0; i < tasksWithMatchingDescription.size(); i++) {
-            Task currentTask = taskList.getTask(i);         // taskList.get(i) contains the checkbox
-            String currentTaskDescription = currentTask.getDescription();
-            if (currentTaskDescription.contains(taskDescription)) {
-                String index = Integer.toString(i + 1);
-                String line = index + Constants.DOT_SPACE + currentTask;
-                messages.add(line);
-            }
-        }
+        ArrayList<String> messages = ui.getTaskMessages(MESSAGE_SHOW_SUCCESS_PRE, tasksWithMatchingDescription);
 
         ui.printMessage(messages);
 

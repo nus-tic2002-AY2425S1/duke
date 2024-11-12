@@ -3,9 +3,12 @@ package ui;
 import common.Constants;
 import common.Messages;
 import exception.CommandException;
+import task.Task;
+import task.TaskList;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -171,4 +174,22 @@ public class Ui {
         printMessage(errorMessage);
     }
 
+    // Print empty list message when given task list is empty
+    public void printEmptyListMessage(TaskList taskList, String emptyListMessage) {
+        if (taskList.isTaskListEmpty()) {
+            String[] message = {emptyListMessage};
+            printMessage(message);
+        }
+    }
+
+    public ArrayList<String> getTaskMessages(String preMessage, TaskList taskList) {
+        ArrayList<String> messages = new ArrayList<>(List.of(preMessage));
+        for (int i = 0; i < taskList.getSize(); i++) {
+            Task current = taskList.getTask(i);
+            String index = Integer.toString(i + 1);
+            String line = index + Constants.DOT_SPACE + current;
+            messages.add(line);
+        }
+        return messages;
+    }
 }

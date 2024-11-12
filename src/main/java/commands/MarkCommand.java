@@ -52,33 +52,14 @@ public class MarkCommand extends Command {
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws CommandException, StorageOperationException {
 
-        int inputTaskNumber = getTaskNumber();
-        int taskListSize = taskList.getSize();
-        boolean isTaskListEmpty = taskList.isEmpty();
-
-        if (isTaskListEmpty) {
-            throw new CommandException(Messages.MESSAGE_EMPTY_TASKLIST);
-        }
-
-        int indexToMark = inputTaskNumber - 1;
-        Task taskToMark;
-        try {
-            taskToMark = taskList.getTask(indexToMark);
-        } catch (IndexOutOfBoundsException ioobe) {
-            throw new CommandException(
-                Messages.ERROR_TASK_NONEXISTENT,
-                String.format("%s %s %s", Messages.MESSAGE_NONEXISTENT_TASK_PRE,
-                    inputTaskNumber, Messages.MESSAGE_NONEXISTENT_TASK_POST),
-                String.format("%s %s.", Messages.MESSAGE_ENTER_VALID_TASK_NUMBER, taskListSize)
-            );
-        }
+        Task taskToMark = taskList.getTaskForOperation(getTaskNumber());
 
         final String MESSAGE_ALREADY_MARKED = "The task `" + taskToMark +
             "` is already marked as done. No action done.";
 
         String[] messages;
 
-        boolean isMarkedSuccess = taskList.markTask(indexToMark);
+        boolean isMarkedSuccess = taskList.markTask(taskToMark);
         if (isMarkedSuccess) {
             storage.saveTasks(taskList);
             messages = new String[]{MESSAGE_MARK_SUCCESS, ui.formatSpace(Constants.TWO) + taskToMark};

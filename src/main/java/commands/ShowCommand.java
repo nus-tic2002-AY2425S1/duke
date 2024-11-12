@@ -28,7 +28,6 @@ public class ShowCommand extends Command {
         OPEN_ANGLE_BRACKET + Constants.DATE + CLOSE_ANGLE_BRACKET;
     public static final String DEADLINES_EVENTS_ON = "deadlines / events on";
     public static final String MESSAGE_EMPTY_LIST = "You have no" + SPACE + DEADLINES_EVENTS_ON + SPACE;
-    public static final String MESSAGE_SHOW_SUCCESS_PRE = "Here are the" + SPACE + DEADLINES_EVENTS_ON + SPACE;
 
     protected final LocalDate date;
     /**
@@ -56,75 +55,24 @@ public class ShowCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
+
         LocalDate date = getDate();
+        final String MESSAGE_SHOW_SUCCESS_PRE = "Here are the" + SPACE + DEADLINES_EVENTS_ON + SPACE + date + Constants.COLON;
 
-        /*
         // Retrieve all tasks scheduled on the specified date
-        List<Task> tasksOnDate = taskList.getTasksOnDate(date);
-
         // Sort the tasks by their LocalDateTime
         // https://stackoverflow.com/questions/2784514/sort-arraylist-of-custom-objects-by-property
-        Collections.sort(tasksOnDate, new Comparator<Task>() {
-            @Override
-            public int compare(Task taskA, Task taskB) {
-                LocalDateTime dateTimeA = null;
-                LocalDateTime dateTimeB = null;
-
-                if (taskA instanceof Deadline) {
-                    dateTimeA = ((Deadline) taskA).getDue();
-                } else if (taskA instanceof Event) {
-                    dateTimeA = ((Event) taskA).getStartDateTime();
-                }
-
-                if (taskB instanceof Deadline) {
-                    dateTimeB = ((Deadline) taskB).getDue();
-                } else if (taskB instanceof Event) {
-                    dateTimeB = ((Event) taskB).getStartDateTime();
-                }
-
-                // https://www.javatpoint.com/compare-time-in-java
-                // If dateTimeA.compareTo(dateTimeB) > 0, then dateTimeA > dateTimeB, i.e. dateTimeA is after dateTimeB
-                // Handle null values. Deadlines can have no time.
-                if (dateTimeA == null && dateTimeB == null) {
-                    return 0;
-                } else if (dateTimeA == null) {
-                    return 1;       // Put dateTimeA before dateTimeB
-                } else if (dateTimeB == null) {
-                    return -1;      // Put dateTimeB after dateTimeA
-                }
-
-                // show 2024-06-09
-                // System.out.println(dateTimeA + " of task " + taskA + ", compare to " + dateTimeB + " of task " + taskB + " is " + dateTimeA.compareTo(dateTimeB));
-                return dateTimeA.compareTo(dateTimeB);
-            }
-        });
-        */
-
-        List<Task> scheduledTasks = taskList.getScheduledTasks(taskList, date);
+        TaskList scheduledTasks = taskList.getScheduledTasks(date);
 
         // System.out.println("after sort " + tasksOnDate);
 
         // Check if there are no tasks on the specified date
-        if (scheduledTasks.isEmpty()) {
-            String[] messages = {MESSAGE_EMPTY_LIST + date};
-            ui.printMessage(messages);
-            return;
-        }
+        ui.printEmptyListMessage(scheduledTasks, MESSAGE_EMPTY_LIST);
 
         // Prepare the message to display to the user
-        ArrayList<String> messages =
-            new ArrayList<>(List.of(String.format("%s%s:", MESSAGE_SHOW_SUCCESS_PRE, date)));
-
-        int taskListSize = taskList.getSize();
-
         // Iterate through the task list and add tasks scheduled on the specified date
-        for (int i = 0; i < scheduledTasks.size(); i++) {
-            Task current = scheduledTasks.get(i);         // taskList.get(i) contains the checkbox
-            String index = Integer.toString(i + 1);
-            String line = index + Constants.DOT_SPACE + current;
-            messages.add(line);
-        }
-        
+        ArrayList<String> messages = ui.getTaskMessages(MESSAGE_SHOW_SUCCESS_PRE, scheduledTasks);
+
         // Print the message list containing tasks scheduled on the specified date
         ui.printMessage(messages);
     }

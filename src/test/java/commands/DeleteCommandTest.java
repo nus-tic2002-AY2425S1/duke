@@ -41,7 +41,8 @@ public class DeleteCommandTest {
 
         // Referenced from https://howtodoinjava.com/junit5/expected-exception-example/
         CommandException exception = assertThrows(CommandException.class, () -> deleteCommand.execute(taskList, ui, storage), "CommandException expected");
-        assertEquals(Messages.ERROR_TASK_NONEXISTENT, exception.getMessage());
+        assertEquals("The task list is empty. Please add a task first.", exception.getMessage());
+//        assertEquals(Messages.ERROR_TASK_NONEXISTENT, exception.getMessage());
         
     }
 

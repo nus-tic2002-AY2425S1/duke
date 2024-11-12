@@ -5,6 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import common.Constants;
+import common.Messages;
+import exception.CommandException;
 
 import java.util.ArrayList;
 import java.time.LocalDate;
@@ -24,6 +26,10 @@ public class TaskList {
      */
     public TaskList() {
         this.taskList = new ArrayList<>();
+    }
+
+    public TaskList(List<Task> taskList) {
+        this.taskList = taskList;
     }
 
     /**
@@ -47,7 +53,7 @@ public class TaskList {
      * 
      * @return true if the {@code TaskList} is empty; false otherwise.
      */
-    public boolean isEmpty() {
+    public boolean isTaskListEmpty() {
         return getTaskList().isEmpty();
     }
 
@@ -95,11 +101,10 @@ public class TaskList {
      * Makes a task at a specified index as done. 
      * Returns false if the task has already been marked done before this method is called.
      * 
-     * @param taskIndex represents the index of the task to mark.
+     * @param taskToMark represents the task to mark.
      * @return true if the task is marked successfully; false otherwise.
      */
-    public boolean markTask(int taskIndex) {
-        Task taskToMark = getTask(taskIndex);
+    public boolean markTask(Task taskToMark) {
         if (taskToMark.getIsDone()) {       // Task has already been marked as done
             return false;
         } else {
@@ -112,17 +117,35 @@ public class TaskList {
      * Marks a task at a specified index as not done.
      * Returns false if the task has already been marked as not done before this method is called.
      * 
-     * @param indexToUnmark represents the index of the task to unmark.
+     * @param taskToUnmark represents the task to unmark.
      * @return true if the task is unmarked successfully; false otherwise.
      */
-    public boolean unmarkTask(int indexToUnmark) {
-        Task taskToUnmark = getTask(indexToUnmark);
+    public boolean unmarkTask(Task taskToUnmark) {
         if (!taskToUnmark.getIsDone()) {        // Task has already been marked as not done
             return false;
         } else {
             taskToUnmark.setDone(false);
             return true;
         }
+    }
+
+    public Task getTaskForOperation(int taskNumber) throws CommandException {
+        if (isTaskListEmpty()) {
+            throw new CommandException(Messages.MESSAGE_EMPTY_TASKLIST);
+        }
+        int index = taskNumber - 1;
+        Task task;
+        try {
+            task = getTask(index);
+        } catch (IndexOutOfBoundsException ioobe) {
+            throw new CommandException(
+                Messages.ERROR_TASK_NONEXISTENT,
+                String.format("%s %s %s", Messages.MESSAGE_NONEXISTENT_TASK_PRE,
+                    taskNumber, Messages.MESSAGE_NONEXISTENT_TASK_POST),
+                String.format("%s %s.", Messages.MESSAGE_ENTER_VALID_TASK_NUMBER, getSize())
+            );
+        }
+        return task;
     }
 
     /**
@@ -154,9 +177,16 @@ public class TaskList {
         return tasksOnDate;
     }
 
-    public List<Task> getScheduledTasks(TaskList taskList, LocalDate date) {
+    public TaskList getScheduledTasks(LocalDate date) {
         // Retrieve all tasks scheduled on the specified date
-        List<Task> tasksOnDate = taskList.getTasksOnDate(date);
+        List<Task> tasksOnDate = new ArrayList<>();
+
+        // Add tasks that satisfy the date into the tasksOnDate list
+        for (Task task : getTaskList()) {
+            if (task.isOnDate(date)) {
+                tasksOnDate.add(task);
+            }
+        }
 
         // Sort the tasks by their LocalDateTime
         // https://stackoverflow.com/questions/2784514/sort-arraylist-of-custom-objects-by-property
@@ -183,7 +213,7 @@ public class TaskList {
             }
         });
 
-        return tasksOnDate;
+        return new TaskList(tasksOnDate);
     }
 
     /**
@@ -192,12 +222,12 @@ public class TaskList {
      * @param description represents the description to check against.
      * @return a list of tasks that has the same description as the specified one.
      */
-    public List<Task> getAllTasksWithMatchingDescription(String description) {
-        List<Task> tasksWithMatchingDescription = new ArrayList<>();
+    public TaskList getAllTasksWithMatchingDescription(String description) {
+        TaskList tasksWithMatchingDescription = new TaskList();
         for (Task task : getTaskList()) {
             String taskDescription = task.getDescription();
             if (taskDescription.contains(description)) {
-                tasksWithMatchingDescription.add(task);
+                tasksWithMatchingDescription.addTask(task);
             }
         }
         return tasksWithMatchingDescription;

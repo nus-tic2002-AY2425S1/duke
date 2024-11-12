@@ -55,36 +55,18 @@ public class UnmarkCommand extends Command {
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws CommandException, StorageOperationException {
 
-        int taskNumber = getTaskNumber();
-        int taskListSize = taskList.getSize();
-        boolean isTaskListEmpty = taskList.isEmpty();
-
-        if (isTaskListEmpty) {
-            throw new CommandException(Messages.MESSAGE_EMPTY_TASKLIST);
-        }
-
-        int indexToUnmark = taskNumber - 1;
-        Task taskToUnmark;
-
-        try {
-            taskToUnmark = taskList.getTask(indexToUnmark);
-        } catch (IndexOutOfBoundsException ioobe) {
-            throw new CommandException(Messages.ERROR_TASK_NONEXISTENT,
-                String.format("%s %s %s", Messages.MESSAGE_NONEXISTENT_TASK_PRE,
-                    taskNumber, Messages.MESSAGE_NONEXISTENT_TASK_POST),
-                String.format("%s %s.", Messages.MESSAGE_ENTER_VALID_TASK_NUMBER, taskListSize)
-            );
-        }
+        Task taskToUnmark = taskList.getTaskForOperation(getTaskNumber());
 
         final String MESSAGE_ALREADY_UNMARKED = "The task `" + taskToUnmark +
             "` is already marked as not done. No action done.";
 
         String[] messages;
 
-        boolean isUnmarkedSuccess = taskList.unmarkTask(indexToUnmark);
+        boolean isUnmarkedSuccess = taskList.unmarkTask(taskToUnmark);
+
         if (isUnmarkedSuccess) {
             storage.saveTasks(taskList);
-            messages = new String[]{MESSAGE_UNMARK_SUCCESS, ui.formatSpace(2) + taskToUnmark};
+            messages = new String[]{MESSAGE_UNMARK_SUCCESS, ui.formatSpace(Constants.TWO) + taskToUnmark};
         } else {
             messages = new String[]{MESSAGE_ALREADY_UNMARKED};
         }

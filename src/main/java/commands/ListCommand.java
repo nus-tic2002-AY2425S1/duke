@@ -30,26 +30,11 @@ public class ListCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
-        // Initialize a list to hold the messages for display to the user
-        // Initialization of ArrayList referenced from https://stackoverflow.com/questions/1005073/initialization-of-an-arraylist-in-one-line
-        ArrayList<String> messages = new ArrayList<>(List.of(MESSAGE_PRE));
-
-        int taskListSize = taskList.getSize();
 
         // Check if the task list is empty
-        if (taskList.isEmpty()) {
-            String[] message = {MESSAGE_EMPTY_LIST};
-            ui.printMessage(message);
-            return;
-        }
+        ui.printEmptyListMessage(taskList, MESSAGE_EMPTY_LIST);
 
-        // Iterate through the task list and format each task for display
-        for (int i = 0; i < taskListSize; i++) {
-            Task current = taskList.getTask(i);
-            String index = Integer.toString(i + 1);
-            String line = index + Constants.DOT_SPACE + current;
-            messages.add(line);
-        }
+        ArrayList<String> messages = ui.getTaskMessages(MESSAGE_PRE, taskList);
 
         // Print the complete message list
         ui.printMessage(messages);

@@ -70,7 +70,7 @@ public class UnmarkCommandTest {
         Todo sampleTodo = typicalTasks.todo_buyGroceries;
         assertFalse(sampleTodo.getIsDone());
 
-        assertFalse(taskList.unmarkTask(1));
+        assertFalse(taskList.unmarkTask(sampleTodo));
     }
 
     @Test

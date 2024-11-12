@@ -9,16 +9,18 @@ import java.time.LocalDateTime;
 public abstract class Task {
     protected String description;
     protected boolean isDone;
+    protected TaskPriority priority;
 
     /**
-     * Constructs a {@code Task} with the specified description.
-     * The task is initially marked as not done.
+     * Constructs a {@code Task} with the specified description, initially marked as not done and
+     * with a default priority of {@code TaskPriority.LOW}.
      *
      * @param description The description of the task.
      */
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        this.priority = TaskPriority.LOW;
     }
 
     /**
@@ -44,6 +46,24 @@ public abstract class Task {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * Retrieves the priority of the task.
+     *
+     * @return The priority of the task, or {@code null} if no priority is set.
+     */
+    public TaskPriority getPriority() {
+        return priority;
+    }
+
+    /**
+     * Sets the priority of the task.
+     *
+     * @param priority The new priority of the task.
+     */
+    public void setPriority(TaskPriority priority) {
+        this.priority = priority;
     }
 
     /**
@@ -101,6 +121,9 @@ public abstract class Task {
         if (!description.equals(task.description)) {
             return false;
         }
+        if (!priority.equals(task.priority)) {
+            return false;
+        }
         return isDone == task.isDone;
     }
 
@@ -111,7 +134,7 @@ public abstract class Task {
      */
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "] " + description;
+        return "[" + priority + "][" + getStatusIcon() + "] " + description;
     }
 
 }

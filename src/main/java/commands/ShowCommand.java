@@ -48,7 +48,6 @@ public class ShowCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
-
         LocalDate date = getDate();
 
         // Here are the deadlines / events on <date>:
@@ -60,31 +59,7 @@ public class ShowCommand extends Command {
         // https://stackoverflow.com/questions/2784514/sort-arraylist-of-custom-objects-by-property
         TaskList scheduledTasks = taskList.getScheduledTasks(date);
 
-        // System.out.println("after sort " + tasksOnDate);
-
         final String MESSAGE_EMPTY_LIST = "You have no" + SPACE + DEADLINES_EVENTS_ON + SPACE + date + Constants.DOT;
-
         ui.printTaskListMessage(scheduledTasks, MESSAGE_EMPTY_LIST, MESSAGE_SHOW_SUCCESS_PRE);
-
-//        if (scheduledTasks.isEmpty()) {
-//            // Check if there are no tasks on the specified date
-//            String[] message = {MESSAGE_EMPTY_LIST};
-//            return;
-//        }
-//
-//        ArrayList<String> messages = ui.getTaskMessages(MESSAGE_SHOW_SUCCESS_PRE, scheduledTasks);
-//        ui.printMessage(messages);
-
-
-//        // Check if there are no tasks on the specified date
-//        String[] message = {MESSAGE_EMPTY_LIST};
-//        ui.printEmptyListMessage(scheduledTasks, MESSAGE_EMPTY_LIST);
-//
-//        // Prepare the message to display to the user
-//        // Iterate through the task list and add tasks scheduled on the specified date
-//        ArrayList<String> messages = ui.getTaskMessages(MESSAGE_SHOW_SUCCESS_PRE, scheduledTasks);
-//
-//        // Print the message list containing tasks scheduled on the specified date
-//        ui.printMessage(messages);
     }
 }

@@ -19,7 +19,7 @@ public class FindCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE + Constants.DESCRIPTION_IN_ANGLE_BRACKETS;
     private static final String MATCHING_TASKS = "matching tasks";
     private static final String MESSAGE_EMPTY_LIST =
-        "There are no " + MATCHING_TASKS + Messages.MESSAGE_IN_YOUR_LIST + Constants.DOT;
+        "There are no" + Constants.SPACE + MATCHING_TASKS + Messages.MESSAGE_IN_YOUR_LIST + Constants.DOT;
     private static final String MESSAGE_SHOW_SUCCESS_PRE =
         Messages.HERE_ARE_THE + SPACE + MATCHING_TASKS + Messages.MESSAGE_IN_YOUR_LIST_COLON;
 
@@ -57,13 +57,6 @@ public class FindCommand extends Command {
         TaskList tasksWithMatchingDescription = taskList.getAllTasksWithMatchingDescription(taskDescription);
 
         ui.printTaskListMessage(tasksWithMatchingDescription, MESSAGE_EMPTY_LIST, MESSAGE_SHOW_SUCCESS_PRE);
-
-//        // Check if there are no tasks with the specified description
-//        ui.printEmptyListMessage(tasksWithMatchingDescription, MESSAGE_EMPTY_LIST);
-//
-//        ArrayList<String> messages = ui.getTaskMessages(MESSAGE_SHOW_SUCCESS_PRE, tasksWithMatchingDescription);
-//
-//        ui.printMessage(messages);
 
     }
 

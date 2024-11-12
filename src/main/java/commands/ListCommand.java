@@ -27,15 +27,6 @@ public class ListCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
-
         ui.printTaskListMessage(taskList, MESSAGE_EMPTY_LIST, MESSAGE_PRE);
-
-//        // Check if the task list is empty
-//        ui.printEmptyListMessage(taskList, MESSAGE_EMPTY_LIST);
-//
-//        ArrayList<String> messages = ui.getTaskMessages(MESSAGE_PRE, taskList);
-//
-//        // Print the complete message list
-//        ui.printMessage(messages);
     }
 }

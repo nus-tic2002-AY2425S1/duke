@@ -162,6 +162,7 @@ public class Ui {
 
     // Print empty list message when given task list is empty
     public void printTaskListMessage(TaskList taskList, String emptyListMessage, String successMessage) {
+        // Check if there are no tasks in the given task list. The given task list is already filtered for the required criteria
         if (taskList.isEmpty()) {
             String[] message = {emptyListMessage};
             printMessage(message);

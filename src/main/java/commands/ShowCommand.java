@@ -20,7 +20,6 @@ public class ShowCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE + 
         OPEN_ANGLE_BRACKET + Constants.DATE + CLOSE_ANGLE_BRACKET;
     public static final String DEADLINES_EVENTS_ON = "deadlines / events on";
-    public static final String MESSAGE_EMPTY_LIST = "You have no" + SPACE + DEADLINES_EVENTS_ON + SPACE;
 
     protected final LocalDate date;
 
@@ -63,14 +62,29 @@ public class ShowCommand extends Command {
 
         // System.out.println("after sort " + tasksOnDate);
 
-        // Check if there are no tasks on the specified date
-        ui.printEmptyListMessage(scheduledTasks, MESSAGE_EMPTY_LIST);
+        final String MESSAGE_EMPTY_LIST = "You have no" + SPACE + DEADLINES_EVENTS_ON + SPACE + date + Constants.DOT;
 
-        // Prepare the message to display to the user
-        // Iterate through the task list and add tasks scheduled on the specified date
-        ArrayList<String> messages = ui.getTaskMessages(MESSAGE_SHOW_SUCCESS_PRE, scheduledTasks);
+        ui.printTaskListMessage(scheduledTasks, MESSAGE_EMPTY_LIST, MESSAGE_SHOW_SUCCESS_PRE);
 
-        // Print the message list containing tasks scheduled on the specified date
-        ui.printMessage(messages);
+//        if (scheduledTasks.isEmpty()) {
+//            // Check if there are no tasks on the specified date
+//            String[] message = {MESSAGE_EMPTY_LIST};
+//            return;
+//        }
+//
+//        ArrayList<String> messages = ui.getTaskMessages(MESSAGE_SHOW_SUCCESS_PRE, scheduledTasks);
+//        ui.printMessage(messages);
+
+
+//        // Check if there are no tasks on the specified date
+//        String[] message = {MESSAGE_EMPTY_LIST};
+//        ui.printEmptyListMessage(scheduledTasks, MESSAGE_EMPTY_LIST);
+//
+//        // Prepare the message to display to the user
+//        // Iterate through the task list and add tasks scheduled on the specified date
+//        ArrayList<String> messages = ui.getTaskMessages(MESSAGE_SHOW_SUCCESS_PRE, scheduledTasks);
+//
+//        // Print the message list containing tasks scheduled on the specified date
+//        ui.printMessage(messages);
     }
 }

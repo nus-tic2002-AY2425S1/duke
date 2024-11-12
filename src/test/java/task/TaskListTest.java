@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import util.TypicalTasks;
 
@@ -193,7 +192,7 @@ public class TaskListTest {
 
     @Test
     public void getTaskWord_noTasks_returnsSingular() {
-        assertTrue(emptyTaskList.isTaskListEmpty(), "Task list has no tasks");
+        assertTrue(emptyTaskList.isEmpty(), "Task list has no tasks");
         assertEquals(" tasks", emptyTaskList.getTaskWord());
     }
 
@@ -215,7 +214,7 @@ public class TaskListTest {
     public void getScheduledTasksOnDate_emptyList_returnsEmptyList() {
         LocalDate date = LocalDate.of(2023, 10, 31);
         TaskList tasksOnDate = defaultTaskList.getScheduledTasks(date);
-        assertTrue(tasksOnDate.isTaskListEmpty());
+        assertTrue(tasksOnDate.isEmpty());
     }
 
     @Test

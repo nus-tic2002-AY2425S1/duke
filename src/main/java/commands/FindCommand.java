@@ -56,12 +56,14 @@ public class FindCommand extends Command {
         String taskDescription = getDescription();
         TaskList tasksWithMatchingDescription = taskList.getAllTasksWithMatchingDescription(taskDescription);
 
-        // Check if there are no tasks with the specified description
-        ui.printEmptyListMessage(tasksWithMatchingDescription, MESSAGE_EMPTY_LIST);
+        ui.printTaskListMessage(tasksWithMatchingDescription, MESSAGE_EMPTY_LIST, MESSAGE_SHOW_SUCCESS_PRE);
 
-        ArrayList<String> messages = ui.getTaskMessages(MESSAGE_SHOW_SUCCESS_PRE, tasksWithMatchingDescription);
-
-        ui.printMessage(messages);
+//        // Check if there are no tasks with the specified description
+//        ui.printEmptyListMessage(tasksWithMatchingDescription, MESSAGE_EMPTY_LIST);
+//
+//        ArrayList<String> messages = ui.getTaskMessages(MESSAGE_SHOW_SUCCESS_PRE, tasksWithMatchingDescription);
+//
+//        ui.printMessage(messages);
 
     }
 

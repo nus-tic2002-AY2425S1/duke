@@ -1,6 +1,5 @@
 package task;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -55,7 +54,7 @@ public class TaskList {
      * 
      * @return true if the {@code TaskList} is empty; false otherwise.
      */
-    public boolean isTaskListEmpty() {
+    public boolean isEmpty() {
         return getTaskList().isEmpty();
     }
 
@@ -133,7 +132,7 @@ public class TaskList {
 
     // Common helper function for execute method of MarkCommand, UnmarkCommand, and DeleteCommand
     public Task getTaskForOperation(int taskNumber) throws CommandException {
-        if (isTaskListEmpty()) {
+        if (isEmpty()) {
             throw new CommandException(Messages.MESSAGE_EMPTY_TASKLIST);
         }
 

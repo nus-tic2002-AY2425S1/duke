@@ -184,8 +184,9 @@ public class TaskListDecoder {
                 break;
 
             case FIXED_DURATION:
-                String[] durationString = taskData[3].split(Constants.EMPTY_STRING);
-                double duration = Double.parseDouble(durationString[0].trim());
+                 String[] durationString = taskData[3].split(Constants.EMPTY_STRING);
+                 double duration = Double.parseDouble(durationString[0].trim());
+                // double duration = Double.parseDouble(taskData[3]);
                 task = new FixedDuration(description, isDone, duration);
                 break;
 

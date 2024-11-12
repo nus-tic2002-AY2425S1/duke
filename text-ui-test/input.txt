@@ -13,7 +13,7 @@ deadline /by 2024-01-01
 deadline /by
 deadline return pen /by 1 Jan 2024
 deadline return pen /by 2024-01-01
-deadline return pen with date /by 2024-01-01 1800
+deadline return pen with time /by 2024-01-01 1800
 list
 mark 6
 unmark 6
@@ -23,19 +23,22 @@ event
 event orientation
 event orientation /from
 event orientation /from Jan 1st
+event orientation /from 05-03-2024
 event orientation /from 2024-03-05
 event orientation /from Jan 1st /to
 event orientation /from 2024-03-05 /to
 event orientation /to
 event orientation /to 2nd
 event orientation /from Jan 1st /to 2nd
-event orientation /from 2024-03-05 /to 2024-03-07
+event faculty orientation /from 2024-03-05 /to 2024-03-07
+event faculty orientation /from 2024-03-10 1000 /to 2024-03-12 2000
 list
 fd
-fd reading the sales report
-fd reading the sales report /duration
-fd reading the sales report /duration invalidDuration
-fd reading the sales report /duration 2
+fd code review
+fd code review /duration
+fd code review /duration invalidDuration
+fd code review /duration 2
+list
 delete 6
 list
 find
@@ -44,13 +47,28 @@ find book
 find pen
 find orientation
 list
+event daily standup /from 2024-07-06 /to 2024-07-06
+deadline report submission /by 2024-07-06
+show
+show 2024-123-123
+show 2024-03-11
+show 2024-03-12
+show 2024-03-07
 mark abc
 mark 123456789
 unmark abc
 unmark 123456789
 delete abc
 delete 123456789
+list
+delete 10
+list
+delete 9
+list
+delete 8
+list
 delete 7
+list
 delete 6
-delete 5
+list
 bye

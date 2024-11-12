@@ -161,10 +161,17 @@ public class Ui {
     }
 
     // Print empty list message when given task list is empty
-    public void printEmptyListMessage(TaskList taskList, String emptyListMessage) {
-        if (taskList.isTaskListEmpty()) {
+    public void printTaskListMessage(TaskList taskList, String emptyListMessage, String successMessage) {
+        if (taskList.isEmpty()) {
             String[] message = {emptyListMessage};
             printMessage(message);
+        } else {
+            // Prepare the message to display to the user
+            // Iterate through the task list and add tasks scheduled on the specified date
+            ArrayList<String> messages = getTaskMessages(successMessage, taskList);
+
+            // Print the message list containing tasks scheduled on the specified date
+            printMessage(messages);
         }
     }
 

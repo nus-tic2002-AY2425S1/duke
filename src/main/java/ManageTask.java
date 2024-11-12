@@ -5,16 +5,17 @@ import java.time.temporal.ChronoUnit;
 
 
 public class ManageTask {
-    private ArrayList<Task> taskList;
-    public ManageTask (ArrayList<Task> taskList) {
+    private final ArrayList<Task> taskList;
+
+    public ManageTask(ArrayList<Task> taskList) {
         this.taskList = taskList;
     }
 
     // add or update the task
-    public void addOrUpdateTask(Task newTask){
+    public void addOrUpdateTask(Task newTask) {
         assert newTask != null : "newTask cannot be null";
-        for (int i = 0; i < taskList.size(); i++){
-            if (taskList.get(i).taskName.equals(newTask.taskName)){
+        for (int i = 0; i < taskList.size(); i++) {
+            if (taskList.get(i).taskName.equals(newTask.taskName)) {
                 taskList.set(i, newTask);
                 System.out.println("Got it, I've updated this task:");
                 System.out.println(" " + taskList.get(i));
@@ -28,9 +29,10 @@ public class ManageTask {
 
     /**
      * Checks if a task with the given name is already exists in the current task list
+     *
      * @param taskName the name of the task to check for duplicates
      * @return the first task object which match the task which we plan to add in the list
-     *         or return null if no duplicate task is found
+     * or return null if no duplicate task is found
      */
     public Task isDuplicate(String taskName) {
         return taskList.stream()
@@ -54,7 +56,7 @@ public class ManageTask {
     }
 
     // Add task to the task-list
-    public void addTask(Task task){
+    public void addTask(Task task) {
 
         assert task != null : "Task can't be null";
 
@@ -63,12 +65,11 @@ public class ManageTask {
             // Display the details of the duplicate task
             System.out.println("OPS!!!! This task already exists:");
             System.out.println(" " + duplicateTask);
-        }
-        else{
+        } else {
             taskList.add(task);
             System.out.println("Got it, I've added this task:");
             System.out.println(" " + taskList.get(taskList.size() - 1));
-            System.out.println("Now you have " + taskList.size()  + " tasks in the task list.");
+            System.out.println("Now you have " + taskList.size() + " tasks in the task list.");
             SaveAndLoadTask.saveTasks(taskList);
         }
 
@@ -89,18 +90,18 @@ public class ManageTask {
     /**
      * Search for the tasks that contain some specified words within the tasks and
      * display all those task that contain that name. if no task match, a message will be display
+     *
      * @param keyword the keyword to search for in a task
      */
-    public void findTask(String keyword){
+    public void findTask(String keyword) {
 
         assert keyword != null : "keyword cannot be null";
         ArrayList<Task> matchTasks = taskList.stream().filter(task -> task.taskName.toLowerCase().contains(keyword.toLowerCase())).collect(Collectors.toCollection(ArrayList::new));
-        if (matchTasks.isEmpty()){
+        if (matchTasks.isEmpty()) {
             System.out.println("No task found with the keyword " + keyword);
-        }
-        else{
+        } else {
             System.out.println("Found " + matchTasks.size() + " tasks with the keyword " + keyword);
-            for (int i = 0; i < matchTasks.size(); i++){
+            for (int i = 0; i < matchTasks.size(); i++) {
                 System.out.println((i + 1) + ". " + matchTasks.get(i));
             }
         }

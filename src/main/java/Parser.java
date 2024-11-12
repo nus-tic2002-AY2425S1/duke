@@ -7,6 +7,7 @@ public class Parser {
     /**
      * Parser which is the command that determine the type of task we would like to create. For example a normal task
      * or it is an event or deadline task.
+     *
      * @param command which is the input command that user input to specific the type of the task with the details.
      * @return a Task object based on the command type either normal task or Event or Deadline task.
      * @throws Exception if the command does not match any know task type
@@ -52,6 +53,7 @@ public class Parser {
 
     /**
      * switch date and time format from string to "dd/MM/yyyy HHmm" to LocalDateTime object
+     *
      * @param dateTimeString the date and time string to parse
      * @return LocalDateTime object which represent the parsed date and timing
      * @throws DateTimeParseException if the string cannot be parser

@@ -10,11 +10,11 @@ public class SaveAndLoadTask {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
 
     // save all the task in the txt file
-    public static void saveTasks (ArrayList<Task> taskList){
-        try{
+    public static void saveTasks(ArrayList<Task> taskList) {
+        try {
             File file = new File(FILE);
             // check if file exist else create the directory file
-            if (!file.getParentFile().exists()){
+            if (!file.getParentFile().exists()) {
                 file.getParentFile().mkdirs();
             }
 
@@ -24,24 +24,23 @@ public class SaveAndLoadTask {
                 writer.write(task.toFileString() + System.lineSeparator());
             }
             writer.close();
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Error saving tasks: " + e.getMessage());
         }
     }
 
     // Load all the task from the task File
-    public static ArrayList<Task> loadTasks(){
+    public static ArrayList<Task> loadTasks() {
         ArrayList<Task> taskList = new ArrayList<>();
         File file = new File(FILE);
 
         // If there is no file or file does not exist. return empty list
-        if (!file.exists()){
-            System.out.println("No task file found, starting with empty task list. " );
+        if (!file.exists()) {
+            System.out.println("No task file found, starting with empty task list. ");
             return taskList;
         }
 
-        try{
+        try {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
@@ -102,12 +101,9 @@ public class SaveAndLoadTask {
                 taskList.add(task);
             }
             scanner.close();
-        }
-
-        catch(FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println("Task file not found.");
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Error loading tasks: " + e.getMessage());
         }
 

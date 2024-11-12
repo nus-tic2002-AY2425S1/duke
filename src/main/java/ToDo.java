@@ -1,17 +1,16 @@
+public class ToDo extends Task {
 
-public class ToDo extends Task{
-
-    public ToDo (String taskName){
+    public ToDo(String taskName) {
         super(taskName);
     }
 
     @Override
-    protected String getTaskType(){
+    protected String getTaskType() {
         return "T";
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "[" + getTaskType() + "][" + getStatusIcon() + "] " + taskName;
     }
 

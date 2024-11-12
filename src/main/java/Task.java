@@ -8,9 +8,10 @@ public class Task {
 
     /**
      * Constructor which help to construct a new task with the given name
+     *
      * @param taskName which is the name of the task
      */
-    public Task (String taskName) {
+    public Task(String taskName) {
         this.taskName = taskName;
         this.isDone = false;
     }
@@ -23,19 +24,19 @@ public class Task {
 
 
     // Mark done task with X
-    public String getStatusIcon(){
+    public String getStatusIcon() {
         // ✔ for Done, X for have not complete
-        return (isDone? "✔" : " ");
+        return (isDone ? "✔" : " ");
     }
 
 
-    public void markAsDone(){
+    public void markAsDone() {
         isDone = true;
         completedDate = LocalDateTime.now();
     }
 
     // Task have not Done set to false
-    public void unmarkAsDone(){
+    public void unmarkAsDone() {
         isDone = false;
     }
 
@@ -46,15 +47,17 @@ public class Task {
 
     /**
      * Task type for subclass to override
+     *
      * @return a string that represent the task type. example "T", "D", "E" and "N" for normal task
      */
-    protected String getTaskType(){
+    protected String getTaskType() {
         return "N";
     }
 
     /**
      * output task as string
      * the string will include the task type, the status and the task name
+     *
      * @return a formatted string representing the task
      */
     @Override
@@ -65,6 +68,7 @@ public class Task {
     /**
      * String representation of task for saving to file
      * the format include the tasktype, task completion status and the task name
+     *
      * @return a string which represent the task formatted for file storage.
      */
 

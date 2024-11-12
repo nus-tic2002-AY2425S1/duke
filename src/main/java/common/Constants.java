@@ -2,7 +2,6 @@ package common;
 
 /**
  * Contains various constant values used throughout the application. It serves as a utility class.
- * <p>
  * The Constants class centralizes commonly used string constants to
  * ensure consistency and ease of maintenance across the application.
  * This design allows for easy modification of constants without changing the logic of the application.
@@ -34,6 +33,9 @@ public class Constants {
     public static final String CLOSE_SQUARE_BRACKET = "]";
     public static final String OPEN_ANGLE_BRACKET = "<";
     public static final String CLOSE_ANGLE_BRACKET = ">";
+    public static final String BACKTICK = "`";
+    public static final String COMMA = ",";
+    public static final String UNDERSCORE = "_";
     public static final String ENCODE_TASK_SEPARATOR = SPACE + "|" + SPACE;
 
     public static final String DESCRIPTION = "description";
@@ -71,5 +73,6 @@ public class Constants {
     public static final int FOUR = 4;
     public static final int FIVE = 5;
     public static final int SEVEN = 7;
+    public static final int SIXTY = 60;
 
 }

@@ -67,6 +67,8 @@ public class Messages {
     // public static final String MESSAGE_NONEXISTENT_TASK_POST = "Please enter a valid task number from 1 to";
     public static final String MESSAGE_NOW_YOU_HAVE = "Now you have ";
     public static final String MESSAGE_IN_THE_LIST = " in the list.";
+    public static final String MESSAGE_IN_YOUR_LIST = " in your list";
+    public static final String MESSAGE_IN_YOUR_LIST_COLON = MESSAGE_IN_YOUR_LIST + Constants.COLON;
 
     // TaskLisDecoder
     public static final String ERROR_INVALID_TASK_FORMAT = "Error: Invalid task format for ";
@@ -83,4 +85,12 @@ public class Messages {
 
     // MarkCommand and UnmarkCommand
     public static final String MESSAGE_EMPTY_TASKLIST = "The task list is empty. Please add a task first.";
+    public static final String THE_TASK = "The task";
+    public static final String DONE = "done";
+    public static final String NOT = "not";
+    public static final String ALREADY_MARKED_AS = "is already marked as";
+    public static final String NO_ACTION_DONE = "No action done.";
+
+    public static final String HERE_ARE_THE = "Here are the";
+
 }

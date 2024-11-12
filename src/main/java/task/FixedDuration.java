@@ -12,7 +12,8 @@ import java.time.LocalDate;
 public class FixedDuration extends Task {
 
     private final double duration;
-    private static final String SPACE = Constants.SPACE;
+
+    private static final String HOURS = Constants.HOURS;
 
     /**
      * Constructs a FixedDuration task with the specified description, completion status, and duration.
@@ -51,9 +52,9 @@ public class FixedDuration extends Task {
      */
     @Override
     public String toString() {
-        return Constants.OPEN_SQUARE_BRACKET + TaskType.FIXED_DURATION + Constants.CLOSE_SQUARE_BRACKET +
-            super.toString() + SPACE + Constants.OPEN_ROUND_BRACKET + Constants.DURATION + Constants.COLON +
-            SPACE + getDuration() + SPACE + Constants.HOURS + Constants.CLOSE_ROUND_BRACKET;
+        return OPEN_SQUARE_BRACKET + TaskType.FIXED_DURATION + CLOSE_SQUARE_BRACKET +
+            super.toString() + SPACE + OPEN_ROUND_BRACKET + Constants.DURATION + COLON +
+            SPACE + getDuration() + SPACE + HOURS + CLOSE_ROUND_BRACKET;
     }
 
     /**
@@ -64,8 +65,7 @@ public class FixedDuration extends Task {
      */
     @Override
     public String encodeTask() {
-        return TaskType.FIXED_DURATION + super.encodeTask() + Constants.ENCODE_TASK_SEPARATOR +
-            getDuration() + SPACE + Constants.HOURS;
+        return TaskType.FIXED_DURATION + super.encodeTask() + SEPARATOR + getDuration() + SPACE + HOURS;
     }
 
     /**

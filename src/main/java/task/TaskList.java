@@ -21,6 +21,8 @@ public class TaskList {
     // https://stackoverflow.com/questions/2279030/type-list-vs-type-arraylist-in-java
     private final List<Task> taskList;
 
+    private static final String SPACE = Constants.SPACE;
+
     /**
      * Initializes / constructs the {@code TaskList} as an empty list.
      */
@@ -129,22 +131,24 @@ public class TaskList {
         }
     }
 
+    // Common helper function for execute method of MarkCommand, UnmarkCommand, and DeleteCommand
     public Task getTaskForOperation(int taskNumber) throws CommandException {
         if (isTaskListEmpty()) {
             throw new CommandException(Messages.MESSAGE_EMPTY_TASKLIST);
         }
-        int index = taskNumber - 1;
+
         Task task;
+
+        String MESSAGE_NONEXISTENT_TASK = Messages.MESSAGE_NONEXISTENT_TASK_PRE + SPACE +
+            taskNumber + SPACE + Messages.MESSAGE_NONEXISTENT_TASK_POST;
+        String MESSAGE_USAGE = Messages.MESSAGE_ENTER_VALID_TASK_NUMBER + SPACE + getSize() + Constants.DOT;
+
         try {
-            task = getTask(index);
+            task = getTask(taskNumber - 1);
         } catch (IndexOutOfBoundsException ioobe) {
-            throw new CommandException(
-                Messages.ERROR_TASK_NONEXISTENT,
-                String.format("%s %s %s", Messages.MESSAGE_NONEXISTENT_TASK_PRE,
-                    taskNumber, Messages.MESSAGE_NONEXISTENT_TASK_POST),
-                String.format("%s %s.", Messages.MESSAGE_ENTER_VALID_TASK_NUMBER, getSize())
-            );
+            throw new CommandException(Messages.ERROR_TASK_NONEXISTENT, MESSAGE_NONEXISTENT_TASK, MESSAGE_USAGE);
         }
+
         return task;
     }
 
@@ -154,10 +158,12 @@ public class TaskList {
      * @return "task" if there is only one task in the {@code TaskList}; "tasks" if there are multiple.
      */
     public String getTaskWord() {
-        StringBuilder taskWordStringBuilder = new StringBuilder(Constants.SPACE + Constants.TASK);
-        if (getSize() > 1) {
+        StringBuilder taskWordStringBuilder = new StringBuilder(SPACE + Constants.TASK);
+
+        if (getSize() != 1) {       // Only 1 is singular
             taskWordStringBuilder.append(Constants.S);
         }
+
         return taskWordStringBuilder.toString();
     }
 
@@ -190,7 +196,7 @@ public class TaskList {
 
         // Sort the tasks by their LocalDateTime
         // https://stackoverflow.com/questions/2784514/sort-arraylist-of-custom-objects-by-property
-        Collections.sort(tasksOnDate, new Comparator<Task>() {
+        tasksOnDate.sort(new Comparator<Task>() {
             @Override
             public int compare(Task taskA, Task taskB) {
                 LocalDateTime dateTimeA = taskA.getTaskDateTime();
@@ -207,8 +213,6 @@ public class TaskList {
                     return -1;      // Put dateTimeB after dateTimeA
                 }
 
-                // show 2024-06-09
-                // System.out.println(dateTimeA + " of task " + taskA + ", compare to " + dateTimeB + " of task " + taskB + " is " + dateTimeA.compareTo(dateTimeB));
                 return dateTimeA.compareTo(dateTimeB);
             }
         });
@@ -224,12 +228,14 @@ public class TaskList {
      */
     public TaskList getAllTasksWithMatchingDescription(String description) {
         TaskList tasksWithMatchingDescription = new TaskList();
+
         for (Task task : getTaskList()) {
             String taskDescription = task.getDescription();
             if (taskDescription.contains(description)) {
                 tasksWithMatchingDescription.addTask(task);
             }
         }
+
         return tasksWithMatchingDescription;
     }
 }

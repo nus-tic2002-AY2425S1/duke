@@ -4,8 +4,6 @@ import common.Constants;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.Comparator;
 
 /**
  * Represents the base class for all tasks. 
@@ -13,8 +11,18 @@ import java.util.Comparator;
  * The Task class contains a description and completion status, which is common to all tasks.
  */
 public abstract class Task {
+
     protected String description;
     protected boolean isDone;
+
+    // Aliases from Constants
+    protected static final String SPACE = Constants.SPACE;
+    protected static final String SEPARATOR = Constants.ENCODE_TASK_SEPARATOR;
+    protected static final String COLON = Constants.COLON;
+    protected static final String OPEN_SQUARE_BRACKET = Constants.OPEN_SQUARE_BRACKET;
+    protected static final String CLOSE_SQUARE_BRACKET = Constants.CLOSE_SQUARE_BRACKET;
+    protected static final String OPEN_ROUND_BRACKET = Constants.OPEN_ROUND_BRACKET;
+    protected static final String CLOSE_ROUND_BRACKET = Constants.CLOSE_ROUND_BRACKET;
 
     /**
      * Constructs a Task with the specified description and completion status.
@@ -109,8 +117,7 @@ public abstract class Task {
     // Equivalent to 'decoded' task, i.e. tasks present in TaskList
     @Override
     public String toString() {
-        return Constants.OPEN_SQUARE_BRACKET + getStatusIcon() + Constants.CLOSE_SQUARE_BRACKET + 
-            Constants.SPACE + getDescription();
+        return OPEN_SQUARE_BRACKET + getStatusIcon() + CLOSE_SQUARE_BRACKET + SPACE + getDescription();
     }
 
     /**

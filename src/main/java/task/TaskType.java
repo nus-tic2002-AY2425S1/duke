@@ -6,7 +6,7 @@ import common.Constants;
  * Represents the different types of tasks that can be created.
  * Each task has a corresponding code,
  * i.e. TODO is represented by "T", DEADLINE is represented by "D",
- * EVENT is represented by "E" and FIXED_DURATION is represented by "FD"
+ * EVENT is represented by "E" and FIXED_DURATION is represented by "FD".
  */
 public enum TaskType {
     TODO(Constants.T),
@@ -59,8 +59,8 @@ public enum TaskType {
     public static String getValidTaskType() {
         StringBuilder validTaskTypes = new StringBuilder();
         for (TaskType taskType : TaskType.values()) {
-            // System.out.println(taskType.code);
-            validTaskTypes.append("`").append(taskType.code).append("`").append(",");
+            validTaskTypes.append(Constants.BACKTICK).append(taskType.code)
+                .append(Constants.BACKTICK).append(Constants.COMMA);
         }
         if (!validTaskTypes.isEmpty()) {
             validTaskTypes.setLength(validTaskTypes.length() - 1);

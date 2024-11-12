@@ -6,18 +6,17 @@ import parser.DateTimeParser;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-// e.g., (a) team project meeting 2/10/2019 2-4pm (b) orientation week 4/10/2019 to 11/10/2019
-
 /**
  * Extends from the Task class. It encapsulates the task description,
  * completion status, start date and time, and end date and time.
  * Events are tasks that occur over a period of time,
  * starting at a specific date and time and ending at a specific date and time.
+ * e.g., (a) team project meeting 2/10/2019 2-4pm (b) orientation week 4/10/2019 to 11/10/2019
  */
 public class Event extends Task {
 
-    protected final LocalDateTime startDateTime;
-    protected final LocalDateTime endDateTime;
+    private final LocalDateTime startDateTime;
+    private final LocalDateTime endDateTime;
 
     /**
      * Constructs an {@code Event} task with the specified description,
@@ -86,19 +85,9 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        final String SPACE = Constants.SPACE;
-        final String COLON = Constants.COLON;
-
-        // If description does not end with a space, add a space behind it
-        if (!description.endsWith(SPACE)) {
-            description += SPACE;
-        }
-
-        // String formattedEndDateTime = DateTimeParser.formatDateTime(endDateTime);
-
-        return Constants.OPEN_SQUARE_BRACKET + TaskType.EVENT + Constants.CLOSE_SQUARE_BRACKET + super.toString() +
-            Constants.OPEN_ROUND_BRACKET + Constants.FROM + COLON + SPACE + getFormattedStartDateTime() +
-            SPACE + Constants.TO + COLON + SPACE + getFormattedEndDateTime() + Constants.CLOSE_ROUND_BRACKET;
+        return OPEN_SQUARE_BRACKET + TaskType.EVENT + CLOSE_SQUARE_BRACKET + super.toString() + SPACE +
+            OPEN_ROUND_BRACKET + Constants.FROM + COLON + SPACE + getFormattedStartDateTime() + SPACE +
+            Constants.TO + COLON + SPACE + getFormattedEndDateTime() + CLOSE_ROUND_BRACKET;
 
     }
 
@@ -109,9 +98,8 @@ public class Event extends Task {
      */
     @Override
     public String encodeTask() {
-        String separator = Constants.ENCODE_TASK_SEPARATOR;
-        return TaskType.EVENT + super.encodeTask() + separator +
-            getFormattedStartDateTime() + separator + getFormattedEndDateTime();
+        return TaskType.EVENT + super.encodeTask() + SEPARATOR +
+            getFormattedStartDateTime() + SEPARATOR + getFormattedEndDateTime();
     }
 
     /**
@@ -124,9 +112,9 @@ public class Event extends Task {
      */
     @Override
     public boolean isOnDate(LocalDate date) {
-        // return getDue().isEqual(due);
-        // return startDate.isEqual(getStartDateTime().toLocalDate()) && endDate.isEqual(getEndDateTime().toLocalDate());
-        return getStartDateTime().toLocalDate().isEqual(date) || getEndDateTime().toLocalDate().isEqual(date);
+        boolean isStartDateOnDate = getStartDateTime().toLocalDate().isEqual(date);
+        boolean isEndDateOnDate = getEndDateTime().toLocalDate().isEqual(date);
+        return isStartDateOnDate || isEndDateOnDate;
     }
 
 }

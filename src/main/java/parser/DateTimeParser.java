@@ -48,15 +48,14 @@ public class DateTimeParser {
 
     /**
      * Parses a date-time string in the format "yyyy-MM-dd HHmm" and returns a {@link LocalDateTime} object.
+     * Convert "yyyy-MM-dd HHmm" in String to "MMM dd yyyy HHmm" in LocalDateTime
      *
      * @param input represents the date-time string to parse.
      * @return the parsed LocalDateTime object.
      * @throws CommandException if the input string is not in the expected format.
      */
-    // Convert "yyyy-MM-dd HHmm" in String to "MMM dd yyyy HHmm" in LocalDateTime
     public static LocalDateTime parseOutputDateTime(String input) throws CommandException {
         try {
-            // return LocalDateTime.parse(input, INPUT_DATETIME_FORMAT);
             return LocalDateTime.parse(input, OUTPUT_DATETIME_FORMAT);
         } catch (DateTimeParseException e) {
             throw new CommandException(Messages.ERROR_INVALID_DATETIME_FORMAT);
@@ -66,12 +65,12 @@ public class DateTimeParser {
     /**
      * Parses a deadline date-time string and returns a {@link LocalDateTime} object.
      * The time is optional and defaults to midnight if not provided.
+     * For adding deadline tasks
      *
      * @param input represents the deadline date-time string to parse.
      * @return the parsed LocalDateTime object.
      * @throws CommandException if the input string is not in the expected format.
      */
-    // For adding deadline tasks
     public static LocalDateTime parseInputDeadlineDateTime(String input) throws CommandException {
         try {
             return LocalDateTime.parse(input, deadlineFormatter);
@@ -87,12 +86,12 @@ public class DateTimeParser {
 
     /**
      * Parses an event date-time string and returns a {@link LocalDateTime} object.
+     * For adding event tasks
      *
      * @param input represents the event date-time string to parse.
      * @return the parsed LocalDateTime object.
      * @throws CommandException if the input string is not in the expected format.
      */
-    // For adding event tasks
     public static LocalDateTime parseInputEventDateTime(String input) throws CommandException {
         try {
             return LocalDateTime.parse(input, INPUT_DATETIME_FORMAT);
@@ -126,11 +125,11 @@ public class DateTimeParser {
 
     /**
      * Formats a {@link LocalDateTime} object into a String in the format "MMM dd yyyy HHmm".
+     * For listing tasks in "MMM dd yyyy HHmm" format
      *
      * @param dateTime represents the LocalDateTime object to format.
      * @return the formatted String.
      */
-    // For listing tasks in "MMM dd yyyy HHmm" format
     public static String formatDateTime(LocalDateTime dateTime) {
         // if (dateTime == null) {
         //     throw new DateTimeParserException("Date/time cannot be null");

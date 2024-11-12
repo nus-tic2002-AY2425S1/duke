@@ -55,6 +55,11 @@ public class Parser {
     public static final String FIND_COMMAND_ARGS_REGEX = TODO_COMMAND_ARGS_REGEX;
     public static final Pattern FIND_COMMAND_ARGS_FORMAT = Pattern.compile(FIND_COMMAND_ARGS_REGEX);
 
+    private static final String DOT = Constants.DOT;
+    private static final String MESSAGE_THE_TASK_IS_MISSING_A = "The task is missing a";
+    private static final String RECEIVED = "Received `%s %s`";
+    private static final String EXAMPLE_USAGE = "Example usage: `%s`";
+
     // Add a private constructor to hide the implicit public one
     private Parser() {
 
@@ -72,7 +77,7 @@ public class Parser {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
 
         if (!matcher.matches()) {
-            throw new CommandException(String.format("%s", Messages.ERROR_INVALID_COMMAND_FORMAT));
+            throw new CommandException(String.format(Constants.PERCENT + Constants.S, Messages.ERROR_INVALID_COMMAND_FORMAT));
         }
 
         final String commandWord = matcher.group("commandWord");
@@ -100,7 +105,7 @@ public class Parser {
             case FixedDurationCommand.COMMAND_WORD -> prepareFixedDuration(cleanArgs);
             case FindCommand.COMMAND_WORD -> prepareFind(cleanArgs);
             default -> throw new CommandException(Messages.ERROR_INVALID_COMMAND,
-                String.format("Command=%s", commandWord), Messages.VALID_COMMANDS
+                String.format("Command=`%s`", commandWord), Messages.VALID_COMMANDS
             );
         };
     }
@@ -121,8 +126,8 @@ public class Parser {
         if (!matcher.matches()) {
             throw new CommandException(
                 String.format("%s%s", Messages.ERROR_INVALID_COMMAND_FORMAT, commandWord),
-                String.format("Received `%s %s`", commandWord, args),
-                String.format("Example usage: %s", messageUsage)
+                String.format(RECEIVED, commandWord, args),
+                String.format(EXAMPLE_USAGE, messageUsage)
             );
         }
         return Integer.parseInt(matcher.group("taskNumber"));
@@ -172,13 +177,13 @@ public class Parser {
      * @param messageUsage represents the usage instructions for the command when an error occurs.
      * @throws CommandException if the description is empty.
      */
-    public static void checkEmptyDescription(String args, String commandWord, String messageUsage)
+    private static void checkEmptyDescription(String args, String commandWord, String messageUsage)
         throws CommandException {
         if (args.isEmpty()) {
             throw new CommandException(
-                Messages.ERROR_INVALID_COMMAND_FORMAT + commandWord + Constants.DOT,
+                Messages.ERROR_INVALID_COMMAND_FORMAT + commandWord + DOT,
                 Messages.MESSAGE_EMPTY_DESCRIPTION_PRE,
-                String.format("Example usage: `%s`", messageUsage)
+                String.format(EXAMPLE_USAGE, messageUsage)
             );
         }
     }
@@ -198,9 +203,9 @@ public class Parser {
         throws CommandException {
         if (!matcher.matches()) {
             throw new CommandException(
-                Messages.ERROR_INVALID_COMMAND_FORMAT + commandWord + Constants.DOT,
-                String.format("Received `%s %s`", commandWord, args),
-                String.format("Example usage: `%s`", messageUsage)
+                Messages.ERROR_INVALID_COMMAND_FORMAT + commandWord + DOT,
+                String.format(RECEIVED, commandWord, args),
+                String.format(EXAMPLE_USAGE, messageUsage)
             );
         }
     }
@@ -243,9 +248,9 @@ public class Parser {
         throws CommandException {
         if (!args.contains(keyword)) {
             throw new CommandException(
-                Messages.ERROR_INVALID_COMMAND_FORMAT + commandWord + Constants.DOT,
+                Messages.ERROR_INVALID_COMMAND_FORMAT + commandWord + DOT,
                 infoMessage,
-                String.format("Example usage: `%s`", messageUsage)
+                String.format(EXAMPLE_USAGE, messageUsage)
             );
         }
     }
@@ -260,7 +265,8 @@ public class Parser {
      */
     private static Command prepareDeadline(String args) throws CommandException {
 
-        final String MESSAGE_EMPTY_DUEDATE_PRE = "The task is missing a due date.";
+        final String MESSAGE_EMPTY_DUEDATE_PRE =
+            MESSAGE_THE_TASK_IS_MISSING_A + Constants.SPACE + Constants.DUE_DATE + DOT;
         final String BY_KEYWORD = Constants.SLASH_BY;
 
         // Check if args (description) is empty
@@ -294,8 +300,13 @@ public class Parser {
      */
     private static Command prepareEvent(String args) throws CommandException {
 
-        final String MESSAGE_EMPTY_STARTDATETIME_PRE = "The task is missing a start date/time.";
-        final String MESSAGE_EMPTY_ENDDATETIME_PRE = "The task is missing an end date/time.";
+        final String MESSAGE_EMPTY_STARTDATETIME_PRE =
+            MESSAGE_THE_TASK_IS_MISSING_A + Constants.SPACE + Constants.START_DATE_TIME + DOT;
+
+        // "The task is missing an end date/time."
+        final String MESSAGE_EMPTY_ENDDATETIME_PRE =
+            MESSAGE_THE_TASK_IS_MISSING_A + "n" + Constants.SPACE + Constants.END_DATE_TIME + DOT;
+
         final String FROM_KEYWORD = Constants.SLASH_FROM;
         final String TO_KEYWORD = Constants.SLASH_TO;
 
@@ -305,8 +316,8 @@ public class Parser {
         checkArgsContainsKeyword(args, FROM_KEYWORD, EventCommand.COMMAND_WORD,
             MESSAGE_EMPTY_STARTDATETIME_PRE, EventCommand.MESSAGE_USAGE);
 
-        checkArgsContainsKeyword(args, TO_KEYWORD, EventCommand.COMMAND_WORD, MESSAGE_EMPTY_ENDDATETIME_PRE,
-            EventCommand.MESSAGE_USAGE);
+        checkArgsContainsKeyword(args, TO_KEYWORD, EventCommand.COMMAND_WORD,
+            MESSAGE_EMPTY_ENDDATETIME_PRE, EventCommand.MESSAGE_USAGE);
 
         final Matcher matcher = EVENT_COMMAND_ARGS_FORMAT.matcher(args);
 
@@ -315,11 +326,9 @@ public class Parser {
 
         String description = matcher.group(Constants.DESCRIPTION).trim();
         String startDateTimeString = matcher.group(Constants.START).trim();
-        // LocalDateTime startDateTime = LocalDateTime.parse(matcher.group("start").trim());
         LocalDateTime startDateTime = DateTimeParser.parseInputEventDateTime(startDateTimeString);
 
         String endDateTimeString = matcher.group(Constants.END).trim();
-        // LocalDateTime endDateTime = LocalDateTime.parse(matcher.group("end").trim());
         LocalDateTime endDateTime = DateTimeParser.parseInputEventDateTime(endDateTimeString);
 
         if (endDateTime.isBefore(startDateTime)) {
@@ -366,12 +375,9 @@ public class Parser {
         validateArgsFormat(matcher, FixedDurationCommand.COMMAND_WORD, args, FixedDurationCommand.MESSAGE_USAGE);
 
         String description = matcher.group(Constants.DESCRIPTION).trim();
-        // System.out.println("description is " + description);
-        String durationString = matcher.group(Constants.DURATION).trim();
-        // System.out.println("duration is " + duration);
 
+        String durationString = matcher.group(Constants.DURATION).trim();
         double duration = Double.parseDouble(durationString);
-        // System.out.println("duration is " + duration);
 
         return new FixedDurationCommand(description, duration);
     }

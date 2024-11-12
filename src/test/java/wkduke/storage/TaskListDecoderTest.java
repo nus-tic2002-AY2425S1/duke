@@ -4,10 +4,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import wkduke.exception.FileContentException;
-import wkduke.task.Deadline;
-import wkduke.task.Event;
-import wkduke.task.Task;
-import wkduke.task.ToDo;
+import wkduke.task.*;
 
 import java.time.LocalDateTime;
 import java.util.stream.Stream;
@@ -22,18 +19,30 @@ public class TaskListDecoderTest {
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
     class ValidTests {
         private static Stream<Object[]> validTaskProvider() {
-            ToDo todo = new ToDo("Read book");
-            Deadline deadline = new Deadline("Submit report",
-                    LocalDateTime.of(2024, 11, 5, 23, 59));
-            Event event = new Event("Attend workshop",
+            ToDo todoLow = new ToDo("Read book", false, TaskPriority.LOW);
+            ToDo todoHigh = new ToDo("Complete assignment", true, TaskPriority.HIGH);
+            Deadline deadlineHighDone = new Deadline("Submit report",
+                    LocalDateTime.of(2024, 11, 5, 23, 59),
+                    true, TaskPriority.HIGH);
+            Deadline deadlineLowNotDone = new Deadline("Start project",
+                    LocalDateTime.of(2024, 12, 10, 12, 0),
+                    false, TaskPriority.LOW);
+            Event eventMedium = new Event("Attend workshop",
                     LocalDateTime.of(2024, 11, 5, 9, 0),
-                    LocalDateTime.of(2024, 11, 5, 17, 0));
-            event.markAsDone();
+                    LocalDateTime.of(2024, 11, 5, 17, 0),
+                    false, TaskPriority.MEDIUM);
+            Event eventHighDone = new Event("Meeting",
+                    LocalDateTime.of(2024, 11, 10, 8, 0),
+                    LocalDateTime.of(2024, 11, 10, 18, 0),
+                    true, TaskPriority.HIGH);
 
             return Stream.of(
-                    new Object[]{"T | 0 | Read book", todo},
-                    new Object[]{"D | 0 | Submit report | 2024-11-05 23:59", deadline},
-                    new Object[]{"E | 1 | Attend workshop | 2024-11-05 09:00 | 2024-11-05 17:00", event}
+                    new Object[]{"T | L | 0 | Read book", todoLow},
+                    new Object[]{"T | H | 1 | Complete assignment", todoHigh},
+                    new Object[]{"D | H | 1 | Submit report | 2024-11-05 23:59", deadlineHighDone},
+                    new Object[]{"D | L | 0 | Start project | 2024-12-10 12:00", deadlineLowNotDone},
+                    new Object[]{"E | M | 0 | Attend workshop | 2024-11-05 09:00 | 2024-11-05 17:00", eventMedium},
+                    new Object[]{"E | H | 1 | Meeting | 2024-11-10 08:00 | 2024-11-10 18:00", eventHighDone}
             );
         }
 
@@ -52,11 +61,13 @@ public class TaskListDecoderTest {
     class InvalidTests {
         private static Stream<String> invalidTaskProvider() {
             return Stream.of(
-                    "X | 0 | Unknown task type",    // Invalid task type
-                    "D | 0 | Submit report",                // Missing due date for Deadline
-                    "E | 0 | Attend workshop | | 17:00",    // Missing start date for Event
-                    "E | 0 | Attend workshop | 09:00 | ",   // Missing end date for Event
-                    "D | 0 | Submit report | invalid-date"  // Invalid date format
+                    "X | 0 | Unknown task type",            // Invalid task type
+                    "D | 0 | Submit report",                        // Missing due date for Deadline
+                    "E | 0 | Attend workshop | | 17:00",            // Missing start date for Event
+                    "E | 0 | Attend workshop | 09:00 | ",           // Missing end date for Event
+                    "D | 0 | Submit report | invalid-date",         // Invalid date format
+                    "T | X | 1 | Submit report",                    // Missing priority for ToDo
+                    "D | | 1 | Submit report | 2024-11-05 23:59"    // Missing priority for Deadline
             );
         }
 

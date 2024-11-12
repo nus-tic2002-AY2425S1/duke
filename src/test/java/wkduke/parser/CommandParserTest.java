@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import wkduke.command.*;
 import wkduke.exception.CommandFormatException;
 import wkduke.exception.TaskFormatException;
+import wkduke.task.TaskPriority;
 
 import java.time.LocalDateTime;
 import java.util.stream.Stream;
@@ -80,6 +81,14 @@ public class CommandParserTest {
             );
         }
 
+        private static Stream<Object[]> validUpdatePriorityCommandProvider() {
+            return Stream.of(
+                    new Object[]{"update-priority 1 H", new UpdatePriorityCommand(1, TaskPriority.HIGH)},
+                    new Object[]{"update-priority 2 M", new UpdatePriorityCommand(2, TaskPriority.MEDIUM)},
+                    new Object[]{"update-priority 3 L", new UpdatePriorityCommand(3, TaskPriority.LOW)}
+            );
+        }
+
         @Order(1)
         @Test
         public void parseCommand_exitCommand_returnsExitCommand() throws CommandFormatException, TaskFormatException {
@@ -139,6 +148,14 @@ public class CommandParserTest {
         @ParameterizedTest
         @MethodSource("validUnmarkCommandProvider")
         public void parseCommand_validUnmarkCommands_returnsUnmarkCommand(String input, UnmarkCommand expected) throws CommandFormatException, TaskFormatException {
+            Command result = CommandParser.parseCommand(input);
+            assertEquals(expected, result);
+        }
+
+        @Order(9)
+        @ParameterizedTest
+        @MethodSource("validUpdatePriorityCommandProvider")
+        public void parseCommand_validUpdatePriorityCommands_returnsUpdatePriorityCommand(String input, UpdatePriorityCommand expected) throws CommandFormatException, TaskFormatException {
             Command result = CommandParser.parseCommand(input);
             assertEquals(expected, result);
         }
@@ -213,6 +230,16 @@ public class CommandParserTest {
             );
         }
 
+        private static Stream<String> invalidUpdatePriorityCommandProvider() {
+            return Stream.of(
+                    "update-priority",          // Missing both task number and priority
+                    "update-priority 1",                // Missing priority
+                    "update-priority one H",            // Non-integer task number
+                    "update-priority 1 X",              // Invalid priority letter
+                    "update-priority -1 H"              // Invalid task number (negative)
+            );
+        }
+
         @Order(8)
         @ParameterizedTest
         @MethodSource("invalidCommandWordProvider")
@@ -266,6 +293,13 @@ public class CommandParserTest {
         @ParameterizedTest
         @MethodSource("invalidUnmarkCommandProvider")
         public void parseCommand_invalidUnmarkCommands_throwsCommandFormatException(String input) {
+            assertThrows(CommandFormatException.class, () -> CommandParser.parseCommand(input));
+        }
+
+        @Order(9)
+        @ParameterizedTest
+        @MethodSource("invalidUpdatePriorityCommandProvider")
+        public void parseCommand_invalidUpdatePriorityCommands_throwsCommandFormatException(String input) {
             assertThrows(CommandFormatException.class, () -> CommandParser.parseCommand(input));
         }
     }

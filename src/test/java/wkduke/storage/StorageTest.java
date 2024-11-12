@@ -7,10 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import wkduke.exception.FileContentException;
 import wkduke.exception.StorageFilePathException;
 import wkduke.exception.StorageOperationException;
-import wkduke.task.Deadline;
-import wkduke.task.Event;
-import wkduke.task.TaskList;
-import wkduke.task.ToDo;
+import wkduke.task.*;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -54,9 +51,26 @@ public class StorageTest {
         void setup() throws StorageOperationException {
             storage = new Storage(VALID_DATA_FILE);
             taskList = new TaskList();
-            taskList.addTask(new ToDo("Read book"));
-            taskList.addTask(new Deadline("Submit report", LocalDateTime.of(2024, 11, 5, 23, 59)));
-            taskList.addTask(new Event("Attend workshop", LocalDateTime.of(2024, 11, 5, 9, 0), LocalDateTime.of(2024, 11, 5, 17, 0)));
+            taskList.addTask(new ToDo("Read book", false, TaskPriority.LOW));
+            taskList.addTask(new ToDo("Complete assignment", true, TaskPriority.HIGH));
+            taskList.addTask(new Deadline("Submit report",
+                    LocalDateTime.of(2024, 11, 5, 23, 59),
+                    true, TaskPriority.HIGH)
+            );
+            taskList.addTask(new Deadline("Start project",
+                    LocalDateTime.of(2024, 12, 10, 12, 0),
+                    false, TaskPriority.LOW)
+            );
+            taskList.addTask(new Event("Attend workshop",
+                    LocalDateTime.of(2024, 11, 5, 9, 0),
+                    LocalDateTime.of(2024, 11, 5, 17, 0),
+                    false, TaskPriority.MEDIUM)
+            );
+            taskList.addTask(new Event("Meeting",
+                    LocalDateTime.of(2024, 11, 10, 8, 0),
+                    LocalDateTime.of(2024, 11, 10, 18, 0),
+                    true, TaskPriority.HIGH)
+            );
         }
 
         @Order(2)

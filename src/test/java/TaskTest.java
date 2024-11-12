@@ -37,12 +37,12 @@ class TaskTest {
         Task task = new Task("Read a book");
 
         // Expected output for normal task type
-        String expected = "[ ][ ] Read a book";
+        String expected = "[N][ ] Read a book";
         assertEquals(expected, task.toString(), "To String should return formatted task string");
 
         // After the task is done
         task.markAsDone();
-        expected = "[ ][✔] Read a book";
+        expected = "[N][✔] Read a book";
         assertEquals(expected, task.toString(), "To String should show task as done.");
     }
 
@@ -51,12 +51,12 @@ class TaskTest {
         Task task = new Task("Read a book");
 
         // Expected format for duke.txt file for undone task
-        String expected = "  | 0 | Read a book";
+        String expected = "N | 0 | Read a book";
         assertEquals(expected, task.toFileString(), "toFileString should return formatted string for file storage");
 
         // Expected format for duke.txt file for done task
         task.markAsDone();
-        expected = "  | 1 | Read a book";
+        expected = "N | 1 | Read a book";
         assertEquals(expected, task.toFileString(), "toFileString should indicate task completion after marking as done");
     }
 

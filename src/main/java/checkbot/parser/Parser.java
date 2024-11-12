@@ -65,8 +65,8 @@ public class Parser {
             case "event":
                 try {
                     Task task = TaskList.addTask(input);
-                    StorageFile.updateFile();
                     if (task != null) {
+                        StorageFile.updateFile();
                         TextUi.echoAddTask(task);
                     }
                 } catch (DateTimeException | InvalidInputException e) {

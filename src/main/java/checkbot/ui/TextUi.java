@@ -40,6 +40,7 @@ public class TextUi {
      * Takes in a Task and prints confirmation of task addition.
      */
     public static void echoAddTask(Task task) {
+        assert task != null : "Task cannot be null.";
         System.out.println(Messages.DIVIDER + System.lineSeparator() +
                 "Got it! I've added this task:" + System.lineSeparator() +
                 "  " + task.getListView() + System.lineSeparator() +
@@ -51,6 +52,7 @@ public class TextUi {
      * Takes in a task and prints confirmation of priority change.
      */
     public static void echoRankTask(Task task) {
+        assert task != null : "Task cannot be null.";
         System.out.println(Messages.DIVIDER + System.lineSeparator() +
                 "Got it! I've changed the priority of this task to: " +
                 task.getPriorityString() + System.lineSeparator() +

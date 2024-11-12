@@ -102,6 +102,7 @@ public class StorageFile {
         for (String task : storageTaskList) {
             // Format: <task type> | <task status> | <task priority> | <description w/ datetime (if applicable)>
             String[] taskArray = task.split("\\|");
+            assert taskArray.length == 4 : "There should be 4 parts in a line: Type, Status, Priority, and Command";
 
             // Convert stored tasks into UI command
             String taskCommand = switch (taskArray[0].trim()) {

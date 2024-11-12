@@ -4,6 +4,7 @@ import wkduke.command.*;
 import wkduke.common.Messages;
 import wkduke.exception.CommandFormatException;
 import wkduke.exception.TaskFormatException;
+import wkduke.task.TaskPriority;
 
 import java.time.LocalDateTime;
 import java.util.regex.Matcher;
@@ -22,6 +23,7 @@ public class CommandParser {
     public static final Pattern UNMARK_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
     public static final Pattern DELETE_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
     public static final Pattern LIST_TASK_ARGS_FORMAT = Pattern.compile("/on (?<on>.+)");
+    public static final Pattern UPDATE_PRIORITY_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*) (?<priority>[LMH])$");
 
     /**
      * Parses the user input into a command.
@@ -49,6 +51,7 @@ public class CommandParser {
             case MarkCommand.COMMAND_WORD -> prepareMark(arguments);
             case UnmarkCommand.COMMAND_WORD -> prepareUnmark(arguments);
             case DeleteCommand.COMMAND_WORD -> prepareDelete(arguments);
+            case UpdatePriorityCommand.COMMAND_WORD -> prepareUpdatePriority(arguments);
             default -> throw new CommandFormatException(
                     Messages.MESSAGE_INVALID_COMMAND_FORMAT,
                     String.format("UserInput='%s'", userInput),
@@ -212,5 +215,27 @@ public class CommandParser {
             );
         }
         return new UnmarkCommand(Integer.parseInt(matcher.group("taskNumber")));
+    }
+
+    /**
+     * Prepares an UpdatePriorityCommand from the given arguments.
+     *
+     * @param arguments The arguments specifying the task number and the new priority level.
+     * @return A new {@code UpdatePriorityCommand} with the specified task number and priority.
+     * @throws CommandFormatException If the arguments format is invalid.
+     */
+    private static Command prepareUpdatePriority(String arguments) throws CommandFormatException {
+        final Matcher matcher = UPDATE_PRIORITY_ARGS_FORMAT.matcher(arguments.trim());
+        if (!matcher.matches()) {
+            throw new CommandFormatException(
+                    Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    String.format("Command='update-priority', Arguments='%s'", arguments),
+                    UpdatePriorityCommand.MESSAGE_USAGE
+            );
+        }
+        return new UpdatePriorityCommand(
+                Integer.parseInt(matcher.group("taskNumber")),
+                TaskPriority.fromCode(matcher.group("priority"))
+        );
     }
 }

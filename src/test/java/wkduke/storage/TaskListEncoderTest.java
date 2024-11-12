@@ -3,10 +3,7 @@ package wkduke.storage;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import wkduke.task.Deadline;
-import wkduke.task.Event;
-import wkduke.task.TaskList;
-import wkduke.task.ToDo;
+import wkduke.task.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,17 +20,34 @@ public class TaskListEncoderTest {
         private static Stream<Object[]> validTaskListProvider() {
             // First test case: Mixed TaskList
             TaskList taskList = new TaskList();
-            taskList.addTask(new ToDo("Read book"));
+            taskList.addTask(new ToDo("Read book", false, TaskPriority.LOW));
+            taskList.addTask(new ToDo("Complete assignment", true, TaskPriority.HIGH));
             taskList.addTask(new Deadline("Submit report",
-                    LocalDateTime.of(2024, 11, 5, 23, 59)));
+                    LocalDateTime.of(2024, 11, 5, 23, 59),
+                    true, TaskPriority.HIGH)
+            );
+            taskList.addTask(new Deadline("Start project",
+                    LocalDateTime.of(2024, 12, 10, 12, 0),
+                    false, TaskPriority.LOW)
+            );
             taskList.addTask(new Event("Attend workshop",
                     LocalDateTime.of(2024, 11, 5, 9, 0),
-                    LocalDateTime.of(2024, 11, 5, 17, 0)));
+                    LocalDateTime.of(2024, 11, 5, 17, 0),
+                    false, TaskPriority.MEDIUM)
+            );
+            taskList.addTask(new Event("Meeting",
+                    LocalDateTime.of(2024, 11, 10, 8, 0),
+                    LocalDateTime.of(2024, 11, 10, 18, 0),
+                    true, TaskPriority.HIGH)
+            );
 
             List<String> expectedEncodedTasks = List.of(
-                    "T | 0 | Read book",
-                    "D | 0 | Submit report | 2024-11-05 23:59",
-                    "E | 0 | Attend workshop | 2024-11-05 09:00 | 2024-11-05 17:00"
+                    "T | L | 0 | Read book",
+                    "T | H | 1 | Complete assignment",
+                    "D | H | 1 | Submit report | 2024-11-05 23:59",
+                    "D | L | 0 | Start project | 2024-12-10 12:00",
+                    "E | M | 0 | Attend workshop | 2024-11-05 09:00 | 2024-11-05 17:00",
+                    "E | H | 1 | Meeting | 2024-11-10 08:00 | 2024-11-10 18:00"
             );
 
             // Second test case: Empty TaskList

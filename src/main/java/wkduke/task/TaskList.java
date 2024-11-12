@@ -115,6 +115,23 @@ public class TaskList {
     }
 
     /**
+     * Sets the priority level of the task at the specified index in the task list.
+     *
+     * @param index    The index of the task whose priority is to be set.
+     * @param priority The new {@code TaskPriority} to set for the task.
+     * @return {@code true} if the priority was successfully updated; {@code false}
+     * if the task already has the specified priority.
+     */
+    public boolean setTaskPriority(int index, TaskPriority priority) {
+        Task task = getTask(index);
+        if (priority.equals(task.getPriority())) {
+            return false;
+        }
+        task.setPriority(priority);
+        return true;
+    }
+
+    /**
      * Retrieves the number of tasks in the list.
      *
      * @return The number of tasks in the list.

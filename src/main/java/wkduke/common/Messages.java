@@ -9,7 +9,7 @@ public class Messages {
     public static final String MESSAGE_GOODBYE = "Bye. Hope to see you again soon!";
 
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format!";
-    public static final String MESSAGE_AVAILABLE_COMMAND = "list, todo, deadline, event, mark, unmark, delete, bye";
+    public static final String MESSAGE_AVAILABLE_COMMAND = "list, todo, deadline, event, mark, unmark, update-priority, bye";
 
     public static final String MESSAGE_INVALID_TASK_FORMAT = "Invalid task format!";
     public static final String MESSAGE_INVALID_TASK_ARG_FORMAT = "Invalid task argument format!";

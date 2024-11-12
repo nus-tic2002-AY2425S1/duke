@@ -26,6 +26,36 @@ public class Event extends Task {
     }
 
     /**
+     * Constructs an {@code Event} task with the specified description, start date-time, end date-time, and completion status.
+     * The task has a default priority of {@code TaskPriority.LOW}.
+     *
+     * @param description The description of the event.
+     * @param from        The start date and time of the event.
+     * @param to          The end date and time of the event.
+     * @param isDone      The completion status of the event.
+     */
+    public Event(String description, LocalDateTime from, LocalDateTime to, boolean isDone) {
+        super(description, isDone);
+        this.from = from;
+        this.to = to;
+    }
+
+    /**
+     * Constructs an {@code Event} task with the specified description, start date-time, end date-time, completion status, and priority.
+     *
+     * @param description The description of the event.
+     * @param from        The start date and time of the event.
+     * @param to          The end date and time of the event.
+     * @param isDone      The completion status of the event.
+     * @param priority    The priority level of the event.
+     */
+    public Event(String description, LocalDateTime from, LocalDateTime to, boolean isDone, TaskPriority priority) {
+        super(description, isDone, priority);
+        this.from = from;
+        this.to = to;
+    }
+
+    /**
      * Retrieves the start date and time of the event.
      *
      * @return The start date and time as a {@code LocalDateTime}.
@@ -68,7 +98,8 @@ public class Event extends Task {
      */
     @Override
     public String encode() {
-        return String.format("E | %s | %s | %s | %s",
+        return String.format("E | %s | %s | %s | %s | %s",
+                priority,
                 isDone ? "1" : "0",
                 description,
                 from.format(TimeParser.ENCODING_FORMATTER),

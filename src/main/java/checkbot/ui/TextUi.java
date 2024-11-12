@@ -84,7 +84,8 @@ public class TextUi {
         System.out.println("Here are the matching task(s) in your list:");
 
         for (Task task : TaskList.tasks) {
-            if (task.getDescription().contains(input)) {
+            // code for insensitive case matching taken from https://www.baeldung.com/java-case-insensitive-string-matching
+            if (task.getDescription().matches("(?i).*" + input + ".*")) {
                 System.out.println(task.getListView());
                 isFound = true;
             }

@@ -47,7 +47,8 @@ public class Deadline extends Task {
      */
     @Override
     public String encode() {
-        return String.format("D | %s | %s | %s",
+        return String.format("D | %s | %s | %s | %s",
+                priority,
                 isDone ? "1" : "0",
                 description,
                 by.format(TimeParser.ENCODING_FORMATTER)

@@ -68,7 +68,8 @@ public class Event extends Task {
      */
     @Override
     public String encode() {
-        return String.format("E | %s | %s | %s | %s",
+        return String.format("E | %s | %s | %s | %s | %s",
+                priority,
                 isDone ? "1" : "0",
                 description,
                 from.format(TimeParser.ENCODING_FORMATTER),

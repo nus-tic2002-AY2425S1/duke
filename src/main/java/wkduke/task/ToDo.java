@@ -23,7 +23,8 @@ public class ToDo extends Task {
      */
     @Override
     public String encode() {
-        return String.format("T | %s | %s",
+        return String.format("T | %s | %s | %s",
+                priority,
                 isDone ? "1" : "0",
                 description
         );

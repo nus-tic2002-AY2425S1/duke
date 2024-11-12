@@ -46,8 +46,6 @@ public class SaveAndLoadTask {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
 
-                System.out.println("Reading line: " + line); // Debug print
-
                 String[] taskDetail = line.split(" \\| ");
 
                 // Ensure we have enough details
@@ -89,7 +87,6 @@ public class SaveAndLoadTask {
                     case "N":
                         // Create a normal task with "N"
                         task = new Task(taskDetail[2].trim()); // Assuming Task constructor exists
-                        System.out.println("Loaded normal task: " + task.toString()); // Debug print
                         break;
 
                     default:
@@ -103,7 +100,6 @@ public class SaveAndLoadTask {
                 }
 
                 taskList.add(task);
-                System.out.println("Loaded task: " + task.toString()); // Debug print
             }
             scanner.close();
         }

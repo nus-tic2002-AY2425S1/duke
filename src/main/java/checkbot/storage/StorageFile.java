@@ -134,9 +134,6 @@ public class StorageFile {
                 throw new RuntimeException();
             }
         }
-
-        // print list after adding all stored tasks
-        TextUi.printTasks();
     }
 
     /**

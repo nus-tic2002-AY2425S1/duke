@@ -5,11 +5,11 @@ public class Messages {
 
     public final static String HELLO = DIVIDER + System.lineSeparator() +
             "Hello! I'm checkbot." + System.lineSeparator() +
-            "What can I do for you? :)" + System.lineSeparator() +
+            "What task are you checking off today? :)" + System.lineSeparator() +
             DIVIDER;
 
     public final static String EXIT = DIVIDER + System.lineSeparator() +
-            "Bye. Hope to see you again soon!" + System.lineSeparator() +
+            "Bye! Remember to do your tasks!" + System.lineSeparator() +
             DIVIDER;
 
     public final static String HELP = DIVIDER + System.lineSeparator() +
@@ -18,8 +18,9 @@ public class Messages {
             "  todo <description> /between <DD/MM/YYYY HHMM(24H)> /and <DD/MM/YYYY HHMM(24H)>" + System.lineSeparator() +
             "  deadline <description> /by <DD/MM/YYYY HHMM(24H)>" + System.lineSeparator() +
             "  event <description> /from <DD/MM/YYYY HHMM(24H)> /to <DD/MM/YYYY HHMM(24H)>" + System.lineSeparator() +
+            "If no time is indicated, the default time is 0000." + System.lineSeparator() +
             "To see the full task list: type \"list\"." + System.lineSeparator() +
-            "To see undone tasks in order of priority level, type \"ranking\"." + System.lineSeparator() +
+            "To see undone tasks in order of priority level: type \"ranking\"." + System.lineSeparator() +
             "To delete a task: Start with \"delete\", followed by the task number." + System.lineSeparator() +
             "To mark a task as done or undone: Start with \"mark\" or \"unmark\", followed by the task number." +
             System.lineSeparator() +
@@ -29,8 +30,8 @@ public class Messages {
             "  rank <task number> medium" + System.lineSeparator() +
             "  rank <task number> low" + System.lineSeparator() +
             "  rank <task number> none" + System.lineSeparator() +
-            "To search for tasks, type \"find\", followed by keywords." + System.lineSeparator() +
-            "To end this session, type \"bye\"." + System.lineSeparator() +
+            "To search for tasks: type \"find\", followed by keywords." + System.lineSeparator() +
+            "To end this session: type \"bye\"." + System.lineSeparator() +
             DIVIDER;
 
     public final static String COMMAND_NOT_FOUND = DIVIDER + System.lineSeparator() +

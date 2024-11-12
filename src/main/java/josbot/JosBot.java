@@ -50,6 +50,7 @@ public class JosBot {
     }
 
     public static void main(String[] args) {
-        new JosBot("data/JosBotList.txt").run();
+        String filepath = "src/data/JosBotList.txt";
+        new JosBot(filepath).run();
     }
 }

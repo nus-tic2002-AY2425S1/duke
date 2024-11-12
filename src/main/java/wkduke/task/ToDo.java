@@ -17,6 +17,28 @@ public class ToDo extends Task {
     }
 
     /**
+     * Constructs a {@code ToDo} task with the specified description and completion status,
+     * with a default priority of {@code TaskPriority.LOW}.
+     *
+     * @param description The description of the task.
+     * @param isDone      The completion status of the task.
+     */
+    public ToDo(String description, boolean isDone) {
+        super(description, isDone);
+    }
+
+    /**
+     * Constructs a {@code ToDo} task with the specified description, completion status, and priority.
+     *
+     * @param description The description of the task.
+     * @param isDone      The completion status of the task.
+     * @param priority    The priority level of the task.
+     */
+    public ToDo(String description, boolean isDone, TaskPriority priority) {
+        super(description, isDone, priority);
+    }
+
+    /**
      * Encodes the {@code ToDo} task into a string format for file storage.
      *
      * @return A {@code String} representing the encoded task.

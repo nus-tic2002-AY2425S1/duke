@@ -24,6 +24,32 @@ public abstract class Task {
     }
 
     /**
+     * Constructs a {@code Task} with the specified description and completion status,
+     * and with a default priority of {@code TaskPriority.LOW}.
+     *
+     * @param description The description of the task.
+     * @param isDone      The completion status of the task.
+     */
+    public Task(String description, boolean isDone) {
+        this.description = description;
+        this.isDone = isDone;
+        this.priority = TaskPriority.LOW;
+    }
+
+    /**
+     * Constructs a {@code Task} with the specified description, completion status, and priority.
+     *
+     * @param description The description of the task.
+     * @param isDone      The completion status of the task.
+     * @param priority    The priority level of the task.
+     */
+    public Task(String description, boolean isDone, TaskPriority priority) {
+        this.description = description;
+        this.isDone = isDone;
+        this.priority = priority;
+    }
+
+    /**
      * Encodes the task into a string format suitable for file storage.
      *
      * @return A {@code String} representing the encoded task.

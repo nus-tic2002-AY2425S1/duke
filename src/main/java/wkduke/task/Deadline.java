@@ -23,6 +23,32 @@ public class Deadline extends Task {
     }
 
     /**
+     * Constructs a {@code Deadline} task with the specified description, deadline date-time, and completion status,
+     * with a default priority of {@code TaskPriority.LOW}.
+     *
+     * @param description The description of the task.
+     * @param by          The date and time by which the task is due.
+     * @param isDone      The completion status of the task.
+     */
+    public Deadline(String description, LocalDateTime by, boolean isDone) {
+        super(description, isDone);
+        this.by = by;
+    }
+
+    /**
+     * Constructs a {@code Deadline} task with the specified description, deadline date-time, completion status, and priority.
+     *
+     * @param description The description of the task.
+     * @param by          The date and time by which the task is due.
+     * @param isDone      The completion status of the task.
+     * @param priority    The priority level of the task.
+     */
+    public Deadline(String description, LocalDateTime by, boolean isDone, TaskPriority priority) {
+        super(description, isDone, priority);
+        this.by = by;
+    }
+
+    /**
      * Retrieves the date and time by which the task is due.
      *
      * @return The due date and time as a {@code LocalDateTime}.

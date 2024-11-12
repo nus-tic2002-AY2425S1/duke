@@ -1,5 +1,7 @@
 package josbot.task;
 
+import josbot.parser.DateTimeParser;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -8,8 +10,11 @@ public class Deadline extends Task {
     protected LocalDateTime by;
 
     protected boolean time;
-    static final DateTimeFormatter FORMATTERDATETIME= DateTimeFormatter.ofPattern("dd MMMM yyyy 'at' hh:mm a");
-    static final DateTimeFormatter FORMATTERDATE= DateTimeFormatter.ofPattern("dd MMMM yyyy");
+    //inspired by https://howtodoinjava.com/java/date-time/java8-datetimeformatter-example/
+    static final DateTimeFormatter FORMATTER_DISPLAY_DATETIME= DateTimeFormatter.ofPattern("dd MMMM yyyy 'at' hh:mm a");
+    static final DateTimeFormatter FORMATTER_DISPLAY_DATE= DateTimeFormatter.ofPattern("dd MMMM yyyy");
+    static final DateTimeFormatter FORMATTER_STORE_DATETIME = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+    static final DateTimeFormatter FORMATTER_STORE_DATE = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 
 //    public Deadline(String description, String by){
@@ -17,46 +22,31 @@ public class Deadline extends Task {
 //        this.by = by;
 //    }
 
-    public Deadline(String description, String deadline_datetime){
+    public Deadline(String description, LocalDateTime by){
         super(description);
-        this.by = convertDateTime(deadline_datetime);
-    }
 
-    private LocalDateTime convertDateTime(String deadline_datetime){
-        String[] datetime = deadline_datetime.split(" ");
-        LocalDateTime dt = null;
-        if(datetime.length == 2)
-        {
-            String[] date = datetime[0].split("/");
-            String hour = datetime[1].substring(0, 2);
-            String minute = datetime[1].substring(2, 4);
-            dt = LocalDateTime.parse(date[2]+"-"+date[1]+"-"+date[0]+"T"+hour+":"+minute);
-            time = true;
-        }
-        else if(datetime.length == 1)
-        {
-
-            String[] date = datetime[0].split("/");
-            dt = LocalDateTime.parse(date[2]+"-"+date[1]+"-"+date[0]+"T00:00");
-            time = false;
-
-        }
-        else
-        {
-            System.out.println("Invalid date & time format! Please use date format (dd-MM-yyyy) or if you want to add time (24-hour format, eg. 1800 is 6PM)");
-        }
-        return dt;
+        DateTimeParser parser = new DateTimeParser();
+        this.by =  by;
     }
 
     public String getBy(){
         if(time)
         {
-            return by.format(FORMATTERDATETIME);
+            return by.format(FORMATTER_DISPLAY_DATETIME);
         }
         else {
-            return by.format(FORMATTERDATE);
+            return by.format(FORMATTER_DISPLAY_DATE);
         }
+    }
 
+    public String getByToStore(){
+        if(time)
+        {
+            return by.format(FORMATTER_STORE_DATETIME);
+        }
+        else {
+            return by.format(FORMATTER_STORE_DATE);
+        }
     }
 
     @Override

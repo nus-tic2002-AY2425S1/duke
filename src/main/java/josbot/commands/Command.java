@@ -1,5 +1,6 @@
 package josbot.commands;
 
+import josbot.JosBotException;
 import josbot.storage.FileStorage;
 import josbot.task.TaskList;
 import josbot.ui.UI;
@@ -19,7 +20,7 @@ public class Command {
         this.exit = false;
     }
 
-    public void execute(TaskList tasks, UI ui, FileStorage file)
+    public void execute(TaskList tasks, UI ui, FileStorage file) throws JosBotException
     {
 
     }

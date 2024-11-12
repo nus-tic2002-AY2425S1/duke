@@ -28,6 +28,8 @@ public class UI {
         switch(error_type){
             case "invalid_command":
                 System.out.println("Invalid Command : No such command found!");
+            case "invalid_datetime_format":
+                System.out.println("Invalid date & time format! Please use date format (dd/MM/yyyy) and if you want to add time, use the time format (24-hour format, eg. 1800 is 6PM)");
         }
     }
 
@@ -81,5 +83,8 @@ public class UI {
         System.out.println("Now you have " + count + " tasks in the list.");
     }
 
+    public void showDateTimeError(){
+        System.out.println("Invalid date & time format! Please use date format (dd/MM/yyyy) and if you want to add time, use the time format (24-hour format, eg. 1800 is 6PM)");
+    }
 
 }

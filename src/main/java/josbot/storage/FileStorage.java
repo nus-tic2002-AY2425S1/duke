@@ -1,6 +1,7 @@
 package josbot.storage;
 
 import josbot.*;
+import josbot.parser.DateTimeParser;
 import josbot.task.*;
 
 import java.io.File;
@@ -34,7 +35,8 @@ public class FileStorage {
             }
             else if(line[0].equals("D"))
             {
-                t = new Deadline(line[2], line[3]);
+                DateTimeParser dt = new DateTimeParser();
+                t = new Deadline(line[2], dt.convertDateTime(line[3]));
             }
             else if(line[0].equals("E"))
             {
@@ -93,7 +95,7 @@ public class FileStorage {
             if(file_list.get(i).getType().equals("D"))
             {
                 Deadline d = (Deadline) file_list.get(i);
-                list_string += ","+d.getBy();
+                list_string += ","+d.getByToStore();
             }
             else if(file_list.get(i).getType().equals("E"))
             {

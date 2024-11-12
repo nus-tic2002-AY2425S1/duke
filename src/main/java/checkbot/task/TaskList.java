@@ -7,6 +7,7 @@ import checkbot.ui.TextUi;
 import checkbot.utils.Messages;
 
 import java.time.DateTimeException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class TaskList {
@@ -18,7 +19,7 @@ public class TaskList {
      * @param input Task description /between time /and time
      * @return Todo object
      * @throws CommandNotFoundException Missing /between or /and command
-     * @throws InvalidInputException Missing description
+     * @throws InvalidInputException Missing description or time, or wrong datetime order
      * @throws NumberFormatException Wrong format of datetime
      * @throws IndexOutOfBoundsException Wrong format of datetime
      * @throws DateTimeException Invalid datetime
@@ -45,7 +46,14 @@ public class TaskList {
             throw new InvalidInputException(Messages.EMPTY_TIME);
         }
 
-        Todo task = new Todo(description, Parser.parseDateTime(startDateTime), Parser.parseDateTime(endDateTime));
+        LocalDateTime start = Parser.parseDateTime(startDateTime);
+        LocalDateTime end = Parser.parseDateTime(endDateTime);
+
+        if (end.isBefore(start)) {
+            throw new InvalidInputException(Messages.DATETIME_ORDER);
+        }
+
+        Todo task = new Todo(description, start, end);
         TaskList.tasks.add(task);
         return task;
     }
@@ -114,7 +122,7 @@ public class TaskList {
      * @param input description /from datetime /to datetime
      * @return Event object
      * @throws CommandNotFoundException Missing /from or /to command
-     * @throws InvalidInputException Empty description / time
+     * @throws InvalidInputException Missing description or time, or wrong datetime order
      * @throws NumberFormatException Wrong format of datetime
      * @throws IndexOutOfBoundsException Wrong format of datetime
      * @throws DateTimeException Invalid datetime
@@ -142,7 +150,14 @@ public class TaskList {
             throw new InvalidInputException(Messages.EMPTY_TIME);
         }
 
-        Event task = new Event(description, Parser.parseDateTime(startDateTime), Parser.parseDateTime(endDateTime));
+        LocalDateTime start = Parser.parseDateTime(startDateTime);
+        LocalDateTime end = Parser.parseDateTime(endDateTime);
+
+        if (end.isBefore(start)) {
+            throw new InvalidInputException(Messages.DATETIME_ORDER);
+        }
+
+        Event task = new Event(description, start, end);
         TaskList.tasks.add(task);
         return task;
     }

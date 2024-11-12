@@ -92,6 +92,10 @@ public class Messages {
             "DD/MM/YYYY HHMM(24H)" + System.lineSeparator() +
             DIVIDER;
 
+    public final static String DATETIME_ORDER = DIVIDER + System.lineSeparator() +
+            "End date/time cannot be earlier than start date/time!" + System.lineSeparator() +
+            DIVIDER;
+
     public final static String INVALID_PRIORITY = DIVIDER + System.lineSeparator() +
             "Please indicate priority:" + System.lineSeparator() +
             "  HIGH" + System.lineSeparator() +

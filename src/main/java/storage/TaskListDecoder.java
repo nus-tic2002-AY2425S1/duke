@@ -6,13 +6,7 @@ import exception.CommandException;
 import exception.FileContentException;
 import exception.TaskListDecoderException;
 import parser.DateTimeParser;
-import task.TaskList;
-import task.Task;
-import task.Todo;
-import task.TaskType;
-import task.Deadline;
-import task.Event;
-import task.FixedDuration;
+import task.*;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -47,14 +41,14 @@ public class TaskListDecoder {
      * @throws CommandException         if an error occurs while processing the command.
      */
     // Solution below referenced from https://github.com/se-edu/addressbook-level2/blob/master/src/seedu/addressbook/storage/AddressBookDecoder.java#L34
-    public static TaskList decodeTaskList(List<String> encodedTaskList)
+    protected static TaskList decodeTaskList(List<String> encodedTaskList)
         throws FileContentException, TaskListDecoderException, CommandException {
         TaskList decodedTasks = new TaskList();
         for (String encodedTask : encodedTaskList) {
             // System.out.println("encodedTask: " + encodedTask);
-            Task task = decodeTaskFromString(encodedTask);
+            Task decodedTask = decodeTaskFromString(encodedTask);
             // System.out.println("Decoded task: " + task);
-            decodedTasks.addTask(task);
+            decodedTasks.addTask(decodedTask);
         }
         return decodedTasks;
     }
@@ -106,11 +100,12 @@ public class TaskListDecoder {
     }
 
     private static boolean getIsDone(String isDoneString) throws FileContentException {
-        boolean isDone;
+        CompletionStatus isDone = CompletionStatus.getStatus(isDoneString);
 
         final String MESSAGE_INVALID_COMPLETION_STATUS = "Task has invalid completion status";
-        final String VALID_COMPLETION_STATUS = "`1` or `0`";
+        final String VALID_COMPLETION_STATUS = CompletionStatus.getValidStatus();
 
+        /*
         isDone = switch (isDoneString) {
             case "1" -> true;
             case "0" -> false;
@@ -119,8 +114,9 @@ public class TaskListDecoder {
                 String.format("Expected %s", VALID_COMPLETION_STATUS)
             );
         };
+        */
 
-        return isDone;
+        return isDone == CompletionStatus.DONE;
     }
 
     private static void validateTaskDataLength(int taskDataLength, TaskType taskType,
@@ -168,6 +164,7 @@ public class TaskListDecoder {
 
         Task task;
         TaskType taskType = getTaskType(taskData[0].trim());
+//        CompletionStatus isDone = getIsDone(taskData[1].trim());
         boolean isDone = getIsDone(taskData[1].trim());
         String description = taskData[2].trim();
 

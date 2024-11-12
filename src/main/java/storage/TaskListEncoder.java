@@ -23,7 +23,7 @@ public class TaskListEncoder {
      * @param taskList represents the {@code TaskList} to be encoded.
      * @return a list of strings representing the encoded tasks.
      */
-    public static List<String> encodeTaskList(TaskList taskList) {
+    protected static List<String> encodeTaskList(TaskList taskList) {
         final List<String> encodedTasks = new ArrayList<>();
         for (Task task : taskList.getTaskList()) {
             encodedTasks.add(encodeTaskToString(task));

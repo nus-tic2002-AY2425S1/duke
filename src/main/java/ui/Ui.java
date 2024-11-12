@@ -17,8 +17,6 @@ import java.util.Scanner;
  */
 public class Ui {
 
-    private static final String LINE = "____________________________________________________________";
-
     private final Scanner in;
 
     /**
@@ -31,14 +29,13 @@ public class Ui {
     /**
      * Formats a string to create a specified number of leading spaces.
      *
-     * @param numberOfSpace the number of spaces to format.
+     * @param numberOfSpaces the number of spaces to format.
      * @return a string containing the specified number of leading spaces.
      */
     // Solution below adapted from https://stackoverflow.com/questions/1073787/print-spaces-with-string-format
     // https://stackoverflow.com/questions/69576641/why-would-you-use-a-stringbuilder-method-over-a-string-in-java
-    public String formatSpace(int numberOfSpace) {
-        // String space = String.format("%" + numberOfSpace + "s", "");
-        String format = Constants.PERCENT + numberOfSpace + Constants.S;
+    public String formatSpace(int numberOfSpaces) {
+        String format = Constants.PERCENT + numberOfSpaces + Constants.S;
         return String.format(format, Constants.EMPTY_STRING);
     }
 
@@ -54,12 +51,12 @@ public class Ui {
     public String getSpace(boolean isLine, boolean isTask) {
         // If space is to come before a horizontal line, use "    "
         if (isLine && !isTask) {
-            return formatSpace(4);      // Space before horizontal line
+            return formatSpace(Constants.FOUR);      // Space before horizontal line
         } else if (!isLine && isTask) {        // If space is to come before a line of text, use "     "
             // For printing task
-            return formatSpace(7);      // Space before task text
-        } else if (!isLine && !isTask) {
-            return formatSpace(5);      // General space
+            return formatSpace(Constants.TWO);      // Space before task text
+        } else if (!isLine) {
+            return formatSpace(Constants.FIVE);      // General space
         } else {
             return Constants.EMPTY_STRING;      // No space
         }
@@ -72,14 +69,9 @@ public class Ui {
      */
     public String getLine() {
         String space = getSpace(true, false);
-        return space + LINE;
-    }
-
-    /**
-     * Displays a horizontal line in the command-line.
-     */
-    public void showLine() {
-        System.out.println(getLine());
+        // Inspired by https://www.baeldung.com/java-string-of-repeated-characters
+        String line = Constants.UNDERSCORE.repeat(Constants.SIXTY);
+        return space + line;
     }
 
     /**
@@ -93,7 +85,7 @@ public class Ui {
     public <T> void printMessage(T messages) {
         // System.out.println("In printMessage");
         String line = getLine();        // includes space before line
-        String space = getSpace(false, false);
+        String space = getSpace(false, false);          // formatSpace(5)
 
         // StringBuilder stringBuilder = new StringBuilder();
         StringBuilder stringBuilder = new StringBuilder().append(line).append(Constants.NEW_LINE);
@@ -106,11 +98,7 @@ public class Ui {
             for (int i = 0; i < Array.getLength(messages); i++) {
                 stringBuilder.append(space).append(Array.get(messages, i)).append(Constants.NEW_LINE);
             }
-        }
-
-        // Checks if the messageList is an ArrayList. Iterates and appends each item to the StringBuilder
-        // https://stackoverflow.com/questions/14674027/checking-if-object-is-instance-of-listobject
-        else if (messages instanceof ArrayList<?>) {
+        } else if (messages instanceof ArrayList<?>) {        // Checks if the messageList is an ArrayList. Iterates and appends each item to the StringBuilder. Reference: https://stackoverflow.com/questions/14674027/checking-if-object-is-instance-of-listobject
             for (int i = 0; i < ((ArrayList<?>) messages).size(); i++) {
                 stringBuilder.append(space).append(((ArrayList<?>) messages).get(i)).append(Constants.NEW_LINE);
             }
@@ -153,15 +141,13 @@ public class Ui {
     public String readInput() throws CommandException {
         String userInput;
         // Keep asking for input until a non-empty string is entered
-        do {
-            userInput = in.nextLine().trim(); // Read and trim the input
-            if (userInput.isEmpty()) {
-                throw new CommandException(
-                    Messages.ERROR_EMPTY_INPUT,
-                    Messages.VALID_COMMANDS
-                );
-            }
-        } while (userInput.isEmpty());          // Continue looping as long as the input is empty
+        userInput = in.nextLine().trim(); // Read and trim the input
+        if (userInput.isEmpty()) {
+            throw new CommandException(
+                Messages.ERROR_EMPTY_INPUT,
+                Messages.VALID_COMMANDS
+            );
+        }
         return userInput;       // Return the valid non-empty user input
     }
 

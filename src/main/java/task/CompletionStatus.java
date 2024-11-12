@@ -23,7 +23,7 @@ public enum CompletionStatus {
                 return completionStatus;
             }
         }
-        throw new IllegalArgumentException("No constant with text " + status + " found");
+        throw new IllegalArgumentException();
     }
 
     public static String getValidStatus() {

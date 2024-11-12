@@ -7,6 +7,10 @@ package exception;
  */
 public class FileContentException extends JavaroException {
 
+    public FileContentException(String errorMessage) {
+        super(errorMessage);
+    }
+
     /**
      * Constructs a FileContentException with the specified error message,
      * additional information, and usage instructions.

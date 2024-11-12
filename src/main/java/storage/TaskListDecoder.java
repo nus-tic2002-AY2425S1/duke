@@ -100,21 +100,17 @@ public class TaskListDecoder {
     }
 
     private static boolean getIsDone(String isDoneString) throws FileContentException {
-        CompletionStatus isDone = CompletionStatus.getStatus(isDoneString);
 
+        CompletionStatus isDone;
         final String MESSAGE_INVALID_COMPLETION_STATUS = "Task has invalid completion status";
-        final String VALID_COMPLETION_STATUS = CompletionStatus.getValidStatus();
 
-        /*
-        isDone = switch (isDoneString) {
-            case "1" -> true;
-            case "0" -> false;
-            default -> throw new FileContentException(MESSAGE_INVALID_COMPLETION_STATUS,
-                String.format("Received `%s`", isDoneString),
-                String.format("Expected %s", VALID_COMPLETION_STATUS)
-            );
-        };
-        */
+        try {
+            isDone = CompletionStatus.getStatus(isDoneString);
+        } catch (IllegalArgumentException e) {
+            throw new FileContentException(MESSAGE_INVALID_COMPLETION_STATUS);
+        }
+
+        final String VALID_COMPLETION_STATUS = CompletionStatus.getValidStatus();
 
         return isDone == CompletionStatus.DONE;
     }
@@ -164,7 +160,6 @@ public class TaskListDecoder {
 
         Task task;
         TaskType taskType = getTaskType(taskData[0].trim());
-//        CompletionStatus isDone = getIsDone(taskData[1].trim());
         boolean isDone = getIsDone(taskData[1].trim());
         String description = taskData[2].trim();
 

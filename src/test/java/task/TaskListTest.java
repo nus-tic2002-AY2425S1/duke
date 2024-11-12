@@ -194,7 +194,7 @@ public class TaskListTest {
     @Test
     public void getTaskWord_noTasks_returnsSingular() {
         assertTrue(emptyTaskList.isTaskListEmpty(), "Task list has no tasks");
-        assertEquals(" task", emptyTaskList.getTaskWord());
+        assertEquals(" tasks", emptyTaskList.getTaskWord());
     }
 
     @Test

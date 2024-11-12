@@ -19,10 +19,40 @@ import java.util.regex.Pattern;
 //Solution below inspired by https://github.com/se-edu/addressbook-level2/blob/master/src/seedu/addressbook/storage/AddressBookDecoder.java
 public class TaskListDecoder {
     public static final Pattern TASK_PATTERN = Pattern.compile(
-            "(?<taskType>[TDE]) \\| (?<taskStatus>[01]) \\| (?<description>[^|]+)"
+            "(?<taskType>[TDE]) \\| (?<taskPriority>[LMH]) \\| (?<taskStatus>[01]) \\| (?<taskDescription>[^|]+)"
                     + "(?: \\| (?<by>[^|]+))?"   // Optional by for D
                     + "(?: \\| (?<from>[^|]+) \\| (?<to>[^|]+))?" // Optional from and to for E
     );
+
+    /**
+     * Decodes a single encoded task string into a {@code Task} object.
+     *
+     * @param encodedTask The encoded task string.
+     * @return A {@code Task} representing the decoded task.
+     * @throws FileContentException If the encoded task has an invalid format.
+     */
+    public static Task decodeTaskFromString(String encodedTask) throws FileContentException {
+        final Matcher matcher = TASK_PATTERN.matcher(encodedTask);
+        if (!matcher.matches()) {
+            throw new FileContentException(
+                    Messages.MESSAGE_INVALID_TASK_ENCODED_FORMAT,
+                    String.format("EncodedTask='%s'", encodedTask)
+            );
+        }
+
+        try {
+            return getTask(matcher);
+        } catch (FileContentException e) {
+            e.setDetail(String.format("EncodedTask='%s'", encodedTask));
+            throw e;
+        } catch (TaskFormatException e) {
+            throw new FileContentException(
+                    e.getMessage(),
+                    String.format("EncodedTask='%s'", encodedTask),
+                    e.getHelp()
+            );
+        }
+    }
 
     /**
      * Decodes a list of encoded task strings into a {@code TaskList}.
@@ -40,56 +70,22 @@ public class TaskListDecoder {
     }
 
     /**
-     * Decodes a single encoded task string into a {@code Task} object.
+     * Converts a matched encoded task pattern into a specific {@code Task} object based on its type.
      *
-     * @param encodedTask The encoded task string.
-     * @return A {@code Task} representing the decoded task.
-     * @throws FileContentException If the encoded task has an invalid format.
+     * @param matcher The regex matcher with captured task data groups.
+     * @return The appropriate {@code Task} object (ToDo, Deadline, or Event) based on the task type.
+     * @throws FileContentException If required fields for the task type are missing or invalid.
+     * @throws TaskFormatException  If there is an error in parsing the task date-time fields.
      */
-    public static Task decodeTaskFromString(String encodedTask) throws FileContentException {
-        final Matcher matcher = TASK_PATTERN.matcher(encodedTask);
-        if (!matcher.matches()) {
-            throw new FileContentException(
-                    Messages.MESSAGE_INVALID_TASK_ENCODED_FORMAT,
-                    String.format("EncodedTask='%s'", encodedTask)
-            );
-        }
+    private static Task getTask(Matcher matcher) throws FileContentException, TaskFormatException {
         TaskType taskType = TaskType.fromCode(matcher.group("taskType"));
-        int taskStatus = Integer.parseInt(matcher.group("taskStatus"));
-        try {
-            Task task = getTask(matcher, taskType);
+        String taskDescription = matcher.group("taskDescription");
+        TaskPriority taskPriority = TaskPriority.fromCode(matcher.group("taskPriority"));
+        boolean taskStatus = "1".equals(matcher.group("taskStatus"));
 
-            if (taskStatus == 1) {
-                task.markAsDone();
-            }
-            return task;
-        } catch (FileContentException e) {
-            e.setDetail(String.format("EncodedTask='%s'", encodedTask));
-            throw e;
-        } catch (TaskFormatException e) {
-            throw new FileContentException(
-                    e.getMessage(),
-                    String.format("EncodedTask='%s'", encodedTask),
-                    e.getHelp()
-            );
-        }
-
-    }
-
-    /**
-     * Creates a {@code Task} from matched data using the specified {@code TaskType}.
-     *
-     * @param matcher  The matcher containing the encoded task data.
-     * @param taskType The type of the task (ToDo, Deadline, Event).
-     * @return A {@code Task} representing the decoded task.
-     * @throws FileContentException If required fields are missing or invalid for the task type.
-     * @throws TaskFormatException  If there is an error parsing task date formats.
-     */
-    private static Task getTask(Matcher matcher, TaskType taskType) throws FileContentException, TaskFormatException {
-        String description = matcher.group("description");
         Task task;
         switch (taskType) {
-            case TODO -> task = new ToDo(description);
+            case TODO -> task = new ToDo(taskDescription, taskStatus, taskPriority);
             case DEADLINE -> {
                 String by = matcher.group("by");
                 if (by == null) {
@@ -98,7 +94,7 @@ public class TaskListDecoder {
                     );
                 }
                 LocalDateTime dateTime = TimeParser.parseDateTime(by);
-                task = new Deadline(description, dateTime);
+                task = new Deadline(taskDescription, dateTime, taskStatus, taskPriority);
             }
             case EVENT -> {
                 String from = matcher.group("from");
@@ -110,7 +106,7 @@ public class TaskListDecoder {
                 }
                 LocalDateTime fromDateTime = TimeParser.parseDateTime(from);
                 LocalDateTime toDateTime = TimeParser.parseDateTime(to);
-                task = new Event(description, fromDateTime, toDateTime);
+                task = new Event(taskDescription, fromDateTime, toDateTime, taskStatus, taskPriority);
             }
             default -> throw new AssertionError("An invalid task type scenario is already handled earlier.");
         }

@@ -3,7 +3,6 @@ package exception;
 /**
  * Throws StorageOperationException when an error occurs during storage operations,
  * e.g. loading tasks to TaskList, saving tasks to storage, etc.
- * <p>
  * This class extends {@link JavaroException} to provide specific error handling
  * related to storage operations within the Javaro application.
  * It allows for the inclusion of additional information

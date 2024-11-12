@@ -2,7 +2,6 @@ package exception;
 
 /**
  * Represents an exception that occurs due to issues with the content of a file in the Javaro application.
- * <p>
  * The FileContentException class extends the JavaroException to provide specific error handling
  * for issues related to file content, such as invalid formats, missing data, or corruption.
  */

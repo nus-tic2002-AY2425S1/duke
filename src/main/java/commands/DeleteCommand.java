@@ -63,7 +63,7 @@ public class DeleteCommand extends Command {
         if (isDeletedSuccess) {
             storage.saveTasks(taskList);
             messages = new String[]{MESSAGE_DELETE_SUCCESS_PRE,
-                ui.formatSpace(Constants.TWO) + taskToDelete, MESSAGE_DELETE_SUCCESS_POST};
+                ui.getSpace(false, true) + taskToDelete, MESSAGE_DELETE_SUCCESS_POST};
         }
 
         ui.printMessage(messages);

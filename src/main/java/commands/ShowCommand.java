@@ -2,19 +2,12 @@ package commands;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 import common.Constants;
+import common.Messages;
 import storage.Storage;
-import task.Deadline;
-import task.Event;
-import task.Task;
 import task.TaskList;
 import ui.Ui;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents a command to show all deadlines and events that are scheduled on a specific date.
@@ -30,6 +23,7 @@ public class ShowCommand extends Command {
     public static final String MESSAGE_EMPTY_LIST = "You have no" + SPACE + DEADLINES_EVENTS_ON + SPACE;
 
     protected final LocalDate date;
+
     /**
      * Constructs a ShowCommand with the specified date.
      * 
@@ -57,7 +51,10 @@ public class ShowCommand extends Command {
     public void execute(TaskList taskList, Ui ui, Storage storage) {
 
         LocalDate date = getDate();
-        final String MESSAGE_SHOW_SUCCESS_PRE = "Here are the" + SPACE + DEADLINES_EVENTS_ON + SPACE + date + Constants.COLON;
+
+        // Here are the deadlines / events on <date>:
+        final String MESSAGE_SHOW_SUCCESS_PRE =
+            Messages.HERE_ARE_THE + SPACE + DEADLINES_EVENTS_ON + SPACE + date + Constants.COLON;
 
         // Retrieve all tasks scheduled on the specified date
         // Sort the tasks by their LocalDateTime

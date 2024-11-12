@@ -1,13 +1,12 @@
 package commands;
 
 import common.Constants;
+import common.Messages;
 import storage.Storage;
-import task.Task;
 import task.TaskList;
 import ui.Ui;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents a command to find tasks in a task list based on a specified description.
@@ -16,9 +15,13 @@ import java.util.List;
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE + Constants.DESCRIPTION_IN_ANGLE_BRACKETS;
-    private static final String MESSAGE_EMPTY_LIST = "There are no matching tasks in your list.";
-    private static final String MESSAGE_SHOW_SUCCESS_PRE = "Here are the matching tasks in your list:";
+    private static final String MATCHING_TASKS = "matching tasks";
+    private static final String MESSAGE_EMPTY_LIST =
+        "There are no " + MATCHING_TASKS + Messages.MESSAGE_IN_YOUR_LIST + Constants.DOT;
+    private static final String MESSAGE_SHOW_SUCCESS_PRE =
+        Messages.HERE_ARE_THE + SPACE + MATCHING_TASKS + Messages.MESSAGE_IN_YOUR_LIST_COLON;
 
     private final String description;
 

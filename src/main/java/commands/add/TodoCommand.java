@@ -14,6 +14,7 @@ public class TodoCommand extends AddTaskCommand {
 
     public static final String COMMAND_WORD = "todo";
 
+    // todo <description>
     public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE + DESCRIPTION_IN_ANGLE_BRACKETS;
 
     /**

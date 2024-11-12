@@ -87,7 +87,7 @@ public abstract class AddTaskCommand extends Command {
 
         final String MESSAGE_ADD_SUCCESS_POST = preparePostSuccessMessage(taskList);
 
-        String[] messages = {MESSAGE_ADD_SUCCESS_PRE, ui.formatSpace(Constants.TWO) + task, MESSAGE_ADD_SUCCESS_POST};
+        String[] messages = {MESSAGE_ADD_SUCCESS_PRE, ui.getSpace(false, true) + task, MESSAGE_ADD_SUCCESS_POST};
 
         // Print the success message to the user
         ui.printMessage(messages);

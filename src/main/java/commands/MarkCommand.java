@@ -54,15 +54,17 @@ public class MarkCommand extends Command {
 
         Task taskToMark = taskList.getTaskForOperation(getTaskNumber());
 
-        final String MESSAGE_ALREADY_MARKED = "The task `" + taskToMark +
-            "` is already marked as done. No action done.";
+        // The task `[T][X] read book` is already marked as done. No action done.
+        final String MESSAGE_ALREADY_MARKED = Messages.THE_TASK + SPACE + Constants.BACKTICK + taskToMark +
+            Constants.BACKTICK + SPACE + Messages.ALREADY_MARKED_AS + SPACE + Messages.DONE +
+            Constants.DOT + SPACE + Messages.NO_ACTION_DONE;
 
         String[] messages;
 
         boolean isMarkedSuccess = taskList.markTask(taskToMark);
         if (isMarkedSuccess) {
             storage.saveTasks(taskList);
-            messages = new String[]{MESSAGE_MARK_SUCCESS, ui.formatSpace(Constants.TWO) + taskToMark};
+            messages = new String[]{MESSAGE_MARK_SUCCESS, ui.getSpace(false, true) + taskToMark};
         } else {
             messages = new String[]{MESSAGE_ALREADY_MARKED};
         }

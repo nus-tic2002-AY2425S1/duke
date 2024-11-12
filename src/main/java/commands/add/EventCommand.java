@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 public class EventCommand extends AddTaskCommand {
     public static final String COMMAND_WORD = "event";
 
+    // event <description> / from <start date/ time> / to <end date/ time>
     public static final String MESSAGE_USAGE = COMMAND_WORD + SPACE +
         DESCRIPTION_IN_ANGLE_BRACKETS + SPACE + Constants.SLASH_FROM + SPACE +
         Constants.START_DATE_TIME_IN_ANGLE_BRACKETS + SPACE + Constants.SLASH_TO + SPACE +

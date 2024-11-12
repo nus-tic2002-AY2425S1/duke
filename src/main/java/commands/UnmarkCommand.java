@@ -11,7 +11,6 @@ import ui.Ui;
 
 /**
  * Represents a command to unmark a task in the task list.
- * <p>
  * The UnmarkCommand class is responsible for updating the status of a
  * specified task in the task list to indicate that it has not been completed.
  * It provides feedback to the user about the result of the operation.
@@ -57,8 +56,10 @@ public class UnmarkCommand extends Command {
 
         Task taskToUnmark = taskList.getTaskForOperation(getTaskNumber());
 
-        final String MESSAGE_ALREADY_UNMARKED = "The task `" + taskToUnmark +
-            "` is already marked as not done. No action done.";
+        // The task `[D][ ] return pen (by: Jan 01 2024 0000)` is already marked as not done. No action done.
+        final String MESSAGE_ALREADY_UNMARKED = Messages.THE_TASK + SPACE + Constants.BACKTICK +
+            taskToUnmark + Constants.BACKTICK + SPACE + Messages.ALREADY_MARKED_AS + SPACE +
+            Messages.NOT + SPACE + Messages.DONE + Constants.DOT + SPACE + Messages.NO_ACTION_DONE;
 
         String[] messages;
 
@@ -66,7 +67,7 @@ public class UnmarkCommand extends Command {
 
         if (isUnmarkedSuccess) {
             storage.saveTasks(taskList);
-            messages = new String[]{MESSAGE_UNMARK_SUCCESS, ui.formatSpace(Constants.TWO) + taskToUnmark};
+            messages = new String[]{MESSAGE_UNMARK_SUCCESS, ui.getSpace(false, true) + taskToUnmark};
         } else {
             messages = new String[]{MESSAGE_ALREADY_UNMARKED};
         }

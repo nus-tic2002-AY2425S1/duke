@@ -66,9 +66,9 @@ public class UpdatePriorityCommand extends Command {
         try {
             int taskIndex = taskNumber - 1;
             Task task = taskList.getTask(taskIndex);
-            boolean updated = taskList.setTaskPriority(taskIndex, priority);
+            boolean isUpdated = taskList.setTaskPriority(taskIndex, priority);
 
-            if (updated) {
+            if (isUpdated) {
                 storage.save(taskList);
                 ui.printMessages(
                         MESSAGE_SUCCESS,

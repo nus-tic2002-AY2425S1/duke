@@ -81,11 +81,11 @@ public class TaskListDecoder {
         TaskType taskType = TaskType.fromCode(matcher.group("taskType"));
         String taskDescription = matcher.group("taskDescription");
         TaskPriority taskPriority = TaskPriority.fromCode(matcher.group("taskPriority"));
-        boolean taskStatus = "1".equals(matcher.group("taskStatus"));
+        boolean isDone = "1".equals(matcher.group("taskStatus"));
 
         Task task;
         switch (taskType) {
-            case TODO -> task = new Todo(taskDescription, taskStatus, taskPriority);
+            case TODO -> task = new Todo(taskDescription, isDone, taskPriority);
             case DEADLINE -> {
                 String by = matcher.group("by");
                 if (by == null) {
@@ -94,7 +94,7 @@ public class TaskListDecoder {
                     );
                 }
                 LocalDateTime dateTime = TimeParser.parseDateTime(by);
-                task = new Deadline(taskDescription, dateTime, taskStatus, taskPriority);
+                task = new Deadline(taskDescription, dateTime, isDone, taskPriority);
             }
             case EVENT -> {
                 String from = matcher.group("from");
@@ -106,7 +106,7 @@ public class TaskListDecoder {
                 }
                 LocalDateTime fromDateTime = TimeParser.parseDateTime(from);
                 LocalDateTime toDateTime = TimeParser.parseDateTime(to);
-                task = new Event(taskDescription, fromDateTime, toDateTime, taskStatus, taskPriority);
+                task = new Event(taskDescription, fromDateTime, toDateTime, isDone, taskPriority);
             }
             default -> throw new AssertionError("An invalid task type scenario is already handled earlier.");
         }

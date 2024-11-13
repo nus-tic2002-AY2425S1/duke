@@ -3,7 +3,11 @@ package mochi.tasks;
 import mochi.common.DateTime;
 
 import java.time.LocalDateTime;
-
+/**
+ * The Event class represents a task with a specific start date and end date.
+ * It includes methods to compare the deadline to another date, format it for display,
+ * and convert it to a database-compatible format.
+ */
 public class Event extends Task {
   protected LocalDateTime _from;
   protected LocalDateTime _to;
@@ -20,7 +24,7 @@ public class Event extends Task {
   }
   @Override
   public String toString() {
-    return "[" + _type + "]" + super.toString() + " (from: " + _from + " to: "+ _to +  ")";
+    return "[" + _type + "]" + super.toString() + " (from: " + DateTime.toString(_from) + " to: "+ DateTime.toString(_to) +  ")";
   }
   @Override
   public boolean compare(String op, String date) {

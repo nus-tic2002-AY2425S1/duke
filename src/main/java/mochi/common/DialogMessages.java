@@ -1,6 +1,10 @@
 package mochi.common;
 import mochi.Mochi;
-
+/**
+ * DialogMessages is an enumeration of common messages used for user interaction.
+ * Each enum constant represents a message string, making it easy to manage and access
+ * consistent dialog messages throughout the application.
+ */
 public enum DialogMessages {
    GREETINGS("Hello! I'm " + Mochi._name + System.lineSeparator()
      + "What can I do for you?"),

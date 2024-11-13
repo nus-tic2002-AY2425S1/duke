@@ -10,47 +10,45 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class InputProcessor {
-  private Command cmd;
+  private final TaskList taskList;
   public InputProcessor(TaskList taskList) {
-    cmd = new Command(taskList);
+    this.taskList = taskList;
   }
   public void processInput(String input) throws MochiException {
-    processInput(input," ");
+    processInput(input, " ");
   }
   public void processInput(String input,String delimiter) throws MochiException {
     String[] token = input.split(delimiter);
-    CommandEnum command = CommandEnum.getValue(token[0]);
-    switch (command) {
+    CommandEnum cmdType = CommandEnum.getValue(token[0]);
+    Command cmd = null;
+    switch (cmdType) {
       case DELETE:
-        cmd.deleteTask(token);
+        cmd = new DeleteTaskCommand(taskList, token);
         break;
       case MARK:
-        cmd.markTask(token);
+        cmd = new MarkTaskCommand(taskList, token);
         break;
       case UNMARK:
-        cmd.unMarkTask(token);
+        cmd = new UnMarkTaskCommand(taskList, token);
         break;
       case BYE:
         Ui.response(DialogMessages.BYE.getValue());
         break;
       case LIST:
-        if (token.length == 1) {
-          cmd.listTask();
+        if (token.length < 3) {
+          cmd = new ListTaskCommand(taskList,token);
         }
         else {
           String tmpDate = "";
           if (Objects.equals(token[2], "/before")) {
-            tmpDate = Utils.trimStringArrayWithStartEnd(token,"/before",""," ");
+            tmpDate = Utils.trimStringArrayWithStartEnd(token, "/before", "", " ");
           }
           if (Objects.equals(token[2], "/after")) {
-            tmpDate = Utils.trimStringArrayWithStartEnd(token,"/after",""," ");
+            tmpDate = Utils.trimStringArrayWithStartEnd(token, "/after", "", " ");
           }
           LocalDateTime isDate = DateTime.parse(tmpDate);
           if (isDate != null) {
-            cmd.listTask(token[1],token[2],tmpDate);
-          }
-          else {
-            Ui.response(tmpDate + " " + DialogMessages.INVALID_TASK.getValue());
+            cmd = new ListTaskCommand(taskList, token);
           }
         }
 
@@ -60,7 +58,7 @@ public class InputProcessor {
         String by = Utils.trimStringArrayWithStartEnd(token,"/by",""," ");
         LocalDateTime isDate = DateTime.parse(by);
         if (isDate != null) {
-          cmd.addTask(new Deadline(d_name,by));
+          cmd = new AddTaskCommand(this.taskList,new Deadline(d_name,by));
         } else {
           Ui.response("/by " + DialogMessages.INVALID_TASK.getValue());
         }
@@ -73,7 +71,7 @@ public class InputProcessor {
         LocalDateTime isFromDate = DateTime.parse(from);
         LocalDateTime isToDate = DateTime.parse(to);
         if ((isFromDate != null) && (isToDate != null)) {
-          cmd.addTask(new Event(e_name,from,to));
+          cmd = new AddTaskCommand(this.taskList,new Event(e_name,from,to));
         } else if (isFromDate == null) {
           Ui.response("/from " + DialogMessages.INVALID_TASK.getValue());
         } else {
@@ -82,10 +80,13 @@ public class InputProcessor {
         break;
       case TODO:
         String t_name = Utils.trimStringArrayWithStartEnd(token,"todo",""," ");
-        cmd.addTask(new Todo(t_name));
+        cmd = new AddTaskCommand(this.taskList,new Todo(t_name));
         break;
       default:
         throw new MochiException(DialogMessages.INPUT_UNKNOWN.getValue());
+    }
+    if(cmd != null) {
+      cmd.execute();
     }
   }
 }

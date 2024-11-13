@@ -2,8 +2,11 @@ package mochi.ui;
 
 public class Ui {
   public static void response(String input) {
-    System.out.println("____________________________________________________________");
+    printDivier();
     System.out.println(input);
+    printDivier();
+  }
+  public static void printDivier() {
     System.out.println("____________________________________________________________");
   }
 }

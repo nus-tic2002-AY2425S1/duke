@@ -1,10 +1,23 @@
 package mochi.common;
-
+/**
+ * The Utils class contains common utility that can be used within the project
+ */
 public class Utils {
-  public static String trimStringArrayWithStartEnd(String[] s, String start, String end, String delimiter) {
+  /**
+   * Trims and concatenates elements from a string array, starting from a specified element and ending
+   * before another specified element. Elements are concatenated with a given delimiter.
+   *
+   * @param string         the array of strings to process.
+   * @param start     the starting string from which to begin concatenation (inclusive).
+   * @param end       the ending string where concatenation stops (exclusive).
+   * @param delimiter the delimiter to use between concatenated elements.
+   * @return a trimmed string of concatenated elements from the array, or an empty string if
+   *         the start element is not found.
+   */
+  public static String trimStringArrayWithStartEnd(String[] string, String start, String end, String delimiter) {
     String body = "";
     boolean shouldCopy = false;
-    for (String i : s) {
+    for (String i : string) {
       if (!end.isEmpty() && i.equals(end))
         break;
       if(shouldCopy) {

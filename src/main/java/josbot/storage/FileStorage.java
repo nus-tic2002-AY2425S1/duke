@@ -22,10 +22,11 @@ public class FileStorage {
     /**
      *
      * Used to load specific file and return the content as ArrayList<Task>
+     * This method is usually triggered when the program first launches
      *
-     * @return
-     * @throws JosBotException
-     * @throws FileNotFoundException
+     * @return ArrayList<Task>
+     * @throws JosBotException when there are JosBotException error coming from convertDateTime method
+     * @throws FileNotFoundException when file is not found in the specified file path
      */
     public ArrayList<Task> load() throws JosBotException, FileNotFoundException {
         ArrayList<Task> load_list = new ArrayList<>();

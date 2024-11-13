@@ -3,7 +3,9 @@ package josbot.parser;
 import josbot.JosBotException;
 import josbot.ui.UI;
 
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 
 public class DateTimeParser {
 
@@ -12,10 +14,13 @@ public class DateTimeParser {
      * Convert date/date & time in String format to LocalDateTime format
      *
      *
-     * @param deadline_datetime
+     * @param Deadline datetime in String format
      * @return Converted date/date & time in LocalDateTime format
+     * @throws DateTimeException If date or time specified does not exist
+     * @throws JosBotException If the datetime specified by user is in the wrong format
+     * For example, it needs to be in dd/MM/yyyy format
      */
-    public LocalDateTime convertDateTime(String deadline_datetime) throws IndexOutOfBoundsException, JosBotException {
+    public LocalDateTime convertDateTime(String deadline_datetime) throws IndexOutOfBoundsException, JosBotException, DateTimeException {
         String[] datetime = deadline_datetime.split(" ");
         LocalDateTime dt = null;
         UI ui = new UI();
@@ -29,7 +34,7 @@ public class DateTimeParser {
                 String[] date = datetime[0].split("/");
                 dt = LocalDateTime.parse(date[2] + "-" + date[1] + "-" + date[0] + "T00:00");
             } else {
-                throw new JosBotException("");
+                throw new JosBotException("invalid_datetime_format");
             }
         return dt;
     }

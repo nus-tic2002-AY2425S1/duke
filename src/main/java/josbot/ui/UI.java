@@ -31,10 +31,10 @@ public class UI {
                 System.out.println("Invalid Command : No such command found!");
                 break;
             case "invalid_datetime_format":
-                System.out.println("Invalid date & time format! Please use date format (dd/MM/yyyy) and if you want to add time, use the time format (24-hour format, eg. 1800 is 6PM)");
+                System.out.println("Invalid date & time format! Please use date format (dd/MM/yyyy) and if you want to add time,\nuse the time format (24-hour format, eg. 1800 is 6PM)");
                 break;
             case "invalid_tag":
-                System.out.println("Invalid tag detected! Please use the correct tag format ('tag task_list_number tag_description')");
+                System.out.println("Invalid tag detected! Please use the correct tag format\nfor tag use 'tag task_list_number tag_description')\n for untag use ('untag task_list_numer')");
                 break;
             case "missing_description":
                 System.out.println("Missing description detected! Please specify the description of the task");
@@ -110,7 +110,11 @@ public class UI {
     }
 
     public void showDateTimeError(){
-        System.out.println("Invalid date & time format! Please use date format (dd/MM/yyyy) and if you want to add time, use the time format (24-hour format, eg. 1800 is 6PM)");
+        System.out.println("Invalid date & time format! Please use date format (dd/MM/yyyy) and if you want to add time,\nuse the time format (24-hour format, eg. 1800 is 6PM)");
+    }
+
+    public void showInvalidDateTime(){
+        System.out.println("Invalid date & time detected! Please make sure that the date or time you've listed is correct");
     }
 
     public void showIndexOutofBoundError(){

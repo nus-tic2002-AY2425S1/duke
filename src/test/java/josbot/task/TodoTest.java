@@ -5,12 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TodoTest {
 
     @Test
-    public void dummyTest() {
-        assertEquals(2, 2);
+    public void testTodoToString() {
+        assertEquals("[T][ ] plan holiday", new Todo("plan holiday").toString());
     }
 
-    @Test
-    public void anotherDummyTest() {
-        assertEquals(4, 4);
-    }
 }

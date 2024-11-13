@@ -1,9 +1,6 @@
-D,1,return book,13/11/2024
-E,1,project meeting,Mon 2pm,4pm
-T,1,homework
-D,0,return book,02/01/2019
-D,0,return file,01/02/2024,1800
-D,0,homework,01/02/2024,1700
-D,0,homework 1,01/02/2024,1800
-D,0,homework 2,01/02/2024,1900
-D,1,return mouse,01/02/2024
+T,0,study for TIC2002
+D,0,submit TIC2002 Report,17/11/2024,2359#school
+E,0,Work,Mon 2pm,5pm
+D,1,submit TIC2901 Report,17/11/2024
+D,0,exam day,30/11/2024
+D,0,buy air ticket,12/12/2024,2359

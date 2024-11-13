@@ -1,6 +1,8 @@
 package josbot;
 
 import java.io.FileNotFoundException;
+import java.time.DateTimeException;
+
 import josbot.commands.Command;
 import josbot.commands.ReminderCommand;
 import josbot.parser.Parser;
@@ -13,6 +15,7 @@ public class JosBot {
     private UI ui;
     private FileStorage fileStorage;
     private TaskList taskList;
+    private static String filepath = "src/data/JosBotList.txt";
 
     public JosBot(String filePath)
     {
@@ -48,6 +51,9 @@ public class JosBot {
             } catch(IndexOutOfBoundsException e) {
                 ui.showIndexOutofBoundError();
             }
+              catch(DateTimeException e) {
+                ui.showInvalidDateTime();
+            }
              finally {
                 ui.showGreeting("Dash");
             }
@@ -56,7 +62,6 @@ public class JosBot {
     }
 
     public static void main(String[] args) {
-        String filepath = "src/data/JosBotList.txt";
         new JosBot(filepath).run();
     }
 }

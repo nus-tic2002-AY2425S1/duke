@@ -50,13 +50,6 @@ public abstract class Task {
     }
 
     /**
-     * Encodes the task into a string format suitable for file storage.
-     *
-     * @return A {@code String} representing the encoded task.
-     */
-    public abstract String encode();
-
-    /**
      * Retrieves the description of the task.
      *
      * @return The description of the task as a {@code String}.

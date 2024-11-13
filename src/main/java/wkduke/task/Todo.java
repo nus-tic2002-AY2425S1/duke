@@ -39,20 +39,6 @@ public class Todo extends Task {
     }
 
     /**
-     * Encodes the {@code Todo} task into a string format for file storage.
-     *
-     * @return A {@code String} representing the encoded task.
-     */
-    @Override
-    public String encode() {
-        return String.format("T | %s | %s | %s",
-                priority,
-                isDone ? "1" : "0",
-                description
-        );
-    }
-
-    /**
      * Checks if the task is scheduled for or due on a specified date.
      * Since a Todo task has no associated date, this always returns {@code false}.
      *

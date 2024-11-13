@@ -67,21 +67,6 @@ public class Deadline extends Task {
     }
 
     /**
-     * Encodes the {@code Deadline} task into a string format for file storage.
-     *
-     * @return A {@code String} representing the encoded task.
-     */
-    @Override
-    public String encode() {
-        return String.format("D | %s | %s | %s | %s",
-                priority,
-                isDone ? "1" : "0",
-                description,
-                by.format(TimeParser.ENCODING_FORMATTER)
-        );
-    }
-
-    /**
      * Checks if the task is due on the specified date.
      *
      * @param targetDateTime The date to check against the task's due date.

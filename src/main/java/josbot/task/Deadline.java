@@ -13,7 +13,7 @@ public class Deadline extends Task {
     //inspired by https://howtodoinjava.com/java/date-time/java8-datetimeformatter-example/
     static final DateTimeFormatter FORMATTER_DISPLAY_DATETIME= DateTimeFormatter.ofPattern("dd MMMM yyyy 'at' hh:mm a");
     static final DateTimeFormatter FORMATTER_DISPLAY_DATE= DateTimeFormatter.ofPattern("dd MMMM yyyy");
-    static final DateTimeFormatter FORMATTER_STORE_DATETIME = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+    static final DateTimeFormatter FORMATTER_STORE_DATETIME = DateTimeFormatter.ofPattern("dd/MM/yyyy,HHmm");
     static final DateTimeFormatter FORMATTER_STORE_DATE = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 
@@ -22,11 +22,18 @@ public class Deadline extends Task {
 //        this.by = by;
 //    }
 
-    public Deadline(String description, LocalDateTime by){
+    public Deadline(String description, LocalDateTime by, boolean time) {
         super(description);
-
-        DateTimeParser parser = new DateTimeParser();
+        //DateTimeParser parser = new DateTimeParser();
         this.by =  by;
+        this.time = time;
+    }
+
+    public Deadline(String description, LocalDateTime by) {
+        super(description);
+        //DateTimeParser parser = new DateTimeParser();
+        this.by =  by;
+        this.time = false;
     }
 
     public String getBy(){

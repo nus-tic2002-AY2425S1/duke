@@ -1,6 +1,7 @@
 package josbot;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import josbot.commands.Command;
 import josbot.parser.Parser;
@@ -42,7 +43,10 @@ public class JosBot {
                 isExit = c.isExit();
             } catch (JosBotException e) {
                 ui.showError(e.getMessage());
-            } finally {
+            } catch(IndexOutOfBoundsException e) {
+                ui.showIndexOutofBoundError();
+            }
+             finally {
                 ui.showGreeting("Dash");
             }
         }

@@ -26,8 +26,17 @@ public class AddCommand extends Command {
             else if(commandType.equals("deadline"))
             {
                 String[] deadline_txt = description.split("/by", 2);
+                String[] datetime = deadline_txt[1].trim().split(" ");
                 DateTimeParser dt = new DateTimeParser();
-                t = new Deadline(deadline_txt[0].trim(), dt.convertDateTime(deadline_txt[1].trim()));
+                if(datetime.length > 1)
+                {
+                    t = new Deadline(deadline_txt[0].trim(), dt.convertDateTime(deadline_txt[1].trim()), true);
+                }
+                else
+                {
+                    t = new Deadline(deadline_txt[0].trim(), dt.convertDateTime(deadline_txt[1].trim()), false);
+                }
+
             }
             else if(commandType.equals("event")){
                 String[] event_txt = description.split("/", 3);

@@ -18,8 +18,8 @@ public class UI {
                 showGreeting("Dash");
                 break;
             case "End":
-                showGreeting("Dash");
-                System.out.println("Bye. Hope to see you again soon!\n");
+                System.out.println("Bye. Hope to see you again soon!");
+                System.out.print("____________________________________________________________");
                 break;
         }
     }
@@ -28,8 +28,10 @@ public class UI {
         switch(error_type){
             case "invalid_command":
                 System.out.println("Invalid Command : No such command found!");
+                break;
             case "invalid_datetime_format":
                 System.out.println("Invalid date & time format! Please use date format (dd/MM/yyyy) and if you want to add time, use the time format (24-hour format, eg. 1800 is 6PM)");
+                break;
         }
     }
 
@@ -85,6 +87,10 @@ public class UI {
 
     public void showDateTimeError(){
         System.out.println("Invalid date & time format! Please use date format (dd/MM/yyyy) and if you want to add time, use the time format (24-hour format, eg. 1800 is 6PM)");
+    }
+
+    public void showIndexOutofBoundError(){
+        System.out.println("The number you've selected is not on the list! Please choose the correct number.");
     }
 
 }

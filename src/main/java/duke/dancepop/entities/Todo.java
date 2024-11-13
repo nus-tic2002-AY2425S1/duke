@@ -9,7 +9,7 @@ public class Todo extends Task {
         super(description);
     }
 
-    protected TaskEnum getType() {
+    public TaskEnum getType() {
         return TaskEnum.TODO;
     }
 }

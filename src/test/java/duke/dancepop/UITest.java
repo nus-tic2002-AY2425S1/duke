@@ -21,108 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class UITest {
     private ByteArrayOutputStream outputStream;
 
-    @BeforeEach
-    void setup() {
-        outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream));
-    }
-
-    @AfterEach
-    void tearDown() {
-        System.setIn(System.in);
-        System.setOut(System.out);
-    }
-
-    @Test
-    void Given_EmptyAndByeCommand_When_Start_Should_DisplayHelloAndUnknownAndByeMessage() {
-        setInput("");
-
-        UI.start();
-
-        String output = outputStream.toString();
-        assertTrue(output.contains("Hello! I'm DancePop"));
-        assertTrue(output.contains("What can I do for you?"));
-        assertTrue(output.contains(ExceptionConsts.UNKNOWN_COMMAND_ERROR));
-        assertTrue(output.contains("Bye. Hope to see you again soon!"));
-    }
-
-    @ParameterizedTest()
-    @MethodSource("getInvalidIndexCommand")
-    void Given_InvalidIndexCommandAndNoTask_When_Start_Should_DisplayInvalidIndexMessage(String command) {
-        setInput(command);
-
-        UI.start();
-
-        String output = outputStream.toString();
-        assertTrue(output.contains(ExceptionConsts.INDEX_INVALID_ERROR));
-    }
-
-    @ParameterizedTest()
-    @MethodSource("getMissingIndexCommand")
-    void Given_MissingIndexCommand_When_Start_Should_DisplayMissingIndexMessage(String command, List<String> errors) {
-        setInput(command);
-
-        UI.start();
-
-        String output = outputStream.toString();
-        for (String error: errors) {
-            assertTrue(output.contains(error));
-        }
-    }
-
-
-    @ParameterizedTest()
-    @MethodSource("getInvalidIntegerCommand")
-    void Given_InvalidIntegerCommand_When_Start_Should_DisplayInvalidIntegerMessage(String command, List<String> errors) {
-        setInput(command);
-
-        UI.start();
-
-        String output = outputStream.toString();
-        for (String error: errors) {
-            assertTrue(output.contains(error));
-        }
-    }
-
-    @ParameterizedTest()
-    @MethodSource("getInvalidTodoCommand")
-    void Given_InvalidTodoCommand_When_Start_Should_DisplayInvalidTodoMessage(String command, List<String> errors) {
-        setInput(command);
-
-        UI.start();
-
-        String output = outputStream.toString();
-        for (String error: errors) {
-            assertTrue(output.contains(error));
-        }
-    }
-
-    @ParameterizedTest()
-    @MethodSource("getInvalidDeadlineCommand")
-    void Given_InvalidDeadlineCommand_When_Start_Should_DisplayInvalidDeadlineMessage(String command, List<String> errors) {
-        setInput(command);
-
-        UI.start();
-
-        String output = outputStream.toString();
-        for (String error: errors) {
-            assertTrue(output.contains(error));
-        }
-    }
-
-    @ParameterizedTest()
-    @MethodSource("getInvalidEventCommand")
-    void Given_InvalidEventCommand_When_Start_Should_DisplayInvalidEventMessage(String command, List<String> errors) {
-        setInput(command);
-
-        UI.start();
-
-        String output = outputStream.toString();
-        for (String error: errors) {
-            assertTrue(output.contains(error));
-        }
-    }
-
     private static Stream<String> getInvalidIndexCommand() {
         return Stream.of("mark 1", "unmark 1", "delete 1");
     }
@@ -173,6 +71,106 @@ class UITest {
         );
     }
 
+    @BeforeEach
+    void setup() {
+        outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+    }
+
+    @AfterEach
+    void tearDown() {
+        System.setIn(System.in);
+        System.setOut(System.out);
+    }
+
+    @Test
+    void Given_EmptyAndByeCommand_When_Start_Should_DisplayHelloAndUnknownAndByeMessage() {
+        setInput("");
+
+        UI.start();
+
+        String output = outputStream.toString();
+        assertTrue(output.contains("Hello! I'm DancePop"));
+        assertTrue(output.contains("What can I do for you?"));
+        assertTrue(output.contains(ExceptionConsts.UNKNOWN_COMMAND_ERROR));
+        assertTrue(output.contains("Bye. Hope to see you again soon!"));
+    }
+
+    @ParameterizedTest()
+    @MethodSource("getInvalidIndexCommand")
+    void Given_InvalidIndexCommandAndNoTask_When_Start_Should_DisplayInvalidIndexMessage(String command) {
+        setInput(command);
+
+        UI.start();
+
+        String output = outputStream.toString();
+        assertTrue(output.contains(ExceptionConsts.INDEX_INVALID_ERROR));
+    }
+
+    @ParameterizedTest()
+    @MethodSource("getMissingIndexCommand")
+    void Given_MissingIndexCommand_When_Start_Should_DisplayMissingIndexMessage(String command, List<String> errors) {
+        setInput(command);
+
+        UI.start();
+
+        String output = outputStream.toString();
+        for (String error : errors) {
+            assertTrue(output.contains(error));
+        }
+    }
+
+    @ParameterizedTest()
+    @MethodSource("getInvalidIntegerCommand")
+    void Given_InvalidIntegerCommand_When_Start_Should_DisplayInvalidIntegerMessage(String command, List<String> errors) {
+        setInput(command);
+
+        UI.start();
+
+        String output = outputStream.toString();
+        for (String error : errors) {
+            assertTrue(output.contains(error));
+        }
+    }
+
+    @ParameterizedTest()
+    @MethodSource("getInvalidTodoCommand")
+    void Given_InvalidTodoCommand_When_Start_Should_DisplayInvalidTodoMessage(String command, List<String> errors) {
+        setInput(command);
+
+        UI.start();
+
+        String output = outputStream.toString();
+        for (String error : errors) {
+            assertTrue(output.contains(error));
+        }
+    }
+
+    @ParameterizedTest()
+    @MethodSource("getInvalidDeadlineCommand")
+    void Given_InvalidDeadlineCommand_When_Start_Should_DisplayInvalidDeadlineMessage(String command, List<String> errors) {
+        setInput(command);
+
+        UI.start();
+
+        String output = outputStream.toString();
+        for (String error : errors) {
+            assertTrue(output.contains(error));
+        }
+    }
+
+    @ParameterizedTest()
+    @MethodSource("getInvalidEventCommand")
+    void Given_InvalidEventCommand_When_Start_Should_DisplayInvalidEventMessage(String command, List<String> errors) {
+        setInput(command);
+
+        UI.start();
+
+        String output = outputStream.toString();
+        for (String error : errors) {
+            assertTrue(output.contains(error));
+        }
+    }
 
     private void setInput(String input) {
         // Force the exit of while loop by throwing exception in ByeCommand

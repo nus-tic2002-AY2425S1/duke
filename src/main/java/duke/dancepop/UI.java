@@ -4,6 +4,7 @@ import duke.dancepop.exceptions.ExitException;
 import duke.dancepop.exceptions.InputException;
 import duke.dancepop.parser.Command;
 import duke.dancepop.parser.Parser;
+import duke.dancepop.utils.Log;
 
 import java.util.Scanner;
 

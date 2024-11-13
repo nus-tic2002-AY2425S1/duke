@@ -1,25 +1,28 @@
 package duke.dancepop.entities;
 
 import duke.dancepop.enums.TaskEnum;
+import duke.dancepop.utils.DateTimeUtil;
+
+import java.time.LocalDateTime;
 
 public class Deadline extends Task {
-    private String deadline;
+    private final LocalDateTime deadline;
 
     // TODO: Fix design for inheritance
-    public Deadline(String description, String deadline) {
+    public Deadline(String description, LocalDateTime deadline) {
         super(description);
         this.deadline = deadline;
     }
 
-    protected TaskEnum getType() {
+    public TaskEnum getType() {
         return TaskEnum.DEADLINE;
     }
 
-    public String getDeadline() {
+    public LocalDateTime getDeadline() {
         return deadline;
     }
 
     public String toString() {
-        return super.toString() + " (by: " + deadline +")";
+        return super.toString() + " (by: " + DateTimeUtil.toString(deadline) + ")";
     }
 }

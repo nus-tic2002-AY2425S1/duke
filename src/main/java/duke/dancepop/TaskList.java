@@ -1,7 +1,13 @@
 package duke.dancepop;
 
+import duke.dancepop.entities.Deadline;
+import duke.dancepop.entities.Event;
 import duke.dancepop.entities.Task;
+import duke.dancepop.utils.DateTimeUtil;
+import duke.dancepop.utils.Log;
 
+import java.text.MessageFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +15,7 @@ public class TaskList {
     private static final List<Task> tasks = new ArrayList<>();
 
     public static Task get(int i) {
-       return tasks.get(i);
+        return tasks.get(i);
     }
 
     public static void add(Task t) {
@@ -49,6 +55,25 @@ public class TaskList {
         String[] taskDescriptions = tasks.stream()
                 .map(Task::toString)
                 .toArray(String[]::new);
+        Log.printSeqMsg(header, taskDescriptions);
+    }
+
+    public static void print(LocalDateTime localDateTime) {
+        String header = "Here are the deadlines and events in your list on: {0}";
+        header = MessageFormat.format(header, DateTimeUtil.toString(localDateTime));
+        String[] taskDescriptions = tasks.stream()
+                .filter(task -> {
+                    if (task instanceof Event event) {
+                        // start >= localDateTime <= end
+                        return !localDateTime.isBefore(event.getStart()) && !localDateTime.isAfter(event.getEnd());
+                    } else if (task instanceof Deadline deadline) {
+                        return localDateTime.toLocalDate().equals(deadline.getDeadline().toLocalDate());
+                    }
+                    return false;
+                })
+                .map(Task::toString)
+                .toArray(String[]::new);
+
         Log.printSeqMsg(header, taskDescriptions);
     }
 }

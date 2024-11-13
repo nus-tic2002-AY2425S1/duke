@@ -57,13 +57,13 @@ public class TaskListDecoder {
     /**
      * Decodes a list of encoded task strings into a {@code TaskList}.
      *
-     * @param encodedTaskList The list of encoded task strings.
+     * @param encodedTasks The list of encoded task strings.
      * @return A {@code TaskList} containing the decoded tasks.
      * @throws FileContentException If any encoded task has an invalid format.
      */
-    public static TaskList decodeTaskList(List<String> encodedTaskList) throws FileContentException {
+    public static TaskList decodeTaskList(List<String> encodedTasks) throws FileContentException {
         TaskList taskList = new TaskList();
-        for (String encodedTask : encodedTaskList) {
+        for (String encodedTask : encodedTasks) {
             taskList.addTask(decodeTaskFromString(encodedTask));
         }
         return taskList;

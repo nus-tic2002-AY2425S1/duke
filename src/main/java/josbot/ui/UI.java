@@ -60,6 +60,10 @@ public class UI {
         System.out.println("Here are the tasks in your list:");
     }
 
+    public void showReminderMessage(){
+        System.out.println("Reminder - Here are the lists of task with deadline that have not been marked done:");
+    }
+
     public void showAddMessage(){
         System.out.println("Got it. I've added this task:");
     }

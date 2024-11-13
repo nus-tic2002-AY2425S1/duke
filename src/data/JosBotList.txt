@@ -1,6 +1,8 @@
-D,0,return book,13/11/2024
-E,1,project meeting,Mon 2pm,4pm
-T,1,task 2
+D,1,return book,13/11/2024
+E,0,project meeting,Mon 2pm,4pm
 T,1,homework
-D,1,return book,02/01/2019
+D,0,return book,02/01/2019
 D,0,return file,01/02/2024,1800
+D,0,homework,01/02/2024,1700
+D,0,homework 1,01/02/2024,1800
+D,0,homework 2,01/02/2024,1900

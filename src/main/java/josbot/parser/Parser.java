@@ -14,6 +14,8 @@ public class Parser {
 
 
         switch(fullCommandType){
+            case "reminder":
+                return new ReminderCommand();
             case "find":
                 return new FindCommand(description);
             case "delete":

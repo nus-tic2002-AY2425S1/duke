@@ -15,6 +15,17 @@ public class FindCommand extends Command {
         this.search_input = search_input;
     }
 
+    /**
+     *
+     * Used to execute the find command to show the list of tasks through UI class based on the search input
+     * given by the user
+     *
+     * @param tasks
+     * @param ui
+     * @param file
+     * @throws JosBotException
+     */
+
     @Override
     public void execute(TaskList tasks, UI ui, FileStorage file) throws JosBotException {
         TaskList results = new TaskList();

@@ -7,6 +7,8 @@ import wkduke.exception.TaskFormatException;
 import wkduke.task.TaskPriority;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,6 +26,7 @@ public class CommandParser {
     public static final Pattern DELETE_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
     public static final Pattern LIST_TASK_ARGS_FORMAT = Pattern.compile("/on (?<on>.+)");
     public static final Pattern UPDATE_PRIORITY_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*) (?<priority>[LMH])$");
+    public static final Pattern FIND_ARGS_FORMAT = Pattern.compile("([^,]+)");
 
     /**
      * Parses the user input into a command.
@@ -52,6 +55,7 @@ public class CommandParser {
             case UnmarkCommand.COMMAND_WORD -> prepareUnmark(arguments);
             case DeleteCommand.COMMAND_WORD -> prepareDelete(arguments);
             case UpdatePriorityCommand.COMMAND_WORD -> prepareUpdatePriority(arguments);
+            case FindCommand.COMMAND_WORD -> prepareFind(arguments);
             default -> throw new CommandFormatException(
                     Messages.MESSAGE_INVALID_COMMAND_FORMAT,
                     String.format("UserInput='%s'", userInput),
@@ -145,6 +149,30 @@ public class CommandParser {
             );
         }
         return new DeleteCommand(Integer.parseInt(matcher.group("taskNumber")));
+    }
+
+    /**
+     * Prepares a FindCommand based on the specified arguments.
+     *
+     * @param arguments The arguments containing keywords to search for in task descriptions.
+     * @return A {@code FindCommand} with the specified keywords.
+     * @throws CommandFormatException If the arguments format is invalid.
+     */
+    private static Command prepareFind(String arguments) throws CommandFormatException {
+        final Matcher matcher = FIND_ARGS_FORMAT.matcher(arguments.trim());
+        List<String> keywords = new ArrayList<>();
+        while (matcher.find()) {
+            keywords.add(matcher.group(1).trim());
+        }
+
+        if (keywords.isEmpty()) {
+            throw new CommandFormatException(
+                    Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    String.format("Command='find', Arguments='%s'", arguments),
+                    FindCommand.MESSAGE_USAGE
+            );
+        }
+        return new FindCommand(keywords);
     }
 
     /**

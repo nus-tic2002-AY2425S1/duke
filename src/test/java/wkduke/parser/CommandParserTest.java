@@ -9,6 +9,7 @@ import wkduke.exception.TaskFormatException;
 import wkduke.task.TaskPriority;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,6 +48,14 @@ public class CommandParserTest {
                             new AddEventCommand("Workshop",
                                     LocalDateTime.of(2024, 11, 6, 10, 0),
                                     LocalDateTime.of(2024, 11, 6, 12, 0))}
+            );
+        }
+
+        private static Stream<Object[]> validFindCommandProvider() {
+            return Stream.of(
+                    new Object[]{"find book", new FindCommand(List.of("book"))},
+                    new Object[]{"find report", new FindCommand(List.of("report"))},
+                    new Object[]{"find assignment,report", new FindCommand(List.of("assignment", "report"))}
             );
         }
 
@@ -116,6 +125,14 @@ public class CommandParserTest {
         @ParameterizedTest
         @MethodSource("validEventCommandProvider")
         public void parseCommand_validEventCommands_returnsAddEventCommand(String input, AddEventCommand expected) throws CommandFormatException, TaskFormatException {
+            Command result = CommandParser.parseCommand(input);
+            assertEquals(expected, result);
+        }
+
+        @Order(10)
+        @ParameterizedTest
+        @MethodSource("validFindCommandProvider")
+        public void parseCommand_validFindCommand_returnsFindCommand(String input, FindCommand expected) throws CommandFormatException, TaskFormatException {
             Command result = CommandParser.parseCommand(input);
             assertEquals(expected, result);
         }
@@ -199,6 +216,14 @@ public class CommandParserTest {
             );
         }
 
+        private static Stream<String> invalidFindCommandProvider() {
+            return Stream.of(
+                    "find", // Missing keyword
+                    "find ",        // Empty keyword
+                    "find ,"        // Only comma
+            );
+        }
+
         private static Stream<String> invalidListCommandProvider() {
             return Stream.of(
                     "list /on ",        // Missing arguments
@@ -209,16 +234,16 @@ public class CommandParserTest {
 
         private static Stream<String> invalidMarkCommandProvider() {
             return Stream.of(
-                    "mark",         // Missing task number
-                    "mark -1",              // Invalid task number
-                    "mark not-a-number"     // Non-integer task number
+                    "mark",     // Missing task number
+                    "mark -1",          // Invalid task number
+                    "mark not-a-number" // Non-integer task number
             );
         }
 
         private static Stream<String> invalidToDoCommandProvider() {
             return Stream.of(
-                    "todo",     // Missing description
-                    "todo "             // Empty description
+                    "todo", // Missing description
+                    "todo "         // Empty description
             );
         }
 
@@ -232,11 +257,11 @@ public class CommandParserTest {
 
         private static Stream<String> invalidUpdatePriorityCommandProvider() {
             return Stream.of(
-                    "update-priority",          // Missing both task number and priority
-                    "update-priority 1",                // Missing priority
-                    "update-priority one H",            // Non-integer task number
-                    "update-priority 1 X",              // Invalid priority letter
-                    "update-priority -1 H"              // Invalid task number (negative)
+                    "update-priority",  // Missing both task number and priority
+                    "update-priority 1",        // Missing priority
+                    "update-priority one H",    // Non-integer task number
+                    "update-priority 1 X",      // Invalid priority letter
+                    "update-priority -1 H"      // Invalid task number (negative)
             );
         }
 
@@ -266,6 +291,13 @@ public class CommandParserTest {
         @MethodSource("invalidEventCommandProvider")
         public void parseCommand_invalidEventCommands_throwsTaskFormatException(String input) {
             assertThrows(TaskFormatException.class, () -> CommandParser.parseCommand(input));
+        }
+
+        @Order(10)
+        @ParameterizedTest
+        @MethodSource("invalidFindCommandProvider")
+        public void parseCommand_invalidFindCommands_throwsCommandFormatException(String input) {
+            assertThrows(CommandFormatException.class, () -> CommandParser.parseCommand(input));
         }
 
         @Order(1)

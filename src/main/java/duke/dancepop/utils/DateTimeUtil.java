@@ -14,7 +14,12 @@ public class DateTimeUtil {
     public static final String HOUR_MINUTES_FORMAT = "[HHmm][HH:mm]";
     public static final String LOCAL_DATE_TIME_CLI_OUTPUT_FORMAT = "MMM dd yyyy HH:mm";
 
-    public static LocalDateTime userInputToLocalDateTime(String localDateTime) throws InputException {
+    /**
+     * @param userInput in yyyy-MM-dd[ [HHmm][HH:mm]] format
+     * @return LocalDateTime object converted from userInput
+     * @throws InputException for DateTimeException
+     */
+    public static LocalDateTime userInputToLocalDateTime(String userInput) throws InputException {
         // Referenced from
         // https://docs.oracle.com/javase/10/docs/api/java/time/format/DateTimeFormatterBuilder.html#appendPattern(java.lang.String)
         // https://docs.oracle.com/javase/10/docs/api/java/time/format/SignStyle.html
@@ -31,24 +36,36 @@ public class DateTimeUtil {
                 .toFormatter();
 
         try {
-            return LocalDateTime.parse(localDateTime, formatter);
+            return LocalDateTime.parse(userInput, formatter);
         } catch (DateTimeException e) {
             throw new InputException(ExceptionConsts.INVALID_DATETIME_ERROR);
         }
     }
 
+    /**
+     * @param localDateTime
+     * @return a string in MMM dd yyyy HH:mm format
+     */
     public static String toString(LocalDateTime localDateTime) {
         // Referenced from DateTimeFormatter docs
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(LOCAL_DATE_TIME_CLI_OUTPUT_FORMAT);
         return localDateTime.format(formatter);
     }
 
+    /**
+     * @param localDateTime string in ISO local date time format
+     * @return LocalDateTime object
+     */
     public static LocalDateTime isoToLocalDateTime(String localDateTime) {
         // Referenced from DateTimeFormatter docs
         return LocalDateTime.parse(localDateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
     }
 
-    public static String toCsvString(LocalDateTime localDateTime) {
+    /**
+     * @param localDateTime object
+     * @return a string in ISO local date time format
+     */
+    public static String toIsoString(LocalDateTime localDateTime) {
         // Referenced from DateTimeFormatter docs
         return localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
     }

@@ -1,6 +1,10 @@
 package duke.dancepop.utils;
 
 public class Log {
+
+    /**
+     * @param messages CLI print all variadic Strings
+     */
     public static void printMsg(String... messages) {
         printSeparator();
         for (String message : messages) {
@@ -9,6 +13,10 @@ public class Log {
         printSeparator();
     }
 
+    /**
+     * @param header CLI header
+     * @param messages CLI print all variadic Strings with sequencing
+     */
     public static void printSeqMsg(String header, String... messages) {
         printSeparator();
         println(header);

@@ -16,6 +16,10 @@ public enum ActualCommandEnum {
         this.value = value;
     }
 
+    /**
+     * @param command command enum to determine actual command usage
+     * @return String describing command usage
+     */
     public static String getActualCommand(CommandEnum command) {
         switch (command) {
             case TODO -> {

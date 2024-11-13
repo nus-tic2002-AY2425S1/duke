@@ -73,6 +73,6 @@ class DateTimeUtilTest {
     void testToCsvString() {
         LocalDateTime dateTime = LocalDateTime.of(2024, 11, 13, 14, 30);
         String isoDateTime = "2024-11-13T14:30:00";
-        assertEquals(isoDateTime, DateTimeUtil.toCsvString(dateTime));
+        assertEquals(isoDateTime, DateTimeUtil.toIsoString(dateTime));
     }
 }

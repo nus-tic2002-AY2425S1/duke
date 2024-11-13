@@ -11,6 +11,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Parser {
+
+    /**
+     * @param input string from user
+     * @return Command object with execute function
+     * @throws InputException
+     */
     public static Command parse(String input) throws InputException {
         String[] parts = input.split(" ", 2);
         String command = parts[0].toLowerCase().trim();

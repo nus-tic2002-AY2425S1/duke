@@ -19,6 +19,9 @@ public class Storage {
     // TODO: Refactor all of these if needed, so messy.
     private static final String FILE_PATH = "volume/data.csv";
 
+    /**
+     * Save all Task objects to CSV file
+     */
     public static void saveToFile() {
         Path filePath = Paths.get(FILE_PATH);
         try {
@@ -44,7 +47,7 @@ public class Storage {
                     } else if (task instanceof Deadline deadline) {
                         writer.append("D|").append(String.valueOf(deadline.getDone())).append("|").append(deadline.getDescription()).append("|").append(deadline.getDeadline().toString()).append("\n");
                     } else if (task instanceof Event event) {
-                        writer.append("E|").append(String.valueOf(event.getDone())).append("|").append(event.getDescription()).append("|").append(DateTimeUtil.toCsvString(event.getStart())).append("|").append(DateTimeUtil.toCsvString(event.getEnd())).append("\n");
+                        writer.append("E|").append(String.valueOf(event.getDone())).append("|").append(event.getDescription()).append("|").append(DateTimeUtil.toIsoString(event.getStart())).append("|").append(DateTimeUtil.toIsoString(event.getEnd())).append("\n");
                     }
                 }
 
@@ -55,6 +58,9 @@ public class Storage {
         }
     }
 
+    /**
+     * Read CSV file and instantiate tasks into TaskList
+     */
     public static void loadFile() {
         Log.printMsg("Loading data from " + FILE_PATH);
         Path filePath = Paths.get(FILE_PATH);

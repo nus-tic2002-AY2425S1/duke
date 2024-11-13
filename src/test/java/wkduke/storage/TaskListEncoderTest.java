@@ -20,8 +20,8 @@ public class TaskListEncoderTest {
         private static Stream<Object[]> validTaskListProvider() {
             // First test case: Mixed TaskList
             TaskList taskList = new TaskList();
-            taskList.addTask(new ToDo("Read book", false, TaskPriority.LOW));
-            taskList.addTask(new ToDo("Complete assignment", true, TaskPriority.HIGH));
+            taskList.addTask(new Todo("Read book", false, TaskPriority.LOW));
+            taskList.addTask(new Todo("Complete assignment", true, TaskPriority.HIGH));
             taskList.addTask(new Deadline("Submit report",
                     LocalDateTime.of(2024, 11, 5, 23, 59),
                     true, TaskPriority.HIGH)

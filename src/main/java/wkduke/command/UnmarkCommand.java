@@ -58,9 +58,9 @@ public class UnmarkCommand extends Command {
         try {
             int taskIndex = taskNumber - 1;
             Task task = taskList.getTask(taskIndex);
-            boolean updated = taskList.unmarkTask(taskIndex);
+            boolean isUpdated = taskList.unmarkTask(taskIndex);
 
-            if (updated) {
+            if (isUpdated) {
                 storage.save(taskList);
                 ui.printMessages(
                         MESSAGE_SUCCESS,

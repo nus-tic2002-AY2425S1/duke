@@ -106,8 +106,8 @@ public class Storage {
      */
     public void save(TaskList taskList) throws StorageOperationException {
         try {
-            List<String> encodedTaskList = TaskListEncoder.encodeTaskList(taskList);
-            Files.write(filePath, encodedTaskList);
+            List<String> encodedTasks = TaskListEncoder.encodeTaskList(taskList);
+            Files.write(filePath, encodedTasks);
         } catch (IOException ioe) {
             throw new StorageOperationException(
                     Messages.MESSAGE_WRITE_FILE_ERROR,

@@ -8,22 +8,22 @@ import java.util.List;
  * Manages a list of tasks, providing methods to add, delete, and query tasks.
  */
 public class TaskList {
-    public final List<Task> taskList;
+    public final List<Task> tasks;
 
     /**
      * Constructs an empty {@code TaskList}.
      */
     public TaskList() {
-        taskList = new ArrayList<>();
+        tasks = new ArrayList<>();
     }
 
     /**
      * Constructs a {@code TaskList} with the given list of tasks.
      *
-     * @param taskList The initial list of tasks.
+     * @param tasks The initial list of tasks.
      */
-    public TaskList(List<Task> taskList) {
-        this.taskList = taskList;
+    public TaskList(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     /**
@@ -32,7 +32,7 @@ public class TaskList {
      * @param task The task to add.
      */
     public void addTask(Task task) {
-        taskList.add(task);
+        tasks.add(task);
     }
 
     /**
@@ -41,7 +41,7 @@ public class TaskList {
      * @param index The index of the task to delete.
      */
     public void deleteTask(int index) {
-        taskList.remove(index);
+        tasks.remove(index);
     }
 
     /**
@@ -52,7 +52,7 @@ public class TaskList {
      */
     public List<Task> findTasks(List<String> keywords) {
         List<Task> matchingTasks = new ArrayList<>();
-        for (Task task : taskList) {
+        for (Task task : tasks) {
             for (String keyword : keywords) {
                 if (task.getDescription().contains(keyword)) {
                     matchingTasks.add(task);
@@ -68,7 +68,7 @@ public class TaskList {
      * @return A {@code List<Task>} containing all tasks.
      */
     public List<Task> getAllTask() {
-        return taskList;
+        return tasks;
     }
 
     /**
@@ -78,14 +78,14 @@ public class TaskList {
      * @return A {@code List<Task>} containing tasks scheduled on the specified date.
      */
     public List<Task> getAllTaskOnDate(LocalDateTime targetDateTime) {
-        List<Task> result = new ArrayList<>();
+        List<Task> tasks = new ArrayList<>();
 
-        for (Task task : taskList) {
+        for (Task task : this.tasks) {
             if (task.isOnDate(targetDateTime)) {
-                result.add(task);
+                tasks.add(task);
             }
         }
-        return result;
+        return tasks;
     }
 
     /**
@@ -95,7 +95,7 @@ public class TaskList {
      * @return The task at the specified index.
      */
     public Task getTask(int index) {
-        return taskList.get(index);
+        return tasks.get(index);
     }
 
     /**
@@ -105,7 +105,7 @@ public class TaskList {
      * @return The index of the task, or {@code -1} if it is not found.
      */
     public int getTaskIndex(Task task) {
-        return taskList.indexOf(task);
+        return tasks.indexOf(task);
     }
 
     /**
@@ -114,7 +114,7 @@ public class TaskList {
      * @return {@code true} if the task list is empty; {@code false} otherwise.
      */
     public boolean isEmpty() {
-        return taskList.isEmpty();
+        return tasks.isEmpty();
     }
 
     /**
@@ -155,7 +155,7 @@ public class TaskList {
      * @return The number of tasks in the list.
      */
     public int size() {
-        return taskList.size();
+        return tasks.size();
     }
 
     /**
@@ -178,6 +178,6 @@ public class TaskList {
         if (!(obj instanceof TaskList taskListObject)) {
             return false;
         }
-        return taskList.equals(taskListObject.getAllTask());
+        return tasks.equals(taskListObject.getAllTask());
     }
 }

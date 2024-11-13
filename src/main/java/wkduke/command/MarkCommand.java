@@ -58,9 +58,9 @@ public class MarkCommand extends Command {
         try {
             int taskIndex = taskNumber - 1;
             Task task = taskList.getTask(taskIndex);
-            boolean updated = taskList.markTask(taskIndex);
+            boolean isUpdated = taskList.markTask(taskIndex);
 
-            if (updated) {
+            if (isUpdated) {
                 storage.save(taskList);
                 ui.printMessages(
                         MESSAGE_SUCCESS,

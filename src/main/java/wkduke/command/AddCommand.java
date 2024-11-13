@@ -8,7 +8,7 @@ import wkduke.ui.Ui;
 
 /**
  * Represents a command to add a task to the task list.
- * This is an abstract class to be extended by specific task-adding commands, such as ToDo, Deadline, and Event.
+ * This is an abstract class to be extended by specific task-adding commands, such as Todo, Deadline, and Event.
  */
 public abstract class AddCommand extends Command {
     public static final String COMMAND_WORD_TODO = "todo";

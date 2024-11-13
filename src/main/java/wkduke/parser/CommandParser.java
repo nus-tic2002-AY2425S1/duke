@@ -62,7 +62,6 @@ public class CommandParser {
                     String.format("AvailableCommand='%s'", Messages.MESSAGE_AVAILABLE_COMMAND)
             );
         };
-
     }
 
     /**

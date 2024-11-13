@@ -85,30 +85,30 @@ public class TaskListDecoder {
 
         Task task;
         switch (taskType) {
-            case TODO -> task = new Todo(taskDescription, isDone, taskPriority);
-            case DEADLINE -> {
-                String by = matcher.group("by");
-                if (by == null) {
-                    throw new FileContentException(
-                            Messages.MESSAGE_INVALID_DEADLINE_ENCODED
-                    );
-                }
-                LocalDateTime dateTime = TimeParser.parseDateTime(by);
-                task = new Deadline(taskDescription, dateTime, isDone, taskPriority);
+        case TODO -> task = new Todo(taskDescription, isDone, taskPriority);
+        case DEADLINE -> {
+            String by = matcher.group("by");
+            if (by == null) {
+                throw new FileContentException(
+                        Messages.MESSAGE_INVALID_DEADLINE_ENCODED
+                );
             }
-            case EVENT -> {
-                String from = matcher.group("from");
-                String to = matcher.group("to");
-                if (from == null || to == null) {
-                    throw new FileContentException(
-                            Messages.MESSAGE_INVALID_EVENT_ENCODED
-                    );
-                }
-                LocalDateTime fromDateTime = TimeParser.parseDateTime(from);
-                LocalDateTime toDateTime = TimeParser.parseDateTime(to);
-                task = new Event(taskDescription, fromDateTime, toDateTime, isDone, taskPriority);
+            LocalDateTime dateTime = TimeParser.parseDateTime(by);
+            task = new Deadline(taskDescription, dateTime, isDone, taskPriority);
+        }
+        case EVENT -> {
+            String from = matcher.group("from");
+            String to = matcher.group("to");
+            if (from == null || to == null) {
+                throw new FileContentException(
+                        Messages.MESSAGE_INVALID_EVENT_ENCODED
+                );
             }
-            default -> throw new AssertionError("An invalid task type scenario is already handled earlier.");
+            LocalDateTime fromDateTime = TimeParser.parseDateTime(from);
+            LocalDateTime toDateTime = TimeParser.parseDateTime(to);
+            task = new Event(taskDescription, fromDateTime, toDateTime, isDone, taskPriority);
+        }
+        default -> throw new AssertionError("An invalid task type scenario is already handled earlier.");
         }
         return task;
     }

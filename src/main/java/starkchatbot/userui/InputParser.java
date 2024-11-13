@@ -2,6 +2,7 @@ package starkchatbot.userui;
 
 import starkchatbot.taskmanager.TaskFinder;
 import starkchatbot.taskmanager.TaskList;
+import starkchatbot.taskmanager.TentativeScheduling;
 
 import java.util.Arrays;
 
@@ -35,6 +36,8 @@ public class InputParser {
             } else if (queryTokens[0].equalsIgnoreCase("find")) {
                 String detail = String.join(" ", Arrays.asList(queryTokens).subList(1, queryTokens.length));
                 taskList.findTasks(detail);
+            } else if (queryTokens[0].equalsIgnoreCase("tentative")) {
+                TentativeEventHandler.tentativeEvent(taskList);
             } else {
                 taskList.addTask(queryTokens[0], String.join(" ", query));
             }

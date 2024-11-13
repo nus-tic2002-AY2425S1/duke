@@ -38,7 +38,8 @@ public class Tokenize {
                     || tokens[0].equalsIgnoreCase("delete")) {
                 throw new StarkException.InvalidTaskException(" OOPS!!! \"" + tokens[0].toUpperCase() + "\" should include task number");
             } else if (!(tokens[0].equalsIgnoreCase("bye")
-                    || tokens[0].equalsIgnoreCase("list"))) {
+                    || tokens[0].equalsIgnoreCase("list")
+                    ||tokens[0].equalsIgnoreCase("tentative"))) {
                 throw new StarkException.InvalidCommandException(" OOPS!!! ( \"" + tokens[0].toUpperCase() + "\" is not valid query or input )");
             }
             return tokens;

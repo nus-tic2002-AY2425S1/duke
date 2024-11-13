@@ -12,17 +12,17 @@ public class TaskFinder {
     }
 
     public void findTasks(String detail) {
-        try{
+        try {
             System.out.println("Finding tasks for related \"" + detail + "\" : ");
             int counter = 0;
             for (Task task : tasks) {
                 if (task.getDescription().contains(detail)) {
                     counter++;
-                    System.out.println(counter + ". " + task.printTask());
+                    System.out.println("\t" + counter + ". " + task.printTask());
                 }
             }
             System.out.println(System.lineSeparator() + "Found " + counter + " matching tasks.");
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new StarkException.InvalidTaskException("Error during finding tasks");
         }
     }

@@ -27,7 +27,7 @@ public class ExitCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws IOException {
-        storage.writeToFile("data/tasks.txt", tasks.toString());
+        storage.writeToFile("tasks.txt", tasks.toString());
         ui.showEnding();
     }
 

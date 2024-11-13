@@ -1,5 +1,16 @@
 package alice.task;
 
+/**
+ * <h1>Task</h1>
+ * The Task abstract class provides the template
+ * for the implementation of the different
+ * specific tasks, such as todo, event and deadline.
+ * <p>
+ *
+ * @author  Jarrel Bin
+ * @version 1.0
+ * @since   2024-11-02
+ */
 public abstract class Task {
     protected String description;
     protected boolean isDone;

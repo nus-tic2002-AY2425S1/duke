@@ -36,7 +36,7 @@ public class Parser {
             case "delete":
                 try {
                     return new DeleteCommand(Integer.parseInt(instruction.get(0))-1);
-                } catch (ArrayIndexOutOfBoundsException e){
+                } catch (IndexOutOfBoundsException e){
                     return new IncorrectCommand();
                 } catch (NumberFormatException e){
                     return new DeleteCommand(action, String.join(" ", instruction));
@@ -44,13 +44,13 @@ public class Parser {
             case "mark":
                 try {
                     return new MarkCommand(Integer.parseInt(instruction.get(0))-1, true);
-                } catch (ArrayIndexOutOfBoundsException e){
+                } catch (IndexOutOfBoundsException e){
                     return new IncorrectCommand();
                 }
             case "unmark":
                 try {
                     return new MarkCommand(Integer.parseInt(instruction.get(0))-1, false);
-                } catch (ArrayIndexOutOfBoundsException e){
+                } catch (IndexOutOfBoundsException e){
                     return new IncorrectCommand();
                 }
             case "todo", "deadline", "event":

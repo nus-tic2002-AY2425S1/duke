@@ -7,6 +7,16 @@ import alice.ui.Ui;
 
 import java.io.IOException;
 
+/**
+ * <h1>Unknown Command</h1>
+ * The UnknownCommand class allows the program to
+ * display an error when the program doesn't recognise it.
+ * <p>
+ *
+ * @author  Jarrel Bin
+ * @version 1.0
+ * @since   2024-11-02
+ */
 public class UnknownCommand extends Command {
 
     @Override

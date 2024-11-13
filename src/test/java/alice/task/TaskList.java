@@ -5,6 +5,17 @@ import java.util.ArrayList;
 
 import static alice.command.AddCommand.buildFormatter;
 
+/**
+ * <h1>Tasklist</h1>
+ * The Tasklist class details the implementation
+ * of an arrayList task object which keeps track
+ * of the tasks currently in memory.
+ * <p>
+ *
+ * @author  Jarrel Bin
+ * @version 1.0
+ * @since   2024-11-02
+ */
 public class TaskList {
     protected ArrayList<Task> tasks;
 
@@ -23,8 +34,9 @@ public class TaskList {
 
     public void printTasks(String searchWord){
         for (int i = 0; i < tasks.size(); i++){
-            if (tasks.get(i).print().contains(searchWord))
-                System.out.println((i+1) + "." + tasks.get(i).print());
+            if (tasks.get(i).print().contains(searchWord)) {
+                System.out.println((i + 1) + "." + tasks.get(i).print());
+            }
         }
     }
 
@@ -49,6 +61,18 @@ public class TaskList {
 
     public void remove(int i) {
         tasks.remove(i);;
+    }
+
+    public void remove(String removeWord) {
+        ArrayList<Task> tasksToRemove = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.print().contains(removeWord)) {
+                tasksToRemove.add(task);
+                System.out.println(task.print());
+            }
+        }
+        tasks.removeAll(tasksToRemove);
+
     }
 
     public int size() {

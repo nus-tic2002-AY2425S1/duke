@@ -7,6 +7,16 @@ import alice.ui.Ui;
 
 import java.io.IOException;
 
+/**
+ * <h1>Command</h1>
+ * The abstract Command class provides a template for
+ * all commands that will be utilised by the program.
+ * <p>
+ *
+ * @author  Jarrel Bin
+ * @version 1.0
+ * @since   2024-11-02
+ */
 public abstract class Command {
     private int index = -1;
     private boolean isDone;

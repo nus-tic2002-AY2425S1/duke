@@ -2,9 +2,20 @@ package alice.parser;
 
 import alice.command.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.time.LocalDate;
+import java.util.*;
 
+/**
+ * <h1>Parser</h1>
+ * The Parser class parses the input given
+ * by the user into the program and behaves
+ * according to the input.
+ * <p>
+ *
+ * @author  Jarrel Bin
+ * @version 1.0
+ * @since   2024-11-02
+ */
 public class Parser {
 
     public static Command parse(String fullCommand){
@@ -27,6 +38,8 @@ public class Parser {
                     return new DeleteCommand(Integer.parseInt(instruction.get(0))-1);
                 } catch (ArrayIndexOutOfBoundsException e){
                     return new IncorrectCommand();
+                } catch (NumberFormatException e){
+                    return new DeleteCommand(action, String.join(" ", instruction));
                 }
             case "mark":
                 try {

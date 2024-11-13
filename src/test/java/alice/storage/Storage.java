@@ -1,13 +1,8 @@
 package alice.storage;
 
-import alice.task.Deadline;
-import alice.task.Event;
-import alice.task.Task;
-import alice.task.Todo;
+import alice.task.*;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -17,10 +12,24 @@ import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
 
+/**
+ * <h1>Storage</h1>
+ * The Storage class is responsible for
+ * retrieving any existing data, create
+ * new txt file or saves existing data
+ * into the txt file.
+ * <p>
+ *
+ * @author  Jarrel Bin
+ * @version 1.0
+ * @since   2024-11-02
+ */
 public class Storage {
     private File f;
-    public static final String DEFAULT_NAME = "data/duke.txt";
+    public static final String DEFAULT_NAME = "tasks.txt";
     private static final String[] DATE_PATTERNS = {
             "yyyy-MM-dd",
             "yyyy-M-d",
@@ -88,7 +97,6 @@ public class Storage {
                         body.append(" ").append(instruction[i]);
                         i++;
                     }
-                    System.out.println(body.toString() + instruction[1]);
                     loadList.add(new Todo(body.toString(), Boolean.parseBoolean(instruction[1])));
                     break;
                 case "D":
@@ -168,7 +176,7 @@ public class Storage {
                     loadList.add(new Event(body.toString(), Boolean.parseBoolean(instruction[1]), param.toString(), param2.toString()));
                     break;
                 default:
-                    System.out.println("Please put an instruction I can understand :(");
+                    System.out.println("Incorrect instruction format!");
             }
 
         }

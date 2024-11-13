@@ -2,10 +2,7 @@ package alice.command;
 
 import alice.exception.NoArgsException;
 import alice.storage.Storage;
-import alice.task.Deadline;
-import alice.task.Event;
-import alice.task.TaskList;
-import alice.task.Todo;
+import alice.task.*;
 import alice.ui.Ui;
 
 import java.io.IOException;
@@ -21,8 +18,8 @@ import java.util.Locale;
 
 /**
  * <h1>Add Command</h1>
- * The AddCommand program implements an application that
- * allows the user to add tasks into the tasklist.
+ * The AddCommand class allows the user to add
+ * tasks into the tasklist.
  * <p>
  *
  * @author  Jarrel Bin
@@ -56,6 +53,9 @@ public class AddCommand extends Command {
         super(action, instruction);
     }
 
+    /**
+     * This method is set to false as this command does not trigger the exit of the program.
+     */
     @Override
     public boolean isExit() {
         return false;
@@ -79,6 +79,9 @@ public class AddCommand extends Command {
         return builder.toFormatter().withResolverStyle(ResolverStyle.SMART);
     }
 
+    /**
+     * This method is used to add tasks into the tasklist.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws IOException, NoArgsException {
 
@@ -88,6 +91,8 @@ public class AddCommand extends Command {
 
         switch (getAction()) {
             case "todo":
+                assert !getInstruction().isEmpty() : "Instruction should have at least one word to describe the task";
+
                 tasks.add(new Todo(getInstruction()));
                 System.out.println("Got it, I've added this task: \n" + tasks.getLast().print());
                 ui.showSize(tasks.size());
@@ -96,6 +101,9 @@ public class AddCommand extends Command {
                 if (!getInstruction().contains(" /by ")) {
                     throw new NoArgsException("/by");
                 }
+
+                assert getInstruction().length() > 1 : "Instructions should have more than 1 word (the parameter)";
+
                 ArrayList<String> deadlineInstruction = new ArrayList<>(Arrays.asList(getInstruction().split(" /by ")));
                 try {
                     tasks.add(new Deadline(deadlineInstruction.get(0), LocalDate.parse(deadlineInstruction.get(deadlineInstruction.size()-1), buildFormatter())));
@@ -112,6 +120,8 @@ public class AddCommand extends Command {
                     throw new NoArgsException("/to");
                 }
 
+                assert getInstruction().length() > 2 : "Instructions should have more than 2 words (the parameters)";
+
                 ArrayList<String> eventInstruction = new ArrayList<>(Arrays.asList(getInstruction().split(" /from ")));
                 ArrayList<String> eventInstruction2 = new ArrayList<>(Arrays.asList(eventInstruction.get(eventInstruction.size()-1).split(" /to ")));
 
@@ -119,6 +129,8 @@ public class AddCommand extends Command {
                 System.out.println("Got it, I've added this task: \n" + tasks.getLast().print());
                 ui.showSize(tasks.size());
                 break;
+            default:
+                throw new AssertionError("No such tasks");
         }
 
 

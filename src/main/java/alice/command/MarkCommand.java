@@ -32,9 +32,9 @@ public class MarkCommand extends Command {
         Task task_mark = tasks.get(getIndex());
         task_mark.setDone(getDone());
         if (getDone()) {
-            System.out.println("Nice! I've marked this task as done:)");
+            System.out.println("Nice! I've marked this task as done:");
         } else {
-            System.out.println("I've unmarked this task as done:)");
+            System.out.println("I've unmarked this task as done:");
         }
         System.out.println(task_mark.print());
     }

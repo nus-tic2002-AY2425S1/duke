@@ -3,6 +3,17 @@ package alice.task;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * <h1>Deadline</h1>
+ * The Deadline class details the implementation
+ * of deadline task object which consists of
+ * description and the /by date.
+ * <p>
+ *
+ * @author  Jarrel Bin
+ * @version 1.0
+ * @since   2024-11-02
+ */
 public class Deadline extends Task {
     private String by;
 

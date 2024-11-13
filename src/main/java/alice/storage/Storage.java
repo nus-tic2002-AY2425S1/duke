@@ -29,7 +29,7 @@ import java.io.IOException;
  */
 public class Storage {
     private File f;
-    public static final String DEFAULT_NAME = "duke.txt";
+    public static final String DEFAULT_NAME = "tasks.txt";
     private static final String[] DATE_PATTERNS = {
             "yyyy-MM-dd",
             "yyyy-M-d",

@@ -3,6 +3,7 @@ package josbot.ui;
 import josbot.task.Task;
 import josbot.task.TaskList;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UI {
@@ -91,6 +92,21 @@ public class UI {
 
     public void showIndexOutofBoundError(){
         System.out.println("The number you've selected is not on the list! Please choose the correct number.");
+    }
+
+    public void showTaskLists(TaskList tasks){
+
+        if(tasks.getTaskCount() == 0)
+        {
+            System.out.println("No task result found!");
+        }
+        else
+        {
+            for (int i = 1; i < tasks.getTaskCount() + 1; i++) {
+                System.out.println(i + ". " + tasks.getTasks().get(i - 1).toString());
+            }
+        }
+
     }
 
 }

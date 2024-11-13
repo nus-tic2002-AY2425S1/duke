@@ -14,6 +14,8 @@ public class Parser {
 
 
         switch(fullCommandType){
+            case "find":
+                return new FindCommand(description);
             case "delete":
                 return parseDelete(fullCommandType, description);
             case "list":
@@ -64,4 +66,7 @@ public class Parser {
             return delete;
         }
     }
+
+
+
 }

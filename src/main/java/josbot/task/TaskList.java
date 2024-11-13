@@ -1,6 +1,7 @@
 package josbot.task;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TaskList {
     protected ArrayList<Task> tasks;
@@ -12,7 +13,6 @@ public class TaskList {
     public TaskList(ArrayList<Task> load) {
         this.tasks = load;
     }
-
     public ArrayList<Task> getTasks() {
         return tasks;
     }

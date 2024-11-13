@@ -10,8 +10,7 @@ public class ListCommand extends Command {
     public void execute(TaskList tasks, UI ui, FileStorage file)
     {
         ui.showListMessage();
-        for (int i = 1; i < tasks.getTaskCount() + 1; i++) {
-            System.out.println(i + ". " + tasks.getTasks().get(i - 1).toString());
-        }
+        ui.showTaskLists(tasks);
+
     }
 }

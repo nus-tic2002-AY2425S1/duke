@@ -78,8 +78,8 @@ public class CommandParserTest {
 
         private static Stream<Object[]> validToDoCommandProvider() {
             return Stream.of(
-                    new Object[]{"todo Read book", new AddToDoCommand("Read book")},
-                    new Object[]{"todo Return book", new AddToDoCommand("Return book")}
+                    new Object[]{"todo Read book", new AddTodoCommand("Read book")},
+                    new Object[]{"todo Return book", new AddTodoCommand("Return book")}
             );
         }
 
@@ -156,7 +156,7 @@ public class CommandParserTest {
         @Order(3)
         @ParameterizedTest
         @MethodSource("validToDoCommandProvider")
-        public void parseCommand_validToDoCommands_returnsAddToDoCommand(String input, AddToDoCommand expected) throws CommandFormatException, TaskFormatException {
+        public void parseCommand_validToDoCommands_returnsAddToDoCommand(String input, AddTodoCommand expected) throws CommandFormatException, TaskFormatException {
             Command result = CommandParser.parseCommand(input);
             assertEquals(expected, result);
         }

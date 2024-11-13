@@ -116,8 +116,8 @@ public class CommandParser {
     /**
      * Prepares an AddToDo command from the given arguments.
      *
-     * @param arguments The arguments provided for the ToDo task.
-     * @return A new {@code AddToDoCommand} with the specified task description.
+     * @param arguments The arguments provided for the Todo task.
+     * @return A new {@code AddTodoCommand} with the specified task description.
      * @throws TaskFormatException If the arguments format is invalid.
      */
     private static Command prepareAddToDo(String arguments) throws TaskFormatException {
@@ -126,10 +126,10 @@ public class CommandParser {
             throw new TaskFormatException(
                     Messages.MESSAGE_INVALID_TASK_FORMAT,
                     String.format("TaskArguments='%s'", arguments),
-                    AddToDoCommand.MESSAGE_USAGE
+                    AddTodoCommand.MESSAGE_USAGE
             );
         }
-        return new AddToDoCommand(matcher.group("description"));
+        return new AddTodoCommand(matcher.group("description"));
     }
 
     /**

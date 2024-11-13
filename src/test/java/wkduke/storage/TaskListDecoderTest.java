@@ -19,8 +19,8 @@ public class TaskListDecoderTest {
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
     class ValidTests {
         private static Stream<Object[]> validTaskProvider() {
-            ToDo todoLow = new ToDo("Read book", false, TaskPriority.LOW);
-            ToDo todoHigh = new ToDo("Complete assignment", true, TaskPriority.HIGH);
+            Todo todoLow = new Todo("Read book", false, TaskPriority.LOW);
+            Todo todoHigh = new Todo("Complete assignment", true, TaskPriority.HIGH);
             Deadline deadlineHighDone = new Deadline("Submit report",
                     LocalDateTime.of(2024, 11, 5, 23, 59),
                     true, TaskPriority.HIGH);
@@ -66,7 +66,7 @@ public class TaskListDecoderTest {
                     "E | 0 | Attend workshop | | 17:00",            // Missing start date for Event
                     "E | 0 | Attend workshop | 09:00 | ",           // Missing end date for Event
                     "D | 0 | Submit report | invalid-date",         // Invalid date format
-                    "T | X | 1 | Submit report",                    // Missing priority for ToDo
+                    "T | X | 1 | Submit report",                    // Missing priority for Todo
                     "D | | 1 | Submit report | 2024-11-05 23:59"    // Missing priority for Deadline
             );
         }

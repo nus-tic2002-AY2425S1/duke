@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 /**
  * Decodes task data from storage format into Task objects.
- * Supports decoding ToDo, Deadline, and Event tasks from encoded strings.
+ * Supports decoding Todo, Deadline, and Event tasks from encoded strings.
  */
 //Solution below inspired by https://github.com/se-edu/addressbook-level2/blob/master/src/seedu/addressbook/storage/AddressBookDecoder.java
 public class TaskListDecoder {
@@ -73,7 +73,7 @@ public class TaskListDecoder {
      * Converts a matched encoded task pattern into a specific {@code Task} object based on its type.
      *
      * @param matcher The regex matcher with captured task data groups.
-     * @return The appropriate {@code Task} object (ToDo, Deadline, or Event) based on the task type.
+     * @return The appropriate {@code Task} object (Todo, Deadline, or Event) based on the task type.
      * @throws FileContentException If required fields for the task type are missing or invalid.
      * @throws TaskFormatException  If there is an error in parsing the task date-time fields.
      */
@@ -85,7 +85,7 @@ public class TaskListDecoder {
 
         Task task;
         switch (taskType) {
-            case TODO -> task = new ToDo(taskDescription, taskStatus, taskPriority);
+            case TODO -> task = new Todo(taskDescription, taskStatus, taskPriority);
             case DEADLINE -> {
                 String by = matcher.group("by");
                 if (by == null) {

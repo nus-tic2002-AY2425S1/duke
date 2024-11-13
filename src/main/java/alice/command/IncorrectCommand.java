@@ -25,6 +25,6 @@ public class IncorrectCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws IOException {
-        ui.showError("Incorrect number of args!");
+        Ui.showError("Incorrect number of args!");
     }
 }

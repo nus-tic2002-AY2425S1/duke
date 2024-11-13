@@ -6,6 +6,7 @@ import alice.ui.Ui;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import static alice.command.AddCommand.buildFormatter;
 
@@ -23,7 +24,11 @@ public class ListCommand extends Command {
     private LocalDate dateQuery;
 
     public ListCommand(String dateQuery) {
-        this.dateQuery = LocalDate.parse(dateQuery, buildFormatter());
+        try {
+            this.dateQuery = LocalDate.parse(dateQuery, buildFormatter());
+        } catch (DateTimeParseException e) {
+            Ui.showError("Unrecognizable date!");
+        }
     }
 
     public ListCommand() {

@@ -57,7 +57,7 @@ public class Ui {
         return input.nextLine();
     }
 
-    public void showError(String message) {
+    public static void showError(String message) {
         System.out.println("Oops! An error occurred: " + message);
     }
 

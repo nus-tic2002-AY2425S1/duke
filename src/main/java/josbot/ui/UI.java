@@ -33,6 +33,14 @@ public class UI {
             case "invalid_datetime_format":
                 System.out.println("Invalid date & time format! Please use date format (dd/MM/yyyy) and if you want to add time, use the time format (24-hour format, eg. 1800 is 6PM)");
                 break;
+            case "invalid_tag":
+                System.out.println("Invalid tag detected! Please use the correct tag format ('tag task_list_number tag_description')");
+                break;
+            case "missing_description":
+                System.out.println("Missing description detected! Please specify the description of the task");
+                break;
+            default:
+                System.out.println("Unknown Error : "+error_type);
         }
     }
 
@@ -61,7 +69,7 @@ public class UI {
     }
 
     public void showReminderMessage(){
-        System.out.println("Reminder - Here are the lists of task with deadline that have not been marked done:");
+        System.out.println("Reminder - Here are the lists of task with deadline \nsorted from the oldest at the top that have not been marked as done:\n");
     }
 
     public void showAddMessage(){
@@ -84,6 +92,17 @@ public class UI {
         System.out.println(t.toString());
     }
 
+    public void showTagMessage(Task t, Boolean tagged){
+        if(tagged == true){
+            System.out.println("OK, I've tagged this task as follow:");
+        }
+        else
+        {
+            System.out.println("OK, I've removed the tag from this task:");
+        }
+        System.out.println(t.toString());
+    }
+
     public void showDeleteMessage(String message, int count){
         System.out.println("Noted. I've removed this task:");
         System.out.println(message);
@@ -98,7 +117,7 @@ public class UI {
         System.out.println("The number you've selected is not on the list! Please choose the correct number.");
     }
 
-    public void showTaskLists(TaskList tasks){
+    public void showTaskLists(TaskList tasks, boolean showNumber){
 
         if(tasks.getTaskCount() == 0)
         {
@@ -106,9 +125,19 @@ public class UI {
         }
         else
         {
-            for (int i = 1; i < tasks.getTaskCount() + 1; i++) {
-                System.out.println(i + ". " + tasks.getTasks().get(i - 1).toString());
+            if(showNumber)
+            {
+                for (int i = 1; i < tasks.getTaskCount() + 1; i++) {
+                    System.out.println(i + ". " + tasks.getTasks().get(i - 1).toString());
+                }
             }
+            else
+            {
+                for (int i = 1; i < tasks.getTaskCount() + 1; i++) {
+                    System.out.println(tasks.getTasks().get(i - 1).toString());
+                }
+            }
+            System.out.println("\nThere are a total of " + tasks.getTaskCount() + " tasks shown in the above list.");
         }
 
     }

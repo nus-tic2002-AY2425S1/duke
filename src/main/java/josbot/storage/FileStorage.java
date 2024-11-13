@@ -34,7 +34,15 @@ public class FileStorage {
         //System.out.println("Path : " + f.getAbsolutePath());
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
         while (s.hasNext()) {
-            String[] line = s.nextLine().split(",");
+
+            String user_input = s.nextLine();
+            String tag = "";
+            if(user_input.contains("#"))
+            {
+                tag = user_input.split("#")[1];
+                user_input = user_input.split("#")[0];
+            }
+            String[] line = user_input.split(",");
             //System.out.println(line);
             Task t = null;
 
@@ -63,6 +71,14 @@ public class FileStorage {
             if(line[1].equals("1"))
             {
                 t.markAsDone();
+            }
+
+            if(!tag.equals(""))
+            {
+                t.setTag(tag);
+            }
+            else {
+                t.setTag("");
             }
 
             load_list.add(t);
@@ -126,6 +142,11 @@ public class FileStorage {
             {
                 Event e = (Event) file_list.get(i);
                 list_string += ","+e.getFrom() + "," + e.getTo();
+            }
+
+            if(!file_list.get(i).getTag().equals(""))
+            {
+                list_string += "#"+file_list.get(i).getTag();
             }
 
             list_string += "\n";

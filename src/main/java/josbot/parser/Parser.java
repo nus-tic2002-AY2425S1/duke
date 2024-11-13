@@ -14,6 +14,9 @@ public class Parser {
 
 
         switch(fullCommandType){
+            case "tag":
+            case "untag":
+                return parseTag(fullCommandType, description);
             case "reminder":
                 return new ReminderCommand();
             case "find":
@@ -37,6 +40,7 @@ public class Parser {
     }
 
     private static Command parseAdd(String fullCommandType, String description) throws JosBotException {
+
         if(description.equals("") || description == null || description.isEmpty()){
             return new InvalidCommand("missing_description");
         }else
@@ -54,6 +58,22 @@ public class Parser {
             Command mark = new MarkCommand();
             mark.setCommandType(fullCommandType, description);
             return mark;
+        }
+    }
+
+    private static Command parseTag(String fullCommandType, String description) throws JosBotException {
+        String[] description_input = description.split(" ");
+        if(description.equals("") || description == null || description.isEmpty()){
+            return new InvalidCommand("invalid_tag");
+        }
+        else if(fullCommandType.equals("untag") && description_input.length != 1 || fullCommandType.equals("tag") && description_input.length != 2){
+            return new InvalidCommand("invalid_tag");
+        }
+        else
+        {
+            Command tag = new TagCommands();
+            tag.setCommandType(fullCommandType, description);
+            return tag;
         }
     }
 

@@ -5,10 +5,12 @@ import java.time.LocalDateTime;
 public class Task {
     protected String description;
     protected boolean isDone;
+    protected String tag;
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        this.tag = "";
     }
 
     public String getDescription() {
@@ -17,6 +19,19 @@ public class Task {
 
     public String getStatusIcon(){
         return (isDone ? "X" : " ");
+    }
+
+    public void setTag(String tag) { this.tag = tag; }
+
+    public String getTag() {
+        if(tag.equals(""))
+        {
+            return "";
+        }
+        else
+        {
+            return tag;
+        }
     }
 
     public void markAsDone(){
@@ -32,7 +47,15 @@ public class Task {
     public LocalDateTime getDateTime(){ return null; };
 
     public String toString(){
-        return "["+getStatusIcon()+"] "+description;
+        if(getTag().isEmpty())
+        {
+            return "["+getStatusIcon()+"] "+description;
+        }
+        else
+        {
+            return "["+getStatusIcon()+"] [#"+getTag()+"] "+description;
+        }
+
     }
 }
 

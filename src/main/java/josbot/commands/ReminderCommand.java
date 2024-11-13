@@ -16,7 +16,7 @@ public class ReminderCommand extends Command {
     @Override
     public void execute(TaskList tasks, UI ui, FileStorage file) throws JosBotException {
         ui.showReminderMessage();
-        ui.showTaskLists(sortTaskDate(tasks));
+        ui.showTaskLists(sortTaskDate(tasks), false);
     }
 
     private List<Task> getDeadlineTasks(TaskList tasks) {

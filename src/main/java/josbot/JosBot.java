@@ -1,8 +1,6 @@
 package josbot;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import josbot.commands.Command;
 import josbot.commands.ReminderCommand;
 import josbot.parser.Parser;
@@ -15,7 +13,6 @@ public class JosBot {
     private UI ui;
     private FileStorage fileStorage;
     private TaskList taskList;
-
 
     public JosBot(String filePath)
     {
@@ -36,7 +33,7 @@ public class JosBot {
         ReminderCommand command = new ReminderCommand();
         ui.showGreeting("Dash");
         ui.showReminderMessage();
-        ui.showTaskLists(command.sortTaskDate(taskList));
+        ui.showTaskLists(command.sortTaskDate(taskList), false);
         ui.showGreeting("Start");
         boolean isExit = false;
         while (!isExit) {

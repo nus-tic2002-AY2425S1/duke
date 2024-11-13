@@ -10,7 +10,7 @@ public class ListCommand extends Command {
     public void execute(TaskList tasks, UI ui, FileStorage file)
     {
         ui.showListMessage();
-        ui.showTaskLists(tasks);
+        ui.showTaskLists(tasks, true);
 
     }
 }

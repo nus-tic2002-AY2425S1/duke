@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
  * Represents a task with a deadline.
  * Contains a description and a date-time by which the task should be completed.
  */
-public class Deadline extends Task {
+public class Deadline extends Task implements TimeAware {
     protected final LocalDateTime by;
 
     /**
@@ -45,17 +45,6 @@ public class Deadline extends Task {
     }
 
     /**
-     * Checks if the task is due on the specified date.
-     *
-     * @param targetDateTime The date to check against the task's due date.
-     * @return {@code true} if the task is due on the specified date; {@code false} otherwise.
-     */
-    @Override
-    public boolean isOnDate(LocalDateTime targetDateTime) {
-        return targetDateTime.isEqual(by);
-    }
-
-    /**
      * Checks if this Deadline task is equal to another object.
      * A Deadline task is considered equal if it is of the same type, has the same description,
      * completion status, and due date as the specified task.
@@ -83,4 +72,17 @@ public class Deadline extends Task {
     public String toString() {
         return "[D]" + super.toString() + " (by:" + by.format(TimeParser.CLI_FORMATTER) + ")";
     }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation checks if the specified date is equal to the due date.
+     *
+     * @param targetDateTime The date to check against the task's due date.
+     * @return {@code true} if the task is due on the specified date; {@code false} otherwise.
+     */
+    public boolean isOccursOnDate(LocalDateTime targetDateTime) {
+        return targetDateTime.isEqual(by);
+    }
+
 }

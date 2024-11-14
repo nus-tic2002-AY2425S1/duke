@@ -1,7 +1,5 @@
 package wkduke.task;
 
-import java.time.LocalDateTime;
-
 /**
  * Represents a Todo task with a description.
  * A Todo task has no associated date or deadline.
@@ -25,18 +23,6 @@ public class Todo extends Task {
      */
     public Todo(String description, boolean isDone, TaskPriority priority) {
         super(description, isDone, priority);
-    }
-
-    /**
-     * Checks if the task is scheduled for or due on a specified date.
-     * Since a Todo task has no associated date, this always returns {@code false}.
-     *
-     * @param targetDateTime The date to check against.
-     * @return {@code false}, as Todo tasks have no associated date.
-     */
-    @Override
-    public boolean isOnDate(LocalDateTime targetDateTime) {
-        return false;
     }
 
     /**

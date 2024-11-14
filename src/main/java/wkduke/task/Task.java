@@ -1,7 +1,5 @@
 package wkduke.task;
 
-import java.time.LocalDateTime;
-
 /**
  * Represents a general task with a description and completion status.
  * Subclasses must implement methods for encoding and date-based checks.
@@ -80,15 +78,7 @@ public abstract class Task {
     public boolean isDone() {
         return isDone;
     }
-
-    /**
-     * Checks if the task is scheduled for or due on a specified date.
-     *
-     * @param targetDateTime The date to check against.
-     * @return {@code true} if the task is on the specified date; {@code false} otherwise.
-     */
-    public abstract boolean isOnDate(LocalDateTime targetDateTime);
-
+    
     /**
      * Marks the task as done.
      */

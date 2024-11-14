@@ -6,6 +6,7 @@ import exception.CommandException;
 import task.Task;
 import task.TaskList;
 
+import javax.swing.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +21,6 @@ public class Ui {
     // Consolidate the strings to print into one variable - javaroResponse
     private String javaroResponse;
 
-    public Ui(String javaroResponse) {
-        this.javaroResponse = javaroResponse;
-    }
-
     public Ui() {
 
     }
@@ -31,6 +28,12 @@ public class Ui {
     public String getJavaroResponse() {
         return javaroResponse;
     }
+
+    public void setJavaroResponse(String javaroResponse) {
+        this.javaroResponse = javaroResponse;
+    }
+
+
 
     /**
      * Formats a string to create a specified number of leading spaces.
@@ -73,12 +76,12 @@ public class Ui {
      *
      * @return a formatted string representing the horizontal line with leading spaces.
      */
-    public String getLine() {
-        String space = getSpace(true, false);
-        // Inspired by https://www.baeldung.com/java-string-of-repeated-characters
-        String line = Constants.UNDERSCORE.repeat(Constants.SIXTY);
-        return space + line;
-    }
+//    public String getLine() {
+//        String space = getSpace(true, false);
+//        // Inspired by https://www.baeldung.com/java-string-of-repeated-characters
+//        String line = Constants.UNDERSCORE.repeat(Constants.SIXTY);
+//        return space + line;
+//    }
 
     /**
      * Prints a horizontal line, followed by the message(s), and ends with another horizontal line.
@@ -89,12 +92,10 @@ public class Ui {
      */
     // Solution below inspired by https://stackoverflow.com/questions/2914695/how-can-you-write-a-function-that-accepts-multiple-types
     public <T> void printMessage(T messages) {
-        // System.out.println("In printMessage");
-        String line = getLine();        // includes space before line
         String space = getSpace(false, false);          // formatSpace(5)
 
         // StringBuilder stringBuilder = new StringBuilder();
-        StringBuilder stringBuilder = new StringBuilder().append(line).append(Constants.NEW_LINE);
+        StringBuilder stringBuilder = new StringBuilder();
 
         // System.out.println(messageList.getClass());
 
@@ -102,27 +103,28 @@ public class Ui {
         // https://stackoverflow.com/questions/40899820/arrays-check-if-object-is-an-array
         if (messages.getClass().isArray()) {
             for (int i = 0; i < Array.getLength(messages); i++) {
-                stringBuilder.append(space).append(Array.get(messages, i)).append(Constants.NEW_LINE);
+                stringBuilder.append(Array.get(messages, i)).append(Constants.NEW_LINE);
             }
         } else if (messages instanceof ArrayList<?>) {        // Checks if the messageList is an ArrayList. Iterates and appends each item to the StringBuilder. Reference: https://stackoverflow.com/questions/14674027/checking-if-object-is-instance-of-listobject
             for (int i = 0; i < ((ArrayList<?>) messages).size(); i++) {
-                stringBuilder.append(space).append(((ArrayList<?>) messages).get(i)).append(Constants.NEW_LINE);
+                stringBuilder.append(((ArrayList<?>) messages).get(i)).append(Constants.NEW_LINE);
             }
         }
 
         // Append the closing line after the message
-        String text = stringBuilder.append(line).toString();
+        String text = stringBuilder.toString();
 
         // Print out the final formatted message to the command line
-        System.out.println(text);
+        setJavaroResponse(text);
     }
 
-    /**
-     * Prints an exit message to the command-line to indicate that the chatbot is exiting.
-     */
+
+    public void showWelcome() {
+        setJavaroResponse(Messages.MESSAGE_WELCOME);
+    }
+
     public void showBye() {
-        String[] messages = {Messages.MESSAGE_GOODBYE};
-        printMessage(messages);
+        setJavaroResponse(Messages.MESSAGE_GOODBYE);
     }
 
     /**

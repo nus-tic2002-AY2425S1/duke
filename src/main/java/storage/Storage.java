@@ -38,11 +38,13 @@ public class Storage {
 //    private static final String DEFAULT_STORAGE_FILEPATH = "data/tasks.txt";
 //    private static final String DEFAULT_STORAGE_FILEPATH = "./src/main/java/data/tasks.txt";
 //    private static final String DEFAULT_STORAGE_FILEPATH = "../data/tasks.txt";
-    private static final String DEFAULT_STORAGE_FILEPATH = System.getProperty("storage.file", "./data/tasks.txt");
+    private static final String DEFAULT_STORAGE_FILEPATH =
+        System.getProperty("user.dir") + File.separator + Paths.get("src", "main", "java", "data", "tasks.txt");
 
 //    private static final String ARCHIVE_STORAGE_FILEPATH = "../data/archive.txt";
 //    private static final String ARCHIVE_STORAGE_FILEPATH = BASE_FILEPATH + "archive.txt";
-    private static final String ARCHIVE_STORAGE_FILEPATH = System.getProperty("storage.file", "./data/archive.txt");
+    private static final String ARCHIVE_STORAGE_FILEPATH =
+        System.getProperty("user.dir") + File.separator + Paths.get("src", "main", "java", "data", "archive.txt");
     private final Path tasksFilePath;
     private final Path archiveTasksFilePath;
 
@@ -53,9 +55,10 @@ public class Storage {
      * @throws StorageOperationException if an error occurs while creating the data folder or task file.
      */
     public Storage() throws StorageOperationException {
+//        System.out.println("storage.file: " + System.getProperty("storage.file"));
 //        System.out.println("java.class.path: " + System.getProperty("java.class.path"));
 //        System.out.println("project root: " + System.getProperty("user.dir"));
-//        System.out.println("user.dir: " + System.getProperty("user.dir") + "/data/tasks.txt");
+//        System.out.println("user.dir: " + System.getProperty("user.dir") + File.separator + Paths.get("src", "main", "java", "data", "tasks.txt"));
 //        System.out.println("user.home: " + System.getProperty("user.home"));
 //        System.out.println("storage: " + System.getProperty("storage.file"));
 //        System.out.println("test: " + Paths.get("src", "main", "java", "data"));
@@ -100,45 +103,6 @@ public class Storage {
             String.format("%s at %s", errorMessagePre, filePathString),
             errorMessagePost
         );
-
-        /*
-        // checkDataFolderExists()
-        throw new StorageOperationException(
-            String.format("%s at %s", Messages.ERROR_CREATE_FOLDER_PRE, dataFolderPathString),
-            Messages.ERROR_CREATE_FOLDER_POST
-        );
-
-        // checkFileExists - if file not created
-        throw new StorageOperationException(
-            String.format("%s at %s", Messages.ERROR_CREATE_FILE_PRE, filePathString),
-            Messages.ERROR_CREATE_FILE_POST
-        );
-
-        // checkFileExists - IOException
-        throw new StorageOperationException(
-            String.format("%s at %s", Messages.ERROR_CREATE_FILE_PRE, filePathString),
-            Messages.ERROR_IO_CREATE_FILE
-        );
-
-        // checkFileExists - SecurityException
-        throw new StorageOperationException(
-            String.format("%s at %s due to %s", Messages.ERROR_CREATE_FILE_PRE,
-                filePathString, Messages.ERROR_SECURITY_CREATE_FILE),
-            String.format("%s create a new file.", Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE)
-        );
-
-        // appendEncodedTaskToFile
-        throw new StorageOperationException(
-            String.format("%s at %s", Messages.ERROR_WRITE_FILE, filePath.toString()),
-            String.format("%s write to the task file", Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE)
-        );
-
-        // writeEncodedTaskToFile
-        throw new StorageOperationException(
-            String.format("%s at %s", Messages.ERROR_WRITE_FILE, filePath.toString()),
-            String.format("%s write to the task file", Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE)
-        );
-        */
 
     }
 
@@ -259,7 +223,9 @@ public class Storage {
         List<String> lines;
         try {
             lines = getAllLines();
+            System.out.println("Loaded lines from tasks file: " + lines);
             taskList = TaskListDecoder.decodeTaskList(lines);
+            System.out.println("Number of tasks loaded: " + taskList.getSize());
         } catch (IOException e) {
             throw new IOException(Messages.ERROR_READ_FILE);
         }

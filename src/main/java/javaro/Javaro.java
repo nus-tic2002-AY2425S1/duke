@@ -52,7 +52,7 @@ public class Javaro {
         } catch (IOException ioe) {
             // Handle IOExceptions (e.g., file not found)
             String[] messages = {ioe.getMessage()};
-            ui.printMessage(messages);
+//            ui.printMessage(messages);
             taskList = new TaskList();      // Initialize an empty task list
         }
 
@@ -95,6 +95,7 @@ public class Javaro {
      * Generates a response for the user's chat message.
      */
     public String getResponse(String userInput) {
-        return "Duke heard: " + userInput;
+        boolean isBye = runUserInput(userInput);
+        return ui.getJavaroResponse();
     }
 }

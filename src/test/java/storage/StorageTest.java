@@ -42,9 +42,23 @@ public class StorageTest {
     @AfterEach
     public void cleanUp() throws IOException {
         // Clean up the test files and directories
-        String dataFolderPath = Paths.get(FILE_STORAGE_PATH).getParent().toString();
-        Files.deleteIfExists(Paths.get(FILE_STORAGE_PATH));
-        Files.deleteIfExists(Paths.get(dataFolderPath));
+        File dataFolder = Paths.get(FILE_STORAGE_PATH).getParent().toFile();
+        deleteDir(dataFolder);
+    }
+
+    // Solution below adapted from https://stackoverflow.com/questions/12835285/create-directory-if-exists-delete-directory-and-its-content-and-create-new-one
+    // Recursively delete the files in the folder
+    public boolean deleteDir(File dataFolder) {
+        if (dataFolder.isDirectory()) {
+            String[] dataFiles = dataFolder.list();
+            for (String dataFile : dataFiles) {
+                boolean isSuccess = deleteDir(new File(dataFolder, dataFile));
+                if (!isSuccess) {
+                    return false;
+                }
+            }
+        }
+        return dataFolder.delete();
     }
 
     @Test
@@ -68,7 +82,7 @@ public class StorageTest {
         if (dataFolder.exists()) {
             // Delete all files in the directory
             File[] files = dataFolder.listFiles();
-            assert files != null;
+            assertNotNull(files);
             for (File file : files) {
                 Files.delete(file.toPath());
             }

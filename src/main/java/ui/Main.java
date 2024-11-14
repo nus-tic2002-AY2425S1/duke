@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 
+import javaro.Javaro;
+
 public class Main extends Application {
 
     private ScrollPane scrollPane;
@@ -20,8 +22,10 @@ public class Main extends Application {
     private Scene scene;
 
     // Image location (e.g., /images/DaUser.png) is given relative to the main/resources folder and there is a / in front
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.png"));
+    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/javaro.jpg"));
+
+    private Javaro javaro = new Javaro();
 
     @Override
     public void start(Stage stage) {
@@ -34,8 +38,13 @@ public class Main extends Application {
         userInput = new TextField();
         sendButton = new Button("Send");
 
-        DialogBox dialogBox = new DialogBox("Hello!", userImage);
-        dialogContainer.getChildren().addAll(dialogBox);
+        //Handling user input
+        sendButton.setOnMouseClicked((event) -> {
+            handleUserInput();
+        });
+        userInput.setOnAction((event) -> {
+            handleUserInput();
+        });
 
         AnchorPane mainLayout = new AnchorPane();
         mainLayout.getChildren().addAll(scrollPane, userInput, sendButton);
@@ -75,5 +84,22 @@ public class Main extends Application {
 
         AnchorPane.setLeftAnchor(userInput , 1.0);
         AnchorPane.setBottomAnchor(userInput, 1.0);
+
+        //Scroll down to the end every time dialogContainer's height changes.
+        dialogContainer.heightProperty().addListener((observable) -> scrollPane.setVvalue(1.0));
+    }
+
+    /**
+     * Creates a dialog box containing user input, and appends it to
+     * the dialog container. Clears the user input after processing.
+     */
+    private void handleUserInput() {
+        String userText = userInput.getText();
+        String javaroText = javaro.getResponse(userInput.getText());
+        dialogContainer.getChildren().addAll(
+            DialogBox.getUserDialog(userText, userImage),
+            DialogBox.getDukeDialog(javaroText, dukeImage)
+        );
+        userInput.clear();
     }
 }

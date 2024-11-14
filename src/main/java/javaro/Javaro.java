@@ -1,3 +1,5 @@
+package javaro;
+
 import commands.Command;
 import exception.CommandException;
 import exception.FileContentException;
@@ -100,5 +102,12 @@ public class Javaro {
      */
     public static void main(String[] args) {
         new Javaro().run();
+    }
+
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        return "Duke heard: " + input;
     }
 }

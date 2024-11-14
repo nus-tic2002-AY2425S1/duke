@@ -64,6 +64,22 @@ public class TaskList {
 
     }
 
+
+    public void addTentativeEvent(Task task) {
+        tasks.add(task);
+    }
+
+
+    public ArrayList<Task> getTentativeEvent() {
+        ArrayList<Task> tentativeTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getClass() == TentativeTask.class) {
+                tentativeTasks.add(task);
+            }
+        }
+        return tentativeTasks;
+    }
+
     /**
      * Prints all tasks in the TaskList to the console, displaying their current status.
      */
@@ -116,7 +132,7 @@ public class TaskList {
         }
     }
 
-    public void findTasks(String detail){
+    public void findTasks(String detail) {
         TaskFinder findTasks = new TaskFinder(tasks);
         findTasks.findTasks(detail);
     }

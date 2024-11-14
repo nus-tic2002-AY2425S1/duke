@@ -38,6 +38,35 @@ public class Ui {
     }
 
     /**
+     * Adds a formatted message to the list if the content is not null or empty.
+     *
+     * @param messages The list to add the message to.
+     * @param label    The label for the message (e.g., "Message", "Info").
+     * @param content  The content of the message.
+     */
+    private void addMessageIfNotEmpty(List<String> messages, String label, String content) {
+        if (content != null && !content.trim().isEmpty()) {
+            messages.add(String.format(" %s: %s", label, content));
+        }
+    }
+
+    /**
+     * Displays an exception message based on the provided {@code WKDukeException}.
+     * Includes error class, message, additional details, and help information if available.
+     *
+     * @param prefix The prefix to display with the exception (e.g., "Error" or "Init-Error").
+     * @param e      The exception containing error information.
+     */
+    private void showException(String prefix, WKDukeException e) {
+        List<String> messages = new ArrayList<>();
+        messages.add(String.format("[%s]-[%s]", prefix, e.getClass().getSimpleName()));
+        addMessageIfNotEmpty(messages, "Message", e.getMessage());
+        addMessageIfNotEmpty(messages, "Detail", e.getDetail());
+        addMessageIfNotEmpty(messages, "Help", e.getHelp());
+        printMessages(messages.toArray(new String[0]));
+    }
+
+    /**
      * Prints a series of messages to the user, surrounded by a border line.
      *
      * @param messages The messages to print.
@@ -64,24 +93,12 @@ public class Ui {
     }
 
     /**
-     * Displays an error message based on the provided {@code WKDukeException}.
-     * Includes error class, message, additional details, and help information if available.
+     * Displays a general error message based on the provided {@code WKDukeException}.
      *
      * @param e The exception containing error information.
      */
     public void showError(WKDukeException e) {
-        List<String> messages = new ArrayList<>();
-        messages.add(String.format("[Error]-[%s]", e.getClass().getSimpleName()));
-        if (e.getMessage() != null && !e.getMessage().trim().isEmpty()) {
-            messages.add(String.format(" Message: %s", e.getMessage()));
-        }
-        if (e.getDetail() != null && !e.getDetail().trim().isEmpty()) {
-            messages.add(String.format(" Info: %s", e.getDetail()));
-        }
-        if (e.getHelp() != null && !e.getHelp().trim().isEmpty()) {
-            messages.add(String.format(" Help: %s", e.getHelp()));
-        }
-        printMessages(messages.toArray(new String[0]));
+        showException("Error", e);
     }
 
     /**
@@ -93,23 +110,11 @@ public class Ui {
 
     /**
      * Displays an initialization error message based on the provided {@code WKDukeException}.
-     * Includes error class, message, additional details, and help information if available.
      *
      * @param e The exception containing error information.
      */
     public void showInitError(WKDukeException e) {
-        List<String> messages = new ArrayList<>();
-        messages.add(String.format("[Init-Error]-[%s]", e.getClass().getSimpleName()));
-        if (e.getMessage() != null && !e.getMessage().trim().isEmpty()) {
-            messages.add(String.format(" Message: %s", e.getMessage()));
-        }
-        if (e.getDetail() != null && !e.getDetail().trim().isEmpty()) {
-            messages.add(String.format(" Info: %s", e.getDetail()));
-        }
-        if (e.getHelp() != null && !e.getHelp().trim().isEmpty()) {
-            messages.add(String.format(" Help: %s", e.getHelp()));
-        }
-        printMessages(messages.toArray(new String[0]));
+        showException("Init-Error", e);
     }
 
     /**

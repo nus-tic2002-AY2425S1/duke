@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Test;
 import starkchatbot.userui.StarkException;
 import starkchatbot.userui.Tokenize;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestTokenize {
 

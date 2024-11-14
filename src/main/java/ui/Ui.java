@@ -17,6 +17,21 @@ import java.util.Scanner;
  */
 public class Ui {
 
+    // Consolidate the strings to print into one variable - javaroResponse
+    private String javaroResponse;
+
+    public Ui(String javaroResponse) {
+        this.javaroResponse = javaroResponse;
+    }
+
+    public Ui() {
+
+    }
+
+    public String getJavaroResponse() {
+        return javaroResponse;
+    }
+
     /**
      * Formats a string to create a specified number of leading spaces.
      *
@@ -103,44 +118,12 @@ public class Ui {
     }
 
     /**
-     * Prints a greeting message to the command-line (when the application starts).
-     */
-    public void showWelcome() {
-        String[] messages = {Messages.MESSAGE_WELCOME};
-        printMessage(messages);
-    }
-
-    /**
      * Prints an exit message to the command-line to indicate that the chatbot is exiting.
      */
     public void showBye() {
         String[] messages = {Messages.MESSAGE_GOODBYE};
         printMessage(messages);
     }
-
-    /**
-     * Reads a line of input from the user and trims any leading or trailing whitespace.
-     * It ensures that the input is not empty.
-     * When the user provides an empty input, it will display an error message,
-     * requesting for the user to enter a non-empty input.
-     * It will continue to prompt the user until a valid input (non-empty string) is received.
-     *
-     * @return the trimmed user input (without any leading whitespaces).
-     * @throws CommandException when the user inputs an invalid string.
-     */
-    // https://github.com/se-edu/addressbook-level2/blob/master/src/seedu/addressbook/ui/TextUi.java#L80
-//    public String readInput() throws CommandException {
-//        String userInput;
-//        // Keep asking for input until a non-empty string is entered
-//        userInput = in.nextLine().trim(); // Read and trim the input
-//        if (userInput.isEmpty()) {
-//            throw new CommandException(
-//                Messages.ERROR_EMPTY_INPUT,
-//                Messages.VALID_COMMANDS
-//            );
-//        }
-//        return userInput;       // Return the valid non-empty user input
-//    }
 
     /**
      * Displays an error message to the user.

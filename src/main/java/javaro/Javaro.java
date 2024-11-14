@@ -1,5 +1,6 @@
 package javaro;
 
+import commands.ByeCommand;
 import commands.Command;
 import common.Messages;
 import exception.CommandException;
@@ -69,43 +70,6 @@ public class Javaro {
         return taskList;
     }
 
-    /**
-     * Runs the main application logic.
-     * Repeatedly reads input from the user, parses the input received from the user and
-     * executes it until the user issues a command to exit, which stops the program.
-     * Any exceptions that occur will be caught and an error message will be displayed to the user.
-     */
-//    public void run() {
-//        // Display welcome message
-//        ui.showWelcome();
-//        boolean isBye = false;
-//
-//        // Main loop for reading user input and executing commands
-//        while (!isBye) {
-//            try {
-//                // Read input from the user
-//                String userInput = ui.readInput();
-//                // ui.showLine();
-//
-//                // Parse and execute the command
-//                Command command = Parser.parse(userInput);
-//                command.execute(taskList, ui, storage);
-//
-//                // Check if the command is a "bye" command to exit the loop
-//                isBye = command.isBye();
-//            } catch (CommandException e) {
-//                // Handle command parsing or execution errors
-//                // System.out.println("CommandException caught: " + e.getMessage());
-//                ui.showError(e.getMessageList());
-//            } catch (StorageOperationException e) {
-//                // Handle storage operation errors
-//                // System.out.println("StorageOperationException caught: " + e.getMessage());
-//                ui.showError(e.getMessageList());
-//            }
-//        }
-//
-//    }
-
     public boolean runUserInput(String userInput) {
         try {
             // Parse and execute the command
@@ -126,17 +90,6 @@ public class Javaro {
             return false;
         }
     }
-
-    /**
-     * Initializes the Javaro program and starts the main loop.
-     * The main entry point of the Javaro application.
-     * This method is called when the program is executed from the command-line.
-     *
-     * @param args command line arguments (not used here).
-     */
-//    public static void main(String[] args) {
-//        new Javaro().run();
-//    }
 
     /**
      * Generates a response for the user's chat message.

@@ -15,7 +15,8 @@ public class SaveToFile {
     private String filePath;
 
 
-    public SaveToFile(ArrayList<Task> taskList, String filePath) throws StarkException.FileNotFoundException {
+    public SaveToFile(ArrayList<Task> taskList, String filePath)
+            throws StarkException.FileNotFoundException {
         this.tasks = taskList;
         this.filePath = filePath;
         if (!Files.exists(Paths.get(filePath))) {
@@ -41,6 +42,8 @@ public class SaveToFile {
                     fileWriter.append("T ]").append(task.getDescription()).append(" ]").append(task.getStatus()).append(" ]");
                 } else if (task.getClass() == Event.class) {
                     fileWriter.append("E ]").append(task.getDescription()).append(" ]").append(task.getStatus()).append(" ]");
+                } else if (task.getClass() == TentativeTask.class) {
+                    fileWriter.append("TE ]").append(task.getDescription()).append(" ]").append(task.getStatus()).append(" ]");
                 }
                 fileWriter.append(System.lineSeparator());
             }

@@ -16,12 +16,19 @@ public class TaskStorage {
         this.fileName = fileName;
     }
 
-    public ArrayList<Task> updateTaskList() throws FileNotFoundException {
+    public ArrayList<Task> updateTaskList() {
         try {
             ReadFromFile readFromFile = new ReadFromFile(fileName);
             ArrayList<String> taskDetail = readFromFile.readTasks();
             for (String task : taskDetail) {
-                tasks.add(TaskParser.parseTasks(task));
+                if (task.isEmpty()) {
+                    continue;
+                }
+                Task readTask = TaskParser.parseTasks(task);
+                if (readTask == null) {
+                    continue;
+                }
+                tasks.add(readTask);
             }
             return tasks;
         } catch (StarkException.InvalidDescriptionException | FileNotFoundException e) {

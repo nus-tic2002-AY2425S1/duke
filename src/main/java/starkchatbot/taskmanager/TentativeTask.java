@@ -26,11 +26,21 @@ public class TentativeTask extends Task {
         }
     }
 
-    public void assignConfirmedSlot(String slot) {
-        String[] allSlots = slot.split(", ");
+    public void assignAllAvailableSlot(String slots) {
+        String[] allSlots = slots.split(", ");
         availableSlots = new ArrayList<>(Arrays.asList(allSlots));
     }
 
+    //to add confirm slot from file storage
+    public void assignConfirmedSlot(String slot) {
+        if(slot.isEmpty()) {
+            return;
+        }
+        isConfirmed = true;
+        confirmedSlot = slot;
+    }
+
+    //to confirm slot from commandline UI
     public void setConfirmedSlot(int slotNumber) {
         if (isConfirmed) {
             System.out.println("Event already confirmed slot: " + confirmedSlot);
@@ -54,10 +64,10 @@ public class TentativeTask extends Task {
 
     public void printAllAvailableSlots() {
         int counter = 0;
-        System.out.println(super.getDescription() + ":");
+        System.out.println("\t" + super.getDescription() + ":");
         for (String slot : availableSlots) {
             counter++;
-            System.out.println("\t" + counter + ") " + slot);
+            System.out.println("\t\t" + counter + ") " + slot);
         }
     }
 
@@ -68,13 +78,13 @@ public class TentativeTask extends Task {
     @Override
     public String getDescription() {
         String joinAvailableSlots = String.join(", ", availableSlots);
-        return super.getDescription() + "|" + confirmedSlot + "|" + " ***" + joinAvailableSlots + "***";
+        return super.getDescription() + " # " + confirmedSlot + " # " + joinAvailableSlots;
     }
 
     @Override
     public String printTask() {
         if (isConfirmed) {
-            return "[TE] " + super.printTask() + " " + confirmedSlot ;
+            return "[TE] " + super.printTask() + " " + confirmedSlot;
         }
         return "[TE] " + super.printTask() + " (Slots not Confirmed yet)";
     }

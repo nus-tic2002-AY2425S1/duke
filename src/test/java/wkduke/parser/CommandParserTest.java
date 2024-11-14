@@ -1,6 +1,12 @@
 package wkduke.parser;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.ClassOrderer;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestClassOrder;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import wkduke.command.Command;
@@ -15,15 +21,17 @@ import wkduke.command.read.ListOnCommand;
 import wkduke.command.update.MarkCommand;
 import wkduke.command.update.UnmarkCommand;
 import wkduke.command.update.UpdatePriorityCommand;
-import wkduke.exception.command.CommandFormatException;
 import wkduke.exception.TaskFormatException;
+import wkduke.exception.command.CommandFormatException;
 import wkduke.task.TaskPriority;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestClassOrder(ClassOrderer.OrderAnnotation.class)
 public class CommandParserTest {

@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class ListCommand extends Command {
     public static final String COMMAND_WORD = "list";
-    public static final String MESSAGE_SUCCESS = "Here are the tasks in your list:";
-    public static final String MESSAGE_FAILED = "Your task list is currently empty.";
+    private static final String MESSAGE_SUCCESS = "Here are the tasks in your list:";
+    private static final String MESSAGE_FAILED = "Your task list is currently empty.";
 
     /**
      * Checks if this ListCommand is equal to another object.

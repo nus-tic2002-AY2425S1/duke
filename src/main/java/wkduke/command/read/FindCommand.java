@@ -14,10 +14,9 @@ import java.util.List;
 public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " {keywords} - specify one or more keywords separated by comma";
-    public static final String MESSAGE_SUCCESS = "Here are the tasks in your list with the keyword '%s':";
-    public static final String MESSAGE_FAILED = "No tasks found with the keyword: %s";
+    private static final String MESSAGE_SUCCESS = "Here are the tasks in your list with the keyword '%s':";
+    private static final String MESSAGE_FAILED = "No tasks found with the keyword: %s";
     private final List<String> keywords;
-
 
     public FindCommand(List<String> keywords) {
         this.keywords = keywords;

@@ -1,8 +1,8 @@
 package wkduke.storage.decoder;
 
 import wkduke.common.Messages;
-import wkduke.exception.storage.FileContentException;
 import wkduke.exception.TaskFormatException;
+import wkduke.exception.storage.FileContentException;
 import wkduke.parser.TimeParser;
 import wkduke.task.*;
 
@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
  * Supports decoding of {@code Todo}, {@code Deadline}, and {@code Event} tasks.
  */
 public class TaskDecoder {
-    public static final Pattern TASK_PATTERN = Pattern.compile(
+    private static final Pattern TASK_PATTERN = Pattern.compile(
             "(?<taskType>[TDE]) \\| (?<taskPriority>[LMH]) \\| (?<taskStatus>[01]) \\| (?<taskDescription>[^|]+)"
                     + "(?: \\| (?<by>[^|]+))?"   // Optional by, only for D (Deadline task)
                     + "(?: \\| (?<from>[^|]+) \\| (?<to>[^|]+))?" // Optional from and to, only for E (Event task)
@@ -73,7 +73,7 @@ public class TaskDecoder {
      * @throws FileContentException If required fields for the task are missing or invalid.
      * @throws TaskFormatException  If an error occurs in date-time parsing.
      */
-    public static Task createTaskFromMatcher(Matcher matcher) throws FileContentException, TaskFormatException {
+    private static Task createTaskFromMatcher(Matcher matcher) throws FileContentException, TaskFormatException {
         TaskType taskType = TaskType.fromCode(matcher.group("taskType"));
         String description = matcher.group("taskDescription");
         TaskPriority priority = TaskPriority.fromCode(matcher.group("taskPriority"));

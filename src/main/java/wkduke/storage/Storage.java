@@ -20,7 +20,7 @@ import java.util.List;
  * Handles file reading, writing, and ensures proper file setup.
  */
 public class Storage {
-    protected static final String DEFAULT_STORAGE_FILEPATH = "./data/tasks.txt";
+    private static final String DEFAULT_STORAGE_FILEPATH = "./data/tasks.txt";
     private final Path filePath;
 
     /**
@@ -44,7 +44,6 @@ public class Storage {
         if (!isValidPath(filePath)) {
             throw new StorageFilePathException(Messages.MESSAGE_FILE_PATH_ERROR);
         }
-
         createFileAndDirectories(filePath);
     }
 

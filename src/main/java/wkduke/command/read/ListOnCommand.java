@@ -14,11 +14,11 @@ import java.util.List;
  * Represents a command to list all tasks occurring on a specified date.
  */
 public class ListOnCommand extends Command {
-    public static final String COMMAND_WORD = "list";
+    private static final String COMMAND_WORD = "list";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " /on {dateTime}";
-    public static final String MESSAGE_SUCCESS = "Here are the tasks in your list on '%s':";
-    public static final String MESSAGE_FAILED = "Your task list is currently empty on '%s'.";
-    protected final LocalDateTime on;
+    private static final String MESSAGE_SUCCESS = "Here are the tasks in your list on '%s':";
+    private static final String MESSAGE_FAILED = "Your task list is currently empty on '%s'.";
+    private final LocalDateTime on;
 
     /**
      * Constructs a ListOnCommand with the specified date and time to filter tasks.

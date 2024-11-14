@@ -15,10 +15,10 @@ public abstract class AddCommand extends Command {
     public static final String COMMAND_WORD_TODO = "todo";
     public static final String COMMAND_WORD_DEADLINE = "deadline";
     public static final String COMMAND_WORD_EVENT = "event";
-    public static final String MESSAGE_SUCCESS_PRE = "Got it. I've added this task:";
-    public static final String TASK_PLACEHOLDER = "  %s";
-    public static final String MESSAGE_SUCCESS_POST = "Now you have %s tasks in the list.";
-    protected Task task;
+    private static final String MESSAGE_SUCCESS_PRE = "Got it. I've added this task:";
+    private static final String TASK_PLACEHOLDER = "  %s";
+    private static final String MESSAGE_SUCCESS_POST = "Now you have %s tasks in the list.";
+    Task task;
 
     /**
      * Checks if this AddCommand is equal to another object.

@@ -69,6 +69,13 @@ public class Ui {
     }
 
     /**
+     * Displays a line border to separate sections in the console output.
+     */
+    private void showLine() {
+        out.println(BORDER_LINE);
+    }
+
+    /**
      * Prints a series of messages to the user, surrounded by a border line.
      *
      * @param messages The messages to print.
@@ -133,13 +140,6 @@ public class Ui {
      */
     public void showInitError(WKDukeException e) {
         showException("Init-Error", e);
-    }
-
-    /**
-     * Displays a line border to separate sections in the console output.
-     */
-    public void showLine() {
-        out.println(BORDER_LINE);
     }
 
     /**

@@ -15,10 +15,10 @@ import wkduke.ui.Ui;
 public class MarkCommand extends Command {
     public static final String COMMAND_WORD = "mark";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " {taskNumber}";
-    public static final String MESSAGE_SUCCESS = "Nice! I've marked this task as done:";
-    public static final String MESSAGE_FAILED = "This task is already marked as done:";
-    public static final String TASK_PLACEHOLDER = "  %s";
-    protected final int taskNumber;
+    private static final String MESSAGE_SUCCESS = "Nice! I've marked this task as done:";
+    private static final String MESSAGE_FAILED = "This task is already marked as done:";
+    private static final String TASK_PLACEHOLDER = "  %s";
+    private final int taskNumber;
 
     /**
      * Constructs a MarkCommand with the specified task number.

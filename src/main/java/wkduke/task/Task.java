@@ -5,9 +5,9 @@ package wkduke.task;
  * Subclasses must implement methods for encoding and date-based checks.
  */
 public abstract class Task {
-    protected final String description;
-    protected boolean isDone;
-    protected TaskPriority priority;
+    private final String description;
+    private boolean isDone;
+    private TaskPriority priority;
 
     /**
      * Constructs a {@code Task} with the specified description, initially marked as not done and
@@ -15,7 +15,7 @@ public abstract class Task {
      *
      * @param description The description of the task.
      */
-    public Task(String description) {
+    Task(String description) {
         this.description = description;
         this.isDone = false;
         this.priority = TaskPriority.LOW;
@@ -28,10 +28,19 @@ public abstract class Task {
      * @param isDone      The completion status of the task.
      * @param priority    The priority level of the task.
      */
-    public Task(String description, boolean isDone, TaskPriority priority) {
+    Task(String description, boolean isDone, TaskPriority priority) {
         this.description = description;
         this.isDone = isDone;
         this.priority = priority;
+    }
+
+    /**
+     * Retrieves the status icon of the task.
+     *
+     * @return {@code "X"} if the task is done, or a blank space if it is not done.
+     */
+    private String getStatusIcon() {
+        return (isDone ? "X" : " "); // mark done task with X
     }
 
     /**
@@ -62,15 +71,6 @@ public abstract class Task {
     }
 
     /**
-     * Retrieves the status icon of the task.
-     *
-     * @return {@code "X"} if the task is done, or a blank space if it is not done.
-     */
-    public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
-    }
-
-    /**
      * Checks if the task is marked as done.
      *
      * @return {@code true} if the task is done; {@code false} otherwise.
@@ -78,7 +78,7 @@ public abstract class Task {
     public boolean isDone() {
         return isDone;
     }
-    
+
     /**
      * Marks the task as done.
      */

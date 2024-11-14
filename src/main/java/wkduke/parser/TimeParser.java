@@ -14,8 +14,10 @@ import java.time.temporal.ChronoField;
  * Supports flexible input formats and standardized output formats.
  */
 public class TimeParser {
+    public static final DateTimeFormatter ENCODING_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    public static final DateTimeFormatter CLI_FORMATTER = DateTimeFormatter.ofPattern("d MMM yyyy h:mma");
     // Solution below inspired by https://stackoverflow.com/questions/50023654/java-datetimeformatterbuilder-with-optional-pattern-results-in-datetimeparseexce
-    public static final DateTimeFormatter DECODING_FORMATTER = new DateTimeFormatterBuilder()
+    private static final DateTimeFormatter DECODING_FORMATTER = new DateTimeFormatterBuilder()
             .appendPattern("[yyyy/MM/dd][yyyy-MM-dd]")
             .optionalStart()
             .appendPattern(" [HHmm][HH:mm]")
@@ -23,8 +25,6 @@ public class TimeParser {
             .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
             .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
             .toFormatter();
-    public static final DateTimeFormatter ENCODING_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    public static final DateTimeFormatter CLI_FORMATTER = DateTimeFormatter.ofPattern("d MMM yyyy h:mma");
 
     /**
      * Parses a date-time string into a {@code LocalDateTime} object using the decoding formatter.

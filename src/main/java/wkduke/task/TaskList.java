@@ -8,7 +8,7 @@ import java.util.List;
  * Manages a list of tasks, providing methods to add, delete, and query tasks.
  */
 public class TaskList {
-    public final List<Task> tasks;
+    private final List<Task> tasks;
 
     /**
      * Constructs an empty {@code TaskList}.

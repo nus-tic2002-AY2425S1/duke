@@ -1,7 +1,5 @@
 package wkduke.command;
 
-import wkduke.exception.CommandOperationException;
-import wkduke.exception.StorageOperationException;
 import wkduke.storage.Storage;
 import wkduke.task.Task;
 import wkduke.task.TaskList;
@@ -33,7 +31,7 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws StorageOperationException, CommandOperationException {
+    public void execute(TaskList taskList, Ui ui, Storage storage) {
         List<Task> matchingTasks = taskList.findTasks(keywords);
         if (matchingTasks.isEmpty()) {
             ui.printMessages(String.format(MESSAGE_FAILED, keywords));

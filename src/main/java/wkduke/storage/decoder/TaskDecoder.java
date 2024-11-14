@@ -88,6 +88,7 @@ public class TaskDecoder {
             case TODO -> new Todo(description, isDone, priority);
             case DEADLINE -> createDeadlineTask(matcher, description, isDone, priority);
             case EVENT -> createEventTask(matcher, description, isDone, priority);
+            default -> throw new AssertionError(taskType);
         };
     }
 
@@ -99,6 +100,7 @@ public class TaskDecoder {
      * @throws FileContentException If the encoded task has an invalid format.
      */
     public static Task decodeTask(String encodedTask) throws FileContentException {
+        assert encodedTask != null : "Precondition failed: 'encodedTask' cannot be null";
         final Matcher matcher = TASK_PATTERN.matcher(encodedTask);
         if (!matcher.matches()) {
             throw new FileContentException(

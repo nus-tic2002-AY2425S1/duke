@@ -54,6 +54,8 @@ public class ListOnCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
+        assert taskList != null : "Precondition failed: 'taskList' cannot be null";
+        assert ui != null : "Precondition failed: 'ui' cannot be null";
         List<Task> tasks = taskList.getAllTaskOnDate(on);
         if (tasks.isEmpty()) {
             ui.printMessages(
@@ -61,6 +63,7 @@ public class ListOnCommand extends Command {
             );
             return;
         }
+        assert !tasks.isEmpty() : "Postcondition failed: 'tasks' cannot be empty";
         ui.printTasks(taskList, tasks, String.format(MESSAGE_SUCCESS, on.format(TimeParser.CLI_FORMATTER)));
     }
 }

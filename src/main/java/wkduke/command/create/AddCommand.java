@@ -45,6 +45,10 @@ public abstract class AddCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws StorageOperationException {
+        assert taskList != null : "Precondition failed: 'taskList' cannot be null";
+        assert ui != null : "Precondition failed: 'ui' cannot be null";
+        assert storage != null : "Precondition failed: 'storage' cannot be null";
+        assert task != null : "Precondition failed: 'task' cannot be null";
         taskList.addTask(task);
         storage.save(taskList);
         ui.printMessages(

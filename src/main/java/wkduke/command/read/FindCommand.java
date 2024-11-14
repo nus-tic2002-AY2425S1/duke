@@ -32,11 +32,14 @@ public class FindCommand extends Command {
 
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
+        assert taskList != null : "Precondition failed: 'taskList' cannot be null";
+        assert ui != null : "Precondition failed: 'ui' cannot be null";
         List<Task> matchingTasks = taskList.findTasks(keywords);
         if (matchingTasks.isEmpty()) {
             ui.printMessages(String.format(MESSAGE_FAILED, keywords));
             return;
         }
+        assert !matchingTasks.isEmpty() : "Postcondition failed: 'matchingTasks' cannot be empty";
         ui.printTasks(taskList, matchingTasks, String.format(MESSAGE_SUCCESS, keywords));
     }
 }

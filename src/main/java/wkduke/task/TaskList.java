@@ -23,6 +23,7 @@ public class TaskList {
      * @param task The task to add.
      */
     public void addTask(Task task) {
+        assert task != null : "Precondition failed: 'task' cannot be null";
         tasks.add(task);
     }
 
@@ -70,6 +71,7 @@ public class TaskList {
      * @return A list of {@code Task} objects occurring on the specified date, or an empty list if none match.
      */
     public List<Task> getAllTaskOnDate(LocalDateTime targetDateTime) {
+        assert targetDateTime != null : "Precondition failed: 'targetDateTime' cannot be null";
         List<Task> tasks = new ArrayList<>();
         for (Task task : this.tasks) {
             if (!(task instanceof TimeAware timeAwareTask)) {
@@ -100,6 +102,15 @@ public class TaskList {
      */
     public int getTaskIndex(Task task) {
         return tasks.indexOf(task);
+    }
+
+    /**
+     * Checks if the task list is empty.
+     *
+     * @return {@code true} if the task list is empty; {@code false} otherwise.
+     */
+    public boolean isEmpty() {
+        return tasks.isEmpty();
     }
 
     /**

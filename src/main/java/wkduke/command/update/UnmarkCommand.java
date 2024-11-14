@@ -56,6 +56,9 @@ public class UnmarkCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws StorageOperationException, CommandOperationException {
+        assert taskList != null : "Precondition failed: 'taskList' cannot be null";
+        assert ui != null : "Precondition failed: 'ui' cannot be null";
+        assert storage != null : "Precondition failed: 'storage' cannot be null";
         try {
             int taskIndex = taskNumber - 1;
             Task task = taskList.getTask(taskIndex);

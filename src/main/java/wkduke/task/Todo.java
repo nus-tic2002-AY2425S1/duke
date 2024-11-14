@@ -1,7 +1,5 @@
 package wkduke.task;
 
-import java.time.LocalDateTime;
-
 /**
  * Represents a Todo task with a description.
  * A Todo task has no associated date or deadline.
@@ -17,17 +15,6 @@ public class Todo extends Task {
     }
 
     /**
-     * Constructs a {@code Todo} task with the specified description and completion status,
-     * with a default priority of {@code TaskPriority.LOW}.
-     *
-     * @param description The description of the task.
-     * @param isDone      The completion status of the task.
-     */
-    public Todo(String description, boolean isDone) {
-        super(description, isDone);
-    }
-
-    /**
      * Constructs a {@code Todo} task with the specified description, completion status, and priority.
      *
      * @param description The description of the task.
@@ -36,32 +23,6 @@ public class Todo extends Task {
      */
     public Todo(String description, boolean isDone, TaskPriority priority) {
         super(description, isDone, priority);
-    }
-
-    /**
-     * Encodes the {@code Todo} task into a string format for file storage.
-     *
-     * @return A {@code String} representing the encoded task.
-     */
-    @Override
-    public String encode() {
-        return String.format("T | %s | %s | %s",
-                priority,
-                isDone ? "1" : "0",
-                description
-        );
-    }
-
-    /**
-     * Checks if the task is scheduled for or due on a specified date.
-     * Since a Todo task has no associated date, this always returns {@code false}.
-     *
-     * @param targetDateTime The date to check against.
-     * @return {@code false}, as Todo tasks have no associated date.
-     */
-    @Override
-    public boolean isOnDate(LocalDateTime targetDateTime) {
-        return false;
     }
 
     /**

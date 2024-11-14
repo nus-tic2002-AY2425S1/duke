@@ -1,4 +1,4 @@
-package wkduke.storage;
+package wkduke.storage.encoder;
 
 import wkduke.task.Task;
 import wkduke.task.TaskList;
@@ -23,7 +23,7 @@ public class TaskListEncoder {
         final List<String> encodedTasks = new ArrayList<>();
 
         for (Task task : taskList.getAllTask()) {
-            encodedTasks.add(task.encode());
+            encodedTasks.add(TaskEncoder.encodeTask(task));
         }
         return encodedTasks;
     }

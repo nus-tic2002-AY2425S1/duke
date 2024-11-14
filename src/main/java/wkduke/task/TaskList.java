@@ -8,22 +8,13 @@ import java.util.List;
  * Manages a list of tasks, providing methods to add, delete, and query tasks.
  */
 public class TaskList {
-    public final List<Task> tasks;
+    private final List<Task> tasks;
 
     /**
      * Constructs an empty {@code TaskList}.
      */
     public TaskList() {
         tasks = new ArrayList<>();
-    }
-
-    /**
-     * Constructs a {@code TaskList} with the given list of tasks.
-     *
-     * @param tasks The initial list of tasks.
-     */
-    public TaskList(List<Task> tasks) {
-        this.tasks = tasks;
     }
 
     /**
@@ -72,16 +63,19 @@ public class TaskList {
     }
 
     /**
-     * Retrieves all tasks that occur on the specified date.
+     * Returns a list of tasks scheduled on the specified date.
+     * Only tasks implementing {@code TimeAware} and occurring on the specified date are included.
      *
      * @param targetDateTime The date to check against.
-     * @return A {@code List<Task>} containing tasks scheduled on the specified date.
+     * @return A list of {@code Task} objects occurring on the specified date, or an empty list if none match.
      */
     public List<Task> getAllTaskOnDate(LocalDateTime targetDateTime) {
         List<Task> tasks = new ArrayList<>();
-
         for (Task task : this.tasks) {
-            if (task.isOnDate(targetDateTime)) {
+            if (!(task instanceof TimeAware timeAwareTask)) {
+                continue;
+            }
+            if (timeAwareTask.isOccursOnDate(targetDateTime)) {
                 tasks.add(task);
             }
         }
@@ -106,15 +100,6 @@ public class TaskList {
      */
     public int getTaskIndex(Task task) {
         return tasks.indexOf(task);
-    }
-
-    /**
-     * Checks if the task list is empty.
-     *
-     * @return {@code true} if the task list is empty; {@code false} otherwise.
-     */
-    public boolean isEmpty() {
-        return tasks.isEmpty();
     }
 
     /**

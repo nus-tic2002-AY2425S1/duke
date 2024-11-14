@@ -1,4 +1,4 @@
-package wkduke.command;
+package wkduke.command.create;
 
 import wkduke.task.Todo;
 

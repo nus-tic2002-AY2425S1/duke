@@ -1,8 +1,9 @@
-package wkduke.command;
+package wkduke.command.delete;
 
+import wkduke.command.Command;
 import wkduke.common.Messages;
-import wkduke.exception.CommandOperationException;
-import wkduke.exception.StorageOperationException;
+import wkduke.exception.command.CommandOperationException;
+import wkduke.exception.storage.StorageOperationException;
 import wkduke.storage.Storage;
 import wkduke.task.Task;
 import wkduke.task.TaskList;
@@ -14,10 +15,10 @@ import wkduke.ui.Ui;
 public class DeleteCommand extends Command {
     public static final String COMMAND_WORD = "delete";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " {taskNumber}";
-    public static final String MESSAGE_SUCCESS_PRE = "Noted. I've removed this task:";
-    public static final String TASK_PLACEHOLDER = "  %s";
-    public static final String MESSAGE_SUCCESS_POST = "Now you have %s tasks in the list.";
-    protected final int taskNumber;
+    private static final String MESSAGE_SUCCESS_PRE = "Noted. I've removed this task:";
+    private static final String TASK_PLACEHOLDER = "  %s";
+    private static final String MESSAGE_SUCCESS_POST = "Now you have %s tasks in the list.";
+    private final int taskNumber;
 
     /**
      * Constructs a DeleteCommand with the specified task number.

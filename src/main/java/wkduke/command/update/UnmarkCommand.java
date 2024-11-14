@@ -1,8 +1,9 @@
-package wkduke.command;
+package wkduke.command.update;
 
+import wkduke.command.Command;
 import wkduke.common.Messages;
-import wkduke.exception.CommandOperationException;
-import wkduke.exception.StorageOperationException;
+import wkduke.exception.command.CommandOperationException;
+import wkduke.exception.storage.StorageOperationException;
 import wkduke.storage.Storage;
 import wkduke.task.Task;
 import wkduke.task.TaskList;
@@ -14,10 +15,10 @@ import wkduke.ui.Ui;
 public class UnmarkCommand extends Command {
     public static final String COMMAND_WORD = "unmark";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " {taskNumber}";
-    public static final String MESSAGE_SUCCESS = "OK, I've marked this task as not done yet:";
-    public static final String MESSAGE_FAILED = "This task is not yet marked as done:";
-    public static final String TASK_PLACEHOLDER = "  %s";
-    protected final int taskNumber;
+    private static final String MESSAGE_SUCCESS = "OK, I've marked this task as not done yet:";
+    private static final String MESSAGE_FAILED = "This task is not yet marked as done:";
+    private static final String TASK_PLACEHOLDER = "  %s";
+    private final int taskNumber;
 
     /**
      * Constructs an UnmarkCommand with the specified task number.

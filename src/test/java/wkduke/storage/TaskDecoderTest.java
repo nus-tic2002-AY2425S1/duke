@@ -1,10 +1,20 @@
 package wkduke.storage;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.ClassOrderer;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestClassOrder;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import wkduke.exception.FileContentException;
-import wkduke.task.*;
+import wkduke.exception.storage.FileContentException;
+import wkduke.storage.decoder.TaskDecoder;
+import wkduke.task.Deadline;
+import wkduke.task.Event;
+import wkduke.task.Task;
+import wkduke.task.TaskPriority;
+import wkduke.task.Todo;
 
 import java.time.LocalDateTime;
 import java.util.stream.Stream;
@@ -13,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestClassOrder(ClassOrderer.OrderAnnotation.class)
-public class TaskListDecoderTest {
+public class TaskDecoderTest {
     @Order(1)
     @Nested
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -49,8 +59,8 @@ public class TaskListDecoderTest {
         @Order(1)
         @ParameterizedTest
         @MethodSource("validTaskProvider")
-        public void decodeTaskFromString_validTask_returnsCorrectTask(String encodedTask, Task expectedTask) throws FileContentException {
-            Task task = TaskListDecoder.decodeTaskFromString(encodedTask);
+        public void decodeTask_validEncodedTask_returnsCorrectTask(String encodedTask, Task expectedTask) throws FileContentException {
+            Task task = TaskDecoder.decodeTask(encodedTask);
             assertEquals(expectedTask, task);
         }
     }
@@ -74,8 +84,8 @@ public class TaskListDecoderTest {
         @Order(1)
         @ParameterizedTest
         @MethodSource("invalidTaskProvider")
-        public void decodeTaskFromString_invalidTask_throwsFileContentException(String encodedTask) {
-            assertThrows(FileContentException.class, () -> TaskListDecoder.decodeTaskFromString(encodedTask));
+        public void decodeTask_invalidEncodedTask_throwsFileContentException(String encodedTask) {
+            assertThrows(FileContentException.class, () -> TaskDecoder.decodeTask(encodedTask));
         }
     }
 }

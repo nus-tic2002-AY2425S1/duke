@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
  * Represents a task with a deadline.
  * Contains a description and a date-time by which the task should be completed.
  */
-public class Deadline extends Task {
-    protected LocalDateTime by;
+public class Deadline extends Task implements TimeAware {
+    private final LocalDateTime by;
 
     /**
      * Constructs a {@code Deadline} task with the specified description and deadline date-time.
@@ -19,19 +19,6 @@ public class Deadline extends Task {
      */
     public Deadline(String description, LocalDateTime by) {
         super(description);
-        this.by = by;
-    }
-
-    /**
-     * Constructs a {@code Deadline} task with the specified description, deadline date-time, and completion status,
-     * with a default priority of {@code TaskPriority.LOW}.
-     *
-     * @param description The description of the task.
-     * @param by          The date and time by which the task is due.
-     * @param isDone      The completion status of the task.
-     */
-    public Deadline(String description, LocalDateTime by, boolean isDone) {
-        super(description, isDone);
         this.by = by;
     }
 
@@ -55,41 +42,6 @@ public class Deadline extends Task {
      */
     public LocalDateTime getBy() {
         return by;
-    }
-
-    /**
-     * Sets the due date and time for the task.
-     *
-     * @param by The new due date and time.
-     */
-    public void setBy(LocalDateTime by) {
-        this.by = by;
-    }
-
-    /**
-     * Encodes the {@code Deadline} task into a string format for file storage.
-     *
-     * @return A {@code String} representing the encoded task.
-     */
-    @Override
-    public String encode() {
-        return String.format("D | %s | %s | %s | %s",
-                priority,
-                isDone ? "1" : "0",
-                description,
-                by.format(TimeParser.ENCODING_FORMATTER)
-        );
-    }
-
-    /**
-     * Checks if the task is due on the specified date.
-     *
-     * @param targetDateTime The date to check against the task's due date.
-     * @return {@code true} if the task is due on the specified date; {@code false} otherwise.
-     */
-    @Override
-    public boolean isOnDate(LocalDateTime targetDateTime) {
-        return targetDateTime.isEqual(by);
     }
 
     /**
@@ -120,4 +72,17 @@ public class Deadline extends Task {
     public String toString() {
         return "[D]" + super.toString() + " (by:" + by.format(TimeParser.CLI_FORMATTER) + ")";
     }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation checks if the specified date is equal to the due date.
+     *
+     * @param targetDateTime The date to check against the task's due date.
+     * @return {@code true} if the task is due on the specified date; {@code false} otherwise.
+     */
+    public boolean isOccursOnDate(LocalDateTime targetDateTime) {
+        return targetDateTime.isEqual(by);
+    }
+
 }

@@ -1,8 +1,9 @@
-package wkduke.command;
+package wkduke.command.update;
 
+import wkduke.command.Command;
 import wkduke.common.Messages;
-import wkduke.exception.CommandOperationException;
-import wkduke.exception.StorageOperationException;
+import wkduke.exception.command.CommandOperationException;
+import wkduke.exception.storage.StorageOperationException;
 import wkduke.storage.Storage;
 import wkduke.task.Task;
 import wkduke.task.TaskList;
@@ -15,9 +16,9 @@ import wkduke.ui.Ui;
 public class UpdatePriorityCommand extends Command {
     public static final String COMMAND_WORD = "update-priority";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " {taskNumber} {taskPriority[L,M,H]}";
-    public static final String MESSAGE_SUCCESS = "OK! I've updated the priority of this task:";
-    public static final String MESSAGE_FAILED = "This task already has the specified priority:";
-    public static final String TASK_PLACEHOLDER = "  %s";
+    private static final String MESSAGE_SUCCESS = "OK! I've updated the priority of this task:";
+    private static final String MESSAGE_FAILED = "This task already has the specified priority:";
+    private static final String TASK_PLACEHOLDER = "  %s";
     private final int taskNumber;
     private final TaskPriority priority;
 

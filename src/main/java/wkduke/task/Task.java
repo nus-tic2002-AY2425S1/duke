@@ -1,15 +1,13 @@
 package wkduke.task;
 
-import java.time.LocalDateTime;
-
 /**
  * Represents a general task with a description and completion status.
  * Subclasses must implement methods for encoding and date-based checks.
  */
 public abstract class Task {
-    protected String description;
-    protected boolean isDone;
-    protected TaskPriority priority;
+    private final String description;
+    private boolean isDone;
+    private TaskPriority priority;
 
     /**
      * Constructs a {@code Task} with the specified description, initially marked as not done and
@@ -17,22 +15,9 @@ public abstract class Task {
      *
      * @param description The description of the task.
      */
-    public Task(String description) {
+    Task(String description) {
         this.description = description;
         this.isDone = false;
-        this.priority = TaskPriority.LOW;
-    }
-
-    /**
-     * Constructs a {@code Task} with the specified description and completion status,
-     * and with a default priority of {@code TaskPriority.LOW}.
-     *
-     * @param description The description of the task.
-     * @param isDone      The completion status of the task.
-     */
-    public Task(String description, boolean isDone) {
-        this.description = description;
-        this.isDone = isDone;
         this.priority = TaskPriority.LOW;
     }
 
@@ -43,18 +28,20 @@ public abstract class Task {
      * @param isDone      The completion status of the task.
      * @param priority    The priority level of the task.
      */
-    public Task(String description, boolean isDone, TaskPriority priority) {
+    Task(String description, boolean isDone, TaskPriority priority) {
         this.description = description;
         this.isDone = isDone;
         this.priority = priority;
     }
 
     /**
-     * Encodes the task into a string format suitable for file storage.
+     * Retrieves the status icon of the task.
      *
-     * @return A {@code String} representing the encoded task.
+     * @return {@code "X"} if the task is done, or a blank space if it is not done.
      */
-    public abstract String encode();
+    private String getStatusIcon() {
+        return (isDone ? "X" : " "); // mark done task with X
+    }
 
     /**
      * Retrieves the description of the task.
@@ -63,15 +50,6 @@ public abstract class Task {
      */
     public String getDescription() {
         return description;
-    }
-
-    /**
-     * Sets the description of the task.
-     *
-     * @param description The new description of the task.
-     */
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     /**
@@ -93,15 +71,6 @@ public abstract class Task {
     }
 
     /**
-     * Retrieves the status icon of the task.
-     *
-     * @return {@code "X"} if the task is done, or a blank space if it is not done.
-     */
-    public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
-    }
-
-    /**
      * Checks if the task is marked as done.
      *
      * @return {@code true} if the task is done; {@code false} otherwise.
@@ -109,14 +78,6 @@ public abstract class Task {
     public boolean isDone() {
         return isDone;
     }
-
-    /**
-     * Checks if the task is scheduled for or due on a specified date.
-     *
-     * @param targetDateTime The date to check against.
-     * @return {@code true} if the task is on the specified date; {@code false} otherwise.
-     */
-    public abstract boolean isOnDate(LocalDateTime targetDateTime);
 
     /**
      * Marks the task as done.

@@ -5,8 +5,8 @@ package wkduke.exception;
  * This exception includes additional fields for detailed error information and helpful guidance.
  */
 public class WKDukeException extends Exception {
-    protected String detail = null;
-    protected String help = null;
+    private String detail = null;
+    private String help = null;
 
     /**
      * Constructs a WKDukeException with the specified error message.
@@ -65,14 +65,5 @@ public class WKDukeException extends Exception {
      */
     public String getHelp() {
         return help;
-    }
-
-    /**
-     * Sets helpful guidance or suggestions for resolving the exception.
-     *
-     * @param help The help information to set.
-     */
-    public void setHelp(String help) {
-        this.help = help;
     }
 }

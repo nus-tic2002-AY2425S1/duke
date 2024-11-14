@@ -1,4 +1,4 @@
-package wkduke.exception;
+package wkduke.exception.storage;
 
 /**
  * Represents a runtime exception that is thrown when there is an error with the storage file path.

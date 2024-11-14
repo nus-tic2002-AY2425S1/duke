@@ -37,15 +37,6 @@ public enum TaskPriority {
     }
 
     /**
-     * Retrieves the code associated with the priority level.
-     *
-     * @return The code as a {@code String}.
-     */
-    public String getCode() {
-        return code;
-    }
-
-    /**
      * Returns a string representation of the priority level in lowercase.
      *
      * @return The name of the priority level in lowercase as a {@code String}.

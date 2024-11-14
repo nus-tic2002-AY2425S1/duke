@@ -1,9 +1,11 @@
 package wkduke.storage;
 
 import wkduke.common.Messages;
-import wkduke.exception.FileContentException;
-import wkduke.exception.StorageFilePathException;
-import wkduke.exception.StorageOperationException;
+import wkduke.exception.storage.FileContentException;
+import wkduke.exception.storage.StorageFilePathException;
+import wkduke.exception.storage.StorageOperationException;
+import wkduke.storage.decoder.TaskListDecoder;
+import wkduke.storage.encoder.TaskListEncoder;
 import wkduke.task.TaskList;
 
 import java.io.FileNotFoundException;
@@ -18,7 +20,7 @@ import java.util.List;
  * Handles file reading, writing, and ensures proper file setup.
  */
 public class Storage {
-    protected static final String DEFAULT_STORAGE_FILEPATH = "./data/tasks.txt";
+    private static final String DEFAULT_STORAGE_FILEPATH = "./data/tasks.txt";
     private final Path filePath;
 
     /**
@@ -39,24 +41,10 @@ public class Storage {
      */
     public Storage(String filePathString) throws StorageOperationException {
         filePath = Paths.get(filePathString);
-        Path folderPath = filePath.getParent();
-
         if (!isValidPath(filePath)) {
             throw new StorageFilePathException(Messages.MESSAGE_FILE_PATH_ERROR);
         }
-        try {
-            if (!Files.exists(folderPath)) {
-                Files.createDirectories(folderPath);
-            }
-            if (!Files.exists(filePath)) {
-                Files.createFile(filePath);
-            }
-        } catch (IOException e) {
-            throw new StorageOperationException(
-                    Messages.MESSAGE_CREATE_FILE_ERROR,
-                    String.format("FilePath='%s", filePathString)
-            );
-        }
+        createFileAndDirectories(filePath);
     }
 
     /**
@@ -67,6 +55,30 @@ public class Storage {
      */
     private static boolean isValidPath(Path filePath) {
         return filePath.toString().endsWith(".txt");
+    }
+
+    /**
+     * Creates the necessary directories and file if they do not exist.
+     *
+     * @param filePath The file path for the task storage.
+     * @throws StorageOperationException If an error occurs while creating the file or directories.
+     */
+    private void createFileAndDirectories(Path filePath) throws StorageOperationException {
+        Path folderPath = filePath.getParent();
+
+        try {
+            if (folderPath != null && Files.notExists(folderPath)) {
+                Files.createDirectories(folderPath);
+            }
+            if (Files.notExists(filePath)) {
+                Files.createFile(filePath);
+            }
+        } catch (IOException e) {
+            throw new StorageOperationException(
+                    Messages.MESSAGE_CREATE_FILE_ERROR,
+                    String.format("FilePath='%s'", filePath)
+            );
+        }
     }
 
     /**

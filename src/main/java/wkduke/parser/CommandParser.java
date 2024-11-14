@@ -1,9 +1,21 @@
 package wkduke.parser;
 
-import wkduke.command.*;
+import wkduke.command.Command;
+import wkduke.command.ExitCommand;
+import wkduke.command.create.AddCommand;
+import wkduke.command.create.AddDeadlineCommand;
+import wkduke.command.create.AddEventCommand;
+import wkduke.command.create.AddTodoCommand;
+import wkduke.command.delete.DeleteCommand;
+import wkduke.command.read.FindCommand;
+import wkduke.command.read.ListCommand;
+import wkduke.command.read.ListOnCommand;
+import wkduke.command.update.MarkCommand;
+import wkduke.command.update.UnmarkCommand;
+import wkduke.command.update.UpdatePriorityCommand;
 import wkduke.common.Messages;
-import wkduke.exception.CommandFormatException;
 import wkduke.exception.TaskFormatException;
+import wkduke.exception.command.CommandFormatException;
 import wkduke.task.TaskPriority;
 
 import java.time.LocalDateTime;
@@ -17,16 +29,16 @@ import java.util.regex.Pattern;
  * Uses regular expressions to match and extract command keywords and arguments.
  */
 public class CommandParser {
-    public static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
-    public static final Pattern TASK_TODO_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+)");
-    public static final Pattern TASK_DEADLINE_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+) /by (?<by>.+)");
-    public static final Pattern TASK_EVENT_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+) /from (?<from>.+) /to (?<to>.+)");
-    public static final Pattern MARK_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
-    public static final Pattern UNMARK_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
-    public static final Pattern DELETE_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
-    public static final Pattern LIST_TASK_ARGS_FORMAT = Pattern.compile("/on (?<on>.+)");
-    public static final Pattern UPDATE_PRIORITY_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*) (?<priority>[LMH])$");
-    public static final Pattern FIND_ARGS_FORMAT = Pattern.compile("([^,]+)");
+    private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+    private static final Pattern TASK_TODO_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+)");
+    private static final Pattern TASK_DEADLINE_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+) /by (?<by>.+)");
+    private static final Pattern TASK_EVENT_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+) /from (?<from>.+) /to (?<to>.+)");
+    private static final Pattern MARK_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
+    private static final Pattern UNMARK_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
+    private static final Pattern DELETE_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
+    private static final Pattern LIST_TASK_ARGS_FORMAT = Pattern.compile("/on (?<on>.+)");
+    private static final Pattern UPDATE_PRIORITY_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*) (?<priority>[LMH])$");
+    private static final Pattern FIND_ARGS_FORMAT = Pattern.compile("([^,]+)");
 
     /**
      * Parses the user input into a command.

@@ -131,6 +131,13 @@ public class TaskList implements AutoCloseable {
     _taskNameToIndexMap.replace(_list.remove(index).getName(),-1);
     saveTasks();
   }
+
+  public void massDeleteTask(int[] index) throws MochiException{
+    int[] sorted = Utils.sortArrayDsc(index);
+    for (int i : sorted)
+      _taskNameToIndexMap.replace(_list.remove(i-1).getName(),-1);
+    saveTasks();
+  }
   /**
    * Unmarks a task as completed based on its index.
    *

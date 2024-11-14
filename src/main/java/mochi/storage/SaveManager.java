@@ -68,4 +68,9 @@ public class SaveManager {
     Path targetFile = Paths.get(file + postfix);
     Files.copy(sourceFile, targetFile, StandardCopyOption.REPLACE_EXISTING);
   }
+  public void deleteData() throws IOException {
+    if (Files.exists(loadFile)) {
+      Files.delete(loadFile);
+    }
+  }
 }

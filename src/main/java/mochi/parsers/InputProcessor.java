@@ -8,6 +8,8 @@ import mochi.common.exception.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class InputProcessor {
   private final TaskList taskList;
@@ -23,13 +25,43 @@ public class InputProcessor {
     Command cmd = null;
     switch (cmdType) {
       case DELETE:
+      if ((token.length > 1) && token[1].startsWith("[")) {
+        String regex = "^\\[\\d+(,\\d+)*\\]$";
+        if (token[1].matches(regex)) {
+          cmd = new MassDeleteTaskCommand(taskList, token[1].replaceAll("[\\[\\]]", ""));
+        } else {
+          Ui.response(DialogMessages.INVALID_MULTI_PATTERN.getValue());
+        }
+      }
+      else {
         cmd = new DeleteTaskCommand(taskList, token);
-        break;
+      }
+      break;
       case MARK:
-        cmd = new MarkTaskCommand(taskList, token);
+        if ((token.length > 1) && token[1].startsWith("[")) {
+          String regex = "^\\[\\d+(,\\d+)*\\]$";
+          if (token[1].matches(regex)) {
+            cmd = new MassMarkTaskCommand(taskList, token[1].replaceAll("[\\[\\]]", ""));
+          } else {
+            Ui.response(DialogMessages.INVALID_MULTI_PATTERN.getValue());
+          }
+        }
+        else {
+          cmd = new MarkTaskCommand(taskList, token);
+        }
         break;
       case UNMARK:
-        cmd = new UnMarkTaskCommand(taskList, token);
+        if ((token.length > 1) && token[1].startsWith("[")) {
+          String regex = "^\\[\\d+(,\\d+)*\\]$";
+          if (token[1].matches(regex)) {
+            cmd = new MassUnMarkTaskCommand(taskList, token[1].replaceAll("[\\[\\]]", ""));
+          } else {
+            Ui.response(DialogMessages.INVALID_MULTI_PATTERN.getValue());
+          }
+        }
+        else {
+          cmd = new UnMarkTaskCommand(taskList, token);
+        }
         break;
       case BYE:
         Ui.response(DialogMessages.BYE.getValue());

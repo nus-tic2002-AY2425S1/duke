@@ -1,4 +1,7 @@
 package mochi.common;
+
+import java.util.Arrays;
+
 /**
  * The Utils class contains common utility that can be used within the project
  */
@@ -27,5 +30,23 @@ public class Utils {
         shouldCopy = true;
     }
     return body.trim();
+  }
+
+  public static int[] splitStringToIntArray(String input, String delimiter) {
+    String[] tmp = input.split(delimiter);
+    int[] result = new int[tmp.length];
+    for (int i = 0; i < tmp.length; i++) {
+      result[i] = Integer.parseInt(tmp[i].trim());
+    }
+    return result;
+  }
+  public static int[] sortArrayDsc(int[] array) {
+    Arrays.sort(array);
+    for (int i = 0; i < array.length / 2; i++) {
+      int temp = array[i];
+      array[i] = array[array.length - 1 - i];
+      array[array.length - 1 - i] = temp;
+    }
+    return array;
   }
 }

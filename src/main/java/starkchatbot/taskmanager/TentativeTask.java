@@ -20,7 +20,7 @@ public class TentativeTask extends Task {
         try {
             String readableFrom = DateTimeParser.parseDateTime(from);
             String readableTo = DateTimeParser.parseDateTime(to);
-            availableSlots.add("(from: " + readableFrom + " to: " + readableTo + ")");
+            availableSlots.add("(from: " + readableFrom + "   to: " + readableTo + ")");
         } catch (Exception e) {
             throw new StarkException.InvalidCommandException(e.getMessage());
         }
@@ -33,32 +33,16 @@ public class TentativeTask extends Task {
 
     //to add confirm slot from file storage
     public void assignConfirmedSlot(String slot) {
-        if(slot.isEmpty()) {
+        if (slot.isEmpty()) {
             return;
         }
         isConfirmed = true;
         confirmedSlot = slot;
     }
 
-    //to confirm slot from commandline UI
-    public void setConfirmedSlot(int slotNumber) {
+    public void editConfirmedSlot() {
         if (isConfirmed) {
-            System.out.println("Event already confirmed slot: " + confirmedSlot);
-            return;
-        }
-        if (slotNumber > availableSlots.size()) {
-            throw new IllegalArgumentException("Slot number must be less than " + availableSlots.size());
-        }
-        if (slotNumber < 1) {
-            throw new IllegalArgumentException("Slot number must be greater than 0");
-        }
-        isConfirmed = true;
-        this.confirmedSlot = availableSlots.get(slotNumber - 1);
-    }
-
-    public void editConfirmedSlot(int slotNumber) {
-        if (isConfirmed) {
-            this.confirmedSlot = availableSlots.get(slotNumber - 1);
+            isConfirmed = false;
         }
     }
 
@@ -73,6 +57,21 @@ public class TentativeTask extends Task {
 
     public String getConfirmedSlot() {
         return confirmedSlot;
+    }
+
+    //to confirm slot from commandline UI
+    public void setConfirmedSlot(int slotNumber) {
+        if (isConfirmed) {
+            return;
+        }
+        if (slotNumber > availableSlots.size()) {
+            System.out.println("Slot number must be less than " + availableSlots.size());
+        }
+        if (slotNumber < 1) {
+            System.out.println("Slot number must be greater than 0");
+        }
+        isConfirmed = true;
+        this.confirmedSlot = availableSlots.get(slotNumber - 1);
     }
 
     @Override

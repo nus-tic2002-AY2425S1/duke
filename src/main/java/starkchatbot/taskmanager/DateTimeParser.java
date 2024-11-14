@@ -20,7 +20,7 @@ public class DateTimeParser {
             if (dateTime.length() == 15) {
                 LocalDateTime localDateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern("yyyy-M-dd HHmm"));
                 readableDate = localDateTime.format(DateTimeFormatter.ofPattern("MMMM dd yyyy"));
-                readableTime = " " + localDateTime.format(DateTimeFormatter.ofPattern("hh:mm a"));
+                readableTime = " " + localDateTime.format(DateTimeFormatter.ofPattern("hh:mma"));
 
             } else {
 
@@ -30,10 +30,10 @@ public class DateTimeParser {
             return readableDate + readableTime;
         } catch (DateTimeParseException e) {
             throw new StarkException.InvalidDescriptionException("Unable to parse Date/Time. Input a valid Date-Time" + System.lineSeparator()
-                                                                + " \t eg : \"YYYY-MM-DD HHmm\" or \"YYYY-MM-DD\" ");
+                    + " \t eg : \"YYYY-MM-DD HHmm\" or \"YYYY-MM-DD\" ");
         } catch (NullPointerException | IllegalArgumentException e) {
             throw new StarkException.InvalidDescriptionException("OOPS!!! Please re-enter Date-Time in below format" + System.lineSeparator()
-                                                                + " \t eg : \"YYYY-MM-DD HHmm\" or \"YYYY-MM-DD\" ");
+                    + " \t eg : \"YYYY-MM-DD HHmm\" or \"YYYY-MM-DD\" ");
         } catch (Exception e) {
             throw new StarkException.InvalidDescriptionException(e.getMessage());
         }

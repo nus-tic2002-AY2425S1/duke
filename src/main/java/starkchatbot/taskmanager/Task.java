@@ -27,6 +27,15 @@ public class Task {
     }
 
     /**
+     * Returns the status of the task.
+     *
+     * @return The task status, either "X" for marked or " " for unmarked.
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
      * Sets the status of the task to either marked or unmarked.
      *
      * @param status is a string indicating the desired status need to ("mark" or "unmark").
@@ -37,15 +46,6 @@ public class Task {
         } else if (status.equalsIgnoreCase("unmark")) {
             this.status = " ";
         }
-    }
-
-    /**
-     * Returns the status of the task.
-     *
-     * @return The task status, either "X" for marked or " " for unmarked.
-     */
-    public String getStatus() {
-        return status;
     }
 
     /**

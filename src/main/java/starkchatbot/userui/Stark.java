@@ -9,7 +9,10 @@ import java.util.ArrayList;
 
 public class Stark {
 
-    private static String fileLocation = "src/Data/TaskLists.txt";
+    private static final String fileLocation = "src/Data/TaskLists.txt";
+
+    public Stark() {
+    }
 
     public static void runChatBot() {
 
@@ -25,9 +28,6 @@ public class Stark {
         } finally {
             System.out.println("ChatBot closed");
         }
-    }
-
-    public Stark() {
     }
 
     public static void main(String[] args) {

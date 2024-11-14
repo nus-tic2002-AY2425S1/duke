@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * all tasks in the list.
  */
 public class TaskList {
-    private ArrayList<Task> tasks;
+    private final ArrayList<Task> tasks;
     private int totalTasks;
 
     public TaskList(ArrayList<Task> tasks) {

@@ -5,10 +5,10 @@ package starkchatbot.taskmanager;
  * Represents a deadline task with a specific due date/time.
  * This class extends Task and includes additional attributes
  */
-public class Deadline extends Task{
+public class Deadline extends Task {
 
-    private String doneBy;
-    private String readableDateTime;
+    private final String doneBy;
+    private final String readableDateTime;
 
 
     /**
@@ -21,7 +21,7 @@ public class Deadline extends Task{
     public Deadline(String task, String doneBy) {
         super(task);
         this.doneBy = doneBy;
-        readableDateTime= DateTimeParser.parseDateTime(doneBy);
+        readableDateTime = DateTimeParser.parseDateTime(doneBy);
     }
 
 
@@ -38,7 +38,6 @@ public class Deadline extends Task{
 
 
     /**
-     *
      * @return A string in the format "description (by: due Date/time)".
      */
     @Override
@@ -47,7 +46,6 @@ public class Deadline extends Task{
     }
 
     /**
-     *
      * @return The due date/time for the task.
      */
     public String getDoneBy() {

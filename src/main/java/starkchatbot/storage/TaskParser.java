@@ -36,7 +36,9 @@ public class TaskParser {
             } else if (taskInfo[0].trim().equalsIgnoreCase("TE")) {
                 task = parseTentativeEvent(taskInfo[1]);
             }
-
+            if (task == null) {
+                return null;
+            }
             if (taskInfo[2].trim().equalsIgnoreCase("X")) {
                 task.setStatus("mark");
             } else {
@@ -54,6 +56,7 @@ public class TaskParser {
         String[] splitDetails = tentativeDescription.split(" # ");
         if (splitDetails.length != 3) {
             System.out.println("Some event description in file are incorrect. -> Skipping...");
+            return null;
         }
         String description = splitDetails[0].trim();
         TentativeTask tentativeTask = new TentativeTask(description);

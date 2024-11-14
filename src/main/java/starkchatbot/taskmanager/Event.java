@@ -6,10 +6,10 @@ package starkchatbot.taskmanager;
  */
 public class Event extends Task {
 
-    private String startAt;
-    private String endBy;
-    private String readableStartAt;
-    private String readableEndAt;
+    private final String startAt;
+    private final String endBy;
+    private final String readableStartAt;
+    private final String readableEndAt;
 
 
     /**
@@ -38,7 +38,6 @@ public class Event extends Task {
 
 
     /**
-     *
      * @return A string in the format "description (from:  Start date/time to: End date/time)".
      */
     @Override
@@ -47,7 +46,6 @@ public class Event extends Task {
     }
 
     /**
-     *
      * @return The start time of the event.
      */
     public String getStartAt() {
@@ -55,7 +53,6 @@ public class Event extends Task {
     }
 
     /**
-     *
      * @return The end time of the event.
      */
     public String getEndBy() {

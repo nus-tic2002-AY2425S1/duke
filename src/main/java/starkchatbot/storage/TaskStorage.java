@@ -25,6 +25,7 @@ public class TaskStorage {
                     continue;
                 }
                 Task readTask = TaskParser.parseTasks(task);
+
                 if (readTask == null) {
                     continue;
                 }

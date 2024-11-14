@@ -5,7 +5,7 @@ import starkchatbot.userui.StarkException;
 import java.util.ArrayList;
 
 public class TaskFinder {
-    private ArrayList<Task> tasks;
+    private final ArrayList<Task> tasks;
 
     public TaskFinder(ArrayList<Task> tasks) {
         this.tasks = tasks;

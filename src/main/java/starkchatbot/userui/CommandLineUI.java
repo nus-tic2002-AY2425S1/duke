@@ -10,7 +10,7 @@ import static starkchatbot.userui.InputParser.userInputParser;
 
 public class CommandLineUI {
 
-    private ArrayList<Task> tasks;
+    private final ArrayList<Task> tasks;
 
     public CommandLineUI(ArrayList<Task> tasks) {
         this.tasks = tasks;

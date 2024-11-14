@@ -241,6 +241,9 @@
      10. [FD][ ] code review (duration: 2.0 hours)
     ____________________________________________________________
     ____________________________________________________________
+     Noted. The task `[T][ ] learn a new language` has been successfully archived to ../src/main/java/data/tasks.txt.
+    ____________________________________________________________
+    ____________________________________________________________
      Noted. I've removed this task:
        [T][ ] learn a new language
      Now you have 9 tasks in the list.
@@ -438,6 +441,9 @@
      3. [E][ ] project meeting (from: Jun 09 2024 1400 to: Jun 09 2024 1600)
      4. [T][X] join sports club
      5. [FD][ ] read the sales report (duration: 2.0 hours)
+    ____________________________________________________________
+    ____________________________________________________________
+     All tasks have been successfully archived to ../src/main/java/data/tasks.txt.
     ____________________________________________________________
     ____________________________________________________________
      Good bye! Hope to see you again soon

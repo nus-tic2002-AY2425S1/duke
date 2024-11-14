@@ -39,6 +39,7 @@ fd code review /duration
 fd code review /duration invalidDuration
 fd code review /duration 2
 list
+archive 6
 delete 6
 list
 find
@@ -71,4 +72,5 @@ delete 7
 list
 delete 6
 list
+archive all
 bye

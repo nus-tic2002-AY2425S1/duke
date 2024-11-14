@@ -144,7 +144,7 @@ public class TaskList {
 
         try {
             task = getTask(taskNumber - 1);
-        } catch (IndexOutOfBoundsException ioobe) {
+        } catch (IndexOutOfBoundsException | NumberFormatException e) {
             throw new CommandException(Messages.ERROR_TASK_NONEXISTENT, MESSAGE_NONEXISTENT_TASK, MESSAGE_USAGE);
         }
 

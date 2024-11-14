@@ -44,8 +44,10 @@ public class ArchiveCommand extends Command {
         switch (target) {
         case ALL:
             storage.archiveTasks(taskList);
-            messages = new String[]{MESSAGE_SUCCESS_ALL_POST + SPACE + storage.getArchiveTasksFilePath() + Constants.DOT};
+            messages = new String[]{MESSAGE_SUCCESS_ALL_POST + SPACE +
+                storage.getArchiveTasksFilePath() + Constants.DOT};
             break;
+
         default:
             int targetNumber = Integer.parseInt(target);
             Task task = taskList.getTaskForOperation(targetNumber);
@@ -53,10 +55,9 @@ public class ArchiveCommand extends Command {
             storage.archiveTask(task);
 
             String MESSAGE_SUCCESS = NOTED + SPACE + Messages.THE_TASK + SPACE +
-                Constants.BACKTICK + task + Constants.BACKTICK + SPACE + HAS +
+                Constants.BACKTICK + task + Constants.BACKTICK + SPACE + HAS + SPACE +
                 MESSAGE_SUCCESS_POST + SPACE + storage.getArchiveTasksFilePath() + Constants.DOT;
             messages = new String[]{MESSAGE_SUCCESS};
-
 
             break;
         }

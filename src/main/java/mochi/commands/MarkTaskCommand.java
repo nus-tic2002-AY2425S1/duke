@@ -9,7 +9,7 @@ public class MarkTaskCommand extends Command {
 
   public MarkTaskCommand(TaskList taskList, String[] token) {
     super(taskList);
-    this.index = Integer.parseInt(token[1]) - 1;;
+    this.index = Integer.parseInt(token[1]) - 1;
   }
 
   @Override

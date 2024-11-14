@@ -10,7 +10,7 @@ public class DeleteTaskCommand extends Command {
 
   public DeleteTaskCommand(TaskList taskList, String[] token) {
     super(taskList);
-    this.index = Integer.parseInt(token[1]) - 1;;
+    this.index = Integer.parseInt(token[1]) - 1;
   }
 
   @Override

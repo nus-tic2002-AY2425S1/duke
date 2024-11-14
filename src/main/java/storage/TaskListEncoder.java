@@ -37,7 +37,7 @@ public class TaskListEncoder {
      * @param task represents the {@code Task} to be encoded.
      * @return a string representation of the encoded {@code Task}.
      */
-    private static String encodeTaskToString(Task task) {
+    protected static String encodeTaskToString(Task task) {
         return task.encodeTask();
     }
 

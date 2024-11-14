@@ -49,20 +49,20 @@ public class StorageTest {
 
     @Test
     public void constructor_checkDataFileExists_tasksFileExists() {
-        File tasksFile = storage.getFile();
+        File tasksFile = storage.getTasksFile();
         assertTrue(tasksFile.exists(), "Tasks file should exist after the storage has been initialized");
     }
 
     @Test
     public void constructor_checkDataFolderExists_dataFolderExists() {
         // https://www.geeksforgeeks.org/get-the-files-parent-directory-in-java/
-        File dataFolder = storage.getFile().getParentFile();
+        File dataFolder = storage.getTasksFile().getParentFile();
         assertTrue(dataFolder.exists(), "Data folder should exist after the storage has been initialized");
     }
 
     @Test
     public void checkDataFolderExists_createDataFolder() throws IOException, StorageOperationException {
-        File dataFolder = storage.getFile().getParentFile();
+        File dataFolder = storage.getTasksFile().getParentFile();
         
         // Delete the data folder if it exists
         if (dataFolder.exists()) {
@@ -85,7 +85,7 @@ public class StorageTest {
     @Test
     public void checkTaskFileExists_createsTaskFile() throws IOException, StorageOperationException {
         // Ensure the task file does not exist
-        File tasksFile = storage.getFile();
+        File tasksFile = storage.getTasksFile();
         Files.deleteIfExists(tasksFile.toPath());
 
         storage.checkTaskFileExists();
@@ -93,15 +93,15 @@ public class StorageTest {
     }
 
     @Test
-    public void getFilePath_returnsCorrectPath() {
+    public void getTasksFilePath_returnsCorrectPath() {
         Path expectedPath = Paths.get(FILE_STORAGE_PATH);
-        assertEquals(expectedPath, storage.getFilePath(), "File path should match the expected path");
+        assertEquals(expectedPath, storage.getTasksFilePath(), "File path should match the expected path");
     }
 
     @Test
-    public void getFile_returnsCorrectFile() {
+    public void getFile_returnsCorrectTasksFile() {
         File expectedFile = new File(FILE_STORAGE_PATH);
-        assertEquals(expectedFile, storage.getFile(), "File object should match the expected file");
+        assertEquals(expectedFile, storage.getTasksFile(), "File object should match the expected file");
     }
 
     // https://stackoverflow.com/questions/29878237/java-how-to-clear-a-text-file-without-deleting-it
@@ -116,7 +116,7 @@ public class StorageTest {
     // Ensure that when an empty file is read, the method behaves correctly by returning an empty list.
     @Test
     public void getAllLines_returnsEmptyListWhenFileIsEmpty() throws IOException {
-        clearFileContent(storage.getFile());
+        clearFileContent(storage.getTasksFile());
         List<String> lines = storage.getAllLines();
 
         // Checks that the lines variable is not null. 

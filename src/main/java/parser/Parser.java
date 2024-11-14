@@ -10,6 +10,7 @@ import commands.UnmarkCommand;
 import commands.DeleteCommand;
 import commands.ShowCommand;
 import commands.FindCommand;
+import commands.ArchiveCommand;
 import commands.add.DeadlineCommand;
 import commands.add.EventCommand;
 import commands.add.FixedDurationCommand;
@@ -33,27 +34,31 @@ import java.util.regex.Pattern;
 public class Parser {
 
     // Regex below generated with the help of ChatGPT
-    public static final String BASIC_COMMAND_REGEX = "^(?<commandWord>\\S+)(?<arguments>.*)";
-    public static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile(BASIC_COMMAND_REGEX);
+    private static final String BASIC_COMMAND_REGEX = "^(?<commandWord>\\S+)(?<arguments>.*)";
+    private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile(BASIC_COMMAND_REGEX);
 
     // Regex used for "mark", "unmark", "delete"
-    public static final String TASK_NUMBER_ARGS_REGEX = "^(?<taskNumber>\\d+)$";
-    public static final Pattern TASK_NUMBER_ARGS_FORMAT = Pattern.compile(TASK_NUMBER_ARGS_REGEX);
+    private static final String TASK_NUMBER_ARGS_REGEX = "^(?<taskNumber>\\d+)$";
+    private static final Pattern TASK_NUMBER_ARGS_FORMAT = Pattern.compile(TASK_NUMBER_ARGS_REGEX);
 
-    public static final String TODO_COMMAND_ARGS_REGEX = "^(?<description>.+)$";
-    public static final Pattern TODO_COMMAND_ARGS_FORMAT = Pattern.compile(TODO_COMMAND_ARGS_REGEX);
+    private static final String TODO_COMMAND_ARGS_REGEX = "^(?<description>.+)$";
+    private static final Pattern TODO_COMMAND_ARGS_FORMAT = Pattern.compile(TODO_COMMAND_ARGS_REGEX);
 
-    public static final String DEADLINE_COMMAND_ARGS_REGEX = "^(?<description>.+) /by (?<due>.+)$";
-    public static final Pattern DEADLINE_COMMAND_ARGS_FORMAT = Pattern.compile(DEADLINE_COMMAND_ARGS_REGEX);
+    private static final String DEADLINE_COMMAND_ARGS_REGEX = "^(?<description>.+) /by (?<due>.+)$";
+    private static final Pattern DEADLINE_COMMAND_ARGS_FORMAT = Pattern.compile(DEADLINE_COMMAND_ARGS_REGEX);
 
-    public static final String EVENT_COMMAND_ARGS_REGEX = "^(?<description>.+) /from (?<start>.+) /to (?<end>.+)$";
-    public static final Pattern EVENT_COMMAND_ARGS_FORMAT = Pattern.compile(EVENT_COMMAND_ARGS_REGEX);
+    private static final String EVENT_COMMAND_ARGS_REGEX = "^(?<description>.+) /from (?<start>.+) /to (?<end>.+)$";
+    private static final Pattern EVENT_COMMAND_ARGS_FORMAT = Pattern.compile(EVENT_COMMAND_ARGS_REGEX);
 
-    public static final String FD_COMMAND_ARGS_REGEX = "^(?<description>.+?) /duration (?<duration>\\d+(\\.\\d+)?)";
-    public static final Pattern FD_COMMAND_ARGS_FORMAT = Pattern.compile(FD_COMMAND_ARGS_REGEX);
+    private static final String FD_COMMAND_ARGS_REGEX = "^(?<description>.+?) /duration (?<duration>\\d+(\\.\\d+)?)";
+    private static final Pattern FD_COMMAND_ARGS_FORMAT = Pattern.compile(FD_COMMAND_ARGS_REGEX);
 
-    public static final String FIND_COMMAND_ARGS_REGEX = TODO_COMMAND_ARGS_REGEX;
-    public static final Pattern FIND_COMMAND_ARGS_FORMAT = Pattern.compile(FIND_COMMAND_ARGS_REGEX);
+    private static final String FIND_COMMAND_ARGS_REGEX = TODO_COMMAND_ARGS_REGEX;
+    private static final Pattern FIND_COMMAND_ARGS_FORMAT = Pattern.compile(FIND_COMMAND_ARGS_REGEX);
+
+    private static final String ARCHIVE_COMMAND_ARGS_REGEX = "^(?<argument>all|\\d+)$";
+    // private static final String ARCHIVE_COMMAND_ARGS_REGEX = "^(?P<target>all|\\d+)$";
+    private static final Pattern ARCHIVE_COMMAND_ARGS_FORMAT = Pattern.compile(ARCHIVE_COMMAND_ARGS_REGEX);
 
     private static final String DOT = Constants.DOT;
     private static final String MESSAGE_THE_TASK_IS_MISSING_A = "The task is missing a";
@@ -77,7 +82,9 @@ public class Parser {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
 
         if (!matcher.matches()) {
-            throw new CommandException(String.format(Constants.PERCENT + Constants.S, Messages.ERROR_INVALID_COMMAND_FORMAT));
+            throw new CommandException(
+                String.format(Constants.PERCENT + Constants.S, Messages.ERROR_INVALID_COMMAND_FORMAT)
+            );
         }
 
         final String commandWord = matcher.group("commandWord");
@@ -104,6 +111,7 @@ public class Parser {
             case ShowCommand.COMMAND_WORD -> prepareShow(cleanArgs);
             case FixedDurationCommand.COMMAND_WORD -> prepareFixedDuration(cleanArgs);
             case FindCommand.COMMAND_WORD -> prepareFind(cleanArgs);
+            case ArchiveCommand.COMMAND_WORD -> prepareArchive(cleanArgs);
             default -> throw new CommandException(Messages.ERROR_INVALID_COMMAND,
                 String.format("Command=`%s`", commandWord), Messages.VALID_COMMANDS
             );
@@ -400,5 +408,14 @@ public class Parser {
 
         String description = matcher.group(Constants.DESCRIPTION).trim();
         return new FindCommand(description);
+    }
+
+    private static Command prepareArchive(String args) throws CommandException {
+
+        final Matcher matcher = ARCHIVE_COMMAND_ARGS_FORMAT.matcher(args);
+
+        validateArgsFormat(matcher, ArchiveCommand.COMMAND_WORD, args, ArchiveCommand.MESSAGE_USAGE);
+
+        return new ArchiveCommand(args);
     }
 }

@@ -78,15 +78,6 @@ public abstract class Task {
     }
 
     /**
-     * Sets the description field of the {@code Task}.
-     * 
-     * @param description represents the new description for the {@code Task}.
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
      * Sets the isDone field (completion status of the {@code Task}).
      * 
      * @param isDone represents the new completion status of the {@code Task}.

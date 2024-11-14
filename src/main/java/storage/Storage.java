@@ -6,12 +6,14 @@ import exception.FileContentException;
 import exception.StorageOperationException;
 import exception.TaskListDecoderException;
 import task.TaskList;
+import task.Task;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 // Reference: https://github.com/se-edu/addressbook-level2/blob/master/src/seedu/addressbook/storage/StorageFile.java
@@ -23,9 +25,25 @@ import java.util.List;
  */
 public class Storage {
 
+//        System.out.println("java.class.path: " + System.getProperty("java.class.path"));
+//        System.out.println("user.dir: " + System.getProperty("user.dir") + "/data/tasks.txt");
+//        System.out.println("user.home: " + System.getProperty("user.home"));
+//        System.out.println("storage: " + System.getProperty("storage"));
+
+//    private static final String BASE_FILEPATH = System.getProperty("user.dir") + "/data/";
+
     // Default file path used if the user doesn't provide the file name.
+//    private static final String DEFAULT_STORAGE_FILEPATH = BASE_FILEPATH + "tasks.txt";
+//    private static final String DEFAULT_STORAGE_FILEPATH = "data/tasks.txt";
+//    private static final String DEFAULT_STORAGE_FILEPATH = "./src/main/java/data/tasks.txt";
+//    private static final String DEFAULT_STORAGE_FILEPATH = "../data/tasks.txt";
     private static final String DEFAULT_STORAGE_FILEPATH = System.getProperty("storage.file", "./data/tasks.txt");
-    protected final Path filePath;
+
+//    private static final String ARCHIVE_STORAGE_FILEPATH = "../data/archive.txt";
+//    private static final String ARCHIVE_STORAGE_FILEPATH = BASE_FILEPATH + "archive.txt";
+    private static final String ARCHIVE_STORAGE_FILEPATH = System.getProperty("storage.file", "./data/archive.txt");
+    private final Path tasksFilePath;
+    private final Path archiveTasksFilePath;
 
     /**
      * Constructs an instance of Storage and initializes the file path to the default value.
@@ -34,9 +52,18 @@ public class Storage {
      * @throws StorageOperationException if an error occurs while creating the data folder or task file.
      */
     public Storage() throws StorageOperationException {
-        this.filePath = Paths.get(DEFAULT_STORAGE_FILEPATH);
+//        System.out.println("java.class.path: " + System.getProperty("java.class.path"));
+//        System.out.println("project root: " + System.getProperty("user.dir"));
+//        System.out.println("user.dir: " + System.getProperty("user.dir") + "/data/tasks.txt");
+//        System.out.println("user.home: " + System.getProperty("user.home"));
+//        System.out.println("storage: " + System.getProperty("storage.file"));
+//        System.out.println("test: " + Paths.get("src", "main", "java", "data"));
+
+        this.tasksFilePath = Paths.get(DEFAULT_STORAGE_FILEPATH);
+        this.archiveTasksFilePath = Paths.get(ARCHIVE_STORAGE_FILEPATH);
         checkDataFolderExists();
         checkTaskFileExists();
+        checkArchiveFileExists();
     }
 
     /**
@@ -44,8 +71,12 @@ public class Storage {
      *
      * @return the file path of the task file as a Path object.
      */
-    public Path getFilePath() {
-        return filePath;
+    public Path getTasksFilePath() {
+        return tasksFilePath;
+    }
+
+    public Path getArchiveTasksFilePath() {
+        return archiveTasksFilePath;
     }
 
     /**
@@ -53,8 +84,12 @@ public class Storage {
      *
      * @return the file object of the task file as a File object
      */
-    public File getFile() {
-        return getFilePath().toFile();
+    public File getTasksFile() {
+        return getTasksFilePath().toFile();
+    }
+
+    public File getArchiveTasksFile() {
+        return getArchiveTasksFilePath().toFile();
     }
 
     /**
@@ -67,7 +102,7 @@ public class Storage {
     public void checkDataFolderExists() throws StorageOperationException {
         // https://stackoverflow.com/questions/15571496/how-to-check-if-a-folder-exists
         // Check if "data" directory exists in current folder 
-        Path dataFolderPath = getFilePath().getParent();
+        Path dataFolderPath = getTasksFilePath().getParent();
         String dataFolderPathString = dataFolderPath.toString();
         File dataFolder = new File(dataFolderPathString);
         boolean isDataFolderExists = dataFolder.exists() && dataFolder.isDirectory();
@@ -88,6 +123,39 @@ public class Storage {
         }
     }
 
+    public void checkFileExists(File file) throws StorageOperationException {
+        // Note: It is intentional that I do not check that the file ends with txt.
+        // The file.exists() method checks for the existence of the exact file specified by the full path,
+        // including the filename and its extension. It is looking for a file named "tasks.txt" specifically.
+        boolean isFileExists = file.exists();
+//        System.out.println("is " + file.toString() + " exists: " + isFileExists);
+
+        String filePathString = file.getPath().toString();
+
+        if (!isFileExists) {
+            try {
+                boolean isFileCreated = file.createNewFile();
+                if (!isFileCreated) {
+                    throw new StorageOperationException(
+                        String.format("%s at %s", Messages.ERROR_CREATE_FILE_PRE, filePathString),
+                        Messages.ERROR_CREATE_FILE_POST
+                    );
+                }
+            } catch (IOException e) {
+                throw new StorageOperationException(
+                    String.format("%s at %s", Messages.ERROR_CREATE_FILE_PRE, filePathString),
+                    Messages.ERROR_IO_CREATE_FILE
+                );
+            } catch (SecurityException e) {
+                throw new StorageOperationException(
+                    String.format("%s at %s due to %s", Messages.ERROR_CREATE_FILE_PRE,
+                        filePathString, Messages.ERROR_SECURITY_CREATE_FILE),
+                    String.format("%s create a new file.", Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE)
+                );
+            }
+        }
+    }
+
     /**
      * Checks if the task file exists and creates it if it does not.
      *
@@ -95,34 +163,13 @@ public class Storage {
      */
     // Handles missing data file by creating it
     public void checkTaskFileExists() throws StorageOperationException {
-        File taskFile = getFile();
-        // Note: It is intentional that I do not check that the file ends with txt. 
-        // The file.exists() method checks for the existence of the exact file specified by the full path, 
-        // including the filename and its extension. It is looking for a file named "tasks.txt" specifically.
-        boolean isTaskFileExists = taskFile.exists();
+        File tasksFile = getTasksFile();
+        checkFileExists(tasksFile);
+    }
 
-        if (!isTaskFileExists) {
-            try {
-                boolean isFileCreated = taskFile.createNewFile();
-                if (!isFileCreated) {
-                    throw new StorageOperationException(
-                        String.format("%s at %s", Messages.ERROR_CREATE_FILE_PRE, getFilePath().toString()),
-                        Messages.ERROR_CREATE_FILE_POST
-                    );
-                }
-            } catch (IOException e) {
-                throw new StorageOperationException(
-                    String.format("%s at %s", Messages.ERROR_CREATE_FILE_PRE, getFilePath().toString()),
-                    Messages.ERROR_IO_CREATE_FILE
-                );
-            } catch (SecurityException e) {
-                throw new StorageOperationException(
-                    String.format("%s at %s due to %s", Messages.ERROR_CREATE_FILE_PRE,
-                        getFilePath().toString(), Messages.ERROR_SECURITY_CREATE_FILE),
-                    String.format("%s create a new file.", Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE)
-                );
-            }
-        }
+    public void checkArchiveFileExists() throws StorageOperationException {
+        File archiveFile = getArchiveTasksFile();
+        checkFileExists(archiveFile);
     }
 
     /**
@@ -132,7 +179,7 @@ public class Storage {
      * @throws IOException if an error occurs while reading the file.
      */
     public List<String> getAllLines() throws IOException {
-        Path filePath = getFilePath();
+        Path filePath = getTasksFilePath();
         List<String> lines;
         lines = Files.readAllLines(filePath);
         return lines;
@@ -160,23 +207,48 @@ public class Storage {
         return taskList;
     }
 
+    public void appendEncodedTaskToFile(Task task, Path filePath) throws StorageOperationException {
+        try {
+            String encodedTask = TaskListEncoder.encodeTaskToString(task);
+            // https://stackoverflow.com/questions/1625234/how-to-append-text-to-an-existing-file-in-java
+            encodedTask += System.lineSeparator();
+            Files.write(filePath, encodedTask.getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException ioe) {
+            throw new StorageOperationException(
+                String.format("%s at %s", Messages.ERROR_WRITE_FILE, filePath.toString()),
+                String.format("%s write to the task file", Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE)
+            );
+        }
+    }
+
+    public void writeEncodedTasksToFile(TaskList taskList, Path filePath) throws StorageOperationException {
+        try {
+            List<String> encodedTaskList = TaskListEncoder.encodeTaskList(taskList);
+            Files.write(filePath, encodedTaskList);
+        } catch (IOException ioe) {
+            throw new StorageOperationException(
+                String.format("%s at %s", Messages.ERROR_WRITE_FILE, filePath.toString()),
+                String.format("%s write to the task file", Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE)
+            );
+        }
+    }
+
     /**
-     * Saves all tasks from the {@code TaskList} object into the task file.
+     * Writes and saves all tasks from the {@code TaskList} object into the task file (tasks.txt).
      *
      * @param taskList represents the task list object to be saved.
      * @throws StorageOperationException if an error occurs while writing to the file.
      */
-    // Write all tasks in taskList into tasks.txt
     public void saveTasks(TaskList taskList) throws StorageOperationException {
-        try {
-            List<String> encodedTaskList = TaskListEncoder.encodeTaskList(taskList);
-            Files.write(getFilePath(), encodedTaskList);
-        } catch (IOException ioe) {
-            throw new StorageOperationException(
-                String.format("%s at %s", Messages.ERROR_WRITE_FILE, getFilePath().toString()),
-                String.format("%s write to the task file", Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE)
-            );
-        }
+        writeEncodedTasksToFile(taskList, getTasksFilePath());
+    }
+
+    public void archiveTask(Task task) throws StorageOperationException {
+        appendEncodedTaskToFile(task, getArchiveTasksFilePath());
+    }
+
+    public void archiveTasks(TaskList taskList) throws StorageOperationException {
+        writeEncodedTasksToFile(taskList, getArchiveTasksFilePath());
     }
 
 }

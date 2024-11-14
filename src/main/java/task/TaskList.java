@@ -166,22 +166,6 @@ public class TaskList {
         return taskWordStringBuilder.toString();
     }
 
-    /**
-     * Retrieves all tasks that occur on a specific date.
-     *
-     * @param date represents the date to check against.
-     * @return a list of tasks that occur on a specified date.
-     */
-    public List<Task> getTasksOnDate(LocalDate date) {
-        List<Task> tasksOnDate = new ArrayList<>();
-        for (Task task : getTaskList()) {
-            if (task.isOnDate(date)) {
-                tasksOnDate.add(task);
-            }
-        }
-        return tasksOnDate;
-    }
-
     public TaskList getScheduledTasks(LocalDate date) {
         // Retrieve all tasks scheduled on the specified date
         List<Task> tasksOnDate = new ArrayList<>();

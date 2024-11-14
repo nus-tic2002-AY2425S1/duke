@@ -22,8 +22,8 @@ public class EventCommand extends AddTaskCommand {
         Constants.START_DATE_TIME_IN_ANGLE_BRACKETS + SPACE + Constants.SLASH_TO + SPACE +
         Constants.END_DATE_TIME_IN_ANGLE_BRACKETS;
 
-    protected final LocalDateTime startDateTime;
-    protected final LocalDateTime endDateTime;
+    private final LocalDateTime startDateTime;
+    private final LocalDateTime endDateTime;
 
     /**
      * Constructs an {@code EventCommand} with the specified task description,

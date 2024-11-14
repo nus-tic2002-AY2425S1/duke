@@ -23,23 +23,24 @@ import java.time.temporal.ChronoField;
 
 public class DateTimeParser {
 
-    public static final String INPUT_DATE_FORMAT = "yyyy-MM-dd";
-    public static final String TIME_PATTERN = "HHmm";
+    private static final String INPUT_DATE_PATTERN = "yyyy-MM-dd";
+    private static final DateTimeFormatter INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern(INPUT_DATE_PATTERN);
+    private static final String TIME_PATTERN = "HHmm";
 
-    public static final String INPUT_DATETIME_PATTERN = INPUT_DATE_FORMAT + Constants.SPACE + TIME_PATTERN;
-    public static final DateTimeFormatter INPUT_DATETIME_FORMAT = DateTimeFormatter.ofPattern(INPUT_DATETIME_PATTERN);
+    private static final String INPUT_DATETIME_PATTERN = INPUT_DATE_PATTERN + Constants.SPACE + TIME_PATTERN;
+    private static final DateTimeFormatter INPUT_DATETIME_FORMAT = DateTimeFormatter.ofPattern(INPUT_DATETIME_PATTERN);
 
-    public static final String OUTPUT_DATETIME_PATTERN = "MMM dd yyyy" + Constants.SPACE + TIME_PATTERN;
-    public static final DateTimeFormatter OUTPUT_DATETIME_FORMAT = DateTimeFormatter.ofPattern(OUTPUT_DATETIME_PATTERN);
+    private static final String OUTPUT_DATETIME_PATTERN = "MMM dd yyyy" + Constants.SPACE + TIME_PATTERN;
+    private static final DateTimeFormatter OUTPUT_DATETIME_FORMAT = DateTimeFormatter.ofPattern(OUTPUT_DATETIME_PATTERN);
 
     // Deadline must have date but time is optional
-    public static final DateTimeFormatter deadlineFormatter = new DateTimeFormatterBuilder()
-        .appendPattern(INPUT_DATE_FORMAT).optionalStart().appendPattern(Constants.SPACE + TIME_PATTERN)
+    private static final DateTimeFormatter deadlineFormatter = new DateTimeFormatterBuilder()
+        .appendPattern(INPUT_DATE_PATTERN).optionalStart().appendPattern(Constants.SPACE + TIME_PATTERN)
         .optionalEnd().parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
         .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0).toFormatter();
 
-    public static final String SHOW_DATE_PATTERN = "yyyy-MM-dd";
-    public static final DateTimeFormatter SHOW_DATE_FORMAT = DateTimeFormatter.ofPattern(SHOW_DATE_PATTERN);
+//    private static final String SHOW_DATE_PATTERN = INPUT_DATE_FORMAT;
+//    private static final DateTimeFormatter SHOW_DATE_FORMAT = DateTimeFormatter.ofPattern(SHOW_DATE_PATTERN);
 
     // Add a private constructor to hide the implicit public one
     private DateTimeParser() {
@@ -113,7 +114,7 @@ public class DateTimeParser {
      */
     public static LocalDate parseInputShowDate(String input) throws CommandException {
         try {
-            return LocalDate.parse(input, SHOW_DATE_FORMAT);
+            return LocalDate.parse(input, INPUT_DATE_FORMAT);
         } catch (DateTimeParseException e) {
             // System.out.println(e.getMessage());
             throw new CommandException(Messages.ERROR_INVALID_DATETIME_FORMAT,

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  * Contains a description and a date-time by which the task should be completed.
  */
 public class Deadline extends Task {
-    protected LocalDateTime by;
+    protected final LocalDateTime by;
 
     /**
      * Constructs a {@code Deadline} task with the specified description and deadline date-time.

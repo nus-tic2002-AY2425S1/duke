@@ -17,7 +17,7 @@ public class ListOnCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + " /on {dateTime}";
     public static final String MESSAGE_SUCCESS = "Here are the tasks in your list on '%s':";
     public static final String MESSAGE_FAILED = "Your task list is currently empty on '%s'.";
-    protected LocalDateTime on;
+    protected final LocalDateTime on;
 
     /**
      * Constructs a ListOnCommand with the specified date and time to filter tasks.

@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
  * Contains a description and a time range during which the event occurs.
  */
 public class Event extends Task {
-    protected LocalDateTime from;
-    protected LocalDateTime to;
+    protected final LocalDateTime from;
+    protected final LocalDateTime to;
 
     /**
      * Constructs an {@code Event} task with the specified description, start, and end date-time.

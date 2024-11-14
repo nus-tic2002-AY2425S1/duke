@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
  * Subclasses must implement methods for encoding and date-based checks.
  */
 public abstract class Task {
-    protected String description;
+    protected final String description;
     protected boolean isDone;
     protected TaskPriority priority;
 

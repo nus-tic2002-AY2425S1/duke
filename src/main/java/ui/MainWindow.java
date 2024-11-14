@@ -40,13 +40,6 @@ public class MainWindow extends AnchorPane {
         dialogContainer.getChildren().add(DialogBox.getJavaroDialog(Messages.MESSAGE_WELCOME, javaroImage));
     }
 
-    public void showBye(String input) {
-        dialogContainer.getChildren().addAll(
-            DialogBox.getUserDialog(input, userImage),
-            DialogBox.getJavaroDialog(Messages.MESSAGE_GOODBYE, javaroImage)
-        );
-    }
-
     public void delayAndExit() {
         // https://stackoverflow.com/questions/27334455/how-to-close-a-stage-after-a-certain-amount-of-time-javafx
         // Create a PauseTransition to wait for 5 seconds: https://stackoverflow.com/questions/30543619/how-to-use-pausetransition-method-in-javafx
@@ -80,16 +73,17 @@ public class MainWindow extends AnchorPane {
 
         userInput.clear();
 
+        String javaroResponse = javaro.getResponse(input);
+
+        dialogContainer.getChildren().addAll(
+            DialogBox.getUserDialog(input, userImage),
+            DialogBox.getJavaroDialog(javaroResponse, javaroImage)
+        );
+
         if (isBye) {
-            showBye(input);
             delayAndExit();
-        } else {
-            String javaroResponse = javaro.getResponse(input);
-            dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getJavaroDialog(javaroResponse, javaroImage)
-            );
         }
+
 
     }
 }

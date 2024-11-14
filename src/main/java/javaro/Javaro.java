@@ -1,6 +1,7 @@
 package javaro;
 
 import commands.Command;
+import common.Messages;
 import exception.CommandException;
 import exception.FileContentException;
 import exception.StorageOperationException;
@@ -56,41 +57,74 @@ public class Javaro {
 
     }
 
+    public Ui getUi() {
+        return ui;
+    }
+
+    public Storage getStorage() {
+        return storage;
+    }
+
+    public TaskList getTaskList() {
+        return taskList;
+    }
+
     /**
      * Runs the main application logic.
      * Repeatedly reads input from the user, parses the input received from the user and
      * executes it until the user issues a command to exit, which stops the program.
      * Any exceptions that occur will be caught and an error message will be displayed to the user.
      */
-    public void run() {
-        // Display welcome message
-        ui.showWelcome();
-        boolean isBye = false;
+//    public void run() {
+//        // Display welcome message
+//        ui.showWelcome();
+//        boolean isBye = false;
+//
+//        // Main loop for reading user input and executing commands
+//        while (!isBye) {
+//            try {
+//                // Read input from the user
+//                String userInput = ui.readInput();
+//                // ui.showLine();
+//
+//                // Parse and execute the command
+//                Command command = Parser.parse(userInput);
+//                command.execute(taskList, ui, storage);
+//
+//                // Check if the command is a "bye" command to exit the loop
+//                isBye = command.isBye();
+//            } catch (CommandException e) {
+//                // Handle command parsing or execution errors
+//                // System.out.println("CommandException caught: " + e.getMessage());
+//                ui.showError(e.getMessageList());
+//            } catch (StorageOperationException e) {
+//                // Handle storage operation errors
+//                // System.out.println("StorageOperationException caught: " + e.getMessage());
+//                ui.showError(e.getMessageList());
+//            }
+//        }
+//
+//    }
 
-        // Main loop for reading user input and executing commands
-        while (!isBye) {
-            try {
-                // Read input from the user
-                String userInput = ui.readInput();
-                // ui.showLine();
+    public boolean runUserInput(String userInput) {
+        try {
+            // Parse and execute the command
+            Command command = Parser.parse(userInput);
+            command.execute(taskList, ui, storage);
 
-                // Parse and execute the command
-                Command command = Parser.parse(userInput);
-                command.execute(taskList, ui, storage);
-
-                // Check if the command is a "bye" command to exit the loop
-                isBye = command.isBye();
-            } catch (CommandException e) {
-                // Handle command parsing or execution errors
-                // System.out.println("CommandException caught: " + e.getMessage());
-                ui.showError(e.getMessageList());
-            } catch (StorageOperationException e) {
-                // Handle storage operation errors
-                // System.out.println("StorageOperationException caught: " + e.getMessage());
-                ui.showError(e.getMessageList());
-            }
+            // Check if the command is a "bye" command to exit the loop
+            return command.isBye();
+        } catch (CommandException e) {
+            // Handle command parsing or execution errors
+            // System.out.println("CommandException caught: " + e.getMessage());
+            ui.showError(e.getMessageList());
+            return false;
+        } catch (StorageOperationException e) {
+            // Handle storage operation errors
+            // System.out.println("StorageOperationException caught: " + e.getMessage());
+            ui.showError(e.getMessageList());
+            return false;
         }
-
     }
 
     /**
@@ -100,14 +134,14 @@ public class Javaro {
      *
      * @param args command line arguments (not used here).
      */
-    public static void main(String[] args) {
-        new Javaro().run();
-    }
+//    public static void main(String[] args) {
+//        new Javaro().run();
+//    }
 
     /**
      * Generates a response for the user's chat message.
      */
-    public String getResponse(String input) {
-        return "Duke heard: " + input;
+    public String getResponse(String userInput) {
+        return "Duke heard: " + userInput;
     }
 }

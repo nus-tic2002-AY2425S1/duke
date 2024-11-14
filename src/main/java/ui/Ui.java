@@ -17,15 +17,6 @@ import java.util.Scanner;
  */
 public class Ui {
 
-    private final Scanner in;
-
-    /**
-     * Constructs a new Ui instance with a Scanner for reading user input.
-     */
-    public Ui() {
-        this.in = new Scanner(System.in);
-    }
-
     /**
      * Formats a string to create a specified number of leading spaces.
      *
@@ -138,18 +129,18 @@ public class Ui {
      * @throws CommandException when the user inputs an invalid string.
      */
     // https://github.com/se-edu/addressbook-level2/blob/master/src/seedu/addressbook/ui/TextUi.java#L80
-    public String readInput() throws CommandException {
-        String userInput;
-        // Keep asking for input until a non-empty string is entered
-        userInput = in.nextLine().trim(); // Read and trim the input
-        if (userInput.isEmpty()) {
-            throw new CommandException(
-                Messages.ERROR_EMPTY_INPUT,
-                Messages.VALID_COMMANDS
-            );
-        }
-        return userInput;       // Return the valid non-empty user input
-    }
+//    public String readInput() throws CommandException {
+//        String userInput;
+//        // Keep asking for input until a non-empty string is entered
+//        userInput = in.nextLine().trim(); // Read and trim the input
+//        if (userInput.isEmpty()) {
+//            throw new CommandException(
+//                Messages.ERROR_EMPTY_INPUT,
+//                Messages.VALID_COMMANDS
+//            );
+//        }
+//        return userInput;       // Return the valid non-empty user input
+//    }
 
     /**
      * Displays an error message to the user.

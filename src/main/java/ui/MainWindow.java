@@ -1,5 +1,6 @@
 package ui;
 
+import common.Messages;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -28,12 +29,17 @@ public class MainWindow extends AnchorPane {
 
     private Javaro javaro;
 
+    public void showWelcome() {
+        dialogContainer.getChildren().add(DialogBox.getJavaroDialog(Messages.MESSAGE_WELCOME, javaroImage));
+    }
+
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        showWelcome();
     }
 
-    /** Injects the Duke instance */
+    /** Injects the Javaro instance */
     public void setJavaro(Javaro javaro) {
         this.javaro = javaro;
     }
@@ -46,10 +52,13 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = javaro.getResponse(input);
+        boolean isBye = javaro.runUserInput(input);
+
         dialogContainer.getChildren().addAll(
             DialogBox.getUserDialog(input, userImage),
-            DialogBox.getDukeDialog(response, javaroImage)
+            DialogBox.getJavaroDialog(response, javaroImage)
         );
+
         userInput.clear();
     }
 }

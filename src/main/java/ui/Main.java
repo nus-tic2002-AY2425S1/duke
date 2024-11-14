@@ -20,6 +20,9 @@ import javafx.stage.Stage;
 
 import javaro.Javaro;
 
+/**
+ * Entry point for JavaFX applications
+ */
 public class Main extends Application {
 
     private ScrollPane scrollPane;
@@ -41,24 +44,18 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
+
+            // Disallow user to resize window below certain limits - Set min height and width
+            stage.setMinHeight(220);
+            stage.setMinWidth(417);
+            // stage.setMaxWidth(417); // Add this if you didn't automatically resize elements
+
             fxmlLoader.<MainWindow>getController().setJavaro(javaro);  // inject the Duke instance
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * Creates a dialog box containing user input, and appends it to
-     * the dialog container. Clears the user input after processing.
-     */
-    private void handleUserInput() {
-        String userText = userInput.getText();
-        String javaroText = javaro.getResponse(userInput.getText());
-        dialogContainer.getChildren().addAll(
-            DialogBox.getUserDialog(userText, userImage),
-            DialogBox.getDukeDialog(javaroText, dukeImage)
-        );
-        userInput.clear();
-    }
 }

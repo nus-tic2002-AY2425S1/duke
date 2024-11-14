@@ -40,11 +40,13 @@ public class Storage {
      * @throws StorageFilePathException  If the file path is invalid (must end with ".txt").
      */
     public Storage(String filePathString) throws StorageOperationException {
+        assert filePathString != null : "Precondition failed: 'filePathString' cannot be null";
         filePath = Paths.get(filePathString);
         if (!isValidPath(filePath)) {
             throw new StorageFilePathException(Messages.MESSAGE_FILE_PATH_ERROR);
         }
         createFileAndDirectories(filePath);
+        assert filePath != null : "Postcondition failed: 'filePath' should be initialised to a valid path";
     }
 
     /**
@@ -117,6 +119,7 @@ public class Storage {
      * @throws StorageOperationException If there is an error writing to the file.
      */
     public void save(TaskList taskList) throws StorageOperationException {
+        assert taskList != null : "Precondition failed: 'taskList' cannot be null";
         try {
             List<String> encodedTasks = TaskListEncoder.encodeTaskList(taskList);
             Files.write(filePath, encodedTasks);

@@ -49,6 +49,7 @@ public class TaskEncoder {
      * @return The encoded string representation of the task.
      */
     public static String encodeTask(Task task) {
+        assert task != null : "Precondition failed: 'task' cannot be null";
         if (task instanceof Todo) {
             return encodeTodoTask((Todo) task);
         } else if (task instanceof Deadline) {

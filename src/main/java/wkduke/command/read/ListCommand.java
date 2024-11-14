@@ -39,11 +39,14 @@ public class ListCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
+        assert taskList != null : "Precondition failed: 'taskList' cannot be null";
+        assert ui != null : "Precondition failed: 'ui' cannot be null";
         List<Task> tasks = taskList.getAllTask();
         if (tasks.isEmpty()) {
             ui.printMessages(MESSAGE_FAILED);
             return;
         }
+        assert !tasks.isEmpty() : "Postcondition failed: 'tasks' cannot be empty";
         ui.printTasks(taskList, tasks, String.format(MESSAGE_SUCCESS));
     }
 }

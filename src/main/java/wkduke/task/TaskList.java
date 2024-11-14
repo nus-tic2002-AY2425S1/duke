@@ -18,15 +18,6 @@ public class TaskList {
     }
 
     /**
-     * Constructs a {@code TaskList} with the given list of tasks.
-     *
-     * @param tasks The initial list of tasks.
-     */
-    public TaskList(List<Task> tasks) {
-        this.tasks = tasks;
-    }
-
-    /**
      * Adds a task to the list.
      *
      * @param task The task to add.
@@ -106,15 +97,6 @@ public class TaskList {
      */
     public int getTaskIndex(Task task) {
         return tasks.indexOf(task);
-    }
-
-    /**
-     * Checks if the task list is empty.
-     *
-     * @return {@code true} if the task list is empty; {@code false} otherwise.
-     */
-    public boolean isEmpty() {
-        return tasks.isEmpty();
     }
 
     /**

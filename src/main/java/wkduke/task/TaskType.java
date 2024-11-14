@@ -37,15 +37,6 @@ public enum TaskType {
     }
 
     /**
-     * Retrieves the code associated with the task type.
-     *
-     * @return The code as a {@code String}.
-     */
-    public String getCode() {
-        return code;
-    }
-
-    /**
      * Returns a string representation of the task type in lowercase.
      *
      * @return The name of the task type in lowercase as a {@code String}.

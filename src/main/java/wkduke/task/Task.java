@@ -24,19 +24,6 @@ public abstract class Task {
     }
 
     /**
-     * Constructs a {@code Task} with the specified description and completion status,
-     * and with a default priority of {@code TaskPriority.LOW}.
-     *
-     * @param description The description of the task.
-     * @param isDone      The completion status of the task.
-     */
-    public Task(String description, boolean isDone) {
-        this.description = description;
-        this.isDone = isDone;
-        this.priority = TaskPriority.LOW;
-    }
-
-    /**
      * Constructs a {@code Task} with the specified description, completion status, and priority.
      *
      * @param description The description of the task.
@@ -56,15 +43,6 @@ public abstract class Task {
      */
     public String getDescription() {
         return description;
-    }
-
-    /**
-     * Sets the description of the task.
-     *
-     * @param description The new description of the task.
-     */
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     /**

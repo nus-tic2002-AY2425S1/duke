@@ -66,13 +66,4 @@ public class WKDukeException extends Exception {
     public String getHelp() {
         return help;
     }
-
-    /**
-     * Sets helpful guidance or suggestions for resolving the exception.
-     *
-     * @param help The help information to set.
-     */
-    public void setHelp(String help) {
-        this.help = help;
-    }
 }

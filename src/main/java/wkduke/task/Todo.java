@@ -17,17 +17,6 @@ public class Todo extends Task {
     }
 
     /**
-     * Constructs a {@code Todo} task with the specified description and completion status,
-     * with a default priority of {@code TaskPriority.LOW}.
-     *
-     * @param description The description of the task.
-     * @param isDone      The completion status of the task.
-     */
-    public Todo(String description, boolean isDone) {
-        super(description, isDone);
-    }
-
-    /**
      * Constructs a {@code Todo} task with the specified description, completion status, and priority.
      *
      * @param description The description of the task.

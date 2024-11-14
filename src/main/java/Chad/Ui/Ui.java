@@ -8,8 +8,6 @@ public interface Ui {
 
     String showWelcome();
 
-    //String readCommand();
-
     void showMsg(String msg);
 
     void showError(String errmsg);

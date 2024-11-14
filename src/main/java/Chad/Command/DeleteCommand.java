@@ -8,8 +8,7 @@ import Chad.Ui.Ui;
 
 public class DeleteCommand extends Command {
     private final int taskIndex;
-    private Task taskToDelete;
-
+    
     public DeleteCommand(int taskIndex) {
         this.taskIndex = taskIndex;
     }
@@ -22,7 +21,7 @@ public class DeleteCommand extends Command {
         try {
             storage.save(tasks.toString());
         } catch (ChadException e) {
-            //do sth here
+            
         }
 
     }

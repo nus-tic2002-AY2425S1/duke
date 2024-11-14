@@ -63,6 +63,8 @@ public class ChadDate {
             if (matcher.group(1) != null) {
                 int amount = Integer.parseInt(matcher.group(1)); // Get the amount (number) before the unit
                 String unit = matcher.group(2).toLowerCase(); // Get the unit
+                // Assert that the amount is greater than 0
+                assert amount > 0 : "Amount must be greater than 0.";
 
                 switch (unit) {
                     case "day":
@@ -70,11 +72,13 @@ public class ChadDate {
                     case "days":
                         totalPeriod = totalPeriod.plusDays(amount); // Add days to the total period
                         break;
-                    case "week":
+                    case "week": 
+                    //Fallthrough
                     case "weeks":
                         totalPeriod = totalPeriod.plus(Period.ofWeeks(amount)); // Add weeks to the total period
                         break;
                     case "month":
+                    //Fallthrough
                     case "months":
                         totalPeriod = totalPeriod.plusMonths(amount); // Add months to the total period
                         break;

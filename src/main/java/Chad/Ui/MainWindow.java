@@ -61,7 +61,7 @@ public class MainWindow extends AnchorPane {
         boolean shallExit = chad.shallExit();
         if (shallExit) {
 
-            // Create Timeline to wait 5 seconds before exiting
+            // Create Timeline to wait 3 seconds before exiting
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), event -> {
                 Platform.exit(); // This will close the application
             }));
@@ -73,7 +73,7 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Show welcome message in the dialog container.
+     * Show welcome message in the dialog container when first start
      */
     private void showWelcome() {
         String welcomeMessage = "Hello from Chad!\n What can I do for you?";

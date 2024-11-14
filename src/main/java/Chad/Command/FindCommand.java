@@ -17,10 +17,10 @@ public class FindCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws ChadException {
         //checkthrough tasks and show all event task deadline within range 
-        //ArrayList<Task> taskTolist = tasks.getTaskbyDeadline(listDate);
+        
         TaskList taskTolist = tasks.findTaskbyIdx(findIdx);
         ui.showTaskList(taskTolist); // UI method to display the task list
-        //storage.save(tasks.toString());
+        
     }
 
 }

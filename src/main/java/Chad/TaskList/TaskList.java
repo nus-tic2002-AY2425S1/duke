@@ -1,11 +1,11 @@
 package Chad.TaskList;
 
-import Chad.Exception.ChadException;
-import Chad.Parser.ChadDate;
-
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
+
+import Chad.Exception.ChadException;
+import Chad.Parser.ChadDate;
 
 /**
  * The TaskList class manages a collection of Task objects.
@@ -32,6 +32,9 @@ public class TaskList {
     public TaskList getTaskbyDeadline(String inputDate) throws ChadException {
         // Parse and validate the input date
         String parsedInputDate = validateDate(inputDate);
+        
+         // Assert that parsedInputDate is not null (should not be the case after validation)
+         assert parsedInputDate != null : "Parsed input date should not be null.";
 
         TaskList tasksByDate = new TaskList(); // Create a new TaskList for tasks matching the date
         for (Task task : tasks) {
@@ -186,15 +189,7 @@ public class TaskList {
         task.unSetTask(); // Set the task's status to not done
     }
 
-    /**
-     * Prints all tasks in the task list to the console.
-     * Each task is preceded by its index in the list.
-     */
-    public void printTasks() {
-        for (int i = 0; i < tasks.size(); i++) { // Iterate through all tasks in the list
-            System.out.println((i + 1) + ". " + tasks.get(i).toString()); // Print task index and description
-        }
-    }
+  
 
     /**
      * Retrieves a task by its ID (index) from the task list.

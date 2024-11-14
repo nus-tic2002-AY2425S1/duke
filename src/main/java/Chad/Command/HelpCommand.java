@@ -20,7 +20,7 @@ public class HelpCommand extends Command {
         HelpType mType = HelpType.valueOf(helpType);
         String HelpMessage = mType.getMessage(); // choose HelpMessage according to user input helpType,
         ui.showHelp(HelpMessage);
-        //storage.save(tasks.toString());
+      
     }
 
 }

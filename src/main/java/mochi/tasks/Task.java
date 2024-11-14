@@ -49,7 +49,6 @@ public class Task {
   public String getStatusIcon() {
     return ( _status ? "X" : " ");
   }
-  public boolean getStatus() { return _status; }
   public String getName() { return _name; }
   public void markTask() {
     _status = true;

@@ -2,7 +2,6 @@ package mochi.commands;
 
 import mochi.common.exception.ExceptionMessages;
 import mochi.common.exception.MochiException;
-import mochi.tasks.Task;
 import mochi.tasks.TaskList;
 import mochi.ui.Ui;
 

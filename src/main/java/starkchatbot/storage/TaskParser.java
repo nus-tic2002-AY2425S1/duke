@@ -1,6 +1,9 @@
 package starkchatbot.storage;
 
-import starkchatbot.taskmanager.*;
+import starkchatbot.taskmanager.Deadline;
+import starkchatbot.taskmanager.Event;
+import starkchatbot.taskmanager.Task;
+import starkchatbot.taskmanager.Todo;
 import starkchatbot.userui.StarkException;
 
 import java.util.regex.PatternSyntaxException;
@@ -39,7 +42,7 @@ public class TaskParser {
                 throw new StarkException.InvalidDescriptionException("Task description is incorrect");
             }
             return task;
-        } catch (IndexOutOfBoundsException |PatternSyntaxException e) {
+        } catch (IndexOutOfBoundsException | PatternSyntaxException e) {
             throw new StarkException.InvalidDescriptionException("Invalid task format found in the file");
         }
     }

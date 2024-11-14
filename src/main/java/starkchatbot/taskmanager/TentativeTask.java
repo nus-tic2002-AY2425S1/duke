@@ -5,14 +5,14 @@ import starkchatbot.userui.StarkException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class TentativeScheduling extends Task {
+public class TentativeTask extends Task {
 
     private ArrayList<String> availableSlots = new ArrayList<>();
     private String confirmedSlot = "";
     private boolean isConfirmed = false;
 
 
-    public TentativeScheduling(String description) {
+    public TentativeTask(String description) {
         super(description);
     }
 
@@ -74,9 +74,9 @@ public class TentativeScheduling extends Task {
     @Override
     public String printTask() {
         if (isConfirmed) {
-            return "[TE] " + super.getDescription() + " " + confirmedSlot ;
+            return "[TE] " + super.printTask() + " " + confirmedSlot ;
         }
-        return "[TE] " + super.getDescription() + " (Slots not Confirmed yet)";
+        return "[TE] " + super.printTask() + " (Slots not Confirmed yet)";
     }
 
 }

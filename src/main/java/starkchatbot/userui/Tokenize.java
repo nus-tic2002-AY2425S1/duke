@@ -23,8 +23,8 @@ public class Tokenize {
      * @throws StarkException.InvalidCommandException     if the command is not recognized
      */
     public static String[] tokenize(String input) throws StarkException.InvalidDescriptionException,
-                                                         StarkException.InvalidTaskException,
-                                                         StarkException.InvalidCommandException {
+            StarkException.InvalidTaskException,
+            StarkException.InvalidCommandException {
 
         String[] tokens = input.split(" ");
 
@@ -32,14 +32,14 @@ public class Tokenize {
             if (tokens[0].equalsIgnoreCase("todo")
                     || tokens[0].equalsIgnoreCase("Deadline")
                     || tokens[0].equalsIgnoreCase("event")
-                    ||tokens[0].equalsIgnoreCase("find")) {
+                    || tokens[0].equalsIgnoreCase("find")) {
                 throw new StarkException.InvalidDescriptionException(" OOPS!!! \"" + tokens[0].toUpperCase() + "\" description cannot be empty");
             } else if (tokens[0].equalsIgnoreCase("mark") || tokens[0].equalsIgnoreCase("unmark")
                     || tokens[0].equalsIgnoreCase("delete")) {
                 throw new StarkException.InvalidTaskException(" OOPS!!! \"" + tokens[0].toUpperCase() + "\" should include task number");
             } else if (!(tokens[0].equalsIgnoreCase("bye")
                     || tokens[0].equalsIgnoreCase("list")
-                    ||tokens[0].equalsIgnoreCase("tentative"))) {
+                    || tokens[0].equalsIgnoreCase("tentative"))) {
                 throw new StarkException.InvalidCommandException(" OOPS!!! ( \"" + tokens[0].toUpperCase() + "\" is not valid query or input )");
             }
             return tokens;

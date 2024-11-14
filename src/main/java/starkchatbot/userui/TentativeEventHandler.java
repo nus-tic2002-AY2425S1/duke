@@ -1,9 +1,8 @@
 package starkchatbot.userui;
 
-import com.sun.source.tree.SwitchTree;
 import starkchatbot.taskmanager.Task;
 import starkchatbot.taskmanager.TaskList;
-import starkchatbot.taskmanager.TentativeScheduling;
+import starkchatbot.taskmanager.TentativeTask;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -11,6 +10,7 @@ import java.util.Scanner;
 public class TentativeEventHandler {
 
     public static void tentativeEvent(TaskList taskList) {
+        System.out.println(System.lineSeparator());
         System.out.println("*****   Tentative event planner   ******");
         System.out.println("[1]. Add new event to Tentative Scheduler");
         System.out.println("[2]. Confirm time slot of a Tentative event");
@@ -43,7 +43,7 @@ public class TentativeEventHandler {
         System.out.print("Please enter event description: ");
         Scanner scanner = new Scanner(System.in);
         String details = scanner.nextLine();
-        TentativeScheduling tentativeEvent = new TentativeScheduling(details.trim());
+        TentativeTask tentativeEvent = new TentativeTask(details.trim());
         try {
 
             System.out.print("Please enter total number of available slots: ");
@@ -72,15 +72,15 @@ public class TentativeEventHandler {
         ArrayList<Task> tentativeEvents = taskList.getTentativeEvent();
         int counter = 0;
         for (Task task : tentativeEvents) {
-            if(task.getClass() == TentativeScheduling.class) {
+            if (task.getClass() == TentativeTask.class) {
                 counter++;
-                System.out.print( counter + ". ");
-                ((TentativeScheduling) task).printAllAvailableSlots();
+                System.out.print(counter + ". ");
+                ((TentativeTask) task).printAllAvailableSlots();
                 System.out.print(System.lineSeparator());
             }
         }
         counter = 1;
-        try{
+        try {
             System.out.print(System.lineSeparator());
             System.out.print("Please choose the event number: ");
             Scanner eventNumber = new Scanner(System.in);
@@ -89,15 +89,15 @@ public class TentativeEventHandler {
             int slot = eventNumber.nextInt();
 
             for (Task task : tentativeEvents) {
-                if(task.getClass() == TentativeScheduling.class && counter == event) {
-                    ((TentativeScheduling) task).setConfirmedSlot(slot);
-                    System.out.println("Event confirmed on: " + ((TentativeScheduling) task).getConfirmedSlot());
+                if (task.getClass() == TentativeTask.class && counter == event) {
+                    ((TentativeTask) task).setConfirmedSlot(slot);
+                    System.out.println("Event confirmed on: " + ((TentativeTask) task).getConfirmedSlot());
                     break;
                 }
                 counter++;
             }
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 

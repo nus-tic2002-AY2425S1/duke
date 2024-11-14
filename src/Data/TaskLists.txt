@@ -8,4 +8,3 @@ E ]see doctor (from: 2024-01-11 to: 2024-02-12) ]  ]
 T ]exercise ]X ]
 T ]buy flower ]X ]
 D ]return book (by: 2011-03-11 1700) ]  ]
-

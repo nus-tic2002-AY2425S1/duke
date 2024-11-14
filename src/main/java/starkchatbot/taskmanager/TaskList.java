@@ -72,8 +72,8 @@ public class TaskList {
 
     public ArrayList<Task> getTentativeEvent() {
         ArrayList<Task> tentativeTasks = new ArrayList<>();
-        for(Task task : tasks) {
-            if(task.getClass() == TentativeScheduling.class) {
+        for (Task task : tasks) {
+            if (task.getClass() == TentativeTask.class) {
                 tentativeTasks.add(task);
             }
         }
@@ -132,7 +132,7 @@ public class TaskList {
         }
     }
 
-    public void findTasks(String detail){
+    public void findTasks(String detail) {
         TaskFinder findTasks = new TaskFinder(tasks);
         findTasks.findTasks(detail);
     }

@@ -33,8 +33,10 @@ application {
 }
 
 shadowJar {
-    archiveBaseName = "duke"
+    archiveBaseName = "wkduke"
     archiveClassifier = null
+    archiveVersion = '1.0.0'
+    mainClassName = 'wkduke.WKDuke'
 }
 
 run {

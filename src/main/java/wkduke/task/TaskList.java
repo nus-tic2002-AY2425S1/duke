@@ -103,6 +103,15 @@ public class TaskList {
     }
 
     /**
+     * Checks if the task list is empty.
+     *
+     * @return {@code true} if the task list is empty; {@code false} otherwise.
+     */
+    public boolean isEmpty() {
+        return tasks.isEmpty();
+    }
+
+    /**
      * Marks the task at the specified index as done.
      *
      * @param index The index of the task to mark as done.

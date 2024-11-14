@@ -76,7 +76,7 @@ public class Ui {
     }
 
     /**
-     * Prints a series of messages to the user, surrounded by a border line.
+     * Prints a series of messages to the user, surrounded by a borderline.
      *
      * @param messages The messages to print.
      */
@@ -96,6 +96,12 @@ public class Ui {
      * @param header   A header message to print before the task list.
      */
     public void printTasks(TaskList taskList, List<Task> tasks, String header) {
+        // The 'tasks' list is expected to come from 'taskList', as there is a dependency to retrieve task's index
+        // based on their position in 'taskList'.
+        if (!tasks.isEmpty()) {
+            assert !taskList.isEmpty() : "Precondition failed: 'taskList' cannot be empty when 'tasks' list is populated";
+        }
+
         List<String> messages = new ArrayList<>();
         messages.add(header);
         for (Task task : tasks) {

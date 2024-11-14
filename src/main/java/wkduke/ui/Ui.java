@@ -2,6 +2,8 @@ package wkduke.ui;
 
 import wkduke.common.Messages;
 import wkduke.exception.WKDukeException;
+import wkduke.task.Task;
+import wkduke.task.TaskList;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -77,6 +79,22 @@ public class Ui {
             out.println(INDENT + message);
         }
         showLine();
+    }
+
+    /**
+     * Prints a list of tasks with a header, each task prefixed by its index.
+     *
+     * @param taskList The list containing all tasks.
+     * @param tasks    The list of tasks to print.
+     * @param header   A header message to print before the task list.
+     */
+    public void printTasks(TaskList taskList, List<Task> tasks, String header) {
+        List<String> messages = new ArrayList<>();
+        messages.add(header);
+        for (Task task : tasks) {
+            messages.add(String.format(" %d.%s", taskList.getTaskIndex(task) + 1, task));
+        }
+        printMessages(messages.toArray(new String[0]));
     }
 
     /**

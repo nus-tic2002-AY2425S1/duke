@@ -5,7 +5,6 @@ import wkduke.task.Task;
 import wkduke.task.TaskList;
 import wkduke.ui.Ui;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,12 +43,6 @@ public class ListCommand extends Command {
             ui.printMessages(MESSAGE_FAILED);
             return;
         }
-
-        List<String> messages = new ArrayList<>();
-        messages.add(MESSAGE_SUCCESS);
-        for (Task task : tasks) {
-            messages.add(String.format("%d.%s", taskList.getTaskIndex(task) + 1, task));
-        }
-        ui.printMessages(messages.toArray(new String[0]));
+        ui.printTasks(taskList, tasks, String.format(MESSAGE_SUCCESS));
     }
 }

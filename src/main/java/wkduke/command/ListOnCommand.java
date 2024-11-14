@@ -7,7 +7,6 @@ import wkduke.task.TaskList;
 import wkduke.ui.Ui;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -61,14 +60,6 @@ public class ListOnCommand extends Command {
             );
             return;
         }
-
-        List<String> messages = new ArrayList<>();
-        messages.add(
-                String.format(MESSAGE_SUCCESS, on.format(TimeParser.CLI_FORMATTER))
-        );
-        for (Task task : tasks) {
-            messages.add(String.format("%d.%s", taskList.getTaskIndex(task) + 1, task));
-        }
-        ui.printMessages(messages.toArray(new String[0]));
+        ui.printTasks(taskList, tasks, String.format(MESSAGE_SUCCESS, on.format(TimeParser.CLI_FORMATTER)));
     }
 }

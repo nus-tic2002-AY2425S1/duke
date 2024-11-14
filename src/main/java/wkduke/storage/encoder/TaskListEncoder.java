@@ -1,4 +1,4 @@
-package wkduke.storage;
+package wkduke.storage.encoder;
 
 import wkduke.task.Task;
 import wkduke.task.TaskList;

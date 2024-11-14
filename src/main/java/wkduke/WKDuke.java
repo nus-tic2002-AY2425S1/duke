@@ -1,8 +1,8 @@
 package wkduke;
 
 import wkduke.command.Command;
-import wkduke.exception.FileContentException;
-import wkduke.exception.StorageOperationException;
+import wkduke.exception.storage.FileContentException;
+import wkduke.exception.storage.StorageOperationException;
 import wkduke.exception.WKDukeException;
 import wkduke.parser.CommandParser;
 import wkduke.storage.Storage;

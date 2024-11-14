@@ -1,4 +1,6 @@
-package wkduke.exception;
+package wkduke.exception.storage;
+
+import wkduke.exception.WKDukeException;
 
 /**
  * Represents an exception that is thrown when an error occurs during a storage operation.

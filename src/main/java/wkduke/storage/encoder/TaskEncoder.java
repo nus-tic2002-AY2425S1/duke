@@ -1,4 +1,4 @@
-package wkduke.storage;
+package wkduke.storage.encoder;
 
 import wkduke.parser.TimeParser;
 import wkduke.task.Deadline;

@@ -1,7 +1,7 @@
 package wkduke.command;
 
-import wkduke.exception.CommandOperationException;
-import wkduke.exception.StorageOperationException;
+import wkduke.exception.command.CommandOperationException;
+import wkduke.exception.storage.StorageOperationException;
 import wkduke.storage.Storage;
 import wkduke.task.TaskList;
 import wkduke.ui.Ui;

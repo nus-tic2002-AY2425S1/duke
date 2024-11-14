@@ -1,8 +1,20 @@
 package wkduke.parser;
 
-import wkduke.command.*;
+import wkduke.command.Command;
+import wkduke.command.ExitCommand;
+import wkduke.command.create.AddCommand;
+import wkduke.command.create.AddDeadlineCommand;
+import wkduke.command.create.AddEventCommand;
+import wkduke.command.create.AddTodoCommand;
+import wkduke.command.delete.DeleteCommand;
+import wkduke.command.read.FindCommand;
+import wkduke.command.read.ListCommand;
+import wkduke.command.read.ListOnCommand;
+import wkduke.command.update.MarkCommand;
+import wkduke.command.update.UnmarkCommand;
+import wkduke.command.update.UpdatePriorityCommand;
 import wkduke.common.Messages;
-import wkduke.exception.CommandFormatException;
+import wkduke.exception.command.CommandFormatException;
 import wkduke.exception.TaskFormatException;
 import wkduke.task.TaskPriority;
 

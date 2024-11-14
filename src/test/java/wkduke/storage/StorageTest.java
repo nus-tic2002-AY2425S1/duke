@@ -4,9 +4,9 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import wkduke.exception.FileContentException;
-import wkduke.exception.StorageFilePathException;
-import wkduke.exception.StorageOperationException;
+import wkduke.exception.storage.FileContentException;
+import wkduke.exception.storage.StorageFilePathException;
+import wkduke.exception.storage.StorageOperationException;
 import wkduke.task.*;
 
 import java.io.IOException;

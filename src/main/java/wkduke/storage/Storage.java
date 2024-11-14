@@ -1,9 +1,11 @@
 package wkduke.storage;
 
 import wkduke.common.Messages;
-import wkduke.exception.FileContentException;
-import wkduke.exception.StorageFilePathException;
-import wkduke.exception.StorageOperationException;
+import wkduke.exception.storage.FileContentException;
+import wkduke.exception.storage.StorageFilePathException;
+import wkduke.exception.storage.StorageOperationException;
+import wkduke.storage.decoder.TaskListDecoder;
+import wkduke.storage.encoder.TaskListEncoder;
 import wkduke.task.TaskList;
 
 import java.io.FileNotFoundException;
@@ -42,7 +44,7 @@ public class Storage {
         if (!isValidPath(filePath)) {
             throw new StorageFilePathException(Messages.MESSAGE_FILE_PATH_ERROR);
         }
-        
+
         createFileAndDirectories(filePath);
     }
 

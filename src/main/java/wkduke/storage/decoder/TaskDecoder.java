@@ -1,7 +1,7 @@
-package wkduke.storage;
+package wkduke.storage.decoder;
 
 import wkduke.common.Messages;
-import wkduke.exception.FileContentException;
+import wkduke.exception.storage.FileContentException;
 import wkduke.exception.TaskFormatException;
 import wkduke.parser.TimeParser;
 import wkduke.task.*;

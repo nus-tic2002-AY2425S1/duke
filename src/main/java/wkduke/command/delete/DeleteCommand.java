@@ -1,8 +1,9 @@
-package wkduke.command;
+package wkduke.command.delete;
 
+import wkduke.command.Command;
 import wkduke.common.Messages;
-import wkduke.exception.CommandOperationException;
-import wkduke.exception.StorageOperationException;
+import wkduke.exception.command.CommandOperationException;
+import wkduke.exception.storage.StorageOperationException;
 import wkduke.storage.Storage;
 import wkduke.task.Task;
 import wkduke.task.TaskList;

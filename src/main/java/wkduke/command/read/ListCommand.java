@@ -1,5 +1,6 @@
-package wkduke.command;
+package wkduke.command.read;
 
+import wkduke.command.Command;
 import wkduke.storage.Storage;
 import wkduke.task.Task;
 import wkduke.task.TaskList;

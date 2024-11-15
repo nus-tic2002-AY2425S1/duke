@@ -82,7 +82,7 @@ public class MainWindow extends AnchorPane {
 
         userInput.clear();
 
-        String javaroResponse = javaro.getResponse(input);
+        String javaroResponse = javaro.getUi().getJavaroResponse();
 
         dialogContainer.getChildren().addAll(
             DialogBox.getUserDialog(input, userImage),

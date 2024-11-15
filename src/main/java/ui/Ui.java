@@ -25,6 +25,9 @@ public class Ui {
 
     }
 
+    /**
+     * Generates a response for the user's chat message.
+     */
     public String getJavaroResponse() {
         return javaroResponse;
     }

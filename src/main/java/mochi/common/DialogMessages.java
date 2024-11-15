@@ -16,6 +16,7 @@ public enum DialogMessages {
    LIST_TASK("Here are the tasks in your list:"),
    LIST_TASK_FILTERED("Here are the filtered tasks in your list:"),
    LIST_TASK_FILTERED_DATE("Here are the filtered tasks by date:"),
+   LIST_TASK_FILTERED_NAME("Here are the filtered tasks by given keyword:"),
    LIST_TASK_EMPTY("There are no task in given type or date filter"),
    MARK_TASK("Nice! I've marked this task as done:"),
    MARK_TASK_MASS("Nice! I've marked the following task ids :"),

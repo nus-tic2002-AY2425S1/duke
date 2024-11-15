@@ -33,8 +33,6 @@ public class Ui {
         this.javaroResponse = javaroResponse;
     }
 
-
-
     /**
      * Formats a string to create a specified number of leading spaces.
      *
@@ -92,9 +90,6 @@ public class Ui {
      */
     // Solution below inspired by https://stackoverflow.com/questions/2914695/how-can-you-write-a-function-that-accepts-multiple-types
     public <T> void printMessage(T messages) {
-        String space = getSpace(false, false);          // formatSpace(5)
-
-        // StringBuilder stringBuilder = new StringBuilder();
         StringBuilder stringBuilder = new StringBuilder();
 
         // System.out.println(messageList.getClass());

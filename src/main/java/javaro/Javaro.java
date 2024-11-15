@@ -27,6 +27,8 @@ public class Javaro {
     private Storage storage;
     private TaskList taskList;
 
+    private String commandType;
+
     /**
      * Constructs a Javaro instance.
      * Setting up the Javaro application initializing the user interface, storage, and task list.
@@ -70,22 +72,32 @@ public class Javaro {
         return taskList;
     }
 
+    public String getCommandType() {
+        return commandType;
+    }
+
     public boolean runUserInput(String userInput) {
         try {
             // Parse and execute the command
             Command command = Parser.parse(userInput);
+            System.out.println(command.getClass().getName());
             command.execute(taskList, ui, storage);
+
+            commandType = command.getClass().getName();
+            System.out.println("in runuserinput commandtype is " + commandType);
 
             // Check if the command is a "bye" command to exit the loop
             return command.isBye();
         } catch (CommandException e) {
             // Handle command parsing or execution errors
             // System.out.println("CommandException caught: " + e.getMessage());
+            commandType = "Error";
             ui.showError(e.getMessageList());
             return false;
         } catch (StorageOperationException e) {
             // Handle storage operation errors
             // System.out.println("StorageOperationException caught: " + e.getMessage());
+            commandType = "Error";
             ui.showError(e.getMessageList());
             return false;
         }
@@ -95,7 +107,6 @@ public class Javaro {
      * Generates a response for the user's chat message.
      */
     public String getResponse(String userInput) {
-        boolean isBye = runUserInput(userInput);
         return ui.getJavaroResponse();
     }
 }

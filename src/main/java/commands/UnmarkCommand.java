@@ -61,17 +61,14 @@ public class UnmarkCommand extends Command {
             taskToUnmark + Constants.BACKTICK + SPACE + Messages.ALREADY_MARKED_AS + SPACE +
             Messages.NOT + SPACE + Messages.DONE + Constants.DOT + SPACE + Messages.NO_ACTION_DONE;
 
-        String[] messages;
-
         boolean isUnmarkedSuccess = taskList.unmarkTask(taskToUnmark);
 
         if (isUnmarkedSuccess) {
             storage.saveTasks(taskList);
-            messages = new String[]{MESSAGE_UNMARK_SUCCESS, ui.getSpace(false, true) + taskToUnmark};
+            String[] messages = new String[]{MESSAGE_UNMARK_SUCCESS, ui.getSpace(false, true) + taskToUnmark};
+            ui.printMessage(messages);
         } else {
-            messages = new String[]{MESSAGE_ALREADY_UNMARKED};
+            throw new CommandException(MESSAGE_ALREADY_UNMARKED);
         }
-
-        ui.printMessage(messages);
     }
 }

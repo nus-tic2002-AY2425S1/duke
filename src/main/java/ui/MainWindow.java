@@ -33,11 +33,17 @@ public class MainWindow extends AnchorPane {
 
     private Javaro javaro;
 
+    public TextField getInputField() {
+        return userInput;
+    }
+
     /**
      * Prints a greeting message to the user when the application starts.
      */
     public void showWelcome() {
-        dialogContainer.getChildren().add(DialogBox.getJavaroDialog(Messages.MESSAGE_WELCOME, javaroImage));
+        dialogContainer.getChildren().add(
+            DialogBox.getJavaroDialog(Messages.MESSAGE_WELCOME, javaroImage)
+        );
     }
 
     public void delayAndExit() {
@@ -54,6 +60,7 @@ public class MainWindow extends AnchorPane {
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        getInputField().promptTextProperty().set("Type here...");       // Set placeholder
         showWelcome();
     }
 
@@ -70,6 +77,8 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         boolean isBye = javaro.runUserInput(input);
+        String commandType = javaro.getCommandType();
+        System.out.println("in handleuserinput commandtype is " + commandType);
 
         userInput.clear();
 
@@ -77,13 +86,12 @@ public class MainWindow extends AnchorPane {
 
         dialogContainer.getChildren().addAll(
             DialogBox.getUserDialog(input, userImage),
-            DialogBox.getJavaroDialog(javaroResponse, javaroImage)
+            DialogBox.getJavaroDialog(javaroResponse, javaroImage, commandType)
         );
 
         if (isBye) {
             delayAndExit();
         }
-
 
     }
 }

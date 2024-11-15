@@ -59,7 +59,36 @@ public class DialogBox extends HBox {
         return db;
     }
 
+    public static DialogBox getJavaroDialog(String text, Image img, String commandType) {
+        var db = getJavaroDialog(text, img);
+        System.out.println("in getjavarodialog commandtype is " + commandType);
+        db.changeDialogStyle(commandType);
+        return db;
+    }
+
     public static DialogBox getJavaroDialog(String text, Image img) {
         return new DialogBox(text, img);
+    }
+
+    private void changeDialogStyle(String commandType) {
+        switch (commandType) {
+            case "commands.add.TodoCommand":
+            case "commands.add.DeadlineCommand":
+            case "commands.add.EventCommand":
+            case "commands.add.FixedDurationCommand":
+            case "commands.ArchiveCommand":
+            case "commands.DeleteCommand":
+            case "commands.FindCommand":
+            case "commands.MarkCommand":
+            case "commands.ShowCommand":
+            case "commands.UnmarkCommand":
+                dialog.getStyleClass().add("success-label");
+                break;
+            case "Error":
+                dialog.getStyleClass().add("failure-label");
+                break;
+            default:
+                // Do nothing
+        }
     }
 }

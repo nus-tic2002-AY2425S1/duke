@@ -112,8 +112,9 @@ public class Parser {
             case FixedDurationCommand.COMMAND_WORD -> prepareFixedDuration(cleanArgs);
             case FindCommand.COMMAND_WORD -> prepareFind(cleanArgs);
             case ArchiveCommand.COMMAND_WORD -> prepareArchive(cleanArgs);
-            default -> throw new CommandException(Messages.ERROR_INVALID_COMMAND,
-                String.format("Command=`%s`", commandWord), Messages.VALID_COMMANDS
+            default -> throw new CommandException(
+                String.format(Messages.ERROR_INVALID_COMMAND + Constants.BACKTICK + userInput + Constants.BACKTICK),
+                Messages.VALID_COMMANDS
             );
         };
     }

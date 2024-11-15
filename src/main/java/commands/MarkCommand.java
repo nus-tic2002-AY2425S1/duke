@@ -66,7 +66,7 @@ public class MarkCommand extends Command {
             storage.saveTasks(taskList);
             messages = new String[]{MESSAGE_MARK_SUCCESS, ui.getSpace(false, true) + taskToMark};
         } else {
-            messages = new String[]{MESSAGE_ALREADY_MARKED};
+            throw new CommandException(MESSAGE_ALREADY_MARKED);
         }
 
         ui.printMessage(messages);

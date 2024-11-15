@@ -3,6 +3,7 @@ package mochi.tasks;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -133,9 +134,10 @@ public class TaskList implements AutoCloseable {
   }
 
   public void massDeleteTask(int[] index) throws MochiException{
-    int[] sorted = Utils.sortArrayDsc(index);
-    for (int i : sorted)
-      _taskNameToIndexMap.replace(_list.remove(i-1).getName(),-1);
+    Arrays.sort(index);
+    for (int i = index.length - 1; i >= 0; i--) {
+      _taskNameToIndexMap.replace(_list.remove(index[i]-1).getName(),-1);
+    }
     saveTasks();
   }
   /**

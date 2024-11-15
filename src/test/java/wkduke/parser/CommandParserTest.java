@@ -122,8 +122,10 @@ public class CommandParserTest {
 
         private static Stream<Object[]> validUnmarkCommandProvider() {
             return Stream.of(
-                    new Object[]{"unmark 1", new UnmarkCommand(1)},
-                    new Object[]{"unmark 42", new UnmarkCommand(42)}
+                    new Object[]{"unmark 1,2,3,4,5", new UnmarkCommand(List.of(1, 2, 3, 4, 5))},
+                    new Object[]{"unmark 5,15,1,", new UnmarkCommand(List.of(1, 5, 15))},
+                    new Object[]{"unmark 1,1,1,2", new UnmarkCommand(List.of(1, 2))},
+                    new Object[]{"unmark  5, 15, 1", new UnmarkCommand(List.of(1, 5, 15))}
             );
         }
 
@@ -290,7 +292,8 @@ public class CommandParserTest {
         private static Stream<String> invalidUnmarkCommandProvider() {
             return Stream.of(
                     "unmark",       // Missing task number
-                    "unmark -1",            // Invalid task number
+                    "unmark -1,2,3",        // Negative task number
+                    "unmark 0",             // Invalid task number
                     "unmark not-a-number"   // Non-integer task number
             );
         }

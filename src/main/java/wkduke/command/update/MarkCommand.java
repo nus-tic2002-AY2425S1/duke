@@ -2,6 +2,7 @@ package wkduke.command.update;
 
 import wkduke.command.Command;
 import wkduke.common.Messages;
+import wkduke.common.Utils;
 import wkduke.exception.command.CommandOperationException;
 import wkduke.exception.storage.StorageOperationException;
 import wkduke.storage.Storage;
@@ -32,18 +33,6 @@ public class MarkCommand extends Command {
      */
     public MarkCommand(List<Integer> taskNumbers) {
         this.taskNumbers = new HashSet<>(taskNumbers);
-    }
-
-    /**
-     * Validates that all specified 1-based task numbers exist in the taskList.
-     *
-     * @param taskList The taskList to validate against.
-     * @throws IndexOutOfBoundsException If any task number is invalid.
-     */
-    private void checkTaskNumber(TaskList taskList) {
-        for (Integer taskNumber : taskNumbers) {
-            taskList.getTask(taskNumber - 1);
-        }
     }
 
     /**
@@ -100,7 +89,7 @@ public class MarkCommand extends Command {
         assert storage != null : "Precondition failed: 'storage' cannot be null";
         try {
             // Validate task numbers
-            checkTaskNumber(taskList);
+            Utils.validateTaskNumbers(taskList, taskNumbers);
 
             // Update task statuses
             List<Task> updatedTasks = new ArrayList<>();

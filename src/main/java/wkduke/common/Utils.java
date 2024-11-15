@@ -1,7 +1,10 @@
 package wkduke.common;
 
+import wkduke.task.TaskList;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Utility class providing common helper methods for operations.
@@ -26,5 +29,17 @@ public class Utils {
             taskNumbers.add(number);
         }
         return taskNumbers;
+    }
+
+    /**
+     * Validates that all specified 1-based task numbers exist in the taskList.
+     *
+     * @param taskList The taskList to validate against.
+     * @throws IndexOutOfBoundsException If any task number is invalid.
+     */
+    public static void validateTaskNumbers(TaskList taskList, Set<Integer> taskNumbers) {
+        for (Integer taskNumber : taskNumbers) {
+            taskList.getTask(taskNumber - 1);
+        }
     }
 }

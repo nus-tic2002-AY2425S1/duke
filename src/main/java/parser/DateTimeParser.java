@@ -56,6 +56,7 @@ public class DateTimeParser {
      * @throws CommandException if the input string is not in the expected format.
      */
     public static LocalDateTime parseOutputDateTime(String input) throws CommandException {
+        assert input != null : "Input string must not be null";
         try {
             return LocalDateTime.parse(input, OUTPUT_DATETIME_FORMAT);
         } catch (DateTimeParseException e) {
@@ -73,6 +74,7 @@ public class DateTimeParser {
      * @throws CommandException if the input string is not in the expected format.
      */
     public static LocalDateTime parseInputDeadlineDateTime(String input) throws CommandException {
+        assert input != null : "Input string must not be null";
         try {
             return LocalDateTime.parse(input, deadlineFormatter);
             // return LocalDateTime.parse(input, INPUT_DATETIME_FORMAT);
@@ -94,6 +96,7 @@ public class DateTimeParser {
      * @throws CommandException if the input string is not in the expected format.
      */
     public static LocalDateTime parseInputEventDateTime(String input) throws CommandException {
+        assert input != null : "Input string must not be null";
         try {
             return LocalDateTime.parse(input, INPUT_DATETIME_FORMAT);
         } catch (DateTimeParseException e) {
@@ -113,6 +116,7 @@ public class DateTimeParser {
      * @throws CommandException if the input string is not in the expected format.
      */
     public static LocalDate parseInputShowDate(String input) throws CommandException {
+        assert input != null : "Input string must not be null";
         try {
             return LocalDate.parse(input, INPUT_DATE_FORMAT);
         } catch (DateTimeParseException e) {
@@ -132,6 +136,7 @@ public class DateTimeParser {
      * @return the formatted String.
      */
     public static String formatDateTime(LocalDateTime dateTime) {
+        assert dateTime != null : "Date and time object must not be null";
         // if (dateTime == null) {
         //     throw new DateTimeParserException("Date/time cannot be null");
         // }

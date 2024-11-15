@@ -17,6 +17,7 @@ import commands.add.FixedDurationCommand;
 import commands.add.TodoCommand;
 import common.Constants;
 import common.Messages;
+
 import exception.CommandException;
 
 import java.time.LocalDate;
@@ -79,6 +80,9 @@ public class Parser {
      *                          i.e. invalid input string, or cannot be parsed into a command.
      */
     public static Command parse(String userInput) throws CommandException {
+
+        assert userInput != null && !userInput.trim().isEmpty()  : "User input should not be null or empty";
+
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
 
         if (!matcher.matches()) {
@@ -131,6 +135,10 @@ public class Parser {
      */
     private static int prepareTaskNumberForCommand
         (String commandWord, String args, String messageUsage) throws CommandException {
+
+        assert commandWord != null : "Command word should not be null";
+        assert args != null : "Arguments should not be null";
+
         final Matcher matcher = TASK_NUMBER_ARGS_FORMAT.matcher(args);
         if (!matcher.matches()) {
             throw new CommandException(
@@ -150,6 +158,7 @@ public class Parser {
      * @throws CommandException if the task number is invalid, i.e. the arguments do not match the expected format.
      */
     private static Command prepareMark(String args) throws CommandException {
+        assert args != null : "Arguments should not be null";
         int taskNumber = prepareTaskNumberForCommand(MarkCommand.COMMAND_WORD, args, MarkCommand.MESSAGE_USAGE);
         return new MarkCommand(taskNumber);
     }
@@ -162,6 +171,7 @@ public class Parser {
      * @throws CommandException if the task number is invalid, i.e. the arguments do not match the expected format.
      */
     private static Command prepareUnmark(String args) throws CommandException {
+        assert args != null : "Arguments should not be null";
         int taskNumber = prepareTaskNumberForCommand(UnmarkCommand.COMMAND_WORD, args, UnmarkCommand.MESSAGE_USAGE);
         return new UnmarkCommand(taskNumber);
     }
@@ -174,6 +184,7 @@ public class Parser {
      * @throws CommandException if the task number is invalid, i.e. the arguments do not match the expected format.
      */
     private static Command prepareDelete(String args) throws CommandException {
+        assert args != null : "Arguments should not be null";
         int taskNumber = prepareTaskNumberForCommand(DeleteCommand.COMMAND_WORD, args, DeleteCommand.MESSAGE_USAGE);
         return new DeleteCommand(taskNumber);
     }
@@ -188,6 +199,10 @@ public class Parser {
      */
     private static void checkEmptyDescription(String args, String commandWord, String messageUsage)
         throws CommandException {
+
+        assert args != null : "Arguments should not be null";
+        assert commandWord != null : "Command word should not be null";
+
         if (args.isEmpty()) {
             throw new CommandException(
                 Messages.ERROR_INVALID_COMMAND_FORMAT + commandWord + DOT,
@@ -210,6 +225,10 @@ public class Parser {
      */
     private static void validateArgsFormat(Matcher matcher, String commandWord, String args, String messageUsage)
         throws CommandException {
+
+        assert args != null : "Arguments should not be null";
+        assert commandWord != null : "Command word should not be null";
+
         if (!matcher.matches()) {
             throw new CommandException(
                 Messages.ERROR_INVALID_COMMAND_FORMAT + commandWord + DOT,
@@ -228,6 +247,8 @@ public class Parser {
      *                          i.e. the arguments do not match the expected format.
      */
     private static Command prepareTodo(String args) throws CommandException {
+
+        assert args != null : "Arguments should not be null";
 
         // Check if args (description) is empty
         checkEmptyDescription(args, TodoCommand.COMMAND_WORD, TodoCommand.MESSAGE_USAGE);
@@ -255,6 +276,11 @@ public class Parser {
     private static void checkArgsContainsKeyword
         (String args, String keyword, String commandWord, String infoMessage, String messageUsage)
         throws CommandException {
+
+        assert args != null : "Arguments should not be null";
+        assert keyword != null : "Keyword should not be null";
+        assert commandWord != null : "Command word should not be null";
+
         if (!args.contains(keyword)) {
             throw new CommandException(
                 Messages.ERROR_INVALID_COMMAND_FORMAT + commandWord + DOT,
@@ -273,6 +299,8 @@ public class Parser {
      *                          are invalid / missing, i.e. the arguments do not match the expected format.
      */
     private static Command prepareDeadline(String args) throws CommandException {
+
+        assert args != null : "Arguments should not be null";
 
         final String MESSAGE_EMPTY_DUEDATE_PRE =
             MESSAGE_THE_TASK_IS_MISSING_A + Constants.SPACE + Constants.DUE_DATE + DOT;
@@ -308,6 +336,8 @@ public class Parser {
      *                          i.e. the arguments do not match the expected format, or if the start date/time is after the end date/time.
      */
     private static Command prepareEvent(String args) throws CommandException {
+
+        assert args != null : "Arguments should not be null";
 
         final String MESSAGE_EMPTY_STARTDATETIME_PRE =
             MESSAGE_THE_TASK_IS_MISSING_A + Constants.SPACE + Constants.START_DATE_TIME + DOT;
@@ -356,7 +386,11 @@ public class Parser {
      * @throws CommandException if the date is invalid, or cannot be parsed.
      */
     private static Command prepareShow(String args) throws CommandException {
+
+        assert args != null : "Arguments should not be null";
+
         LocalDate date = DateTimeParser.parseInputShowDate(args);
+
         return new ShowCommand(date);
     }
 
@@ -368,6 +402,8 @@ public class Parser {
      * @throws CommandException if there are missing components, or the command cannot be parsed.
      */
     private static Command prepareFixedDuration(String args) throws CommandException {
+
+        assert args != null : "Arguments should not be null";
 
         final String MESSAGE_EMPTY_DURATION_PRE = "The task is missing a duration.";
         final String DURATION_KEYWORD = Constants.SLASH_DURATION;
@@ -388,6 +424,12 @@ public class Parser {
         String durationString = matcher.group(Constants.DURATION).trim();
         double duration = Double.parseDouble(durationString);
 
+        if (duration <= 0) {
+            throw new CommandException(Messages.ERROR_INVALID_COMMAND_FORMAT + Constants.BACKTICK +
+                FixedDurationCommand.COMMAND_WORD + Constants.BACKTICK, "Duration must be more than 0 hours.",
+                String.format(EXAMPLE_USAGE, FixedDurationCommand.MESSAGE_USAGE));
+        }
+
         return new FixedDurationCommand(description, duration);
     }
 
@@ -399,6 +441,9 @@ public class Parser {
      * @throws CommandException if there are missing components, or the command cannot be parsed.
      */
     private static Command prepareFind(String args) throws CommandException {
+
+        assert args != null : "Arguments should not be null";
+
         // Check if args (description) is empty
         checkEmptyDescription(args, FindCommand.COMMAND_WORD, FindCommand.MESSAGE_USAGE);
 

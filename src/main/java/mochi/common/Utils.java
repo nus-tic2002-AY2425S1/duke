@@ -1,7 +1,5 @@
 package mochi.common;
 
-import java.util.Arrays;
-
 /**
  * The Utils class contains common utility that can be used within the project
  */
@@ -18,18 +16,18 @@ public class Utils {
    *         the start element is not found.
    */
   public static String trimStringArrayWithStartEnd(String[] string, String start, String end, String delimiter) {
-    String body = "";
+    StringBuilder body = new StringBuilder();
     boolean shouldCopy = false;
     for (String i : string) {
       if (!end.isEmpty() && i.equals(end))
         break;
       if(shouldCopy) {
-        body += i + delimiter;
+        body.append(i).append(delimiter);
       }
       if (i.equalsIgnoreCase(start))
         shouldCopy = true;
     }
-    return body.trim();
+    return body.toString().trim();
   }
 
   public static int[] splitStringToIntArray(String input, String delimiter) {

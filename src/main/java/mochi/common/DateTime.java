@@ -2,7 +2,6 @@ package mochi.common;
 
 import mochi.common.exception.ExceptionMessages;
 import mochi.ui.Ui;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,11 +12,9 @@ import java.time.format.DateTimeParseException;
  * It handles user-friendly formatting for display purposes and formatting that is used for storage in a database.
  */
 public class DateTime {
-
   private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
   private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy");
   private static final DateTimeFormatter DISPLAY_FORMATTER = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mma");
-
   /**
    * Parses a string representing a date and time into a LocalDateTime object.
    *
@@ -32,7 +29,6 @@ public class DateTime {
       return null;
     }
   }
-
   public static LocalDate parseDate(String dateTime) {
     try {
       return LocalDate.parse(dateTime, DATE_FORMATTER);
@@ -41,7 +37,6 @@ public class DateTime {
       return null;
     }
   }
-
   /**
    * Converts a LocalDateTime object to a formatted string for display.
    *
@@ -51,7 +46,6 @@ public class DateTime {
   public static String toString(LocalDateTime dateTime) {
     return dateTime.format(DISPLAY_FORMATTER);
   }
-
   /**
    * Converts a LocalDateTime object to a string used for database storage.
    *

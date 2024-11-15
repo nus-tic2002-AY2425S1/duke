@@ -1,24 +1,26 @@
 package mochi.parsers;
 
-import mochi.commands.*;
-import mochi.common.*;
-import mochi.common.exception.*;
-import mochi.tasks.*;
+import mochi.commands.AddTaskCommand;
+import mochi.commands.Command;
+import mochi.common.DialogMessages;
+import mochi.common.exception.MochiException;
+import mochi.tasks.Deadline;
+import mochi.tasks.Event;
+import mochi.tasks.TaskList;
+import mochi.tasks.TaskType;
+import mochi.tasks.Todo;
 
 public class LoadProcessor {
   private final TaskList taskList;
   public LoadProcessor(TaskList taskList) {
     this.taskList = taskList;
   }
-  public void processInput(String input) throws MochiException {
-    processInput(input," ");
-  }
   public void processInput(String input,String delimiter) throws MochiException {
     // need to escape | character
     if (delimiter.equals("||"))
       delimiter = "\\|\\|";
     String[] token = input.split(delimiter);
-    Command cmd = null;
+    Command cmd;
     TaskType taskTypes = TaskType.getValue(token[0]);
     switch (taskTypes) {
       case T:
@@ -39,8 +41,6 @@ public class LoadProcessor {
       default:
         throw new MochiException(DialogMessages.INPUT_UNKNOWN.getValue());
     }
-    if (cmd != null) {
-      cmd.execute();
-    }
+    cmd.execute();
   }
 }

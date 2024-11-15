@@ -1,18 +1,15 @@
 package mochi.commands;
 
 import mochi.common.DialogMessages;
-import mochi.ui.*;
-import mochi.tasks.*;
+import mochi.tasks.TaskList;
+import mochi.ui.Ui;
 
 public class UnMarkTaskCommand extends Command {
-
   private final int index;
-
   public UnMarkTaskCommand(TaskList taskList, String[] token) {
     super(taskList);
     this.index = Integer.parseInt(token[1]) - 1;
   }
-
   @Override
   public void execute() {
     try {

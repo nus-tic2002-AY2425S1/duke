@@ -4,8 +4,13 @@ import mochi.common.exception.ExceptionMessages;
 import mochi.ui.Ui;
 
 import java.io.IOException;
-import java.nio.file.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -23,7 +28,7 @@ public class SaveManager {
   }
   public SaveManager(String filePath) {
     loadFile = Paths.get(filePath);
-    isValidDirectory(filePath);
+    checkValidDirectory(filePath);
   }
   /**
    * Loads tasks from the specified file as an ArrayList of strings.
@@ -48,24 +53,27 @@ public class SaveManager {
   public void save(ArrayList<String> input) throws IOException {
     Path saveFile = Paths.get(BACKUP_FILE);
     if(Files.exists(saveFile)) {
-      backUpFileWithPrefix(BACKUP_FILE,POSTFIX);
+      backUpFileWithPrefix();
     }
-    Files.write(saveFile, input, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+    Files.write(saveFile,
+            input,
+            StandardCharsets.UTF_8,
+            StandardOpenOption.CREATE,
+            StandardOpenOption.TRUNCATE_EXISTING
+    );
   }
-  private boolean isValidDirectory(String pathString) {
+  private void checkValidDirectory(String pathString) {
     try {
-      Path path = Paths.get(pathString);
-      return Files.exists(path) && Files.isDirectory(path);
+      Paths.get(pathString);
     } catch (InvalidPathException e) {
       Ui.response(ExceptionMessages.INVALID_PATH_EXCEPTION);
     } catch (SecurityException e) {
       Ui.response(ExceptionMessages.SECURITY_PATH_EXCEPTION);
     }
-    return false;
   }
-  private void backUpFileWithPrefix(String file,String postfix) throws IOException {
-    Path sourceFile = Paths.get(file);
-    Path targetFile = Paths.get(file + postfix);
+  private void backUpFileWithPrefix() throws IOException {
+    Path sourceFile = Paths.get(BACKUP_FILE);
+    Path targetFile = Paths.get(BACKUP_FILE + POSTFIX);
     Files.copy(sourceFile, targetFile, StandardCopyOption.REPLACE_EXISTING);
   }
   public void deleteData() throws IOException {

@@ -2,7 +2,6 @@ package mochi.common.exception;
 
 public class ExceptionMessages {
   public static final String TASK_EXIST = "Input task name exist in the system, please use another task name";
-  public static final String INDEX_OUT_OF_RANGE = "Input parameters is not correct, please check your number of parameters";
   public static final String INVALID_PATH_EXCEPTION = "The provided path is invalid: ";
   public static final String SECURITY_PATH_EXCEPTION = "Insufficient permissions to access the path: ";
   public static final String NUMBER_FORMAT_EXCEPTION = "The expected parameter is in a wrong format";

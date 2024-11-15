@@ -1,20 +1,17 @@
 package mochi.commands;
 
-import mochi.common.*;
-import mochi.ui.*;
-import mochi.tasks.*;
-
+import mochi.common.DialogMessages;
+import mochi.common.Utils;
+import mochi.tasks.TaskList;
+import mochi.ui.Ui;
 import java.util.Arrays;
 
 public class MassUnMarkTaskCommand extends Command {
-
   private final int[] idx;
-
   public MassUnMarkTaskCommand(TaskList taskList, String token) {
     super(taskList);
     this.idx = Utils.splitStringToIntArray(token,",");
   }
-
   @Override
   public void execute() {
     try {

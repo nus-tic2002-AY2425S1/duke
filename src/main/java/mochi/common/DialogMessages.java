@@ -6,7 +6,7 @@ import mochi.Mochi;
  * consistent dialog messages throughout the application.
  */
 public enum DialogMessages {
-   GREETINGS("Hello! I'm " + Mochi._name + System.lineSeparator()
+   GREETINGS("Hello! I'm " + Mochi.NAME + System.lineSeparator()
      + "What can I do for you?"),
    INVALID_MULTI_PATTERN("The given mass pattern is wrong, please use [1,3,5] if you wish to select 3 task with task id 1,3,5"),
    LOAD_TASK_LINE_ERROR("Please check the following line number as it is in the wrong save format. Line:"),
@@ -39,13 +39,10 @@ public enum DialogMessages {
             """),
    INPUT_UNKNOWN("Looks like you have input the wrong input, here are the available commands"
      + System.lineSeparator() + COMMANDS_LIST.getValue());
-
    private final String message;
-
    DialogMessages(String message) {
       this.message = message;
    }
-
    public String getValue() {
       return message;
    }

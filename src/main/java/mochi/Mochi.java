@@ -1,15 +1,14 @@
 package mochi;
 
-import mochi.commands.*;
-import mochi.common.*;
-import mochi.parsers.*;
-import mochi.tasks.*;
-import mochi.ui.*;
+import mochi.commands.CommandEnum;
+import mochi.common.DialogMessages;
+import mochi.parsers.InputProcessor;
+import mochi.tasks.TaskList;
+import mochi.ui.Ui;
 
 import java.util.Scanner;
 public class Mochi {
-  public final static String _name = "Mochi";
-
+  public static final String NAME = "Mochi";
   public static void main(String[] args) {
     Ui.response(DialogMessages.GREETINGS.getValue());
     TaskList taskList = new TaskList();

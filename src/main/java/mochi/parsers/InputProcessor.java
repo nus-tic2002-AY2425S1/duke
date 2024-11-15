@@ -1,10 +1,26 @@
 package mochi.parsers;
 
-import mochi.commands.*;
-import mochi.tasks.*;
-import mochi.ui.*;
-import mochi.common.*;
-import mochi.common.exception.*;
+import mochi.commands.AddTaskCommand;
+import mochi.commands.Command;
+import mochi.commands.CommandEnum;
+import mochi.commands.DeleteTaskCommand;
+import mochi.commands.FindCommand;
+import mochi.commands.ListTaskByDateCommand;
+import mochi.commands.ListTaskCommand;
+import mochi.commands.MarkTaskCommand;
+import mochi.commands.MassDeleteTaskCommand;
+import mochi.commands.MassMarkTaskCommand;
+import mochi.commands.MassUnMarkTaskCommand;
+import mochi.commands.UnMarkTaskCommand;
+import mochi.common.DateTime;
+import mochi.common.DialogMessages;
+import mochi.common.Utils;
+import mochi.common.exception.MochiException;
+import mochi.tasks.Deadline;
+import mochi.tasks.Event;
+import mochi.tasks.TaskList;
+import mochi.tasks.Todo;
+import mochi.ui.Ui;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -95,7 +111,6 @@ public class InputProcessor {
             cmd = new ListTaskCommand(taskList, token);
           }
         }
-
         break;
       case DEADLINE:
         String d_name = Utils.trimStringArrayWithStartEnd(token,"deadline","/by"," ");
@@ -111,7 +126,6 @@ public class InputProcessor {
         String e_name = Utils.trimStringArrayWithStartEnd(token,"event","/from"," ");
         String from = Utils.trimStringArrayWithStartEnd(token,"/from","/to"," ");
         String to = Utils.trimStringArrayWithStartEnd(token,"/to",""," ");
-
         LocalDateTime isFromDate = DateTime.parse(from);
         LocalDateTime isToDate = DateTime.parse(to);
         if ((isFromDate != null) && (isToDate != null)) {

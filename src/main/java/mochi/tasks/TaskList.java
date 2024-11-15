@@ -8,11 +8,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
-import mochi.common.exception.*;
-import mochi.parsers.*;
-import mochi.storage.*;
-import mochi.ui.*;
-import mochi.common.*;
+import mochi.common.DialogMessages;
+import mochi.common.exception.ExceptionMessages;
+import mochi.common.exception.MochiException;
+import mochi.parsers.LoadProcessor;
+import mochi.storage.SaveManager;
+import mochi.ui.Ui;
+
 /**
  * TaskList manages a collection of Task objects, providing functionality to add, delete, mark,
  * unmark, and retrieve tasks. It also handles loading tasks from and saving tasks to a file.
@@ -45,7 +47,7 @@ public class TaskList implements AutoCloseable {
     }
   }
 
-  private void saveTasks() throws MochiException {
+  private void saveTasks() {
     ArrayList<String> tasksToDbString = new ArrayList<>();
     for (Task task : _list) {
       tasksToDbString.add(task.toDBString());
@@ -56,7 +58,7 @@ public class TaskList implements AutoCloseable {
       Ui.response(e.getMessage());
     }
   }
-  private void loadTasks() throws MochiException {
+  private void loadTasks() {
     try {
       ArrayList<String> tmp = saveManger.load();
       if (tmp == null) {
@@ -127,14 +129,13 @@ public class TaskList implements AutoCloseable {
    * Deletes a task based on its index.
    *
    * @param index the index of the task to delete.
-   * @throws MochiException if deletion fails.
    */
-  public void deleteTask(int index) throws MochiException{
+  public void deleteTask(int index) {
     _taskNameToIndexMap.replace(_list.remove(index).getName(),-1);
     saveTasks();
   }
 
-  public void massDeleteTask(int[] index) throws MochiException{
+  public void massDeleteTask(int[] index) {
     Arrays.sort(index);
     for (int i = index.length - 1; i >= 0; i--) {
       _taskNameToIndexMap.replace(_list.remove(index[i]-1).getName(),-1);
@@ -145,9 +146,8 @@ public class TaskList implements AutoCloseable {
    * Unmarks a task as completed based on its index.
    *
    * @param index the index of the task to unmark.
-   * @throws MochiException if unmarking fails.
    */
-  public void unmarkTask(int index) throws MochiException {
+  public void unmarkTask(int index) {
     _list.get(index).unmarkTask();
     saveTasks();
   }

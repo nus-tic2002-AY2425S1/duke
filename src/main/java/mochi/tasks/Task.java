@@ -6,7 +6,6 @@ public class Task {
   protected String _name;
   protected boolean _status;
   protected String _type;
-
   public Task(String name, String type) {
     _name = name;
     _type = type;

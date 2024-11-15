@@ -1,18 +1,15 @@
 package mochi.commands;
 
-import mochi.ui.*;
-import mochi.tasks.*;
-import mochi.common.*;
+import mochi.common.DialogMessages;
+import mochi.tasks.TaskList;
+import mochi.ui.Ui;
 
 public class DeleteTaskCommand extends Command {
-
   private final int index;
-
   public DeleteTaskCommand(TaskList taskList, String[] token) {
     super(taskList);
     this.index = Integer.parseInt(token[1]) - 1;
   }
-
   @Override
   public void execute() {
     try {

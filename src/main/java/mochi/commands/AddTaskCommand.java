@@ -1,13 +1,13 @@
 package mochi.commands;
 
+import mochi.common.DialogMessages;
 import mochi.common.exception.ExceptionMessages;
 import mochi.common.exception.MochiException;
-import mochi.tasks.*;
-import mochi.ui.*;
-import mochi.common.*;
+import mochi.tasks.Task;
+import mochi.tasks.TaskList;
+import mochi.ui.Ui;
 
 public class AddTaskCommand extends Command {
-
   private final Task task;
   private boolean state;
   private boolean isLoading = false;
@@ -26,8 +26,9 @@ public class AddTaskCommand extends Command {
     if (isLoading) {
       try {
         taskList.addTask(task);
-        if (state)
+        if (state) {
           markTaskById(taskList.getTaskIdByTask(task));
+        }
         Ui.response( " "
                 + DialogMessages.TASK_LOADED.getValue()
                 + "  " + task.getName()

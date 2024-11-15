@@ -30,6 +30,11 @@ public class Event extends Task {
      */
     public Event(String description, boolean isDone, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         super(description, isDone);
+        assert description != null && !description.isEmpty() : "Description should not be null or empty";
+        assert startDateTime != null : "Start date and time should not be null";
+        assert endDateTime != null : "End date and time should not be null";
+        assert startDateTime.isBefore(endDateTime) : "Start date and time must be before or equal to end date and time";
+
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
     }
@@ -43,6 +48,10 @@ public class Event extends Task {
      */
     public Event(String description, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         super(description);
+        assert description != null && !description.isEmpty() : "Description should not be null or empty";
+        assert startDateTime != null : "Start date and time should not be null";
+        assert endDateTime != null : "End date and time should not be null";
+        assert startDateTime.isBefore(endDateTime) : "Start date and time must be before or equal to end date and time";
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
     }
@@ -98,8 +107,10 @@ public class Event extends Task {
      */
     @Override
     public String encodeTask() {
-        return TaskType.EVENT + super.encodeTask() + SEPARATOR +
+        String encodedTask = TaskType.EVENT + super.encodeTask() + SEPARATOR +
             getFormattedStartDateTime() + SEPARATOR + getFormattedEndDateTime();
+        assertValidEncodedTask(encodedTask);
+        return encodedTask;
     }
 
     /**

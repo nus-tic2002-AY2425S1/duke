@@ -31,11 +31,13 @@ public abstract class Task {
      * @param isDone      represents the completion status of the {@code Task}.
      */
     public Task(String description, boolean isDone) {
+        assert description != null && !description.isEmpty() : "Description should not be null or empty";
         this.description = description;
         this.isDone = isDone;
     }
 
     public Task(String description) {
+        assert description != null && !description.isEmpty() : "Description should not be null or empty";
         this.description = description;
         this.isDone = false;
     }
@@ -119,8 +121,10 @@ public abstract class Task {
      * @return encoded string representation of the {@code Task}.
      */
     public String encodeTask() {
+        String description = getDescription().trim();
+        assert description != null && !description.isEmpty() : "Task description should not be null or empty";
         String separator = Constants.ENCODE_TASK_SEPARATOR;
-        return separator + getIsDoneValue() + separator + getDescription().trim();
+        return separator + getIsDoneValue() + separator + description;
     }
 
     /**
@@ -140,5 +144,9 @@ public abstract class Task {
             return ((Event) task).getStartDateTime();
         }
         return null;
+    }
+
+    public void assertValidEncodedTask(String encodedTask) {
+        assert encodedTask != null && !encodedTask.isEmpty() : "Encoded task should not be null or empty";
     }
 }

@@ -30,6 +30,7 @@ public class TaskList {
     }
 
     public TaskList(List<Task> taskList) {
+        assert taskList != null;
         this.taskList = taskList;
     }
 
@@ -59,6 +60,7 @@ public class TaskList {
     }
 
     public boolean hasTask(Task task) {
+        assert task != null : "Task cannot be null";
         return getTaskList().contains(task);
     }
 
@@ -69,6 +71,7 @@ public class TaskList {
      * @return the task at the specified index.
      */
     public Task getTask(int index) {
+        assert index >= 0 && index < getSize() : "Task index is out of bounds";
         return getTaskList().get(index);
     }
 
@@ -81,6 +84,8 @@ public class TaskList {
     public void addTask(Task task) {
         if (task != null) {
             getTaskList().add(task);
+        } else {
+            assert task != null : "Task cannot be null";
         }
     }
 
@@ -91,6 +96,7 @@ public class TaskList {
      * @return true if the task is removed successfully; false otherwise.
      */
     public boolean removeTask(Task task) {
+        assert task != null : "Task cannot be null";
         if (getTaskList().contains(task)) {
             return getTaskList().remove(task);
         } else {
@@ -106,6 +112,7 @@ public class TaskList {
      * @return true if the task is marked successfully; false otherwise.
      */
     public boolean markTask(Task taskToMark) {
+        assert taskToMark != null : "Task to mark cannot be null";
         if (taskToMark.getIsDone()) {       // Task has already been marked as done
             return false;
         } else {
@@ -122,6 +129,7 @@ public class TaskList {
      * @return true if the task is unmarked successfully; false otherwise.
      */
     public boolean unmarkTask(Task taskToUnmark) {
+        assert taskToUnmark != null : "Task to unmark cannot be null";
         if (!taskToUnmark.getIsDone()) {        // Task has already been marked as not done
             return false;
         } else {
@@ -148,6 +156,7 @@ public class TaskList {
             throw new CommandException(Messages.ERROR_TASK_NONEXISTENT, MESSAGE_NONEXISTENT_TASK, MESSAGE_USAGE);
         }
 
+        assert task != null : "Task cannot be null";
         return task;
     }
 
@@ -210,6 +219,7 @@ public class TaskList {
      * @return a list of tasks that has the same description as the specified one.
      */
     public TaskList getAllTasksWithMatchingDescription(String description) {
+        assert description != null : "Description is not null";
         TaskList tasksWithMatchingDescription = new TaskList();
 
         for (Task task : getTaskList()) {

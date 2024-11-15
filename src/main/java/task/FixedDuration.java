@@ -24,6 +24,10 @@ public class FixedDuration extends Task {
      */
     public FixedDuration(String description, boolean isDone, double duration) {
         super(description, isDone);
+
+        assert description != null && !description.isEmpty() : "Description should not be null or empty";
+        assert duration >= 0 : "Duration should be non-negative";
+
         this.duration = duration;
     }
 
@@ -36,6 +40,10 @@ public class FixedDuration extends Task {
      */
     public FixedDuration(String description, double duration) {
         super(description);
+
+        assert description != null && !description.isEmpty() : "Description should not be null or empty";
+        assert duration >= 0 : "Duration should be non-negative";
+
         this.duration = duration;
     }
 
@@ -65,7 +73,9 @@ public class FixedDuration extends Task {
      */
     @Override
     public String encodeTask() {
-        return TaskType.FIXED_DURATION + super.encodeTask() + SEPARATOR + getDuration() + SPACE + HOURS;
+        String encodedTask = TaskType.FIXED_DURATION + super.encodeTask() + SEPARATOR + getDuration() + SPACE + HOURS;
+        assertValidEncodedTask(encodedTask);
+        return encodedTask;
     }
 
     /**

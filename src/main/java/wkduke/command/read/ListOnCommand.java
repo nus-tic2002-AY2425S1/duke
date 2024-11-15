@@ -6,6 +6,7 @@ import wkduke.storage.Storage;
 import wkduke.task.Task;
 import wkduke.task.TaskList;
 import wkduke.ui.Ui;
+import wkduke.ui.UiTaskGroup;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -64,6 +65,9 @@ public class ListOnCommand extends Command {
             return;
         }
         assert !tasks.isEmpty() : "Postcondition failed: 'tasks' cannot be empty";
-        ui.printTasks(taskList, tasks, String.format(MESSAGE_SUCCESS, on.format(TimeParser.CLI_FORMATTER)));
+        ui.printUiTaskGroup(taskList, new UiTaskGroup(
+                        String.format(MESSAGE_SUCCESS, on.format(TimeParser.CLI_FORMATTER)), "", tasks
+                )
+        );
     }
 }

@@ -9,11 +9,11 @@ import wkduke.storage.Storage;
 import wkduke.task.Task;
 import wkduke.task.TaskList;
 import wkduke.ui.Ui;
+import wkduke.ui.UiTaskGroup;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -102,9 +102,9 @@ public class MarkCommand extends Command {
             }
 
             // Display success and failure messages
-            ui.printTaskGroups(taskList, Map.of(
-                    MESSAGE_SUCCESS, updatedTasks,
-                    MESSAGE_FAILED, alreadyMarkedTasks
+            ui.printUiTaskGroups(taskList, List.of(
+                    new UiTaskGroup(MESSAGE_SUCCESS, "", updatedTasks),
+                    new UiTaskGroup(MESSAGE_FAILED, "", alreadyMarkedTasks)
             ));
         } catch (IndexOutOfBoundsException e) {
             throw new CommandOperationException(

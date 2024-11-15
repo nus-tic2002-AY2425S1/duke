@@ -6,6 +6,9 @@ import wkduke.storage.Storage;
 import wkduke.task.Task;
 import wkduke.task.TaskList;
 import wkduke.ui.Ui;
+import wkduke.ui.UiTaskGroup;
+
+import java.util.List;
 
 /**
  * Represents a command to add a task to the task list.
@@ -16,7 +19,6 @@ public abstract class AddCommand extends Command {
     public static final String COMMAND_WORD_DEADLINE = "deadline";
     public static final String COMMAND_WORD_EVENT = "event";
     private static final String MESSAGE_SUCCESS_PRE = "Got it. I've added this task:";
-    private static final String TASK_PLACEHOLDER = "  %s";
     private static final String MESSAGE_SUCCESS_POST = "Now you have %s tasks in the list.";
     Task task;
 
@@ -51,10 +53,11 @@ public abstract class AddCommand extends Command {
         assert task != null : "Precondition failed: 'task' cannot be null";
         taskList.addTask(task);
         storage.save(taskList);
-        ui.printMessages(
-                MESSAGE_SUCCESS_PRE,
-                String.format(TASK_PLACEHOLDER, task.toString()),
-                String.format(MESSAGE_SUCCESS_POST, taskList.size())
+        ui.printUiTaskGroup(taskList, new UiTaskGroup(
+                        String.format(MESSAGE_SUCCESS_PRE),
+                        String.format(MESSAGE_SUCCESS_POST, taskList.size()),
+                        List.of(task)
+                )
         );
     }
 }

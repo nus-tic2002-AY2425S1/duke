@@ -118,7 +118,10 @@ public class Storage {
         // Check if "data" directory exists in current folder
         Path dataFolderPath = getTasksFilePath().getParent();
         String dataFolderPathString = dataFolderPath.toString();
+        assert dataFolderPath != null : "Data folder path should not be null";
+
         File dataFolder = new File(dataFolderPathString);
+        assert !dataFolder.exists() || dataFolder.isDirectory() : "Data folder must exist and be a directory";
         boolean isDataFolderExists = dataFolder.exists() && dataFolder.isDirectory();
 
         // Create the directory if it does not exist
@@ -131,6 +134,7 @@ public class Storage {
             if (!isDataFolderCreated) {
                 // Error: Failed to create the data directory at ./data
                 //     Please check your folder path and permissions.
+                assert isDataFolderCreated : "Failed to create the data directory at " + dataFolderPath;
                 throw throwStorageOperationException(Messages.ERROR_CREATE_FOLDER_PRE, dataFolderPathString,
                     Messages.ERROR_CREATE_FOLDER_POST);
             }
@@ -138,11 +142,16 @@ public class Storage {
     }
 
     public void checkFileExists(File file) throws StorageOperationException {
+        assert file != null : "File reference should not be null";
+        assert file.getPath() != null : "File path should not be null";
+
         // Note: It is intentional that I do not check that the file ends with txt.
         // The file.exists() method checks for the existence of the exact file specified by the full path,
         // including the filename and its extension. It is looking for a file named "tasks.txt" specifically.
         boolean isFileExists = file.exists();
 //        System.out.println("is " + file.toString() + " exists: " + isFileExists);
+
+        assert !isFileExists || file.isFile() : "Expected a valid file at " + file.getPath();
 
         String filePathString = file.getPath();
 
@@ -152,6 +161,7 @@ public class Storage {
                 if (!isFileCreated) {
                     // Error: Failed to create the task file at ./data/tasks.txt
                     // Please check your file path and permissions.
+                    assert isFileCreated : "Failed to create the task file at " + file.getPath();
                     throw throwStorageOperationException(Messages.ERROR_CREATE_FILE_PRE, filePathString,
                         Messages.ERROR_CREATE_FILE_POST);
                 }
@@ -202,6 +212,7 @@ public class Storage {
      * @throws IOException if an error occurs while reading the file.
      */
     public List<String> getAllLines() throws IOException {
+        assert Files.exists(tasksFilePath) : "Task file must exist at " + tasksFilePath;
         Path filePath = getTasksFilePath();
         List<String> lines;
         lines = Files.readAllLines(filePath);

@@ -50,8 +50,10 @@ public class TaskListDecoder {
     // Solution below referenced from https://github.com/se-edu/addressbook-level2/blob/master/src/seedu/addressbook/storage/AddressBookDecoder.java#L34
     protected static TaskList decodeTaskList(List<String> encodedTaskList)
         throws FileContentException, TaskListDecoderException, CommandException {
+        assert encodedTaskList != null : "Encoded task list should not be null";
         TaskList decodedTasks = new TaskList();
         for (String encodedTask : encodedTaskList) {
+            assert !encodedTask.isEmpty() : "Encoded task should not be empty";
             // System.out.println("encodedTask: " + encodedTask);
             Task decodedTask = decodeTaskFromString(encodedTask);
             // System.out.println("Decoded task: " + task);
@@ -61,6 +63,7 @@ public class TaskListDecoder {
     }
 
     private static void validateEncodedTask(String encodedTask) throws FileContentException {
+        assert encodedTask != null : "Encoded task should not be null";
         if (encodedTask.isEmpty()) {
             throw new FileContentException(
                 String.format("%s. %s.", Messages.MESSAGE_EMPTY_LINE, Messages.MESSAGE_INVALID_TASKS_DATA),
@@ -72,9 +75,10 @@ public class TaskListDecoder {
     }
 
     private static String[] splitEncodedTask(String encodedTask) throws FileContentException {
+        assert encodedTask != null : "Encoded task should not be null";
         String[] taskData = encodedTask.split(" \\| ");
         // System.out.println("taskData is " + Arrays.toString(taskData));
-
+        assert taskData.length >= 3 : "Task data should have at least 3 components";
         if (taskData.length < 3) {
             throw new FileContentException(
                 String.format("%s. %s.", Messages.MESSAGE_TASK_MISSING_COMPONENTS,
@@ -89,6 +93,7 @@ public class TaskListDecoder {
     }
 
     private static TaskType getTaskType(String taskTypeString) throws FileContentException {
+        assert taskTypeString != null : "Task type string should not be null";
         final String ERROR_GET_TASKTYPE = "Error: Unknown task type.";
         final String VALID_TASK_TYPE = TaskType.getValidTaskType();
         TaskType taskType;
@@ -107,7 +112,7 @@ public class TaskListDecoder {
     }
 
     private static boolean getIsDone(String isDoneString) throws FileContentException {
-
+        assert isDoneString != null : "Completion status string should not be null";
         CompletionStatus isDone;
         final String MESSAGE_INVALID_COMPLETION_STATUS = "Task has invalid completion status";
 
@@ -123,7 +128,9 @@ public class TaskListDecoder {
     }
 
     private static void validateTaskDataLength(int taskDataLength, TaskType taskType,
-                                               String[] taskData) throws TaskListDecoderException {
+        String[] taskData) throws TaskListDecoderException {
+
+        assert taskData != null : "Task data should not be null";
 
         int expectedTaskDataLength = 0;
         String expectedFormat = null;
@@ -138,6 +145,8 @@ public class TaskListDecoder {
             expectedTaskDataLength = Constants.FOUR;
             expectedFormat = EXPECTED_FORMAT_FD;
         }
+
+        assert expectedTaskDataLength == Constants.FOUR || expectedTaskDataLength == Constants.FIVE : "Expected task data length should be 4 or 5";
 
         if (taskDataLength < expectedTaskDataLength) {
             throw new TaskListDecoderException(Messages.ERROR_INVALID_TASK_FORMAT,
@@ -201,6 +210,8 @@ public class TaskListDecoder {
                 throw new TaskListDecoderException("Invalid task type: " + taskType);
 
         }
+
+        assert task != null : "Task should not be null";
 
         task.setDone(isDone);
         return task;

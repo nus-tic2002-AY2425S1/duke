@@ -24,8 +24,10 @@ public class TaskListEncoder {
      * @return a list of strings representing the encoded tasks.
      */
     protected static List<String> encodeTaskList(TaskList taskList) {
+        assert taskList != null : "Task list should not be null";
         final List<String> encodedTasks = new ArrayList<>();
         for (Task task : taskList.getTaskList()) {
+            assert task != null : "Task in the list should not be null";
             encodedTasks.add(encodeTaskToString(task));
         }
         return encodedTasks;
@@ -38,7 +40,10 @@ public class TaskListEncoder {
      * @return a string representation of the encoded {@code Task}.
      */
     protected static String encodeTaskToString(Task task) {
-        return task.encodeTask();
+        assert task != null : "Task should not be null";
+        String encodedTask = task.encodeTask();
+        assert encodedTask != null && !encodedTask.isEmpty() : "Encoded task should not be null or empty";
+        return encodedTask;
     }
 
 }

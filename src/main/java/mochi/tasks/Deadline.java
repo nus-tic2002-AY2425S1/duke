@@ -1,5 +1,6 @@
 package mochi.tasks;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import mochi.common.*;
 /**
@@ -50,5 +51,9 @@ public class Deadline extends Task{
       + _name
       + TaskList._saveDelimiter
       + DateTime.toDBString(_by);
+  }
+  @Override
+  public boolean fallsOnDate(LocalDate date) {
+    return _by.toLocalDate().isEqual(date);
   }
 }

@@ -2,6 +2,7 @@ package mochi.tasks;
 
 import mochi.common.DateTime;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 /**
  * The Event class represents a task with a specific start date and end date.
@@ -47,5 +48,12 @@ public class Event extends Task {
       + DateTime.toDBString(_from)
       + TaskList._saveDelimiter
       + DateTime.toDBString(_to);
+  }
+  @Override
+  public boolean fallsOnDate(LocalDate date) {
+    LocalDate fromDate = _from.toLocalDate();
+    LocalDate toDate = _to.toLocalDate();
+    return (fromDate.isEqual(date) || toDate.isEqual(date) ||
+            (fromDate.isBefore(date) && toDate.isAfter(date)));
   }
 }

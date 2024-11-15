@@ -1,5 +1,7 @@
 package mochi.tasks;
 
+import java.time.LocalDate;
+
 public class Task {
   protected String _name;
   protected boolean _status;
@@ -55,5 +57,8 @@ public class Task {
   }
   public void unmarkTask() {
     _status = false;
+  }
+  public boolean fallsOnDate(LocalDate date) {
+    return false;
   }
 }

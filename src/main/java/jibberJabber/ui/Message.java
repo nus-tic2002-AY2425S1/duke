@@ -1,3 +1,7 @@
+package jibberJabber.ui;
+
+import jibberJabber.tasks.Task;
+
 public class Message {
     public static void printHorizontalLines(){
         System.out.println("____________________________________________________________");
@@ -17,11 +21,8 @@ public class Message {
         printSingleMessage("Bye. Hope to see you again soon!");
     }
     public static void printEmptyMessage(boolean isList){
-        if(isList){
-            printSingleMessage("The list is empty.");
-        } else {
-            printSingleMessage("The task is empty.");
-        }
+        if(isList) printSingleMessage("The list is empty.");
+        else printSingleMessage("The task is empty.");
     }
     public static void printInvalidIntegerMessage(){
         printSingleMessage("Mark item needs to be a valid number.");
@@ -34,11 +35,8 @@ public class Message {
     }
     public static void printTaskStatusMessage(boolean isDone, Task currentTask){
         String message;
-        if(isDone){
-            message = "Nice! I've marked this task as done";
-        } else {
-            message = "OK, I've marked this task as not done yet";
-        }
+        if(isDone) message = "Nice! I've marked this task as done";
+        else message = "OK, I've marked this task as not done yet";
         printHorizontalLines();
         System.out.println(message + ":");
         System.out.println("\t[" + currentTask.getStatusIcon() + "] " + currentTask.getTaskName());
@@ -71,5 +69,14 @@ public class Message {
             default -> "";
         };
         printSingleMessage("It seems you forgot to specify a parameter! Please enter it in the following format: " + format);
+    }
+    public static void printFailedDirectoryCreation(){
+        printSingleMessage("Failed to create a directory");
+    }
+    public static void printFailedToCreateFile(){
+        printSingleMessage("Failed to create file");
+    }
+    public static void printFailedToAppendToFile(){
+        printSingleMessage("Failed to append text to file");
     }
 }

@@ -1,6 +1,10 @@
-public class Event extends Task{
-    protected String from;
-    protected String to;
+package jibberJabber.tasks.taskType;
+
+import jibberJabber.tasks.Task;
+
+public class Event extends Task {
+    public String from;
+    public String to;
 
     public Event(String taskName, String from, String to) {
         super(taskName);

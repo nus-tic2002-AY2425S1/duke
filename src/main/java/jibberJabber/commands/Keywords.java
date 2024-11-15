@@ -1,3 +1,5 @@
+package jibberJabber.commands;
+
 public enum Keywords {
     BYE("bye"),
     LIST("list"),

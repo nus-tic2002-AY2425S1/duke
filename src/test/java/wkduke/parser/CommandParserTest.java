@@ -52,8 +52,10 @@ public class CommandParserTest {
 
         private static Stream<Object[]> validDeleteCommandProvider() {
             return Stream.of(
-                    new Object[]{"delete 1", new DeleteCommand(1)},
-                    new Object[]{"delete 42", new DeleteCommand(42)}
+                    new Object[]{"delete 1,2,3,4,5", new DeleteCommand(List.of(1, 2, 3, 4, 5))},
+                    new Object[]{"delete 5,15,1,", new DeleteCommand(List.of(1, 5, 15))},
+                    new Object[]{"delete 1,1,1,2", new DeleteCommand(List.of(1, 2))},
+                    new Object[]{"delete  5, 15, 1", new DeleteCommand(List.of(1, 5, 15))}
             );
         }
 
@@ -239,9 +241,10 @@ public class CommandParserTest {
 
         private static Stream<String> invalidDeleteCommandProvider() {
             return Stream.of(
-                    "delete",       // Missing task number
-                    "delete -1",            // Invalid task number
-                    "delete not-a-number"   // Non-integer task number
+                    "delete",     // Missing task number
+                    "delete -1,2,3",      // Negative task number
+                    "delete 0",           // Invalid task number
+                    "delete not-a-number" // Non-integer task number
             );
         }
 

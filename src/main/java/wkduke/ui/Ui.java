@@ -74,7 +74,7 @@ public class Ui {
         List<String> formattedTasks = new ArrayList<>();
         for (Task task : tasks) {
             int taskIndex = taskList.getTaskIndex(task);
-            String index = (taskIndex == -1) ? "X" : String.format("%" + digits + "d", taskIndex + 1); // Align the index
+            String index = (taskIndex == -1) ? "⌦" : String.format("%" + digits + "d", taskIndex + 1); // Align the index
             formattedTasks.add(String.format(" %s. %s", index, task));
         }
         return formattedTasks;

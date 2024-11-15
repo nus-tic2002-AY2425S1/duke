@@ -35,7 +35,6 @@ public class CommandParser {
     private static final Pattern TASK_DEADLINE_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+) /by (?<by>.+)");
     // Solution below inspired by https://perlancar.wordpress.com/2018/10/05/matching-several-things-in-no-particular-order-using-a-single-regex/
     private static final Pattern TASK_EVENT_DATA_ARGS_FORMAT = Pattern.compile("(?<description>[^/]+)(?=.*?/from\\s+(?<from>(?:(?!/to|$).)+))(?=.*?/to\\s+(?<to>(?:(?!/from|$).)+))");
-    private static final Pattern DELETE_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
     private static final Pattern LIST_TASK_ARGS_FORMAT = Pattern.compile("/on (?<on>.+)");
     private static final Pattern UPDATE_PRIORITY_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*) (?<priority>[LMH])$");
     private static final Pattern FIND_ARGS_FORMAT = Pattern.compile("([^,]+)");
@@ -146,20 +145,21 @@ public class CommandParser {
     /**
      * Prepares a DeleteCommand from the given arguments.
      *
-     * @param arguments The arguments provided to specify which task to delete.
-     * @return A new {@code DeleteCommand} with the specified task number.
+     * @param arguments The arguments provided to specify which tasks to delete.
+     * @return A new {@code DeleteCommand} with the specified task numbers.
      * @throws CommandFormatException If the arguments format is invalid.
      */
     private static Command prepareDelete(String arguments) throws CommandFormatException {
-        final Matcher matcher = DELETE_TASK_ARGS_FORMAT.matcher(arguments.trim());
-        if (!matcher.matches()) {
+        try {
+            List<Integer> taskNumbers = Utils.parseTaskNumbers(arguments, ",");
+            return new DeleteCommand(taskNumbers);
+        } catch (NumberFormatException e) {
             throw new CommandFormatException(
-                    Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    String.format(Messages.MESSAGE_INVALID_TASK_NUMBERS_FORMAT, e.getMessage()),
                     String.format("Command='delete', Arguments='%s'", arguments),
                     DeleteCommand.MESSAGE_USAGE
             );
         }
-        return new DeleteCommand(Integer.parseInt(matcher.group("taskNumber")));
     }
 
     /**

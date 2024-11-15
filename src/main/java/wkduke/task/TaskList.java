@@ -28,12 +28,12 @@ public class TaskList {
     }
 
     /**
-     * Deletes a task at the specified index from the list.
+     * Removes the specified task from the task list.
      *
-     * @param index The index of the task to delete.
+     * @param task The task to be removed from the list. Must exist in the task list.
      */
-    public void deleteTask(int index) {
-        tasks.remove(index);
+    public void deleteTask(Task task) {
+        tasks.remove(task);
     }
 
     /**

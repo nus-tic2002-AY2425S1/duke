@@ -59,6 +59,43 @@ public class Event extends Task implements TimeAware {
     }
 
     /**
+     * Retrieves the start date time of the event for comparison purposes.
+     *
+     * @return The event's starting {@code LocalDateTime}.
+     */
+    @Override
+    public LocalDateTime getComparableDateTime() {
+        return from;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation checks if the specified date falls within the event's time range,
+     * from the start date (inclusive) to the end date (inclusive).
+     *
+     * @param targetDateTime The date to check against the event's time range.
+     * @return {@code true} if the specified date falls within the event's time range; {@code false} otherwise.
+     */
+    @Override
+    public boolean isOccursOnDate(LocalDateTime targetDateTime) {
+        boolean isOnStartDate = targetDateTime.isEqual(from);
+        boolean isOnEndDate = targetDateTime.isEqual(to);
+        boolean isBetweenDates = targetDateTime.isAfter(from) && targetDateTime.isBefore(to);
+        return isOnStartDate || isOnEndDate || isBetweenDates;
+    }
+
+    /**
+     * Retrieves the type of this task as {@code TaskType.EVENT}.
+     *
+     * @return The task type, always {@code TaskType.EVENT}.
+     */
+    @Override
+    public TaskType getType() {
+        return TaskType.EVENT;
+    }
+
+    /**
      * Checks if this Event task is equal to another object.
      * An Event task is considered equal if it is of the same type, has the same description,
      * completion status, start date, and end date as the specified task.
@@ -88,22 +125,5 @@ public class Event extends Task implements TimeAware {
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from:" + from.format(TimeParser.CLI_FORMATTER) + " to:" + to.format(TimeParser.CLI_FORMATTER) + ")";
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * This implementation checks if the specified date falls within the event's time range,
-     * from the start date (inclusive) to the end date (inclusive).
-     *
-     * @param targetDateTime The date to check against the event's time range.
-     * @return {@code true} if the specified date falls within the event's time range; {@code false} otherwise.
-     */
-    @Override
-    public boolean isOccursOnDate(LocalDateTime targetDateTime) {
-        boolean isOnStartDate = targetDateTime.isEqual(from);
-        boolean isOnEndDate = targetDateTime.isEqual(to);
-        boolean isBetweenDates = targetDateTime.isAfter(from) && targetDateTime.isBefore(to);
-        return isOnStartDate || isOnEndDate || isBetweenDates;
     }
 }

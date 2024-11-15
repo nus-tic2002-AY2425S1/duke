@@ -8,6 +8,7 @@ import mochi.Mochi;
 public enum DialogMessages {
    GREETINGS("Hello! I'm " + Mochi._name + System.lineSeparator()
      + "What can I do for you?"),
+   INVALID_MULTI_PATTERN("The given mass pattern is wrong, please use [1,3,5] if you wish to select 3 task with task id 1,3,5"),
    LOAD_TASK_LINE_ERROR("Please check the following line number as it is in the wrong save format. Line:"),
    LOAD_TASK_ERROR("Unable to load database file, it could be corrupted"),
    SAVE_TASK_FOUND("Successfully loaded from save! Please use `list` command to check on save!"),
@@ -16,9 +17,12 @@ public enum DialogMessages {
    LIST_TASK_FILTERED("Here are the filtered tasks in your list:"),
    LIST_TASK_EMPTY("There are no task in given type or date filter"),
    MARK_TASK("Nice! I've marked this task as done:"),
+   MARK_TASK_MASS("Nice! I've marked the following task ids :"),
    DELETE_TASK("Noted. I've removed this task:"),
+   DELETE_TASK_MASS("Nice! I've removed the following task ids :"),
    INVALID_TASK("parameter is in wrong date format, this will not be added!"),
    UNMARK_TASK("OK, I've marked this task as not done yet:"),
+   UNMARK_TASK_MASS("Nice! I've unmarked the following task ids :"),
    BYE("Bye. Hope to see you again soon!"),
    TASK_ADDED("Got it. I've added this task:"),
    TASK_LOADED("Loaded:"),

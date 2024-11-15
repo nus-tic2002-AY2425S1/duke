@@ -1,4 +1,5 @@
 package mochi.tasks;
+
 /**
  * Enum representing different types of tasks in the application.
  * <ul>
@@ -9,12 +10,13 @@ package mochi.tasks;
  * </ul>
  */
 public enum TaskType {
-  T, D, E, UNKNOWN;
-  public static TaskType getValue(String c) {
-    try {
-      return TaskType.valueOf(c.toUpperCase());
-    } catch (IllegalArgumentException e) {
-      return UNKNOWN;
+    T, D, E, UNKNOWN;
+
+    public static TaskType getValue(String c) {
+        try {
+            return TaskType.valueOf(c.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return UNKNOWN;
+        }
     }
-  }
 }

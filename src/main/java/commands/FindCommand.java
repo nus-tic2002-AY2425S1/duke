@@ -31,6 +31,7 @@ public class FindCommand extends Command {
      * @param description represents the description to search for in the task list.
      */
     public FindCommand(String description) {
+        assert description != null && !description.trim().isEmpty() : "Description cannot be null or empty";
         this.description = description;
     }
 
@@ -52,6 +53,7 @@ public class FindCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
+        assertExecuteParams(taskList, ui, storage);
 
         String taskDescription = getDescription();
         TaskList tasksWithMatchingDescription = taskList.getAllTasksWithMatchingDescription(taskDescription);

@@ -30,6 +30,7 @@ public class UnmarkCommand extends Command {
      * @param taskNumber represents the 1-based index of the task to be unmarked.
      */
     public UnmarkCommand(int taskNumber) {
+        assert taskNumber > 0 : "Task number must be greater than 0";
         this.taskNumber = taskNumber;
     }
 
@@ -53,7 +54,7 @@ public class UnmarkCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws CommandException, StorageOperationException {
-
+        assertExecuteParams(taskList, ui, storage);
         Task taskToUnmark = taskList.getTaskForOperation(getTaskNumber());
 
         // The task `[D][ ] return pen (by: Jan 01 2024 0000)` is already marked as not done. No action done.

@@ -32,6 +32,7 @@ public abstract class AddTaskCommand extends Command {
      * @param description represents the description of the {@code Task} to be added.
      */
     protected AddTaskCommand(String description) {
+        assert description != null && !description.trim().isEmpty() : "Task description must not be null or empty";
         this.description = description;
     }
 
@@ -59,6 +60,7 @@ public abstract class AddTaskCommand extends Command {
      * @return a post-success message.
      */
     protected static String preparePostSuccessMessage(TaskList taskList) {
+        assert taskList != null : "TaskList must not be null";
         // Prepare the success message
         int taskListSize = taskList.getSize();
         String taskWord = taskList.getTaskWord();
@@ -77,7 +79,12 @@ public abstract class AddTaskCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws StorageOperationException {
+
+        assertExecuteParams(taskList, ui, storage);
+
         Task task = createTask();
+
+        assert task != null : "Task created must not be null";
 
         // Add the newly-created task to the task list
         taskList.addTask(task);

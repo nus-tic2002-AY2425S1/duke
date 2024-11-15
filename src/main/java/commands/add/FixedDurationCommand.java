@@ -31,6 +31,7 @@ public class FixedDurationCommand extends AddTaskCommand {
      */
     public FixedDurationCommand(String description, double duration) {
         super(description);
+        assert duration > 0 : "Duration must be non-negative and non-zero";
         this.duration = duration;
     }
 
@@ -50,6 +51,7 @@ public class FixedDurationCommand extends AddTaskCommand {
     protected Task createTask() {
         String taskDescription = getDescription();
         double taskDuration = getDuration();
+        assert duration > 0 : "Duration must be non-negative and non-zero";
         return new FixedDuration(taskDescription, taskDuration);
     }
 

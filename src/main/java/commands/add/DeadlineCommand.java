@@ -30,6 +30,7 @@ public class DeadlineCommand extends AddTaskCommand {
      */
     public DeadlineCommand(String description, LocalDateTime dueDate) {
         super(description);
+        assert dueDate != null : "Due date cannot be null";
         this.dueDate = dueDate;
     }
 
@@ -46,7 +47,10 @@ public class DeadlineCommand extends AddTaskCommand {
     @Override
     protected Task createTask() {
         String taskDescription = getDescription();
+        boolean isDescriptionEmpty = !(taskDescription.trim().isEmpty());
+        assert taskDescription != null && isDescriptionEmpty : "Task description cannot be null or empty";
         LocalDateTime taskDueDate = getDueDate();
+        assert taskDueDate != null : "Task due date cannot be null or empty";
         return new Deadline(taskDescription, taskDueDate);
     }
 

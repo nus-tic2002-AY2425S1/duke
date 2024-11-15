@@ -35,6 +35,12 @@ public class EventCommand extends AddTaskCommand {
      */
     public EventCommand(String description, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         super(description);
+
+        // Assertions to validate constructor parameters
+        assert startDateTime != null : "Event start date and time cannot be null";
+        assert endDateTime != null : "Event end date and time cannot be null";
+        assert startDateTime.isBefore(endDateTime) : "Event start date and time must be before end date and time";
+
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
     }
@@ -59,8 +65,17 @@ public class EventCommand extends AddTaskCommand {
     @Override
     protected Task createTask() {
         String eventDescription = getDescription();
+        boolean isDescriptionEmpty = !(eventDescription.trim().isEmpty());
+        assert eventDescription != null && isDescriptionEmpty : "Task description cannot be null or empty";
+
         LocalDateTime eventStartDateTime = getStartDateTime();
+        assert eventStartDateTime != null : "Event start date and time must not be null";
+
         LocalDateTime eventEndDateTime = getEndDateTime();
+        assert eventEndDateTime != null : "Event end date and time must not be null";
+
+        assert eventStartDateTime.isBefore(eventEndDateTime) : "Event start date and time must be before or equal to end date and time";
+
         return new Event(eventDescription, eventStartDateTime, eventEndDateTime);
     }
 

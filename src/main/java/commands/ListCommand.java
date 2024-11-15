@@ -27,6 +27,7 @@ public class ListCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
+        assertExecuteParams(taskList, ui, storage);
         ui.printTaskListMessage(taskList, MESSAGE_EMPTY_LIST, MESSAGE_PRE);
     }
 }

@@ -29,6 +29,7 @@ public class ShowCommand extends Command {
      * @param date represents the date for which to show deadlines and events.
      */
     public ShowCommand(LocalDate date) {
+        assert date != null : "Date must not be null";
         this.date = date;
     }
     
@@ -48,6 +49,7 @@ public class ShowCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
+        assertExecuteParams(taskList, ui, storage);
         LocalDate date = getDate();
 
         // Here are the deadlines / events on <date>:

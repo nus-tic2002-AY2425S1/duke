@@ -30,6 +30,7 @@ public class MarkCommand extends Command {
      * @param taskNumber represents the 1-based index of the task to be marked as done.
      */
     public MarkCommand(int taskNumber) {
+        assert taskNumber > 0 : "Task number must be greater than 0";
         this.taskNumber = taskNumber;
     }
 
@@ -51,8 +52,10 @@ public class MarkCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws CommandException, StorageOperationException {
+        assertExecuteParams(taskList, ui, storage);
 
         Task taskToMark = taskList.getTaskForOperation(getTaskNumber());
+        assert taskToMark != null : "Task to mark should not be null";
 
         // The task `[T][X] read book` is already marked as done. No action done.
         final String MESSAGE_ALREADY_MARKED = Messages.THE_TASK + SPACE + Constants.BACKTICK + taskToMark +

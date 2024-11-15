@@ -24,6 +24,8 @@ public class ArchiveCommand extends Command {
     private final String target;
 
     public ArchiveCommand(String target) {
+        assert target != null : "Target must not be null";
+        assert target.equalsIgnoreCase(ALL) || target.matches("\\d+") : "Target must be \"all\" or a valid task index";
         this.target = target;
     }
 
@@ -38,6 +40,7 @@ public class ArchiveCommand extends Command {
 
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws CommandException, StorageOperationException {
+        assertExecuteParams(taskList, ui, storage);
         String target = getTarget();
         String[] messages = null;
 
@@ -50,7 +53,9 @@ public class ArchiveCommand extends Command {
 
         default:
             int targetNumber = Integer.parseInt(target);
+
             Task task = taskList.getTaskForOperation(targetNumber);
+            assert task != null : "Task must exist for the given target number";
 
             storage.archiveTask(task);
 

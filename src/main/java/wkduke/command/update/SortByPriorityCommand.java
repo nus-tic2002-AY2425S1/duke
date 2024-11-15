@@ -20,6 +20,21 @@ public class SortByPriorityCommand extends SortCommand {
     }
 
     /**
+     * Checks if this {@code SortByPriorityCommand} is equal to another object.
+     * Two commands are considered equal if they have the same sorting order.
+     *
+     * @param obj The object to compare with this command.
+     * @return {@code true} if the specified object is a {@code SortByPriorityCommand} with the same sort order; {@code false} otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof SortByPriorityCommand command)) {
+            return false;
+        }
+        return sortOrder.equals(command.sortOrder);
+    }
+
+    /**
      * Executes the sort command by sorting tasks in the task list by priority, saving the updated list,
      * and displaying the sorted tasks.
      *

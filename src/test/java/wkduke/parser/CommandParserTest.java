@@ -19,6 +19,10 @@ import wkduke.command.read.FindCommand;
 import wkduke.command.read.ListCommand;
 import wkduke.command.read.ListOnCommand;
 import wkduke.command.update.MarkCommand;
+import wkduke.command.update.SortByDateTimeCommand;
+import wkduke.command.update.SortByPriorityCommand;
+import wkduke.command.update.SortByTaskTypeCommand;
+import wkduke.command.update.SortOrder;
 import wkduke.command.update.UnmarkCommand;
 import wkduke.command.update.UpdatePriorityCommand;
 import wkduke.exception.TaskFormatException;
@@ -115,6 +119,17 @@ public class CommandParserTest {
             );
         }
 
+        private static Stream<Object[]> validSortCommandProvider() {
+            return Stream.of(
+                    new Object[]{"sort /by priority /order asc", new SortByPriorityCommand(SortOrder.ASCENDING)},
+                    new Object[]{"sort /by  priority /order  desc", new SortByPriorityCommand(SortOrder.DESCENDING)},
+                    new Object[]{"sort /by tasktype /order asc", new SortByTaskTypeCommand(SortOrder.ASCENDING)},
+                    new Object[]{"sort /by  tasktype /order  desc", new SortByTaskTypeCommand(SortOrder.DESCENDING)},
+                    new Object[]{"sort /by datetime /order asc", new SortByDateTimeCommand(SortOrder.ASCENDING)},
+                    new Object[]{"sort /by  datetime /order  desc", new SortByDateTimeCommand(SortOrder.DESCENDING)}
+            );
+        }
+
         private static Stream<Object[]> validToDoCommandProvider() {
             return Stream.of(
                     new Object[]{"todo Read book", new AddTodoCommand("Read book")},
@@ -190,6 +205,14 @@ public class CommandParserTest {
         @ParameterizedTest
         @MethodSource("validMarkCommandProvider")
         public void parseCommand_validMarkCommands_returnsMarkCommand(String input, MarkCommand expected) throws CommandFormatException, TaskFormatException {
+            Command result = CommandParser.parseCommand(input);
+            assertEquals(expected, result);
+        }
+
+        @Order(11)
+        @ParameterizedTest
+        @MethodSource("validSortCommandProvider")
+        public void parseCommand_validSortCommands_returnsSortCommand(String input, Command expected) throws CommandFormatException, TaskFormatException {
             Command result = CommandParser.parseCommand(input);
             assertEquals(expected, result);
         }
@@ -285,6 +308,17 @@ public class CommandParserTest {
             );
         }
 
+        private static Stream<String> invalidSortCommandProvider() {
+            return Stream.of(
+                    "sort",                             // Missing /by and /order
+                    "sort /by priority",                        // Missing /order
+                    "sort /order asc",                          // Missing /by
+                    "sort /by invalid-field /order asc",        // Invalid field
+                    "sort /by priority /order invalid-order",   // Invalid order
+                    "sort /by datetime /order"                  // Missing order value
+            );
+        }
+
         private static Stream<String> invalidToDoCommandProvider() {
             return Stream.of(
                     "todo", // Missing description
@@ -357,6 +391,13 @@ public class CommandParserTest {
         @ParameterizedTest
         @MethodSource("invalidMarkCommandProvider")
         public void parseCommand_invalidMarkCommands_throwsCommandFormatException(String input) {
+            assertThrows(CommandFormatException.class, () -> CommandParser.parseCommand(input));
+        }
+
+        @Order(12)
+        @ParameterizedTest
+        @MethodSource("invalidSortCommandProvider")
+        public void parseCommand_invalidSortCommands_throwsCommandFormatException(String input) {
             assertThrows(CommandFormatException.class, () -> CommandParser.parseCommand(input));
         }
 

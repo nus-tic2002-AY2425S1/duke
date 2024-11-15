@@ -3,6 +3,7 @@ package mochi.common;
 import mochi.common.exception.ExceptionMessages;
 import mochi.ui.Ui;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -13,8 +14,8 @@ import java.time.format.DateTimeParseException;
  */
 public class DateTime {
 
-  private static final DateTimeFormatter INPUT_FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
-
+  private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+  private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy");
   private static final DateTimeFormatter DISPLAY_FORMATTER = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mma");
 
   /**
@@ -25,7 +26,16 @@ public class DateTime {
    */
   public static LocalDateTime parse(String dateTime) {
     try {
-      return LocalDateTime.parse(dateTime, INPUT_FORMATTER);
+      return LocalDateTime.parse(dateTime, DATE_TIME_FORMATTER);
+    } catch (DateTimeParseException e) {
+      Ui.response(ExceptionMessages.DATE_FORMAT_INVALID);
+      return null;
+    }
+  }
+
+  public static LocalDate parseDate(String dateTime) {
+    try {
+      return LocalDate.parse(dateTime, DATE_FORMATTER);
     } catch (DateTimeParseException e) {
       Ui.response(ExceptionMessages.DATE_FORMAT_INVALID);
       return null;
@@ -49,6 +59,6 @@ public class DateTime {
    * @return a formatted string in the "d/M/yyyy HHmm" format.
    */
   public static String toDBString(LocalDateTime dateTime) {
-    return dateTime.format(INPUT_FORMATTER);
+    return dateTime.format(DATE_TIME_FORMATTER);
   }
 }

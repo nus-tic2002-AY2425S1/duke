@@ -2,6 +2,7 @@ package mochi.tasks;
 
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -174,7 +175,7 @@ public class TaskList implements AutoCloseable {
     for (Task i : _list) {
       System.out.println(_list.indexOf(i)+1 + "." + i.toString());
     }
-    Ui.printDivier();
+    Ui.printDivider();
   }
   /**
    * Prints a filtered list of tasks based on type, operator, and date.
@@ -184,7 +185,7 @@ public class TaskList implements AutoCloseable {
    * @param date the date for filtering tasks.
    */
   public void printTaskList(String type, String op, String date) {
-    Ui.printDivier();
+    Ui.printDivider();
     if (op.isEmpty()) {
       printTaskList(type);
     } else {
@@ -192,19 +193,28 @@ public class TaskList implements AutoCloseable {
       for (Task i : _list) {
         if (Objects.equals(i.getType(), type)) {
           if (i.compare(op, date)) {
-            System.out.println(_list.indexOf(i) + 1 + "." + i.toString());
+            System.out.println(_list.indexOf(i) + 1 + "." + i);
           }
         }
       }
     }
-    Ui.printDivier();
+    Ui.printDivider();
   }
   public void printTaskList(String type) {
     System.out.println(DialogMessages.LIST_TASK_FILTERED.getValue());
     for (Task i : _list) {
       if (Objects.equals(i.getType(), type)) {
-        System.out.println(_list.indexOf(i)+1 + "." + i.toString());
+        System.out.println(_list.indexOf(i)+1 + "." + i);
       }
     }
+  }
+  public void printTaskListByDate(LocalDate date) {
+    System.out.println(DialogMessages.LIST_TASK_FILTERED_DATE.getValue());
+    for (Task i : _list) {
+      if (i.fallsOnDate(date)) {
+        System.out.println(_list.indexOf(i)+1 + "." + i);
+      }
+    }
+    Ui.printDivider();
   }
 }

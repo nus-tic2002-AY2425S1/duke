@@ -6,10 +6,9 @@ import mochi.ui.*;
 import mochi.common.*;
 import mochi.common.exception.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class InputProcessor {
   private final TaskList taskList;
@@ -66,6 +65,13 @@ public class InputProcessor {
       case BYE:
         Ui.response(DialogMessages.BYE.getValue());
         break;
+      case VIEW:
+        String viewDateTmp = Utils.trimStringArrayWithStartEnd(token,"view",""," ");
+        LocalDate viewDate = DateTime.parseDate(viewDateTmp);
+        if (viewDate != null) {
+          cmd = new ListTaskByDateCommand(taskList, viewDate);
+        }
+        break;
       case LIST:
         if (token.length < 3) {
           cmd = new ListTaskCommand(taskList,token);
@@ -103,7 +109,11 @@ public class InputProcessor {
         LocalDateTime isFromDate = DateTime.parse(from);
         LocalDateTime isToDate = DateTime.parse(to);
         if ((isFromDate != null) && (isToDate != null)) {
-          cmd = new AddTaskCommand(this.taskList,new Event(e_name,from,to));
+          if (isToDate.isBefore(isFromDate)) {
+            Ui.response(DialogMessages.INVALID_TASK_FROM_AFTER_TO.getValue());
+          } else {
+            cmd = new AddTaskCommand(this.taskList,new Event(e_name,from,to));
+          }
         } else if (isFromDate == null) {
           Ui.response("/from " + DialogMessages.INVALID_TASK.getValue());
         } else {

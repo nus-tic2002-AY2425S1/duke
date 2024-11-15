@@ -106,8 +106,10 @@ public class CommandParserTest {
 
         private static Stream<Object[]> validMarkCommandProvider() {
             return Stream.of(
-                    new Object[]{"mark 1", new MarkCommand(1)},
-                    new Object[]{"mark 42", new MarkCommand(42)}
+                    new Object[]{"mark 1,2,3,4,5", new MarkCommand(List.of(1, 2, 3, 4, 5))},
+                    new Object[]{"mark 5,15,1,", new MarkCommand(List.of(1, 5, 15))},
+                    new Object[]{"mark 1,1,1,2", new MarkCommand(List.of(1, 2))},
+                    new Object[]{"mark  5, 15, 1", new MarkCommand(List.of(1, 5, 15))}
             );
         }
 
@@ -272,7 +274,8 @@ public class CommandParserTest {
         private static Stream<String> invalidMarkCommandProvider() {
             return Stream.of(
                     "mark",     // Missing task number
-                    "mark -1",          // Invalid task number
+                    "mark -1,2,3",      // Negative task number
+                    "mark 0",           // Invalid task number
                     "mark not-a-number" // Non-integer task number
             );
         }

@@ -14,6 +14,7 @@ import wkduke.command.update.MarkCommand;
 import wkduke.command.update.UnmarkCommand;
 import wkduke.command.update.UpdatePriorityCommand;
 import wkduke.common.Messages;
+import wkduke.common.Utils;
 import wkduke.exception.TaskFormatException;
 import wkduke.exception.command.CommandFormatException;
 import wkduke.task.TaskPriority;
@@ -34,7 +35,6 @@ public class CommandParser {
     private static final Pattern TASK_DEADLINE_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+) /by (?<by>.+)");
     // Solution below inspired by https://perlancar.wordpress.com/2018/10/05/matching-several-things-in-no-particular-order-using-a-single-regex/
     private static final Pattern TASK_EVENT_DATA_ARGS_FORMAT = Pattern.compile("(?<description>[^/]+)(?=.*?/from\\s+(?<from>(?:(?!/to|$).)+))(?=.*?/to\\s+(?<to>(?:(?!/from|$).)+))");
-    private static final Pattern MARK_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
     private static final Pattern UNMARK_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
     private static final Pattern DELETE_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
     private static final Pattern LIST_TASK_ARGS_FORMAT = Pattern.compile("/on (?<on>.+)");
@@ -222,20 +222,21 @@ public class CommandParser {
     /**
      * Prepares a MarkCommand from the given arguments.
      *
-     * @param arguments The arguments provided to specify which task to mark as done.
-     * @return A new {@code MarkCommand} with the specified task number.
+     * @param arguments The arguments provided to specify which tasks to mark as done.
+     * @return A new {@code MarkCommand} with the specified task numbers.
      * @throws CommandFormatException If the arguments format is invalid.
      */
     private static Command prepareMark(String arguments) throws CommandFormatException {
-        final Matcher matcher = MARK_TASK_ARGS_FORMAT.matcher(arguments.trim());
-        if (!matcher.matches()) {
+        try {
+            List<Integer> taskNumbers = Utils.parseTaskNumbers(arguments, ",");
+            return new MarkCommand(taskNumbers);
+        } catch (NumberFormatException e) {
             throw new CommandFormatException(
-                    Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    String.format(Messages.MESSAGE_INVALID_TASK_NUMBERS_FORMAT, e.getMessage()),
                     String.format("Command='mark', Arguments='%s'", arguments),
                     MarkCommand.MESSAGE_USAGE
             );
         }
-        return new MarkCommand(Integer.parseInt(matcher.group("taskNumber")));
     }
 
     /**

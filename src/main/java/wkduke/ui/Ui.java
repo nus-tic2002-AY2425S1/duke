@@ -8,6 +8,7 @@ import wkduke.task.TaskList;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -86,6 +87,31 @@ public class Ui {
             out.println(INDENT + message);
         }
         showLine();
+    }
+
+    /**
+     * Prints task groups with headers, where each task is prefixed by its index in the TaskList.
+     *
+     * @param taskList   The list used to determine task index.
+     * @param taskGroups A map linking headers to their corresponding task lists.
+     * @throws AssertionError If the taskList is empty and tasks are present.
+     */
+    public void printTaskGroups(TaskList taskList, Map<String, List<Task>> taskGroups) {
+        List<String> messages = new ArrayList<>();
+        for (Map.Entry<String, List<Task>> entry : taskGroups.entrySet()) {
+            String header = entry.getKey();
+            List<Task> tasks = entry.getValue();
+            if (tasks.isEmpty()) {
+                continue;
+            }
+            assert !taskList.isEmpty() : "Invariants failed: 'taskList' cannot be empty when 'tasks' are present";
+            messages.add(header);
+            for (Task task : tasks) {
+                messages.add(String.format(" %d.%s", taskList.getTaskIndex(task) + 1, task));
+            }
+            messages.add("");
+        }
+        printMessages(messages.toArray(new String[0]));
     }
 
     /**

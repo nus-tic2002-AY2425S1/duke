@@ -11,6 +11,12 @@ import wkduke.command.read.FindCommand;
 import wkduke.command.read.ListCommand;
 import wkduke.command.read.ListOnCommand;
 import wkduke.command.update.MarkCommand;
+import wkduke.command.update.SortByDateTimeCommand;
+import wkduke.command.update.SortByPriorityCommand;
+import wkduke.command.update.SortByTaskTypeCommand;
+import wkduke.command.update.SortCommand;
+import wkduke.command.update.SortField;
+import wkduke.command.update.SortOrder;
 import wkduke.command.update.UnmarkCommand;
 import wkduke.command.update.UpdatePriorityCommand;
 import wkduke.common.Messages;
@@ -35,9 +41,11 @@ public class CommandParser {
     private static final Pattern TASK_DEADLINE_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+) /by (?<by>.+)");
     // Solution below inspired by https://perlancar.wordpress.com/2018/10/05/matching-several-things-in-no-particular-order-using-a-single-regex/
     private static final Pattern TASK_EVENT_DATA_ARGS_FORMAT = Pattern.compile("(?<description>[^/]+)(?=.*?/from\\s+(?<from>(?:(?!/to|$).)+))(?=.*?/to\\s+(?<to>(?:(?!/from|$).)+))");
+
     private static final Pattern LIST_TASK_ARGS_FORMAT = Pattern.compile("/on (?<on>.+)");
-    private static final Pattern UPDATE_PRIORITY_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*) (?<priority>[LMH])$");
-    private static final Pattern FIND_ARGS_FORMAT = Pattern.compile("([^,]+)");
+    private static final Pattern UPDATE_TASK_PRIORITY_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*) (?<priority>[LMH])$");
+    private static final Pattern SORT_TASK_ARGS_FORMAT = Pattern.compile("(?=.*?/by\\s+(?<by>priority|tasktype|datetime))(?=.*?/order\\s+(?<order>asc|desc))");
+    private static final Pattern FIND_TASK_ARGS_FORMAT = Pattern.compile("([^,]+)");
 
     /**
      * Parses the user input into a command.
@@ -67,6 +75,7 @@ public class CommandParser {
             case DeleteCommand.COMMAND_WORD -> prepareDelete(arguments);
             case UpdatePriorityCommand.COMMAND_WORD -> prepareUpdatePriority(arguments);
             case FindCommand.COMMAND_WORD -> prepareFind(arguments);
+            case SortCommand.COMMAND_WORD -> prepareSort(arguments);
             default -> throw new CommandFormatException(
                     Messages.MESSAGE_INVALID_COMMAND_FORMAT,
                     String.format("UserInput='%s'", userInput),
@@ -170,7 +179,7 @@ public class CommandParser {
      * @throws CommandFormatException If the arguments format is invalid.
      */
     private static Command prepareFind(String arguments) throws CommandFormatException {
-        final Matcher matcher = FIND_ARGS_FORMAT.matcher(arguments.trim());
+        final Matcher matcher = FIND_TASK_ARGS_FORMAT.matcher(arguments.trim());
         List<String> keywords = new ArrayList<>();
         while (matcher.find()) {
             keywords.add(matcher.group(1).trim());
@@ -239,6 +248,32 @@ public class CommandParser {
     }
 
     /**
+     * Prepares a SortCommand from the given arguments.
+     *
+     * @param arguments The arguments provided to specify the sort field and order.
+     * @return A specific {@code SortCommand} for the given sort field and order.
+     * @throws CommandFormatException If the arguments format is invalid.
+     */
+    private static Command prepareSort(String arguments) throws CommandFormatException {
+        final Matcher matcher = SORT_TASK_ARGS_FORMAT.matcher(arguments.trim());
+        if (!matcher.find()) {
+            throw new CommandFormatException(
+                    Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    String.format("Command='sort', Arguments='%s'", arguments),
+                    SortCommand.MESSAGE_USAGE
+            );
+        }
+        SortField sortField = SortField.fromFieldName(matcher.group("by"));
+        SortOrder sortOrder = SortOrder.fromCode(matcher.group("order"));
+        return switch (sortField) {
+            case PRIORITY -> new SortByPriorityCommand(sortOrder);
+            case TASKTYPE -> new SortByTaskTypeCommand(sortOrder);
+            case DATETIME -> new SortByDateTimeCommand(sortOrder);
+            default -> throw new AssertionError("Invalid sort field scenario is already handled earlier");
+        };
+    }
+
+    /**
      * Prepares an UnmarkCommand from the given arguments.
      *
      * @param arguments The arguments provided to specify which tasks to unmark.
@@ -266,7 +301,7 @@ public class CommandParser {
      * @throws CommandFormatException If the arguments format is invalid.
      */
     private static Command prepareUpdatePriority(String arguments) throws CommandFormatException {
-        final Matcher matcher = UPDATE_PRIORITY_ARGS_FORMAT.matcher(arguments.trim());
+        final Matcher matcher = UPDATE_TASK_PRIORITY_ARGS_FORMAT.matcher(arguments.trim());
         if (!matcher.matches()) {
             throw new CommandFormatException(
                     Messages.MESSAGE_INVALID_COMMAND_FORMAT,

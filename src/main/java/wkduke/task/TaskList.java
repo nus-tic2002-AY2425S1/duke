@@ -1,7 +1,10 @@
 package wkduke.task;
 
+import wkduke.command.update.SortOrder;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -155,6 +158,57 @@ public class TaskList {
     }
 
     /**
+     * Sorts tasks in the task list by datetime.
+     * Non-time-aware tasks are placed at the bottom, and time-aware tasks are sorted based on their datetime.
+     *
+     * @param sortOrder The sorting order ({@code ASCENDING} or {@code DESCENDING}).
+     */
+    // Solution below inspired by https://stackoverflow.com/questions/5927109/sort-objects-in-arraylist-by-date
+    public void sortTaskByDateTime(SortOrder sortOrder) {
+        tasks.sort((t1, t2) -> {
+            boolean t1TimeAware = t1 instanceof TimeAware;
+            boolean t2TimeAware = t2 instanceof TimeAware;
+
+            // Handle cases where one or both tasks are not time-aware
+            if (!t1TimeAware && !t2TimeAware) {
+                return 0; // Both are not time aware, keep order unchanged
+            } else if (!t1TimeAware) {
+                return 1; // t1 is non-time-aware, place it after t2
+            } else if (!t2TimeAware) {
+                return -1; // t2 is non-time-aware, place it after t1
+            }
+
+            // Both are time aware, compare their datetime
+            TimeAware task1 = (TimeAware) t1;
+            TimeAware task2 = (TimeAware) t2;
+            int comparison = task1.getComparableDateTime().compareTo(task2.getComparableDateTime());
+            return (sortOrder == SortOrder.ASCENDING) ? comparison : -comparison;
+        });
+    }
+
+    /**
+     * Sorts tasks in the task list by priority.
+     *
+     * @param sortOrder The sorting order ({@code ASCENDING} or {@code DESCENDING}).
+     */
+    // Solution below inspired by https://medium.com/@mgautham1995/order-a-java-list-using-a-custom-comparison-order-for-enum-69565e741236
+    public void sortTaskByPriority(SortOrder sortOrder) {
+        tasks.sort((sortOrder == SortOrder.ASCENDING) ? Comparator.comparing(Task::getPriority)
+                : Comparator.comparing(Task::getPriority).reversed());
+    }
+
+    /**
+     * Sorts tasks in the task list by type.
+     *
+     * @param sortOrder The sorting order ({@code ASCENDING} or {@code DESCENDING}).
+     */
+    // Solution below inspired by https://medium.com/@mgautham1995/order-a-java-list-using-a-custom-comparison-order-for-enum-69565e741236
+    public void sortTaskByType(SortOrder sortOrder) {
+        tasks.sort((sortOrder == SortOrder.ASCENDING) ? Comparator.comparing(Task::getType)
+                : Comparator.comparing(Task::getType).reversed());
+    }
+
+    /**
      * Marks the task at the specified index as not done.
      *
      * @param index The index of the task to mark as not done.
@@ -169,6 +223,14 @@ public class TaskList {
         return true;
     }
 
+    /**
+     * Checks if this {@code TaskList} is equal to another object.
+     * Two {@code TaskList} objects are considered equal if their task lists contain the same tasks in the same order.
+     *
+     * @param obj The object to compare with this {@code TaskList}.
+     * @return {@code true} if the specified object is a {@code TaskList} and contains the same tasks;
+     * {@code false} otherwise.
+     */
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof TaskList taskListObject)) {

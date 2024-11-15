@@ -187,7 +187,7 @@ public class TaskList implements AutoCloseable {
   public void printTaskList(String type, String op, String date) {
     Ui.printDivider();
     if (op.isEmpty()) {
-      printTaskList(type);
+      printTaskListByType(type);
     } else {
       System.out.println(DialogMessages.LIST_TASK_FILTERED.getValue());
       for (Task i : _list) {
@@ -200,13 +200,23 @@ public class TaskList implements AutoCloseable {
     }
     Ui.printDivider();
   }
-  public void printTaskList(String type) {
+  public void printTaskListByType(String type) {
     System.out.println(DialogMessages.LIST_TASK_FILTERED.getValue());
     for (Task i : _list) {
       if (Objects.equals(i.getType(), type)) {
         System.out.println(_list.indexOf(i)+1 + "." + i);
       }
     }
+    Ui.printDivider();
+  }
+  public void printTaskListByName(String name) {
+    System.out.println(DialogMessages.LIST_TASK_FILTERED_NAME.getValue());
+    for (Task i : _list) {
+      if (i.getName().toLowerCase().contains(name.toLowerCase())) {
+        System.out.println(_list.indexOf(i)+1 + "." + i);
+      }
+    }
+    Ui.printDivider();
   }
   public void printTaskListByDate(LocalDate date) {
     System.out.println(DialogMessages.LIST_TASK_FILTERED_DATE.getValue());

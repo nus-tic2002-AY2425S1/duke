@@ -65,6 +65,12 @@ public class InputProcessor {
       case BYE:
         Ui.response(DialogMessages.BYE.getValue());
         break;
+      case FIND:
+        if (token.length > 1) {
+          String findVar = Utils.trimStringArrayWithStartEnd(token,"find",""," ");
+          cmd = new FindCommand(taskList, findVar);
+        }
+        break;
       case VIEW:
         String viewDateTmp = Utils.trimStringArrayWithStartEnd(token,"view",""," ");
         LocalDate viewDate = DateTime.parseDate(viewDateTmp);

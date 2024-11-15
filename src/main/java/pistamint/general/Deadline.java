@@ -1,4 +1,5 @@
-package Pistamint.General;
+package pistamint.general;
+import pistamint.*;
 
 public class Deadline extends Task {
     private String deadline;
@@ -33,5 +34,10 @@ public class Deadline extends Task {
 
     public String getOnlyDescription(){
         return super.getDescription();
+    }
+    @Override
+    public Deadline clone(){
+        Deadline clonedDeadline=(Deadline)super.clone();
+        return clonedDeadline;
     }
 }

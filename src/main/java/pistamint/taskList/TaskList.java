@@ -1,14 +1,15 @@
-package Pistamint.TaskList;
-import Pistamint.General.Task;
+package pistamint.taskList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import pistamint.general.*;
+import pistamint.*;
 
-import Pistamint.Ui.Ui;
-import Pistamint.Storage.Storage;
+import pistamint.ui.Ui;
+import pistamint.storage.Storage;
 public class TaskList {
-    private static ArrayList<Task> tasks;
+    public static ArrayList<Task> tasks;
     private static Storage storage;
     public TaskList(Storage storage) {
         tasks = new ArrayList<>();

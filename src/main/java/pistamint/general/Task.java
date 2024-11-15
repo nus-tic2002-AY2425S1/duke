@@ -1,6 +1,7 @@
-package Pistamint.General;
+package pistamint.general;
+import pistamint.*;
 
-public class Task {
+public class Task implements Cloneable {
     protected String description;
     protected boolean isDone;
     protected char symbol;
@@ -32,5 +33,13 @@ public class Task {
     public void setDescription(String description) {
         this.description = description;
     }
-
+    @Override
+    public Task clone(){
+        try{
+            return(Task) super.clone();
+        }catch(CloneNotSupportedException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

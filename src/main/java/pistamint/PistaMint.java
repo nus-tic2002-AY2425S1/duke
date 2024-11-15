@@ -1,9 +1,10 @@
-package Pistamint;
-import Pistamint.TaskList.TaskList;
-import Pistamint.Ui.Ui;
-import Pistamint.Storage.Storage;
-import Pistamint.Parser.Parser;
+package pistamint;
+import pistamint.taskList.TaskList;
+import pistamint.ui.Ui;
+import pistamint.storage.Storage;
+import pistamint.parser.Parser;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
@@ -15,8 +16,8 @@ public class PistaMint {
     public static int length = 50;
     public static String line = "-".repeat(length);
     public static String input = "";
-    public static String directoryPath = "../../../data";
-    public static String filePath = directoryPath + "/duke.txt";
+    public static String directoryPath = System.getProperty("user.dir")+"/data";
+    public static String filePath = "/Pistamint.txt";
     public PistaMint(String filePath) throws FileNotFoundException {
         storage=new Storage(directoryPath,filePath);
         tasks=new TaskList(storage);
@@ -40,6 +41,6 @@ public class PistaMint {
         TaskList taskList = new TaskList(storage);   // Instantiate Pistamint.TaskList
         Parser parser = new Parser(taskList);
         Ui ui = new Ui(taskList);
-        new PistaMint("../../../data/duke.txt").run();
+        new PistaMint(directoryPath+File.separator+filePath).run();
     }
 }

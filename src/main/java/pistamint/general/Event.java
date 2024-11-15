@@ -1,18 +1,18 @@
-package Pistamint.General;
+package pistamint.general;
+import pistamint.*;
 
 public class Event extends Task{
     private String from;
     private String to;
     public Event(String description, char symbol,String from, String to){
         super(description, symbol);
-        this.from =" (from:"+from;
-        this.to = " to:"+to+")";
+        this.from =" (from:"+from+" ";
+        this.to = "to:"+to+")";
         this.isDone=false;
     }
     public Event(String description, char symbol){
         super(description, symbol);
         String from,to;
-        //System.out.println(description.lastIndexOf("to"));
         from=description.substring(description.indexOf("(from:")+6,description.lastIndexOf("to"));
         to=description.substring(description.indexOf("to:")+3,description.lastIndexOf(")"));
         this.from="(from:"+from;
@@ -38,5 +38,11 @@ public class Event extends Task{
     }
     public String getOnlyDescription(){
         return super.getDescription();
+    }
+
+    @Override
+    public Event clone() {
+        Event clonedEvent=(Event)super.clone();
+        return clonedEvent;
     }
 }

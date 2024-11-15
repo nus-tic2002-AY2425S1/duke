@@ -1,14 +1,13 @@
-package Pistamint.Storage;
-import Pistamint.General.Task;
+package pistamint.storage;
+import pistamint.general.Task;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import Pistamint.Parser.Parser;
-import Pistamint.TaskList.TaskList;
-import Pistamint.Ui.Ui;
+import pistamint.parser.Parser;
+import pistamint.ui.Ui;
+import pistamint.*;
 
 public class Storage {
     private static String directoryPath;
@@ -34,6 +33,7 @@ public class Storage {
                 boolean createDir = directory.mkdir();
                 if (!createDir) {
                     System.out.println("Failed to create directory.");
+
                 } else {
                     System.out.println("Directory created successfully.");
                 }
@@ -63,7 +63,7 @@ public class Storage {
     }
 
     /**
-     * Append new line of data into file storage when user adds new task.
+     * This method appends new line of data into file storage when user adds new task.
      * @throws IOException when there is IO issues when processing the entry.
      */
     public static void appendToFile(Task t) throws IOException {
@@ -74,7 +74,7 @@ public class Storage {
     }
 
     /**
-     * Remove specific line of data from file storage when user initiates to delete of the task.
+     * This method refreshes the file when user initiate any update/delete/marking/unmarking of task list
      * @throws IOException when there is IO issues when processing the entry.
      */
     public static void refreshFile(ArrayList<Task> taskList) throws IOException {

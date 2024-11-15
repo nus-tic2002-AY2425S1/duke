@@ -15,6 +15,7 @@ import java.util.Scanner;
  * @since   2024-11-02
  */
 public class Ui {
+    //Solution below adapted from https://github.com/se-edu/addressbook-level2/blob/master/src/seedu/addressbook/ui/TextUi.java
     private final Scanner in;
     private final PrintStream out;
 

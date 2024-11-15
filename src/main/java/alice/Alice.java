@@ -25,7 +25,7 @@ public class Alice {
     private static Storage storage;
     private static Ui ui;
 
-
+    //Solution below adapted from lectures
     public Alice(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -38,6 +38,7 @@ public class Alice {
         }
     }
 
+    //Solution below adapted from week 8 tasks
     public static void run() {
         ui.showWelcome();
         boolean isExit = false;

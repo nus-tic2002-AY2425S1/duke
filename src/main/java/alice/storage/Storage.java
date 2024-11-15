@@ -30,6 +30,7 @@ import java.io.IOException;
 public class Storage {
     private File f;
     public static final String DEFAULT_NAME = "tasks.txt";
+
     private static final String[] DATE_PATTERNS = {
             "yyyy-MM-dd",
             "yyyy-M-d",
@@ -51,6 +52,8 @@ public class Storage {
             "MMM d yyyy"
     };
 
+    //Solution below adapted from https://stackoverflow.com/questions/57553322/handling-multiple-formats-in-datetimeformatter
+    // and https://coderanch.com/t/677142/java/DateTimeParseException-Text-parsed-unparsed-text
     private static DateTimeFormatter buildFormatter() {
         DateTimeFormatterBuilder builder = new DateTimeFormatterBuilder();
         for (String pattern : DATE_PATTERNS) {

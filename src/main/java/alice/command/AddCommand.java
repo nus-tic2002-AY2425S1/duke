@@ -67,6 +67,8 @@ public class AddCommand extends Command {
      * @return DateTimeFormatter This returns the format that the parameter will
      * be processed in.
      */
+    //Solution below adapted from https://stackoverflow.com/questions/57553322/handling-multiple-formats-in-datetimeformatter
+    // and https://coderanch.com/t/677142/java/DateTimeParseException-Text-parsed-unparsed-text
     public static DateTimeFormatter buildFormatter() {
         DateTimeFormatterBuilder builder = new DateTimeFormatterBuilder();
         for (String pattern : DATE_PATTERNS) {

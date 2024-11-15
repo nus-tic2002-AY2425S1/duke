@@ -40,6 +40,7 @@ public class TaskList {
         }
     }
 
+    //Solution below adapted from https://stackoverflow.com/questions/11466441/call-a-child-class-method-from-a-parent-class-object
     public void printTasks(LocalDate dateQuery){
         for (int i = 0; i < tasks.size(); i++){
             if (tasks.get(i) instanceof Deadline){

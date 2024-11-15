@@ -32,7 +32,8 @@ public class CommandParser {
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
     private static final Pattern TASK_TODO_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+)");
     private static final Pattern TASK_DEADLINE_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+) /by (?<by>.+)");
-    private static final Pattern TASK_EVENT_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+) /from (?<from>.+) /to (?<to>.+)");
+    // Solution below inspired by https://perlancar.wordpress.com/2018/10/05/matching-several-things-in-no-particular-order-using-a-single-regex/
+    private static final Pattern TASK_EVENT_DATA_ARGS_FORMAT = Pattern.compile("(?<description>[^/]+)(?=.*?/from\\s+(?<from>(?:(?!/to|$).)+))(?=.*?/to\\s+(?<to>(?:(?!/from|$).)+))");
     private static final Pattern MARK_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
     private static final Pattern UNMARK_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
     private static final Pattern DELETE_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
@@ -105,15 +106,15 @@ public class CommandParser {
      */
     private static Command prepareAddEvent(String arguments) throws TaskFormatException {
         final Matcher matcher = TASK_EVENT_DATA_ARGS_FORMAT.matcher(arguments.trim());
-        if (!matcher.matches()) {
+        if (!matcher.find()) {
             throw new TaskFormatException(
                     Messages.MESSAGE_INVALID_TASK_FORMAT,
                     String.format("TaskArguments='%s'", arguments),
                     AddEventCommand.MESSAGE_USAGE
             );
         }
-        LocalDateTime fromDateTime = TimeParser.parseDateTime(matcher.group("from"));
-        LocalDateTime toDateTime = TimeParser.parseDateTime(matcher.group("to"));
+        LocalDateTime fromDateTime = TimeParser.parseDateTime(matcher.group("from").trim());
+        LocalDateTime toDateTime = TimeParser.parseDateTime(matcher.group("to").trim());
         if (fromDateTime.isAfter(toDateTime)) {
             throw new TaskFormatException(
                     Messages.MESSAGE_INVALID_TASK_ARG_FORMAT,
@@ -121,7 +122,7 @@ public class CommandParser {
                     String.format(Messages.MESSAGE_INVALID_DATETIME_RANGE, fromDateTime, toDateTime)
             );
         }
-        return new AddEventCommand(matcher.group("description"), fromDateTime, toDateTime);
+        return new AddEventCommand(matcher.group("description").trim(), fromDateTime, toDateTime);
     }
 
     /**

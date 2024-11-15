@@ -59,12 +59,28 @@ public class CommandParserTest {
 
         private static Stream<Object[]> validEventCommandProvider() {
             return Stream.of(
-                    new Object[]{"event Meeting /from 2024-11-05 09:00 /to 2024-11-05 17:00",
-                            new AddEventCommand("Meeting",
+                    new Object[]{"event Meeting1 /from 2024-11-05 09:00 /to 2024-11-05 17:00",
+                            new AddEventCommand("Meeting1",
                                     LocalDateTime.of(2024, 11, 5, 9, 0),
                                     LocalDateTime.of(2024, 11, 5, 17, 0))},
-                    new Object[]{"event Workshop /from 2024/11/06 10:00 /to 2024/11/06 12:00",
-                            new AddEventCommand("Workshop",
+                    new Object[]{"event Meeting2 /from 2024-11-05 /to 2024-11-06",
+                            new AddEventCommand("Meeting2",
+                                    LocalDateTime.of(2024, 11, 5, 0, 0),
+                                    LocalDateTime.of(2024, 11, 6, 0, 0))},
+                    new Object[]{"event Workshop1 /from 2024/11/06 1000 /to 2024/11/06 1200",
+                            new AddEventCommand("Workshop1",
+                                    LocalDateTime.of(2024, 11, 6, 10, 0),
+                                    LocalDateTime.of(2024, 11, 6, 12, 0))},
+                    new Object[]{"event Workshop2 /from 2024/11/06 10:00 /to 2024-11-06 1200",
+                            new AddEventCommand("Workshop2",
+                                    LocalDateTime.of(2024, 11, 6, 10, 0),
+                                    LocalDateTime.of(2024, 11, 6, 12, 0))},
+                    new Object[]{"event Workshop3 /to 2024-11-06 1200 /from 2024/11/06 10:00",
+                            new AddEventCommand("Workshop3",
+                                    LocalDateTime.of(2024, 11, 6, 10, 0),
+                                    LocalDateTime.of(2024, 11, 6, 12, 0))},
+                    new Object[]{"event   Workshop4   /to   2024-11-06 1200   /from   2024/11/06 10:00",
+                            new AddEventCommand("Workshop4",
                                     LocalDateTime.of(2024, 11, 6, 10, 0),
                                     LocalDateTime.of(2024, 11, 6, 12, 0))}
             );
@@ -230,7 +246,9 @@ public class CommandParserTest {
                     "event Meeting /to 2024-11-05 17:00",               // Missing start date time
                     "event Meeting /from 2024-11-05 09:00 /to",                 // Missing end date time
                     "event /from 2024-11-05 09:00 /to 2024-11-05 17:00",        // Missing description
-                    "event Meeting /from invalid-date /to 2024-11-05 17:00",    // Invalid start date time
+                    "event Meeting /to 2024-11-05 /to 2024-11-05",              // Invalid command format
+                    "event Meeting /from 2024-11-05 /from 2024-11-05",          // Invalid command format
+                    "event Meeting /from 2024-11-05 /to 2024-11-06  23:59",     // Invalid date time format
                     "event Meeting /from 2024-11-05 17:00 /to 2024-11-05 09:00" // End time before start time
             );
         }

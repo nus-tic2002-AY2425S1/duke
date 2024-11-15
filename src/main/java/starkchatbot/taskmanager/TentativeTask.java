@@ -40,6 +40,21 @@ public class TentativeTask extends Task {
         confirmedSlot = slot;
     }
 
+    //to confirm slot from commandline UI
+    public void setConfirmedSlot(int slotNumber) {
+        if (isConfirmed) {
+            return;
+        }
+        if (slotNumber > availableSlots.size()) {
+            System.out.println("Slot number must be less than " + availableSlots.size());
+        }
+        if (slotNumber < 1) {
+            System.out.println("Slot number must be greater than 0");
+        }
+        isConfirmed = true;
+        this.confirmedSlot = availableSlots.get(slotNumber - 1);
+    }
+
     public void editConfirmedSlot() {
         if (isConfirmed) {
             isConfirmed = false;
@@ -57,21 +72,6 @@ public class TentativeTask extends Task {
 
     public String getConfirmedSlot() {
         return confirmedSlot;
-    }
-
-    //to confirm slot from commandline UI
-    public void setConfirmedSlot(int slotNumber) {
-        if (isConfirmed) {
-            return;
-        }
-        if (slotNumber > availableSlots.size()) {
-            System.out.println("Slot number must be less than " + availableSlots.size());
-        }
-        if (slotNumber < 1) {
-            System.out.println("Slot number must be greater than 0");
-        }
-        isConfirmed = true;
-        this.confirmedSlot = availableSlots.get(slotNumber - 1);
     }
 
     @Override

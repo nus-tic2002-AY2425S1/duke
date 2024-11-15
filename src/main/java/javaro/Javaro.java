@@ -77,6 +77,7 @@ public class Javaro {
     }
 
     public boolean runUserInput(String userInput) {
+        assert userInput != null : "User input should not be null";
         try {
             // Parse and execute the command
             Command command = Parser.parse(userInput);
@@ -84,7 +85,6 @@ public class Javaro {
             command.execute(taskList, ui, storage);
 
             commandType = command.getClass().getName();
-            System.out.println("in runuserinput commandtype is " + commandType);
 
             // Check if the command is a "bye" command to exit the loop
             return command.isBye();
@@ -101,12 +101,5 @@ public class Javaro {
             ui.showError(e.getMessageList());
             return false;
         }
-    }
-
-    /**
-     * Generates a response for the user's chat message.
-     */
-    public String getResponse(String userInput) {
-        return ui.getJavaroResponse();
     }
 }

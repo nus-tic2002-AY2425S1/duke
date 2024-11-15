@@ -6,6 +6,10 @@ import josbot.ui.UI;
 
 public class MarkCommand extends Command {
 
+    public MarkCommand(String commandType, String description) {
+        super(commandType, description);
+    }
+
     @Override
     public void execute(TaskList tasks, UI ui, FileStorage file)
     {

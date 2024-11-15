@@ -1,26 +1,27 @@
 package josbot.ui;
 
+import josbot.parser.DateTimeParser;
 import josbot.task.Task;
 import josbot.task.TaskList;
-
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UI {
 
+    public void showLine(){
+        System.out.println("____________________________________________________________");
+    }
+
     public void showGreeting(String type){
         switch(type){
-            case "Dash":
-                System.out.print("____________________________________________________________\n");
-                break;
             case "Start":
-                showGreeting("Dash");
-                System.out.println("Hello I'm JosBot\nWhat can I do for you?");
-                showGreeting("Dash");
+                showLine();
+                DateTimeParser dt = new DateTimeParser();
+                System.out.println( "Good "+dt.getTimeGreeting() +", I'm JosBot\nWhat can I do for you?");
+                showLine();
                 break;
             case "End":
                 System.out.println("Bye. Hope to see you again soon!");
-                System.out.print("____________________________________________________________");
+                showLine();
                 break;
         }
     }
@@ -39,6 +40,9 @@ public class UI {
             case "missing_description":
                 System.out.println("Missing description detected! Please specify the description of the task");
                 break;
+            case "missing_mark_number":
+                System.out.println("Missing mark number detected! Please specify the task number you want to mark");
+                break;
             default:
                 System.out.println("Unknown Error : "+error_type);
         }
@@ -46,17 +50,18 @@ public class UI {
 
     public void showLoadingError(){
         System.out.println("Error: Failed to load file");
-        showGreeting("Dash");
+        showLine();
     }
 
-    public void showInvalidCommandError(String message){
-        System.out.println("Invalid Command : " + message);
-        showGreeting("Dash");
-    }
+//    public void showInvalidCommandError(String message){
+//        System.out.println("Invalid Command : " + message);
+//        showLine();
+//    }
 
     public void showFileNotFoundError(){
         System.out.println("Error: File are not found!\n");
-        showGreeting("Dash");
+        System.out.println("Creating new file..\n");
+        showLine();
     }
 
     public String readCommand(){
@@ -82,7 +87,7 @@ public class UI {
     }
 
     public void showMarkMessage(Task t, Boolean marked){
-        if(marked == true){
+        if(marked){
             System.out.println("Nice! I've marked this task as done:");
         }
         else
@@ -93,7 +98,7 @@ public class UI {
     }
 
     public void showTagMessage(Task t, Boolean tagged){
-        if(tagged == true){
+        if(tagged){
             System.out.println("OK, I've tagged this task as follow:");
         }
         else
@@ -104,9 +109,18 @@ public class UI {
     }
 
     public void showDeleteMessage(String message, int count){
-        System.out.println("Noted. I've removed this task:");
+        if(message.equals("start"))
+        {
+            System.out.println("Noted. I've removed this task:");
+        }
+        else
+        {
+            System.out.println("Now you have " + count + " tasks in the list.");
+        }
+    }
+
+    public void showMessage(String message){
         System.out.println(message);
-        System.out.println("Now you have " + count + " tasks in the list.");
     }
 
     public void showDateTimeError(){
@@ -119,6 +133,10 @@ public class UI {
 
     public void showIndexOutofBoundError(){
         System.out.println("The number you've selected is not on the list! Please choose the correct number.");
+    }
+
+    public void showNumberFormatError(){
+        System.out.println("The command format that you've selected is wrong! Please use number/Integer (e.g <Command> <number/integer>)");
     }
 
     public void showTaskLists(TaskList tasks, boolean showNumber){

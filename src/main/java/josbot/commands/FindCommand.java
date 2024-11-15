@@ -6,13 +6,10 @@ import josbot.task.Task;
 import josbot.task.TaskList;
 import josbot.ui.UI;
 
-import java.util.ArrayList;
-
 public class FindCommand extends Command {
-    protected String search_input;
 
-    public FindCommand(String search_input) {
-        this.search_input = search_input;
+    public FindCommand(String commandType, String description) {
+        super(commandType, description);
     }
 
     /**
@@ -31,12 +28,10 @@ public class FindCommand extends Command {
         TaskList results = new TaskList();
 
         for(Task task : tasks.getTasks()) {
-            if(task.getDescription().contains(search_input)) {
+            if(task.getDescription().contains(description)) {
                 results.addTask(task);
             }
         }
         ui.showTaskLists(results, false);
     }
-
-
 }

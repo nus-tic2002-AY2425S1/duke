@@ -9,8 +9,11 @@ import josbot.ui.UI;
 import java.util.*;
 
 public class ReminderCommand extends Command {
-    public ReminderCommand() {
 
+    public ReminderCommand(){}
+
+    public ReminderCommand(String commandType, String description) {
+        super(commandType, description);
     }
 
     @Override

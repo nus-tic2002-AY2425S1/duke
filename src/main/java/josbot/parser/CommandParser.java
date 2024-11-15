@@ -3,11 +3,9 @@ package josbot.parser;
 import josbot.JosBotException;
 import josbot.commands.*;
 
-public class Parser {
-
+public class CommandParser {
 
     public static Command parse(String fullCommand) throws JosBotException {
-        //Command command = new Command();
         String fullCommandType = fullCommand.split(" ")[0];
         String description = fullCommand.replace(fullCommandType, "").trim();
         fullCommandType = fullCommandType.toLowerCase();
@@ -18,13 +16,13 @@ public class Parser {
             case "untag":
                 return parseTag(fullCommandType, description);
             case "reminder":
-                return new ReminderCommand();
+                return new ReminderCommand(fullCommandType, description);
             case "find":
-                return new FindCommand(description);
+                return new FindCommand(fullCommandType, description);
             case "delete":
                 return parseDelete(fullCommandType, description);
             case "list":
-                return new ListCommand();
+                return new ListCommand(fullCommandType, description);
             case "mark":
             case "unmark":
                 return parseMark(fullCommandType, description);
@@ -33,7 +31,7 @@ public class Parser {
             case "deadline":
                 return parseAdd(fullCommandType, description);
             case "bye":
-                return new ExitCommand();
+                return new ExitCommand(fullCommandType, description);
             default:
                 return new InvalidCommand("invalid_command");
         }
@@ -45,8 +43,8 @@ public class Parser {
             return new InvalidCommand("missing_description");
         }else
         {
-            Command add = new AddCommand();
-            add.setCommandType(fullCommandType, description);
+            Command add = new AddCommand(fullCommandType, description);
+            //add.setCommandType(fullCommandType, description);
             return add;
         }
     }
@@ -55,37 +53,36 @@ public class Parser {
             return new InvalidCommand("missing_mark_number");
         }else
         {
-            Command mark = new MarkCommand();
-            mark.setCommandType(fullCommandType, description);
-            return mark;
+            return new MarkCommand(fullCommandType, description);
         }
     }
 
     private static Command parseTag(String fullCommandType, String description) throws JosBotException {
         String[] description_input = description.split(" ");
-        if(description.equals("") || description == null || description.isEmpty()){
-            return new InvalidCommand("invalid_tag");
-        }
-        else if(fullCommandType.equals("untag") && description_input.length != 1 || fullCommandType.equals("tag") && description_input.length != 2){
+        if(description.equals("") || description == null || description.isEmpty() || (fullCommandType.equals("untag") && description_input.length != 1) || (fullCommandType.equals("tag") && description_input.length != 2)){
             return new InvalidCommand("invalid_tag");
         }
         else
         {
-            Command tag = new TagCommands();
-            tag.setCommandType(fullCommandType, description);
-            return tag;
+            return new TagCommands(fullCommandType, description);
         }
     }
 
     private static Command parseDelete(String fullCommandType, String description) throws JosBotException {
-        //potential enhancement to allow multiple delete
         if(description.equals("") || description == null || description.isEmpty()){
             return new InvalidCommand("missing_mark_number");
         }else
         {
-            Command delete = new DeleteCommand();
-            delete.setCommandType(fullCommandType, description);
-            return delete;
+            return new DeleteCommand(fullCommandType, description);
+        }
+    }
+
+    private boolean checkError(String description){
+        if(description.isEmpty()){
+            return false;
+        }
+        else {
+            return true;
         }
     }
 

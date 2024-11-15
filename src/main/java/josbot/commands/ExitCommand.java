@@ -6,7 +6,8 @@ import josbot.task.TaskList;
 import josbot.ui.UI;
 
 public class ExitCommand extends Command {
-    public ExitCommand() {
+    public ExitCommand(String commandType, String description) {
+        super(commandType, description);
         this.exit = true;
     }
 

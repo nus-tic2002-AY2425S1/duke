@@ -1,11 +1,12 @@
 package josbot;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.DateTimeException;
 
 import josbot.commands.Command;
 import josbot.commands.ReminderCommand;
-import josbot.parser.Parser;
+import josbot.parser.CommandParser;
 import josbot.storage.FileStorage;
 import josbot.task.TaskList;
 import josbot.ui.UI;
@@ -29,10 +30,14 @@ public class JosBot {
         } catch (FileNotFoundException e) {
             ui.showFileNotFoundError();
         }
+          catch (IOException e) {
+            ui.showLoadingError();
+          }
     }
 
     public void run(){
-        Parser parser;
+        CommandParser parser;
+        ui.showLine();
         ReminderCommand command = new ReminderCommand();
         ui.showGreeting("Dash");
         ui.showReminderMessage();
@@ -42,8 +47,8 @@ public class JosBot {
         while (!isExit) {
             try {
                 String fullCommand = ui.readCommand();
-                ui.showGreeting("Dash");
-                Command c = Parser.parse(fullCommand);
+                ui.showLine();
+                Command c = CommandParser.parse(fullCommand);
                 c.execute(taskList, ui, fileStorage);
                 isExit = c.isExit();
             } catch (JosBotException e) {
@@ -54,8 +59,11 @@ public class JosBot {
               catch(DateTimeException e) {
                 ui.showInvalidDateTime();
             }
+              catch(NumberFormatException e) {
+                ui.showNumberFormatError();
+              }
              finally {
-                ui.showGreeting("Dash");
+                ui.showLine();
             }
         }
         ui.showGreeting("End");

@@ -14,16 +14,23 @@ public class Command {
     protected String description;
     protected boolean exit;
 
+
+    public Command() {}
+
+    public Command(String commandType, String description) {
+        this.commandType = commandType;
+        this.description = description;
+        this.exit = false;
+    }
+
+
     public void setCommandType(String commandType, String description) {
         this.commandType = commandType;
         this.description = description;
         this.exit = false;
     }
 
-    public void execute(TaskList tasks, UI ui, FileStorage file) throws JosBotException
-    {
-
-    }
+    public void execute(TaskList tasks, UI ui, FileStorage file) throws JosBotException {};
 
     public String getCommandType() {return commandType;}
     public String getDescription() {return description;}

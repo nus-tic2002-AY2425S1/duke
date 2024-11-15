@@ -7,6 +7,9 @@ import josbot.ui.UI;
 
 public class TagCommands extends Command{
 
+    public TagCommands(String commandType, String description) {
+        super(commandType, description);
+    }
 
     @Override
     public void execute(TaskList tasks, UI ui, FileStorage file) throws JosBotException

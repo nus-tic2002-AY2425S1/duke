@@ -1,18 +1,30 @@
 package josbot.task;
 
+import josbot.parser.DateTimeParser;
+
+import java.time.LocalDateTime;
+
 public class Event extends Task {
+    protected LocalDateTime from;
+    protected LocalDateTime to;
 
-    protected String from;
-    protected String to;
-
-    public Event(String description, String from, String to){
+    public Event(String description, LocalDateTime from, LocalDateTime to) {
         super(description);
-        this.from  = from;
-        this.to   = to;
+        this.from = from;
+        this.to  = to;
     }
 
-    public String getFrom(){return from;}
-    public String getTo(){return to;}
+    public LocalDateTime getTo(){
+        return to;
+    }
+    public LocalDateTime getFrom(){
+        return from;
+    }
+
+    @Override
+    public LocalDateTime getDateTime(){
+        return from;
+    }
 
     @Override
     public String getType(){
@@ -21,6 +33,8 @@ public class Event extends Task {
 
     @Override
     public String toString(){
-        return "[E]"+super.toString()+" (from: "+from+" to: "+to+")";
+        DateTimeParser dt_parser = new DateTimeParser();
+        return "[E]"+super.toString()+" (From: "+dt_parser.convertToString(getFrom(),"view")+" To: "+dt_parser.convertToString(getTo(),"view")+")";
     }
+    //have to change this
 }

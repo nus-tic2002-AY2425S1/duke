@@ -5,6 +5,7 @@ import wkduke.storage.Storage;
 import wkduke.task.Task;
 import wkduke.task.TaskList;
 import wkduke.ui.Ui;
+import wkduke.ui.UiTaskGroup;
 
 import java.util.List;
 
@@ -40,6 +41,9 @@ public class FindCommand extends Command {
             return;
         }
         assert !matchingTasks.isEmpty() : "Postcondition failed: 'matchingTasks' cannot be empty";
-        ui.printTasks(taskList, matchingTasks, String.format(MESSAGE_SUCCESS, keywords));
+        ui.printUiTaskGroup(taskList, new UiTaskGroup(
+                        String.format(MESSAGE_SUCCESS, keywords), "", matchingTasks
+                )
+        );
     }
 }

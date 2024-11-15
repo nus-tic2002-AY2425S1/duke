@@ -52,19 +52,37 @@ public class CommandParserTest {
 
         private static Stream<Object[]> validDeleteCommandProvider() {
             return Stream.of(
-                    new Object[]{"delete 1", new DeleteCommand(1)},
-                    new Object[]{"delete 42", new DeleteCommand(42)}
+                    new Object[]{"delete 1,2,3,4,5", new DeleteCommand(List.of(1, 2, 3, 4, 5))},
+                    new Object[]{"delete 5,15,1,", new DeleteCommand(List.of(1, 5, 15))},
+                    new Object[]{"delete 1,1,1,2", new DeleteCommand(List.of(1, 2))},
+                    new Object[]{"delete  5, 15, 1", new DeleteCommand(List.of(1, 5, 15))}
             );
         }
 
         private static Stream<Object[]> validEventCommandProvider() {
             return Stream.of(
-                    new Object[]{"event Meeting /from 2024-11-05 09:00 /to 2024-11-05 17:00",
-                            new AddEventCommand("Meeting",
+                    new Object[]{"event Meeting1 /from 2024-11-05 09:00 /to 2024-11-05 17:00",
+                            new AddEventCommand("Meeting1",
                                     LocalDateTime.of(2024, 11, 5, 9, 0),
                                     LocalDateTime.of(2024, 11, 5, 17, 0))},
-                    new Object[]{"event Workshop /from 2024/11/06 10:00 /to 2024/11/06 12:00",
-                            new AddEventCommand("Workshop",
+                    new Object[]{"event Meeting2 /from 2024-11-05 /to 2024-11-06",
+                            new AddEventCommand("Meeting2",
+                                    LocalDateTime.of(2024, 11, 5, 0, 0),
+                                    LocalDateTime.of(2024, 11, 6, 0, 0))},
+                    new Object[]{"event Workshop1 /from 2024/11/06 1000 /to 2024/11/06 1200",
+                            new AddEventCommand("Workshop1",
+                                    LocalDateTime.of(2024, 11, 6, 10, 0),
+                                    LocalDateTime.of(2024, 11, 6, 12, 0))},
+                    new Object[]{"event Workshop2 /from 2024/11/06 10:00 /to 2024-11-06 1200",
+                            new AddEventCommand("Workshop2",
+                                    LocalDateTime.of(2024, 11, 6, 10, 0),
+                                    LocalDateTime.of(2024, 11, 6, 12, 0))},
+                    new Object[]{"event Workshop3 /to 2024-11-06 1200 /from 2024/11/06 10:00",
+                            new AddEventCommand("Workshop3",
+                                    LocalDateTime.of(2024, 11, 6, 10, 0),
+                                    LocalDateTime.of(2024, 11, 6, 12, 0))},
+                    new Object[]{"event   Workshop4   /to   2024-11-06 1200   /from   2024/11/06 10:00",
+                            new AddEventCommand("Workshop4",
                                     LocalDateTime.of(2024, 11, 6, 10, 0),
                                     LocalDateTime.of(2024, 11, 6, 12, 0))}
             );
@@ -90,8 +108,10 @@ public class CommandParserTest {
 
         private static Stream<Object[]> validMarkCommandProvider() {
             return Stream.of(
-                    new Object[]{"mark 1", new MarkCommand(1)},
-                    new Object[]{"mark 42", new MarkCommand(42)}
+                    new Object[]{"mark 1,2,3,4,5", new MarkCommand(List.of(1, 2, 3, 4, 5))},
+                    new Object[]{"mark 5,15,1,", new MarkCommand(List.of(1, 5, 15))},
+                    new Object[]{"mark 1,1,1,2", new MarkCommand(List.of(1, 2))},
+                    new Object[]{"mark  5, 15, 1", new MarkCommand(List.of(1, 5, 15))}
             );
         }
 
@@ -104,8 +124,10 @@ public class CommandParserTest {
 
         private static Stream<Object[]> validUnmarkCommandProvider() {
             return Stream.of(
-                    new Object[]{"unmark 1", new UnmarkCommand(1)},
-                    new Object[]{"unmark 42", new UnmarkCommand(42)}
+                    new Object[]{"unmark 1,2,3,4,5", new UnmarkCommand(List.of(1, 2, 3, 4, 5))},
+                    new Object[]{"unmark 5,15,1,", new UnmarkCommand(List.of(1, 5, 15))},
+                    new Object[]{"unmark 1,1,1,2", new UnmarkCommand(List.of(1, 2))},
+                    new Object[]{"unmark  5, 15, 1", new UnmarkCommand(List.of(1, 5, 15))}
             );
         }
 
@@ -219,9 +241,10 @@ public class CommandParserTest {
 
         private static Stream<String> invalidDeleteCommandProvider() {
             return Stream.of(
-                    "delete",       // Missing task number
-                    "delete -1",            // Invalid task number
-                    "delete not-a-number"   // Non-integer task number
+                    "delete",     // Missing task number
+                    "delete -1,2,3",      // Negative task number
+                    "delete 0",           // Invalid task number
+                    "delete not-a-number" // Non-integer task number
             );
         }
 
@@ -230,7 +253,9 @@ public class CommandParserTest {
                     "event Meeting /to 2024-11-05 17:00",               // Missing start date time
                     "event Meeting /from 2024-11-05 09:00 /to",                 // Missing end date time
                     "event /from 2024-11-05 09:00 /to 2024-11-05 17:00",        // Missing description
-                    "event Meeting /from invalid-date /to 2024-11-05 17:00",    // Invalid start date time
+                    "event Meeting /to 2024-11-05 /to 2024-11-05",              // Invalid command format
+                    "event Meeting /from 2024-11-05 /from 2024-11-05",          // Invalid command format
+                    "event Meeting /from 2024-11-05 /to 2024-11-06  23:59",     // Invalid date time format
                     "event Meeting /from 2024-11-05 17:00 /to 2024-11-05 09:00" // End time before start time
             );
         }
@@ -254,7 +279,8 @@ public class CommandParserTest {
         private static Stream<String> invalidMarkCommandProvider() {
             return Stream.of(
                     "mark",     // Missing task number
-                    "mark -1",          // Invalid task number
+                    "mark -1,2,3",      // Negative task number
+                    "mark 0",           // Invalid task number
                     "mark not-a-number" // Non-integer task number
             );
         }
@@ -269,7 +295,8 @@ public class CommandParserTest {
         private static Stream<String> invalidUnmarkCommandProvider() {
             return Stream.of(
                     "unmark",       // Missing task number
-                    "unmark -1",            // Invalid task number
+                    "unmark -1,2,3",        // Negative task number
+                    "unmark 0",             // Invalid task number
                     "unmark not-a-number"   // Non-integer task number
             );
         }

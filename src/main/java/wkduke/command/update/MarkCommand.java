@@ -2,31 +2,59 @@ package wkduke.command.update;
 
 import wkduke.command.Command;
 import wkduke.common.Messages;
+import wkduke.common.Utils;
 import wkduke.exception.command.CommandOperationException;
 import wkduke.exception.storage.StorageOperationException;
 import wkduke.storage.Storage;
 import wkduke.task.Task;
 import wkduke.task.TaskList;
 import wkduke.ui.Ui;
+import wkduke.ui.UiTaskGroup;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
- * Represents a command to mark a task as done in the task list.
+ * Represents a command to mark one or more tasks as done in the task list.
  */
 public class MarkCommand extends Command {
     public static final String COMMAND_WORD = "mark";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " {taskNumber}";
-    private static final String MESSAGE_SUCCESS = "Nice! I've marked this task as done:";
-    private static final String MESSAGE_FAILED = "This task is already marked as done:";
-    private static final String TASK_PLACEHOLDER = "  %s";
-    private final int taskNumber;
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " {taskNumber1, taskNumber2...} (Note: duplicates will be ignored)";
+    private static final String MESSAGE_SUCCESS = "Nice! I've marked these tasks as done:";
+    private static final String MESSAGE_FAILED = "These tasks is already marked as done:";
+    private final Set<Integer> taskNumbers;
 
     /**
-     * Constructs a MarkCommand with the specified task number.
+     * Constructs a MarkCommand with the specified task numbers.
      *
-     * @param taskNumber The 1-based index of the task to be marked as done.
+     * @param taskNumbers A list of 1-based index representing the tasks to be marked as done (Duplicates will be ignored).
      */
-    public MarkCommand(int taskNumber) {
-        this.taskNumber = taskNumber;
+    public MarkCommand(List<Integer> taskNumbers) {
+        this.taskNumbers = new HashSet<>(taskNumbers);
+    }
+
+    /**
+     * Updates the status of tasks as done, categorising them into successfully updated tasks and tasks
+     * that were already marked as done.
+     *
+     * @param taskList           The task list containing the tasks.
+     * @param updatedTasks       A list to store tasks successfully marked as done.
+     * @param alreadyMarkedTasks A list to store tasks that were already marked as done.
+     */
+    private void updateTaskStatus(TaskList taskList, List<Task> updatedTasks, List<Task> alreadyMarkedTasks) {
+        for (Integer taskNumber : taskNumbers) {
+            int taskIndex = taskNumber - 1;
+            Task task = taskList.getTask(taskIndex);
+
+            boolean isUpdated = taskList.markTask(taskIndex);
+            if (isUpdated) {
+                updatedTasks.add(task);
+            } else {
+                alreadyMarkedTasks.add(task);
+            }
+        }
     }
 
     /**
@@ -41,11 +69,11 @@ public class MarkCommand extends Command {
         if (!(obj instanceof MarkCommand command)) {
             return false;
         }
-        return taskNumber == command.taskNumber;
+        return taskNumbers.equals(command.taskNumbers);
     }
 
     /**
-     * Executes the mark command by marking the specified task as done, saving the updated
+     * Executes the mark command by marking the specified tasks as done, saving the updated
      * task list to storage, and displaying a success or failure message.
      *
      * @param taskList The task list containing the task to be marked as done.
@@ -60,26 +88,29 @@ public class MarkCommand extends Command {
         assert ui != null : "Precondition failed: 'ui' cannot be null";
         assert storage != null : "Precondition failed: 'storage' cannot be null";
         try {
-            int taskIndex = taskNumber - 1;
-            Task task = taskList.getTask(taskIndex);
-            boolean isUpdated = taskList.markTask(taskIndex);
+            // Validate task numbers
+            Utils.validateTaskNumbers(taskList, taskNumbers);
 
-            if (isUpdated) {
+            // Update task statuses
+            List<Task> updatedTasks = new ArrayList<>();
+            List<Task> alreadyMarkedTasks = new ArrayList<>();
+            updateTaskStatus(taskList, updatedTasks, alreadyMarkedTasks);
+
+            // Save taskList to storage
+            if (!updatedTasks.isEmpty()) {
                 storage.save(taskList);
-                ui.printMessages(
-                        MESSAGE_SUCCESS,
-                        String.format(TASK_PLACEHOLDER, task.toString())
-                );
-            } else {
-                ui.printMessages(
-                        MESSAGE_FAILED,
-                        String.format(TASK_PLACEHOLDER, task.toString())
-                );
             }
+
+            // Display success and failure messages
+            ui.printUiTaskGroups(taskList, List.of(
+                    new UiTaskGroup(MESSAGE_SUCCESS, "", updatedTasks),
+                    new UiTaskGroup(MESSAGE_FAILED, "", alreadyMarkedTasks)
+            ));
         } catch (IndexOutOfBoundsException e) {
             throw new CommandOperationException(
                     Messages.MESSAGE_INVALID_TASK_NUMBER,
-                    String.format("Command='mark', TaskNumber='%s'", taskNumber)
+                    String.format("Command='mark', TaskNumber='%s'", taskNumbers),
+                    e.getMessage()
             );
         }
     }

@@ -14,6 +14,7 @@ import wkduke.command.update.MarkCommand;
 import wkduke.command.update.UnmarkCommand;
 import wkduke.command.update.UpdatePriorityCommand;
 import wkduke.common.Messages;
+import wkduke.common.Utils;
 import wkduke.exception.TaskFormatException;
 import wkduke.exception.command.CommandFormatException;
 import wkduke.task.TaskPriority;
@@ -32,10 +33,8 @@ public class CommandParser {
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
     private static final Pattern TASK_TODO_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+)");
     private static final Pattern TASK_DEADLINE_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+) /by (?<by>.+)");
-    private static final Pattern TASK_EVENT_DATA_ARGS_FORMAT = Pattern.compile("(?<description>.+) /from (?<from>.+) /to (?<to>.+)");
-    private static final Pattern MARK_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
-    private static final Pattern UNMARK_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
-    private static final Pattern DELETE_TASK_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*)$");
+    // Solution below inspired by https://perlancar.wordpress.com/2018/10/05/matching-several-things-in-no-particular-order-using-a-single-regex/
+    private static final Pattern TASK_EVENT_DATA_ARGS_FORMAT = Pattern.compile("(?<description>[^/]+)(?=.*?/from\\s+(?<from>(?:(?!/to|$).)+))(?=.*?/to\\s+(?<to>(?:(?!/from|$).)+))");
     private static final Pattern LIST_TASK_ARGS_FORMAT = Pattern.compile("/on (?<on>.+)");
     private static final Pattern UPDATE_PRIORITY_ARGS_FORMAT = Pattern.compile("^(?<taskNumber>\\d.*) (?<priority>[LMH])$");
     private static final Pattern FIND_ARGS_FORMAT = Pattern.compile("([^,]+)");
@@ -105,15 +104,15 @@ public class CommandParser {
      */
     private static Command prepareAddEvent(String arguments) throws TaskFormatException {
         final Matcher matcher = TASK_EVENT_DATA_ARGS_FORMAT.matcher(arguments.trim());
-        if (!matcher.matches()) {
+        if (!matcher.find()) {
             throw new TaskFormatException(
                     Messages.MESSAGE_INVALID_TASK_FORMAT,
                     String.format("TaskArguments='%s'", arguments),
                     AddEventCommand.MESSAGE_USAGE
             );
         }
-        LocalDateTime fromDateTime = TimeParser.parseDateTime(matcher.group("from"));
-        LocalDateTime toDateTime = TimeParser.parseDateTime(matcher.group("to"));
+        LocalDateTime fromDateTime = TimeParser.parseDateTime(matcher.group("from").trim());
+        LocalDateTime toDateTime = TimeParser.parseDateTime(matcher.group("to").trim());
         if (fromDateTime.isAfter(toDateTime)) {
             throw new TaskFormatException(
                     Messages.MESSAGE_INVALID_TASK_ARG_FORMAT,
@@ -121,7 +120,7 @@ public class CommandParser {
                     String.format(Messages.MESSAGE_INVALID_DATETIME_RANGE, fromDateTime, toDateTime)
             );
         }
-        return new AddEventCommand(matcher.group("description"), fromDateTime, toDateTime);
+        return new AddEventCommand(matcher.group("description").trim(), fromDateTime, toDateTime);
     }
 
     /**
@@ -146,20 +145,21 @@ public class CommandParser {
     /**
      * Prepares a DeleteCommand from the given arguments.
      *
-     * @param arguments The arguments provided to specify which task to delete.
-     * @return A new {@code DeleteCommand} with the specified task number.
+     * @param arguments The arguments provided to specify which tasks to delete.
+     * @return A new {@code DeleteCommand} with the specified task numbers.
      * @throws CommandFormatException If the arguments format is invalid.
      */
     private static Command prepareDelete(String arguments) throws CommandFormatException {
-        final Matcher matcher = DELETE_TASK_ARGS_FORMAT.matcher(arguments.trim());
-        if (!matcher.matches()) {
+        try {
+            List<Integer> taskNumbers = Utils.parseTaskNumbers(arguments, ",");
+            return new DeleteCommand(taskNumbers);
+        } catch (NumberFormatException e) {
             throw new CommandFormatException(
-                    Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    String.format(Messages.MESSAGE_INVALID_TASK_NUMBERS_FORMAT, e.getMessage()),
                     String.format("Command='delete', Arguments='%s'", arguments),
                     DeleteCommand.MESSAGE_USAGE
             );
         }
-        return new DeleteCommand(Integer.parseInt(matcher.group("taskNumber")));
     }
 
     /**
@@ -221,39 +221,41 @@ public class CommandParser {
     /**
      * Prepares a MarkCommand from the given arguments.
      *
-     * @param arguments The arguments provided to specify which task to mark as done.
-     * @return A new {@code MarkCommand} with the specified task number.
+     * @param arguments The arguments provided to specify which tasks to mark as done.
+     * @return A new {@code MarkCommand} with the specified task numbers.
      * @throws CommandFormatException If the arguments format is invalid.
      */
     private static Command prepareMark(String arguments) throws CommandFormatException {
-        final Matcher matcher = MARK_TASK_ARGS_FORMAT.matcher(arguments.trim());
-        if (!matcher.matches()) {
+        try {
+            List<Integer> taskNumbers = Utils.parseTaskNumbers(arguments, ",");
+            return new MarkCommand(taskNumbers);
+        } catch (NumberFormatException e) {
             throw new CommandFormatException(
-                    Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    String.format(Messages.MESSAGE_INVALID_TASK_NUMBERS_FORMAT, e.getMessage()),
                     String.format("Command='mark', Arguments='%s'", arguments),
                     MarkCommand.MESSAGE_USAGE
             );
         }
-        return new MarkCommand(Integer.parseInt(matcher.group("taskNumber")));
     }
 
     /**
      * Prepares an UnmarkCommand from the given arguments.
      *
-     * @param arguments The arguments provided to specify which task to unmark.
-     * @return A new {@code UnmarkCommand} with the specified task number.
+     * @param arguments The arguments provided to specify which tasks to unmark.
+     * @return A new {@code UnmarkCommand} with the specified task numbers.
      * @throws CommandFormatException If the arguments format is invalid.
      */
     private static Command prepareUnmark(String arguments) throws CommandFormatException {
-        final Matcher matcher = UNMARK_TASK_ARGS_FORMAT.matcher(arguments.trim());
-        if (!matcher.matches()) {
+        try {
+            List<Integer> taskNumbers = Utils.parseTaskNumbers(arguments, ",");
+            return new UnmarkCommand(taskNumbers);
+        } catch (NumberFormatException e) {
             throw new CommandFormatException(
-                    Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    String.format(Messages.MESSAGE_INVALID_TASK_NUMBERS_FORMAT, e.getMessage()),
                     String.format("Command='unmark', Arguments='%s'", arguments),
                     UnmarkCommand.MESSAGE_USAGE
             );
         }
-        return new UnmarkCommand(Integer.parseInt(matcher.group("taskNumber")));
     }
 
     /**

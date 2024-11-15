@@ -2,31 +2,59 @@ package wkduke.command.update;
 
 import wkduke.command.Command;
 import wkduke.common.Messages;
+import wkduke.common.Utils;
 import wkduke.exception.command.CommandOperationException;
 import wkduke.exception.storage.StorageOperationException;
 import wkduke.storage.Storage;
 import wkduke.task.Task;
 import wkduke.task.TaskList;
 import wkduke.ui.Ui;
+import wkduke.ui.UiTaskGroup;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
- * Represents a command to unmark a task as not done in the task list.
+ * Represents a command to unmark one or more tasks as not done in the task list.
  */
 public class UnmarkCommand extends Command {
     public static final String COMMAND_WORD = "unmark";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " {taskNumber}";
-    private static final String MESSAGE_SUCCESS = "OK, I've marked this task as not done yet:";
-    private static final String MESSAGE_FAILED = "This task is not yet marked as done:";
-    private static final String TASK_PLACEHOLDER = "  %s";
-    private final int taskNumber;
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " {taskNumber1, taskNumber2...} (Note: duplicates will be ignored)";
+    private static final String MESSAGE_SUCCESS = "OK, I've marked these tasks as not done yet:";
+    private static final String MESSAGE_FAILED = "These tasks is not yet marked as done:";
+    private final Set<Integer> taskNumbers;
 
     /**
-     * Constructs an UnmarkCommand with the specified task number.
+     * Constructs an UnmarkCommand with the specified task numbers.
      *
-     * @param taskNumber The 1-based index of the task to be marked as not done.
+     * @param taskNumbers A list of 1-based index representing the tasks to be marked as done (Duplicates will be ignored).
      */
-    public UnmarkCommand(int taskNumber) {
-        this.taskNumber = taskNumber;
+    public UnmarkCommand(List<Integer> taskNumbers) {
+        this.taskNumbers = new HashSet<>(taskNumbers);
+    }
+
+    /**
+     * Updates the status of tasks as not done, categorising them into successfully updated tasks and tasks
+     * that were already in the "not done" status.
+     *
+     * @param taskList            The task list containing the tasks.
+     * @param updatedTasks        A list to store tasks successfully marked as not done.
+     * @param alreadyNotDoneTasks A list to store tasks that were already in the "not done" status.
+     */
+    private void updateTaskStatus(TaskList taskList, List<Task> updatedTasks, List<Task> alreadyNotDoneTasks) {
+        for (Integer taskNumber : taskNumbers) {
+            int taskIndex = taskNumber - 1;
+            Task task = taskList.getTask(taskIndex);
+
+            boolean isUpdated = taskList.unmarkTask(taskIndex);
+            if (isUpdated) {
+                updatedTasks.add(task);
+            } else {
+                alreadyNotDoneTasks.add(task);
+            }
+        }
     }
 
     /**
@@ -41,11 +69,11 @@ public class UnmarkCommand extends Command {
         if (!(obj instanceof UnmarkCommand command)) {
             return false;
         }
-        return taskNumber == command.taskNumber;
+        return taskNumbers.equals(command.taskNumbers);
     }
 
     /**
-     * Executes the unmark command by marking the specified task as not done, saving the updated
+     * Executes the unmark command by marking the specified tasks as not done, saving the updated
      * task list to storage, and displaying a success or failure message.
      *
      * @param taskList The task list containing the task to be marked as not done.
@@ -60,26 +88,29 @@ public class UnmarkCommand extends Command {
         assert ui != null : "Precondition failed: 'ui' cannot be null";
         assert storage != null : "Precondition failed: 'storage' cannot be null";
         try {
-            int taskIndex = taskNumber - 1;
-            Task task = taskList.getTask(taskIndex);
-            boolean isUpdated = taskList.unmarkTask(taskIndex);
+            // Validate task numbers
+            Utils.validateTaskNumbers(taskList, taskNumbers);
 
-            if (isUpdated) {
+            // Update task statuses
+            List<Task> updatedTasks = new ArrayList<>();
+            List<Task> alreadyNotDoneTasks = new ArrayList<>();
+            updateTaskStatus(taskList, updatedTasks, alreadyNotDoneTasks);
+
+            // Save taskList to storage
+            if (!updatedTasks.isEmpty()) {
                 storage.save(taskList);
-                ui.printMessages(
-                        MESSAGE_SUCCESS,
-                        String.format(TASK_PLACEHOLDER, task.toString())
-                );
-            } else {
-                ui.printMessages(
-                        MESSAGE_FAILED,
-                        String.format(TASK_PLACEHOLDER, task.toString())
-                );
             }
+
+            // Display success and failure messages
+            ui.printUiTaskGroups(taskList, List.of(
+                    new UiTaskGroup(MESSAGE_SUCCESS, "", updatedTasks),
+                    new UiTaskGroup(MESSAGE_FAILED, "", alreadyNotDoneTasks)
+            ));
         } catch (IndexOutOfBoundsException e) {
             throw new CommandOperationException(
                     Messages.MESSAGE_INVALID_TASK_NUMBER,
-                    String.format("Command='unmark', TaskNumber='%s'", taskNumber)
+                    String.format("Command='unmark', TaskNumber='%s'", taskNumbers),
+                    e.getMessage()
             );
         }
     }

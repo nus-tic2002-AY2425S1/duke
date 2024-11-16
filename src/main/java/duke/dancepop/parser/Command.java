@@ -150,3 +150,25 @@ class ListByDateTimeCommand extends BinaryCommand<LocalDateTime> {
         TaskList.print(value);
     }
 }
+
+class SaveToFileNameCommand extends BinaryCommand<String> {
+
+    public SaveToFileNameCommand(String value) {
+        super(value);
+    }
+
+    public void execute() {
+        Storage.loadFile(value);
+    }
+}
+
+class LoadFromFileNameCommand extends BinaryCommand<String> {
+
+    public LoadFromFileNameCommand(String value) {
+        super(value);
+    }
+
+    public void execute() {
+        Storage.loadFile(value);
+    }
+}

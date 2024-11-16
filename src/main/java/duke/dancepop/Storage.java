@@ -13,17 +13,24 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 
 public class Storage {
-
-    // TODO: Refactor all of these if needed, so messy.
-    private static final String FILE_PATH = "volume/data.csv";
+    private static final String FILE_PATH = "volume/";
+    private static final String DEFAULT_FILE_NAME = "data.csv";
+    private static Optional<String> SET_FILE_NAME = Optional.empty();
 
     /**
      * Save all Task objects to CSV file
      */
-    public static void saveToFile() {
-        Path filePath = Paths.get(FILE_PATH);
+    public static void saveToFile(String fileName) {
+        String fullFilePath = FILE_PATH + fileName;
+        Path filePath = Paths.get(fullFilePath);
+
+        if (!fileName.equalsIgnoreCase(DEFAULT_FILE_NAME)) {
+            SET_FILE_NAME = Optional.of(fileName);
+        }
+
         try {
             // Delete CSV file if exists
             if (Files.exists(filePath)) {
@@ -37,10 +44,8 @@ public class Storage {
                     createEmptyCsvFile(writer);
                     return;
                 }
-                // TODO: Re-evaluate if csv should really have empty pipes | to fit a general header
-                // Maybe do a type, (Un)Mark, metadata header
-                // Then content wise just do this: type | (Un)Mark | description - /by or /from - /to
-                // And split via hyphen or some other string that isn't commonly used
+                // CSV Format: Type | (Un)Mark | metadata header
+                // Type | (Un)Mark | description [ | /by ][ | /from | /to]
                 for (Task task : TaskList.getTasks()) {
                     if (task instanceof Todo todo) {
                         writer.append("T|").append(String.valueOf(todo.getDone())).append("|").append(todo.getDescription()).append("\n");
@@ -58,20 +63,34 @@ public class Storage {
         }
     }
 
+    public static void saveToFile() {
+        // Save to default file if user has not specified a file
+        if (SET_FILE_NAME.isPresent()) {
+            saveToFile(SET_FILE_NAME.get());
+        } else {
+            saveToFile(DEFAULT_FILE_NAME);
+        }
+    }
+
     /**
      * Read CSV file and instantiate tasks into TaskList
      */
-    public static void loadFile() {
-        Log.printMsg("Loading data from " + FILE_PATH);
-        Path filePath = Paths.get(FILE_PATH);
+    public static void loadFile(String fileName) {
+        String fullFilePath = FILE_PATH + fileName;
+        Log.printMsg("Loading data from " + fullFilePath);
+        Path filePath = Paths.get(fullFilePath);
         if (!Files.exists(filePath)) {
             Log.printMsg("No saved data found.");
             return;
         }
 
+        if (!fileName.equalsIgnoreCase(DEFAULT_FILE_NAME)) {
+            SET_FILE_NAME = Optional.of(fileName);
+        }
+
         try {
             // Ignore empty and whitespace lines
-            List<String> lines = Files.readAllLines(Paths.get(FILE_PATH))
+            List<String> lines = Files.readAllLines(Paths.get(fullFilePath))
                     .stream()
                     .filter(line -> !line.trim().isEmpty())
                     .toList();
@@ -99,6 +118,15 @@ public class Storage {
             }
         } catch (IOException ioe) {
             Log.printMsg("Error occurred while loading file: ", ioe.getMessage());
+        }
+    }
+
+    public static void loadFile() {
+        // Load from default file if user has not specified a file
+        if (SET_FILE_NAME.isPresent()) {
+            loadFile(SET_FILE_NAME.get());
+        } else {
+            loadFile(DEFAULT_FILE_NAME);
         }
     }
 

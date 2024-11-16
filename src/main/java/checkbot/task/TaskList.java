@@ -273,7 +273,7 @@ public class TaskList {
      * @throws IndexOutOfBoundsException Invalid task number
      * @throws InvalidInputException Empty task number
      */
-    public static void setStatus(String  input)
+    public static void setStatus(String input)
             throws CommandNotFoundException, IndexOutOfBoundsException, InvalidInputException {
         String[] setStatusArray = input.split(" ");
         assert setStatusArray.length > 0 : "Input cannot be blank, action type is required in front.";

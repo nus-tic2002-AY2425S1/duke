@@ -16,12 +16,24 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static wkduke.ui.Ui.INDENT_HELP_MSG_NUM;
+
 /**
  * Represents a command to delete a tasks from the task list.
  */
 public class DeleteCommand extends Command {
     public static final String COMMAND_WORD = "delete";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " {taskNumber1, taskNumber2...} (Note: duplicates will be ignored)";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " {task-numbers...}\n"
+            + "Description:".indent(INDENT_HELP_MSG_NUM)
+            + "  - Deletes the specified tasks from the task list.".indent(INDENT_HELP_MSG_NUM)
+            + "  - You can provide multiple task numbers separated by commas.".indent(INDENT_HELP_MSG_NUM)
+            + "Example:".indent(INDENT_HELP_MSG_NUM)
+            + "  delete 1".indent(INDENT_HELP_MSG_NUM)
+            + "  delete 1,3,5".indent(INDENT_HELP_MSG_NUM)
+            + "Constraints:".indent(INDENT_HELP_MSG_NUM)
+            + "  - Task numbers must be positive integers.".indent(INDENT_HELP_MSG_NUM)
+            + "  - Task numbers must exist in the task list.".indent(INDENT_HELP_MSG_NUM)
+            + "  - Duplicate task numbers will be ignored.".indent(INDENT_HELP_MSG_NUM);
     private static final String MESSAGE_SUCCESS_PRE = "Noted. I've removed these tasks:";
     private static final String MESSAGE_SUCCESS_POST = "Now you have %s tasks in the list.";
     private final Set<Integer> taskNumbers;

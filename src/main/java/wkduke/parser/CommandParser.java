@@ -20,7 +20,6 @@ import wkduke.command.update.SortOrder;
 import wkduke.command.update.UnmarkCommand;
 import wkduke.command.update.UpdatePriorityCommand;
 import wkduke.common.Messages;
-import wkduke.common.Utils;
 import wkduke.exception.TaskFormatException;
 import wkduke.exception.command.CommandFormatException;
 import wkduke.task.TaskPriority;
@@ -30,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static wkduke.common.Utils.validateDateTimeRange;
 
 /**
  * Parses user input into command objects for execution.
@@ -77,8 +78,8 @@ public class CommandParser {
             case FindCommand.COMMAND_WORD -> prepareFind(arguments);
             case SortCommand.COMMAND_WORD -> prepareSort(arguments);
             default -> throw new CommandFormatException(
-                    Messages.MESSAGE_INVALID_COMMAND_FORMAT,
-                    String.format("UserInput='%s'", userInput),
+                    Messages.MESSAGE_UNKNOWN_COMMAND,
+                    String.format("Input='%s'", userInput),
                     String.format("AvailableCommand='%s'", Messages.MESSAGE_AVAILABLE_COMMAND)
             );
         };
@@ -96,7 +97,7 @@ public class CommandParser {
         if (!matcher.matches()) {
             throw new TaskFormatException(
                     Messages.MESSAGE_INVALID_TASK_FORMAT,
-                    String.format("TaskArguments='%s'", arguments),
+                    String.format("Command='deadline', Arguments='%s'", arguments),
                     AddDeadlineCommand.MESSAGE_USAGE
             );
         }
@@ -116,19 +117,13 @@ public class CommandParser {
         if (!matcher.find()) {
             throw new TaskFormatException(
                     Messages.MESSAGE_INVALID_TASK_FORMAT,
-                    String.format("TaskArguments='%s'", arguments),
+                    String.format("Command='event', Arguments='%s'", arguments),
                     AddEventCommand.MESSAGE_USAGE
             );
         }
         LocalDateTime fromDateTime = TimeParser.parseDateTime(matcher.group("from").trim());
         LocalDateTime toDateTime = TimeParser.parseDateTime(matcher.group("to").trim());
-        if (fromDateTime.isAfter(toDateTime)) {
-            throw new TaskFormatException(
-                    Messages.MESSAGE_INVALID_TASK_ARG_FORMAT,
-                    String.format("TaskArguments='%s'", arguments),
-                    String.format(Messages.MESSAGE_INVALID_DATETIME_RANGE, fromDateTime, toDateTime)
-            );
-        }
+        validateDateTimeRange(fromDateTime, toDateTime, arguments);
         return new AddEventCommand(matcher.group("description").trim(), fromDateTime, toDateTime);
     }
 
@@ -144,7 +139,7 @@ public class CommandParser {
         if (!matcher.matches()) {
             throw new TaskFormatException(
                     Messages.MESSAGE_INVALID_TASK_FORMAT,
-                    String.format("TaskArguments='%s'", arguments),
+                    String.format("Command='todo', Arguments='%s'", arguments),
                     AddTodoCommand.MESSAGE_USAGE
             );
         }
@@ -160,7 +155,7 @@ public class CommandParser {
      */
     private static Command prepareDelete(String arguments) throws CommandFormatException {
         try {
-            List<Integer> taskNumbers = Utils.parseTaskNumbers(arguments, ",");
+            List<Integer> taskNumbers = TaskNumberParser.parseTaskNumbers(arguments, ",");
             return new DeleteCommand(taskNumbers);
         } catch (NumberFormatException e) {
             throw new CommandFormatException(
@@ -236,7 +231,7 @@ public class CommandParser {
      */
     private static Command prepareMark(String arguments) throws CommandFormatException {
         try {
-            List<Integer> taskNumbers = Utils.parseTaskNumbers(arguments, ",");
+            List<Integer> taskNumbers = TaskNumberParser.parseTaskNumbers(arguments, ",");
             return new MarkCommand(taskNumbers);
         } catch (NumberFormatException e) {
             throw new CommandFormatException(
@@ -282,7 +277,7 @@ public class CommandParser {
      */
     private static Command prepareUnmark(String arguments) throws CommandFormatException {
         try {
-            List<Integer> taskNumbers = Utils.parseTaskNumbers(arguments, ",");
+            List<Integer> taskNumbers = TaskNumberParser.parseTaskNumbers(arguments, ",");
             return new UnmarkCommand(taskNumbers);
         } catch (NumberFormatException e) {
             throw new CommandFormatException(

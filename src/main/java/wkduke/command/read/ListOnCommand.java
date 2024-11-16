@@ -11,12 +11,27 @@ import wkduke.ui.UiTaskGroup;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static wkduke.ui.Ui.INDENT_HELP_MSG_NUM;
+
 /**
  * Represents a command to list all tasks occurring on a specified date.
  */
 public class ListOnCommand extends Command {
     private static final String COMMAND_WORD = "list";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " /on {dateTime}";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " /on {datetime}\n"
+            + "Description:".indent(INDENT_HELP_MSG_NUM)
+            + "  - Lists all tasks in your task list. Optionally, filter tasks scheduled for a specific date.".indent(INDENT_HELP_MSG_NUM)
+            + "Format:".indent(INDENT_HELP_MSG_NUM)
+            + "  list".indent(INDENT_HELP_MSG_NUM)
+            + "  list /on {dateTime}".indent(INDENT_HELP_MSG_NUM)
+            + TimeParser.MESSAGE_USAGE
+            + "Example:".indent(INDENT_HELP_MSG_NUM)
+            + "  list".indent(INDENT_HELP_MSG_NUM)
+            + "  list /on 2024-11-05".indent(INDENT_HELP_MSG_NUM)
+            + "Constraints:".indent(INDENT_HELP_MSG_NUM)
+            + "  - If /on is omitted, all tasks will be listed.".indent(INDENT_HELP_MSG_NUM)
+            + "  - If /on is provided, only time aware tasks occurring on the specified date will be listed.".indent(INDENT_HELP_MSG_NUM);
+
     private static final String MESSAGE_SUCCESS = "Here are the tasks in your list on '%s':";
     private static final String MESSAGE_FAILED = "Your task list is currently empty on '%s'.";
     private final LocalDateTime on;

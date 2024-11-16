@@ -1,9 +1,10 @@
 package wkduke.common;
 
+import wkduke.exception.TaskFormatException;
+import wkduke.parser.TimeParser;
 import wkduke.task.TaskList;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 /**
@@ -11,24 +12,22 @@ import java.util.Set;
  */
 public class Utils {
     /**
-     * Parses a string of task numbers separated by a specified delimiter into a list of 1-based unsigned integers.
+     * Validates that the start date-time is not after the end date-time.
      *
-     * @param input     The input string containing task numbers separated by the delimiter.
-     * @param delimiter The delimiter used to separate the task numbers.
-     * @return A list of parsed 1-based unsigned integers.
-     * @throws NumberFormatException If the input contains invalid task numbers (e.g., zero, negative, or non-numeric values).
+     * @param fromDateTime The start date-time.
+     * @param toDateTime   The end date-time.
+     * @param arguments    The original input arguments.
+     * @throws TaskFormatException If the start date-time is after the end date-time.
      */
-    public static List<Integer> parseTaskNumbers(String input, String delimiter) {
-        List<Integer> taskNumbers = new ArrayList<>();
-        String[] parts = input.split(delimiter);
-        for (String part : parts) {
-            int number = Integer.parseUnsignedInt(part.trim());
-            if (number == 0) {
-                throw new NumberFormatException("For input string: \"0\"");
-            }
-            taskNumbers.add(number);
+    public static void validateDateTimeRange(LocalDateTime fromDateTime, LocalDateTime toDateTime, String arguments)
+            throws TaskFormatException {
+        if (fromDateTime.isAfter(toDateTime)) {
+            throw new TaskFormatException(
+                    String.format(Messages.MESSAGE_INVALID_DATETIME_RANGE, fromDateTime, toDateTime),
+                    String.format("Arguments='%s'", arguments),
+                    System.lineSeparator() + TimeParser.MESSAGE_USAGE
+            );
         }
-        return taskNumbers;
     }
 
     /**

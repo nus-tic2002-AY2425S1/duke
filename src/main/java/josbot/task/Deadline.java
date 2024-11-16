@@ -3,68 +3,72 @@ package josbot.task;
 import josbot.parser.DateTimeParser;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
+/**
+ * Represent Deadline Task
+ */
 
 public class Deadline extends Task {
     protected LocalDateTime by;
     protected boolean time;
-    //inspired by https://howtodoinjava.com/java/date-time/java8-datetimeformatter-example/
-    static final DateTimeFormatter FORMATTER_DISPLAY_DATETIME= DateTimeFormatter.ofPattern("dd MMMM yyyy 'at' hh:mm a");
-    static final DateTimeFormatter FORMATTER_DISPLAY_DATE= DateTimeFormatter.ofPattern("dd MMMM yyyy");
-    static final DateTimeFormatter FORMATTER_STORE_DATETIME = DateTimeFormatter.ofPattern("dd/MM/yyyy,HHmm");
-    static final DateTimeFormatter FORMATTER_STORE_DATE = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-
-//    public Deadline(String description, String by){
-//        super(description);
-//        this.by = by;
-//    }
+    /**
+     * Creates a deadline task with its description and date & time
+     *
+     * @param description description of the deadline task
+     * @param by          date&time of the deadline
+     * @param time
+     */
 
     public Deadline(String description, LocalDateTime by, boolean time) {
         super(description);
-        this.by =  by;
+        this.by = by;
         this.time = time;
     }
 
+    /**
+     * Creates a deadline task with its description and date
+     *
+     * @param description description of the deadline task
+     * @param by          date of the deadline
+     */
+
     public Deadline(String description, LocalDateTime by) {
         super(description);
-        this.by =  by;
+        this.by = by;
         this.time = false;
     }
 
-//    public String getBy(){
-//        if(time)
-//        {
-//            return by.format(FORMATTER_DISPLAY_DATETIME);
-//        }
-//        else {
-//            return by.format(FORMATTER_DISPLAY_DATE);
-//        }
-//    }
-//
-//    public String getByToStore(){
-//        if(time)
-//        {
-//            return by.format(FORMATTER_STORE_DATETIME);
-//        }
-//        else {
-//            return by.format(FORMATTER_STORE_DATE);
-//        }
-//    }
+    /**
+     * Return deadline date & time
+     *
+     * @return deadline date & time
+     */
 
     @Override
-    public LocalDateTime getDateTime(){
+    public LocalDateTime getDateTime() {
         return by;
     }
 
+    /**
+     * Return String of Deadline type
+     *
+     * @return Deadline type
+     */
     @Override
-    public String getType(){
+    public String getType() {
         return "D";
     }
 
+    /**
+     * Return String of the deadline details
+     *
+     * @return
+     */
+
     @Override
-    public String toString(){
-        DateTimeParser dt_parser = new DateTimeParser();
-        return "[D]"+super.toString()+" (by: "+dt_parser.convertToString(getDateTime(),"view")+")";
+    public String toString() {
+        DateTimeParser dtParser = new DateTimeParser();
+        return "[D]" + super.toString() + " (by: " + dtParser.convertToString(getDateTime(), "view") + ")";
     }
 }

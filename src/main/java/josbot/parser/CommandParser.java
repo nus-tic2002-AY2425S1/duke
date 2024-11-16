@@ -1,91 +1,90 @@
 package josbot.parser;
 
 import josbot.JosBotException;
-import josbot.commands.*;
+import josbot.commands.AddCommand;
+import josbot.commands.Command;
+import josbot.commands.CommandList;
+import josbot.commands.DeleteCommand;
+import josbot.commands.ExitCommand;
+import josbot.commands.FindCommand;
+import josbot.commands.InvalidCommand;
+import josbot.commands.ListCommand;
+import josbot.commands.MarkCommand;
+import josbot.commands.ReminderCommand;
+import josbot.commands.TagCommands;
+
+/**
+ * Class used to parse Command
+ */
+
 
 public class CommandParser {
+    static CommandList cmdList;
+
+    /**
+     * Returns command class based on the input command (fullCommand)
+     * executed by the user
+     *
+     * @param fullCommand Command executed by user
+     * @return command child class
+     * @throws JosBotException
+     */
 
     public static Command parse(String fullCommand) throws JosBotException {
         String fullCommandType = fullCommand.split(" ")[0];
         String description = fullCommand.replace(fullCommandType, "").trim();
-        fullCommandType = fullCommandType.toLowerCase();
 
+        try {
+            cmdList = CommandList.valueOf(fullCommandType.toUpperCase());
 
-        switch(fullCommandType){
-            case "tag":
-            case "untag":
-                return parseTag(fullCommandType, description);
-            case "reminder":
+            switch (cmdList) {
+            case TAG:
+            case UNTAG:
+                if (checkError(description)) {
+                    return new TagCommands(fullCommandType, description);
+                } else {
+                    return new InvalidCommand("invalid_tag");
+                }
+            case REMINDER:
                 return new ReminderCommand(fullCommandType, description);
-            case "find":
+            case FIND:
                 return new FindCommand(fullCommandType, description);
-            case "delete":
-                return parseDelete(fullCommandType, description);
-            case "list":
+            case DELETE:
+                if (checkError(description)) {
+                    return new DeleteCommand(fullCommandType, description);
+                } else {
+                    return new InvalidCommand("missing_mark_number");
+                }
+            case LIST:
                 return new ListCommand(fullCommandType, description);
-            case "mark":
-            case "unmark":
-                return parseMark(fullCommandType, description);
-            case "todo":
-            case "event":
-            case "deadline":
-                return parseAdd(fullCommandType, description);
-            case "bye":
+            case MARK:
+            case UNMARK:
+                if (checkError(description)) {
+                    return new MarkCommand(fullCommandType, description);
+                } else {
+                    return new InvalidCommand("missing_mark_number");
+                }
+            case TODO:
+            case EVENT:
+            case DEADLINE:
+                if (checkError(description)) {
+                    return new AddCommand(fullCommandType, description);
+                } else {
+                    return new InvalidCommand("missing_description");
+                }
+            case BYE:
                 return new ExitCommand(fullCommandType, description);
             default:
                 return new InvalidCommand("invalid_command");
+            }
+        } catch (IllegalArgumentException e) {
+            return new InvalidCommand("invalid_command");
         }
     }
 
-    private static Command parseAdd(String fullCommandType, String description) throws JosBotException {
-
-        if(description.equals("") || description == null || description.isEmpty()){
-            return new InvalidCommand("missing_description");
-        }else
-        {
-            Command add = new AddCommand(fullCommandType, description);
-            //add.setCommandType(fullCommandType, description);
-            return add;
-        }
+    private static boolean checkError(String description) {
+        return !description.equals("") && description != null && !description.isEmpty();
     }
-    private static Command parseMark(String fullCommandType, String description) throws JosBotException {
-        if(description.equals("") || description == null || description.isEmpty()){
-            return new InvalidCommand("missing_mark_number");
-        }else
-        {
-            return new MarkCommand(fullCommandType, description);
-        }
-    }
-
-    private static Command parseTag(String fullCommandType, String description) throws JosBotException {
-        String[] description_input = description.split(" ");
-        if(description.equals("") || description == null || description.isEmpty() || (fullCommandType.equals("untag") && description_input.length != 1) || (fullCommandType.equals("tag") && description_input.length != 2)){
-            return new InvalidCommand("invalid_tag");
-        }
-        else
-        {
-            return new TagCommands(fullCommandType, description);
-        }
-    }
-
-    private static Command parseDelete(String fullCommandType, String description) throws JosBotException {
-        if(description.equals("") || description == null || description.isEmpty()){
-            return new InvalidCommand("missing_mark_number");
-        }else
-        {
-            return new DeleteCommand(fullCommandType, description);
-        }
-    }
-
-    private boolean checkError(String description){
-        if(description.isEmpty()){
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
-
 
 
 }

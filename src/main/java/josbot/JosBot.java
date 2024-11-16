@@ -11,6 +11,10 @@ import josbot.storage.FileStorage;
 import josbot.task.TaskList;
 import josbot.ui.UI;
 
+/**
+ * Main Program of JosBot
+ */
+
 public class JosBot {
 
     private UI ui;
@@ -25,13 +29,14 @@ public class JosBot {
         try {
             taskList = new TaskList(fileStorage.load());
         } catch (JosBotException e) {
-            ui.showLoadingError();
+            //ui.showLoadingError();
+            ui.showError("loading_error");
             taskList = new TaskList();
         } catch (FileNotFoundException e) {
-            ui.showFileNotFoundError();
+            ui.showError("file_not_found_error");
         }
           catch (IOException e) {
-            ui.showLoadingError();
+              ui.showError("loading_error");
           }
     }
 

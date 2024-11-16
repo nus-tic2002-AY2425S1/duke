@@ -5,41 +5,52 @@ import josbot.storage.FileStorage;
 import josbot.task.TaskList;
 import josbot.ui.UI;
 
-import java.io.File;
-import java.nio.file.FileStore;
+/**
+ * Command is the parent class used to identify the command executed by the user and relevant errors generated.
+ */
 
 public class Command {
 
     protected String commandType;
     protected String description;
-    protected boolean exit;
+    protected boolean isExit;
 
 
-    public Command() {}
+    public Command() {
+    }
 
+
+    /**
+     *
+     * Takes in the type and description of the command and storing it.
+     *
+     * @param commandType The type of Command (e.g. Todo , Deadline and more ..)
+     * @param description The description of the command
+     */
     public Command(String commandType, String description) {
         this.commandType = commandType;
         this.description = description;
-        this.exit = false;
+        this.isExit = false;
     }
 
+    public void execute(TaskList tasks, UI ui, FileStorage file) throws JosBotException {}
 
-    public void setCommandType(String commandType, String description) {
-        this.commandType = commandType;
-        this.description = description;
-        this.exit = false;
+    /**
+     * Return the description of the command
+     *
+     * @return description of the command
+     */
+    public String getDescription() {
+        return description;
     }
 
-    public void execute(TaskList tasks, UI ui, FileStorage file) throws JosBotException {};
+    /**
+     * Return boolean of isExit value
+     *
+     * @return isExit
+     */
 
-    public String getCommandType() {return commandType;}
-    public String getDescription() {return description;}
-
-    public boolean isExit(){
-        return exit;
+    public boolean isExit() {
+        return isExit;
     }
-
-//    public void CommandResult(){
-//        throw new UnsupportedOperationException("Not supported!");
-//    }
 }

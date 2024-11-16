@@ -1,14 +1,21 @@
 package josbot.storage;
 
-import josbot.*;
+import josbot.JosBotException;
 import josbot.parser.DateTimeParser;
-import josbot.task.*;
+import josbot.parser.StorageParser;
+import josbot.task.Deadline;
+import josbot.task.Event;
+import josbot.task.Task;
+import josbot.task.TaskList;
+import josbot.task.Todo;
 import josbot.ui.UI;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -21,147 +28,90 @@ public class FileStorage {
         this.path = filePath;
     }
 
-    private void checkFilePath() throws IOException {
-        File file = new File(path);
-        if(!file.exists()) {
-            UI ui = new UI();
-            ui.showFileNotFoundError();
-            file.createNewFile();
-        }
-    }
-
-
     /**
-     *
-     * Used to load specific file and return the content as ArrayList<Task>
+     * Returns ArrayList of Task by loading the specific file content
      * This method is usually triggered when the program first launches
      *
      * @return ArrayList<Task>
-     * @throws JosBotException when there are JosBotException error coming from convertDateTime method
-     * @throws FileNotFoundException when file is not found in the specified file path
+     * @throws JosBotException       when there are JosBotException error coming from convertDateTime method
      */
-    public ArrayList<Task> load() throws JosBotException, FileNotFoundException, IOException {
-        checkFilePath();
+    public ArrayList<Task> load() throws JosBotException, IOException, ArrayIndexOutOfBoundsException {
         File f = new File(path);
-
-        ArrayList<Task> load_list = new ArrayList<>();
+        f.createNewFile();
+        ArrayList<Task> loadList = new ArrayList<>();
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
-        while (s.hasNext()) {
-            dt = new DateTimeParser();
-            String user_input = s.nextLine();
-            String tag = "";
-            if(user_input.contains("#"))
-            {
-                tag = user_input.split("#")[1];
-                user_input = user_input.split("#")[0];
-            }
-            String[] line = user_input.split(",");
-            Task t = null;
-
-            if(line[0].equals("T"))
-            {
-                t = new Todo(line[2]);
-            }
-            else if(line[0].equals("D"))
-            {
-                if(line.length == 5)
-                {
-                    t = new Deadline(line[2], dt.convertToDateTime(line[3]+" "+line[4]), true);
+        try {
+            while (s.hasNext()) {
+                dt = new DateTimeParser();
+                String userInput = s.nextLine();
+                String tag = "";
+                if (userInput.contains("#")) {
+                    tag = userInput.split("#")[1];
+                    userInput = userInput.split("#")[0];
                 }
-                else
-                {
-                    t = new Deadline(line[2], dt.convertToDateTime(line[3]));
+                String[] line = userInput.split(",");
+                Task t = null;
+
+                if (line[0].equals("T")) {
+                    t = new Todo(line[2]);
+                } else if (line[0].equals("D")) {
+                    if (line.length == 5) {
+                        t = new Deadline(line[2], dt.convertToDateTime(line[3] + " " + line[4]), true);
+                    } else {
+                        t = new Deadline(line[2], dt.convertToDateTime(line[3]));
+                    }
+
+                } else if (line[0].equals("E")) {
+                    t = new Event(line[2], dt.convertToDateTime(line[3]), dt.convertToDateTime(line[3]));
+                } else {
+                    throw new JosBotException("");
                 }
 
-            }
-            else if(line[0].equals("E"))
-            {
-                t = new Event(line[2], dt.convertToDateTime(line[3]), dt.convertToDateTime(line[3]));
+                if (line[1].equals("1")) {
+                    t.markAsDone();
+                }
+
+                if (!tag.equals("")) {
+                    t.setTag(tag);
+                } else {
+                    t.setTag("");
+                }
+
+                loadList.add(t);
             }
 
-            if(line[1].equals("1"))
-            {
-                t.markAsDone();
-            }
-
-            if(!tag.equals(""))
-            {
-                t.setTag(tag);
-            }
-            else {
-                t.setTag("");
-            }
-
-            load_list.add(t);
+        } catch (ArrayIndexOutOfBoundsException | JosBotException e) {
+            UI ui = new UI();
+            s.close();
+            Path filepath = Paths.get(path);
+            Files.delete(filepath);
+            ui.showLine();
+            ui.showError("file_corrupted");
+            f.createNewFile();
+            return loadList;
         }
-
-        return load_list;
+        return loadList;
     }
-
 
     /**
+     * Save TaskList in a filepath declared
      *
-     * Used to save TaskList in a filepath declared
-     *
-     * @param tasks
+     * @param tasks contains all the current tasks
      */
     public void saveToFile(TaskList tasks) {
-        String list_string = parseListToString(tasks.getTasks());
+        StorageParser parser = new StorageParser();
+        String listString = parser.parseListToString(tasks.getTasks());
         File f = new File(path);
-        try{
-            if(f.exists()){
+        try {
+            if (f.exists()) {
                 FileWriter fw = new FileWriter(path);
-                fw.write(list_string);
+                fw.write(listString);
                 fw.close();
-            }
-            else
-            {
+            } else {
                 throw new JosBotException("");
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Error : No save file was found!");
         }
-    }
-
-
-    private static String parseListToString(ArrayList<Task> file_list)
-    {
-        String list_string = "";
-        for(int i = 0; i < file_list.size(); i++)
-        {
-            list_string += file_list.get(i).getType() + ",";
-            if(file_list.get(i).getStatusIcon().equals("X"))
-            {
-                list_string += "1,";
-            }
-            else
-            {
-                list_string += "0,";
-            }
-            list_string += file_list.get(i).getDescription();
-
-            //deadline
-            if(file_list.get(i).getType().equals("D"))
-            {
-                Deadline d = (Deadline) file_list.get(i);
-                DateTimeParser dt_parser = new DateTimeParser();
-                list_string += ","+dt_parser.convertToString(d.getDateTime(),"store");
-            }
-            else if(file_list.get(i).getType().equals("E"))
-            {
-                Event e = (Event) file_list.get(i);
-                DateTimeParser dt_parser = new DateTimeParser();
-                list_string += ","+dt_parser.convertToString(e.getFrom(),"store") + "," + dt_parser.convertToString(e.getTo(),"store");
-            }
-
-            if(!file_list.get(i).getTag().equals(""))
-            {
-                list_string += "#"+file_list.get(i).getTag();
-            }
-
-            list_string += "\n";
-        }
-        return list_string;
     }
 }

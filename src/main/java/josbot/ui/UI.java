@@ -1,5 +1,6 @@
 package josbot.ui;
 
+import josbot.common.Messages;
 import josbot.parser.DateTimeParser;
 import josbot.task.Task;
 import josbot.task.TaskList;
@@ -7,161 +8,144 @@ import java.util.Scanner;
 
 public class UI {
 
-    public void showLine(){
-        System.out.println("____________________________________________________________");
+    private static final String LINE = "____________________________________________________________";
+
+    public void showLine() {
+        System.out.println(LINE);
     }
 
-    public void showGreeting(String type){
-        switch(type){
-            case "Start":
-                showLine();
-                DateTimeParser dt = new DateTimeParser();
-                System.out.println( "Good "+dt.getTimeGreeting() +", I'm JosBot\nWhat can I do for you?");
-                showLine();
-                break;
-            case "End":
-                System.out.println("Bye. Hope to see you again soon!");
-                showLine();
-                break;
+    public void showGreeting(String type) {
+        switch (type) {
+        case "Start":
+            showLine();
+            DateTimeParser dt = new DateTimeParser();
+            System.out.println(dt.getTimeGreeting() + ", "+Messages.START_GREETING);
+            showLine();
+            break;
+        case "End":
+            System.out.println(Messages.END_GREETING);
+            showLine();
+            break;
         }
     }
 
-    public void showError(String error_type){
-        switch(error_type){
-            case "invalid_command":
-                System.out.println("Invalid Command : No such command found!");
-                break;
-            case "invalid_datetime_format":
-                System.out.println("Invalid date & time format! Please use date format (dd/MM/yyyy) and if you want to add time,\nuse the time format (24-hour format, eg. 1800 is 6PM)");
-                break;
-            case "invalid_tag":
-                System.out.println("Invalid tag detected! Please use the correct tag format\nfor tag use 'tag task_list_number tag_description')\n for untag use ('untag task_list_numer')");
-                break;
-            case "missing_description":
-                System.out.println("Missing description detected! Please specify the description of the task");
-                break;
-            case "missing_mark_number":
-                System.out.println("Missing mark number detected! Please specify the task number you want to mark");
-                break;
-            default:
-                System.out.println("Unknown Error : "+error_type);
+    public void showError(String errorType) {
+        switch (errorType) {
+        case "invalid_command":
+            System.out.println(Messages.ERROR_INVALID_COMMAND);
+            break;
+        case "invalid_datetime_format":
+            System.out.println(Messages.ERROR_INVALID_DATETIME_FORMAT);
+            break;
+        case "invalid_tag":
+            System.out.println(Messages.ERROR_INVALID_TAG);
+            break;
+        case "missing_description":
+            System.out.println(Messages.ERROR_MISSING_DESCRIPTION);
+            break;
+        case "missing_mark_number":
+            System.out.println(Messages.ERROR_MISSING_MARK_NUMBER);
+            break;
+        case "file_corrupted":
+            System.out.println(Messages.ERROR_FILE_CORRUPTED);
+            break;
+        case "loading_error":
+            System.out.println(Messages.ERROR_LOADING);
+            showLine();
+            break;
+        case "file_not_found_error":
+            System.out.println(Messages.ERROR_FILE_NOT_FOUND);
+            showLine();
+        default:
+            System.out.println("Unknown Error : " + errorType);
         }
     }
 
-    public void showLoadingError(){
-        System.out.println("Error: Failed to load file");
-        showLine();
-    }
+public void showInvalidDateTime() {
+    System.out.println(Messages.ERROR_INVALID_DATETIME);
+}
 
-//    public void showInvalidCommandError(String message){
-//        System.out.println("Invalid Command : " + message);
-//        showLine();
-//    }
-
-    public void showFileNotFoundError(){
-        System.out.println("Error: File are not found!\n");
-        System.out.println("Creating new file..\n");
-        showLine();
-    }
-
-    public String readCommand(){
+    public String readCommand() {
         Scanner in = new Scanner(System.in);
         return in.nextLine().trim();
     }
 
-    public void showListMessage(){
-        System.out.println("Here are the tasks in your list:");
+    public void showListMessage() {
+        System.out.println(Messages.LIST_MESSAGES);
     }
 
-    public void showReminderMessage(){
-        System.out.println("Reminder - Here are the lists of task with deadline \nsorted from the oldest at the top that have not been marked as done:\n");
+    public void showReminderMessage() {
+        System.out.println(Messages.REMINDER_MESSAGES);
     }
 
-    public void showAddMessage(){
-        System.out.println("Got it. I've added this task:");
+    public void showAddMessage() {
+        System.out.println(Messages.ADD_MESSAGES);
     }
 
-    public void showTaskMessage(Task t, TaskList list){
+    public void showTaskMessage(Task t, TaskList list) {
         System.out.println(t.toString());
-        System.out.println("Now you have " + list.getTaskCount() + " task in the list.");
+        System.out.println(Messages.TASK_MESSAGES_START + list.getTaskCount() + Messages.TASK_MESSAGES_END);
     }
 
-    public void showMarkMessage(Task t, Boolean marked){
-        if(marked){
-            System.out.println("Nice! I've marked this task as done:");
-        }
-        else
-        {
-            System.out.println("OK, I've marked this task as not done yet:");
+    public void showMarkMessage(Task t, Boolean marked) {
+        if (marked) {
+            System.out.println(Messages.MARK_MESSAGES);
+        } else {
+            System.out.println(Messages.UNMARK_MESSAGES);
         }
         System.out.println(t.toString());
     }
 
-    public void showTagMessage(Task t, Boolean tagged){
-        if(tagged){
-            System.out.println("OK, I've tagged this task as follow:");
-        }
-        else
-        {
-            System.out.println("OK, I've removed the tag from this task:");
+    public void showTagMessage(Task t, Boolean tagged) {
+        if (tagged) {
+            System.out.println(Messages.TAG_MESSAGES);
+        } else {
+            System.out.println(Messages.UNTAG_MESSAGES);
         }
         System.out.println(t.toString());
     }
 
-    public void showDeleteMessage(String message, int count){
-        if(message.equals("start"))
-        {
-            System.out.println("Noted. I've removed this task:");
-        }
-        else
-        {
-            System.out.println("Now you have " + count + " tasks in the list.");
+    public void showDeleteMessage(String message, int count) {
+        if (message.equals("start")) {
+            System.out.println(Messages.DELETE_MESSAGES);
+        } else {
+            System.out.println(Messages.TASK_MESSAGES_START + count + Messages.TASK_MESSAGES_END);
         }
     }
 
-    public void showMessage(String message){
+    public void showMessage(String message) {
         System.out.println(message);
     }
 
-    public void showDateTimeError(){
-        System.out.println("Invalid date & time format! Please use date format (dd/MM/yyyy) and if you want to add time,\nuse the time format (24-hour format, eg. 1800 is 6PM)");
+    public void showDateTimeError() {
+        System.out.println(Messages.ERROR_DATEITME);
     }
 
-    public void showInvalidDateTime(){
-        System.out.println("Invalid date & time detected! Please make sure that the date or time you've listed is correct");
+
+
+    public void showIndexOutofBoundError() {
+        System.out.println(Messages.ERROR_INDEX_OUT_OF_BOUND);
     }
 
-    public void showIndexOutofBoundError(){
-        System.out.println("The number you've selected is not on the list! Please choose the correct number.");
+    public void showNumberFormatError() {
+        System.out.println(Messages.ERROR_NUMBER_FORMAT);
     }
 
-    public void showNumberFormatError(){
-        System.out.println("The command format that you've selected is wrong! Please use number/Integer (e.g <Command> <number/integer>)");
-    }
+    public void showTaskLists(TaskList tasks, boolean showNumber) {
 
-    public void showTaskLists(TaskList tasks, boolean showNumber){
-
-        if(tasks.getTaskCount() == 0)
-        {
-            System.out.println("No task result found!");
-        }
-        else
-        {
-            if(showNumber)
-            {
+        if (tasks.getTaskCount() == 0) {
+            System.out.println(Messages.NO_TASK_FOUND_MESSAGES);
+        } else {
+            if (showNumber) {
                 for (int i = 1; i < tasks.getTaskCount() + 1; i++) {
                     System.out.println(i + ". " + tasks.getTasks().get(i - 1).toString());
                 }
-            }
-            else
-            {
+            } else {
                 for (int i = 1; i < tasks.getTaskCount() + 1; i++) {
                     System.out.println(tasks.getTasks().get(i - 1).toString());
                 }
             }
-            System.out.println("\nThere are a total of " + tasks.getTaskCount() + " tasks shown in the above list.");
+            System.out.println(Messages.TASK_LIST_MESSAGES_START + tasks.getTaskCount() + Messages.TASK_LIST_MESSAGES_END);
         }
-
     }
-
 }

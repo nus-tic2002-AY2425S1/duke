@@ -2,6 +2,9 @@ package wkduke.ui;
 
 import wkduke.common.Messages;
 import wkduke.exception.WKDukeException;
+import wkduke.exception.storage.StorageFilePathException;
+import wkduke.exception.storage.StorageOperationException;
+import wkduke.storage.Storage;
 import wkduke.task.Task;
 import wkduke.task.TaskList;
 
@@ -9,6 +12,11 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import static wkduke.common.Messages.MESSAGE_CUSTOM_DATA_SOURCE_POST;
+import static wkduke.common.Messages.MESSAGE_DEFAULT_DATA_SOURCE_POST;
+import static wkduke.common.Messages.MESSAGE_FLEXIBLE_INPUT_PROMPT;
+import static wkduke.common.Messages.MESSAGE_FLEXIBLE_INPUT_RETRY_PROMPT;
 
 /**
  * Handles user interface for the WKDuke application.
@@ -87,6 +95,40 @@ public class Ui {
      */
     private void showLine() {
         out.print(BORDER_LINE.indent(INDENT_LEVEL1_NUM));
+    }
+
+    /**
+     * Initializes a storage instance with a user-specified or default file path.
+     *
+     * <p>This method prompts the user to input a file path for loading tasks. The user can provide a
+     * custom file path (validated for correctness) or press 'Enter' to use the default data source.
+     * Invalid inputs are caught and retried with appropriate feedback. If no valid path is provided,
+     * the storage is initialized with the default data source. Feedback messages are displayed to
+     * indicate whether a custom or default path is being used.</p>
+     *
+     * @return A {@link Storage} instance initialized with the specified or default data source.
+     * @throws StorageOperationException If the default data source cannot be initialized.
+     */
+
+    public Storage getFlexibleDataSource() throws StorageOperationException {
+        showLine();
+        out.print(Messages.MESSAGE_FLEXIBLE_DATA_SOURCE.indent(INDENT_LEVEL2_NUM));
+        out.print(MESSAGE_FLEXIBLE_INPUT_PROMPT);
+        String filePath = in.nextLine().trim();
+
+        while (!filePath.isEmpty()) {
+            try {
+                return new Storage(filePath);
+            } catch (StorageOperationException | StorageFilePathException e) {
+                out.printf("\t Error: %s%n%n", e.getMessage());
+                out.print(MESSAGE_FLEXIBLE_INPUT_RETRY_PROMPT);
+                filePath = in.nextLine().trim();
+            } finally {
+                out.printf((MESSAGE_CUSTOM_DATA_SOURCE_POST) + "%n", filePath);
+            }
+        }
+        out.println(MESSAGE_DEFAULT_DATA_SOURCE_POST);
+        return new Storage();
     }
 
     /**

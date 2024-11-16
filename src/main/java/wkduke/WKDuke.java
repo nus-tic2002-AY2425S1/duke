@@ -31,7 +31,7 @@ public class WKDuke {
             taskList = storage.load();
         } catch (StorageOperationException | FileContentException e) {
             ui.showError(e);
-            System.exit(-1);
+            System.exit(1);
         }
     }
 
@@ -61,7 +61,7 @@ public class WKDuke {
                 isExit = c.isExit();
             } catch (StorageOperationException e) {
                 ui.showError(e);
-                System.exit(-1);
+                System.exit(1);
             } catch (WKDukeException e) {
                 ui.showError(e);
             }

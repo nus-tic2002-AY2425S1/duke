@@ -27,6 +27,7 @@ public class Ui {
     private static final String BORDER_LINE = "____________________________________________________________________________";
     private static final int INDENT_LEVEL1_NUM = 4;
     private static final int INDENT_LEVEL2_NUM = INDENT_LEVEL1_NUM + 1;
+    private static final int DISPLAY_INDEX_OFFSET = 1;
     private static final String WK_DUKE_LOGO = """
               ___       __   ___  __    ________  ___  ___  ___  __    _______
              |\\  \\     |\\  \\|\\  \\|\\  \\ |\\   ___ \\|\\  \\|\\  \\|\\  \\|\\  \\ |\\  ___ \\
@@ -84,7 +85,7 @@ public class Ui {
         List<String> formattedTasks = new ArrayList<>();
         for (Task task : tasks) {
             int taskIndex = taskList.getTaskIndex(task);
-            String index = (taskIndex == -1) ? "⌦" : String.format("%" + digits + "d", taskIndex + 1); // Align the index
+            String index = (taskIndex == -1) ? "⌦" : String.format("%" + digits + "d", taskIndex + DISPLAY_INDEX_OFFSET); // Align the index
             formattedTasks.add(String.format(" %s. %s", index, task));
         }
         return formattedTasks;

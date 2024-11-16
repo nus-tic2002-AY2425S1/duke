@@ -15,6 +15,13 @@ public class ReadFromFile {
         this.fileName = fileName;
     }
 
+    /**
+     * Reads tasks from the file specified by the file name.
+     * Each line in the file represents a task detail and is added to a list.
+     *
+     * @return An ArrayList containing the task details read from the file.
+     * @throws FileNotFoundException If the file cannot be found or read.
+     */
     public ArrayList<String> readTasks() throws FileNotFoundException {
         try {
             ArrayList<String> taskDetail = new ArrayList<>();

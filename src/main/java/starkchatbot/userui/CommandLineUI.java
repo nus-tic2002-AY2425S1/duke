@@ -12,6 +12,11 @@ public class CommandLineUI {
 
     private final ArrayList<Task> tasks;
 
+    /**
+     * Initializes the CommandLineUI with a list of tasks.
+     *
+     * @param tasks the list of tasks to manage and display to the user.
+     */
     public CommandLineUI(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
@@ -33,6 +38,12 @@ public class CommandLineUI {
     }
 
 
+    /**
+     * Reads user inputs, processes the commands, and manages the task lists based
+     * on the inputs provided. Ends when the user enters "bye".
+     *
+     * @return the updated list of tasks after processing user inputs to Stark class.
+     */
     public ArrayList<Task> readUserInputs() {
         lineBreak();
         welcomeMsg();

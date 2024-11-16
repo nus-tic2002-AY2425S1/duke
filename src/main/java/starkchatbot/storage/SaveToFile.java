@@ -3,18 +3,26 @@ package starkchatbot.storage;
 import starkchatbot.taskmanager.*;
 import starkchatbot.userui.StarkException;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.io.File;
 
 public class SaveToFile {
-    private ArrayList<Task> tasks;
-    private String filePath;
+    private final ArrayList<Task> tasks;
+    private final String filePath;
 
 
+    /**
+     * Constructs a SaveToFile object with a list of tasks and the file path where the tasks will be saved.
+     * If the file does not exist, it attempts to create a new file at the given path.
+     *
+     * @param taskList The list of tasks to be saved to the file.
+     * @param filePath The path of the file where tasks will be saved.
+     * @throws StarkException.FileNotFoundException If the file cannot be created or found.
+     */
     public SaveToFile(ArrayList<Task> taskList, String filePath)
             throws StarkException.FileNotFoundException {
         this.tasks = taskList;
@@ -31,6 +39,13 @@ public class SaveToFile {
 
     }
 
+
+    /**
+     * Writes the tasks to the file at the specified file path.
+     * The task data is saved in a specific format based on the task type.
+     *
+     * @throws StarkException.WriteToFileException If an error occurs while writing to the file.
+     */
     public void writeToFile() throws StarkException.WriteToFileException {
 
         try {

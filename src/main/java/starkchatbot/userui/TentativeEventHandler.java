@@ -9,6 +9,11 @@ import java.util.Scanner;
 
 public class TentativeEventHandler {
 
+    /**
+     * Displays a menu for managing tentative events and processes user input
+     *
+     * @param taskList the task list to manage tentative events.
+     */
     public static void tentativeEvent(TaskList taskList) {
         boolean isactive = true;
 
@@ -54,6 +59,12 @@ public class TentativeEventHandler {
         }
     }
 
+
+    /**
+     * Adds a new tentative event with time slots to the task list.
+     *
+     * @param taskList the task list to add the tentative event to.
+     */
     private static void addTentativeEvent(TaskList taskList) {
         System.out.print(System.lineSeparator());
         System.out.print("\tPlease enter event description: ");
@@ -83,6 +94,12 @@ public class TentativeEventHandler {
         }
     }
 
+
+    /**
+     * Prints all tentative events in the task list.
+     *
+     * @param tentativeEvents the list of tentative tasks to print.
+     */
     private static void printAllTentativeEvents(ArrayList<Task> tentativeEvents) {
 
         int counter = 0;

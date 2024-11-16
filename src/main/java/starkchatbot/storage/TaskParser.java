@@ -5,8 +5,19 @@ import starkchatbot.userui.StarkException;
 
 import java.util.regex.PatternSyntaxException;
 
+
+/**
+ * Parses task data from file strings and creates corresponding task objects.
+ */
 public class TaskParser {
 
+    /**
+     * Parses a task description string and creates a corresponding Task object.
+     *
+     * @param taskSplit the task description string from the file.
+     * @return the parsed Task object, or null if the description is invalid.
+     * @throws StarkException.InvalidDescriptionException if the task description format is invalid.
+     */
     public static Task parseTasks(String taskSplit) throws StarkException.InvalidDescriptionException {
 
         try {
@@ -52,6 +63,12 @@ public class TaskParser {
     }
 
 
+    /**
+     * Parses a tentative event task description string and creates a TentativeTask object.
+     *
+     * @param tentativeDescription the tentative event description string from the file.
+     * @return the parsed TentativeTask object, or null if the description is invalid.
+     */
     private static Task parseTentativeEvent(String tentativeDescription) {
         String[] splitDetails = tentativeDescription.split(" # ");
         if (splitDetails.length != 3) {

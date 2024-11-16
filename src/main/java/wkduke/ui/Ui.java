@@ -174,7 +174,9 @@ public class Ui {
      */
     public void printUiTaskGroups(TaskList taskList, List<UiTaskGroup> taskGroups) {
         List<String> messages = new ArrayList<>();
-        for (UiTaskGroup uiTaskGroup : taskGroups) {
+        int size = taskGroups.size();
+        for (int i = 0; i < size; i++) {
+            UiTaskGroup uiTaskGroup = taskGroups.get(i);
             List<Task> tasks = uiTaskGroup.tasks();
             if (tasks.isEmpty()) {
                 continue;
@@ -182,6 +184,9 @@ public class Ui {
             messages.add(uiTaskGroup.header());
             messages.addAll(formatTasksWithIndex(taskList, tasks));
             messages.add(uiTaskGroup.footer());
+            if (i < size - 1) {
+                messages.add("\n"); // Add a blank line between groups
+            }
         }
         printMessages(messages.toArray(new String[0]));
     }

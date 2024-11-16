@@ -4,7 +4,7 @@ import duke.dancepop.utils.Storage;
 
 public class DancePop {
     public static void main(String[] args) {
-        Storage.loadFile();
+        Storage.loadFromFile();
         UI.start();
     }
 }

@@ -10,45 +10,95 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+/**
+ * Utility class for managing a list of tasks.
+ */
 public class TaskList {
     private static final List<Task> tasks = new ArrayList<>();
 
+    /**
+     * Retrieves the task at the specified index.
+     *
+     * @param i The index of the task to retrieve.
+     * @return The Task object at the specified index.
+     */
     public static Task get(int i) {
         return tasks.get(i);
     }
 
+    /**
+     * Adds a list of tasks to the task list.
+     *
+     * @param t The list of tasks to add.
+     */
+    public static void addAll(List<Task> t) {
+        tasks.addAll(t);
+    }
+
+    /**
+     * Adds a task to the task list.
+     *
+     * @param t The task to add.
+     */
     public static void add(Task t) {
         tasks.add(t);
     }
 
+    /**
+     * Adds a task to the task list and prints a confirmation message.
+     *
+     * @param t The task to add.
+     */
     public static void addAndPrint(Task t) {
         add(t);
-        // TODO: Refactor all these strings into enum or something and also outside of this class
         Log.printMsg("Got it. I've added this task:", t.toString(), "Now you have " + tasks.size() + " tasks in the list.");
     }
 
+    /**
+     * Removes the task at the specified index from the task list and prints a confirmation message.
+     *
+     * @param i The index of the task to remove.
+     */
     public static void remove(int i) {
         Task t = tasks.get(i);
         tasks.remove(i);
         Log.printMsg("Noted. I've removed this task:", t.toString(), "Now you have " + tasks.size() + " tasks in the list.");
     }
 
+    /**
+     * Marks the task at the specified index as done and prints a confirmation message.
+     *
+     * @param i The index of the task to mark as done.
+     */
     public static void markDone(int i) {
         Task t = get(i);
-        t.setDone(true);
+        t.setIsDone(true);
         Log.printMsg("Nice! I've marked this task as done:", t.toString());
     }
 
+    /**
+     * Marks the task at the specified index as not done and prints a confirmation message.
+     *
+     * @param i The index of the task to mark as not done.
+     */
     public static void unmarkDone(int i) {
         Task t = get(i);
-        t.setDone(false);
+        t.setIsDone(false);
         Log.printMsg("OK, I've marked this task as not done yet:", t.toString());
     }
 
+    /**
+     * Clears all tasks from the task list.
+     */
     public static void clear() {
         tasks.clear();
     }
 
+    /**
+     * Retrieves the list of all tasks.
+     *
+     * @return The list of tasks.
+     */
     public static List<Task> getTasks() {
         return tasks;
     }

@@ -13,9 +13,11 @@ import java.util.regex.Pattern;
 public class Parser {
 
     /**
-     * @param input string from user
-     * @return Command object with execute function
-     * @throws InputException
+     * Parses the user input string and returns the corresponding Command object.
+     *
+     * @param input The user input string.
+     * @return The Command object associated with the input.
+     * @throws InputException If the input is invalid or the command is unrecognized.
      */
     public static Command parse(String input) throws InputException {
         String[] parts = input.split(" ", 2);

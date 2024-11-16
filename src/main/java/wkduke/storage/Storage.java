@@ -24,7 +24,7 @@ import static wkduke.common.Messages.MESSAGE_DUPLICATE_TASK_IN_FILE_HELP;
  * Handles file reading, writing, and ensures proper file setup.
  */
 public class Storage {
-    private static final String DEFAULT_STORAGE_FILEPATH = "./data/tasks.txt";
+    public static final String DEFAULT_STORAGE_FILEPATH = "./data/tasks.txt";
     private final Path filePath;
 
     /**

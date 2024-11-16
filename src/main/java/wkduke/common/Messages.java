@@ -39,11 +39,11 @@ public class Messages {
     public static final String MESSAGE_FLEXIBLE_DATA_SOURCE = """
                   +----------------------------------------------------------+
                   |                                                          |
-                  |                 WKDuke Pre-initialisation                |
+                  |                WKDuke Pre-initialisation                 |
                   |                                                          |
                   |   Please enter the custom file path to load your tasks   |
-                  |           (relative or full path) or press 'Enter'       |
-                  |     to use the default data source (./data/tasks.txt).   |
+                  |         (relative or full path) or press 'Enter'         |
+                  |    to use the default data source (./data/tasks.txt).    |
                   |                                                          |
                   +----------------------------------------------------------+
             """;
@@ -66,9 +66,9 @@ public class Messages {
               Tips: You can type the command name (e.g., 'todo', 'delete', etc.) to see detailed usage and examples for that command.
             """;
     public static final String MESSAGE_TASK_LIST_TIPS = """
-            \nTips: [TaskType][TaskPriority][TaskStatus]
-              [TaskType]: [T] for Todo, [D] for Deadline, [E] for Event
-              [TaskPriority]: [H] for High, [M] for Medium, [L] for Low
-              [TaskStatus]: [X] for done, [ ] for not done
+            \nTips:
+              Type:     [T] Todo, [D] Deadline, [E] Event
+              Priority: [H] High, [M] Medium, [L] Low
+              Status:   [X] Done, [ ] Not done
             """;
 }

@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static wkduke.util.TestUtil.assertTextFilesEqual;
 
 @TestClassOrder(ClassOrderer.OrderAnnotation.class)
-public class StorageTest {
+class StorageTest {
     private static final String VALID_DATA_FILE = "src/test/data/StorageTest/ValidData.txt";
     private static final String INVALID_DATA_FILE = "src/test/data/StorageTest/InvalidData.txt";
 
@@ -57,7 +57,7 @@ public class StorageTest {
         @Order(1)
         @ParameterizedTest
         @MethodSource("validFilePathsProvider")
-        public void constructor_validFilePath_createsStorage(String filePath) {
+        void constructor_validFilePath_createsStorage(String filePath) {
             assertDoesNotThrow(() -> new Storage(filePath));
         }
 
@@ -120,7 +120,7 @@ public class StorageTest {
         @Order(1)
         @ParameterizedTest
         @MethodSource("invalidFilePathsProvider")
-        public void constructor_invalidFilePath_throwsStorageFilePathException(String filePath) {
+        void constructor_invalidFilePath_throwsStorageFilePathException(String filePath) {
             assertThrows(StorageFilePathException.class, () -> new Storage(filePath));
         }
 

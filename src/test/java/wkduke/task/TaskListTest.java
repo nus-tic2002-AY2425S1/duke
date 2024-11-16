@@ -17,7 +17,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestClassOrder(ClassOrderer.OrderAnnotation.class)
-public class TaskListTest {
+class TaskListTest {
     private TaskList taskList;
     private Todo todo1, todo2;
     private Deadline deadline1, deadline2;

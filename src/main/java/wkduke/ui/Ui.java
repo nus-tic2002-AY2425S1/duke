@@ -85,7 +85,7 @@ public class Ui {
         List<String> formattedTasks = new ArrayList<>();
         for (Task task : tasks) {
             int taskIndex = taskList.getTaskIndex(task);
-            String index = (taskIndex == -1) ? "⌦" : String.format("%" + digits + "d", taskIndex + DISPLAY_INDEX_OFFSET); // Align the index
+            String index = (taskIndex == -1) ? "x" : String.format("%" + digits + "d", taskIndex + DISPLAY_INDEX_OFFSET); // Align the index
             formattedTasks.add(String.format(" %s. %s", index, task));
         }
         return formattedTasks;
@@ -96,6 +96,7 @@ public class Ui {
      */
     private void showLine() {
         out.print(BORDER_LINE.indent(INDENT_LEVEL1_NUM));
+        out.println();
     }
 
     /**
@@ -119,16 +120,17 @@ public class Ui {
 
         while (!filePath.isEmpty()) {
             try {
-                return new Storage(filePath);
+                Storage storage = new Storage(filePath);
+                out.printf((MESSAGE_CUSTOM_DATA_SOURCE_POST) + "%n", filePath);
+                return storage;
             } catch (StorageOperationException | StorageFilePathException e) {
                 out.printf("\t Error: %s%n%n", e.getMessage());
                 out.print(MESSAGE_FLEXIBLE_INPUT_RETRY_PROMPT);
                 filePath = in.nextLine().trim();
-            } finally {
-                out.printf((MESSAGE_CUSTOM_DATA_SOURCE_POST) + "%n", filePath);
             }
         }
         out.println(MESSAGE_DEFAULT_DATA_SOURCE_POST);
+        out.println();
         return new Storage();
     }
 
@@ -142,6 +144,7 @@ public class Ui {
         for (String message : messages) {
             out.print(message.indent(INDENT_LEVEL2_NUM));
         }
+        out.println();
         showLine();
     }
 
@@ -220,10 +223,6 @@ public class Ui {
      * Displays the welcome logo and message to the user.
      */
     public void showWelcome() {
-        out.print(BORDER_LINE.indent(INDENT_LEVEL1_NUM));
-        out.print(WK_DUKE_LOGO.indent(INDENT_LEVEL2_NUM));
-        out.print(Messages.MESSAGE_WELCOME.indent(INDENT_LEVEL2_NUM));
-        out.print(BORDER_LINE.indent(INDENT_LEVEL1_NUM));
-
+        printMessages(WK_DUKE_LOGO, Messages.MESSAGE_WELCOME);
     }
 }

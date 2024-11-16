@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 // Solution below inspired by https://junit.org/junit5/docs/current/user-guide/#writing-tests-test-execution-order
 @TestClassOrder(ClassOrderer.OrderAnnotation.class)
-public class TimeParserTest {
+class TimeParserTest {
     @Order(1)
     @Nested
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -45,7 +45,7 @@ public class TimeParserTest {
         @Order(2)
         @ParameterizedTest
         @MethodSource("boundaryTimeProvider")
-        public void parseDateTime_boundaryTimes_returnsLocalDateTime(String input, LocalDateTime expected) throws TaskFormatException {
+        void parseDateTime_boundaryTimes_returnsLocalDateTime(String input, LocalDateTime expected) throws TaskFormatException {
             assertEquals(expected, TimeParser.parseDateTime(input));
         }
 
@@ -53,7 +53,7 @@ public class TimeParserTest {
         @Order(1)
         @ParameterizedTest
         @MethodSource("validDateTimeProvider")
-        public void parseDateTime_validDateFormats_returnsLocalDateTime(String input, LocalDateTime expected) throws TaskFormatException {
+        void parseDateTime_validDateFormats_returnsLocalDateTime(String input, LocalDateTime expected) throws TaskFormatException {
             assertEquals(expected, TimeParser.parseDateTime(input));
         }
     }
@@ -86,14 +86,14 @@ public class TimeParserTest {
         @Order(2)
         @ParameterizedTest
         @MethodSource("extraneousCharacterProvider")
-        public void parseDateTime_extraneousCharacters_throwsTaskFormatException(String input) {
+        void parseDateTime_extraneousCharacters_throwsTaskFormatException(String input) {
             assertThrows(TaskFormatException.class, () -> TimeParser.parseDateTime(input));
         }
 
         @Order(1)
         @ParameterizedTest
         @MethodSource("invalidDateTimeProvider")
-        public void parseDateTime_invalidDateFormats_throwsTaskFormatException(String input) {
+        void parseDateTime_invalidDateFormats_throwsTaskFormatException(String input) {
             assertThrows(TaskFormatException.class, () -> TimeParser.parseDateTime(input));
         }
     }

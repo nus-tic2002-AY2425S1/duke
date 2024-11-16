@@ -38,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestClassOrder(ClassOrderer.OrderAnnotation.class)
-public class CommandParserTest {
+class CommandParserTest {
     @Order(1)
     @Nested
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -156,7 +156,7 @@ public class CommandParserTest {
 
         @Order(1)
         @Test
-        public void parseCommand_exitCommand_returnsExitCommand() throws CommandFormatException, TaskFormatException {
+        void parseCommand_exitCommand_returnsExitCommand() throws CommandFormatException, TaskFormatException {
             Command result = CommandParser.parseCommand("bye");
             assertInstanceOf(ExitCommand.class, result, "Expected an instance of ExitCommand");
         }
@@ -164,7 +164,7 @@ public class CommandParserTest {
         @Order(4)
         @ParameterizedTest
         @MethodSource("validDeadlineCommandProvider")
-        public void parseCommand_validDeadlineCommands_returnsAddDeadlineCommand(String input, AddDeadlineCommand expected) throws CommandFormatException, TaskFormatException {
+        void parseCommand_validDeadlineCommands_returnsAddDeadlineCommand(String input, AddDeadlineCommand expected) throws CommandFormatException, TaskFormatException {
             Command result = CommandParser.parseCommand(input);
             assertEquals(expected, result);
         }
@@ -172,7 +172,7 @@ public class CommandParserTest {
         @Order(8)
         @ParameterizedTest
         @MethodSource("validDeleteCommandProvider")
-        public void parseCommand_validDeleteCommands_returnsDeleteCommand(String input, DeleteCommand expected) throws CommandFormatException, TaskFormatException {
+        void parseCommand_validDeleteCommands_returnsDeleteCommand(String input, DeleteCommand expected) throws CommandFormatException, TaskFormatException {
             Command result = CommandParser.parseCommand(input);
             assertEquals(expected, result);
         }
@@ -180,7 +180,7 @@ public class CommandParserTest {
         @Order(5)
         @ParameterizedTest
         @MethodSource("validEventCommandProvider")
-        public void parseCommand_validEventCommands_returnsAddEventCommand(String input, AddEventCommand expected) throws CommandFormatException, TaskFormatException {
+        void parseCommand_validEventCommands_returnsAddEventCommand(String input, AddEventCommand expected) throws CommandFormatException, TaskFormatException {
             Command result = CommandParser.parseCommand(input);
             assertEquals(expected, result);
         }
@@ -188,7 +188,7 @@ public class CommandParserTest {
         @Order(10)
         @ParameterizedTest
         @MethodSource("validFindCommandProvider")
-        public void parseCommand_validFindCommand_returnsFindCommand(String input, FindCommand expected) throws CommandFormatException, TaskFormatException {
+        void parseCommand_validFindCommand_returnsFindCommand(String input, FindCommand expected) throws CommandFormatException, TaskFormatException {
             Command result = CommandParser.parseCommand(input);
             assertEquals(expected, result);
         }
@@ -196,7 +196,7 @@ public class CommandParserTest {
         @Order(2)
         @ParameterizedTest
         @MethodSource("validListCommandProvider")
-        public void parseCommand_validListCommands_returnsListCommand(String input, Command expected) throws CommandFormatException, TaskFormatException {
+        void parseCommand_validListCommands_returnsListCommand(String input, Command expected) throws CommandFormatException, TaskFormatException {
             Command result = CommandParser.parseCommand(input);
             assertEquals(expected, result);
         }
@@ -204,7 +204,7 @@ public class CommandParserTest {
         @Order(6)
         @ParameterizedTest
         @MethodSource("validMarkCommandProvider")
-        public void parseCommand_validMarkCommands_returnsMarkCommand(String input, MarkCommand expected) throws CommandFormatException, TaskFormatException {
+        void parseCommand_validMarkCommands_returnsMarkCommand(String input, MarkCommand expected) throws CommandFormatException, TaskFormatException {
             Command result = CommandParser.parseCommand(input);
             assertEquals(expected, result);
         }
@@ -212,7 +212,7 @@ public class CommandParserTest {
         @Order(11)
         @ParameterizedTest
         @MethodSource("validSortCommandProvider")
-        public void parseCommand_validSortCommands_returnsSortCommand(String input, Command expected) throws CommandFormatException, TaskFormatException {
+        void parseCommand_validSortCommands_returnsSortCommand(String input, Command expected) throws CommandFormatException, TaskFormatException {
             Command result = CommandParser.parseCommand(input);
             assertEquals(expected, result);
         }
@@ -220,7 +220,7 @@ public class CommandParserTest {
         @Order(3)
         @ParameterizedTest
         @MethodSource("validToDoCommandProvider")
-        public void parseCommand_validToDoCommands_returnsAddToDoCommand(String input, AddTodoCommand expected) throws CommandFormatException, TaskFormatException {
+        void parseCommand_validToDoCommands_returnsAddToDoCommand(String input, AddTodoCommand expected) throws CommandFormatException, TaskFormatException {
             Command result = CommandParser.parseCommand(input);
             assertEquals(expected, result);
         }
@@ -228,7 +228,7 @@ public class CommandParserTest {
         @Order(7)
         @ParameterizedTest
         @MethodSource("validUnmarkCommandProvider")
-        public void parseCommand_validUnmarkCommands_returnsUnmarkCommand(String input, UnmarkCommand expected) throws CommandFormatException, TaskFormatException {
+        void parseCommand_validUnmarkCommands_returnsUnmarkCommand(String input, UnmarkCommand expected) throws CommandFormatException, TaskFormatException {
             Command result = CommandParser.parseCommand(input);
             assertEquals(expected, result);
         }
@@ -236,7 +236,7 @@ public class CommandParserTest {
         @Order(9)
         @ParameterizedTest
         @MethodSource("validUpdatePriorityCommandProvider")
-        public void parseCommand_validUpdatePriorityCommands_returnsUpdatePriorityCommand(String input, UpdatePriorityCommand expected) throws CommandFormatException, TaskFormatException {
+        void parseCommand_validUpdatePriorityCommands_returnsUpdatePriorityCommand(String input, UpdatePriorityCommand expected) throws CommandFormatException, TaskFormatException {
             Command result = CommandParser.parseCommand(input);
             assertEquals(expected, result);
         }
@@ -348,77 +348,77 @@ public class CommandParserTest {
         @Order(8)
         @ParameterizedTest
         @MethodSource("invalidCommandWordProvider")
-        public void parseCommand_invalidCommandWord_throwsCommandFormatException(String input) {
+        void parseCommand_invalidCommandWord_throwsCommandFormatException(String input) {
             assertThrows(CommandFormatException.class, () -> CommandParser.parseCommand(input));
         }
 
         @Order(3)
         @ParameterizedTest
         @MethodSource("invalidDeadlineCommandProvider")
-        public void parseCommand_invalidDeadlineCommands_throwsTaskFormatException(String input) {
+        void parseCommand_invalidDeadlineCommands_throwsTaskFormatException(String input) {
             assertThrows(TaskFormatException.class, () -> CommandParser.parseCommand(input));
         }
 
         @Order(7)
         @ParameterizedTest
         @MethodSource("invalidDeleteCommandProvider")
-        public void parseCommand_invalidDeleteCommands_throwsCommandFormatException(String input) {
+        void parseCommand_invalidDeleteCommands_throwsCommandFormatException(String input) {
             assertThrows(CommandFormatException.class, () -> CommandParser.parseCommand(input));
         }
 
         @Order(4)
         @ParameterizedTest
         @MethodSource("invalidEventCommandProvider")
-        public void parseCommand_invalidEventCommands_throwsTaskFormatException(String input) {
+        void parseCommand_invalidEventCommands_throwsTaskFormatException(String input) {
             assertThrows(TaskFormatException.class, () -> CommandParser.parseCommand(input));
         }
 
         @Order(10)
         @ParameterizedTest
         @MethodSource("invalidFindCommandProvider")
-        public void parseCommand_invalidFindCommands_throwsCommandFormatException(String input) {
+        void parseCommand_invalidFindCommands_throwsCommandFormatException(String input) {
             assertThrows(CommandFormatException.class, () -> CommandParser.parseCommand(input));
         }
 
         @Order(1)
         @ParameterizedTest
         @MethodSource("invalidListCommandProvider")
-        public void parseCommand_invalidListCommands_throwsCommandFormatException(String input) {
+        void parseCommand_invalidListCommands_throwsCommandFormatException(String input) {
             assertThrows(CommandFormatException.class, () -> CommandParser.parseCommand(input));
         }
 
         @Order(5)
         @ParameterizedTest
         @MethodSource("invalidMarkCommandProvider")
-        public void parseCommand_invalidMarkCommands_throwsCommandFormatException(String input) {
+        void parseCommand_invalidMarkCommands_throwsCommandFormatException(String input) {
             assertThrows(CommandFormatException.class, () -> CommandParser.parseCommand(input));
         }
 
         @Order(12)
         @ParameterizedTest
         @MethodSource("invalidSortCommandProvider")
-        public void parseCommand_invalidSortCommands_throwsCommandFormatException(String input) {
+        void parseCommand_invalidSortCommands_throwsCommandFormatException(String input) {
             assertThrows(CommandFormatException.class, () -> CommandParser.parseCommand(input));
         }
 
         @Order(2)
         @ParameterizedTest
         @MethodSource("invalidToDoCommandProvider")
-        public void parseCommand_invalidToDoCommands_throwsTaskFormatException(String input) {
+        void parseCommand_invalidToDoCommands_throwsTaskFormatException(String input) {
             assertThrows(TaskFormatException.class, () -> CommandParser.parseCommand(input));
         }
 
         @Order(6)
         @ParameterizedTest
         @MethodSource("invalidUnmarkCommandProvider")
-        public void parseCommand_invalidUnmarkCommands_throwsCommandFormatException(String input) {
+        void parseCommand_invalidUnmarkCommands_throwsCommandFormatException(String input) {
             assertThrows(CommandFormatException.class, () -> CommandParser.parseCommand(input));
         }
 
         @Order(9)
         @ParameterizedTest
         @MethodSource("invalidUpdatePriorityCommandProvider")
-        public void parseCommand_invalidUpdatePriorityCommands_throwsCommandFormatException(String input) {
+        void parseCommand_invalidUpdatePriorityCommands_throwsCommandFormatException(String input) {
             assertThrows(CommandFormatException.class, () -> CommandParser.parseCommand(input));
         }
     }

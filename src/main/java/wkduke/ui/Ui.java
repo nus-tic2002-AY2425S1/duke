@@ -15,18 +15,20 @@ import java.util.Scanner;
  * Provides methods to display messages, errors, and read user commands.
  */
 public class Ui {
-    private static final String BORDER_LINE = "\t_________________________________________________________________________";
-    private static final String INDENT = "\t ";
+    public static final int INDENT_HELP_MSG_NUM = 7;
+    private static final String BORDER_LINE = "____________________________________________________________________________";
+    private static final int INDENT_LEVEL1_NUM = 4;
+    private static final int INDENT_LEVEL2_NUM = INDENT_LEVEL1_NUM + 1;
     private static final String WK_DUKE_LOGO = """
-             ___       __   ___  __    ________  ___  ___  ___  __    _______
-            \t |\\  \\     |\\  \\|\\  \\|\\  \\ |\\   ___ \\|\\  \\|\\  \\|\\  \\|\\  \\ |\\  ___ \\
-            \t \\ \\  \\    \\ \\  \\ \\  \\/  /|\\ \\  \\_|\\ \\ \\  \\\\\\  \\ \\  \\/  /|\\ \\   __/|
-            \t  \\ \\  \\  __\\ \\  \\ \\   ___  \\ \\  \\ \\\\ \\ \\  \\\\\\  \\ \\   ___  \\ \\  \\_|/__
-            \t   \\ \\  \\|\\__\\_\\  \\ \\  \\\\ \\  \\ \\  \\_\\\\ \\ \\  \\\\\\  \\ \\  \\\\ \\  \\ \\  \\_|\\ \\
-            \t    \\ \\____________\\ \\__\\\\ \\__\\ \\_______\\ \\_______\\ \\__\\\\ \\__\\ \\_______\\
-            \t     \\|____________|\\|__| \\|__|\\|_______|\\|_______|\\|__| \\|__|\\|_______|
+              ___       __   ___  __    ________  ___  ___  ___  __    _______
+             |\\  \\     |\\  \\|\\  \\|\\  \\ |\\   ___ \\|\\  \\|\\  \\|\\  \\|\\  \\ |\\  ___ \\
+             \\ \\  \\    \\ \\  \\ \\  \\/  /|\\ \\  \\_|\\ \\ \\  \\\\\\  \\ \\  \\/  /|\\ \\   __/|
+              \\ \\  \\  __\\ \\  \\ \\   ___  \\ \\  \\ \\\\ \\ \\  \\\\\\  \\ \\   ___  \\ \\  \\_|/__
+               \\ \\  \\|\\__\\_\\  \\ \\  \\\\ \\  \\ \\  \\_\\\\ \\ \\  \\\\\\  \\ \\  \\\\ \\  \\ \\  \\_|\\ \\
+                \\ \\____________\\ \\__\\\\ \\__\\ \\_______\\ \\_______\\ \\__\\\\ \\__\\ \\_______\\
+                 \\|____________|\\|__| \\|__|\\|_______|\\|_______|\\|__| \\|__|\\|_______|
+            
             """;
-
     private final Scanner in;
     private final PrintStream out;
 
@@ -81,26 +83,10 @@ public class Ui {
     }
 
     /**
-     * Displays an exception message based on the provided {@code WKDukeException}.
-     * Includes error class, message, additional details, and help information if available.
-     *
-     * @param prefix The prefix to display with the exception (e.g., "Error" or "Init-Error").
-     * @param e      The exception containing error information.
-     */
-    private void showException(String prefix, WKDukeException e) {
-        List<String> messages = new ArrayList<>();
-        messages.add(String.format("[%s]-[%s]", prefix, e.getClass().getSimpleName()));
-        addMessageIfNotEmpty(messages, "Message", e.getMessage());
-        addMessageIfNotEmpty(messages, "Detail", e.getDetail());
-        addMessageIfNotEmpty(messages, "Help", e.getHelp());
-        printMessages(messages.toArray(new String[0]));
-    }
-
-    /**
      * Displays a line border to separate sections in the console output.
      */
     private void showLine() {
-        out.println(BORDER_LINE);
+        out.print(BORDER_LINE.indent(INDENT_LEVEL1_NUM));
     }
 
     /**
@@ -111,7 +97,7 @@ public class Ui {
     public void printMessages(String... messages) {
         showLine();
         for (String message : messages) {
-            out.println(INDENT + message);
+            out.print(message.indent(INDENT_LEVEL2_NUM));
         }
         showLine();
     }
@@ -173,7 +159,11 @@ public class Ui {
      * @param e The exception containing error information.
      */
     public void showError(WKDukeException e) {
-        showException("Error", e);
+        List<String> messages = new ArrayList<>();
+        addMessageIfNotEmpty(messages, "Error", String.format("%s (%s)", e.getMessage(), e.getClass().getSimpleName()));
+        addMessageIfNotEmpty(messages, "Detail", e.getDetail());
+        addMessageIfNotEmpty(messages, "Help", e.getHelp());
+        printMessages(messages.toArray(new String[0]));
     }
 
     /**
@@ -184,18 +174,13 @@ public class Ui {
     }
 
     /**
-     * Displays an initialization error message based on the provided {@code WKDukeException}.
-     *
-     * @param e The exception containing error information.
-     */
-    public void showInitError(WKDukeException e) {
-        showException("Init-Error", e);
-    }
-
-    /**
      * Displays the welcome logo and message to the user.
      */
     public void showWelcome() {
-        printMessages(WK_DUKE_LOGO, Messages.MESSAGE_WELCOME);
+        out.print(BORDER_LINE.indent(INDENT_LEVEL1_NUM));
+        out.print(WK_DUKE_LOGO.indent(INDENT_LEVEL2_NUM));
+        out.print(Messages.MESSAGE_WELCOME.indent(INDENT_LEVEL2_NUM));
+        out.print(BORDER_LINE.indent(INDENT_LEVEL1_NUM));
+
     }
 }

@@ -10,12 +10,29 @@ import wkduke.task.TaskList;
 import wkduke.task.TaskPriority;
 import wkduke.ui.Ui;
 
+import static wkduke.ui.Ui.INDENT_HELP_MSG_NUM;
+
 /**
  * Represents a command to update the priority of a specified task in the task list.
  */
 public class UpdatePriorityCommand extends Command {
     public static final String COMMAND_WORD = "update-priority";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " {taskNumber} {taskPriority[L,M,H]}";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " {task-number} {task-priority}\n"
+            + "Description:".indent(INDENT_HELP_MSG_NUM)
+            + "  - Updates the priority of a specific task in your task list.".indent(INDENT_HELP_MSG_NUM)
+            + "Task Priority:".indent(INDENT_HELP_MSG_NUM)
+            + "  L - Low priority.".indent(INDENT_HELP_MSG_NUM)
+            + "  M - Medium priority.".indent(INDENT_HELP_MSG_NUM)
+            + "  H - High priority.".indent(INDENT_HELP_MSG_NUM)
+            + "Example:".indent(INDENT_HELP_MSG_NUM)
+            + "  update-priority 3 H".indent(INDENT_HELP_MSG_NUM)
+            + "  update-priority 1 L".indent(INDENT_HELP_MSG_NUM)
+            + "Constraints:".indent(INDENT_HELP_MSG_NUM)
+            + "  - Task number must be positive integer.".indent(INDENT_HELP_MSG_NUM)
+            + "  - Task number must exist in the task list.".indent(INDENT_HELP_MSG_NUM)
+            + "  - 'task-priority' must be one of: L, M, H.".indent(INDENT_HELP_MSG_NUM)
+            + "  - The task's current priority will be updated only if it's different.".indent(INDENT_HELP_MSG_NUM);
+
     private static final String MESSAGE_SUCCESS = "OK! I've updated the priority of this task:";
     private static final String MESSAGE_FAILED = "This task already has the specified priority:";
     private static final String TASK_PLACEHOLDER = "  %s";

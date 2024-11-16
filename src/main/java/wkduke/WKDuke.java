@@ -28,7 +28,7 @@ public class WKDuke {
             storage = new Storage();
             taskList = storage.load();
         } catch (StorageOperationException | FileContentException e) {
-            ui.showInitError(e);
+            ui.showError(e);
             System.exit(-1);
         }
     }

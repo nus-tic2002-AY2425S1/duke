@@ -1,4 +1,6 @@
-public class Event extends TaskList {
+package KLBot.TaskList;
+
+public class Event extends Task {
 
     protected String fromDateTime;
     protected String toDateTime;

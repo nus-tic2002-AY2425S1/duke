@@ -1,0 +1,5 @@
+E | 1 | Team meeting | Mon 10am | 12pm
+T | 1 | Buy groceries
+D | 0 | Submit math quiz | monday
+E | 1 | Project consultation | Tue 9am | 11pm
+D | 0 | return books | tuesday

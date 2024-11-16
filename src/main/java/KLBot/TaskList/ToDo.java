@@ -1,4 +1,6 @@
-public class ToDo extends TaskList {
+package KLBot.TaskList;
+
+public class ToDo extends Task {
 
     public ToDo(String description) {
         super(description);

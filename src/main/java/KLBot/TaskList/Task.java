@@ -1,8 +1,10 @@
-public class TaskList {
+package KLBot.TaskList;
+
+public class Task {
     protected boolean completed;
     protected String listDescription;
 
-    public TaskList(String listDescription) {
+    public Task(String listDescription) {
         this.listDescription = listDescription;
         this.completed = false;
     }
@@ -36,7 +38,7 @@ public class TaskList {
         return " | " + (completed ? "1" : "0") + " | " + listDescription;
     }
 
-    public static TaskList fromFileFormat(String taskData) {
+    public static Task fromFileFormat(String taskData) {
         String[] parts = taskData.split(" \\| ");
 
         if (parts.length >= 3) {

@@ -1,4 +1,6 @@
-public class Deadline extends TaskList {
+package KLBot.TaskList;
+
+public class Deadline extends Task {
     protected String deadlineDate;
 
     public Deadline(String description, String deadlineDate) {

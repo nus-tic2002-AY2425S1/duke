@@ -1,10 +1,13 @@
 package pistamint.storage;
+
 import pistamint.general.Task;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 import pistamint.parser.Parser;
 import pistamint.ui.Ui;
 import pistamint.*;
@@ -20,6 +23,7 @@ public class Storage {
 
     /**
      * Load the data in file storage into the task list
+     *
      * @return the Array list of tasks that is in the file storage
      * @throws IOException when there is IO issues when processing the entry.
      */
@@ -64,23 +68,25 @@ public class Storage {
 
     /**
      * This method appends new line of data into file storage when user adds new task.
+     *
      * @throws IOException when there is IO issues when processing the entry.
      */
     public static void appendToFile(Task t) throws IOException {
         FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
-        String task= t.getSymbol()+"|"+(t.getStatusIcon().equals("X") ? "1":"0")+"|"+t.getDescription();
-        fw.write(System.lineSeparator()+task);
+        String task = t.getSymbol() + "|" + (t.getStatusIcon().equals("X") ? "1" : "0") + "|" + t.getDescription();
+        fw.write(System.lineSeparator() + task);
         fw.close();
     }
 
     /**
      * This method refreshes the file when user initiate any update/delete/marking/unmarking of task list
+     *
      * @throws IOException when there is IO issues when processing the entry.
      */
     public static void refreshFile(ArrayList<Task> taskList) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         for (Task task : taskList) {
-            fw.write(task.getSymbol()+"|"+(task.getStatusIcon().equals("X") ? "1":"0")+"|"+task.getDescription());
+            fw.write(task.getSymbol() + "|" + (task.getStatusIcon().equals("X") ? "1" : "0") + "|" + task.getDescription());
             fw.write(System.lineSeparator());
         }
         fw.close();

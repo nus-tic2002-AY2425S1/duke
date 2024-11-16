@@ -1,4 +1,5 @@
 package pistamint.general;
+
 import pistamint.*;
 
 public class Deadline extends Task {
@@ -13,7 +14,7 @@ public class Deadline extends Task {
     public Deadline(String description, char symbol) {
         super(description, symbol);
         String timeline;
-        timeline =description.substring(description.indexOf("(by:")+4, description.lastIndexOf(")"));
+        timeline = description.substring(description.indexOf("(by:") + 4, description.lastIndexOf(")"));
         this.deadline = "(by:" + timeline + ")";
         setDescription(description.substring(0, description.lastIndexOf("(")));
         this.isDone = false;
@@ -32,12 +33,13 @@ public class Deadline extends Task {
         return super.getDescription() + getDeadline();
     }
 
-    public String getOnlyDescription(){
+    public String getOnlyDescription() {
         return super.getDescription();
     }
+
     @Override
-    public Deadline clone(){
-        Deadline clonedDeadline=(Deadline)super.clone();
+    public Deadline clone() {
+        Deadline clonedDeadline = (Deadline) super.clone();
         return clonedDeadline;
     }
 }

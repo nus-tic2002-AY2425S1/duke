@@ -1,4 +1,5 @@
 package pistamint.ui;
+
 import pistamint.*;
 import pistamint.general.Task;
 import pistamint.taskList.TaskList;
@@ -48,6 +49,7 @@ public class Ui {
 
     /**
      * This method prints out the task information when task are updated.
+     *
      * @param task refers to the task that is being selected for update
      */
     public static void showTaskUpdated(Task task) {
@@ -57,6 +59,7 @@ public class Ui {
 
     /**
      * This method prints out the task information of the task that is going to be removed
+     *
      * @param task refers to the task that is to be removed
      */
     public static void showTaskRemoved(Task task) {
@@ -67,6 +70,7 @@ public class Ui {
 
     /**
      * This method print out the task information when it is marked as completed
+     *
      * @param task refers to the task that is to be marked completed.
      */
     public static void showTaskMarked(Task task) {
@@ -75,6 +79,7 @@ public class Ui {
 
     /**
      * This method prints out the task information when it is unmarked, to show that it is not completed
+     *
      * @param task refers to the task that is to be unmarked
      */
     public static void showTaskUnMarked(Task task) {
@@ -92,6 +97,7 @@ public class Ui {
 
     /**
      * This method prints out task information on the matching items that user have searched for
+     *
      * @param arrayList contains all the task entries that match user searched for
      */
     public static void printMatchingTask(ArrayList<Task> arrayList) {
@@ -105,6 +111,7 @@ public class Ui {
 
     /**
      * This method loops through array to print out items in the ArrayList
+     *
      * @param arrayList stores the task in the ArrayList
      */
     private static void loopArray(ArrayList<Task> arrayList) {
@@ -116,11 +123,13 @@ public class Ui {
 
     /**
      * This method prints out the runtime error exception in a more user-friendly and readable manner.
+     *
      * @param e refers to the runtime error message
      */
     public static void runTimeException(String e) {
         System.out.println(Ui.start + "\n\tRunTime exception occurred. Error is due to: " + e + Ui.end);
     }
+
     /**
      * This method prints out the indexOutOfBound error exception in a more user-friendly and readable manner.
      * Indicating to user the number of items currently in the task list.
@@ -155,6 +164,7 @@ public class Ui {
 
     /**
      * This method prints out the task information when it is cloned, and indicate the current number of items in the task list.
+     *
      * @param task refers to the task that is cloned.
      */
     public static void showItemCloned(Task task) {

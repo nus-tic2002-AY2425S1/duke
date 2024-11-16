@@ -1,5 +1,7 @@
 package pistamint.parser;
+
 import pistamint.*;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -39,7 +41,6 @@ public class Parser {
             if (symbol == 'T') {
                 task = new Todo(description, symbol);
                 taskList.addTask(task, true);
-
             } else if (symbol == 'D') {
                 task = new Deadline(description, symbol);
                 taskList.addTask(task, true);
@@ -53,14 +54,15 @@ public class Parser {
         }
     }
 
-    public static String checkDescription(String task,String input){
-        if(task.equalsIgnoreCase("deadline")) {
+    public static String checkDescription(String task, String input) {
+        if (task.equalsIgnoreCase("deadline")) {
             return input.substring(input.indexOf(" "), input.indexOf("/by"));
-        }else if(task.equalsIgnoreCase("event")) {
+        } else if (task.equalsIgnoreCase("event")) {
             return input.substring(input.indexOf(" "), input.indexOf("/from"));
         }
         return input;
     }
+
     /**
      * This method returns true if the commands have been successfully processed (added to task list and also the file storage)
      * return false if otherwise. It parses the user input timeline in "yyyy-MM-dd" for event /deadlines task
@@ -78,7 +80,7 @@ public class Parser {
         try {
             if (task.equalsIgnoreCase("todo")) {
                 action = input.substring(input.indexOf(" "));
-                if(action.trim().isEmpty()) {
+                if (action.trim().isEmpty()) {
                     Ui.stringIndexOutOfBound(task);
                     return false;
                 }
@@ -87,8 +89,8 @@ public class Parser {
             } else {
                 String description = "";
                 try {
-                    description=checkDescription(task,input);
-                    if(description.trim().isEmpty()) {
+                    description = checkDescription(task, input);
+                    if (description.trim().isEmpty()) {
                         Ui.stringIndexOutOfBound(task);
                         return false;
                     }
@@ -130,7 +132,7 @@ public class Parser {
     public static void processUpdateEvent(Event event, String reader) {
         Scanner input;
         LocalDate to, from;
-        boolean success=true;
+        boolean success = true;
         try {
             while (reader != null) {
                 System.out.print(Ui.start);
@@ -149,7 +151,7 @@ public class Parser {
                 } else if (reader.equalsIgnoreCase("3")) {
                     System.out.print("\n\tNew Description:");
                     input = new Scanner(System.in);
-                    success=updateDescription(input.nextLine()+" ",event);
+                    success = updateDescription(input.nextLine() + " ", event);
                     break;
                 } else {
                     System.out.print("\n\tPlease only select within selection: ");
@@ -157,7 +159,7 @@ public class Parser {
                     reader = input.nextLine();
                 }
             }
-            if(success) {
+            if (success) {
                 Storage.refreshFile(taskList.getTasks());
                 assert taskList.getSize() > 0 : "Task list is empty after task updated.";
                 Ui.showTaskUpdated((Task) event);
@@ -194,7 +196,7 @@ public class Parser {
                 } else if (reader.equalsIgnoreCase("2")) {
                     System.out.print("\n\tNew Description:");
                     input = new Scanner(System.in);
-                    success=updateDescription(input.nextLine()+" ",dL);
+                    success = updateDescription(input.nextLine() + " ", dL);
                     break;
                 } else {
                     System.out.print("\n\tPlease only select within selection: ");
@@ -202,7 +204,7 @@ public class Parser {
                     reader = input.nextLine();
                 }
             }
-            if(success) {
+            if (success) {
                 Storage.refreshFile(taskList.getTasks());
                 assert taskList.getSize() > 0 : "Task list is empty after task updated.";
                 Ui.showTaskUpdated((Task) dL);
@@ -216,6 +218,7 @@ public class Parser {
 
     /**
      * This method checks if the user key in the keyword "exit"
+     *
      * @param reader is the user input being passed into this method
      * @return whether did user really keyed in "exit"
      */
@@ -229,20 +232,21 @@ public class Parser {
 
     /**
      * This method updates the description field of the task
+     *
      * @param description refers to the user input for the new description that they have entered
-     * @param task refers to the task that is to be updated
+     * @param task        refers to the task that is to be updated
      * @return true/false dependent on the user input, it is to prevent user from updating empty description.
      */
-    public static boolean updateDescription(String description,Task task){
-        if(description.trim().isEmpty()) {
+    public static boolean updateDescription(String description, Task task) {
+        if (description.trim().isEmpty()) {
             Ui.stringIndexOutOfBound("Description");
-        }
-        else{
+        } else {
             task.setDescription(description);
             return true;
         }
         return false;
     }
+
     /**
      * This method takes in the task that is being selected for update
      * It will process the task based on the type of the task (T,D,E)
@@ -257,7 +261,7 @@ public class Parser {
                 System.out.println(Ui.start + "\n\tDescription [Current:(" + task.getDescription().trim() + ")]");
                 System.out.print("\n\tNew Description:");
                 reader = new Scanner(System.in);
-                if(updateDescription(reader.nextLine(), task)) {
+                if (updateDescription(reader.nextLine(), task)) {
                     Storage.refreshFile(taskList.getTasks());
                     assert taskList.getSize() > 0 : "Task list is empty after task updated.";
                     Ui.showTaskUpdated((Task) task);
@@ -291,6 +295,7 @@ public class Parser {
 
     /**
      * This method is used to clone a task for the user based on their selection
+     *
      * @param t is the task that needs to be cloned
      */
     public static void cloneTask(Task t) {
@@ -321,13 +326,12 @@ public class Parser {
                 break;
             case "mark":
                 try {
-                    if(!taskList.getTasks().get(Integer.parseInt(input.split(" ")[1]) - 1).isDone()){
+                    if (!taskList.getTasks().get(Integer.parseInt(input.split(" ")[1]) - 1).isDone()) {
                         taskList.markAsDone(Integer.parseInt(input.split(" ")[1]) - 1);
                         Ui.showTaskMarked(taskList.getTasks().get(Integer.parseInt(input.split(" ")[1]) - 1));
                         Storage.refreshFile(taskList.getTasks());
-                    }
-                    else{
-                        System.out.println(Ui.start+"\n\t Item has already been marked completed"+Ui.end);
+                    } else {
+                        System.out.println(Ui.start + "\n\t Item has already been marked completed" + Ui.end);
                     }
                     assert taskList.getSize() > 0 : "Task list is empty after task marked.";
                 } catch (NumberFormatException e) {
@@ -340,13 +344,12 @@ public class Parser {
                 break;
             case "unmark":
                 try {
-                    if(taskList.getTasks().get(Integer.parseInt(input.split(" ")[1]) - 1).isDone()) {
+                    if (taskList.getTasks().get(Integer.parseInt(input.split(" ")[1]) - 1).isDone()) {
                         taskList.markAsUnDone(Integer.parseInt(input.split(" ")[1]) - 1);
                         Ui.showTaskUnMarked(taskList.getTasks().get(Integer.parseInt(input.split(" ")[1]) - 1));
                         Storage.refreshFile(taskList.getTasks());
-                    }
-                    else{
-                        System.out.println(Ui.start+"\n\t Item hasn't been marked"+Ui.end);
+                    } else {
+                        System.out.println(Ui.start + "\n\t Item hasn't been marked" + Ui.end);
                     }
                     assert taskList.getSize() > 0 : "Task list is empty after task unmarked.";
                 } catch (NumberFormatException e) {
@@ -408,7 +411,7 @@ public class Parser {
                     } else {
                         int index = Integer.parseInt(input.split(" ")[1]) - 1;
                         Task task = taskList.getTasks().get(index);
-                        Task newTask=task.clone();
+                        Task newTask = task.clone();
                         cloneTask(newTask);
                         Ui.showItemCloned(taskList.getTasks().get(taskList.getSize() - 1));
                         System.out.println("\tDo you wish to update this item?(Y/N)" + Ui.end);

@@ -18,45 +18,27 @@ import java.util.Optional;
 public class Storage {
     private static final String FILE_PATH = "volume/";
     private static final String DEFAULT_FILE_NAME = "data.csv";
-    private static Optional<String> SET_FILE_NAME = Optional.empty();
+    private static Optional<String> customFileName = Optional.empty();
 
     /**
-     * Save all Task objects to CSV file
+     * Save all Task objects to a CSV file.
      */
     public static void saveToFile(String fileName) {
-        String fullFilePath = FILE_PATH + fileName;
-        Path filePath = Paths.get(fullFilePath);
+        Path filePath = Paths.get(FILE_PATH, fileName);
 
         if (!fileName.equalsIgnoreCase(DEFAULT_FILE_NAME)) {
-            SET_FILE_NAME = Optional.of(fileName);
+            customFileName = Optional.of(fileName);
         }
 
         try {
-            // Delete CSV file if exists
-            if (Files.exists(filePath)) {
-                Files.delete(filePath);
-            }
+            Files.deleteIfExists(filePath);
 
-            // Write to new CSV file
-            try (FileWriter writer = new FileWriter(FILE_PATH)) {
-                // Create empty file if no task list
+            try (FileWriter writer = new FileWriter(filePath.toString())) {
                 if (TaskList.getTasks().isEmpty()) {
                     createEmptyCsvFile(writer);
-                    return;
+                } else {
+                    writeTasksToFile(writer, TaskList.getTasks());
                 }
-                // CSV Format: Type | (Un)Mark | metadata header
-                // Type | (Un)Mark | description [ | /by ][ | /from | /to]
-                for (Task task : TaskList.getTasks()) {
-                    if (task instanceof Todo todo) {
-                        writer.append("T|").append(String.valueOf(todo.getDone())).append("|").append(todo.getDescription()).append("\n");
-                    } else if (task instanceof Deadline deadline) {
-                        writer.append("D|").append(String.valueOf(deadline.getDone())).append("|").append(deadline.getDescription()).append("|").append(deadline.getDeadline().toString()).append("\n");
-                    } else if (task instanceof Event event) {
-                        writer.append("E|").append(String.valueOf(event.getDone())).append("|").append(event.getDescription()).append("|").append(DateTimeUtil.toIsoString(event.getStart())).append("|").append(DateTimeUtil.toIsoString(event.getEnd())).append("\n");
-                    }
-                }
-
-                writer.flush();
             }
         } catch (IOException ioe) {
             Log.printMsg("Error occurred while saving file: ", ioe.getMessage());
@@ -64,74 +46,81 @@ public class Storage {
     }
 
     public static void saveToFile() {
-        // Save to default file if user has not specified a file
-        if (SET_FILE_NAME.isPresent()) {
-            saveToFile(SET_FILE_NAME.get());
-        } else {
-            saveToFile(DEFAULT_FILE_NAME);
-        }
+        saveToFile(customFileName.orElse(DEFAULT_FILE_NAME));
     }
 
     /**
-     * Read CSV file and instantiate tasks into TaskList
+     * Load Task objects from a CSV file into TaskList.
      */
     public static void loadFile(String fileName) {
-        String fullFilePath = FILE_PATH + fileName;
-        Log.printMsg("Loading data from " + fullFilePath);
-        Path filePath = Paths.get(fullFilePath);
+        Path filePath = Paths.get(FILE_PATH, fileName);
+        Log.printMsg("Loading data from " + filePath);
+
         if (!Files.exists(filePath)) {
             Log.printMsg("No saved data found.");
             return;
         }
 
         if (!fileName.equalsIgnoreCase(DEFAULT_FILE_NAME)) {
-            SET_FILE_NAME = Optional.of(fileName);
+            customFileName = Optional.of(fileName);
         }
 
         try {
-            // Ignore empty and whitespace lines
-            List<String> lines = Files.readAllLines(Paths.get(fullFilePath))
-                    .stream()
+            List<String> lines = Files.readAllLines(filePath).stream()
                     .filter(line -> !line.trim().isEmpty())
                     .toList();
 
-            for (String line : lines) {
-                // type | (Un)Mark | description | /by or /from | /to
-                String[] parts = line.split("\\|");
-                switch (parts[0]) {
-                    case "T":
-                        Task todo = new Todo(parts[2]);
-                        todo.setDone(parts[1]);
-                        TaskList.add(todo);
-                        break;
-                    case "D":
-                        Task deadline = new Deadline(parts[2], DateTimeUtil.isoToLocalDateTime(parts[3]));
-                        deadline.setDone(parts[1]);
-                        TaskList.add(deadline);
-                        break;
-                    case "E":
-                        Task event = new Event(parts[2], DateTimeUtil.isoToLocalDateTime(parts[3]), DateTimeUtil.isoToLocalDateTime(parts[4]));
-                        event.setDone(parts[1]);
-                        TaskList.add(event);
-                        break;
-                }
-            }
+            lines.forEach(Storage::parseAndAddTask);
         } catch (IOException ioe) {
             Log.printMsg("Error occurred while loading file: ", ioe.getMessage());
         }
     }
 
     public static void loadFile() {
-        // Load from default file if user has not specified a file
-        if (SET_FILE_NAME.isPresent()) {
-            loadFile(SET_FILE_NAME.get());
-        } else {
-            loadFile(DEFAULT_FILE_NAME);
+        loadFile(customFileName.orElse(DEFAULT_FILE_NAME));
+    }
+
+    private static void writeTasksToFile(FileWriter writer, List<Task> tasks) throws IOException {
+        for (Task task : tasks) {
+            writer.append(serializeTask(task)).append("\n");
         }
+        writer.flush();
+    }
+
+    private static String serializeTask(Task task) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(task instanceof Todo ? "T" :
+                        task instanceof Deadline ? "D" : "E")
+                .append("|").append(task.getDone())
+                .append("|").append(task.getDescription());
+
+        if (task instanceof Deadline deadline) {
+            sb.append("|").append(deadline.getDeadline());
+        } else if (task instanceof Event event) {
+            sb.append("|").append(DateTimeUtil.toIsoString(event.getStart()))
+                    .append("|").append(DateTimeUtil.toIsoString(event.getEnd()));
+        }
+
+        return sb.toString();
+    }
+
+    private static void parseAndAddTask(String line) {
+        String[] parts = line.split("\\|");
+        Task task;
+
+        switch (parts[0]) {
+            case "T" -> task = new Todo(parts[2]);
+            case "D" -> task = new Deadline(parts[2], DateTimeUtil.isoToLocalDateTime(parts[3]));
+            case "E" ->
+                    task = new Event(parts[2], DateTimeUtil.isoToLocalDateTime(parts[3]), DateTimeUtil.isoToLocalDateTime(parts[4]));
+            default -> throw new IllegalArgumentException("Unknown task type: " + parts[0]);
+        }
+
+        task.setDone(parts[1]);
+        TaskList.add(task);
     }
 
     private static void createEmptyCsvFile(FileWriter writer) throws IOException {
-        writer.append("");
-        writer.flush();
+        writer.append("").flush();
     }
 }

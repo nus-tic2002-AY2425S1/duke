@@ -45,17 +45,5 @@ public class Event extends Task {
         return super.getDescription() + " (from: " + startAt + " to: " + endBy + ")";
     }
 
-    /**
-     * @return The start time of the event.
-     */
-    public String getStartAt() {
-        return startAt;
-    }
 
-    /**
-     * @return The end time of the event.
-     */
-    public String getEndBy() {
-        return endBy;
-    }
 }

@@ -17,8 +17,8 @@ public class Stark {
     public static void runChatBot() {
 
         try {
-
-            ArrayList<Task> storedTasks = new TaskStorage(fileLocation).updateTaskList();
+            TaskStorage taskStorage = new TaskStorage(fileLocation);
+            ArrayList<Task> storedTasks = taskStorage.updateTaskList();
             CommandLineUI userUi = new CommandLineUI(storedTasks);
             ArrayList<Task> updatedTasks = userUi.readUserInputs();
             new SaveToFile(updatedTasks, fileLocation).writeToFile();

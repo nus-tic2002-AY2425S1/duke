@@ -52,7 +52,7 @@ public class TaskParser {
     }
 
 
-    public static Task parseTentativeEvent(String tentativeDescription) {
+    private static Task parseTentativeEvent(String tentativeDescription) {
         String[] splitDetails = tentativeDescription.split(" # ");
         if (splitDetails.length != 3) {
             System.out.println("Some event description in file are incorrect. -> Skipping...");

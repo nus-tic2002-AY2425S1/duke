@@ -50,7 +50,7 @@ public class SaveToFile {
             fileWriter.close();
             System.out.println("Tasks saved to the file successfully");
         } catch (IOException e) {
-            throw new StarkException.WriteToFileException("Saving the task to \" " + filePath + " \" failed...");
+            throw new StarkException.WriteToFileException(e.getMessage());
         }
     }
 }

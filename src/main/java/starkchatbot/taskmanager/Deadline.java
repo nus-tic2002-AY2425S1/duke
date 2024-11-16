@@ -45,11 +45,6 @@ public class Deadline extends Task {
         return super.getDescription() + " (by: " + doneBy + ")";
     }
 
-    /**
-     * @return The due date/time for the task.
-     */
-    public String getDoneBy() {
-        return doneBy;
-    }
+
 
 }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Stark {
 
-    private static final String fileLocation = "src/Data/TaskLists.txt";
+    private static final String fileLocation = "TaskLists.txt";
 
     public Stark() {
     }

@@ -1,27 +1,20 @@
-Todo
-Todo task 1
-Event
-Event task 2
-Event task 2 /from
-Event task 2 /from this time
-Event task 2 /from /to
-Event task 2 /from this time /to
-Event task 2 from this time /to that time
-Event task 2 /from this time /to that time
-Deadline
-Deadline task 3
-Deadline task 3 /by
-Deadline task 3 /by some due date
-Todo task 4
-lisy
+todo task 1 - record video for TIC2002
+deadline task 2 - TIC2002 Report 2 /by 17/11/2024 2359
+event DAY6 concert /from 22/11/2024 1900 /to 22/11/2024 2200
+todo task 4
+todo task 5 - collect things from somewhere /between 23/11/2024 /and 30/11/2024
 list
 mark 1
-mark 2
-mark 1
-remove 2
-delete 2
-Event task 5 /from sun 4pm /to sun 7pm
-list
+mark 3
 unmark 1
+rank 5 high
+rank 1 medium
+rank 2 low
+list
+ranking
+find task
+find task 5
+find day6
+delete 4
 list
 bye

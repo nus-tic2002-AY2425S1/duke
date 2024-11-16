@@ -4,7 +4,7 @@ import Chad.Exception.ChadException;
 
 import java.io.*;
 import java.util.Scanner;
-
+//Solution below adapted from ChatGpt
 public class Storage {
     private final File file;
 

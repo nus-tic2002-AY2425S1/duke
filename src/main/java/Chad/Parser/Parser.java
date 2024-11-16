@@ -1,6 +1,16 @@
 package Chad.Parser;
 
-import Chad.Command.*;
+import Chad.Command.AddCommand;
+import Chad.Command.Command;
+import Chad.Command.DeleteCommand;
+import Chad.Command.ExitCommand;
+import Chad.Command.FindCommand;
+import Chad.Command.HelpCommand;
+import Chad.Command.ListByDateCommand;
+import Chad.Command.ListCommand;
+import Chad.Command.MarkTaskCommand;
+import Chad.Command.StatisticsCommand;
+import Chad.Command.UnmarkTaskCommand;
 import Chad.Exception.ChadException;
 import Chad.TaskList.Deadline;
 import Chad.TaskList.Event;
@@ -128,7 +138,6 @@ public class Parser {
         // Check if there is a substring beyond "find"
         if (parts.length > 1) {
             String parameter = parts[1]; // Get and trim the "something" part
-            //Ui.showMsg(parameter);
             return new StatisticsCommand(parameter);
 
         }
@@ -149,9 +158,6 @@ public class Parser {
     }
 
     private static Command createGeneralTask(String inpuString) throws ChadException {
-        //parts=inpuString
-        //validateTaskDescription(parts);
-        //String generalTaskDescription = parts[1];
         return new AddCommand(new Task(inpuString));
     }
 

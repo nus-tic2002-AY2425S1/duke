@@ -16,6 +16,7 @@ import javafx.util.Duration;
 /**
  * Controller for the main GUI.
  */
+//Solution below adapted from https://se-education.org/guides/tutorials/javaFxPart4.html
 public class MainWindow extends AnchorPane {
     @FXML
     private ScrollPane scrollPane;

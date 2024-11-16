@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 /**
  * A GUI for Chad using FXML.
  */
+//Solution below adapted from https://se-education.org/guides/tutorials/javaFxPart4.html
+
 public class Main extends Application {
 
     private final Chad chad = new Chad("./data/chad.txt");

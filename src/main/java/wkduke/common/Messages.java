@@ -27,6 +27,22 @@ public class Messages {
     public static final String MESSAGE_WRITE_FILE_ERROR = "Error while writing to file!";
     public static final String MESSAGE_FILE_PATH_ERROR = "Storage file should end with '.txt'";
 
-    public static final String MESSAGE_AVAILABLE_COMMAND = "list, todo, deadline, event, mark, unmark, find, sort, update-priority, bye";
+    public static final String MESSAGE_AVAILABLE_COMMAND = """
+            Available commands:
+              list       - Lists all tasks.
+              list /on   - Lists tasks on a specific date.
+              find       - Finds tasks by keyword(s).
+              todo       - Adds a Todo task.
+              deadline   - Adds a Deadline task.
+              event      - Adds an Event task.
+              delete     - Deletes task(s).
+              mark       - Marks task(s) as done.
+              unmark     - Unmarks task(s) as not done.
+              sort       - Sorts tasks by type, priority, or datetime.
+              update-priority - Updates the priority of a task.
+              help       - Displays this help message.
+            
+              Tips: You can type the command name (e.g., 'todo', 'delete', etc.) to see detailed usage and examples for that command.
+            """;
 
 }

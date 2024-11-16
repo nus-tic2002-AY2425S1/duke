@@ -2,6 +2,7 @@ package wkduke.parser;
 
 import wkduke.command.Command;
 import wkduke.command.ExitCommand;
+import wkduke.command.HelpCommand;
 import wkduke.command.create.AddCommand;
 import wkduke.command.create.AddDeadlineCommand;
 import wkduke.command.create.AddEventCommand;
@@ -67,6 +68,7 @@ public class CommandParser {
 
         return switch (commandWord) {
             case ExitCommand.COMMAND_WORD -> new ExitCommand();
+            case HelpCommand.COMMAND_WORD -> new HelpCommand();
             case ListCommand.COMMAND_WORD -> prepareList(arguments);
             case AddCommand.COMMAND_WORD_TODO -> prepareAddToDo(arguments);
             case AddCommand.COMMAND_WORD_DEADLINE -> prepareAddDeadline(arguments);
@@ -80,7 +82,7 @@ public class CommandParser {
             default -> throw new CommandFormatException(
                     Messages.MESSAGE_UNKNOWN_COMMAND,
                     String.format("Input='%s'", userInput),
-                    String.format("AvailableCommand='%s'", Messages.MESSAGE_AVAILABLE_COMMAND)
+                    System.lineSeparator() + Messages.MESSAGE_AVAILABLE_COMMAND
             );
         };
     }

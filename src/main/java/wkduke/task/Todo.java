@@ -26,6 +26,16 @@ public class Todo extends Task {
     }
 
     /**
+     * Retrieves the type of this task as {@code TaskType.TODO}.
+     *
+     * @return The task type, always {@code TaskType.TODO}.
+     */
+    @Override
+    public TaskType getType() {
+        return TaskType.TODO;
+    }
+
+    /**
      * Checks if this Todo task is equal to another object.
      * A Todo task is considered equal if it is of the same type and has the same
      * description and completion status as the specified task.

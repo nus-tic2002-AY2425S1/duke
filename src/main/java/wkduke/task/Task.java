@@ -55,7 +55,7 @@ public abstract class Task {
     /**
      * Retrieves the priority of the task.
      *
-     * @return The priority of the task, or {@code null} if no priority is set.
+     * @return The priority of the task.
      */
     public TaskPriority getPriority() {
         return priority;
@@ -71,26 +71,20 @@ public abstract class Task {
     }
 
     /**
+     * Retrieves the type of this task.
+     * Each concrete task must specify its type (e.g., {@code TaskType.TODO}, {@code TaskType.DEADLINE}, {@code TaskType.EVENT}).
+     *
+     * @return The {@code TaskType} representing the type of this task.
+     */
+    public abstract TaskType getType();
+
+    /**
      * Checks if the task is marked as done.
      *
      * @return {@code true} if the task is done; {@code false} otherwise.
      */
     public boolean isDone() {
         return isDone;
-    }
-
-    /**
-     * Marks the task as done.
-     */
-    public void markAsDone() {
-        isDone = true;
-    }
-
-    /**
-     * Marks the task as not done.
-     */
-    public void markAsUndone() {
-        isDone = false;
     }
 
     /**
@@ -124,4 +118,17 @@ public abstract class Task {
         return "[" + priority + "][" + getStatusIcon() + "] " + description;
     }
 
+    /**
+     * Marks the task as done.
+     */
+    void markAsDone() {
+        isDone = true;
+    }
+
+    /**
+     * Marks the task as not done.
+     */
+    void markAsUndone() {
+        isDone = false;
+    }
 }

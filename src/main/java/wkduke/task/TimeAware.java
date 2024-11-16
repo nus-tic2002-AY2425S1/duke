@@ -7,6 +7,13 @@ import java.time.LocalDateTime;
  */
 interface TimeAware {
     /**
+     * Retrieves the date time used for comparison when sorting or filtering tasks.
+     *
+     * @return The {@code LocalDateTime} representing the task's comparable date and time.
+     */
+    LocalDateTime getComparableDateTime();
+
+    /**
      * Checks if the task occurs on the specified date and time.
      *
      * @param targetDateTime The date and time to check.

@@ -33,6 +33,7 @@ public class Parser {
             case "bye" -> parseBye(arguments);
             case "save" -> parseSave(arguments);
             case "load" -> parseLoad(arguments);
+            case "find" -> parseFind(arguments);
             default -> throw new InputException(ExceptionConsts.UNKNOWN_COMMAND_ERROR);
         };
     }
@@ -185,5 +186,9 @@ public class Parser {
         }
 
         return new LoadFromFileNameCommand(value);
+    }
+
+    private static Command parseFind(String value) {
+        return new FindCommand(value);
     }
 }

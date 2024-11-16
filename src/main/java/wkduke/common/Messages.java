@@ -47,8 +47,6 @@ public class Messages {
                   |                                                          |
                   +----------------------------------------------------------+
             """;
-
-
     public static final String MESSAGE_AVAILABLE_COMMAND = """
             Available commands:
               list       - Lists all tasks.
@@ -62,6 +60,7 @@ public class Messages {
               unmark     - Unmarks task(s) as not done.
               sort       - Sorts tasks by type, priority, or datetime.
               update-priority - Updates the priority of a task.
+              bye        - Exits the application.
               help       - Displays this help message.
             
               Tips: You can type the command name (e.g., 'todo', 'delete', etc.) to see detailed usage and examples for that command.

@@ -169,19 +169,19 @@ public class Parser {
     }
 
     private static Command parseSave(String value) throws InputException {
-        validateFileName(value);
+        validateFileName(value, CommandEnum.SAVE);
         return new SaveToFileNameCommand(value);
     }
 
     private static Command parseLoad(String value) throws InputException {
-        validateFileName(value);
+        validateFileName(value, CommandEnum.LOAD);
         return new LoadFromFileNameCommand(value);
     }
 
-    private static void validateFileName(String value) throws InputException {
+    private static void validateFileName(String value, CommandEnum command) throws InputException {
         boolean isFileNameValid = value.toLowerCase().endsWith(".csv");
         if (!isFileNameValid) {
-            List<String> errors = new ErrorMessageBuilder(CommandEnum.LOAD).unknownArguments().build();
+            List<String> errors = new ErrorMessageBuilder(command).unknownArguments().build();
             throw new InputException(errors);
         }
     }

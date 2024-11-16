@@ -167,25 +167,21 @@ public class Parser {
     }
 
     private static Command parseSave(String value) throws InputException {
-        boolean fileNameValid = value.split(".csv").length == 1;
-
-        if (!fileNameValid) {
-            List<String> errors = new ErrorMessageBuilder(CommandEnum.SAVE).unknownArguments().build();
-            throw new InputException(errors);
-        }
-
+        validateFileName(value);
         return new SaveToFileNameCommand(value);
     }
 
     private static Command parseLoad(String value) throws InputException {
-        boolean fileNameValid = value.split(".csv").length == 1;
+        validateFileName(value);
+        return new LoadFromFileNameCommand(value);
+    }
 
-        if (!fileNameValid) {
+    private static void validateFileName(String value) throws InputException {
+        boolean isFileNameValid = value.toLowerCase().endsWith(".csv");
+        if (!isFileNameValid) {
             List<String> errors = new ErrorMessageBuilder(CommandEnum.LOAD).unknownArguments().build();
             throw new InputException(errors);
         }
-
-        return new LoadFromFileNameCommand(value);
     }
 
     private static Command parseFind(String value) {

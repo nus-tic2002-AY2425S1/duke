@@ -20,6 +20,7 @@ public class UI {
             String input = getString();
             try {
                 Command command = Parser.parse(input);
+                assert command != null : "Command from parser must not be null";
                 command.execute();
             } catch (InputException e) {
                 Log.printMsg(e.getMessages().toArray(new String[0]));

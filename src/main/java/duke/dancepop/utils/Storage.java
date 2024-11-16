@@ -68,6 +68,7 @@ public class Storage {
      * @param fileName The name of the file to load tasks from.
      */
     public static void loadFromFile(String fileName) {
+        assert fileName != null && !fileName.isBlank() : "File name must not be null or blank";
         Path filePath = Paths.get(FILE_PATH, fileName);
         Log.printMsg("Loading data from " + filePath);
 
@@ -115,6 +116,7 @@ public class Storage {
     }
 
     private static String serializeTask(Task task) {
+        assert task != null : "Task to serialize must not be null";
         StringBuilder sb = new StringBuilder();
         sb.append(task instanceof Todo ? "T" :
                         task instanceof Deadline ? "D" : "E")

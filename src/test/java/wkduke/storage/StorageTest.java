@@ -11,6 +11,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import wkduke.exception.command.CommandOperationException;
 import wkduke.exception.storage.FileContentException;
 import wkduke.exception.storage.StorageFilePathException;
 import wkduke.exception.storage.StorageOperationException;
@@ -61,7 +62,7 @@ public class StorageTest {
         }
 
         @BeforeEach
-        void setup() throws StorageOperationException {
+        void setup() throws StorageOperationException, CommandOperationException {
             storage = new Storage(VALID_DATA_FILE);
             taskList = new TaskList();
             taskList.addTask(new Todo("Read book", false, TaskPriority.LOW));

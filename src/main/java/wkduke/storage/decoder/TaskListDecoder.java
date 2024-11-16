@@ -1,5 +1,6 @@
 package wkduke.storage.decoder;
 
+import wkduke.exception.command.CommandOperationException;
 import wkduke.exception.storage.FileContentException;
 import wkduke.task.TaskList;
 
@@ -18,7 +19,7 @@ public class TaskListDecoder {
      * @return A {@code TaskList} containing the decoded tasks.
      * @throws FileContentException If any encoded task has an invalid format.
      */
-    public static TaskList decodeTaskList(List<String> encodedTasks) throws FileContentException {
+    public static TaskList decodeTaskList(List<String> encodedTasks) throws FileContentException, CommandOperationException {
         TaskList taskList = new TaskList();
         for (String encodedTask : encodedTasks) {
             taskList.addTask(TaskDecoder.decodeTask(encodedTask));

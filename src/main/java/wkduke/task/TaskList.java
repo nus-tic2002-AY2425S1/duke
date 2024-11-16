@@ -1,11 +1,15 @@
 package wkduke.task;
 
 import wkduke.command.update.SortOrder;
+import wkduke.exception.command.CommandOperationException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import static wkduke.common.Messages.MESSAGE_DUPLICATE_TASK;
+import static wkduke.common.Messages.MESSAGE_DUPLICATE_TASK_HELP;
 
 /**
  * Manages a list of tasks, providing methods to add, delete, and query tasks.
@@ -21,12 +25,20 @@ public class TaskList {
     }
 
     /**
-     * Adds a task to the list.
+     * Adds a task to the task list.
      *
-     * @param task The task to add.
+     * @param task The task to be added. Must not be {@code null}.
+     * @throws CommandOperationException if the task already exists in the list.
      */
-    public void addTask(Task task) {
+    public void addTask(Task task) throws CommandOperationException {
         assert task != null : "Precondition failed: 'task' cannot be null";
+        if (tasks.contains(task)) {
+            throw new CommandOperationException(
+                    MESSAGE_DUPLICATE_TASK,
+                    String.format("Task='%s'", task),
+                    MESSAGE_DUPLICATE_TASK_HELP
+            );
+        }
         tasks.add(task);
     }
 

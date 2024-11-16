@@ -36,6 +36,8 @@ public class Parser {
                 return createFind(fullCommand);
             case "summary":
                 return createStaticsCommand(fullCommand);
+            case "help":
+                return new HelpCommand("general");
             default:
                 return createGeneralTask(fullCommand); // Add normal task
         }

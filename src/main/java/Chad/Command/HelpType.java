@@ -1,7 +1,18 @@
 package Chad.Command;
 
 public enum HelpType {
-    GENERAL("This is a general help message."),
+    GENERAL("Below are the available commands:"+System.lineSeparator()+
+    "Add general tasks, eg: do homework"+System.lineSeparator()+
+    "todo <task_description>"+System.lineSeparator()+
+    "deadline <task_description> /by <date>"+System.lineSeparator()+
+    "event <task_description> /from <start_time> /to <end_time>"+System.lineSeparator()+
+    "find <find_index> ,searching for keyword in description."+System.lineSeparator()+
+    "summary :summary <time_period> , eg. summary 1 week"+System.lineSeparator()+
+    "list [<date>], eg: list, list 2024-12-31"+System.lineSeparator()+
+    "unmark/mark <task_index>,eg: mark 1, unmark 2"+System.lineSeparator()+
+    "delete <task_index>, eg: delete 1"+System.lineSeparator()+
+    "or type 'bye' to exit "
+    ),
     TODO("How to use: todo <task_description> " + System.lineSeparator() + "- Adds a task to the list."),
     DEADLINE("How to use: deadline <task_description> /by <date> " + System.lineSeparator() + " Adds a deadline task."),
     EVENT("How to use event: event <task_description> /from <start_time> /to <end_time> " + System.lineSeparator() + " Adds an event task."),

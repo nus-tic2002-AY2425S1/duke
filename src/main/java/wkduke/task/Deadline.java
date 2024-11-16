@@ -57,14 +57,15 @@ public class Deadline extends Task implements TimeAware {
     /**
      * {@inheritDoc}
      * <p>
-     * This implementation checks if the specified date is equal to the due date.
+     * This implementation checks if the specified date (ignoring the time) matches the task's due date (`by`).
+     * </p>
      *
      * @param targetDateTime The date to check against the task's due date.
      * @return {@code true} if the task is due on the specified date; {@code false} otherwise.
      */
     @Override
     public boolean isOccursOnDate(LocalDateTime targetDateTime) {
-        return targetDateTime.isEqual(by);
+        return targetDateTime.toLocalDate().isEqual(by.toLocalDate());
     }
 
     /**
@@ -103,7 +104,7 @@ public class Deadline extends Task implements TimeAware {
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by:" + by.format(TimeParser.CLI_FORMATTER) + ")";
+        return "[D]" + super.toString() + " (by:" + by.format(TimeParser.CLI_DATE_TIME_FORMATTER) + ")";
     }
 
 }

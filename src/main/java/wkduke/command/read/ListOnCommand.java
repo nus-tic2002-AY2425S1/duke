@@ -76,13 +76,13 @@ public class ListOnCommand extends Command {
         List<Task> tasks = taskList.getAllTaskOnDate(on);
         if (tasks.isEmpty()) {
             ui.printMessages(
-                    String.format(MESSAGE_FAILED, on.format(TimeParser.CLI_FORMATTER))
+                    String.format(MESSAGE_FAILED, on.format(TimeParser.CLI_DATE_FORMATTER))
             );
             return;
         }
         assert !tasks.isEmpty() : "Postcondition failed: 'tasks' cannot be empty";
         ui.printUiTaskGroup(taskList, new UiTaskGroup(
-                        String.format(MESSAGE_SUCCESS, on.format(TimeParser.CLI_FORMATTER)), MESSAGE_TASK_LIST_TIPS, tasks
+                        String.format(MESSAGE_SUCCESS, on.format(TimeParser.CLI_DATE_FORMATTER)), MESSAGE_TASK_LIST_TIPS, tasks
                 )
         );
     }

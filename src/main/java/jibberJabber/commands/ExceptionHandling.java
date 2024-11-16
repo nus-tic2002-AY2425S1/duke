@@ -9,10 +9,20 @@ import jibberJabber.tasks.taskType.Deadline;
 import java.io.File;
 import java.util.ArrayList;
 import java.io.IOException;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.time.format.DateTimeFormatter;
+/**
+ * The exception handling class provides methods for handling exceptions
+ */
 public class ExceptionHandling {
+    /**
+     * Validates whether the input index for marking or unmarking a task is a valid integer
+     *
+     * @param input the input string to validate.
+     * @return true if the input is a valid integer, false if its not.
+     */
     //Solution below adapted from https://www.quora.com/What-is-the-function-of-a-isInteger-in-Java
-    // Exception: Validates whether the input index for marking or unmarking a task is a valid integer
     public static boolean isInteger(String input) {
         try {
             Integer.parseInt( input );
@@ -21,11 +31,21 @@ public class ExceptionHandling {
         catch (NumberFormatException e) { return false;
         }
     }
-    // Remove unnecessary whitespace between words and start / end of the string
+    /**
+     * Remove unnecessary whitespace between words and start / end of the string
+     *
+     * @param input the input string.
+     * @return th estring to check for extra spaces to be removed.
+     */
     public static String removeSpaces(String input){
         return input.trim().replaceAll("\\s+", " ");
     }
-    // Exception: Validates if the input contains only specified keywords or if no name has been provided for the task
+    /**
+     * Validates if the input contains only specified keywords or if no name has been provided for the task
+     *
+     * @param input the input string to validate.
+     * @return true if the input is empty or invalid, false if it is valid.
+     */
     public static boolean isEmptyInput(String input) {
         input = removeSpaces(input);
         boolean isEmptyTask = false;
@@ -64,7 +84,13 @@ public class ExceptionHandling {
         }
         return isEmptyTask;
     }
-    // Exception: Validates if there are duplicate tasks, including task type, already added to the list
+    /**
+     * Validates if there are duplicate tasks, including task type, already added to the list
+     *
+     * @param todoTaskList the list of tasks to check against.
+     * @param newTask      the new task to validate.
+     * @return true if the task is duplicated, false if not.
+     */
     public static boolean isTaskDuplicated(ArrayList<Task> todoTaskList, String newTask) {
         newTask = removeSpaces(newTask);
         for (Task task : todoTaskList) {
@@ -80,7 +106,9 @@ public class ExceptionHandling {
                     if (deadlineDetails.length == 2 ){
                         String newDeadlineTask = removeSpaces(deadlineDetails[0]);
                         String deadlineOfTask = removeSpaces(deadlineDetails[1]);
-                        if (((Deadline) task).by.equalsIgnoreCase(deadlineOfTask) && task.getTaskName().equalsIgnoreCase(newDeadlineTask)) {
+                        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+                        String formattedBy = ((Deadline) task).by.format(inputFormatter);
+                        if (formattedBy.equalsIgnoreCase(deadlineOfTask) && task.getTaskName().equalsIgnoreCase(newDeadlineTask)) {
                             return true;
                         }
                     }
@@ -95,7 +123,10 @@ public class ExceptionHandling {
                         if (taskDurationDetails.length == 2){
                             String from = removeSpaces(taskDurationDetails[0]);
                             String to = removeSpaces(taskDurationDetails[1]);
-                            if (((Event) task).from.equalsIgnoreCase(from) && ((Event) task).to.equalsIgnoreCase(to) && task.getTaskName().equalsIgnoreCase(newEventTask)) {
+                            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+                            String formattedFrom = ((Event) task).from.format(inputFormatter);
+                            String formattedTo = ((Event) task).to.format(inputFormatter);
+                            if (formattedFrom.equalsIgnoreCase(from) && formattedTo.equalsIgnoreCase(to) && task.getTaskName().equalsIgnoreCase(newEventTask)) {
                                 return true;
                             }
                         }
@@ -105,18 +136,35 @@ public class ExceptionHandling {
         }
         return false;
     }
-    // Exception: Validates if the task has already been marked or unmarked in the list
+    /**
+     * Validates if the task has already been marked or unmarked in the list
+     *
+     * @param todoTaskList the TaskList containing all tasks objects
+     * @param index        the index of the task to validate.
+     * @param isDone       the status of the task
+     * @return true if the task is already marked/unmarked as per the input, false if not.
+     */
     public static boolean isTaskMarked(TaskList todoTaskList, int index, boolean isDone){
         try{
             return todoTaskList.getTaskById(index - 1).isDone == isDone;
         } catch (Exception e){ return false;
         }
     }
-    // Exception: Validates if the provided deadline for the task is missing
+    /**
+     * Validates if the provided deadline for the task is missing
+     *
+     * @param deadlineDetails an array of deadline details split by "/by".
+     * @return true if the deadline details format are valid, false if not.
+     */
     public static boolean isValidDeadlineInput(String[] deadlineDetails) {
         return deadlineDetails.length >= 2 && !removeSpaces(deadlineDetails[1]).isEmpty();
     }
-    // Exception: Validates if the event period provided for the task is missing
+    /**
+     * Validates if the event period provided for the task is missing
+     *
+     * @param eventDetails an array of event details split by "/from" and by "/to"
+     * @return true if the event details format are valid, false if not.
+     */
     public static boolean isValidEventInput(String[] eventDetails) {
         if (eventDetails.length < 2) {
             return false;
@@ -124,12 +172,28 @@ public class ExceptionHandling {
         String[] eventOfTask = eventDetails[1].split("/to");
         return eventOfTask.length >= 2 && !removeSpaces(eventOfTask[0]).isEmpty() && !removeSpaces(eventOfTask[1]).isEmpty();
     }
-    // Exception: Validates if the file is created
+    /**
+     * Validates if the file is created
+     *
+     * @param file the file to check.
+     * @return true if the file was created successfully, false if not.
+     */
     public static boolean isFileCreated (File file) {
         try {
             return file.createNewFile();
         } catch (IOException e) {
             return false;
         }
+    }
+    /**
+     * Validates if the given date string matches the expected format.
+     *
+     * @param date the date string to check against.
+     * @return true if the date format is invalid, false if not.
+     */
+    public static boolean isInvalidDate(String date){
+        Pattern pattern = Pattern.compile("^\\d{1,2}/\\d{1,2}/\\d{4} \\d{4}$");
+        Matcher matcher = pattern.matcher(date);
+        return !matcher.matches();
     }
 }

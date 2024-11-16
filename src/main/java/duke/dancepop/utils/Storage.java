@@ -4,12 +4,17 @@ import duke.dancepop.entities.Deadline;
 import duke.dancepop.entities.Event;
 import duke.dancepop.entities.Task;
 import duke.dancepop.entities.Todo;
+import duke.dancepop.enums.TaskEnum;
+import duke.dancepop.exceptions.ExceptionConsts;
+import duke.dancepop.exceptions.FileException;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +24,11 @@ public class Storage {
     private static Optional<String> customFileName = Optional.empty();
 
     /**
-     * Save all Task objects to a CSV file.
+     * Saves all Task objects to a CSV file with the specified file name.
+     * If the specified file exists, it will be overwritten.
+     * If file doesn't exist, it will be created.
+     *
+     * @param fileName The name of the file to save the tasks.
      */
     public static void saveToFile(String fileName) {
         Path filePath = Paths.get(FILE_PATH, fileName);
@@ -44,14 +53,22 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves all Task objects to a CSV file.
+     * If a custom file name has been specified, it will use that; otherwise, it uses the default file name.
+     */
     public static void saveToFile() {
         saveToFile(customFileName.orElse(DEFAULT_FILE_NAME));
     }
 
     /**
-     * Load Task objects from a CSV file into TaskList.
+     * Loads Task objects from a CSV file with the specified file name into TaskList.
+     * If the file does not exist, a log message is printed, and no tasks are loaded.
+     *
+     * @param fileName The name of the file to load tasks from.
      */
-    public static void loadFile(String fileName) {
+    public static void loadFromFile(String fileName) {
+        assert fileName != null && !fileName.isBlank() : "File name must not be null or blank";
         Path filePath = Paths.get(FILE_PATH, fileName);
         Log.printMsg("Loading data from " + filePath);
 
@@ -71,14 +88,24 @@ public class Storage {
                     .filter(line -> !line.trim().isEmpty())
                     .toList();
 
-            lines.forEach(Storage::parseAndAddTask);
-        } catch (IOException ioe) {
-            Log.printMsg("Error occurred while loading file: ", ioe.getMessage());
+            List<Task> fileTasks = new ArrayList<>();
+            for (String line : lines) {
+                Task fileTask = parseAndAddTask(line);
+                fileTasks.add(fileTask);
+            }
+            TaskList.addAll(fileTasks);
+        } catch (IOException | FileException ioe) {
+            Log.printMsg(ioe.getMessage());
         }
     }
 
-    public static void loadFile() {
-        loadFile(customFileName.orElse(DEFAULT_FILE_NAME));
+    /**
+     * Loads Task objects from a CSV file.
+     * If a custom file name has been specified, it will use that.
+     * Otherwise, it uses the default file name - data.csv
+     */
+    public static void loadFromFile() {
+        loadFromFile(customFileName.orElse(DEFAULT_FILE_NAME));
     }
 
     private static void writeTasksToFile(FileWriter writer, List<Task> tasks) throws IOException {
@@ -89,10 +116,11 @@ public class Storage {
     }
 
     private static String serializeTask(Task task) {
+        assert task != null : "Task to serialize must not be null";
         StringBuilder sb = new StringBuilder();
         sb.append(task instanceof Todo ? "T" :
                         task instanceof Deadline ? "D" : "E")
-                .append("|").append(task.getDone())
+                .append("|").append(task.getIsDone())
                 .append("|").append(task.getDescription());
 
         if (task instanceof Deadline deadline) {
@@ -105,20 +133,39 @@ public class Storage {
         return sb.toString();
     }
 
-    private static void parseAndAddTask(String line) {
+    private static Task parseAndAddTask(String line) throws FileException {
         String[] parts = line.split("\\|");
-        Task task;
 
-        switch (parts[0]) {
-            case "T" -> task = new Todo(parts[2]);
-            case "D" -> task = new Deadline(parts[2], DateTimeUtil.isoToLocalDateTime(parts[3]));
-            case "E" ->
-                    task = new Event(parts[2], DateTimeUtil.isoToLocalDateTime(parts[3]), DateTimeUtil.isoToLocalDateTime(parts[4]));
-            default -> throw new IllegalArgumentException("Unknown task type: " + parts[0]);
+        if (parts.length < 3) {
+            throw new FileException(ExceptionConsts.INVALID_CSV_FILE_FORMAT_ERROR);
         }
 
-        task.setDone(parts[1]);
-        TaskList.add(task);
+        Task task;
+        switch (parts[0]) {
+            case "T" -> {
+                if (parts.length != 3) {
+                    throw new FileException(MessageFormat.format(ExceptionConsts.INVALID_TASK_CSV_FORMAT_ERROR, TaskEnum.TODO));
+                }
+                task = new Todo(parts[2]);
+            }
+            case "D" -> {
+                if (parts.length != 4) {
+                    throw new FileException(MessageFormat.format(ExceptionConsts.INVALID_TASK_CSV_FORMAT_ERROR, TaskEnum.DEADLINE));
+                }
+                task = new Deadline(parts[2], DateTimeUtil.isoToLocalDateTime(parts[3]));
+            }
+            case "E" -> {
+                if (parts.length != 5) {
+                    throw new FileException(MessageFormat.format(ExceptionConsts.INVALID_TASK_CSV_FORMAT_ERROR, TaskEnum.EVENT));
+                }
+                task = new Event(parts[2], DateTimeUtil.isoToLocalDateTime(parts[3]), DateTimeUtil.isoToLocalDateTime(parts[4]));
+            }
+            default ->
+                    throw new FileException(MessageFormat.format(ExceptionConsts.UNKNOWN_TASK_CSV_FORMAT_ERROR, parts[0]));
+        }
+
+        task.setIsDone(parts[1]);
+        return task;
     }
 
     private static void createEmptyCsvFile(FileWriter writer) throws IOException {

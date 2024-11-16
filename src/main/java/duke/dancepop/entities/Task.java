@@ -18,20 +18,26 @@ public abstract class Task {
         return description;
     }
 
-    public boolean getDone() {
+    public boolean getIsDone() {
         return isDone;
     }
 
-    public void setDone(boolean isDone) {
+    public void setIsDone(boolean isDone) {
         this.isDone = isDone;
     }
 
-    public void setDone(String isDone) {
+    public void setIsDone(String isDone) {
         this.isDone = Boolean.parseBoolean(isDone);
     }
 
+    /**
+     * Returns a string representation of task
+     * Example output: [taskType][isDone] description
+     *
+     * @return A string containing task type, isDone, description
+     */
     public String toString() {
-        String done = getDone() ? "X" : " ";
+        String done = getIsDone() ? "X" : " ";
         return "[" + type.getValue() + "]" + "[" + done + "] " + description;
     }
 }

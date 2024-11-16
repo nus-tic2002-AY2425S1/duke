@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 public class Deadline extends Task {
     private final LocalDateTime deadline;
 
-    // TODO: Fix design for inheritance
     public Deadline(String description, LocalDateTime deadline) {
         super(description);
         this.deadline = deadline;
@@ -22,6 +21,12 @@ public class Deadline extends Task {
         return deadline;
     }
 
+    /**
+     * Returns a string representation of deadline task
+     * Example output: [taskType][isDone] description (by: deadline)
+     *
+     * @return A string containing task type, isDone, description, deadline
+     */
     public String toString() {
         return super.toString() + " (by: " + DateTimeUtil.toString(deadline) + ")";
     }

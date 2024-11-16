@@ -1,5 +1,7 @@
 package jibberJabber.ui;
 
+import jibberJabber.commands.ExceptionHandling;
+
 import java.util.Scanner;
 /**
  * The Ui class handles all user interactions within the Jibber Jabber application while running
@@ -21,7 +23,7 @@ public class Ui {
      * @return The trimmed user input as a String.
      */
     public String read() {
-        return scanner.nextLine().trim();
+        return ExceptionHandling.removeSpaces(scanner.nextLine());
     }
     /**
      * This method returns the welcome message to the user.

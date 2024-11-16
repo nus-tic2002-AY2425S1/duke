@@ -1,6 +1,7 @@
 package wkduke.command.create;
 
 import wkduke.command.Command;
+import wkduke.exception.command.CommandOperationException;
 import wkduke.exception.storage.StorageOperationException;
 import wkduke.storage.Storage;
 import wkduke.task.Task;
@@ -46,7 +47,7 @@ public abstract class AddCommand extends Command {
      * @throws StorageOperationException if there is an error with saving the task list to storage.
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws StorageOperationException {
+    public void execute(TaskList taskList, Ui ui, Storage storage) throws StorageOperationException, CommandOperationException {
         assert taskList != null : "Precondition failed: 'taskList' cannot be null";
         assert ui != null : "Precondition failed: 'ui' cannot be null";
         assert storage != null : "Precondition failed: 'storage' cannot be null";

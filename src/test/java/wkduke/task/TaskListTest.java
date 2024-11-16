@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 import wkduke.command.update.SortOrder;
+import wkduke.exception.command.CommandOperationException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -94,7 +95,7 @@ public class TaskListTest {
     }
 
     @BeforeEach
-    void setup() {
+    void setup() throws CommandOperationException {
         taskList = new TaskList();
         todo1 = new Todo("Read book", false, TaskPriority.LOW);
         todo2 = new Todo("Complete assignment", true, TaskPriority.HIGH);

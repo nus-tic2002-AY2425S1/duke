@@ -5,8 +5,17 @@ public class ToDo extends TaskList {
     }
 
     @Override
-    public String toString() {
+    public String getType() {
+        return "T";
+    }
 
+    @Override
+    public String toString() {
         return "[T]" + super.toString();
+    }
+
+    @Override
+    public String toFileFormat() {
+        return "T | " + (completed ? "1" : "0") + " | " + listDescription;
     }
 }

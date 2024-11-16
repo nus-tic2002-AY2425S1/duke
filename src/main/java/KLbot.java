@@ -1,15 +1,22 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.File;
 
 public class KLbot {
     private static final String botName = "KLbot";
     private static final Scanner in = new Scanner(System.in);
     private static final ArrayList<TaskList> taskList = new ArrayList<>();
     private static String errorTask;
+    public static String filePath = "data/KLBot.txt";
 
     public static void main(String[] args) throws KLBotException {
         greetUser();
+        loadTasksFromFile();
         botLoop();
+        saveTasksToFile();
         sayGoodbye();
         in.close();
     }
@@ -32,11 +39,10 @@ public class KLbot {
             String userInput = in.nextLine();
             String inputToLowerCase = userInput.toLowerCase();
             if (isExit(userInput)) break;
-            try{
+            try {
                 if (inputToLowerCase.isBlank()) {
                     throw new KLBotException("Oops! It looks like you didn’t enter anything. Please type something to continue.");
                 } else if (inputToLowerCase.startsWith("mark")) {
-                    System.out.println(userInput);
                     handleTaskAction(userInput, true);
                 } else if (inputToLowerCase.startsWith("unmark")) {
                     handleTaskAction(userInput, false);
@@ -44,15 +50,14 @@ public class KLbot {
                     addTask(userInput);
                 } else if (isShowList(userInput)) {
                     displayTaskList();
-                } else if(inputToLowerCase.startsWith("delete")){
+                } else if (inputToLowerCase.startsWith("delete")) {
                     deleteTask(userInput);
                 } else {
                     throw new KLBotException("Hmm, I didn't quite catch that. Could you please try again?");
                 }
-            }catch(KLBotException e){
+            } catch (KLBotException e) {
                 System.out.println(e.getMessage());
             }
-
         }
     }
 
@@ -77,21 +82,21 @@ public class KLbot {
             }
             System.out.println(task);
             printLine();
+            saveTasksToFile();
         }
     }
 
-    private static int parseTaskIndex(String userInput) throws KLBotException{
+    private static int parseTaskIndex(String userInput) throws KLBotException {
         try {
             return Integer.parseInt(userInput.split(" ")[1]) - 1;
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-            throw new KLBotException("Invalid task number. Please try again.");
-
+            throw new KLBotException("Oops! The task number seems to be invalid. Please try again. ");
         }
     }
 
-    private static boolean taskIndexIsValid(int taskIndex) throws KLBotException{
+    private static boolean taskIndexIsValid(int taskIndex) throws KLBotException {
         if (taskIndex < 0 || taskIndex >= taskList.size()) {
-            throw new KLBotException("Task number out of range. Please enter a valid task number.");
+            throw new KLBotException("Oops! This task number doesn't exist. Could you check again?");
         }
         return true;
     }
@@ -104,6 +109,7 @@ public class KLbot {
             System.out.println(task);
             printLine();
             System.out.println("Now you have " + taskList.size() + " task(s) in the list.");
+            saveTasksToFile();
         }
     }
 
@@ -136,7 +142,7 @@ public class KLbot {
     }
 
     private static TaskList createTask(String userInput) throws KLBotException {
-        try{
+        try {
             if (!hasDescription(userInput)) {
                 throw new KLBotException(errorTask);
             }
@@ -151,7 +157,7 @@ public class KLbot {
                 if (parts.length < 3) return null;
                 return new Event(parts[0].trim(), parts[1].replace("from ", "").trim(), parts[2].replace("to ", "").trim());
             }
-        }catch(KLBotException e){
+        } catch (KLBotException e) {
             System.out.println(e.getMessage());
         }
 
@@ -164,11 +170,13 @@ public class KLbot {
             TaskList task = taskList.get(taskIndex);
             printLine();
             System.out.println("Alrighty! I've successfully removed this task: \n\t" + taskList.get(taskIndex));
-            System.out.println("You've now got " + taskList.size() + " task(s) left in your list. Keep up the great work!");
             taskList.remove(task);
+            System.out.println("You've now got " + taskList.size() + " task(s) left in your list. Keep up the great work!");
             printLine();
+            saveTasksToFile();
         }
     }
+
     public static void displayTaskList() {
         if (taskList.isEmpty()) {
             System.out.println("It looks like your task list is empty. No worries! Add some tasks, and I'll be here to help you manage them!");
@@ -180,6 +188,41 @@ public class KLbot {
             System.out.println("\t" + (i + 1) + "." + taskList.get(i));
         }
         printLine();
+    }
+
+    private static void saveTasksToFile() {
+        try (FileWriter writer = new FileWriter(filePath)) {
+            for (TaskList task : taskList) {
+                writer.write(task.toFileFormat() + "\n");
+            }
+            System.out.println("Everything is saved! Your tasks are safe and sound. 😊");
+        } catch (IOException e) {
+            System.out.println("Oops! Something went wrong while saving tasks to file. Please try again! 😟");
+        }
+    }
+
+    private static void loadTasksFromFile() {
+        File file = new File(filePath);
+        if (file.exists()) {
+            try (Scanner fileScanner = new Scanner(file)) {
+                while (fileScanner.hasNextLine()) {
+                    String line = fileScanner.nextLine();
+                    TaskList task = TaskList.fromFileFormat(line);
+
+                    if (task != null) {
+                        taskList.add(task);
+                    }
+                }
+                if (!taskList.isEmpty()) {
+                    System.out.println("Yay! I found some tasks you’ve saved earlier:");
+                    for (int i = 0; i < taskList.size(); i++) {
+                        System.out.println("\t" + (i + 1) + "." + taskList.get(i));
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                System.out.println("Uh-oh, I couldn’t find your saved tasks. Maybe you don’t have any yet? 😊");
+            }
+        }
     }
 
     private static void sayGoodbye() {

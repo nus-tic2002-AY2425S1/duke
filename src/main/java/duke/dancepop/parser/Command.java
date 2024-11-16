@@ -172,3 +172,14 @@ class LoadFromFileNameCommand extends BinaryCommand<String> {
         Storage.loadFile(value);
     }
 }
+
+class FindCommand extends BinaryCommand<String> {
+
+    public FindCommand(String value) {
+        super(value);
+    }
+
+    public void execute() {
+        TaskList.printByDescriptionContains(value);
+    }
+}

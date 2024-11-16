@@ -9,6 +9,8 @@ import wkduke.ui.UiTaskGroup;
 
 import java.util.List;
 
+import static wkduke.common.Messages.MESSAGE_TASK_LIST_TIPS;
+
 /**
  * Represents a command to list all tasks in the task list.
  */
@@ -48,6 +50,6 @@ public class ListCommand extends Command {
             return;
         }
         assert !tasks.isEmpty() : "Postcondition failed: 'tasks' cannot be empty";
-        ui.printUiTaskGroup(taskList, new UiTaskGroup(String.format(MESSAGE_SUCCESS), "", tasks));
+        ui.printUiTaskGroup(taskList, new UiTaskGroup(String.format(MESSAGE_SUCCESS), MESSAGE_TASK_LIST_TIPS, tasks));
     }
 }

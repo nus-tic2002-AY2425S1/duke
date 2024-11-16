@@ -11,6 +11,7 @@ import wkduke.ui.UiTaskGroup;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static wkduke.common.Messages.MESSAGE_TASK_LIST_TIPS;
 import static wkduke.ui.Ui.INDENT_HELP_MSG_NUM;
 
 /**
@@ -81,7 +82,7 @@ public class ListOnCommand extends Command {
         }
         assert !tasks.isEmpty() : "Postcondition failed: 'tasks' cannot be empty";
         ui.printUiTaskGroup(taskList, new UiTaskGroup(
-                        String.format(MESSAGE_SUCCESS, on.format(TimeParser.CLI_FORMATTER)), "", tasks
+                        String.format(MESSAGE_SUCCESS, on.format(TimeParser.CLI_FORMATTER)), MESSAGE_TASK_LIST_TIPS, tasks
                 )
         );
     }

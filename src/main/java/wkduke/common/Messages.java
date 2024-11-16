@@ -44,5 +44,10 @@ public class Messages {
             
               Tips: You can type the command name (e.g., 'todo', 'delete', etc.) to see detailed usage and examples for that command.
             """;
-
+    public static final String MESSAGE_TASK_LIST_TIPS = """
+            \nTips: [TaskType][TaskPriority][TaskStatus]
+              [TaskType]: [T] for Todo, [D] for Deadline, [E] for Event
+              [TaskPriority]: [H] for High, [M] for Medium, [L] for Low
+              [TaskStatus]: [X] for done, [ ] for not done
+            """;
 }

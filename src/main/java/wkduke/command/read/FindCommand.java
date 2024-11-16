@@ -9,6 +9,7 @@ import wkduke.ui.UiTaskGroup;
 
 import java.util.List;
 
+import static wkduke.common.Messages.MESSAGE_TASK_LIST_TIPS;
 import static wkduke.ui.Ui.INDENT_HELP_MSG_NUM;
 
 /**
@@ -52,7 +53,7 @@ public class FindCommand extends Command {
         }
         assert !matchingTasks.isEmpty() : "Postcondition failed: 'matchingTasks' cannot be empty";
         ui.printUiTaskGroup(taskList, new UiTaskGroup(
-                        String.format(MESSAGE_SUCCESS, keywords), "", matchingTasks
+                        String.format(MESSAGE_SUCCESS, keywords), MESSAGE_TASK_LIST_TIPS, matchingTasks
                 )
         );
     }

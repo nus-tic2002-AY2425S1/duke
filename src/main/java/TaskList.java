@@ -1,6 +1,7 @@
 public class TaskList {
     protected boolean completed;
     protected String listDescription;
+
     public TaskList(String listDescription) {
         this.listDescription = listDescription;
         this.completed = false;

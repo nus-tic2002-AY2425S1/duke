@@ -1,10 +1,10 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class KLbot {
     private static final String botName = "KLbot";
     private static final Scanner in = new Scanner(System.in);
-    private static TaskList[] userList = new TaskList[100];
-    private static int listCounter = 0;
+    private static final ArrayList<TaskList> taskList = new ArrayList<>();
     private static String errorTask;
 
     public static void main(String[] args) throws KLBotException {
@@ -24,27 +24,35 @@ public class KLbot {
         System.out.println("\t⏰ To add a Deadline task, type 'deadline' followed by your task description and the deadline day. For example: 'deadline return book /by Sunday'");
 
         System.out.println("What can I do for you today? (Type 'bye' when you're ready to go!)");
-
         printLine();
     }
 
     private static void botLoop() throws KLBotException {
         while (true) {
             String userInput = in.nextLine();
+            String inputToLowerCase = userInput.toLowerCase();
             if (isExit(userInput)) break;
-            if (userInput.isBlank()) {
-                System.out.println("Oops! It looks like you didn’t enter anything. Please type something to continue.");
-            } else if (userInput.startsWith("mark")) {
-                handleTaskAction(userInput, true);
-            } else if (userInput.startsWith("unmark")) {
-                handleTaskAction(userInput, false);
-            } else if (userInput.startsWith("todo") || userInput.startsWith("deadline") || userInput.startsWith("event")) {
-                addTask(userInput);
-            } else if (isShowList(userInput)) {
-                displayTaskList();
-            } else {
-                System.out.println("Hmm, I didn't quite catch that. Could you please try again?");
+            try{
+                if (inputToLowerCase.isBlank()) {
+                    throw new KLBotException("Oops! It looks like you didn’t enter anything. Please type something to continue.");
+                } else if (inputToLowerCase.startsWith("mark")) {
+                    System.out.println(userInput);
+                    handleTaskAction(userInput, true);
+                } else if (inputToLowerCase.startsWith("unmark")) {
+                    handleTaskAction(userInput, false);
+                } else if (inputToLowerCase.startsWith("todo") || userInput.startsWith("deadline") || userInput.startsWith("event")) {
+                    addTask(userInput);
+                } else if (isShowList(userInput)) {
+                    displayTaskList();
+                } else if(inputToLowerCase.startsWith("delete")){
+                    deleteTask(userInput);
+                } else {
+                    throw new KLBotException("Hmm, I didn't quite catch that. Could you please try again?");
+                }
+            }catch(KLBotException e){
+                System.out.println(e.getMessage());
             }
+
         }
     }
 
@@ -59,10 +67,10 @@ public class KLbot {
     private static void handleTaskAction(String userInput, boolean isMarkAction) throws KLBotException {
         int taskIndex = parseTaskIndex(userInput);
         if (taskIndexIsValid(taskIndex)) {
-            TaskList task = userList[taskIndex];
+            TaskList task = taskList.get(taskIndex);
             if (isMarkAction) {
                 task.markAsCompleted();
-                System.out.println("Yay! You've successfully marked this task as done! ");
+                System.out.println("Yay! You've successfully marked this task as done!");
             } else {
                 task.markAsIncomplete();
                 System.out.println("Alright, I've marked this task as not done yet. Let me know if you need anything else!");
@@ -75,13 +83,14 @@ public class KLbot {
     private static int parseTaskIndex(String userInput) throws KLBotException{
         try {
             return Integer.parseInt(userInput.split(" ")[1]) - 1;
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             throw new KLBotException("Invalid task number. Please try again.");
+
         }
     }
 
     private static boolean taskIndexIsValid(int taskIndex) throws KLBotException{
-        if (taskIndex < 0 || taskIndex >= listCounter) {
+        if (taskIndex < 0 || taskIndex >= taskList.size()) {
             throw new KLBotException("Task number out of range. Please enter a valid task number.");
         }
         return true;
@@ -89,31 +98,26 @@ public class KLbot {
 
     private static void addTask(String userInput) throws KLBotException {
         TaskList task = createTask(userInput);
-        if (task != null && listCounter < userList.length) {
-            userList[listCounter++] = task;
+        if (task != null) {
+            taskList.add(task);
             System.out.println("Got it! I've added this task to your list:");
             System.out.println(task);
             printLine();
-            System.out.println("Now you have " + listCounter + " task(s) in the list.");
-        } else if (listCounter >= userList.length) {
-            System.out.println("Task list is full! Cannot add more tasks.");
+            System.out.println("Now you have " + taskList.size() + " task(s) in the list.");
         }
     }
 
     private static boolean hasDescription(String userInput) {
         if (userInput.startsWith("todo")) {
             String[] todoDescription = userInput.split(" ");
-            System.out.println(todoDescription.length);
             if (todoDescription.length <= 1) {
                 errorTask = "Oh no! It seems there’s a little hiccup with your To Do task description. Make sure it follows this format: 'todo borrow book'. Thanks!";
                 return false;
             }
             return true;
-
         }
         if (userInput.startsWith("deadline")) {
             String[] deadlineDescription = userInput.split(" /by ");
-            System.out.println(deadlineDescription.length);
             if (deadlineDescription.length != 2) {
                 errorTask = "Oh no! It seems there’s a little hiccup with your Deadline task description. Make sure it follows this format: 'deadline return book /by Sunday'. Thanks!";
                 return false;
@@ -132,39 +136,55 @@ public class KLbot {
     }
 
     private static TaskList createTask(String userInput) throws KLBotException {
-        if (!hasDescription(userInput)) {
-            throw new KLBotException(errorTask);
+        try{
+            if (!hasDescription(userInput)) {
+                throw new KLBotException(errorTask);
+            }
+            if (userInput.startsWith("todo")) {
+                return new ToDo(userInput.replace("todo ", "").trim());
+            } else if (userInput.startsWith("deadline")) {
+                String[] parts = userInput.replace("deadline ", "").split("/by", 2);
+                if (parts.length < 2) return null;
+                return new Deadline(parts[0].trim(), parts[1].trim());
+            } else if (userInput.startsWith("event")) {
+                String[] parts = userInput.replace("event ", "").split("/", 3);
+                if (parts.length < 3) return null;
+                return new Event(parts[0].trim(), parts[1].replace("from ", "").trim(), parts[2].replace("to ", "").trim());
+            }
+        }catch(KLBotException e){
+            System.out.println(e.getMessage());
         }
-        if (userInput.startsWith("todo")) {
-            return new ToDo(userInput.replace("todo ", "").trim());
-        } else if (userInput.startsWith("deadline")) {
-            String[] parts = userInput.replace("deadline ", "").split("/by", 2);
-            if (parts.length < 2) return null;
-            return new Deadline(parts[0].trim(), parts[1].trim());
-        } else if (userInput.startsWith("event")) {
-            String[] parts = userInput.replace("event ", "").split("/", 3);
-            if (parts.length < 3) return null;
-            return new Event(parts[0].trim(), parts[1].replace("from ", "").trim(), parts[2].replace("to ", "").trim());
-        }
+
         return null;
     }
 
+    public static void deleteTask(String userInput) throws KLBotException {
+        int taskIndex = parseTaskIndex(userInput);
+        if (taskIndexIsValid(taskIndex)) {
+            TaskList task = taskList.get(taskIndex);
+            printLine();
+            System.out.println("Alrighty! I've successfully removed this task: \n\t" + taskList.get(taskIndex));
+            System.out.println("You've now got " + taskList.size() + " task(s) left in your list. Keep up the great work!");
+            taskList.remove(task);
+            printLine();
+        }
+    }
     public static void displayTaskList() {
-        if (listCounter == 0) {
+        if (taskList.isEmpty()) {
             System.out.println("It looks like your task list is empty. No worries! Add some tasks, and I'll be here to help you manage them!");
             return;
         }
 
         printLine();
-        for (int i = 0; i < listCounter; i++) {
-            System.out.println("\t" + (i + 1) + "." + userList[i]);
+        for (int i = 0; i < taskList.size(); i++) {
+            System.out.println("\t" + (i + 1) + "." + taskList.get(i));
         }
         printLine();
     }
 
     private static void sayGoodbye() {
         printLine();
-        System.out.println("Aww, you're leaving? It was so nice chatting with you! Take care and see you soon! \uD83D\uDC96");
+        System.out.println("Aww, you're leaving? It was so nice chatting with you! Take care and see you soon! 💖");
         printLine();
     }
 

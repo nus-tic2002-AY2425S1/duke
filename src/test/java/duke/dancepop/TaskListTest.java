@@ -4,6 +4,7 @@ import duke.dancepop.entities.Deadline;
 import duke.dancepop.entities.Event;
 import duke.dancepop.entities.Task;
 import duke.dancepop.entities.Todo;
+import duke.dancepop.utils.TaskList;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,7 +46,7 @@ class TaskListTest {
     @ParameterizedTest()
     @MethodSource("getTasks")
     void Given_Task_When_Add_Should_AddTaskCorrectly(Task task) {
-        TaskList.add(task);
+        TaskList.addAndPrint(task);
 
         String output = outputStream.toString();
         assertTrue(output.contains("Got it. I've added this task:"));
@@ -59,9 +60,9 @@ class TaskListTest {
         Task deadline = new Deadline("description", startDT);
         Task event = new Event("description", startDT, endDT);
 
-        TaskList.add(todo);
-        TaskList.add(deadline);
-        TaskList.add(event);
+        TaskList.addAndPrint(todo);
+        TaskList.addAndPrint(deadline);
+        TaskList.addAndPrint(event);
 
         TaskList.print();
 

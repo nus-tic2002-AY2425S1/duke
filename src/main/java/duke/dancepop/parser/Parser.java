@@ -22,33 +22,19 @@ public class Parser {
         String command = parts[0].toLowerCase().trim();
         String arguments = parts.length > 1 ? parts[1].trim() : "";
 
-        switch (command) {
-            case "todo" -> {
-                return parseTodo(arguments);
-            }
-            case "deadline" -> {
-                return parseDeadline(arguments);
-            }
-            case "event" -> {
-                return parseEvent(arguments);
-            }
-            case "mark" -> {
-                return parseMark(arguments);
-            }
-            case "unmark" -> {
-                return parseUnmark(arguments);
-            }
-            case "delete" -> {
-                return parseDelete(arguments);
-            }
-            case "list" -> {
-                return parseList(arguments);
-            }
-            case "bye" -> {
-                return parseBye(arguments);
-            }
+        return switch (command) {
+            case "todo" -> parseTodo(arguments);
+            case "deadline" -> parseDeadline(arguments);
+            case "event" -> parseEvent(arguments);
+            case "mark" -> parseMark(arguments);
+            case "unmark" -> parseUnmark(arguments);
+            case "delete" -> parseDelete(arguments);
+            case "list" -> parseList(arguments);
+            case "bye" -> parseBye(arguments);
+            case "save" -> parseSave(arguments);
+            case "load" -> parseLoad(arguments);
             default -> throw new InputException(ExceptionConsts.UNKNOWN_COMMAND_ERROR);
-        }
+        };
     }
 
     private static Command parseTodo(String arguments) throws InputException {
@@ -177,5 +163,27 @@ public class Parser {
             List<String> errors = new ErrorMessageBuilder(command).integerParse().build();
             throw new InputException(errors);
         }
+    }
+
+    private static Command parseSave(String value) throws InputException {
+        boolean fileNameValid = value.split(".csv").length == 1;
+
+        if (!fileNameValid) {
+            List<String> errors = new ErrorMessageBuilder(CommandEnum.SAVE).unknownArguments().build();
+            throw new InputException(errors);
+        }
+
+        return new SaveToFileNameCommand(value);
+    }
+
+    private static Command parseLoad(String value) throws InputException {
+        boolean fileNameValid = value.split(".csv").length == 1;
+
+        if (!fileNameValid) {
+            List<String> errors = new ErrorMessageBuilder(CommandEnum.LOAD).unknownArguments().build();
+            throw new InputException(errors);
+        }
+
+        return new LoadFromFileNameCommand(value);
     }
 }

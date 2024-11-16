@@ -1,5 +1,6 @@
 package jibberJabber.tasks;
 
+import jibberJabber.commands.ExceptionHandling;
 import jibberJabber.commands.KeywordHandling;
 import jibberJabber.ui.Message;
 /**
@@ -80,17 +81,54 @@ public class Task {
      * @param keywordHandling The keyword class to handle all keyword operations.
      * @param isFromFile Indicates whether the task was read from a file: true if read from file (not to display default message), false if its from user input (display default message)
      */
-    public static void addTask(TaskList todoTaskList, String todoTask, String keyword, KeywordHandling keywordHandling , boolean isFromFile){
+    public static void addTask(TaskList todoTaskList, String todoTask, String keyword, KeywordHandling keywordHandling , boolean isFromFile, TaskFiles taskFiles){
+        keyword = ExceptionHandling.removeSpaces(keyword).toLowerCase();
         switch (keyword){
             case "todo":
                 keywordHandling.processTodoTask(todoTask, todoTaskList, isFromFile);
                 break;
             case "deadline":
+                String deadlineTask = ExceptionHandling.removeSpaces(todoTask.replaceAll("(?i)deadline", ""));
+                String[] deadlineDetails = deadlineTask.split("/by");
+                // Checks if deadline is provided
+                if (!ExceptionHandling.isValidDeadlineInput(deadlineDetails)) {
+                    Message.printMissingParameterMessage("deadline");
+                    return;
+                }
+                String deadlineOfTask = ExceptionHandling.removeSpaces(deadlineDetails[1]);
+                if (ExceptionHandling.isInvalidDate(deadlineOfTask)){
+                    Message.printInvalidDateFormatMessage();
+                    return;
+                }
                 keywordHandling.processDeadlineTask(todoTask, todoTaskList, isFromFile);
                 break;
             case "event":
+                String eventTask = ExceptionHandling.removeSpaces(todoTask.replaceAll("(?i)event", ""));
+                if (!eventTask.contains("/from") || !eventTask.contains("/to")) {
+                    // Checks if the input value is in proper format
+                    Message.printMissingParameterMessage("event");
+                    return;
+                }
+                String[] eventDetails = eventTask.split("/from");
+                if (!ExceptionHandling.isValidEventInput(eventDetails)) {
+                    // Checks if event duration is provided
+                    Message.printMissingParameterMessage("event");
+                    return;
+                }
+                String[] eventDurationDetails = eventDetails[1].split("/to");
+                String from = ExceptionHandling.removeSpaces(eventDurationDetails[0]);
+                String to = ExceptionHandling.removeSpaces(eventDurationDetails[1]);
+                if (ExceptionHandling.isInvalidDate(from) || ExceptionHandling.isInvalidDate(to)) {
+                    Message.printInvalidDateFormatMessage();
+                    return;
+                }
                 keywordHandling.processEventTask(todoTask, todoTaskList, isFromFile);
                 break;
+        }
+        if (!todoTaskList.getTasks().isEmpty()) {
+            taskFiles.writeToTextFile(todoTaskList, todoTaskList.getTasks().get(todoTaskList.getTasks().size() - 1), true);
+        } else {
+            Message.printFailedToAppendToFileMessage();
         }
     }
 }

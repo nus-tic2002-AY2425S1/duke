@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 /**
  * The task files class handles file related operations such as storing and retrieving tasks in the task management system.
@@ -42,18 +44,42 @@ public class TaskFiles {
                     // Keep track of the index of the added item from the list
                     itemIndex ++;
                     KeywordHandling keywordHandling = new KeywordHandling();
-                    String task = scanner.nextLine().trim();
+                    // To reconvert back to the defaulted input date format
+                    DateTimeFormatter extractedDateFormatter = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mma");
+                    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
+                    String task = ExceptionHandling.removeSpaces(scanner.nextLine());
                     boolean isTaskCompleted = task.contains("[X]");
                     char keywordCharacter = task.charAt(1);
                     task = switch (keywordCharacter) {
-                        case 'T' -> task.replaceAll("\\[T]\\[([ X])]", "todo").trim();
-                        case 'D' -> task.replaceAll("\\[D]\\[([ X])]", "deadline").replaceAll("\\(by:", "/by").trim();
-                        default ->  task.replaceAll("\\[E]\\[([ X])]", "event").replaceAll("\\(from:", "/from").replaceAll("to:", "/to").trim();
-                    };
+                            case 'T'-> ExceptionHandling.removeSpaces(task.replaceAll("\\[T]\\[([ X])]", "todo"));
+                            case 'D' -> {
+                                task = ExceptionHandling.removeSpaces( task.replaceAll("\\[D]\\[([ X])]", "deadline").replaceAll("\\(by:", "/by"));
+                                String[] splitDeadlineTask = task.split("/by");
+                                // Removing ) after splitting to reconvert the date
+                                String deadline = ExceptionHandling.removeSpaces(splitDeadlineTask[1].replace(")", ""));
+                                String deadlineTask = ExceptionHandling.removeSpaces(splitDeadlineTask[0]);
+                                LocalDateTime byDate = LocalDateTime.parse(deadline, extractedDateFormatter);
+                                String formattedByDate = byDate.format(dateFormatter);
+                                yield deadlineTask + "/by " + formattedByDate;
+                            }
+                            default -> {
+                                task = ExceptionHandling.removeSpaces(task.replaceAll("\\[E]\\[([ X])]", "event").replaceAll("\\(from:", "/from").replaceAll("to:", "/to"));
+                                String[] splitEventTask = task.split("/from");
+                                String eventTask = ExceptionHandling.removeSpaces(splitEventTask[0]);
+                                // Removing ) after splitting to reconvert the date
+                                String from = ExceptionHandling.removeSpaces(splitEventTask[1].split("/to")[0].replace(")", ""));
+                                String to = ExceptionHandling.removeSpaces(splitEventTask[1].split("/to")[1].replace(")", ""));
+                                LocalDateTime fromDate = LocalDateTime.parse(from, extractedDateFormatter);
+                                LocalDateTime toDate = LocalDateTime.parse(to, extractedDateFormatter);
+                                String formattedFromDate = fromDate.format(dateFormatter);
+                                String formattedToDate = toDate.format(dateFormatter);
+                                yield eventTask + "/from " + formattedFromDate + "/to" + formattedToDate;
+                            }
+                        };
                     // Happens after first attempt to load file, so manually remove additional closing parenthesis
                     task = task.replaceAll("\\)+$", "");
-                    String keyword = task.split(" ")[0].trim();
-                    Task.addTask(todoTaskList, task, keyword, keywordHandling, true);
+                    String keyword = ExceptionHandling.removeSpaces(task.split(" ")[0]);
+                    Task.addTask(todoTaskList, task, keyword, keywordHandling, true, taskFiles);
                     if (isTaskCompleted) {
                         keywordHandling.processMarkKeyword(todoTaskList, Integer.toString(itemIndex), true, taskFiles, true);
                     }

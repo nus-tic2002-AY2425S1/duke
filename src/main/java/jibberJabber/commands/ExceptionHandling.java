@@ -92,7 +92,6 @@ public class ExceptionHandling {
      * @return true if the task is duplicated, false if not.
      */
     public static boolean isTaskDuplicated(ArrayList<Task> todoTaskList, String newTask) {
-        newTask = removeSpaces(newTask);
         for (Task task : todoTaskList) {
             if(task instanceof ToDo){
                 newTask = removeSpaces(newTask.replace("todo", ""));
@@ -195,5 +194,18 @@ public class ExceptionHandling {
         Pattern pattern = Pattern.compile("^\\d{1,2}/\\d{1,2}/\\d{4} \\d{4}$");
         Matcher matcher = pattern.matcher(date);
         return !matcher.matches();
+    }
+    /**
+     * Validates if the given keyword string matches the enum keywords
+     *
+     * @return true if the date format is invalid, false if not.
+     */
+    public static boolean isInvalidKeywordCommand(String keyword){
+        try{
+            Keywords.valueOf(keyword.toUpperCase());
+            return false;
+        } catch (IllegalArgumentException e) {
+            return true;
+        }
     }
 }

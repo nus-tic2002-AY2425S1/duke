@@ -36,7 +36,11 @@ public class Parser {
         }
         String[] splitTodoTask = todoTask.split(" ");
         String splitWord = splitTodoTask[0];
-        // User input keyword per instance --> created instance method
+        // Check to ensure the proper keyword is passed since we are checking against ENUM
+        if (ExceptionHandling.isInvalidKeywordCommand(splitWord)) {
+            Message.printMissingCommandKeywordMessage();
+            return true;
+        }
         switch (Keywords.valueOf(splitWord.toUpperCase())) {
             case BYE:
                 return false;
@@ -71,23 +75,16 @@ public class Parser {
                 keywordHandling.processRemoveKeyword(taskList, splitTodoTask[1], taskFiles);
                 if (!taskList.getTasks().isEmpty()) {
                     taskFiles.writeToTextFile(taskList, taskList.getTasks().get(taskList.getTasks().size() - 1), false);
-                } else {
-                    Message.printFailedToAppendToFileMessage();
                 }
                 return true;
             case TODO:
             case DEADLINE:
             case EVENT:
-                if (ExceptionHandling.isTaskDuplicated(taskList.getTasks(), todoTask)) {
+                if (ExceptionHandling.isTaskDuplicated(taskList.getTasks(), todoTask.toLowerCase())) {
                     // Checks for duplicated tasks being added
                     Message.printDuplicateMessage();
                 } else {
-                    Task.addTask(taskList, todoTask, splitWord, keywordHandling, false);
-                    if (!taskList.getTasks().isEmpty()) {
-                        taskFiles.writeToTextFile(taskList, taskList.getTasks().get(taskList.getTasks().size() - 1), true);
-                    } else {
-                        Message.printFailedToAppendToFileMessage();
-                    }
+                    Task.addTask(taskList, todoTask, splitWord, keywordHandling, false, taskFiles);
                 }
                 return true;
             default:

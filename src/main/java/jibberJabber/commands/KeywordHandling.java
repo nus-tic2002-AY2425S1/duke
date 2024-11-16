@@ -97,7 +97,7 @@ public class KeywordHandling {
      * @param isFromFile   indicates whether the task was read from a file: true if read from file (not to display default message), false if its from
      */
     public void processTodoTask(String todoTask, TaskList todoTaskList, boolean isFromFile) {
-        String newTodoTask = ExceptionHandling.removeSpaces( todoTask.replace("todo", ""));
+        String newTodoTask = ExceptionHandling.removeSpaces( todoTask.replaceAll("(?i)todo", ""));
         ToDo inputTodoTask =  new ToDo(newTodoTask);
         todoTaskList.addTask(inputTodoTask);
         if (!isFromFile) {
@@ -113,19 +113,10 @@ public class KeywordHandling {
      */
     public void processDeadlineTask(String todoTask, TaskList todoTaskList, boolean isFromFile) {
         LocalDateTime deadlineDateTime;
-        String deadlineTask = ExceptionHandling.removeSpaces(todoTask.replace("deadline", ""));
+        String deadlineTask = ExceptionHandling.removeSpaces(todoTask.replaceAll("(?i)deadline", ""));
         String[] deadlineDetails = deadlineTask.split("/by");
-        // Checks if deadline is provided
-        if (!ExceptionHandling.isValidDeadlineInput(deadlineDetails)) {
-            Message.printMissingParameterMessage("deadline");
-            return;
-        }
         String newDeadlineTask = ExceptionHandling.removeSpaces(deadlineDetails[0]);
         String deadlineOfTask = ExceptionHandling.removeSpaces(deadlineDetails[1]);
-        if (ExceptionHandling.isInvalidDate(deadlineOfTask)){
-            Message.printInvalidDateFormatMessage();
-            return;
-        }
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
         try {
             deadlineDateTime = parse(deadlineOfTask, inputFormatter);
@@ -149,26 +140,12 @@ public class KeywordHandling {
     public void processEventTask(String todoTask, TaskList todoTaskList, boolean isFromFile) {
         LocalDateTime fromDateTime;
         LocalDateTime toDateTime;
-        String eventTask = ExceptionHandling.removeSpaces(todoTask.replace("event", ""));
-        if (!eventTask.contains("/from") || !eventTask.contains("/to")) {
-            // Checks if the input value is in proper format
-            Message.printMissingParameterMessage("event");
-            return;
-        }
+        String eventTask = ExceptionHandling.removeSpaces(todoTask.replaceAll("(?i)event", ""));
         String[] eventDetails = eventTask.split("/from");
-        if (!ExceptionHandling.isValidEventInput(eventDetails)) {
-            // Checks if event duration is provided
-            Message.printMissingParameterMessage("event");
-            return;
-        }
         String newEventTask = ExceptionHandling.removeSpaces(eventDetails[0]);
         String[] eventDurationDetails = eventDetails[1].split("/to");
         String from = ExceptionHandling.removeSpaces(eventDurationDetails[0]);
         String to = ExceptionHandling.removeSpaces(eventDurationDetails[1]);
-        if (ExceptionHandling.isInvalidDate(from) || ExceptionHandling.isInvalidDate(to)) {
-            Message.printInvalidDateFormatMessage();
-            return;
-        }
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
         try {
             fromDateTime = parse(from, inputFormatter);

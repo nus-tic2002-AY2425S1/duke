@@ -1,7 +1,7 @@
 package duke.dancepop.parser;
 
-import duke.dancepop.Storage;
-import duke.dancepop.TaskList;
+import duke.dancepop.utils.Storage;
+import duke.dancepop.utils.TaskList;
 import duke.dancepop.entities.Deadline;
 import duke.dancepop.entities.Event;
 import duke.dancepop.entities.Task;
@@ -58,7 +58,7 @@ class TodoCommand extends BinaryCommand<String> {
 
     public void execute() {
         Task task = new Todo(getValue());
-        TaskList.add(task);
+        TaskList.addAndPrint(task);
     }
 }
 
@@ -72,7 +72,7 @@ class DeadlineCommand extends BinaryCommand<String> {
 
     public void execute() {
         Task task = new Deadline(getValue(), by);
-        TaskList.add(task);
+        TaskList.addAndPrint(task);
     }
 }
 
@@ -88,7 +88,7 @@ class EventCommand extends BinaryCommand<String> {
 
     public void execute() {
         Task task = new Event(getValue(), from, to);
-        TaskList.add(task);
+        TaskList.addAndPrint(task);
     }
 }
 
@@ -158,7 +158,7 @@ class SaveToFileNameCommand extends BinaryCommand<String> {
     }
 
     public void execute() {
-        Storage.loadFile(value);
+        Storage.saveToFile(value);
     }
 }
 

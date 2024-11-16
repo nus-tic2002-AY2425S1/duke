@@ -1,11 +1,9 @@
-package duke.dancepop;
+package duke.dancepop.utils;
 
 import duke.dancepop.entities.Deadline;
 import duke.dancepop.entities.Event;
 import duke.dancepop.entities.Task;
 import duke.dancepop.entities.Todo;
-import duke.dancepop.utils.DateTimeUtil;
-import duke.dancepop.utils.Log;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,6 +23,7 @@ public class Storage {
      */
     public static void saveToFile(String fileName) {
         Path filePath = Paths.get(FILE_PATH, fileName);
+        Log.printMsg("Saving tasks to " + filePath);
 
         if (!fileName.equalsIgnoreCase(DEFAULT_FILE_NAME)) {
             customFileName = Optional.of(fileName);
@@ -60,6 +59,8 @@ public class Storage {
             Log.printMsg("No saved data found.");
             return;
         }
+
+        TaskList.clear();
 
         if (!fileName.equalsIgnoreCase(DEFAULT_FILE_NAME)) {
             customFileName = Optional.of(fileName);

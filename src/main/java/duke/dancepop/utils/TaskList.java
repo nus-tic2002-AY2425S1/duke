@@ -1,10 +1,8 @@
-package duke.dancepop;
+package duke.dancepop.utils;
 
 import duke.dancepop.entities.Deadline;
 import duke.dancepop.entities.Event;
 import duke.dancepop.entities.Task;
-import duke.dancepop.utils.DateTimeUtil;
-import duke.dancepop.utils.Log;
 
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
@@ -20,6 +18,10 @@ public class TaskList {
 
     public static void add(Task t) {
         tasks.add(t);
+    }
+
+    public static void addAndPrint(Task t) {
+        add(t);
         // TODO: Refactor all these strings into enum or something and also outside of this class
         Log.printMsg("Got it. I've added this task:", t.toString(), "Now you have " + tasks.size() + " tasks in the list.");
     }

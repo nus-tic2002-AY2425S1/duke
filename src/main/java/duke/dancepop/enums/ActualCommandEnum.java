@@ -8,7 +8,9 @@ public enum ActualCommandEnum {
     BYE("bye"),
     MARK("mark <int value>"),
     UNMARK("unmark <int value>"),
-    DELETE("delete <int value>");
+    DELETE("delete <int value>"),
+    SAVE("save <filename>.csv"),
+    LOAD("load <filename>.csv");
 
     private final String value;
 
@@ -45,6 +47,12 @@ public enum ActualCommandEnum {
             }
             case BYE -> {
                 return BYE.getValue();
+            }
+            case LOAD -> {
+                return LOAD.getValue();
+            }
+            case SAVE -> {
+                return SAVE.getValue();
             }
         }
         return "";

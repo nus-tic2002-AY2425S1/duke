@@ -8,7 +8,9 @@ public enum CommandEnum {
     BYE("bye"),
     MARK("mark"),
     UNMARK("unmark"),
-    DELETE("delete");
+    DELETE("delete"),
+    SAVE("save"),
+    LOAD("load");
 
     private final String value;
 

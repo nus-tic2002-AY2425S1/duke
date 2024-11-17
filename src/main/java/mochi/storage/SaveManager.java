@@ -50,6 +50,7 @@ public class SaveManager {
     }
 
     /**
+     * Created with the use of chatGPT
      * Saves an ArrayList of tasks to the default backup file path. If the file exists, it creates a backup.
      *
      * @param input the ArrayList of strings to save.
@@ -67,7 +68,7 @@ public class SaveManager {
                 StandardOpenOption.TRUNCATE_EXISTING
         );
     }
-
+    // * Created with the use of chatGPT
     private void checkValidDirectory(String pathString) {
         try {
             Paths.get(pathString);
@@ -77,7 +78,7 @@ public class SaveManager {
             Ui.response(ExceptionMessages.SECURITY_PATH_EXCEPTION);
         }
     }
-
+    // * Created with the use of chatGPT
     private void backUpFileWithPrefix() throws IOException {
         Path sourceFile = Paths.get(BACKUP_FILE);
         Path targetFile = Paths.get(BACKUP_FILE + POSTFIX);

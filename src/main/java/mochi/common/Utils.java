@@ -15,7 +15,8 @@ public class Utils {
      * @return a trimmed string of concatenated elements from the array, or an empty string if
      * the start element is not found.
      */
-    // chatgpt
+    // * Created with the use of chatGPT
+
     public static String trimStringArrayWithStartEnd(String[] string, String start, String end, String delimiter) {
         StringBuilder body = new StringBuilder();
         boolean shouldCopy = false;

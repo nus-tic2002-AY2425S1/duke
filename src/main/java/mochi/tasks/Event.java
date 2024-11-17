@@ -56,7 +56,7 @@ public class Event extends Task {
                 + TaskList._saveDelimiter
                 + DateTime.toDBString(_to);
     }
-
+    // * Created with the use of chatGPT
     @Override
     public boolean fallsOnDate(LocalDate date) {
         LocalDate fromDate = _from.toLocalDate();

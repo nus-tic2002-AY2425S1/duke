@@ -24,6 +24,7 @@ public class DateTime {
      * @param dateTime the date and time string to parse, expected in the format "d/M/yyyy HHmm".
      * @return the parsed LocalDateTime object, or null if the input format is invalid.
      */
+    // * Created with the use of chatGPT
     public static LocalDateTime parse(String dateTime) {
         try {
             return LocalDateTime.parse(dateTime, DATE_TIME_FORMATTER);

@@ -24,8 +24,8 @@ import static wkduke.common.Messages.MESSAGE_FLEXIBLE_INPUT_RETRY_PROMPT;
  */
 public class Ui {
     public static final int INDENT_HELP_MSG_NUM = 8;
-    public static final int MAX_ERROR_HEADER_LINE_LENGTH = 77;
-    public static final int MAX_PRINT_LIST_HEADER_LINE_LENGTH = 78;
+    private static final int MAX_ERROR_HEADER_LINE_LENGTH = 77;
+    private static final int MAX_PRINT_LIST_HEADER_LINE_LENGTH = 78;
     private static final String BORDER_LINE = "________________________________________________________________________________";
     private static final int INDENT_LEVEL1_NUM = 4;
     private static final int INDENT_LEVEL2_NUM = INDENT_LEVEL1_NUM + 1;
@@ -61,7 +61,7 @@ public class Ui {
      * @return The wrapped message as a string with newlines inserted appropriately.
      */
     // Solution below inspired by https://stackoverflow.com/questions/4055430/java-code-for-wrapping-text-lines-to-a-max-line-width
-    public static String wrapMessage(String message, int maxLineLength, int extraIndent) {
+    private static String wrapMessage(String message, int maxLineLength, int extraIndent) {
         StringBuilder wrappedMessage = new StringBuilder();
         String indent = " ".repeat(extraIndent);
         int adjustedMaxLineLength = maxLineLength - extraIndent;
@@ -154,7 +154,6 @@ public class Ui {
      * @return A {@link Storage} instance initialized with the specified or default data source.
      * @throws StorageOperationException If the default data source cannot be initialized.
      */
-
     public Storage getFlexibleDataSource() throws StorageOperationException {
         showLine();
         out.print(Messages.MESSAGE_FLEXIBLE_DATA_SOURCE.indent(INDENT_LEVEL2_NUM));

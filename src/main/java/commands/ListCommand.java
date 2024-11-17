@@ -5,8 +5,6 @@ import storage.Storage;
 import task.TaskList;
 import ui.Ui;
 
-import java.util.ArrayList;
-
 /**
  * Represents a command to list all tasks in the task list,
  * The ListCommand class is responsible for displaying the tasks currently stored in the task list.

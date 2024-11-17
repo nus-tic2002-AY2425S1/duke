@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
-// Reference: https://github.com/se-edu/addressbook-level2/blob/master/src/seedu/addressbook/storage/StorageFile.java
+// Solution below adapted from https://github.com/se-edu/addressbook-level2/blob/master/src/seedu/addressbook/storage/StorageFile.java
 
 /**
  * Represents the storage file used to manage storage of tasks data.
@@ -26,26 +26,9 @@ import java.util.List;
  */
 public class Storage {
 
-//        System.out.println("java.class.path: " + System.getProperty("java.class.path"));
-//        System.out.println("user.dir: " + System.getProperty("user.dir") + "/data/tasks.txt");
-//        System.out.println("user.home: " + System.getProperty("user.home"));
-//        System.out.println("storage: " + System.getProperty("storage"));
-
-//    private static final String BASE_FILEPATH = System.getProperty("user.dir") + "/data/";
-
-    // Default file path used if the user doesn't provide the file name.
-//    private static final String DEFAULT_STORAGE_FILEPATH = BASE_FILEPATH + "tasks.txt";
-//    private static final String DEFAULT_STORAGE_FILEPATH = "data/tasks.txt";
-//    private static final String DEFAULT_STORAGE_FILEPATH = "./src/main/java/data/tasks.txt";
-//    private static final String DEFAULT_STORAGE_FILEPATH = "../data/tasks.txt";
     private static final String DEFAULT_STORAGE_FILEPATH =
         System.getProperty("user.dir") + File.separator + Paths.get("duke", "duke", "src", "main", "java", "data", "tasks.txt");
-//        "/data/tasks.txt";
-//        Paths.get("src", "main", "java", "data", "tasks.txt").toString();
-//        System.getProperty("user.dir") + File.separator + Paths.get("src", "main", "java", "data", "tasks.txt");
 
-//    private static final String ARCHIVE_STORAGE_FILEPATH = "../data/archive.txt";
-//    private static final String ARCHIVE_STORAGE_FILEPATH = BASE_FILEPATH + "archive.txt";
     private static final String ARCHIVE_STORAGE_FILEPATH =
         System.getProperty("user.dir") + File.separator + Paths.get("duke", "duke", "src", "main", "java", "data", "archive.txt");
     private final Path tasksFilePath;
@@ -58,27 +41,7 @@ public class Storage {
      * @throws StorageOperationException if an error occurs while creating the data folder or task file.
      */
     public Storage() throws StorageOperationException {
-//        System.out.println("storage.file: " + System.getProperty("storage.file"));
-//        System.out.println("java.class.path: " + System.getProperty("java.class.path"));
-//        System.out.println("project root: " + System.getProperty("user.dir"));
-//        System.out.println("user.dir: " + System.getProperty("user.dir") + File.separator + Paths.get("src", "main", "java", "data", "tasks.txt"));
-//        System.out.println("user.home: " + System.getProperty("user.home"));
-//        System.out.println("storage: " + System.getProperty("storage.file"));
-//        System.out.println("test: " + Paths.get("src", "main", "java", "data"));
-
-//        this.tasksFilePath = Paths.get(getResourcePath(DEFAULT_STORAGE_FILEPATH));
-//        this.tasksFilePath = Paths.get(getClass().getClassLoader().getResource(DEFAULT_STORAGE_FILEPATH).getPath());
-
-        System.out.println("java.class.path: " + System.getProperty("java.class.path"));
-        System.out.println("user.dir: " + System.getProperty("user.dir") + File.separator + Paths.get("src", "main", "java", "data", "tasks.txt"));
-        System.out.println("user.home: " + System.getProperty("user.home"));
-        System.out.println("storage: " + System.getProperty("storage.file"));
-//        System.out.println("thsi " + this.getClass().getResourceAsStream("/data/tasks.txt").toString());
-//        System.out.println("csdthsi " + this.getClass().getResourceAsStream("data/tasks.txt").toString());
-
-//        this.tasksFilePath = Paths.get();
         this.tasksFilePath = Paths.get(DEFAULT_STORAGE_FILEPATH);
-        System.out.println("tasksFilePath is " + this.tasksFilePath.toAbsolutePath());
         this.archiveTasksFilePath = Paths.get(ARCHIVE_STORAGE_FILEPATH);
         checkDataFolderExists();
         checkTaskFileExists();
@@ -123,7 +86,7 @@ public class Storage {
 
     /**
      * Checks if the data folder exists. Handles missing data folder by creating it.
-     * The data folder is expected to be in the `/data` directory. It must match the file path exactly.
+     * The data folder is expected to be in the {@code /data} directory. It must match the file path exactly.
      *
      * @throws StorageOperationException if an error occurs while checking or creating the data folder,
      *                                   e.g. folder cannot be created
@@ -149,7 +112,7 @@ public class Storage {
             if (!isDataFolderCreated) {
                 // Error: Failed to create the data directory at ./data
                 //     Please check your folder path and permissions.
-                assert isDataFolderCreated : "Failed to create the data directory at " + dataFolderPath;
+//                assert isDataFolderCreated : "Failed to create the data directory at " + dataFolderPath;
                 throw throwStorageOperationException(Messages.ERROR_CREATE_FOLDER_PRE, dataFolderPathString,
                     Messages.ERROR_CREATE_FOLDER_POST);
             }
@@ -220,7 +183,6 @@ public class Storage {
         Path filePath = getTasksFilePath();
         List<String> lines;
         lines = Files.readAllLines(filePath);
-        System.out.println("lines is " + lines);
         return lines;
     }
 
@@ -239,13 +201,10 @@ public class Storage {
         List<String> lines;
         try {
             lines = getAllLines();
-//            System.out.println("Loaded lines from tasks file: " + lines);
             taskList = TaskListDecoder.decodeTaskList(lines);
-//            System.out.println("Number of tasks loaded: " + taskList.getSize());
         } catch (IOException e) {
             throw new IOException(Messages.ERROR_READ_FILE);
         }
-        System.out.println("tasklist is " + taskList.toString());
         return taskList;
     }
 
@@ -256,10 +215,6 @@ public class Storage {
 
         throw throwStorageOperationException(Messages.ERROR_WRITE_FILE, filePathString, errorMessagePost);
 
-//            throw new StorageOperationException(
-//                String.format("%s at %s", Messages.ERROR_WRITE_FILE, filePath.toString()),
-//                String.format("%s write to the task file", Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE)
-//            );
     }
 
     public void appendEncodedTaskToFile(Task task, Path filePath) throws StorageOperationException {

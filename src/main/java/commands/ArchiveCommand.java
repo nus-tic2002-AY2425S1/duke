@@ -35,25 +35,17 @@ public class ArchiveCommand extends Command {
         return target;
     }
 
-    // implement in tasklist
-    public boolean archiveAll() {
-        return false;
-    }
-
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws CommandException, StorageOperationException {
         assertExecuteParams(taskList, ui, storage);
         String target = getTarget();
         String[] messages = null;
 
-        switch (target) {
-        case ALL:
+        if (target.equals(ALL)) {
             storage.archiveTasks(taskList);
             messages = new String[]{MESSAGE_SUCCESS_ALL_POST + SPACE +
                 storage.getArchiveTasksFilePath() + Constants.DOT};
-            break;
-
-        default:
+        } else {
             int targetNumber = Integer.parseInt(target);
 
             Task task = taskList.getTaskForOperation(targetNumber);
@@ -65,8 +57,6 @@ public class ArchiveCommand extends Command {
                 Constants.BACKTICK + task + Constants.BACKTICK + SPACE + HAS + SPACE +
                 MESSAGE_SUCCESS_POST + SPACE + storage.getArchiveTasksFilePath() + Constants.DOT;
             messages = new String[]{MESSAGE_SUCCESS};
-
-            break;
         }
 
         ui.printMessage(messages);

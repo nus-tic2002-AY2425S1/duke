@@ -50,15 +50,13 @@ public class Javaro {
         } catch (StorageOperationException | FileContentException |
                  TaskListDecoderException | CommandException e) {
             // Handle common exceptions related to task loading
-            // storageOperationException.printStackTrace();
-//            System.out.println("messageList " + e.getMessageList() + " type " + e.getMessageList().getClass().getName());
             LOGGER.log(Level.WARNING, e.getMessageList().toString());
             ui.showError(e.getMessageList());       // Display the error message to the user
             taskList = new TaskList();      // Initialize an empty task list
         } catch (IOException ioe) {
             // Handle IOExceptions (e.g., file not found)
             String[] messages = {ioe.getMessage()};
-//            ui.printMessage(messages);
+            ui.printMessage(messages);
             taskList = new TaskList();      // Initialize an empty task list
         }
 
@@ -66,14 +64,6 @@ public class Javaro {
 
     public Ui getUi() {
         return ui;
-    }
-
-    public Storage getStorage() {
-        return storage;
-    }
-
-    public TaskList getTaskList() {
-        return taskList;
     }
 
     public String getCommandType() {
@@ -93,13 +83,11 @@ public class Javaro {
             return command.isBye();
         } catch (CommandException e) {
             // Handle command parsing or execution errors
-            // System.out.println("CommandException caught: " + e.getMessage());
             commandType = "Error";
             ui.showError(e.getMessageList());
             return false;
         } catch (StorageOperationException e) {
             // Handle storage operation errors
-            // System.out.println("StorageOperationException caught: " + e.getMessage());
             commandType = "Error";
             ui.showError(e.getMessageList());
             return false;

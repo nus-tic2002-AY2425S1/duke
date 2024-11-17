@@ -16,7 +16,7 @@ import javaro.Javaro;
 // Solution below referenced from https://se-education.org/guides/tutorials/javaFxPart4.html
 public class Main extends Application {
 
-    private Javaro javaro = new Javaro();
+    private final Javaro javaro = new Javaro();
 
     @Override
     public void start(Stage stage) {

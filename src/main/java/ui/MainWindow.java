@@ -29,8 +29,8 @@ public class MainWindow extends AnchorPane {
     private Button sendButton;
 
     // Image location (e.g., /images/DaUser.png) is given relative to the main/resources folder and there is a / in front
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.png"));
-    private Image javaroImage = new Image(this.getClass().getResourceAsStream("/images/javaro.jpg"));
+    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.png"));
+    private final Image javaroImage = new Image(this.getClass().getResourceAsStream("/images/javaro.jpg"));
 
     private Javaro javaro;
 

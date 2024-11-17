@@ -75,7 +75,6 @@ public class TaskListDecoder {
     private static String[] splitEncodedTask(String encodedTask) throws FileContentException {
         assert encodedTask != null : "Encoded task should not be null";
         String[] taskData = encodedTask.split(" \\| ");
-        // System.out.println("taskData is " + Arrays.toString(taskData));
 //        assert taskData.length >= 3 : "Task data should have at least 3 components";
         if (taskData.length < 3) {
             throw new FileContentException(

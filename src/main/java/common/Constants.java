@@ -72,7 +72,5 @@ public class Constants {
     public static final int TWO = 2;
     public static final int FOUR = 4;
     public static final int FIVE = 5;
-    public static final int SEVEN = 7;
-    public static final int SIXTY = 60;
 
 }

@@ -63,7 +63,6 @@ public class DialogBox extends HBox {
     public static DialogBox getJavaroDialog(String text, Image img, String commandType) {
         assert commandType != null : "Command type cannot be null";
         var db = getJavaroDialog(text, img);
-        System.out.println("in getjavarodialog commandtype is " + commandType);
         db.changeDialogStyle(commandType);
         return db;
     }

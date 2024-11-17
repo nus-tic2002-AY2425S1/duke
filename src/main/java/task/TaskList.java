@@ -185,26 +185,23 @@ public class TaskList {
         }
 
         // Sort the tasks by their LocalDateTime
-        // https://stackoverflow.com/questions/2784514/sort-arraylist-of-custom-objects-by-property
-        tasksOnDate.sort(new Comparator<Task>() {
-            @Override
-            public int compare(Task taskA, Task taskB) {
-                LocalDateTime dateTimeA = taskA.getTaskDateTime();
-                LocalDateTime dateTimeB = taskB.getTaskDateTime();
+        // Solution below adapted from https://stackoverflow.com/questions/2784514/sort-arraylist-of-custom-objects-by-property
+        tasksOnDate.sort((taskA, taskB) -> {
+            LocalDateTime dateTimeA = taskA.getTaskDateTime();
+            LocalDateTime dateTimeB = taskB.getTaskDateTime();
 
-                // https://www.javatpoint.com/compare-time-in-java
-                // If dateTimeA.compareTo(dateTimeB) > 0, then dateTimeA > dateTimeB, i.e. dateTimeA is after dateTimeB
-                // Handle null values. Deadlines can have no time.
-                if (dateTimeA == null && dateTimeB == null) {
-                    return 0;
-                } else if (dateTimeA == null) {
-                    return 1;       // Put dateTimeA before dateTimeB
-                } else if (dateTimeB == null) {
-                    return -1;      // Put dateTimeB after dateTimeA
-                }
-
-                return dateTimeA.compareTo(dateTimeB);
+            // Solution below inspired by https://www.javatpoint.com/compare-time-in-java
+            // If dateTimeA.compareTo(dateTimeB) > 0, then dateTimeA > dateTimeB, i.e. dateTimeA is after dateTimeB
+            // Handle null values. Deadlines can have no time.
+            if (dateTimeA == null && dateTimeB == null) {
+                return 0;
+            } else if (dateTimeA == null) {
+                return 1;       // Put dateTimeA before dateTimeB
+            } else if (dateTimeB == null) {
+                return -1;      // Put dateTimeB after dateTimeA
             }
+
+            return dateTimeA.compareTo(dateTimeB);
         });
 
         return new TaskList(tasksOnDate);

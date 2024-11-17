@@ -2,15 +2,12 @@ package ui;
 
 import common.Constants;
 import common.Messages;
-import exception.CommandException;
 import task.Task;
 import task.TaskList;
 
-import javax.swing.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Represents the user interface that is responsible for handling interactions with the user.
@@ -83,8 +80,6 @@ public class Ui {
     public <T> void printMessage(T messages) {
         StringBuilder stringBuilder = new StringBuilder();
 
-        // System.out.println(messageList.getClass());
-
         // Checks if the messageList is an array. Iterates and appends each item to the StringBuilder
         // https://stackoverflow.com/questions/40899820/arrays-check-if-object-is-an-array
         if (messages.getClass().isArray()) {
@@ -100,15 +95,8 @@ public class Ui {
         // Append the closing line after the message
         String text = stringBuilder.toString();
 
-//        System.out.println("Error message is " + text);
-
         // Set the final formatted message as the response from Javaro
         setJavaroResponse(text);
-    }
-
-
-    public void showWelcome() {
-        setJavaroResponse(Messages.MESSAGE_WELCOME);
     }
 
     public void showBye() {

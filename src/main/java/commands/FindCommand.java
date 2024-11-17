@@ -6,8 +6,6 @@ import storage.Storage;
 import task.TaskList;
 import ui.Ui;
 
-import java.util.ArrayList;
-
 /**
  * Represents a command to find tasks in a task list based on a specified description.
  * The command searches for tasks that matches the given description and displays the list to the user.

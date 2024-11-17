@@ -26,16 +26,4 @@ public enum CompletionStatus {
         throw new IllegalArgumentException();
     }
 
-    public static String getValidStatus() {
-        StringBuilder completionStatus = new StringBuilder();
-        for (CompletionStatus status : CompletionStatus.values()) {
-            completionStatus.append(Constants.BACKTICK).append(status.status)
-                .append(Constants.BACKTICK).append(Constants.COMMA);
-        }
-        if (!completionStatus.isEmpty()) {
-            completionStatus.setLength(completionStatus.length() - 1);
-        }
-        return completionStatus.toString();
-    }
-
 }

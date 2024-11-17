@@ -67,21 +67,21 @@ public class ChadDate {
                 assert amount > 0 : "Amount must be greater than 0.";
 
                 switch (unit) {
-                    case "day":
-                        //Fallthrough
-                    case "days":
-                        totalPeriod = totalPeriod.plusDays(amount); // Add days to the total period
-                        break;
-                    case "week": 
-                    //Fallthrough
-                    case "weeks":
-                        totalPeriod = totalPeriod.plus(Period.ofWeeks(amount)); // Add weeks to the total period
-                        break;
-                    case "month":
-                    //Fallthrough
-                    case "months":
-                        totalPeriod = totalPeriod.plusMonths(amount); // Add months to the total period
-                        break;
+                case "day":
+                //Fallthrough
+                case "days":
+                    totalPeriod = totalPeriod.plusDays(amount); // Add days to the total period
+                    break;
+                case "week": 
+                //Fallthrough
+                case "weeks":
+                    totalPeriod = totalPeriod.plus(Period.ofWeeks(amount)); // Add weeks to the total period
+                    break;
+                case "month":
+                //Fallthrough
+                case "months":
+                    totalPeriod = totalPeriod.plusMonths(amount); // Add months to the total period
+                    break;
                 }
             }
 
@@ -89,15 +89,15 @@ public class ChadDate {
             if (matcher.group(3) != null) { // Check matched group for "last day/week/month"
                 String lastUnit = matcher.group(3).toLowerCase();
                 switch (lastUnit) {
-                    case "day":
-                        totalPeriod = totalPeriod.plusDays(1); // Add one day for last day
-                        break;
-                    case "week":
-                        totalPeriod = totalPeriod.plus(Period.ofWeeks(1)); // Add one week for last week
-                        break;
-                    case "month":
-                        totalPeriod = totalPeriod.plusMonths(1); // Add one month for last month
-                        break;
+                case "day":
+                    totalPeriod = totalPeriod.plusDays(1); // Add one day for last day
+                    break;
+                case "week":
+                    totalPeriod = totalPeriod.plus(Period.ofWeeks(1)); // Add one week for last week
+                    break;
+                case "month":
+                    totalPeriod = totalPeriod.plusMonths(1); // Add one month for last month
+                    break;
                 }
             }
         }

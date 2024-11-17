@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 
 public class DateTimeParser {
 
-    //inspired by https://howtodoinjava.com/java/date-time/java8-datetimeformatter-example/
+    //Solution below inspired from https://howtodoinjava.com/java/date-time/java8-datetimeformatter-example/
     static final DateTimeFormatter FORMATTER_DISPLAY_DATETIME = DateTimeFormatter.ofPattern("dd MMMM yyyy 'at' hh:mm a");
     static final DateTimeFormatter FORMATTER_DISPLAY_TIME = DateTimeFormatter.ofPattern("hh:mm a");
     static final DateTimeFormatter FORMATTER_CHECK_TIME = DateTimeFormatter.ofPattern("HHmm");

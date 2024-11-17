@@ -31,7 +31,7 @@ public class UpdatePriorityCommand extends Command {
             + "  - Task number must be positive integer.".indent(INDENT_HELP_MSG_NUM)
             + "  - Task number must exist in the task list.".indent(INDENT_HELP_MSG_NUM)
             + "  - 'task-priority' must be one of: L, M, H.".indent(INDENT_HELP_MSG_NUM)
-            + "  - The task's current priority will be updated only if it's different.".indent(INDENT_HELP_MSG_NUM);
+            + "  - The task's priority will be updated only if it's different.".indent(INDENT_HELP_MSG_NUM);
 
     private static final String MESSAGE_SUCCESS = "OK! I've updated the priority of this task:";
     private static final String MESSAGE_FAILED = "This task already has the specified priority:";

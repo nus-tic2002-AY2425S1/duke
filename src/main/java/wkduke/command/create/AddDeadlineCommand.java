@@ -13,7 +13,7 @@ import static wkduke.ui.Ui.INDENT_HELP_MSG_NUM;
 public class AddDeadlineCommand extends AddCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD_DEADLINE + " {task-description} /by {datetime}\n"
             + "Description:".indent(INDENT_HELP_MSG_NUM)
-            + "  - Adds a Deadline task with a description and a due date to your task list.".indent(INDENT_HELP_MSG_NUM)
+            + "  - Adds a Deadline task with a description and a due date.".indent(INDENT_HELP_MSG_NUM)
             + TimeParser.MESSAGE_USAGE
             + "Example:".indent(INDENT_HELP_MSG_NUM)
             + "  deadline Submit report /by 2024-11-05 23:59".indent(INDENT_HELP_MSG_NUM)

@@ -19,7 +19,7 @@ public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " {keywords}\n"
             + "Description:".indent(INDENT_HELP_MSG_NUM)
-            + "  - Search for tasks that contain one or more specified keywords in description.".indent(INDENT_HELP_MSG_NUM)
+            + "  - Search for tasks that contain specified keywords in description.".indent(INDENT_HELP_MSG_NUM)
             + "Example:".indent(INDENT_HELP_MSG_NUM)
             + "  find report, assignment".indent(INDENT_HELP_MSG_NUM)
             + "  find meeting".indent(INDENT_HELP_MSG_NUM)

@@ -31,7 +31,8 @@ public class ListOnCommand extends Command {
             + "  list /on 2024-11-05".indent(INDENT_HELP_MSG_NUM)
             + "Constraints:".indent(INDENT_HELP_MSG_NUM)
             + "  - If /on is omitted, all tasks will be listed.".indent(INDENT_HELP_MSG_NUM)
-            + "  - If /on is provided, only time aware tasks occurring on the specified date will be listed.".indent(INDENT_HELP_MSG_NUM);
+            + "  - If /on is provided, only time aware tasks occurring on the".indent(INDENT_HELP_MSG_NUM)
+            + "    specified date will be listed.".indent(INDENT_HELP_MSG_NUM);
 
     private static final String MESSAGE_SUCCESS = "Here are the tasks in your list on '%s':";
     private static final String MESSAGE_FAILED = "Your task list is currently empty on '%s'.";

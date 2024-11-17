@@ -13,7 +13,7 @@ import static wkduke.ui.Ui.INDENT_HELP_MSG_NUM;
 public class AddEventCommand extends AddCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD_EVENT + " {task-description} /from {start-datetime} /to {end-datetime}\n"
             + "Description:".indent(INDENT_HELP_MSG_NUM)
-            + "  - Adds an Event task with a description and a specified time range to your task list.".indent(INDENT_HELP_MSG_NUM)
+            + "  - Adds an Event task with a description and a specified time range.".indent(INDENT_HELP_MSG_NUM)
             + TimeParser.MESSAGE_USAGE
             + "Example:".indent(INDENT_HELP_MSG_NUM)
             + "  event Workshop /from 2024-11-05 09:00 /to 2024-11-05 17:00".indent(INDENT_HELP_MSG_NUM)

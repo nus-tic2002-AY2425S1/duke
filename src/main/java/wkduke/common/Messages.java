@@ -37,15 +37,15 @@ public class Messages {
     public static final String MESSAGE_DEFAULT_DATA_SOURCE_POST = "\t WKDuke is loading the default data source: ./data/tasks.txt";
     public static final String MESSAGE_CUSTOM_DATA_SOURCE_POST = "\t WKDuke is loading the custom data source: %s";
     public static final String MESSAGE_FLEXIBLE_DATA_SOURCE = """
-                  +----------------------------------------------------------+
-                  |                                                          |
-                  |                WKDuke Pre-initialisation                 |
-                  |                                                          |
-                  |   Please enter the custom file path to load your tasks   |
-                  |         (relative or full path) or press 'Enter'         |
-                  |    to use the default data source (./data/tasks.txt).    |
-                  |                                                          |
-                  +----------------------------------------------------------+
+                    +----------------------------------------------------------+
+                    |                                                          |
+                    |                WKDuke Pre-initialisation                 |
+                    |                                                          |
+                    |   Please enter the custom file path to load your tasks   |
+                    |         (relative or full path) or press 'Enter'         |
+                    |    to use the default data source (./data/tasks.txt).    |
+                    |                                                          |
+                    +----------------------------------------------------------+
             """;
     public static final String MESSAGE_AVAILABLE_COMMAND = """
             Available commands:
@@ -63,7 +63,8 @@ public class Messages {
               bye        - Exits the application.
               help       - Displays this help message.
             
-              Tips: You can type the command name (e.g., 'todo', 'delete', etc.) to see detailed usage and examples for that command.
+              Tips: You can type the command name (e.g., 'todo', 'delete', etc.) to see 
+                    detailed usage and examples for that command.
             """;
     public static final String MESSAGE_TASK_LIST_TIPS = """
             \nTips:

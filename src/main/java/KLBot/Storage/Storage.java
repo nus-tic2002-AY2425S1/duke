@@ -37,11 +37,11 @@ public class Storage {
      */
     public static void createFileIfNeeded(File file) throws IOException {
         if (!file.exists()) {
-            System.out.println("Oops! It looks like the file to save your list doesn't exist yet. I'll create it for you...");
+            System.out.println("Oops! It looks like the file to save your list do not exist yet. I will create it for you...");
             if (file.createNewFile()) {
                 System.out.println("Yay! The file has been created successfully.");
             } else {
-                System.out.println("Uh-oh! Something went wrong and I couldn't create the file.");
+                System.out.println("Uh-oh! Something went wrong and I could not create the file.");
             }
         }
     }

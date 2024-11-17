@@ -17,11 +17,11 @@ import java.util.Scanner;
  * processes commands, handles tasks, and manages the loading and saving of tasks to a file.
  */
 public class KLbot {
-    private static final String fileDirectory="data";
-    private static final String filePath="data/KLBot.txt";
+    private static final String fileDirectory = "data";
+    private static final String filePath = "data/KLBot.txt";
     private static final Scanner in = new Scanner(System.in);
     private static final Ui ui = new Ui();
-    private static final Storage storage = new Storage(fileDirectory,filePath);
+    private static final Storage storage = new Storage(fileDirectory, filePath);
     private static final Parser parser = new Parser();
     private static final TaskList taskList = new TaskList();
 
@@ -55,7 +55,7 @@ public class KLbot {
                     String keyword = userInput.replace("search", "").trim();
                     searchTasks(keyword);
                 } else {
-                    throw new KLBotException("I didn't quite catch that. Could you try again?");
+                    throw new KLBotException("I did not quite catch that. Could you try again?");
                 }
             } catch (KLBotException | IOException e) {
                 ui.showError(e.getMessage());
@@ -63,6 +63,20 @@ public class KLbot {
         }
     }
 
+    private static int parseTaskIndex(String userInput) throws KLBotException {
+        try {
+            return Integer.parseInt(userInput.split(" ")[1]) - 1;
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            throw new KLBotException("Oops! The task number seems to be invalid. Please try again. ");
+        }
+    }
+
+    private static boolean taskIndexIsValid(int taskIndex) throws KLBotException {
+        if (taskIndex < 0 || taskIndex >= taskList.size()) {
+            throw new KLBotException("Oops! This task number doesn't exist. Could you check again?");
+        }
+        return true;
+    }
     /**
      * Marks a task as completed or uncompleted based on the user's input.
      *
@@ -70,8 +84,9 @@ public class KLbot {
      * @throws KLBotException If the task index is invalid or other errors occur.
      */
     private static void handleTaskAction(String userInput) throws KLBotException, IOException {
-        int taskIndex = Integer.parseInt(userInput.split(" ")[1]) - 1;
-        if (taskIndex >= 0 && taskIndex < taskList.size()) {
+        int taskIndex = parseTaskIndex(userInput);
+
+        if (taskIndexIsValid(taskIndex)) {
             Task task = taskList.getTask(taskIndex);
             if (userInput.toLowerCase().startsWith("mark")) {
                 task.markAsCompleted();
@@ -83,6 +98,8 @@ public class KLbot {
             System.out.println(task);
             ui.printLine();
             saveTasksToFile();
+        } else {
+            throw new KLBotException("Oops! The task number seems to be invalid. Please try again. ");
         }
     }
 
@@ -108,8 +125,8 @@ public class KLbot {
      * @throws KLBotException If the task index is invalid or other errors occur.
      */
     private static void deleteTask(String userInput) throws KLBotException, IOException {
-        int taskIndex = Integer.parseInt(userInput.split(" ")[1]) - 1;
-        if (taskIndex >= 0 && taskIndex < taskList.size()) {
+        int taskIndex = parseTaskIndex(userInput);
+        if (taskIndexIsValid(taskIndex)) {
             Task task = taskList.getTask(taskIndex);
             taskList.removeTask(taskIndex);
             ui.showTaskRemoved(task.getDescription());
@@ -133,7 +150,6 @@ public class KLbot {
     }
 
 
-
     /**
      * Searches for tasks in the task list that contain the specified keyword.
      *
@@ -143,7 +159,7 @@ public class KLbot {
         List<Task> matchingTasks = taskList.searchTasks(keyword);
 
         if (matchingTasks.isEmpty()) {
-            System.out.println("Oops! I couldn't find any tasks with the keyword: " + keyword);
+            System.out.println("Oops! I could not find any tasks with the keyword: " + keyword);
         } else {
             System.out.println("Yay! Here are the tasks I found that match your search for '" + keyword + "':");
             for (Task task : matchingTasks) {

@@ -17,29 +17,29 @@ import josbot.ui.UI;
 
 public class JosBot {
 
-    private UI ui;
-    private FileStorage fileStorage;
+    private final UI ui;
+    private final FileStorage fileStorage;
     private TaskList taskList;
-    private static String filepath = "src/data/JosBotList.txt";
+    private static final String filepath = "./src/data/JosBotList.txt";
 
-    public JosBot(String filePath)
-    {
+    public JosBot(String filePath) {
         ui = new UI();
         fileStorage = new FileStorage(filePath);
         try {
-            taskList = new TaskList(fileStorage.load());
+            taskList = new TaskList(FileStorage.load());
         } catch (JosBotException e) {
+            System.out.println("Josbot_exception: " + e.getMessage());
             ui.showError("loading_error");
             taskList = new TaskList();
         } catch (FileNotFoundException e) {
             ui.showError("file_not_found_error");
+        } catch (IOException e) {
+            System.out.println("IO Exception: " + e.getMessage());
+            ui.showError("loading_error");
         }
-          catch (IOException e) {
-              ui.showError("loading_error");
-          }
     }
 
-    public void run(){
+    public void run() {
         ui.showLine();
         ui.showReminderMessage();
         ReminderCommand command = new ReminderCommand();
@@ -55,16 +55,13 @@ public class JosBot {
                 isExit = c.isExit();
             } catch (JosBotException e) {
                 ui.showError(e.getMessage());
-            } catch(IndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException e) {
                 ui.showIndexOutofBoundError();
-            }
-              catch(DateTimeException e) {
+            } catch (DateTimeException e) {
                 ui.showInvalidDateTime();
-            }
-              catch(NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 ui.showNumberFormatError();
-              }
-             finally {
+            } finally {
                 ui.showLine();
             }
         }

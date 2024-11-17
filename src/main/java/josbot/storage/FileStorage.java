@@ -33,14 +33,16 @@ public class FileStorage {
      * This method is usually triggered when the program first launches
      *
      * @return ArrayList<Task>
-     * @throws JosBotException       when there are JosBotException error coming from convertDateTime method
+     * @throws josbot.JosBotException       when there are JosBotException error coming from convertDateTime method
      */
-    public static ArrayList<Task> load() throws JosBotException, IOException, ArrayIndexOutOfBoundsException {
-        File f = new File(path);
-        f.createNewFile();
+    public static ArrayList<Task> load() throws JosBotException, ArrayIndexOutOfBoundsException, IOException {
         ArrayList<Task> loadList = new ArrayList<>();
-        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+        Scanner s = null; // create a Scanner using the File as the source
         try {
+            File f = new File(path);
+            f.createNewFile();
+
+            s = new Scanner(f);
             while (s.hasNext()) {
                 dt = new DateTimeParser();
                 String userInput = s.nextLine();
@@ -80,14 +82,20 @@ public class FileStorage {
                 loadList.add(t);
             }
 
-        } catch (ArrayIndexOutOfBoundsException | JosBotException e) {
+        } catch (ArrayIndexOutOfBoundsException | JosBotException | IOException e) {
             UI ui = new UI();
-            s.close();
+            if(s != null)
+            {
+                s.close();
+            }
+            Files.createDirectories(Paths.get(path).getParent());
+            File newFile = new File(path);
+            newFile.createNewFile();
             Path filepath = Paths.get(path);
             Files.delete(filepath);
             ui.showLine();
             ui.showError("file_corrupted");
-            f.createNewFile();
+            newFile.createNewFile();
             return new ArrayList<Task>();
         }
         return loadList;
@@ -111,7 +119,8 @@ public class FileStorage {
                 throw new JosBotException("");
             }
         } catch (Exception e) {
-            System.out.println("Error : No save file was found!");
+            UI ui = new UI();
+            ui.showError("loading_error");
         }
     }
 }

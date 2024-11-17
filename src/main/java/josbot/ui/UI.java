@@ -4,6 +4,7 @@ import josbot.common.Messages;
 import josbot.parser.DateTimeParser;
 import josbot.task.Task;
 import josbot.task.TaskList;
+
 import java.util.Scanner;
 
 public class UI {
@@ -19,7 +20,7 @@ public class UI {
         case "Start":
             showLine();
             DateTimeParser dt = new DateTimeParser();
-            System.out.println(dt.getTimeGreeting() + ", "+Messages.START_GREETING);
+            System.out.println(DateTimeParser.getTimeGreeting() + ", " + Messages.START_GREETING);
             showLine();
             break;
         case "End":
@@ -64,9 +65,9 @@ public class UI {
         }
     }
 
-public void showInvalidDateTime() {
-    System.out.println(Messages.ERROR_INVALID_DATETIME);
-}
+    public void showInvalidDateTime() {
+        System.out.println(Messages.ERROR_INVALID_DATETIME);
+    }
 
     public String readCommand() {
         Scanner in = new Scanner(System.in);
@@ -77,7 +78,7 @@ public void showInvalidDateTime() {
         System.out.println(Messages.LIST_MESSAGES);
     }
 
-    public void showHelp(){
+    public void showHelp() {
         System.out.println(Messages.HELP_MESSAGES);
     }
 
@@ -127,7 +128,6 @@ public void showInvalidDateTime() {
     public void showDateTimeError() {
         System.out.println(Messages.ERROR_DATEITME);
     }
-
 
 
     public void showIndexOutofBoundError() {

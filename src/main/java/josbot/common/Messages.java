@@ -10,7 +10,7 @@ public class Messages {
     public static final String ERROR_INVALID_TAG = "Invalid tag detected! Please use the correct tag format\nfor tag use ('tag <task_list_number> <tag_description>')\n for untag use ('untag <task_list_number>')";
     public static final String ERROR_MISSING_DESCRIPTION = "Missing description detected! Please specify the description of the task";
     public static final String ERROR_MISSING_MARK_NUMBER = "Missing number detected! Please specify the task number";
-    public static final String ERROR_FILE_CORRUPTED = "File is corrupted, detected mismatch in format used.\n Creating new file..";
+    public static final String ERROR_FILE_CORRUPTED = "File is corrupted/File is not found\n Creating new file..";
     public static final String ERROR_LOADING = "Error: Failed to load file";
     public static final String ERROR_FILE_NOT_FOUND = "Error: File are not found!\nCreating new file..";
     public static final String ERROR_INVALID_DATETIME = "Invalid date & time detected! Please make sure that the date or time you've listed is correct";

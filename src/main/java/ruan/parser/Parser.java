@@ -29,11 +29,23 @@ public class Parser {
         } else if (trimmedInput.startsWith(Constants.EVENT_COMMAND)) {
             return new AddCommand(Constants.EVENT_COMMAND, trimmedInput.replace(Constants.EVENT_COMMAND, "").trim());
         } else if (trimmedInput.startsWith(Constants.DELETE_COMMAND)) {
-            return new DeleteCommand(Integer.parseInt(trimmedInput.split(" ")[1]) - 1);
+            String[] data = trimmedInput.split(" ");
+            if(data.length != 2){
+                throw new RuanException(ErrorType.UNKNOWN_DESCRIPTION);
+            }
+            return new DeleteCommand(Integer.parseInt(data[1]) - 1);
         } else if (trimmedInput.startsWith(Constants.MARK_COMMAND)) {
-            return new SetDoneCommand(Integer.parseInt(trimmedInput.split(" ")[1]) - 1, true);
+            String[] data = trimmedInput.split(" ");
+            if(data.length != 2){
+                throw new RuanException(ErrorType.UNKNOWN_DESCRIPTION);
+            }
+            return new SetDoneCommand(Integer.parseInt(data[1]) - 1, true);
         } else if (trimmedInput.startsWith(Constants.UNMARK_COMMAND)) {
-            return new SetDoneCommand(Integer.parseInt(trimmedInput.split(" ")[1]) - 1, false);
+            String[] data = trimmedInput.split(" ");
+            if(data.length != 2){
+                throw new RuanException(ErrorType.UNKNOWN_DESCRIPTION);
+            }
+            return new SetDoneCommand(Integer.parseInt(data[1]) - 1, false);
         } else if (trimmedInput.startsWith(Constants.FIND_COMMAND)) {
             String keyword = trimmedInput.replaceFirst("(?i)"+Constants.FIND_COMMAND, "").trim();
             return new FindCommand(keyword);

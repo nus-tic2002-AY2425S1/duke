@@ -60,6 +60,7 @@ public abstract class Task {
      /**
      * Sets the status of the task
      * @param isDone True if the task is marked as done
+     * @param completionDateTime completion datetime to be set for task, if null, take current datetime
      */
     public void setDone(boolean isDone, String completionDateTime) {
         this.isDone = isDone;

@@ -47,7 +47,7 @@ public class DeleteCommand extends Command {
             // save latest task list to the file
             storage.saveTasks(tasks.getTasks());
 
-        } catch (IndexOutOfBoundsException e) {
+        } catch (RuanException e) {
             throw new RuanException(ErrorType.INVALID_TASK_NUMBER);
         }
     }

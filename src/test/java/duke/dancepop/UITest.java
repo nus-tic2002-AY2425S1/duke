@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+// Referenced from https://stackoverflow.com/questions/1119385/junit-test-for-system-out-println
 class UITest {
     private ByteArrayOutputStream outputStream;
 

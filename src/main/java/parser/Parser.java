@@ -86,9 +86,7 @@ public class Parser {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
 
         if (!matcher.matches()) {
-            throw new CommandException(
-                String.format(Constants.PERCENT + Constants.S, Messages.ERROR_INVALID_COMMAND_FORMAT)
-            );
+            throw new CommandException(Messages.ERROR_INVALID_COMMAND_FORMAT, Messages.VALID_COMMANDS);
         }
 
         final String commandWord = matcher.group("commandWord");
@@ -229,11 +227,20 @@ public class Parser {
         assert args != null : "Arguments should not be null";
         assert commandWord != null : "Command word should not be null";
 
+        String usage;
+
+        if (commandWord.equalsIgnoreCase(ArchiveCommand.COMMAND_WORD)) {
+            usage = messageUsage;
+        } else {
+            usage = String.format(EXAMPLE_USAGE, messageUsage);
+        }
+
         if (!matcher.matches()) {
+
             throw new CommandException(
                 Messages.ERROR_INVALID_COMMAND_FORMAT + commandWord + DOT,
                 String.format(RECEIVED, commandWord, args),
-                String.format(EXAMPLE_USAGE, messageUsage)
+                usage
             );
         }
     }
@@ -281,10 +288,19 @@ public class Parser {
         assert keyword != null : "Keyword should not be null";
         assert commandWord != null : "Command word should not be null";
 
-        if (!args.contains(keyword)) {
+        // https://stackoverflow.com/questions/275944/how-do-i-count-the-number-of-occurrences-of-a-char-in-a-string
+        int keywordCount = (args.length() - args.replace(keyword, Constants.EMPTY_STRING).length()) / keyword.length();
+
+        if (keywordCount == 0) {
             throw new CommandException(
                 Messages.ERROR_INVALID_COMMAND_FORMAT + commandWord + DOT,
                 infoMessage,
+                String.format(EXAMPLE_USAGE, messageUsage)
+            );
+        } else if (keywordCount > 1) {
+            throw new CommandException(
+                Messages.ERROR_INVALID_COMMAND_FORMAT + commandWord + DOT,
+                "There are too many " + keyword + " arguments. Please keep only one.",
                 String.format(EXAMPLE_USAGE, messageUsage)
             );
         }
@@ -388,6 +404,13 @@ public class Parser {
     private static Command prepareShow(String args) throws CommandException {
 
         assert args != null : "Arguments should not be null";
+
+        if (args.isEmpty()) {
+            throw new CommandException(
+                "Error: Missing date",
+                "Please enter a date for which you would like to view the tasks"
+            );
+        }
 
         LocalDate date = DateTimeParser.parseInputShowDate(args);
 

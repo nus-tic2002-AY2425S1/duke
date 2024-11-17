@@ -1,8 +1,6 @@
 package javaro;
 
-import commands.ByeCommand;
 import commands.Command;
-import common.Messages;
 import exception.CommandException;
 import exception.FileContentException;
 import exception.StorageOperationException;
@@ -13,6 +11,8 @@ import task.TaskList;
 import ui.Ui;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Represents the main application class / entry point for the Javaro task management system.
@@ -28,6 +28,8 @@ public class Javaro {
     private TaskList taskList;
 
     private String commandType;
+
+    private final static Logger LOGGER = Logger.getLogger(Javaro.class.getName());
 
     /**
      * Constructs a Javaro instance.
@@ -49,6 +51,8 @@ public class Javaro {
                  TaskListDecoderException | CommandException e) {
             // Handle common exceptions related to task loading
             // storageOperationException.printStackTrace();
+//            System.out.println("messageList " + e.getMessageList() + " type " + e.getMessageList().getClass().getName());
+            LOGGER.log(Level.WARNING, e.getMessageList().toString());
             ui.showError(e.getMessageList());       // Display the error message to the user
             taskList = new TaskList();      // Initialize an empty task list
         } catch (IOException ioe) {
@@ -81,7 +85,6 @@ public class Javaro {
         try {
             // Parse and execute the command
             Command command = Parser.parse(userInput);
-            System.out.println(command.getClass().getName());
             command.execute(taskList, ui, storage);
 
             commandType = command.getClass().getName();

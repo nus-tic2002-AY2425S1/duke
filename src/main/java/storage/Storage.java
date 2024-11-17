@@ -114,7 +114,7 @@ public class Storage {
      *                                   e.g. folder cannot be created
      */
     public void checkDataFolderExists() throws StorageOperationException {
-        // https://stackoverflow.com/questions/15571496/how-to-check-if-a-folder-exists
+        // Solution below referenced from https://stackoverflow.com/questions/15571496/how-to-check-if-a-folder-exists
         // Check if "data" directory exists in current folder
         Path dataFolderPath = getTasksFilePath().getParent();
         String dataFolderPathString = dataFolderPath.toString();
@@ -126,7 +126,7 @@ public class Storage {
 
         // Create the directory if it does not exist
         if (!isDataFolderExists) {
-            // https://tutorialspoint.com/java/java_directories.htm
+            // Solution below referenced from https://tutorialspoint.com/java/java_directories.htm
             // The mkdir() method creates a directory, returning true on success and false on failure.
             // Failure indicates that the path specified in the File object already exists,
             // or that the directory cannot be created because the entire path does not exist yet.
@@ -149,7 +149,6 @@ public class Storage {
         // The file.exists() method checks for the existence of the exact file specified by the full path,
         // including the filename and its extension. It is looking for a file named "tasks.txt" specifically.
         boolean isFileExists = file.exists();
-//        System.out.println("is " + file.toString() + " exists: " + isFileExists);
 
         assert !isFileExists || file.isFile() : "Expected a valid file at " + file.getPath();
 
@@ -168,10 +167,6 @@ public class Storage {
             } catch (IOException e) {
                 throw throwStorageOperationException(Messages.ERROR_CREATE_FILE_PRE, filePathString,
                     Messages.ERROR_IO_CREATE_FILE);
-//                throw new StorageOperationException(
-//                    String.format("%s at %s", Messages.ERROR_CREATE_FILE_PRE, filePathString),
-//                    Messages.ERROR_IO_CREATE_FILE
-//                );
             } catch (SecurityException e) {
                 String modifiedFilePathString = filePathString + Constants.SPACE + "due to" +
                     Constants.SPACE + Messages.ERROR_SECURITY_CREATE_FILE;
@@ -179,12 +174,6 @@ public class Storage {
                     Constants.SPACE + "create a new file.";
                 throw throwStorageOperationException(Messages.ERROR_CREATE_FILE_PRE, modifiedFilePathString,
                     errorMessagePost);
-
-//                throw new StorageOperationException(
-//                    String.format("%s at %s due to %s", Messages.ERROR_CREATE_FILE_PRE,
-//                        filePathString, Messages.ERROR_SECURITY_CREATE_FILE),
-//                    String.format("%s create a new file.", Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE)
-//                );
             }
         }
     }
@@ -234,13 +223,26 @@ public class Storage {
         List<String> lines;
         try {
             lines = getAllLines();
-            System.out.println("Loaded lines from tasks file: " + lines);
+//            System.out.println("Loaded lines from tasks file: " + lines);
             taskList = TaskListDecoder.decodeTaskList(lines);
-            System.out.println("Number of tasks loaded: " + taskList.getSize());
+//            System.out.println("Number of tasks loaded: " + taskList.getSize());
         } catch (IOException e) {
             throw new IOException(Messages.ERROR_READ_FILE);
         }
         return taskList;
+    }
+
+    public void handleWriteToFileIOException(Path filePath) throws StorageOperationException {
+        String filePathString = filePath.toString();
+        String fileName = new File(filePathString).getName();
+        String errorMessagePost = Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE + "write to " + fileName;
+
+        throw throwStorageOperationException(Messages.ERROR_WRITE_FILE, filePathString, errorMessagePost);
+
+//            throw new StorageOperationException(
+//                String.format("%s at %s", Messages.ERROR_WRITE_FILE, filePath.toString()),
+//                String.format("%s write to the task file", Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE)
+//            );
     }
 
     public void appendEncodedTaskToFile(Task task, Path filePath) throws StorageOperationException {
@@ -250,17 +252,7 @@ public class Storage {
             encodedTask += System.lineSeparator();
             Files.write(filePath, encodedTask.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException ioe) {
-            String filePathString = filePath.toString();
-            String fileName = new File(filePathString).getName();
-            String errorMessagePost = Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE +
-                "write to " + fileName;
-
-            throw throwStorageOperationException(Messages.ERROR_WRITE_FILE, filePathString, errorMessagePost);
-
-//            throw new StorageOperationException(
-//                String.format("%s at %s", Messages.ERROR_WRITE_FILE, filePath.toString()),
-//                String.format("%s write to the task file", Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE)
-//            );
+            handleWriteToFileIOException(filePath);
         }
     }
 
@@ -278,18 +270,7 @@ public class Storage {
                 Files.write(filePath, encodedTaskList);
             }
         } catch (IOException ioe) {
-            String filePathString = filePath.toString();
-            String fileName = new File(filePathString).getName();
-
-            String errorMessagePost = Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE +
-                "write to " + fileName;
-
-            throw throwStorageOperationException(Messages.ERROR_WRITE_FILE, filePathString, errorMessagePost);
-
-//            throw new StorageOperationException(
-//                String.format("%s at %s", Messages.ERROR_WRITE_FILE, filePath.toString()),
-//                String.format("%s write to %s", Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE, fileName)
-//            );
+            handleWriteToFileIOException(filePath);
         }
     }
 

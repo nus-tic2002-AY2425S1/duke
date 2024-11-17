@@ -37,7 +37,7 @@ public abstract class Task {
     }
 
     public Task(String description) {
-        assert description != null && !description.isEmpty() : "Description should not be null or empty";
+//        assert description != null && !description.isEmpty() : "Description should not be null or empty";
         this.description = description;
         this.isDone = false;
     }

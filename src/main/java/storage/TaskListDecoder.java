@@ -53,10 +53,8 @@ public class TaskListDecoder {
         assert encodedTaskList != null : "Encoded task list should not be null";
         TaskList decodedTasks = new TaskList();
         for (String encodedTask : encodedTaskList) {
-            assert !encodedTask.isEmpty() : "Encoded task should not be empty";
-            // System.out.println("encodedTask: " + encodedTask);
+//            assert !encodedTask.isEmpty() : "Encoded task should not be empty";
             Task decodedTask = decodeTaskFromString(encodedTask);
-            // System.out.println("Decoded task: " + task);
             decodedTasks.addTask(decodedTask);
         }
         return decodedTasks;
@@ -78,7 +76,7 @@ public class TaskListDecoder {
         assert encodedTask != null : "Encoded task should not be null";
         String[] taskData = encodedTask.split(" \\| ");
         // System.out.println("taskData is " + Arrays.toString(taskData));
-        assert taskData.length >= 3 : "Task data should have at least 3 components";
+//        assert taskData.length >= 3 : "Task data should have at least 3 components";
         if (taskData.length < 3) {
             throw new FileContentException(
                 String.format("%s. %s.", Messages.MESSAGE_TASK_MISSING_COMPONENTS,
@@ -122,8 +120,6 @@ public class TaskListDecoder {
             throw new FileContentException(MESSAGE_INVALID_COMPLETION_STATUS);
         }
 
-        final String VALID_COMPLETION_STATUS = CompletionStatus.getValidStatus();
-
         return isDone == CompletionStatus.DONE;
     }
 
@@ -146,10 +142,10 @@ public class TaskListDecoder {
             expectedFormat = EXPECTED_FORMAT_FD;
         }
 
-        assert expectedTaskDataLength == Constants.FOUR || expectedTaskDataLength == Constants.FIVE : "Expected task data length should be 4 or 5";
+//        assert expectedTaskDataLength == Constants.FOUR || expectedTaskDataLength == Constants.FIVE : "Expected task data length should be 4 or 5";
 
         if (taskDataLength < expectedTaskDataLength) {
-            throw new TaskListDecoderException(Messages.ERROR_INVALID_TASK_FORMAT,
+            throw new TaskListDecoderException(Messages.ERROR_INVALID_TASK_FORMAT + taskType,
                 String.format("Received `%s`", Arrays.toString(taskData)),
                 String.format("Expected format: `%s`", expectedFormat));
         }

@@ -13,7 +13,9 @@ public class ArchiveCommand extends Command {
 
     public static final String COMMAND_WORD = "archive";
     private static final String ALL = "all";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + Constants.SPACE + ALL;
+    private static final String MESSAGE_USAGE_SINGLE_TASK = COMMAND_WORD + Constants.SPACE + Constants.ONE;
+    private static final String MESSAGE_USAGE_ALL_TASKS = COMMAND_WORD + Constants.SPACE + ALL;
+    public static final String MESSAGE_USAGE = String.format("Example usage: `%s` or `%s`", MESSAGE_USAGE_SINGLE_TASK, MESSAGE_USAGE_ALL_TASKS);
     private static final String NOTED = "Noted.";
     private static final String ALL_TASKS = "All" + SPACE + Constants.TASK + Constants.S;
     private static final String HAS = "has";

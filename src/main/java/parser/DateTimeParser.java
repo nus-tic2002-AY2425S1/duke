@@ -1,14 +1,17 @@
 package parser;
 
+import commands.Command;
 import common.Constants;
 import common.Messages;
 import exception.CommandException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.time.temporal.ChronoField;
 
 /**
@@ -34,6 +37,7 @@ public class DateTimeParser {
     private static final DateTimeFormatter OUTPUT_DATETIME_FORMAT = DateTimeFormatter.ofPattern(OUTPUT_DATETIME_PATTERN);
 
     // Deadline must have date but time is optional
+    // Solution below inspired by https://stackoverflow.com/questions/49358893/datetimeformatter-parsing-string-with-optional-time-part-fails-if-space-removed
     private static final DateTimeFormatter deadlineFormatter = new DateTimeFormatterBuilder()
         .appendPattern(INPUT_DATE_PATTERN).optionalStart().appendPattern(Constants.SPACE + TIME_PATTERN)
         .optionalEnd().parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
@@ -73,18 +77,125 @@ public class DateTimeParser {
      * @return the parsed LocalDateTime object.
      * @throws CommandException if the input string is not in the expected format.
      */
+    // Solution below adapted from ChatGPT.
+    public static LocalDateTime parseInputDeadlineDateTime(String input) throws CommandException {
+        // Check if the input matches the date pattern
+        // \d{4} specifies 4 digits for the year
+        if (input.matches("\\d{4}-\\d{2}-\\d{2}")) {
+
+            // Extract year, month, and day from the input string
+            String[] parts = input.split("-");
+            int year = Integer.parseInt(parts[0]);
+            int month = Integer.parseInt(parts[1]);
+            int day = Integer.parseInt(parts[2]);
+
+            // Validate the date manually
+            if (!isValidDate(year, month, day)) {
+                throw new CommandException(Messages.ERROR_INVALID_DATETIME_FORMAT,
+                    String.format("Received `%s`", input),
+                    String.format("Expected format: %s. Example: 2019-10-15 [1800]", INPUT_DATETIME_PATTERN)
+                );
+            }
+
+            // If valid, create LocalDate and return the time at the start of the day
+            LocalDate date = LocalDate.of(year, month, day);
+            return date.atStartOfDay();
+        } else {
+            // If it doesn't match the date pattern, try parsing as datetime
+            try {
+                return LocalDateTime.parse(input, INPUT_DATETIME_FORMAT);
+            } catch (DateTimeParseException e) {
+                throw new CommandException(Messages.ERROR_INVALID_DATETIME_FORMAT,
+                    String.format("Received `%s`", input),
+                    String.format("Expected format: %s. Example: 2019-10-15 [1800]", INPUT_DATETIME_PATTERN)
+                );
+            }
+        }
+    }
+
+    private static boolean isValidDate(int year, int month, int day) {
+        // Check if the month is valid
+        if (month < 1 || month > 12) {
+            return false;
+        }
+
+        // Solution below inspired by https://www.geeksforgeeks.org/localdate-lengthofmonth-method-in-java-with-examples/
+        // Check if the day is valid for the given month
+        int daysInMonth = LocalDate.of(year, month, 1).lengthOfMonth();
+        return day >= 1 && day <= daysInMonth;
+    }
+
+    /*
     public static LocalDateTime parseInputDeadlineDateTime(String input) throws CommandException {
         assert input != null : "Input string must not be null";
         try {
-            return LocalDateTime.parse(input, deadlineFormatter);
+//            LocalDate dateRaw = input.split(Constants.SPACE)[0];
+//
+//            // Get the number of days in the month for the given date
+//            YearMonth yearMonth = YearMonth.of(date.getYear(), date.getMonth());
+//            int daysInMonth = yearMonth.lengthOfMonth();
+//
+//            // Check if the day is valid
+//            if (date.getDayOfMonth() > daysInMonth) {
+//                throw new DateTimeParseException("Invalid day for the given month/year", date.toString(), 0);
+//            }
+
+            // First, parse the date only to check if it's valid
+//            LocalDate date = LocalDate.parse(input.trim(), INPUT_DATE_FORMAT);
+//            System.out.println("date is " + date);
+
+
+            // Now, parse the time (if present), and combine both parts into a LocalDateTime
+//            LocalDateTime dateTime = LocalDateTime.parse(input.trim(), deadlineFormatter);
+
             // return LocalDateTime.parse(input, INPUT_DATETIME_FORMAT);
+
+            LocalDateTime dateTime = LocalDateTime.parse(input, INPUT_DATETIME_FORMAT);
+            return dateTime;
+
+//            return dateTime;
         } catch (DateTimeParseException e) {
             // System.out.println(e.getMessage());
-            throw new CommandException(Messages.ERROR_INVALID_DATETIME_FORMAT,
-                String.format("Received `%s`", input),
-                String.format("Expected format: %s. Example: 2019-10-15 [1800]", INPUT_DATETIME_PATTERN)
-            );
+            System.out.println("Parsing failed for input: " + input); // Debugging output
+            System.out.println("Exception message: " + e.getMessage()); // Debugging output
+
+//            if (e.getMessage().contains("Invalid date") || e.getMessage().contains("Invalid leap year")) {
+//                throw new CommandException(Messages.ERROR_INVALID_DATETIME_FORMAT,
+//                    String.format("Received `%s`", input),
+//                    "The date provided is invalid. Please check for leap year errors or invalid date format.");
+//            } else {
+//                throw new CommandException(Messages.ERROR_INVALID_DATETIME_FORMAT,
+//                    String.format("Received `%s`", input),
+//                    String.format("Expected format: %s. Example: 2019-10-15 [1800]", INPUT_DATETIME_PATTERN)
+//                );
+//            }
+
+            try {
+                LocalDate date = LocalDate.parse(input, DateTimeFormatter.ofPattern(INPUT_DATE_PATTERN));
+                // Convert LocalDate to LocalDateTime at midnight (00:00)
+                return date.atStartOfDay();
+            } catch (DateTimeParseException dtpe) {
+                // If both parsing attempts fail, throw CommandException
+                throw new CommandException(Messages.ERROR_INVALID_DATETIME_FORMAT,
+                    String.format("Received `%s`", input),
+                    String.format("Expected format: %s. Example: 2019-10-15 [1800]", INPUT_DATETIME_PATTERN)
+                );
+            }
+
         }
+    }
+    */
+
+
+    public static LocalDate isValidLocalDate(String dateStr, DateTimeFormatter dateFormatter) {
+        LocalDate date = null;
+        try {
+            date = LocalDate.parse(dateStr, dateFormatter);
+        } catch (DateTimeParseException e) {
+            //handle exception
+            e.printStackTrace();
+        }
+        return date;
     }
 
     /**
@@ -117,13 +228,22 @@ public class DateTimeParser {
      */
     public static LocalDate parseInputShowDate(String input) throws CommandException {
         assert input != null : "Input string must not be null";
+
+        if (input.trim().isEmpty()) {
+            throw new CommandException(
+                Messages.ERROR_INVALID_DATETIME_FORMAT,
+                String.format("Received `%s`", input),
+                String.format("Expected format: %s. Example: 2019-10-15", INPUT_DATE_PATTERN)
+            );
+        }
+
         try {
             return LocalDate.parse(input, INPUT_DATE_FORMAT);
         } catch (DateTimeParseException e) {
             // System.out.println(e.getMessage());
             throw new CommandException(Messages.ERROR_INVALID_DATETIME_FORMAT,
                 String.format("Received `%s`", input),
-                String.format("Expected format: %s. Example: 2019-10-15 1800", INPUT_DATETIME_PATTERN)
+                String.format("Expected format: %s. Example: 2019-10-15", INPUT_DATE_PATTERN)
             );
         }
     }

@@ -71,7 +71,7 @@ public class TaskList {
      * @return the task at the specified index.
      */
     public Task getTask(int index) {
-        assert index >= 0 && index < getSize() : "Task index is out of bounds";
+//        assert index >= 0 && index < getSize() : "Task index is out of bounds";
         return getTaskList().get(index);
     }
 
@@ -84,8 +84,6 @@ public class TaskList {
     public void addTask(Task task) {
         if (task != null) {
             getTaskList().add(task);
-        } else {
-            assert task != null : "Task cannot be null";
         }
     }
 

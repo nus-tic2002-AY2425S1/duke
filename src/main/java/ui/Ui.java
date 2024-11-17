@@ -73,18 +73,6 @@ public class Ui {
     }
 
     /**
-     * Creates a horizontal line with the appropriate number of leading spaces before the horizontal line.
-     *
-     * @return a formatted string representing the horizontal line with leading spaces.
-     */
-//    public String getLine() {
-//        String space = getSpace(true, false);
-//        // Inspired by https://www.baeldung.com/java-string-of-repeated-characters
-//        String line = Constants.UNDERSCORE.repeat(Constants.SIXTY);
-//        return space + line;
-//    }
-
-    /**
      * Prints a horizontal line, followed by the message(s), and ends with another horizontal line.
      * There will be spaces before each line.
      *
@@ -112,7 +100,9 @@ public class Ui {
         // Append the closing line after the message
         String text = stringBuilder.toString();
 
-        // Print out the final formatted message to the command line
+//        System.out.println("Error message is " + text);
+
+        // Set the final formatted message as the response from Javaro
         setJavaroResponse(text);
     }
 

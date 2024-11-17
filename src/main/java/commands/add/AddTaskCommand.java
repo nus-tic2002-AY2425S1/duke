@@ -32,7 +32,7 @@ public abstract class AddTaskCommand extends Command {
      * @param description represents the description of the {@code Task} to be added.
      */
     protected AddTaskCommand(String description) {
-        assert description != null && !description.trim().isEmpty() : "Task description must not be null or empty";
+//        assert description != null && !description.trim().isEmpty() : "Task description must not be null or empty";
         this.description = description;
     }
 

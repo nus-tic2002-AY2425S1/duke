@@ -17,6 +17,7 @@ import javaro.Javaro;
 /**
  * Controller for the Javaro GUI.
  */
+// Solution below referenced from https://se-education.org/guides/tutorials/javaFxPart4.html
 public class MainWindow extends AnchorPane {
     @FXML
     private ScrollPane scrollPane;
@@ -62,6 +63,7 @@ public class MainWindow extends AnchorPane {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
         getInputField().promptTextProperty().set("Type here...");       // Set placeholder
         showWelcome();
+
     }
 
     /** Injects the Javaro instance */
@@ -78,11 +80,11 @@ public class MainWindow extends AnchorPane {
         String input = userInput.getText();
         boolean isBye = javaro.runUserInput(input);
         String commandType = javaro.getCommandType();
-        System.out.println("in handleuserinput commandtype is " + commandType);
 
         userInput.clear();
 
         String javaroResponse = javaro.getUi().getJavaroResponse();
+
 
         dialogContainer.getChildren().addAll(
             DialogBox.getUserDialog(input, userImage),

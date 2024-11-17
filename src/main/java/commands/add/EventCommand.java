@@ -74,7 +74,7 @@ public class EventCommand extends AddTaskCommand {
         LocalDateTime eventEndDateTime = getEndDateTime();
         assert eventEndDateTime != null : "Event end date and time must not be null";
 
-        assert eventStartDateTime.isBefore(eventEndDateTime) : "Event start date and time must be before or equal to end date and time";
+        assert eventStartDateTime.isBefore(eventEndDateTime) : "Event start date and time must be before end date and time";
 
         return new Event(eventDescription, eventStartDateTime, eventEndDateTime);
     }

@@ -6,23 +6,26 @@ import KLBot.TaskList.Task;
 import KLBot.TaskList.TaskList;
 import KLBot.Ui.Ui;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 
 /**
  * The KLbot class represents the main bot functionality. It interacts with the user,
  * processes commands, handles tasks, and manages the loading and saving of tasks to a file.
  */
 public class KLbot {
-
+    private static final String fileDirectory="data";
+    private static final String filePath="data/KLBot.txt";
     private static final Scanner in = new Scanner(System.in);
     private static final Ui ui = new Ui();
-    private static final Storage storage = new Storage("data/KLBot.txt");
+    private static final Storage storage = new Storage(fileDirectory,filePath);
     private static final Parser parser = new Parser();
     private static final TaskList taskList = new TaskList();
 
-    public static void main(String[] args) throws KLBotException {
+    public static void main(String[] args) throws IOException {
         ui.greetUser();
         loadTasksFromFile();
         botLoop();
@@ -35,7 +38,7 @@ public class KLbot {
      * The main loop of the bot. Continuously prompts the user for input, processes commands,
      * and handles tasks (e.g., mark, unmark, add, delete, list).
      */
-    private static void botLoop() throws KLBotException {
+    private static void botLoop() {
         while (true) {
             String userInput = in.nextLine();
             if (parser.isExit(userInput)) break;
@@ -54,7 +57,7 @@ public class KLbot {
                 } else {
                     throw new KLBotException("I didn't quite catch that. Could you try again?");
                 }
-            } catch (KLBotException e) {
+            } catch (KLBotException | IOException e) {
                 ui.showError(e.getMessage());
             }
         }
@@ -66,7 +69,7 @@ public class KLbot {
      * @param userInput The user's input to mark or unmark a task.
      * @throws KLBotException If the task index is invalid or other errors occur.
      */
-    private static void handleTaskAction(String userInput) throws KLBotException {
+    private static void handleTaskAction(String userInput) throws KLBotException, IOException {
         int taskIndex = Integer.parseInt(userInput.split(" ")[1]) - 1;
         if (taskIndex >= 0 && taskIndex < taskList.size()) {
             Task task = taskList.getTask(taskIndex);
@@ -89,7 +92,7 @@ public class KLbot {
      * @param userInput The user's input to create and add a new task.
      * @throws KLBotException If the task description is invalid or cannot be parsed.
      */
-    private static void addTask(String userInput) throws KLBotException {
+    private static void addTask(String userInput) throws KLBotException, IOException {
         Task task = parser.createTask(userInput);
         if (task != null) {
             taskList.addTask(task);
@@ -104,7 +107,7 @@ public class KLbot {
      * @param userInput The user's input to delete a task.
      * @throws KLBotException If the task index is invalid or other errors occur.
      */
-    private static void deleteTask(String userInput) throws KLBotException {
+    private static void deleteTask(String userInput) throws KLBotException, IOException {
         int taskIndex = Integer.parseInt(userInput.split(" ")[1]) - 1;
         if (taskIndex >= 0 && taskIndex < taskList.size()) {
             Task task = taskList.getTask(taskIndex);
@@ -128,6 +131,8 @@ public class KLbot {
     private static void saveTasksToFile() {
         storage.saveTasksToFile(taskList);
     }
+
+
 
     /**
      * Searches for tasks in the task list that contain the specified keyword.

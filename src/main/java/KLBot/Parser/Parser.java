@@ -74,7 +74,7 @@ public class Parser {
         if (userInput.toLowerCase().startsWith("todo")) {
             String[] todoDescription = userInput.split(" ");
             if (todoDescription.length <= 1) {
-                errorTask = "Oops! It seems there’s a small issue with your To Do task description. Please make sure it follows the format: 'todo borrow book'. 😊";
+                errorTask = "Oops! It seems there’s a small issue with your To Do task description. Please make sure it follows the format: 'todo borrow book'.";
                 return false;
             }
             return true;
@@ -82,7 +82,7 @@ public class Parser {
         if (userInput.toLowerCase().startsWith("deadline")) {
             String[] deadlineDescription = userInput.split(" /by ");
             if (deadlineDescription.length != 2) {
-                errorTask = "Oh no! There’s a little hiccup with your Deadline task description. Please follow this format: 'deadline return book /by Sunday'. 📝";
+                errorTask = "Oh no! There’s a little hiccup with your Deadline task description. Please follow this format: 'deadline return book /by Sunday'.";
                 return false;
             }
             return true;
@@ -90,7 +90,7 @@ public class Parser {
         if (userInput.toLowerCase().startsWith("event")) {
             String[] eventDescription = userInput.split(" /from | /to ");
             if (eventDescription.length != 3) {
-                errorTask = "Oops! There’s a problem with your Event task description. Please follow this format: 'event project meeting /from Mon 2pm /to 4pm'. 🎉";
+                errorTask = "Oops! There’s a problem with your Event task description. Please follow this format: 'event project meeting /from Mon 2pm /to 4pm'.";
                 return false;
             }
             return true;

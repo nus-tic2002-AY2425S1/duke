@@ -23,13 +23,13 @@ public class DateTimeParser {
     /**
      * Returns a LocalDateTime that are converted from date/date & time in String format
      *
-     * @param Deadline datetime in String format
+     * @param deadlineDatetime datetime in String format
      * @return Converted date/date & time in LocalDateTime format
      * @throws DateTimeException If date or time specified does not exist
      * @throws JosBotException   If the datetime specified by user is in the wrong format
      *                           For example, it needs to be in dd/MM/yyyy format
      */
-    public LocalDateTime convertToDateTime(String deadlineDatetime) throws IndexOutOfBoundsException, JosBotException, DateTimeException {
+    public static LocalDateTime convertToDateTime(String deadlineDatetime) throws IndexOutOfBoundsException, JosBotException, DateTimeException {
         String[] datetime = deadlineDatetime.split(" ");
         LocalDateTime dt = null;
         if (datetime.length == 2) {
@@ -56,7 +56,7 @@ public class DateTimeParser {
      * @throws DateTimeException for wrong datetime format
      */
 
-    public String convertToString(LocalDateTime dt, String purpose) throws DateTimeException {
+    public static String convertToString(LocalDateTime dt, String purpose) throws DateTimeException {
         if (purpose.equals("view")) {
             if (dt.format(FORMATTER_CHECK_TIME).equals("0000")) {
                 return dt.format(FORMATTER_DISPLAY_DATE);
@@ -77,9 +77,10 @@ public class DateTimeParser {
      * @throws DateTimeException
      */
 
-    public String getTimeGreeting() throws DateTimeException {
+    public static String getTimeGreeting() throws DateTimeException {
         LocalDateTime dt = LocalDateTime.now();
         int hour = dt.getHour();
+        assert(hour >= 0 && hour < 24);
         if (hour < 12) {
             return "Good Morning";
         } else if (hour < 17) {

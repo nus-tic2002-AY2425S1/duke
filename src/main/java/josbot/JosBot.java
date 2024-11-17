@@ -29,7 +29,6 @@ public class JosBot {
         try {
             taskList = new TaskList(fileStorage.load());
         } catch (JosBotException e) {
-            //ui.showLoadingError();
             ui.showError("loading_error");
             taskList = new TaskList();
         } catch (FileNotFoundException e) {
@@ -41,11 +40,9 @@ public class JosBot {
     }
 
     public void run(){
-        CommandParser parser;
         ui.showLine();
-        ReminderCommand command = new ReminderCommand();
-        ui.showGreeting("Dash");
         ui.showReminderMessage();
+        ReminderCommand command = new ReminderCommand();
         ui.showTaskLists(command.sortTaskDate(taskList), false);
         ui.showGreeting("Start");
         boolean isExit = false;

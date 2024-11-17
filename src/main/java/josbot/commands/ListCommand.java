@@ -29,12 +29,22 @@ public class ListCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, UI ui, FileStorage file){
-        ui.showListMessage();
+
         if(description.contains("/")){
-            TaskList results = new TaskList();
-            results = checkList(tasks);
-            ui.showTaskLists(results, false);
+            String[] split = description.split("/");
+            if(split.length == 3){
+                ui.showListMessage();
+                TaskList results = new TaskList();
+                results = checkList(tasks);
+                ui.showTaskLists(results, false);
+            }
+            else
+            {
+                ui.showError("invalid_list");
+            }
+
         } else{
+            ui.showListMessage();
             ui.showTaskLists(tasks, true);
         }
 

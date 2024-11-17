@@ -7,6 +7,7 @@ import josbot.commands.CommandList;
 import josbot.commands.DeleteCommand;
 import josbot.commands.ExitCommand;
 import josbot.commands.FindCommand;
+import josbot.commands.HelpCommand;
 import josbot.commands.InvalidCommand;
 import josbot.commands.ListCommand;
 import josbot.commands.MarkCommand;
@@ -72,6 +73,8 @@ public class CommandParser {
                 } else {
                     return new InvalidCommand("missing_description");
                 }
+            case HELP:
+                return new HelpCommand(fullCommandType, description);
             case BYE:
                 return new ExitCommand(fullCommandType, description);
             default:

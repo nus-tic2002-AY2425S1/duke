@@ -49,7 +49,6 @@ public class ReminderCommand extends Command {
      * @return List of deadline task that are not marked as 'done'
      */
     private List<Task> getDeadlineTasks(TaskList tasks) {
-        //TaskList deadlineTasks = new TaskList();
         List<Task> deadlineTasks = new ArrayList<Task>();
         for (Task task : tasks.getTasks()) {
             if (task.getType().equals("D") && !task.getStatusIcon().equals("X")) {

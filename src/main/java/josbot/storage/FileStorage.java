@@ -21,8 +21,8 @@ import java.util.Scanner;
 
 public class FileStorage {
 
-    protected String path;
-    private DateTimeParser dt;
+    protected static String path;
+    private static DateTimeParser dt;
 
     public FileStorage(String filePath) {
         this.path = filePath;
@@ -35,7 +35,7 @@ public class FileStorage {
      * @return ArrayList<Task>
      * @throws JosBotException       when there are JosBotException error coming from convertDateTime method
      */
-    public ArrayList<Task> load() throws JosBotException, IOException, ArrayIndexOutOfBoundsException {
+    public static ArrayList<Task> load() throws JosBotException, IOException, ArrayIndexOutOfBoundsException {
         File f = new File(path);
         f.createNewFile();
         ArrayList<Task> loadList = new ArrayList<>();
@@ -62,7 +62,7 @@ public class FileStorage {
                     }
 
                 } else if (line[0].equals("E")) {
-                    t = new Event(line[2], dt.convertToDateTime(line[3]), dt.convertToDateTime(line[3]));
+                    t = new Event(line[2], dt.convertToDateTime(line[3]), dt.convertToDateTime(line[5]));
                 } else {
                     throw new JosBotException("");
                 }
@@ -88,7 +88,7 @@ public class FileStorage {
             ui.showLine();
             ui.showError("file_corrupted");
             f.createNewFile();
-            return loadList;
+            return new ArrayList<Task>();
         }
         return loadList;
     }
@@ -98,7 +98,7 @@ public class FileStorage {
      *
      * @param tasks contains all the current tasks
      */
-    public void saveToFile(TaskList tasks) {
+    public static void saveToFile(TaskList tasks) {
         StorageParser parser = new StorageParser();
         String listString = parser.parseListToString(tasks.getTasks());
         File f = new File(path);

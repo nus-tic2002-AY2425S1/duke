@@ -18,8 +18,6 @@ public class Command {
 
     public Command() {
     }
-
-
     /**
      *
      * Takes in the type and description of the command and storing it.

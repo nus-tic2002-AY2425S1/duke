@@ -18,7 +18,7 @@ public class StorageParser {
      * @param fileList An Array List that contains Task that user have executed
      * @return A suitable String format of the task to be stored
      */
-    public String parseListToString(ArrayList<Task> fileList) {
+    public static String parseListToString(ArrayList<Task> fileList) {
         String listString = "";
         for (int i = 0; i < fileList.size(); i++) {
             listString += fileList.get(i).getType() + ",";

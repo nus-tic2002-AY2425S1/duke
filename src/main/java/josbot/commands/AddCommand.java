@@ -10,6 +10,8 @@ import josbot.task.Task;
 import josbot.task.TaskList;
 import josbot.ui.UI;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * This Command is initialised when user executes the 'todo', 'deadline' or 'event' command
@@ -48,11 +50,13 @@ public class AddCommand extends Command {
                 dt = new DateTimeParser();
                 String[] deadlineTxt = description.split("/by", 2);
                 String[] datetime = deadlineTxt[1].trim().split(" ");
+                LocalDateTime convertedDateTime = dt.convertToDateTime(deadlineTxt[1].trim());
+                assert(datetime.length > 0);
                 if(datetime.length > 1){
-                    t = new Deadline(deadlineTxt[0].trim(), dt.convertToDateTime(deadlineTxt[1].trim()), true);
+                    t = new Deadline(deadlineTxt[0].trim(),convertedDateTime , true);
                 }
                 else{
-                    t = new Deadline(deadlineTxt[0].trim(), dt.convertToDateTime(deadlineTxt[1].trim()), false);
+                    t = new Deadline(deadlineTxt[0].trim(),convertedDateTime, false);
                 }
 
             }

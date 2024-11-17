@@ -56,6 +56,9 @@ public class UI {
         case "file_not_found_error":
             System.out.println(Messages.ERROR_FILE_NOT_FOUND);
             showLine();
+        case "invalid_list":
+            System.out.println(Messages.ERROR_INVALID_LIST);
+            break;
         default:
             System.out.println("Unknown Error : " + errorType);
         }
@@ -72,6 +75,10 @@ public void showInvalidDateTime() {
 
     public void showListMessage() {
         System.out.println(Messages.LIST_MESSAGES);
+    }
+
+    public void showHelp(){
+        System.out.println(Messages.HELP_MESSAGES);
     }
 
     public void showReminderMessage() {

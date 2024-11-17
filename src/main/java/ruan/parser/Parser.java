@@ -10,9 +10,6 @@ import ruan.constant.Constants;
  */
 
 public class Parser {
-
-    
-
     /**
      * Parses the user input and returns the appropriate command
      * This method interprets the input string to determine which command the user wants to execute
@@ -42,6 +39,8 @@ public class Parser {
             return new FindCommand(keyword);
         } else if (trimmedInput.equals(Constants.LIST_COMMAND)) {
             return new ListCommand();
+        } else if (trimmedInput.equals(Constants.STATISTICS_COMMAND)) {
+            return new StatsCommand();
         } else {
             throw new RuanException(ErrorType.UNKNOWN_DESCRIPTION);
         }

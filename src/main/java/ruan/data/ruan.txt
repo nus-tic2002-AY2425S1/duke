@@ -1,11 +1,2 @@
-T | 0 | buy book
-D | 0 | return book /by tommmorow
-E | 0 | go home /from Nov 17 2024 /to Nov 17 2024
-E | 0 | go out /from Nov 17 2024 /to Nov 17 2024
-E | 0 | school /from Nov 17 2024 /to Nov 17 2024
-D | 0 | task1 /by Nov 17 2024
-D | 0 | task 5 /by Nov 17 2024
-E | 0 | task 6 /from Nov 17 2024, 6:00 pm /to Nov 17 2024, 11:59 pm
-D | 0 | task 7 /by sun 2024-11-17
-T | 0 | task1
-T | 0 | buy 2 books
+T | 0 | read book | null
+T | 0 | borrow book | null

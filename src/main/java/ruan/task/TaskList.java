@@ -3,6 +3,7 @@ package ruan.task;
 import java.util.ArrayList;
 import ruan.exception.ErrorType;
 import ruan.exception.RuanException;
+import ruan.statistics.Statistics;
 
 /**
  * Represents a list of tasks and provides various operations to manipulate the tasks
@@ -11,12 +12,14 @@ import ruan.exception.RuanException;
 
 public class TaskList {
     private ArrayList<Task> tasks;    
+    private Statistics statistics;
     
     /**
      * Constructs an empty TaskList
      */
     public TaskList() {
         this.tasks = new ArrayList<>();
+        this.statistics = new Statistics();
     }
 
     /**
@@ -25,6 +28,7 @@ public class TaskList {
      */
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;
+        this.statistics = new Statistics();
     }
     
     /**
@@ -58,10 +62,8 @@ public class TaskList {
      * @throws RuanException If the index is invalid (i.e., out of bounds)
      */
     public void setDone(int index, boolean isDone) throws RuanException {
-        if (index < 0 || index >= tasks.size()) {
-            throw new RuanException(ErrorType.INVALID_TASK_NUMBER);
-        }
-        tasks.get(index).setDone(isDone);
+        assert index >= 0 && index < tasks.size() : ErrorType.INVALID_TASK_NUMBER;
+        tasks.get(index).setDone(isDone, null);
     }
 
     /**
@@ -71,6 +73,19 @@ public class TaskList {
     public ArrayList<Task> getTasks() {
         return tasks;
     }
+
+    public int getTasksCompletedInPastWeek() {
+        return statistics.getTasksCompletedInPastWeek(tasks);
+    }
+
+    public int getTotalCompletedTasks() {
+        return statistics.getTotalCompletedTasks(tasks);
+    }
+
+    public int getTotalPendingTasks() {
+        return statistics.getTotalPendingTasks(tasks);
+    }
+
 
     /**
      * Gets the description of a task at a specified index
@@ -106,8 +121,6 @@ public class TaskList {
         }
         return false;
     }
-
-
 
     /**
      * Finds tasks that contain the given keyword

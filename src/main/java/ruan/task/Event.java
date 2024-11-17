@@ -26,7 +26,8 @@ public class Event extends Task {
 
     @Override
     public String toFileFormat() {
-        return "E | " + (isDone ? "1" : "0") + " | " + description + " /from " + from.dateTimeToString() + " /to " + to.dateTimeToString();
+        String completionTime = (completionDateTime != null) ? completionDateTime.toString() : "null";
+        return "E | " + (isDone ? "1" : "0") + " | " + description + " /from " + from.dateTimeToString() + " /to " + to.dateTimeToString() + " | " + completionTime;
     }
 
     @Override

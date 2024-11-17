@@ -1,11 +1,15 @@
 package ruan.parser;
 
 import ruan.command.*;
-import ruan.exception.RuanException;
+import ruan.exception.*;
+import ruan.constant.Constants;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * With the use of ChatGPT to implement the methods
+ */
 
 public class ParserTest {
 

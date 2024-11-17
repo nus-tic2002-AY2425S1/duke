@@ -58,4 +58,5 @@ public class Storage {
             throw new RuanException(ErrorType.FAIL_TO_SAVE);
         }
     }
+
 }

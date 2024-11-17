@@ -24,7 +24,8 @@ public class Deadline extends Task {
 
     @Override
     public String toFileFormat() {
-        return "D | " + (isDone ? "1" : "0") + " | " + description + Constants.SPLIT_BY_COMMAND + by.dateTimeToString();
+        String completionTime = (completionDateTime != null) ? completionDateTime.toString() : "null";
+        return "D | " + (isDone ? "1" : "0") + " | " + description + Constants.SPLIT_BY_COMMAND + by.dateTimeToString() + " | " + completionTime;
     }
 
     @Override

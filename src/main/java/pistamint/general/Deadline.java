@@ -7,7 +7,7 @@ public class Deadline extends Task {
 
     public Deadline(String description, char symbol, String deadline) {
         super(description, symbol);
-        this.deadline = " (by:" + deadline + ")";
+        this.deadline = "(by:" + deadline + ")";
         this.isDone = false;
     }
 

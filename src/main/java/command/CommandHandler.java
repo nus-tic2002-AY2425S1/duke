@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Interface for handling user input commands
+ * Solution below adapted from https://www.geeksforgeeks.org/factory-method-design-pattern-in-java/
  */
 public interface CommandHandler {
     /**

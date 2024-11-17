@@ -1,3 +1,4 @@
+package ruan.exception;
 /**
  * Class to catch exceptions for Ruan 
  */

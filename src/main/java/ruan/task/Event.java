@@ -1,6 +1,5 @@
-/**
- * Adding an event task
- */
+package ruan.task;
+
 public class Event extends Task {
     private String from;
     private String to;
@@ -9,6 +8,11 @@ public class Event extends Task {
         super(description);
         this.from = from;
         this.to = to;
+    }
+
+    @Override
+    public String toFileFormat() {
+        return "E | " + (isDone ? "1" : "0") + " | " + description + " /from " + from + " /to " + to;
     }
 
     @Override

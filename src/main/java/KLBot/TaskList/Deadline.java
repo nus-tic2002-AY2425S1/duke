@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class Deadline extends Task {
     protected LocalDate deadlineDate;
+    //Reference:https://www.w3schools.com/java/tryjava.asp?filename=demo_date_format
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
     protected String deadlineDesc;
 

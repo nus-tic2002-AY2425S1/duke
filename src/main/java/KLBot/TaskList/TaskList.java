@@ -79,6 +79,7 @@ public class TaskList {
      * @return A list of tasks whose descriptions contain the keyword.
      */
     public List<Task> searchTasks(String keyword) {
+        //Reference: Example 2 in https://www.tutorialspoint.com/how-to-find-an-element-in-a-list-with-java
         List<Task> matchingTasks = new ArrayList<>();
         for (Task task : tasks) {
             if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {

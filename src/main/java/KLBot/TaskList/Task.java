@@ -81,6 +81,7 @@ public class Task {
      * @return A Task object or null if the input is invalid.
      */
     public static Task fromFileFormat(String taskData) {
+        //Solution below adapted from https://stackoverflow.com/questions/10796160/splitting-a-java-string-by-the-pipe-symbol-using-split
         String[] parts = taskData.split(" \\| ");
 
         if (parts.length >= 3) {

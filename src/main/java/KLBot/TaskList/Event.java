@@ -25,6 +25,7 @@ public class Event extends Task {
         super(description);
         this.eventDesc=description;
 
+        //Reason for having 2 different formatter is because when saving into file, date will be in "yyyy-MM-dd'T'HH:mm" format.
         if(fromDateTime.contains("T")||toDateTime.contains("T")){
             formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         }else{

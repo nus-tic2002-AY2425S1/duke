@@ -14,7 +14,7 @@ public class Ui {
         System.out.println("\t📚 To add a ToDo task, type 'todo' followed by your task description. For example: 'todo borrow a book'");
         System.out.println("\t📅 To add an Event task, type 'event' followed by the event details and date/time. For example: 'event project meeting /from Mon 2pm /to 4pm'");
         System.out.println("\t⏰ To add a Deadline task, type 'deadline' followed by your task description and the deadline date. For example: 'deadline return book /by Sunday'");
-
+        System.out.println("\t\uD83D\uDD0E To search for a task, type 'search' followed by a keyword.For example: 'search return book'");
         System.out.println("What can I do for you today? (Type 'bye' when you're ready to say goodbye! 😢)");
         printLine();
     }

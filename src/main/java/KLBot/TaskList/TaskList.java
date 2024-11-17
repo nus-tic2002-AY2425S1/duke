@@ -1,6 +1,7 @@
 package KLBot.TaskList;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The TaskList class manages a collection of tasks. It allows tasks to be added, removed,
@@ -69,5 +70,21 @@ public class TaskList {
      */
     public boolean isEmpty() {
         return tasks.isEmpty();
+    }
+
+    /**
+     * Searches for tasks whose descriptions contain the given keyword.
+     *
+     * @param keyword The keyword to search for in task descriptions.
+     * @return A list of tasks whose descriptions contain the keyword.
+     */
+    public List<Task> searchTasks(String keyword) {
+        List<Task> matchingTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
+                matchingTasks.add(task);
+            }
+        }
+        return matchingTasks;
     }
 }

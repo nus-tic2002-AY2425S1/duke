@@ -7,6 +7,7 @@ import KLBot.TaskList.TaskList;
 import KLBot.Ui.Ui;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -47,6 +48,9 @@ public class KLbot {
                     ui.showTaskList(taskList);
                 } else if (userInput.toLowerCase().startsWith("delete")) {
                     deleteTask(userInput);
+                } else if (userInput.startsWith("search")) {
+                    String keyword = userInput.replace("search", "").trim();
+                    searchTasks(keyword);
                 } else {
                     throw new KLBotException("I didn't quite catch that. Could you try again?");
                 }
@@ -123,5 +127,23 @@ public class KLbot {
      */
     private static void saveTasksToFile() {
         storage.saveTasksToFile(taskList);
+    }
+
+    /**
+     * Searches for tasks in the task list that contain the specified keyword.
+     *
+     * @param keyword The keyword to search for in task descriptions.
+     */
+    private static void searchTasks(String keyword) {
+        List<Task> matchingTasks = taskList.searchTasks(keyword);
+
+        if (matchingTasks.isEmpty()) {
+            System.out.println("Oops! I couldn't find any tasks with the keyword: " + keyword);
+        } else {
+            System.out.println("Yay! Here are the tasks I found that match your search for '" + keyword + "':");
+            for (Task task : matchingTasks) {
+                System.out.println(task);
+            }
+        }
     }
 }

@@ -6,6 +6,9 @@ import ruan.exception.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.ArrayList;
 
 /**
  * With the use of ChatGPT to come out of test cases
@@ -21,7 +24,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void addTask_validTask_taskAdded() {
+    public void addTask_validTask_taskAdded() throws RuanException {
         Task task = new Todo("Write code");
         taskList.addTask(task);
         assertEquals(1, taskList.size());
@@ -66,7 +69,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void getTaskDescription_validIndex_returnsDescription() {
+    public void getTaskDescription_validIndex_returnsDescription() throws RuanException {
         Task task = new Todo("Write code");
         taskList.addTask(task);
 
@@ -79,7 +82,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void addTask_duplicateTask_taskNotAdded() {
+    public void addTask_duplicateTask_taskNotAdded() throws RuanException {
         Task task = new Todo("Write code");
         taskList.addTask(task);
         assertEquals(1, taskList.size());

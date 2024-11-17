@@ -28,13 +28,11 @@ public class JosBot {
         try {
             taskList = new TaskList(FileStorage.load());
         } catch (JosBotException e) {
-            System.out.println("Josbot_exception: " + e.getMessage());
             ui.showError("loading_error");
             taskList = new TaskList();
         } catch (FileNotFoundException e) {
             ui.showError("file_not_found_error");
         } catch (IOException e) {
-            System.out.println("IO Exception: " + e.getMessage());
             ui.showError("loading_error");
         }
     }

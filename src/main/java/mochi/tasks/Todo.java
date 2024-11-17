@@ -10,6 +10,11 @@ public class Todo extends Task {
     }
 
     @Override
+    public boolean compare(String op, String date) {
+        return false;
+    }
+
+    @Override
     public String toString() {
         return "[" + this._type + "]" + super.toString();
     }

@@ -27,6 +27,7 @@ public class AddCommand extends Command {
     /**
      * Executes the add command by creating and adding a new task to the task list
      * Depending on the type, add a Todo, Deadline, or Event task
+     * Check if there is duplicate task before adding to tasklist
      * @param tasks Task list where the new task will be added
      * @param ui Ui instance used for interacting with the user/displaying message
      * @param storage Storage instance for saving tasks to a file.
@@ -46,7 +47,6 @@ public class AddCommand extends Command {
                 task = new Todo(description);
                 break;
             case "deadline":
-
                 //get different part of command from description
                 descriptionData = description.split(" /by ");
 
@@ -68,7 +68,6 @@ public class AddCommand extends Command {
                 task = new Deadline(descriptionData[0].trim(), descriptionData[1].trim());
                 break;
             case "event":
-
                 //get different part of command from description
                 descriptionData = description.split(" /from | /to ");
 
@@ -93,11 +92,16 @@ public class AddCommand extends Command {
                 throw new RuanException(ErrorType.UNKNOWN_DESCRIPTION);
         }
 
-        // Add the task to the task list
-        tasks.addTask(task);
-        ui.printTaskAdded(task, tasks.size());
+        //check if there is duplicate task
+        if (tasks.isDuplicate(task)) {
+            throw new RuanException(ErrorType.DUPLICATE_TASK);
+        } else {
+            // Add the task to the task list
+            tasks.addTask(task);
+            ui.printTaskAdded(task, tasks.size());
+            // Save the latest task list
+            storage.saveTasks(tasks.getTasks());
+        }
 
-        // Save the latest task list
-        storage.saveTasks(tasks.getTasks());
     }
 }

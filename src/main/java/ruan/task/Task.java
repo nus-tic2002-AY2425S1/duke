@@ -101,4 +101,22 @@ public abstract class Task {
         //return formatted string
         return "[" + getStatusIcon() + "] " + description; 
     }
+
+
+    /**
+     * Checks if this task is equal to another object
+     * @param obj The object to compare
+     * @return true if the tasks have the same description
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Task otherTask = (Task) obj;
+        return this.description.equalsIgnoreCase(otherTask.description);
+    }
 }

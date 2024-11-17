@@ -79,11 +79,24 @@ public class TaskList {
     }
 
     /**
-     * Gets the number of tasks in the TaskList
+     * Gets the number of tasks in TaskList
      * @return Size of the TaskList
      */
     public int size() {
         return tasks.size();
+    }
+
+    /**
+     * Check if there is a duplicate task in TaskList
+     * @return True if there is duplicated task
+     */
+    public boolean isDuplicate(Task task) {
+        for (Task t : tasks) {
+            if (t.equals(task)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

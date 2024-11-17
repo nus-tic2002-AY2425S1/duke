@@ -75,4 +75,15 @@ public class TaskListTest {
     public void getTaskDescription_invalidIndex_throwsException() {
         assertThrows(IndexOutOfBoundsException.class, () -> taskList.getTaskDescription(0));
     }
+
+
+    @Test
+    public void addTask_duplicateTask_taskNotAdded() {
+        Task task = new Todo("Write code");
+        taskList.addTask(task);
+        assertEquals(1, taskList.size());
+        
+        taskList.addTask(task);
+        assertEquals(1, taskList.size());
+    }
 }

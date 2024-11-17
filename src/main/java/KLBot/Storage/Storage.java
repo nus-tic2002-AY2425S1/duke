@@ -79,7 +79,7 @@ public class Storage {
                     }
                 }
                 if (!taskList.isEmpty()) {
-                    System.out.println("Yay! I found some tasks you’ve saved earlier:");
+                    System.out.println("Yay! I found some tasks was saved earlier:");
                     for (int i = 0; i < taskList.size(); i++) {
                         System.out.println("\t" + (i + 1) + "." + taskList.get(i));
                     }

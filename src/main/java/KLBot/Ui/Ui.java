@@ -29,7 +29,7 @@ public class Ui {
 
     public void showTaskList(TaskList taskList) {
         if (taskList.isEmpty()) {
-            System.out.println("It looks like your task list is empty! No worries, just add some tasks and I'll be happy to help you manage them! 😊");
+            System.out.println("It looks like your task list is empty! No worries, just add some tasks and I'll be happy to help you manage them!");
             return;
         }
 
@@ -61,7 +61,7 @@ public class Ui {
     }
 
     public void printLine() {
-        System.out.println("____________________________________________________________");
+        System.out.println("________________________________________________________________________________________________________________________");
     }
 }
 

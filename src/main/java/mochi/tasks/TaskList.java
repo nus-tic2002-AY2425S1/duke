@@ -186,9 +186,9 @@ public class TaskList implements AutoCloseable {
      * Prints the list of tasks to the console.
      */
     public void printTaskList() {
-        System.out.println(DialogMessages.LIST_TASK.getValue());
+        Ui.ResponseSingleLine(DialogMessages.LIST_TASK.getValue());
         for (Task i : _list) {
-            System.out.println(_list.indexOf(i) + 1 + "." + i.toString());
+            Ui.ResponseSingleLine(_list.indexOf(i) + 1 + "." + i.toString());
         }
         Ui.printDivider();
     }
@@ -205,11 +205,11 @@ public class TaskList implements AutoCloseable {
         if (op.isEmpty()) {
             printTaskListByType(type);
         } else {
-            System.out.println(DialogMessages.LIST_TASK_FILTERED.getValue());
+            Ui.ResponseSingleLine(DialogMessages.LIST_TASK_FILTERED.getValue());
             for (Task i : _list) {
                 if (Objects.equals(i.getType(), type)) {
                     if (i.compare(op, date)) {
-                        System.out.println(_list.indexOf(i) + 1 + "." + i);
+                        Ui.ResponseSingleLine(_list.indexOf(i) + 1 + "." + i);
                     }
                 }
             }
@@ -218,20 +218,20 @@ public class TaskList implements AutoCloseable {
     }
 
     public void printTaskListByType(String type) {
-        System.out.println(DialogMessages.LIST_TASK_FILTERED.getValue());
+        Ui.ResponseSingleLine(DialogMessages.LIST_TASK_FILTERED.getValue());
         for (Task i : _list) {
             if (Objects.equals(i.getType(), type)) {
-                System.out.println(_list.indexOf(i) + 1 + "." + i);
+                Ui.ResponseSingleLine(_list.indexOf(i) + 1 + "." + i);
             }
         }
         Ui.printDivider();
     }
 
     public void printTaskListByName(String name) {
-        System.out.println(DialogMessages.LIST_TASK_FILTERED_NAME.getValue());
+        Ui.ResponseSingleLine(DialogMessages.LIST_TASK_FILTERED_NAME.getValue());
         for (Task i : _list) {
             if (i.getName().toLowerCase().contains(name.toLowerCase())) {
-                System.out.println(_list.indexOf(i) + 1 + "." + i);
+                Ui.ResponseSingleLine(_list.indexOf(i) + 1 + "." + i);
             }
         }
         Ui.printDivider();
@@ -239,10 +239,10 @@ public class TaskList implements AutoCloseable {
 
     public void printTaskListByDate(LocalDate date) {
         assert date != null : "date cannot be null";
-        System.out.println(DialogMessages.LIST_TASK_FILTERED_DATE.getValue());
+        Ui.ResponseSingleLine(DialogMessages.LIST_TASK_FILTERED_DATE.getValue());
         for (Task i : _list) {
             if (i.fallsOnDate(date)) {
-                System.out.println(_list.indexOf(i) + 1 + "." + i);
+                Ui.ResponseSingleLine(_list.indexOf(i) + 1 + "." + i);
             }
         }
         Ui.printDivider();

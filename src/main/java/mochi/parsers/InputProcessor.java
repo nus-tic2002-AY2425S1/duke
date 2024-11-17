@@ -1,17 +1,6 @@
 package mochi.parsers;
 
-import mochi.commands.AddTaskCommand;
-import mochi.commands.Command;
-import mochi.commands.CommandEnum;
-import mochi.commands.DeleteTaskCommand;
-import mochi.commands.FindCommand;
-import mochi.commands.ListTaskByDateCommand;
-import mochi.commands.ListTaskCommand;
-import mochi.commands.MarkTaskCommand;
-import mochi.commands.MassDeleteTaskCommand;
-import mochi.commands.MassMarkTaskCommand;
-import mochi.commands.MassUnMarkTaskCommand;
-import mochi.commands.UnMarkTaskCommand;
+import mochi.commands.*;
 import mochi.common.DateTime;
 import mochi.common.DialogMessages;
 import mochi.common.Utils;
@@ -35,11 +24,11 @@ public class InputProcessor {
         this.taskList = taskList;
     }
 
-    public void processInput(String input) throws MochiException {
+    public void processInput(String input) {
         processInput(input, " ");
     }
 
-    public void processInput(String input, String delimiter) throws MochiException {
+    public void processInput(String input, String delimiter)  {
         String[] token = input.split(delimiter);
         CommandEnum cmdType = CommandEnum.getValue(token[0]);
         Command cmd = null;
@@ -158,7 +147,7 @@ public class InputProcessor {
                 cmd = new AddTaskCommand(this.taskList, new Todo(t_name));
                 break;
             default:
-                throw new MochiException(DialogMessages.INPUT_UNKNOWN.getValue());
+                Ui.response(DialogMessages.INPUT_UNKNOWN.getValue());
         }
         if (cmd != null) {
             cmd.execute();

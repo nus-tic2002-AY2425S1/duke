@@ -5,7 +5,6 @@ import mochi.common.DateTime;
 import mochi.common.DialogMessages;
 import mochi.common.Utils;
 import mochi.common.exception.ExceptionMessages;
-import mochi.common.exception.MochiException;
 import mochi.tasks.Deadline;
 import mochi.tasks.Event;
 import mochi.tasks.TaskList;
@@ -88,6 +87,8 @@ public class InputProcessor {
                 if (token.length > 1) {
                     String findVar = Utils.trimStringArrayWithStartEnd(token, "find", "", " ");
                     cmd = new FindCommand(taskList, findVar);
+                } else {
+                    Ui.response(ExceptionMessages.FIND_INVALID);
                 }
                 break;
             case VIEW:

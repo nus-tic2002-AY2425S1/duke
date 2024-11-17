@@ -11,4 +11,5 @@ public class ExceptionMessages {
     public static final String TASK_EVENT_TO_EMPTY = "Ops, the event's `to` parameter is empty, please supply in correct format";
     public static final String TASK_DEADLINE_BY_EMPTY = "Ops, the deadline's `to` parameter is empty, please supply in correct format";
     public static final String DATE_FORMAT_INVALID = "Invalid date format. Please use 'd/M/yyyy HHmm' format.";
+    public static final String FIND_INVALID = "Keyword is empty, please specify correct keyword";
 }

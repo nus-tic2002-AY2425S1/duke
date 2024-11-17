@@ -26,30 +26,48 @@ public class Parser {
         commandWord = commandWord.toLowerCase();
         // No Fallthrough indicated and no break, because each case is a return will terminate the case
         switch (commandWord) {
-            case "todo":
-                return createTodo(parts);
-            case "deadline":
-                return createDeadline(parts);
-            case "event":
-                return createEvent(parts);
-            case "delete":
-                return createDelete(parts);
-            case "mark":
-                return createMark(parts);
-            case "unmark":
-                return createUnmark(parts);
-            case "bye":
-                return new ExitCommand();
-            case "list":
-                return createList(fullCommand);
-            case "find":
-                return createFind(fullCommand);
-            case "summary":
-                return createStaticsCommand(fullCommand);
-            case "help":
-                return new HelpCommand("general");
-            default:
-                return createGeneralTask(fullCommand); // Add normal task
+        case "Todo":
+        //fallthrough
+        case "todo":
+            return createTodo(parts);
+         case "Deadline":
+        //fallthrough
+        case "deadline":
+            return createDeadline(parts);
+        case "Event":
+        //fallthrough
+        case "event":
+            return createEvent(parts);
+        case "Delete":
+        //fallthrough
+        case "delete":
+            return createDelete(parts);
+        case "Mark":
+        //fallthrough
+        case "mark":
+            return createMark(parts);
+        case "unmark":
+            return createUnmark(parts);
+        case "Bye":
+        //fallthrough
+        case "bye":
+            return new ExitCommand();
+        case "List":
+        //fallthrough
+        case "list":
+            return createList(fullCommand);
+        case "Find":
+        //fallthrough
+        case "find":
+            return createFind(fullCommand);
+        case "Summary":
+        //fallthrough
+        case "summary":
+            return createStaticsCommand(fullCommand);
+        case "help":
+            return new HelpCommand("general");
+        default:
+            return createGeneralTask(fullCommand); // Add normal task
         }
     }
 

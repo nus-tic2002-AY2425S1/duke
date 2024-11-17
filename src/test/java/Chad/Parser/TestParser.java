@@ -1,10 +1,16 @@
 package Chad.Parser;
 
-import Chad.Command.*;
-import Chad.Exception.ChadException;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import Chad.Command.AddCommand;
+import Chad.Command.Command;
+import Chad.Command.DeleteCommand;
+import Chad.Command.ListByDateCommand;
+import Chad.Command.ListCommand;
+import Chad.Command.MarkTaskCommand;
+import Chad.Command.UnmarkTaskCommand;
+import Chad.Exception.ChadException;
 
 public class TestParser {
 

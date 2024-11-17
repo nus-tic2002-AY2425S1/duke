@@ -1,15 +1,21 @@
 package KLBot.TaskList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Task {
-    protected String deadlineDate;
+    protected LocalDate deadlineDate;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
+    protected String deadlineDesc;
 
     public Deadline(String description, String deadlineDate) {
         super(description);
-        this.deadlineDate = deadlineDate;
+        this.deadlineDesc=description;
+        this.deadlineDate = LocalDate.parse(deadlineDate);
     }
 
-    public String getBy() {
-        return deadlineDate;
+    @Override
+    public String getDescription() {
+        return deadlineDesc + " (by: " + deadlineDate.format(formatter) + ")";
     }
 
     @Override
@@ -19,11 +25,11 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + deadlineDate + ")";
+        return "[D]" + super.toString() + " (by: " + deadlineDate.format(formatter) + ")";
     }
 
     @Override
     public String toFileFormat() {
-        return "D | " + (completed ? "1" : "0") + " | " + listDescription + " | " + deadlineDate;
+        return "D | " + (completed ? "1" : "0") + " | " + listDescription + " | " + deadlineDate.toString();
     }
 }

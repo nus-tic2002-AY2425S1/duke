@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -26,7 +25,7 @@ import util.TypicalTasks;
 
 public class StorageTest {
     
-    private final String FILE_STORAGE_PATH = "./data/tasks.txt";
+    private final String FILE_STORAGE_PATH = "data/tasks.txt";
     
     private Storage storage;
 

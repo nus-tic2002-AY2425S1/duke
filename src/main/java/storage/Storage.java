@@ -39,12 +39,15 @@ public class Storage {
 //    private static final String DEFAULT_STORAGE_FILEPATH = "./src/main/java/data/tasks.txt";
 //    private static final String DEFAULT_STORAGE_FILEPATH = "../data/tasks.txt";
     private static final String DEFAULT_STORAGE_FILEPATH =
-        System.getProperty("user.dir") + File.separator + Paths.get("src", "main", "java", "data", "tasks.txt");
+        System.getProperty("user.dir") + File.separator + Paths.get("duke", "duke", "src", "main", "java", "data", "tasks.txt");
+//        "/data/tasks.txt";
+//        Paths.get("src", "main", "java", "data", "tasks.txt").toString();
+//        System.getProperty("user.dir") + File.separator + Paths.get("src", "main", "java", "data", "tasks.txt");
 
 //    private static final String ARCHIVE_STORAGE_FILEPATH = "../data/archive.txt";
 //    private static final String ARCHIVE_STORAGE_FILEPATH = BASE_FILEPATH + "archive.txt";
     private static final String ARCHIVE_STORAGE_FILEPATH =
-        System.getProperty("user.dir") + File.separator + Paths.get("src", "main", "java", "data", "archive.txt");
+        System.getProperty("user.dir") + File.separator + Paths.get("duke", "duke", "src", "main", "java", "data", "archive.txt");
     private final Path tasksFilePath;
     private final Path archiveTasksFilePath;
 
@@ -63,7 +66,19 @@ public class Storage {
 //        System.out.println("storage: " + System.getProperty("storage.file"));
 //        System.out.println("test: " + Paths.get("src", "main", "java", "data"));
 
+//        this.tasksFilePath = Paths.get(getResourcePath(DEFAULT_STORAGE_FILEPATH));
+//        this.tasksFilePath = Paths.get(getClass().getClassLoader().getResource(DEFAULT_STORAGE_FILEPATH).getPath());
+
+        System.out.println("java.class.path: " + System.getProperty("java.class.path"));
+        System.out.println("user.dir: " + System.getProperty("user.dir") + File.separator + Paths.get("src", "main", "java", "data", "tasks.txt"));
+        System.out.println("user.home: " + System.getProperty("user.home"));
+        System.out.println("storage: " + System.getProperty("storage.file"));
+//        System.out.println("thsi " + this.getClass().getResourceAsStream("/data/tasks.txt").toString());
+//        System.out.println("csdthsi " + this.getClass().getResourceAsStream("data/tasks.txt").toString());
+
+//        this.tasksFilePath = Paths.get();
         this.tasksFilePath = Paths.get(DEFAULT_STORAGE_FILEPATH);
+        System.out.println("tasksFilePath is " + this.tasksFilePath.toAbsolutePath());
         this.archiveTasksFilePath = Paths.get(ARCHIVE_STORAGE_FILEPATH);
         checkDataFolderExists();
         checkTaskFileExists();
@@ -205,6 +220,7 @@ public class Storage {
         Path filePath = getTasksFilePath();
         List<String> lines;
         lines = Files.readAllLines(filePath);
+        System.out.println("lines is " + lines);
         return lines;
     }
 
@@ -229,6 +245,7 @@ public class Storage {
         } catch (IOException e) {
             throw new IOException(Messages.ERROR_READ_FILE);
         }
+        System.out.println("tasklist is " + taskList.toString());
         return taskList;
     }
 

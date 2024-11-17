@@ -1,7 +1,9 @@
 package ruan.exception;
+
 /**
  * List of enum for errors
  */
+
 public enum ErrorType {
     EMPTY_DESCRIPTION("The instruction cannot be empty."),
     UNKNOWN_DESCRIPTION("Your instruction is not recognize."),
@@ -16,10 +18,18 @@ public enum ErrorType {
 
     private final String message;
 
+    /**
+     * Constructs an ErrorType with the specified error message
+     * @param message Detailed error message associated with this error type
+     */
     ErrorType(String message) {
         this.message = "Oh no! "+message;
     }
 
+    /**
+     * Gets the error message associated with this error type
+     * @return The error message as a string
+     */
     public String getMessage() {
         return message;
     }

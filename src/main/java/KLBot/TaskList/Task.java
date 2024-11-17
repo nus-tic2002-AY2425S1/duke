@@ -34,6 +34,16 @@ public class Task {
     }
 
     /**
+     * Returns the status icon of the task.
+     * The status icon is "X" if the task is completed, and a space (" ") if the task is incomplete.
+     *
+     * @return A string of the status icon of the task
+     */
+    public String getStatusIcon() {
+        return (completed ? "X" : " ");
+    }
+
+    /**
      * Returns the description of the task.
      *
      * @return The description of the task.

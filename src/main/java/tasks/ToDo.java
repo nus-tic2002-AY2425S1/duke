@@ -34,7 +34,7 @@ public class ToDo extends Task{
     }
 
     @Override
-    public void update (String description) {
+    public void update(String description) {
         this.description = description;
     }
 

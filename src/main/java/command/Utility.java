@@ -12,6 +12,7 @@ public class Utility {
 
     /**
      * Parse task index from user input
+     * Solution below adapted from https://stackoverflow.com/questions/4444341/split-a-string-into-a-string-of-a-specific-size
      * @param userInput The user input command string
      * @return The parsed task index
      * @throws DukeException If the index is not a valid index in the task or is an invalid integer

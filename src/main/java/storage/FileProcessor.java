@@ -1,6 +1,10 @@
 package storage;
 
-import tasks.*;
+import tasks.Deadline;
+import tasks.Task;
+import tasks.ToDo;
+import tasks.Event;
+import tasks.FixedDuration;
 import exception.DukeException;
 
 import java.io.File;
@@ -16,6 +20,7 @@ import static parser.DateTimeParser.parseDateTime;
 
 /**
  * Handles loading and saving of tasks to and from a file
+ * Solution below adapted from https://www.baeldung.com/java-read-write-files-different-threads
  */
 public class FileProcessor {
     String fileLocation;

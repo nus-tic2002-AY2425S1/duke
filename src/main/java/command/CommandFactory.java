@@ -4,16 +4,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 import exception.DukeException;
-import tasks.*;
+import tasks.Task;
+import tasks.ToDo;
+import tasks.Event;
+import tasks.Deadline;
+import tasks.FixedDuration;
+
 
 
 import static parser.TaskParser.parseTask;
 
 /**
  * Factory class to generate tasks based on user input commands.
+ * Solution below adapted from https://www.geeksforgeeks.org/factory-method-design-pattern-in-java/
  */
 public class CommandFactory {
     public static final Map<String, Task> taskMap = new HashMap<>();
+    //Solution below adapted from https://stackoverflow.com/questions/37721799/factory-implementation-with-enum
     static {
         taskMap.put(CommandType.TODO.name().toLowerCase(), new ToDo(null));
         taskMap.put(CommandType.EVENT.name().toLowerCase(), new Event(null,null,null));

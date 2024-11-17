@@ -5,6 +5,7 @@ import lombok.Getter;
 
 /**
  * An abstract task class with description and completion status
+ * Solution below adapted from https://www.baeldung.com/lombok-ide
  */
 @Getter
 public abstract class Task {
@@ -51,7 +52,7 @@ public abstract class Task {
      */
     public abstract Task createTask(String description) throws DukeException;
 
-    public abstract void update (String updateInput) throws DukeException;
+    public abstract void update(String updateInput) throws DukeException;
 
     /**
      * Convert task to a format for file saving format for file storage

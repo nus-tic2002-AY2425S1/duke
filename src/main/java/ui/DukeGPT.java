@@ -38,6 +38,7 @@ public class DukeGPT {
     /**
      * Initialises the command handlers by mapping commands to their respective handlers
      */
+    //Solution below adapted from https://stackoverflow.com/questions/37721799/factory-implementation-with-enum
     private static void initCommandHandlers() {
         commandHandlerMapping.put(CommandType.LIST.name().toLowerCase(), new ListCommandHandler());
         commandHandlerMapping.put(CommandType.MARK.name().toLowerCase(), new MarkCommandHandler());

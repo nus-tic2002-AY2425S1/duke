@@ -2,6 +2,10 @@ package parser;
 
 import exception.DukeException;
 
+/**
+ * Handles Task parsing
+ * Solution below adapted from https://stackoverflow.com/questions/4444341/split-a-string-into-a-string-of-a-specific-size
+ */
 public class TaskParser {
 
     public static String [] parseTask(String commandString) {

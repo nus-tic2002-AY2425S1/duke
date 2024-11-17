@@ -7,6 +7,7 @@ import java.time.format.DateTimeParseException;
 
 /**
  * Handles datetime parsing
+ * Solution below adapted from https://www.baeldung.com/java-date-time-from-string
  */
 public class DateTimeParser {
     private static final DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");

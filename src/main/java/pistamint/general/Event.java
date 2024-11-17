@@ -8,7 +8,7 @@ public class Event extends Task {
 
     public Event(String description, char symbol, String from, String to) {
         super(description, symbol);
-        this.from = " (from:" + from + " ";
+        this.from = "(from:" + from + " ";
         this.to = "to:" + to + ")";
         this.isDone = false;
     }

@@ -97,14 +97,14 @@ public class Parser {
                     if (task.equalsIgnoreCase("deadline")) {
                         timeline = LocalDate.parse(input.substring(input.indexOf("/by") + 3).trim());
                         String dL = timeline.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
-                        Deadline deadline = new Deadline(description.trim(), 'D', dL);
+                        Deadline deadline = new Deadline(description.trim()+" ", 'D', dL);
                         taskList.addTask(deadline, false);
                     } else if (task.equalsIgnoreCase("event")) {
                         from = LocalDate.parse(input.substring(input.indexOf("/from") + 5, input.indexOf("/to")).trim());
                         to = LocalDate.parse(input.substring(input.indexOf("/to") + 3).trim());
                         String eFrom = from.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
                         String eTo = to.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
-                        Event event = new Event(description.trim(), 'E', eFrom, eTo);
+                        Event event = new Event(description.trim()+" ", 'E', eFrom, eTo);
                         taskList.addTask(event, false);
                     }
 

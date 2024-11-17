@@ -1,7 +1,10 @@
 package jibberJabber.tasks;
 
+import jibberJabber.tasks.taskType.Deadline;
+import jibberJabber.tasks.taskType.Event;
 import jibberJabber.ui.Message;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 /**
  * The task list class represents a list of tasks in the task management system.
@@ -74,12 +77,60 @@ public class TaskList {
     public void printTaskList() {
         Message.printHorizontalLines();
         System.out.println("Here are the tasks in your list:");
-        // Using totalNumberOfTodoTask as the source of truth to determine the number of task objects created
         for (int counter = 0; counter < getTotalTaskCount(); counter++) {
             int listIndex = counter + 1;
             Task currentTask = getTaskById(counter);
             System.out.println(listIndex + "." + currentTask.printAddedTask());
         }
         Message.printHorizontalLines();
+    }
+    /**
+     * Retrieve tasks within a given period
+     *
+     * @param startDate the index of the task to remove.
+     * @param endDate the index of the task to remove.
+     * @return task list of tasks within the date range
+     */
+    public TaskList getTasksWithinPeriod(LocalDate startDate, LocalDate endDate) {
+        LocalDate taskStartDate;
+        LocalDate taskEndDate;
+        TaskList todoTaskList = new TaskList();
+        for (Task task : getTasks()) {
+            if (!task.isDone){
+                if (task instanceof Event) {
+                    taskStartDate = ((Event) task).from;
+                    taskEndDate = ((Event) task).to;
+                    if ((taskStartDate.isEqual(startDate) || taskStartDate.isAfter(startDate)) &&
+                        (taskEndDate.isEqual(endDate) || taskEndDate.isBefore(endDate))) {
+                            todoTaskList.addTask(task);
+                    }
+                } else if (task instanceof Deadline) {
+                    taskEndDate = ((Deadline) task).by;
+                    if ((taskEndDate.isEqual(startDate) || taskEndDate.isAfter(startDate)) &&
+                       (taskEndDate.isEqual(endDate) || taskEndDate.isBefore(endDate))) {
+                            todoTaskList.addTask(task);
+                    }
+                }
+
+            }
+        }
+        return todoTaskList;
+    }
+    /**
+     * Retrieve tasks with the specified keyword
+     *
+     * @param searchKeyword the keyword to search within each task's name.
+     * @param taskList the task list to sieve through the task.
+     * @return task list of tasks with the keyword present
+     */
+    public TaskList getTasksWithMatchingKeyword(String searchKeyword, TaskList taskList){
+        TaskList matchingStrings = new TaskList();
+        searchKeyword = searchKeyword.toLowerCase();
+        for (Task task : taskList.getTasks()) {
+            if (task.printAddedTask().toLowerCase().contains(searchKeyword)){
+                matchingStrings.addTask(task);
+            }
+        }
+        return matchingStrings;
     }
 }

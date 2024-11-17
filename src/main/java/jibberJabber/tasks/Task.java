@@ -3,8 +3,13 @@ package jibberJabber.tasks;
 import jibberJabber.commands.ExceptionHandling;
 import jibberJabber.commands.KeywordHandling;
 import jibberJabber.ui.Message;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
+
 /**
- * The task class represents a general task, with methods to handle task status, track task counts, and interact with task lists.
+ * The Task class represents a general task, with methods to handle task status, track task counts, and interact with task lists.
  */
 public class Task {
     protected String taskName;
@@ -65,6 +70,16 @@ public class Task {
         }
     }
     /**
+     * Convert local date into formatted string date
+     *
+     * @param date the input date in local date data type.
+     * @return the string date of the formatted date
+     */
+    public static String convertDateInputString(LocalDate date){
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MMM dd yyyy");
+        return date.format(dateFormat);
+    }
+    /**
      * Returns a formatted string representing the task name and its respective status icon
      *
      * @return The formatted task string.
@@ -81,7 +96,7 @@ public class Task {
      * @param keywordHandling The keyword class to handle all keyword operations.
      * @param isFromFile Indicates whether the task was read from a file: true if read from file (not to display default message), false if its from user input (display default message)
      */
-    public static void addTask(TaskList todoTaskList, String todoTask, String keyword, KeywordHandling keywordHandling , boolean isFromFile, TaskFiles taskFiles){
+    public static boolean addTask(TaskList todoTaskList, String todoTask, String keyword, KeywordHandling keywordHandling , boolean isFromFile){
         keyword = ExceptionHandling.removeSpaces(keyword).toLowerCase();
         switch (keyword){
             case "todo":
@@ -93,12 +108,12 @@ public class Task {
                 // Checks if deadline is provided
                 if (!ExceptionHandling.isValidDeadlineInput(deadlineDetails)) {
                     Message.printMissingParameterMessage("deadline");
-                    return;
+                    return false;
                 }
                 String deadlineOfTask = ExceptionHandling.removeSpaces(deadlineDetails[1]);
                 if (ExceptionHandling.isInvalidDate(deadlineOfTask)){
                     Message.printInvalidDateFormatMessage();
-                    return;
+                    return false;
                 }
                 keywordHandling.processDeadlineTask(todoTask, todoTaskList, isFromFile);
                 break;
@@ -107,28 +122,30 @@ public class Task {
                 if (!eventTask.contains("/from") || !eventTask.contains("/to")) {
                     // Checks if the input value is in proper format
                     Message.printMissingParameterMessage("event");
-                    return;
+                    return false;
                 }
                 String[] eventDetails = eventTask.split("/from");
                 if (!ExceptionHandling.isValidEventInput(eventDetails)) {
                     // Checks if event duration is provided
                     Message.printMissingParameterMessage("event");
-                    return;
+                    return false;
                 }
-                String[] eventDurationDetails = eventDetails[1].split("/to");
-                String from = ExceptionHandling.removeSpaces(eventDurationDetails[0]);
-                String to = ExceptionHandling.removeSpaces(eventDurationDetails[1]);
-                if (ExceptionHandling.isInvalidDate(from) || ExceptionHandling.isInvalidDate(to)) {
-                    Message.printInvalidDateFormatMessage();
-                    return;
+                String[] eventDurationDetails = eventDetails[1].split("(?i)/to");
+                if (ExceptionHandling.isInvalidDate(ExceptionHandling.removeSpaces(eventDurationDetails[0])) ||
+                    ExceptionHandling.isInvalidDate(ExceptionHandling.removeSpaces(eventDurationDetails[1]))) {
+                        Message.printInvalidDateFormatMessage();
+                        return false;
+                }
+                Map<String, LocalDate> dateRange = keywordHandling.parseStartAndEndDates(eventDetails[1], "(?i)/to");
+                LocalDate startDate = dateRange.get("startDate");
+                LocalDate endDate = dateRange.get("endDate");
+                if (startDate.isAfter(endDate)){
+                    Message.printInvalidTimeMessage();
+                    return false;
                 }
                 keywordHandling.processEventTask(todoTask, todoTaskList, isFromFile);
                 break;
         }
-        if (!todoTaskList.getTasks().isEmpty()) {
-            taskFiles.writeToTextFile(todoTaskList, todoTaskList.getTasks().get(todoTaskList.getTasks().size() - 1), true);
-        } else {
-            Message.printFailedToAppendToFileMessage();
-        }
+        return true;
     }
 }

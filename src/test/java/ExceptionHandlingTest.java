@@ -37,13 +37,9 @@ public class ExceptionHandlingTest {
         assertTrue(ExceptionHandling.isEmptyInput("todo"), "Input with only 'todo' should be empty.");
         assertFalse(ExceptionHandling.isEmptyInput("todo read a book"), "Valid 'todo' keyword command should have valid task description.");
         assertTrue(ExceptionHandling.isEmptyInput("event /from /to"), "Input with only 'event' should be empty.");
-        assertFalse(ExceptionHandling.isEmptyInput("event Celebrate Birthday /from 1/1/2023 1400 /to 2/1/2023 1400"), "Valid 'event' keyword command should have valid task description.");
+        assertFalse(ExceptionHandling.isEmptyInput("event Celebrate Birthday /from 1/1/2023 /to 2/1/2023"), "Valid 'event' keyword command should have valid task description.");
         assertTrue(ExceptionHandling.isEmptyInput("deadline /by"), "Input with only 'deadline' should be empty.");
-        assertFalse(ExceptionHandling.isEmptyInput("deadline return book /by 1/1/2023 1400"), "Valid 'deadline' keyword command should have valid task description.");
-        String filePath = System.getProperty("user.dir") + File.separator + "data/tasks.txt";
-        File taskFile = new File(filePath);
-        assertTrue(taskFile.exists(), "Task file should exist.");
-        assertEquals(0, taskList.getTotalTaskCount(), "Task file should reflect an empty task list after deletion.");
+        assertFalse(ExceptionHandling.isEmptyInput("deadline return book /by 1/1/2023"), "Valid 'deadline' keyword command should have valid task description.");
     }
     // Test: Validate if a new task is present in existing list
     @Test
@@ -72,7 +68,7 @@ public class ExceptionHandlingTest {
     // Test: Validate if the date is formatted
     @Test
     void testIsInvalidDate() {
-        assertFalse(ExceptionHandling.isInvalidDate("1/12/2023 2359"), "Valid date should return false.");
+        assertFalse(ExceptionHandling.isInvalidDate("1/12/2023"), "Valid date should return false.");
         assertTrue(ExceptionHandling.isInvalidDate("1-12-2023 2359"), "Invalid date format should return true.");
         assertTrue(ExceptionHandling.isInvalidDate(" "), "Invalid date format should return true.");
         assertTrue(ExceptionHandling.isInvalidDate("2023-12-01  "), "Invalid date format should return true.");

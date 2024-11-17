@@ -28,7 +28,7 @@ public class Parser {
      * @param todoTask the task information
      * @return false if the command is "bye" (to exit the program), true to continue the program
      */
-    public boolean processCommand(String todoTask) {
+    public boolean hasProcessCommandSucceed(String todoTask) {
         // Check for empty input string and bypass it
         if (ExceptionHandling.isEmptyInput(todoTask)) {
             Message.printEmptyMessage(false);
@@ -47,35 +47,39 @@ public class Parser {
             case LIST:
                 keywordHandling.processListKeyword(taskList);
                 return true;
+            case COMPLETE:
+                keywordHandling.processCompleteTaskWithinPeriod(todoTask.toLowerCase(), taskList);
+                return true;
+            case FIND:
+                keywordHandling.processFindKeyword(todoTask.toLowerCase(), taskList);
+                return true;
             case MARK:
                 if (splitTodoTask.length < 2) {
                     Message.printEmptyMessage(true);
                     return true;
                 }
-                keywordHandling.processMarkKeyword(taskList, splitTodoTask[1], true, taskFiles, false);
-                if (!taskList.getTasks().isEmpty()) {
-                    taskFiles.writeToTextFile(taskList, taskList.getLastTask(), false);
-                }
+                keywordHandling.processMarkKeyword(taskList, splitTodoTask[1], true, false);
+                taskFiles.writeToTextFile(taskList, taskList.getLastTask(), false);
                 return true;
             case UNMARK:
                 if (splitTodoTask.length < 2) {
                     Message.printEmptyMessage(true);
                     return true;
                 }
-                keywordHandling.processMarkKeyword(taskList, splitTodoTask[1], false, taskFiles, false);
-                if (!taskList.getTasks().isEmpty()) {
-                    taskFiles.writeToTextFile(taskList, taskList.getLastTask(), false);
-                }
+                keywordHandling.processMarkKeyword(taskList, splitTodoTask[1], false, false);
+                taskFiles.writeToTextFile(taskList, taskList.getLastTask(), false);
                 return true;
             case DELETE:
                 if (splitTodoTask.length < 2) {
                     Message.printEmptyMessage(true);
                     return true;
                 }
-                keywordHandling.processRemoveKeyword(taskList, splitTodoTask[1], taskFiles);
-                if (!taskList.getTasks().isEmpty()) {
-                    taskFiles.writeToTextFile(taskList, taskList.getTasks().get(taskList.getTasks().size() - 1), false);
+                keywordHandling.processRemoveKeyword(taskList, splitTodoTask[1]);
+                if (taskList.getTasks().isEmpty()){
+                    taskFiles.writeToTextFile(new TaskList(), null, false);
+                    return true;
                 }
+                taskFiles.writeToTextFile(taskList, taskList.getTasks().get(taskList.getTasks().size() - 1), false);
                 return true;
             case TODO:
             case DEADLINE:
@@ -84,7 +88,12 @@ public class Parser {
                     // Checks for duplicated tasks being added
                     Message.printDuplicateMessage();
                 } else {
-                    Task.addTask(taskList, todoTask, splitWord, keywordHandling, false, taskFiles);
+                    boolean taskAdded = Task.addTask(taskList, todoTask, splitWord, keywordHandling, false);
+                    if (!taskList.getTasks().isEmpty() && taskAdded) {
+                        taskFiles.writeToTextFile(taskList, taskList.getTasks().get(taskList.getTasks().size() - 1), true);
+                    } else {
+                        Message.printFailedToAppendToFileMessage();
+                    }
                 }
                 return true;
             default:

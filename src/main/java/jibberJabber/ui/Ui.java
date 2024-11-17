@@ -1,17 +1,16 @@
 package jibberJabber.ui;
-
 import jibberJabber.commands.ExceptionHandling;
 
 import java.util.Scanner;
 /**
- * The Ui class handles all user interactions within the Jibber Jabber application while running
+ * The Ui class handles all user interactions within the application while running
  * Upon load, it displays the welcome message and after, reads the user input upon each interaction
  * It displays the ending message when the system ends or the user input the bye keyword command
  */
 public class Ui {
     private final Scanner scanner;
     /**
-     * Constructs a Ui object of the Ui class.
+     * Constructs an Ui object of the Ui class.
      * Sets up the scanner for reading user input.
      */
     public Ui() {

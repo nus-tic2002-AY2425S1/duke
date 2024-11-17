@@ -1,15 +1,15 @@
 package jibberJabber.tasks.taskType;
 
 import jibberJabber.tasks.Task;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
+import java.time.LocalDate;
 /**
  * The Event class represents an Event task (subclass) that extends the base Task class.
  * Includes a date range for the task (from and to)
  */
 public class Event extends Task {
-    public LocalDateTime from;
-    public LocalDateTime to;
+    public LocalDate from;
+    public LocalDate to;
     /**
      * Constructs an Event task with the user's input - task name, from date and to date
      *
@@ -17,7 +17,7 @@ public class Event extends Task {
      * @param from The event's starting date (date time) of the task.
      * @param to The event's ending date (date time) of the task.
      */
-    public Event(String taskName, LocalDateTime from, LocalDateTime to) {
+    public Event(String taskName, LocalDate from, LocalDate to) {
         super(taskName);
         this.from = from;
         this.to = to;
@@ -29,7 +29,6 @@ public class Event extends Task {
      */
     @Override
     public String printAddedTask(){
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mma");
-        return "\t[E]" + super.printAddedTask()  + " (from: " + from.format(dateFormat) + " to: " + to.format(dateFormat) + ")";
+        return "\t[E]" + super.printAddedTask()  + " (from: " + convertDateInputString(from) + " to: " + convertDateInputString(to) + ")";
     }
 }

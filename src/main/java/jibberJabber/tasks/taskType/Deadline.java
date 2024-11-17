@@ -1,21 +1,20 @@
 package jibberJabber.tasks.taskType;
 
 import jibberJabber.tasks.Task;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 /**
  * The Deadline class represents a deadline task (subclass) that extends the base Task class.
  * Includes a deadline for the task.
  */
 public class Deadline extends Task {
-    public LocalDateTime by;
+    public LocalDate by;
     /**
      * Constructs a Deadline task with the user's input - task name and due date.
      *
      * @param taskName The name of the task.
      * @param by The deadline (date time) for the task.
      */
-    public Deadline(String taskName, LocalDateTime by) {
+    public Deadline(String taskName, LocalDate by) {
         super(taskName);
         this.by = by;
     }
@@ -26,7 +25,6 @@ public class Deadline extends Task {
      */
     @Override
     public String printAddedTask(){
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MMM dd yyyy, h:mma");
-        return "\t[D]" + super.printAddedTask() + " (by: " + by.format(dateFormat) + ")";
+        return "\t[D]" + super.printAddedTask() + " (by: " + convertDateInputString(by) + ")";
     }
 }

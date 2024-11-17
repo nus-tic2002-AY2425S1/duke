@@ -2,7 +2,7 @@ package jibberJabber.ui;
 
 import jibberJabber.tasks.Task;
 /**
- * This class handles all customised messages, providing methods to handle exceptions and successful command execution
+ * This Message class handles all customised messages, providing methods to handle exceptions and successful command execution
  */
 public class Message {
     /**
@@ -63,7 +63,7 @@ public class Message {
     /**
      * This method sets isDone status for each currentTask within the arraylist with the defaulted Task status message
      *
-     * @param isDone A boolean to the status of doneness for the task (Done / Not Done)
+     * @param isDone A boolean to the status of done-ness for the task (Done / Not Done)
      * @param currentTask The current task object being pointed in the array list
      */
     public static void printTaskStatusMessage(boolean isDone, Task currentTask){
@@ -148,6 +148,24 @@ public class Message {
      * This method returns the defaulted message when the date format passed during deadline and event commands are invalid
      */
     public static void printInvalidDateFormatMessage(){
-        printSingleMessage("Invalid date format. Date should be in the format of d/M/yyyy HHmm");
+        printSingleMessage("Invalid date format. Date should be in the format of d/M/yyyy");
+    }
+    /**
+     * This method returns the defaulted message when start date is after end date
+     */
+    public static void printInvalidTimeMessage(){
+        printSingleMessage("Invalid date range. Both dates should be present and start date should be before end date");
+    }
+    /**
+     * This method returns the defaulted message when no task is found within the date range given
+     */
+    public static void printNoTaskFoundWithinPeriodMessage(){
+        printSingleMessage("No task found with the period");
+    }
+    /**
+     * This method returns the defaulted message when no task is found with the keyword
+     */
+    public static void printNoTaskFoundWithKeywordMessage(){
+        printSingleMessage("No task found");
     }
 }

@@ -1,17 +1,19 @@
 package jibberJabber.commands;
 
-import jibberJabber.tasks.TaskFiles;
 import jibberJabber.tasks.TaskList;
 import jibberJabber.tasks.taskType.Event;
 import jibberJabber.tasks.Task;
 import jibberJabber.tasks.taskType.ToDo;
 import jibberJabber.tasks.taskType.Deadline;
 import jibberJabber.ui.Message;
-import java.time.LocalDateTime;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import static java.time.LocalDateTime.parse;
+import static java.time.LocalDate.parse;
 /**
  * The keyword class handles keyword-specific operations for task management, such as adding, marking, removing, and listing tasks.
  */
@@ -37,6 +39,44 @@ public class KeywordHandling {
         return false;
     }
     /**
+     * Convert string date into formatted local date
+     *
+     * @param date the input date in local date data type.
+     * @param pattern the pattern to format the date
+     * @return the local date of the formatted date
+     */
+    public static LocalDate formatDateInputsAsLocalDate(String date, String pattern){
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern(pattern);
+        return parse(date, inputFormatter);
+    }
+    /**
+     * Creates a map object to track the start and end date after word split
+     *
+     * @param todoTask     the task description.
+     * @param splitRegex the word to split the string
+     * @return a map object containing the start and end date after split
+     */
+    // Since multiple codes require the same codes, have created this method to capture and reuse across
+    public Map<String, LocalDate> parseStartAndEndDates(String todoTask, String splitRegex){
+        Map<String, LocalDate> dateRangeMap = new HashMap<>();
+        String[] splitWord = todoTask.split(splitRegex);
+        if (splitWord.length != 2) {
+            Message.printInvalidDateFormatMessage();
+            return dateRangeMap;
+        }
+        String startDate = ExceptionHandling.removeSpaces(splitWord[0]);
+        String endDate = ExceptionHandling.removeSpaces(splitWord[1]);
+        try {
+            LocalDate convertedStartDateTime = formatDateInputsAsLocalDate(startDate, "d/M/yyyy");
+            LocalDate convertedEndDateTime = formatDateInputsAsLocalDate(endDate, "d/M/yyyy");
+            dateRangeMap.put("startDate", convertedStartDateTime);
+            dateRangeMap.put("endDate", convertedEndDateTime);
+        } catch (DateTimeParseException e) {
+            Message.printInvalidDateFormatMessage();
+        }
+        return dateRangeMap;
+    }
+    /**
      * Lists all tasks in the TaskList. If the list is empty, a message is printed.
      *
      * @param todoTaskList the TaskList to display.
@@ -52,10 +92,9 @@ public class KeywordHandling {
      * @param todoTaskList the TaskList containing tasks.
      * @param index        the index of the task to mark/unmark.
      * @param isMark       true to mark the task as done, false to unmark it.
-     * @param taskFiles    the TaskFiles object for file handling.
      * @param isFromFile   indicates whether the task was read from a file: true if read from file (not to display default message), false if its from user input (display default message)
      */
-    public void processMarkKeyword(TaskList todoTaskList, String index, boolean isMark, TaskFiles taskFiles, boolean isFromFile){
+    public void processMarkKeyword(TaskList todoTaskList, String index, boolean isMark, boolean isFromFile){
         if (isInvalidIndex(todoTaskList, index)){
             return;
         }
@@ -66,28 +105,21 @@ public class KeywordHandling {
         }
         Task markTask = todoTaskList.getTaskById(convertedIndex);
         markTask.setTaskMarkStatus(todoTaskList, convertedIndex, isMark, isFromFile);
-        if (!todoTaskList.getTasks().isEmpty()){
-            taskFiles.writeToTextFile(todoTaskList, todoTaskList.getLastTask(), false);
-        }
     }
     /**
      * Removes a task from the TaskList.
      *
      * @param todoTaskList the TaskList containing tasks.
      * @param index        the index of the task to remove.
-     * @param taskFiles    the TaskFiles object for file handling.
      */
-    public void processRemoveKeyword(TaskList todoTaskList, String index, TaskFiles taskFiles){
+    public void processRemoveKeyword(TaskList todoTaskList, String index){
         if (isInvalidIndex(todoTaskList, index)){
             return;
         }
         int convertedIndex = Integer.parseInt(index) - 1;
         Task deleteTask = todoTaskList.removeTask(convertedIndex);
         int totalNumberOfTodoTask = Task.decreaseTotalNumberOfTodoTask();
-        if (!todoTaskList.getTasks().isEmpty()){
-            taskFiles.writeToTextFile(todoTaskList, todoTaskList.getLastTask(), false);
-            Message.printDeleteTaskMessage(totalNumberOfTodoTask, deleteTask.printAddedTask());
-        }
+        Message.printDeleteTaskMessage(totalNumberOfTodoTask, deleteTask.printAddedTask());
     }
     /**
      * Processes task keyword -  todo / deadlines / events
@@ -112,14 +144,13 @@ public class KeywordHandling {
      * @param isFromFile   indicates whether the task was read from a file: true if read from file (not to display default message), false if its from
      */
     public void processDeadlineTask(String todoTask, TaskList todoTaskList, boolean isFromFile) {
-        LocalDateTime deadlineDateTime;
+        LocalDate deadlineDateTime;
         String deadlineTask = ExceptionHandling.removeSpaces(todoTask.replaceAll("(?i)deadline", ""));
-        String[] deadlineDetails = deadlineTask.split("/by");
+        String[] deadlineDetails = deadlineTask.split("(?i)/by");
         String newDeadlineTask = ExceptionHandling.removeSpaces(deadlineDetails[0]);
         String deadlineOfTask = ExceptionHandling.removeSpaces(deadlineDetails[1]);
-        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
         try {
-            deadlineDateTime = parse(deadlineOfTask, inputFormatter);
+            deadlineDateTime = formatDateInputsAsLocalDate(deadlineOfTask, "d/M/yyyy");
         } catch (DateTimeParseException e) {
             Message.printInvalidDateFormatMessage();
             return;
@@ -138,26 +169,58 @@ public class KeywordHandling {
      * @param isFromFile   indicates whether the task was read from a file: true if read from file (not to display default message), false if its from
      */
     public void processEventTask(String todoTask, TaskList todoTaskList, boolean isFromFile) {
-        LocalDateTime fromDateTime;
-        LocalDateTime toDateTime;
         String eventTask = ExceptionHandling.removeSpaces(todoTask.replaceAll("(?i)event", ""));
-        String[] eventDetails = eventTask.split("/from");
+        String[] eventDetails = eventTask.split("(?i)/from");
         String newEventTask = ExceptionHandling.removeSpaces(eventDetails[0]);
-        String[] eventDurationDetails = eventDetails[1].split("/to");
-        String from = ExceptionHandling.removeSpaces(eventDurationDetails[0]);
-        String to = ExceptionHandling.removeSpaces(eventDurationDetails[1]);
-        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/M/yyyy HHmm");
-        try {
-            fromDateTime = parse(from, inputFormatter);
-            toDateTime = parse(to, inputFormatter);
-        } catch (DateTimeParseException e) {
-            Message.printInvalidDateFormatMessage();
-            return;
-        }
-        Event inputEventTask = new Event(newEventTask, fromDateTime, toDateTime);
+        Map<String, LocalDate> dateRange = parseStartAndEndDates(eventDetails[1], "(?i)/to");
+        Event inputEventTask = new Event(newEventTask, dateRange.get("startDate"), dateRange.get("endDate"));
         todoTaskList.addTask(inputEventTask);
         if (!isFromFile) {
             Message.printAddedTaskMessage(todoTaskList.getTotalTaskCount(), inputEventTask.printAddedTask());
         }
     }
+    /**
+     * Processes task that needs to be completed within a date period
+     *
+     * @param todoTask the task description with the date period
+     * @param todoTaskList the task list to sieve through the task.
+    */
+    public void processCompleteTaskWithinPeriod(String todoTask, TaskList todoTaskList){
+        todoTask = ExceptionHandling.removeSpaces(todoTask.replaceAll("(?i)complete tasks? between", ""));
+        Map<String, LocalDate> dateRange = parseStartAndEndDates(todoTask, "/to");
+        LocalDate startDate = dateRange.get("startDate");
+        LocalDate endDate = dateRange.get("endDate");
+        if (dateRange.isEmpty() || startDate == null || endDate == null || startDate.isAfter(endDate)) {
+            Message.printInvalidTimeMessage();
+            return;
+        }
+        TaskList tasksWithinPeriod = todoTaskList.getTasksWithinPeriod(startDate, endDate);
+
+        if (tasksWithinPeriod.getTotalTaskCount() == 0) {
+            Message.printNoTaskFoundWithinPeriodMessage();
+        }
+        else {
+            tasksWithinPeriod.printTaskList();
+        }
+    }
+    /**
+     * Processes task that contains the keyword
+     *
+     * @param todoTask the task description with event period range
+     */
+    public void processFindKeyword(String todoTask, TaskList todoTaskList){
+        todoTask = ExceptionHandling.removeSpaces(todoTask.replaceAll("(?i)find", ""));
+        if (todoTask.isEmpty()) {
+            Message.printNoTaskFoundWithKeywordMessage();
+            return;
+        }
+        TaskList tasksWithinPeriod = todoTaskList.getTasksWithMatchingKeyword(todoTask, todoTaskList);
+        if (tasksWithinPeriod.getTotalTaskCount() == 0) {
+            Message.printNoTaskFoundWithKeywordMessage();
+        }
+        else {
+            tasksWithinPeriod.printTaskList();
+        }
+    }
+
 }

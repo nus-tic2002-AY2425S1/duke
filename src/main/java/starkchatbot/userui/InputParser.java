@@ -22,7 +22,11 @@ public class InputParser {
      */
     public static void userInputParser(TaskList taskList, String query) {
         try {
+
+            assert query != null : "Input query should not be null.";
             String[] queryTokens = Tokenize.tokenize(query); // for checking the input are valid
+
+            assert queryTokens.length > 0 : "Tokenized query should have at least one token.";
 
             if (queryTokens[0].equalsIgnoreCase("list")) {
                 taskList.printAllTasks();

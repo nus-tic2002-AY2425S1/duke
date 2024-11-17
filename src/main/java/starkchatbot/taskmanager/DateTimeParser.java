@@ -17,6 +17,8 @@ public class DateTimeParser {
         readableDate = "";
         readableTime = "";
         try {
+            assert dateTime != null : "Input dateTime should not be null.";
+            assert !dateTime.isEmpty() : "Input dateTime should not be an empty string.";
             if (dateTime.length() == 15) {
                 LocalDateTime localDateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern("yyyy-M-dd HHmm"));
                 readableDate = localDateTime.format(DateTimeFormatter.ofPattern("MMMM dd yyyy"));
@@ -27,6 +29,8 @@ public class DateTimeParser {
                 LocalDate localDate = LocalDate.parse(dateTime, DateTimeFormatter.ofPattern("yyyy-M-dd"));
                 readableDate = localDate.format(DateTimeFormatter.ofPattern("MMMM dd yyyy"));
             }
+
+            assert !readableDate.isEmpty() : "Readable date should not be empty after parsing.";
             return readableDate + readableTime;
         } catch (DateTimeParseException e) {
             throw new StarkException.InvalidDescriptionException("Unable to parse Date/Time. Input a valid Date-Time" + System.lineSeparator()
@@ -40,10 +44,12 @@ public class DateTimeParser {
     }
 
     public static String getDate() {
+        assert readableDate != null : "Readable date should not be null when getDate() is called.";
         return readableDate;
     }
 
     public static String getTime() {
+        assert readableTime != null : "Readable time should not be null when getTime() is called.";
         return readableTime;
     }
 

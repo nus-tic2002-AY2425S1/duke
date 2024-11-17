@@ -27,7 +27,7 @@ public class CommandLineUI {
 
     private void welcomeMsg() {
         lineBreak();
-        System.out.println("Hello! I'm Stark Chatbot. \n" +
+        System.out.println("Hello! I'm Stark Chatbot.\n" +
                 "What can I do for you?");
         lineBreak();
     }

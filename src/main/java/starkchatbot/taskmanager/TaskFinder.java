@@ -13,7 +13,7 @@ public class TaskFinder {
 
     public void findTasks(String detail) {
         try {
-            System.out.println("Finding tasks for related \"" + detail + "\" : ");
+            System.out.println("Finding tasks for related \"" + detail + "\" :");
             int counter = 0;
             for (Task task : tasks) {
                 if (task.getDescription().contains(detail)) {

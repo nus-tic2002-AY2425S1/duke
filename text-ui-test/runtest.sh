@@ -10,6 +10,10 @@ if [ -e "./ACTUAL.TXT" ]; then
     rm ACTUAL.TXT
 fi
 
+if [ -e "./TaskLists.txt" ]; then
+    rm TaskLists.txt
+fi
+
 # compile the code into the bin folder, terminates if error occurred
 if ! javac -cp ../src/main/java -Xlint:none -d ../bin ../src/main/java/starkchatbot/**/*.java; then
     echo "********** BUILD FAILURE **********"
@@ -26,7 +30,7 @@ if command -v dos2unix >/dev/null 2>&1; then
 else
     echo "dos2unix not found, converting using tr"
     tr -d '\r' < ACTUAL.TXT > ACTUAL.TXT.tmp && mv ACTUAL.TXT.tmp ACTUAL.TXT
-    tr -d '\r' < EXPECTED-UNIX.TXT > EXPECTED-UNIX.TXT.tmp && mv EXPECTED-UNIX.TXT.tmp EXPECTED-UNIX.TXT
+    tr -d '\r' < EXPECTED.TXT > EXPECTED-UNIX.TXT.tmp && mv EXPECTED-UNIX.TXT.tmp EXPECTED-UNIX.TXT
 fi
 
 # compare the output to the expected output

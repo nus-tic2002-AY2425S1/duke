@@ -16,11 +16,11 @@ public abstract class Task {
     }
 
     /**
-     * Compares the task's deadline with a specified date using an operator.
+     * Compares the task's timeline with a specified date using an operator.
      *
      * @param op   the operator to use for comparison ("/before" or "/after").
-     * @param date the date to compare with the task's deadline in the "d/M/yyyy HHmm" format.
-     * @return true if the deadline meets the comparison condition, false otherwise.
+     * @param date the date to compare with the task's timeline property in the "d/M/yyyy HHmm" format.
+     * @return true if the task meets the comparison condition, false otherwise.
      */
     public abstract boolean compare(String op, String date);
 

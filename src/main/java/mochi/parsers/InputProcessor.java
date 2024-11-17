@@ -15,6 +15,7 @@ import mochi.commands.UnMarkTaskCommand;
 import mochi.common.DateTime;
 import mochi.common.DialogMessages;
 import mochi.common.Utils;
+import mochi.common.exception.ExceptionMessages;
 import mochi.common.exception.MochiException;
 import mochi.tasks.Deadline;
 import mochi.tasks.Event;
@@ -52,7 +53,11 @@ public class InputProcessor {
                         Ui.response(DialogMessages.INVALID_MULTI_PATTERN.getValue());
                     }
                 } else {
-                    cmd = new DeleteTaskCommand(taskList, token);
+                    try {
+                        cmd = new DeleteTaskCommand(taskList, token);
+                    } catch (NumberFormatException e) {
+                        Ui.response(ExceptionMessages.NUMBER_FORMAT_EXCEPTION);
+                    }
                 }
                 break;
             case MARK:
@@ -64,7 +69,11 @@ public class InputProcessor {
                         Ui.response(DialogMessages.INVALID_MULTI_PATTERN.getValue());
                     }
                 } else {
-                    cmd = new MarkTaskCommand(taskList, token);
+                    try {
+                        cmd = new MarkTaskCommand(taskList, token);
+                    } catch (NumberFormatException e) {
+                        Ui.response(ExceptionMessages.NUMBER_FORMAT_EXCEPTION);
+                    }
                 }
                 break;
             case UNMARK:
@@ -76,7 +85,11 @@ public class InputProcessor {
                         Ui.response(DialogMessages.INVALID_MULTI_PATTERN.getValue());
                     }
                 } else {
-                    cmd = new UnMarkTaskCommand(taskList, token);
+                    try {
+                        cmd = new UnMarkTaskCommand(taskList, token);
+                    } catch (NumberFormatException e) {
+                        Ui.response(ExceptionMessages.NUMBER_FORMAT_EXCEPTION);
+                    }
                 }
                 break;
             case BYE:

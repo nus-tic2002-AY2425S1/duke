@@ -4,6 +4,9 @@ import jibberJabber.tasks.Task;
 import jibberJabber.tasks.TaskFiles;
 import jibberJabber.tasks.TaskList;
 import jibberJabber.ui.Message;
+
+import static jibberJabber.ui.Message.printMissingCommandKeywordMessage;
+
 /**
  * The parser class handles parsing and processing of user commands for the task management system.
  */
@@ -29,6 +32,7 @@ public class Parser {
      * @return false if the command is "bye" (to exit the program), true to continue the program
      */
     public boolean hasProcessCommandSucceed(String todoTask) {
+        assert todoTask != null : "It looks like you forgot to specify keywords!";
         // Check for empty input string and bypass it
         if (ExceptionHandling.isEmptyInput(todoTask)) {
             Message.printEmptyMessage(false);
@@ -38,7 +42,7 @@ public class Parser {
         String splitWord = splitTodoTask[0];
         // Check to ensure the proper keyword is passed since we are checking against ENUM
         if (ExceptionHandling.isInvalidKeywordCommand(splitWord)) {
-            Message.printMissingCommandKeywordMessage();
+            printMissingCommandKeywordMessage();
             return true;
         }
         switch (Keywords.valueOf(splitWord.toUpperCase())) {
@@ -97,7 +101,7 @@ public class Parser {
                 }
                 return true;
             default:
-                Message.printMissingCommandKeywordMessage();
+                printMissingCommandKeywordMessage();
                 return true;
         }
     }

@@ -52,6 +52,7 @@ public class TaskList {
      * @return the task at the specified index.
      */
     public Task getTaskById(int id) {
+        assert id >= 0 && id < getTotalTaskCount() : "Index is out of bounds.";
         return todoTaskList.get(id);
     }
     /**

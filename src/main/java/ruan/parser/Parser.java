@@ -2,6 +2,7 @@ package ruan.parser;
 
 import ruan.command.*;
 import ruan.exception.*;
+import ruan.constant.Constants;
 
 /**
  * Represents parser that processes user input and returns the appropriate command
@@ -9,6 +10,8 @@ import ruan.exception.*;
  */
 
 public class Parser {
+
+    
 
     /**
      * Parses the user input and returns the appropriate command
@@ -20,21 +23,24 @@ public class Parser {
     public static Command parse(String input) throws RuanException {
         String trimmedInput = input.trim().toLowerCase();
 
-        if (trimmedInput.equals("bye")) {
+        if (trimmedInput.equals(Constants.BYE_COMMAND)) {
             return new ExitCommand();
-        } else if (trimmedInput.startsWith("todo")) {
-            return new AddCommand("todo", trimmedInput.replace("todo", "").trim());
-        } else if (trimmedInput.startsWith("deadline")) {
-            return new AddCommand("deadline", trimmedInput.replace("deadline", "").trim());
-        } else if (trimmedInput.startsWith("event")) {
-            return new AddCommand("event", trimmedInput.replace("event", "").trim());
-        } else if (trimmedInput.startsWith("delete")) {
+        } else if (trimmedInput.startsWith(Constants.TODO_COMMAND)) {
+            return new AddCommand(Constants.TODO_COMMAND, trimmedInput.replace(Constants.TODO_COMMAND, "").trim());
+        } else if (trimmedInput.startsWith(Constants.DEADLINE_COMMAND)) {
+            return new AddCommand(Constants.DEADLINE_COMMAND, trimmedInput.replace(Constants.DEADLINE_COMMAND, "").trim());
+        } else if (trimmedInput.startsWith(Constants.EVENT_COMMAND)) {
+            return new AddCommand(Constants.EVENT_COMMAND, trimmedInput.replace(Constants.EVENT_COMMAND, "").trim());
+        } else if (trimmedInput.startsWith(Constants.DELETE_COMMAND)) {
             return new DeleteCommand(Integer.parseInt(trimmedInput.split(" ")[1]) - 1);
-        } else if (trimmedInput.startsWith("mark")) {
+        } else if (trimmedInput.startsWith(Constants.MARK_COMMAND)) {
             return new SetDoneCommand(Integer.parseInt(trimmedInput.split(" ")[1]) - 1, true);
-        } else if (trimmedInput.startsWith("unmark")) {
+        } else if (trimmedInput.startsWith(Constants.UNMARK_COMMAND)) {
             return new SetDoneCommand(Integer.parseInt(trimmedInput.split(" ")[1]) - 1, false);
-        } else if (trimmedInput.equals("list")) {
+        } else if (trimmedInput.startsWith(Constants.FIND_COMMAND)) {
+            String keyword = trimmedInput.replaceFirst("(?i)"+Constants.FIND_COMMAND, "").trim();
+            return new FindCommand(keyword);
+        } else if (trimmedInput.equals(Constants.LIST_COMMAND)) {
             return new ListCommand();
         } else {
             throw new RuanException(ErrorType.UNKNOWN_DESCRIPTION);

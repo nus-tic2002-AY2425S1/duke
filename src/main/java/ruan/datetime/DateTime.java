@@ -57,7 +57,7 @@ public class DateTime {
      * If not valid, returns the original string
      * @return A string representing the date and time
      */
-    public String DateTimeToString() {
+    public String dateTimeToString() {
         if (dateTime != null) {
             return dateTime.format(OUTPUT_FORMATTER_DATETIME);
         } else if (date != null) {

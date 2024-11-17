@@ -26,13 +26,13 @@ public class Event extends Task {
 
     @Override
     public String toFileFormat() {
-        return "E | " + (isDone ? "1" : "0") + " | " + description + " /from " + from.DateTimeToString() + " /to " + to.DateTimeToString();
+        return "E | " + (isDone ? "1" : "0") + " | " + description + " /from " + from.dateTimeToString() + " /to " + to.dateTimeToString();
     }
 
     @Override
     public String toString() {
         //return formatted task string
-        return "[E]" + super.toString() + " (from: " + from.DateTimeToString() + " to: " + to.DateTimeToString() + ")";
+        return "[E]" + super.toString() + " (from: " + from.dateTimeToString() + " to: " + to.dateTimeToString() + ")";
     }
 
 }

@@ -1,8 +1,8 @@
 package ruan.command;
 
 import ruan.task.*;
-import ruan.ui.*;
-import ruan.storage.*;
+import ruan.ui.Ui;
+import ruan.storage.Storage;
 import ruan.exception.*;
 
 /**

@@ -1,9 +1,10 @@
 package ruan.command;
 
 import ruan.task.*;
-import ruan.ui.*;
-import ruan.storage.*;
+import ruan.ui.Ui;
+import ruan.storage.Storage;
 import ruan.exception.*;
+import ruan.constant.Constants;
 
 /**
  * Represents a command to add task
@@ -39,16 +40,16 @@ public class AddCommand extends Command {
         String[] descriptionData = {};
 
         switch (type) {
-            case "todo":
+            case Constants.TODO_COMMAND:
                 if (description.isBlank()) {
                     throw new RuanException(ErrorType.EMPTY_DESCRIPTION);
                 }
 
                 task = new Todo(description);
                 break;
-            case "deadline":
+            case Constants.DEADLINE_COMMAND:
                 //get different part of command from description
-                descriptionData = description.split(" /by ");
+                descriptionData = description.split(Constants.SPLIT_BY_COMMAND);
 
                 //if description does not have 2 parts, throw error
                 if(descriptionData.length != 2){
@@ -67,9 +68,9 @@ public class AddCommand extends Command {
                 
                 task = new Deadline(descriptionData[0].trim(), descriptionData[1].trim());
                 break;
-            case "event":
+            case Constants.EVENT_COMMAND:
                 //get different part of command from description
-                descriptionData = description.split(" /from | /to ");
+                descriptionData = description.split(Constants.SPLIT_FROM_TO_COMMAND);
 
                  //if description does not have 3 parts, throw error
                 if(descriptionData.length != 3){

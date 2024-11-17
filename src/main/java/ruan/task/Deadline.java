@@ -1,6 +1,7 @@
 package ruan.task;
 
 import ruan.datetime.DateTime;
+import ruan.constant.Constants;
 
 /**
  * Represents a task with a deadline
@@ -23,13 +24,13 @@ public class Deadline extends Task {
 
     @Override
     public String toFileFormat() {
-        return "D | " + (isDone ? "1" : "0") + " | " + description + " /by " + by.DateTimeToString();
+        return "D | " + (isDone ? "1" : "0") + " | " + description + Constants.SPLIT_BY_COMMAND + by.dateTimeToString();
     }
 
     @Override
     public String toString() {
         //return formatted task string
-        return "[D]" + super.toString() + " (by: " + by.DateTimeToString() + ")";
+        return "[D]" + super.toString() + " (by: " + by.dateTimeToString() + ")";
     }
 
 }

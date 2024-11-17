@@ -38,7 +38,6 @@ public class Ui {
      */
     public void printWelcome() {
         printLogo();
-        
         String[] message = {
             "  Hello, I'm Ruan",
             "  What can I do for you?"
@@ -78,16 +77,12 @@ public class Ui {
     public void printMessage(String[] message) {
         //to print the header line
         showLine();
-
         for(String line: message){
-            if(line == null){
-                //exit this loop when line is null
-                break;
+            if(line != null){
+                //print each line string in a new line
+                System.out.println("  "+line);
             }
-            //print each line string in a new line
-            System.out.println("  "+line);
         }
-
         //to print the footer line
         showLine();
     }   

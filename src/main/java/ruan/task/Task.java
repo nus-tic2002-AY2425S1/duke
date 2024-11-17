@@ -33,6 +33,15 @@ public abstract class Task {
         return (isDone ? "X" : " ");
     }
 
+    /**
+     * Gets the description of the task
+     * @return String representing the description of the task
+     */
+    public String getDescription() {
+        //return task description
+        return description;
+    }
+
      /**
      * Sets the status of the task
      * @param isDone True if the task is marked as done

@@ -15,7 +15,7 @@ public enum ErrorType {
     FAIL_TO_SAVE("Failed to save task."),
     FAIL_TO_LOAD_FILE("Failed to load file."),
     FAIL_TO_LOAD_TASK("Failed to load task."),
-    DUPLICATE_TASK("This task already exists in your list");
+    DUPLICATE_TASK("This task already exists in your list.");
 
     private final String message;
 

@@ -30,8 +30,12 @@ public class TaskList {
     /**
      * Adds a task to the TaskList
      * @param task The task to add to the list
+     * @throws RuanException If the task already exists in the TaskList
      */
-    public void addTask(Task task) {
+    public void addTask(Task task) throws RuanException {
+        if (isDuplicate(task)) {
+            throw new RuanException(ErrorType.DUPLICATE_TASK);
+        }
         tasks.add(task);
     }
 
@@ -44,7 +48,6 @@ public class TaskList {
         if (index < 0 || index >= tasks.size()) {
             throw new RuanException(ErrorType.INVALID_TASK_NUMBER);
         }
-
         tasks.remove(index);
     }
 
@@ -73,8 +76,12 @@ public class TaskList {
      * Gets the description of a task at a specified index
      * @param index Index of the task
      * @return String representation of the task
+     * * @throws RuanException If the index is invalid (i.e., out of bounds)
      */
-    public String getTaskDescription(int index) {
+    public String getTaskDescription(int index) throws RuanException {
+        if (index < 0 || index >= tasks.size()) {
+            throw new RuanException(ErrorType.INVALID_TASK_NUMBER);
+        }
         return tasks.get(index).toString();
     }
 
@@ -88,6 +95,7 @@ public class TaskList {
 
     /**
      * Check if there is a duplicate task in TaskList
+     * @param task Task to be check for duplicates
      * @return True if there is duplicated task
      */
     public boolean isDuplicate(Task task) {
@@ -97,6 +105,24 @@ public class TaskList {
             }
         }
         return false;
+    }
+
+
+
+    /**
+     * Finds tasks that contain the given keyword
+     *
+     * @param keyword Keyword to search for
+     * @return List of tasks that contain the keyword
+     */
+    public ArrayList<Task> findTasks(String keyword) {
+        ArrayList<Task> matchingTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getDescription().toLowerCase().contains(keyword.toLowerCase())) {
+                matchingTasks.add(task);
+            }
+        }
+        return matchingTasks;
     }
 
 }

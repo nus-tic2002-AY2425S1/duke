@@ -12,7 +12,7 @@ import ruan.parser.*;
  * Handles loading tasks, managing user interactions, and executing commands
  */
 
-public class Ruan {
+public class Ruan {    
 
     private Storage storage;
     private TaskList tasks;

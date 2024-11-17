@@ -6,17 +6,42 @@ import KLBot.TaskList.Event;
 import KLBot.TaskList.Task;
 import KLBot.TaskList.ToDo;
 
+/**
+ * The Parser class is responsible for interpreting the user input,
+ * identifying the type of task (ToDo, Deadline, Event), and creating
+ * the corresponding task object.
+ */
 public class Parser {
     private static String errorTask;
 
+    /**
+     * Checks if the user input is a command to exit the program.
+     *
+     * @param userInput The user input string.
+     * @return true if the input is "bye".
+     */
     public boolean isExit(String userInput) {
         return "bye".equalsIgnoreCase(userInput);
     }
 
+    /**
+     * Checks if the user input is a command to show the task list.
+     *
+     * @param userInput The user input string.
+     * @return true if the input is "list".
+     */
     public boolean isShowList(String userInput) {
         return "list".equalsIgnoreCase(userInput);
     }
 
+    /**
+     * Parses the user input to create a task (ToDo, Deadline, or Event) based on the command.
+     * It ensures that the description for each task type is valid.
+     *
+     * @param userInput The user input string containing the task command and description.
+     * @return A Task object (ToDo, Deadline, or Event) based on the user input, or null if the input is invalid.
+     * @throws KLBotException If there is an issue with the task description or format.
+     */
     public Task createTask(String userInput) throws KLBotException {
         try {
             if (!hasDescription(userInput)) {
@@ -39,6 +64,12 @@ public class Parser {
         return null;
     }
 
+    /**
+     * Validates if the user input has a description
+     *
+     * @param userInput The user input string containing the task command and description.
+     * @return true if the description exists.
+     */
     private static boolean hasDescription(String userInput) {
         if (userInput.toLowerCase().startsWith("todo")) {
             String[] todoDescription = userInput.split(" ");

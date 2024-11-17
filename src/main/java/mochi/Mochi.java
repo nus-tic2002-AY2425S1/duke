@@ -16,6 +16,9 @@ public class Mochi {
         TaskList taskList = new TaskList();
         InputProcessor inputProcessor = new InputProcessor(taskList);
         Scanner in = new Scanner(System.in);
+        run(in,inputProcessor);
+    }
+    public static void run(Scanner in,InputProcessor inputProcessor) {
         boolean shouldExit = false;
         while (!shouldExit) {
             String input = in.nextLine();

@@ -42,7 +42,8 @@ class MochiTest {
         String simulatedInput = "Event Buy milk /from 11/11/2024 0000 /to 11/11/2024 0800\nbye\n";
         String output = simulateInput(simulatedInput);
         generalCheck(output);
-        assertTrue(output.contains("[E][ ] Buy milk (from: Nov 11 2024, 12:00AM to: Nov 11 2024, 8:00AM)"), "Expected event output does not match actual output.");
+        assertTrue(output.contains("[E][ ] Buy milk (from: Nov 11 2024, 12:00AM to: Nov 11 2024, 8:00AM)"),
+          "Expected event output does not match actual output.");
         // Reset streams
         System.setIn(originalSystemIn);
         System.setOut(originalSystemOut);

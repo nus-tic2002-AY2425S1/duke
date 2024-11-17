@@ -1,8 +1,11 @@
 package mochi.commands;
 
 import mochi.common.DialogMessages;
+import mochi.common.Utils;
 import mochi.tasks.TaskList;
 import mochi.ui.Ui;
+
+import java.util.Objects;
 
 public class ListTaskCommand extends Command {
     private final String[] token;
@@ -25,13 +28,19 @@ public class ListTaskCommand extends Command {
                 taskList.printTaskList("T", "", "");
             }
         } else {
+            String tmpDate = "";
+            if (Objects.equals(token[2], "/before")) {
+                tmpDate = Utils.trimStringArrayWithStartEnd(token, "/before", "", " ");
+            }
+            if (Objects.equals(token[2], "/after")) {
+                tmpDate = Utils.trimStringArrayWithStartEnd(token, "/after", "", " ");
+            }
             String type = token[1];
             String op = token[2];
-            String date = token[3];
             if ("event".equals(type)) {
-                taskList.printTaskList("E", op, date);
+                taskList.printTaskList("E", op, tmpDate);
             } else if ("deadline".equals(type)) {
-                taskList.printTaskList("D", op, date);
+                taskList.printTaskList("D", op, tmpDate);
             } else {
                 Ui.response(DialogMessages.LIST_TASK_EMPTY.getValue());
             }

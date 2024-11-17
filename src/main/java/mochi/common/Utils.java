@@ -6,8 +6,8 @@ package mochi.common;
 public class Utils {
     /**
      * Trims and concatenates elements from a string array, starting from a specified element and ending
-     * before another specified element. Elements are concatenated with a given delimiter.
-     *
+     * before another specified element.
+     * Elements are concatenated with a given delimiter.
      * @param string    the array of strings to process.
      * @param start     the starting string from which to begin concatenation (inclusive).
      * @param end       the ending string where concatenation stops (exclusive).
@@ -15,6 +15,7 @@ public class Utils {
      * @return a trimmed string of concatenated elements from the array, or an empty string if
      * the start element is not found.
      */
+    // chatgpt
     public static String trimStringArrayWithStartEnd(String[] string, String start, String end, String delimiter) {
         StringBuilder body = new StringBuilder();
         boolean shouldCopy = false;

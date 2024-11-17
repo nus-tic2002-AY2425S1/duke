@@ -28,8 +28,8 @@ public class DateTimeParserTest {
 
     @Test
     public void parseInputDeadlineDateTime_validInput_returnsLocalDateTime() throws CommandException {
-        LocalDateTime expected = LocalDateTime.of(2023, 10, 1, 0, 0); // Default time is midnight
-        LocalDateTime actual = DateTimeParser.parseInputDeadlineDateTime("2023-10-01");
+        LocalDateTime expected = LocalDateTime.of(2023, 10, 30, 0, 0); // Default time is midnight
+        LocalDateTime actual = DateTimeParser.parseInputDeadlineDateTime("2023-10-30");
         assertEquals(expected, actual);
     }
 

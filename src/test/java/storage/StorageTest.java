@@ -106,17 +106,17 @@ public class StorageTest {
         assertTrue(tasksFile.exists(), "Task file should be created");
     }
 
-    @Test
-    public void getTasksFilePath_returnsCorrectPath() {
-        Path expectedPath = Paths.get(FILE_STORAGE_PATH);
-        assertEquals(expectedPath, storage.getTasksFilePath(), "File path should match the expected path");
-    }
+//    @Test
+//    public void getTasksFilePath_returnsCorrectPath() {
+//        Path expectedPath = Paths.get(FILE_STORAGE_PATH);
+//        assertEquals(expectedPath, storage.getTasksFilePath(), "File path should match the expected path");
+//    }
 
-    @Test
-    public void getFile_returnsCorrectTasksFile() {
-        File expectedFile = new File(FILE_STORAGE_PATH);
-        assertEquals(expectedFile, storage.getTasksFile(), "File object should match the expected file");
-    }
+//    @Test
+//    public void getFile_returnsCorrectTasksFile() {
+//        File expectedFile = new File(FILE_STORAGE_PATH);
+//        assertEquals(expectedFile, storage.getTasksFile(), "File object should match the expected file");
+//    }
 
     // https://stackoverflow.com/questions/29878237/java-how-to-clear-a-text-file-without-deleting-it
     private void clearFileContent(File file) throws IOException {

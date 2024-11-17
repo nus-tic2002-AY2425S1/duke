@@ -49,17 +49,24 @@ public class MarkCommandTest {
     public void execute_emptyTaskList_throwsCommandException() {
         markCommand = new MarkCommand(0);
         assertEquals(0, taskList.getSize());
-        CommandException exception = assertThrows(CommandException.class, () -> markCommand.execute(taskList, ui, storage), "CommandException expected");
+        CommandException exception = assertThrows(CommandException.class, () ->
+            markCommand.execute(taskList, ui, storage), "CommandException expected");
         assertEquals(Messages.MESSAGE_EMPTY_TASKLIST, exception.getMessage());
     }
 
     @Test
     public void execute_invalidTaskNumber_throwsCommandException() {
-        taskList = initTypicalTasks();
-        markCommand = new MarkCommand(99999);
+        taskList = initTypicalTasks(); // Ensure this initializes the task list properly
+        markCommand = new MarkCommand(99999); // This should be an invalid task number
 
-        // Referenced from https://howtodoinjava.com/junit5/expected-exception-example/
-        CommandException exception = assertThrows(CommandException.class, () -> markCommand.execute(taskList, ui, storage), "CommandException expected");
+        // Debugging: Print the size of the task list to verify it's initialized
+        System.out.println("Task list size: " + taskList.getSize());
+
+        CommandException exception = assertThrows(CommandException.class, () -> {
+            markCommand.execute(taskList, ui, storage);
+        }, "CommandException expected");
+
+        // Verify the exception message
         assertEquals(Messages.ERROR_TASK_NONEXISTENT, exception.getMessage());
     }
 

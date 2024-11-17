@@ -1,5 +1,6 @@
 package parser;
 
+import common.Constants;
 import org.junit.jupiter.api.Test;
 
 import commands.Command;
@@ -67,7 +68,7 @@ public class ParserTest {
     @Test
     public void parse_invalidCommand_throwsCommandException() {
         CommandException exception = assertThrows(CommandException.class, () -> Parser.parse("invalidCommand"));
-        assertEquals(Messages.ERROR_INVALID_COMMAND, exception.getMessage());
+        assertEquals(Messages.ERROR_INVALID_COMMAND + Constants.BACKTICK + "invalidCommand" + Constants.BACKTICK, exception.getMessage());
     }
 
     @Test

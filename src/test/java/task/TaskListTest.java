@@ -52,23 +52,23 @@ public class TaskListTest {
         assertEquals(0, emptyTaskList.getSize(), "Empty task list should contain 0 tasks.");
     }
 
-    public void addTask_success(Task task) {
-        assertNotNull(task);
-        int numberOfTasksBeforeAddition = defaultTaskList.getSize();
-        defaultTaskList.addTask(task);
-        int numberOfTasksAfterAddition = defaultTaskList.getSize();
-        assertEquals(numberOfTasksBeforeAddition, numberOfTasksAfterAddition - 1, 
-            "Task list should contain one more task after adding a new task");
-    }
-
     @Test
     public void addTask_nullTask_noChangeInSize() {
         Task task = null;
         int numberOfTasksBeforeAddition = defaultTaskList.getSize();
         defaultTaskList.addTask(task);
         int numberOfTasksAfterAddition = defaultTaskList.getSize();
-        assertEquals(numberOfTasksBeforeAddition, numberOfTasksAfterAddition, 
+        assertEquals(numberOfTasksBeforeAddition, numberOfTasksAfterAddition,
             "Size should not change after adding a null task");
+    }
+
+    public void addTask_success(Task task) {
+        assertNotNull(task);
+        int numberOfTasksBeforeAddition = defaultTaskList.getSize();
+        defaultTaskList.addTask(task);
+        int numberOfTasksAfterAddition = defaultTaskList.getSize();
+        assertEquals(numberOfTasksBeforeAddition, numberOfTasksAfterAddition - 1,
+            "Task list should contain one more task after adding a new task");
     }
 
     @Test

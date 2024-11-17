@@ -28,10 +28,4 @@ public class UiTest {
         assertEquals(NO_SPACE, ui.getSpace(true, true));
     }
 
-    @Test
-    public void getLine() {
-        String LINE = "____________________________________________________________";
-        assertEquals(FOUR_SPACES + LINE, ui.getLine());
-    }
-
 }

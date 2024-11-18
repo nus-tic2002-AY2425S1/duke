@@ -57,7 +57,7 @@ public class ShowCommand extends Command {
 
         // Retrieve all tasks scheduled on the specified date
         // Sort the tasks by their LocalDateTime
-        // https://stackoverflow.com/questions/2784514/sort-arraylist-of-custom-objects-by-property
+        // Solution below referenced from https://stackoverflow.com/questions/2784514/sort-arraylist-of-custom-objects-by-property
         TaskList scheduledTasks = taskList.getScheduledTasks(date);
 
         final String MESSAGE_EMPTY_LIST = "You have no" + SPACE + DEADLINES_EVENTS_ON + SPACE + date + Constants.DOT;

@@ -288,7 +288,7 @@ public class Parser {
         assert keyword != null : "Keyword should not be null";
         assert commandWord != null : "Command word should not be null";
 
-        // https://stackoverflow.com/questions/275944/how-do-i-count-the-number-of-occurrences-of-a-char-in-a-string
+        // Solution below referenced from https://stackoverflow.com/questions/275944/how-do-i-count-the-number-of-occurrences-of-a-char-in-a-string
         int keywordCount = (args.length() - args.replace(keyword, Constants.EMPTY_STRING).length()) / keyword.length();
 
         if (keywordCount == 0) {

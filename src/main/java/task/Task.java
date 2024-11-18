@@ -37,7 +37,6 @@ public abstract class Task {
     }
 
     public Task(String description) {
-//        assert description != null && !description.isEmpty() : "Description should not be null or empty";
         this.description = description;
         this.isDone = false;
     }
@@ -136,6 +135,14 @@ public abstract class Task {
      */
     public abstract boolean isOnDate(LocalDate date);
 
+    /**
+     * Retrieves the date and time associated with the task, depending on the task type.
+     * If the task is a {@link Deadline}, the method returns the due date and time.
+     * If the task is an {@link Event}, the method returns the start date and time.
+     * If the task is neither a {@link Deadline} nor an {@link Event}, it returns null.
+     *
+     * @return The date and time associated with the task, or null if the task type does not have a date/time.
+     */
     public LocalDateTime getTaskDateTime() {
         Task task = this;
         if (task instanceof Deadline) {
@@ -146,6 +153,13 @@ public abstract class Task {
         return null;
     }
 
+    /**
+     * Asserts that the encoded task string is not null and not empty.
+     * This is a helper method to check that the task string is valid before further processing.
+     *
+     * @param encodedTask The encoded task string to validate.
+     * @throws AssertionError If the encoded task is null or empty.
+     */
     public void assertValidEncodedTask(String encodedTask) {
         assert encodedTask != null && !encodedTask.isEmpty() : "Encoded task should not be null or empty";
     }

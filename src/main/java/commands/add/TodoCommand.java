@@ -33,8 +33,6 @@ public class TodoCommand extends AddTaskCommand {
      */
     @Override
     protected Task createTask() {
-        // Assertion to ensure the description is valid at the time of task creation
-//        assert getDescription() != null && !getDescription().trim().isEmpty() : "Todo description must not be null or empty";
         return new Todo(getDescription());
     }
 }

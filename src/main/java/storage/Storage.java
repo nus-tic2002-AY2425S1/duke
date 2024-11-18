@@ -31,6 +31,7 @@ public class Storage {
 
     private static final String ARCHIVE_STORAGE_FILEPATH =
         System.getProperty("user.dir") + File.separator + Paths.get("duke", "duke", "src", "main", "java", "data", "archive.txt");
+
     private final Path tasksFilePath;
     private final Path archiveTasksFilePath;
 
@@ -46,6 +47,13 @@ public class Storage {
         checkDataFolderExists();
         checkTaskFileExists();
         checkArchiveFileExists();
+    }
+
+    public Storage(String tasksFilePath, String archiveFilePath) throws StorageOperationException {
+        this.tasksFilePath = Paths.get(tasksFilePath);
+        this.archiveTasksFilePath = Paths.get(archiveFilePath);
+        checkDataFolderExists();
+        checkTaskFileExists();;
     }
 
     /**
@@ -112,7 +120,6 @@ public class Storage {
             if (!isDataFolderCreated) {
                 // Error: Failed to create the data directory at ./data
                 //     Please check your folder path and permissions.
-//                assert isDataFolderCreated : "Failed to create the data directory at " + dataFolderPath;
                 throw throwStorageOperationException(Messages.ERROR_CREATE_FOLDER_PRE, dataFolderPathString,
                     Messages.ERROR_CREATE_FOLDER_POST);
             }
@@ -212,16 +219,14 @@ public class Storage {
         String filePathString = filePath.toString();
         String fileName = new File(filePathString).getName();
         String errorMessagePost = Messages.MESSAGE_INSUFFICIENT_PERMISSIONS_PRE + "write to " + fileName;
-
         throw throwStorageOperationException(Messages.ERROR_WRITE_FILE, filePathString, errorMessagePost);
-
     }
 
     public void appendEncodedTaskToFile(Task task, Path filePath) throws StorageOperationException {
         try {
             String encodedTask = TaskListEncoder.encodeTaskToString(task);
-            // https://stackoverflow.com/questions/1625234/how-to-append-text-to-an-existing-file-in-java
             encodedTask += System.lineSeparator();
+            // Solution below referenced from https://stackoverflow.com/questions/1625234/how-to-append-text-to-an-existing-file-in-java
             Files.write(filePath, encodedTask.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException ioe) {
             handleWriteToFileIOException(filePath);

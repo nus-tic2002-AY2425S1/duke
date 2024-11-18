@@ -82,7 +82,7 @@ public class Deadline extends Task {
      * @return true if the task is due on the specified date, false otherwise.
      */
     @Override
-    // https://www.geeksforgeeks.org/compare-dates-in-java/
+    // Solution below referenced from https://www.geeksforgeeks.org/compare-dates-in-java/
     public boolean isOnDate(LocalDate date) {
         LocalDate dueDate = getDue().toLocalDate();
         return dueDate != null && dueDate.isEqual(date);

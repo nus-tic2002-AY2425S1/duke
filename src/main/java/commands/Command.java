@@ -43,6 +43,5 @@ public abstract class Command {
         assert taskList != null : "Task list must not be null";
         assert ui != null : "Ui must not be null";
         assert storage != null : "Storage must not be null";
-
     }
 }

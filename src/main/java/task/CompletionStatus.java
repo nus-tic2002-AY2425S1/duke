@@ -1,7 +1,5 @@
 package task;
 
-import common.Constants;
-
 public enum CompletionStatus {
 
     DONE("1"),

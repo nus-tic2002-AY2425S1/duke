@@ -1,4 +1,4 @@
-// https://stackoverflow.com/questions/8423700/how-to-create-a-custom-exception-type-in-java
+// Solution below referenced from https://stackoverflow.com/questions/8423700/how-to-create-a-custom-exception-type-in-java
 
 package exception;
 

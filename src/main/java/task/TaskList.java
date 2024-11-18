@@ -1,14 +1,13 @@
 package task;
+
 import java.time.LocalDateTime;
-import java.util.Comparator;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.ArrayList;
 
 import common.Constants;
 import common.Messages;
 import exception.CommandException;
-
-import java.util.ArrayList;
-import java.time.LocalDate;
 
 /**
  * Represents a list of tasks.
@@ -59,6 +58,12 @@ public class TaskList {
         return getTaskList().isEmpty();
     }
 
+    /**
+     * Checks if the {@code TaskList} has the specified task.
+     *
+     * @param task
+     * @return true if the task list contains the specified task
+     */
     public boolean hasTask(Task task) {
         assert task != null : "Task cannot be null";
         return getTaskList().contains(task);
@@ -71,7 +76,6 @@ public class TaskList {
      * @return the task at the specified index.
      */
     public Task getTask(int index) {
-//        assert index >= 0 && index < getSize() : "Task index is out of bounds";
         return getTaskList().get(index);
     }
 
@@ -80,7 +84,6 @@ public class TaskList {
      * 
      * @param task represents the task to be added. If it is null, the task will not be added.
      */
-    // Adds a new task
     public void addTask(Task task) {
         if (task != null) {
             getTaskList().add(task);
@@ -136,7 +139,14 @@ public class TaskList {
         }
     }
 
-    // Common helper function for execute method of MarkCommand, UnmarkCommand, and DeleteCommand
+    /**
+     * Retrieves a task from the task list based on the provided task number for an operation.
+     * Common helper function for execute method of MarkCommand, UnmarkCommand, and DeleteCommand
+     *
+     * @param taskNumber represents the task number to retrieve, 1-based index (i.e., index 1 for the first task).
+     * @return the task corresponding to the given task number.
+     * @throws CommandException if the task list is empty or if the task number is invalid (out of bounds).
+     */
     public Task getTaskForOperation(int taskNumber) throws CommandException {
         if (isEmpty()) {
             throw new CommandException(Messages.MESSAGE_EMPTY_TASKLIST);
@@ -163,6 +173,7 @@ public class TaskList {
      * 
      * @return "task" if there is only one task in the {@code TaskList}; "tasks" if there are multiple.
      */
+    // Solution below inspired by https://stackoverflow.com/questions/69576641/why-would-you-use-a-stringbuilder-method-over-a-string-in-java
     public String getTaskWord() {
         StringBuilder taskWordStringBuilder = new StringBuilder(SPACE + Constants.TASK);
 
@@ -173,6 +184,13 @@ public class TaskList {
         return taskWordStringBuilder.toString();
     }
 
+    /**
+     * Retrieves a list of tasks that are scheduled on a specified date, sorted by their LocalDateTime.
+     * Tasks without a specific time (i.e., tasks with null date/time) are placed after those with a defined time.
+     *
+     * @param date The date to filter tasks by. Only tasks that are scheduled on this date will be included.
+     * @return A {@link TaskList} containing tasks scheduled on the specified date, sorted by their LocalDateTime.
+     */
     public TaskList getScheduledTasks(LocalDate date) {
         // Retrieve all tasks scheduled on the specified date
         List<Task> tasksOnDate = new ArrayList<>();

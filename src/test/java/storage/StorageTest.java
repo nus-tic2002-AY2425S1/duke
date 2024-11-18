@@ -22,26 +22,38 @@ import exception.StorageOperationException;
 import exception.TaskListDecoderException;
 import task.TaskList;
 import util.TypicalTasks;
+import ui.Ui;
 
 public class StorageTest {
-    
-    private final String FILE_STORAGE_PATH = "data/tasks.txt";
-    
+
+    private final String TASKS_FILE_STORAGE_PATH =
+        System.getProperty("user.dir") + File.separator + Paths.get("src", "test", "java", "data", "tasks.txt");
+    private final String ARCHIVE_FILE_STORAGE_PATH =
+        System.getProperty("user.dir") + File.separator + Paths.get("src", "test", "java", "data", "archive.txt");
+
     private Storage storage;
+    private TaskList taskList;
+    private Ui ui;
+    private TypicalTasks typicalTasks;
+
+    public StorageTest() throws StorageOperationException {
+        storage = new Storage(TASKS_FILE_STORAGE_PATH, ARCHIVE_FILE_STORAGE_PATH);
+        taskList = new TaskList();
+        ui = new Ui();
+        typicalTasks = new TypicalTasks();
+    }
 
     @BeforeEach
     public void setUp() throws StorageOperationException {
-        // Set the system property for testing
-        System.setProperty("storage.file", FILE_STORAGE_PATH);
-        storage = new Storage();
+        storage = new Storage(TASKS_FILE_STORAGE_PATH, ARCHIVE_FILE_STORAGE_PATH);
     }
 
-    // https://howtodoinjava.com/junit5/after-each-annotation-example/
-    // https://stackoverflow.com/questions/27599965/java-better-way-to-delete-file-if-exists
+    // Solution below inspired by https://howtodoinjava.com/junit5/after-each-annotation-example/
+    // Solution below referenced from https://stackoverflow.com/questions/27599965/java-better-way-to-delete-file-if-exists
     @AfterEach
     public void cleanUp() throws IOException {
         // Clean up the test files and directories
-        File dataFolder = Paths.get(FILE_STORAGE_PATH).getParent().toFile();
+        File dataFolder = Paths.get(TASKS_FILE_STORAGE_PATH).getParent().toFile();
         deleteDir(dataFolder);
     }
 
@@ -68,7 +80,7 @@ public class StorageTest {
 
     @Test
     public void constructor_checkDataFolderExists_dataFolderExists() {
-        // https://www.geeksforgeeks.org/get-the-files-parent-directory-in-java/
+        // Solution below referenced from https://www.geeksforgeeks.org/get-the-files-parent-directory-in-java/
         File dataFolder = storage.getTasksFile().getParentFile();
         assertTrue(dataFolder.exists(), "Data folder should exist after the storage has been initialized");
     }
@@ -105,19 +117,7 @@ public class StorageTest {
         assertTrue(tasksFile.exists(), "Task file should be created");
     }
 
-//    @Test
-//    public void getTasksFilePath_returnsCorrectPath() {
-//        Path expectedPath = Paths.get(FILE_STORAGE_PATH);
-//        assertEquals(expectedPath, storage.getTasksFilePath(), "File path should match the expected path");
-//    }
-
-//    @Test
-//    public void getFile_returnsCorrectTasksFile() {
-//        File expectedFile = new File(FILE_STORAGE_PATH);
-//        assertEquals(expectedFile, storage.getTasksFile(), "File object should match the expected file");
-//    }
-
-    // https://stackoverflow.com/questions/29878237/java-how-to-clear-a-text-file-without-deleting-it
+    // Solution below adapted from https://stackoverflow.com/questions/29878237/java-how-to-clear-a-text-file-without-deleting-it
     private void clearFileContent(File file) throws IOException {
         try (FileWriter fw = new FileWriter(file, false)) {
             // The FileWriter with 'false' in the second argument will clear the file contents

@@ -102,6 +102,14 @@ public class DateTimeParser {
         }
     }
 
+    /**
+     * Checks if a date is valid
+     *
+     * @param year represents the value of the year, in int
+     * @param month represents the value of the month, in int
+     * @param day represents the value of the day, in int
+     * @return true if the date is valid, false otherwise
+     */
     private static boolean isValidDate(int year, int month, int day) {
         // Check if the month is valid
         if (month < 1 || month > 12) {

@@ -53,13 +53,20 @@ public class TaskListDecoder {
         assert encodedTaskList != null : "Encoded task list should not be null";
         TaskList decodedTasks = new TaskList();
         for (String encodedTask : encodedTaskList) {
-//            assert !encodedTask.isEmpty() : "Encoded task should not be empty";
             Task decodedTask = decodeTaskFromString(encodedTask);
             decodedTasks.addTask(decodedTask);
         }
         return decodedTasks;
     }
 
+    /**
+     * Validates the encoded task string.
+     * Ensures that the encoded task is not null or empty.
+     * If the task is empty, a {@link FileContentException} is thrown with an appropriate error message.
+     *
+     * @param encodedTask The encoded task string to validate.
+     * @throws FileContentException If the task string is empty.
+     */
     private static void validateEncodedTask(String encodedTask) throws FileContentException {
         assert encodedTask != null : "Encoded task should not be null";
         if (encodedTask.isEmpty()) {
@@ -72,10 +79,17 @@ public class TaskListDecoder {
         }
     }
 
+    /**
+     * Splits an encoded task string into its components based on the delimiter " | ".
+     * Throws a {@link FileContentException} if the task does not have the required components.
+     *
+     * @param encodedTask The encoded task string to split.
+     * @return An array of strings containing the task components.
+     * @throws FileContentException If the task string does not contain enough components.
+     */
     private static String[] splitEncodedTask(String encodedTask) throws FileContentException {
         assert encodedTask != null : "Encoded task should not be null";
         String[] taskData = encodedTask.split(" \\| ");
-//        assert taskData.length >= 3 : "Task data should have at least 3 components";
         if (taskData.length < 3) {
             throw new FileContentException(
                 String.format("%s. %s.", Messages.MESSAGE_TASK_MISSING_COMPONENTS,
@@ -89,6 +103,14 @@ public class TaskListDecoder {
         return taskData;
     }
 
+    /**
+     * Retrieves the {@link TaskType} for the given task type string.
+     * If the string does not match a valid task type, a {@link FileContentException} is thrown.
+     *
+     * @param taskTypeString The task type as a string (e.g., "TODO", "DEADLINE").
+     * @return The corresponding {@link TaskType}.
+     * @throws FileContentException If the task type string is invalid.
+     */
     private static TaskType getTaskType(String taskTypeString) throws FileContentException {
         assert taskTypeString != null : "Task type string should not be null";
         final String ERROR_GET_TASKTYPE = "Error: Unknown task type.";
@@ -98,7 +120,6 @@ public class TaskListDecoder {
         try {
             taskType = TaskType.getTaskType(taskTypeString);
         } catch (IllegalArgumentException e) {
-            // throw new FileContentException("Unknown task type: " + taskData[0].trim());
             throw new FileContentException(ERROR_GET_TASKTYPE,
                 String.format("Received `%s`", taskTypeString.trim()),
                 String.format("Expected `%s`", VALID_TASK_TYPE)
@@ -108,6 +129,14 @@ public class TaskListDecoder {
         return taskType;
     }
 
+    /**
+     * Converts the completion status string into a boolean value representing whether the task is done.
+     * Throws a {@link FileContentException} if the string does not correspond to a valid completion status.
+     *
+     * @param isDoneString The completion status as a string (e.g., "DONE", "NOT_DONE").
+     * @return True if the task is marked as done, false otherwise.
+     * @throws FileContentException If the completion status string is invalid.
+     */
     private static boolean getIsDone(String isDoneString) throws FileContentException {
         assert isDoneString != null : "Completion status string should not be null";
         CompletionStatus isDone;
@@ -122,6 +151,16 @@ public class TaskListDecoder {
         return isDone == CompletionStatus.DONE;
     }
 
+    /**
+     * Validates that the task data array has the correct length based on the task type.
+     * Throws a {@link TaskListDecoderException} if the length of the task data does not match the expected length
+     * for the specified task type.
+     *
+     * @param taskDataLength The length of the task data array.
+     * @param taskType The type of the task (e.g., TODO, DEADLINE).
+     * @param taskData The array of task data components.
+     * @throws TaskListDecoderException If the task data length is incorrect for the given task type.
+     */
     private static void validateTaskDataLength(int taskDataLength, TaskType taskType,
         String[] taskData) throws TaskListDecoderException {
 
@@ -140,8 +179,6 @@ public class TaskListDecoder {
             expectedTaskDataLength = Constants.FOUR;
             expectedFormat = EXPECTED_FORMAT_FD;
         }
-
-//        assert expectedTaskDataLength == Constants.FOUR || expectedTaskDataLength == Constants.FIVE : "Expected task data length should be 4 or 5";
 
         if (taskDataLength < expectedTaskDataLength) {
             throw new TaskListDecoderException(Messages.ERROR_INVALID_TASK_FORMAT + taskType,
@@ -197,7 +234,6 @@ public class TaskListDecoder {
             case FIXED_DURATION:
                  String[] durationString = taskData[3].split(Constants.EMPTY_STRING);
                  double duration = Double.parseDouble(durationString[0].trim());
-                // double duration = Double.parseDouble(taskData[3]);
                 task = new FixedDuration(description, isDone, duration);
                 break;
 

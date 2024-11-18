@@ -48,8 +48,8 @@ public class MainWindow extends AnchorPane {
     }
 
     public void delayAndExit() {
-        // https://stackoverflow.com/questions/27334455/how-to-close-a-stage-after-a-certain-amount-of-time-javafx
-        // Create a PauseTransition to wait for 5 seconds: https://stackoverflow.com/questions/30543619/how-to-use-pausetransition-method-in-javafx
+        // Solution below referenced from https://stackoverflow.com/questions/27334455/how-to-close-a-stage-after-a-certain-amount-of-time-javafx
+        // Solution below referenced from https://stackoverflow.com/questions/30543619/how-to-use-pausetransition-method-in-javafx
         PauseTransition delay = new PauseTransition(Duration.seconds(Constants.FIVE));
         delay.setOnFinished(event -> {
             // Close the application after the pause

@@ -16,15 +16,15 @@ public class Parser {
 
         // Check for normal task command
         if (command.startsWith("add ")) {
-            String taskDescription = command.substring(4).trim(); // Extract the task description
-            return new Task(taskDescription); // Create a new normal task
+            String taskDescription = command.substring(4).trim();
+            return new Task(taskDescription);
         }
 
         // Check for deadline command
         if (command.startsWith("deadline ")) {
             String[] parts = command.split(" /by ", 2);
-            String description = parts[0].substring(9).trim(); // Extract description
-            String dateTime = parts[1].trim(); // Extract date string
+            String description = parts[0].substring(9).trim();
+            String dateTime = parts[1].trim();
 
             // Parse the date and time
             LocalDateTime dateTimeParsed = parseDateTime(dateTime);
@@ -35,16 +35,17 @@ public class Parser {
         // Check for event command
         if (command.startsWith("event ")) {
             String[] parts = command.split(" /from ", 2);
-            String description = parts[0].substring(6).trim(); // Extract description
+            String description = parts[0].substring(6).trim();
             String[] dateParts = parts[1].split(" /to ", 2);
-            String fromDate = dateParts[0].trim(); // Extract start date string
-            String toDate = dateParts[1].trim(); // Extract end date string
+            String fromDate = dateParts[0].trim();
+            String toDate = dateParts[1].trim();
 
             // Parse the start and end dates
             LocalDateTime fromDateParsed = parseDateTime(fromDate);
             LocalDateTime toDateParsed = parseDateTime(toDate);
 
-            return new Event(description, fromDateParsed, toDateParsed); // Create a new Event task
+            // Create a new Event task
+            return new Event(description, fromDateParsed, toDateParsed);
         }
         // Handle other commands
         throw new Exception("Invalid command.");

@@ -36,7 +36,7 @@ public class SaveAndLoadTask {
 
         // If there is no file or file does not exist. return empty list
         if (!file.exists()) {
-            System.out.println("No task file found, starting with empty task list. ");
+            System.out.println("No task file found. ");
             return taskList;
         }
 
@@ -49,7 +49,7 @@ public class SaveAndLoadTask {
 
                 // Ensure we have enough details
                 if (taskDetail.length < 3) {
-                    System.out.println("Skipping line due to insufficient details: " + line);
+                    System.out.println("Skip due to lack of details for task: " + line);
                     continue; // Skip this line
                 }
 
@@ -64,7 +64,7 @@ public class SaveAndLoadTask {
                         break;
                     case "D":
                         if (taskDetail.length < 4) {
-                            System.out.println("Skipping line due to insufficient details for Deadline: " + line);
+                            System.out.println("kip due to lack of details for Event task Deadline: " + line);
                             continue;
                         }
                         // Parse LocalDateTime for Deadline
@@ -74,7 +74,7 @@ public class SaveAndLoadTask {
                         break;
                     case "E":
                         if (taskDetail.length < 5) {
-                            System.out.println("Skipping line due to insufficient details for Event: " + line);
+                            System.out.println("Skip due to lack of details for Event task: " + line);
                             continue;
                         }
                         // Parse LocalDateTime for Event (start and end time)

@@ -1,10 +1,6 @@
-T | 1 | Read a book
-D | 0 | Submit assignment | 22/10/2024 2359
-E | 0 | Team meeting | 23/10/2024 1000 | 23/10/2024 1100
 D | 0 | Submit paper | 22/10/2024 2359
-E | 1 | Play game | 23/10/2024 1000 | 23/10/2024 1100
-T | 0 | read book
-D | 1 | return book | 31/10/2024 1500
-D | 0 | submit assignment | 22/10/2024 2359
-D | 0 | play | 31/10/2024 1500
-E | 0 | attend meeting | 31/10/2024 1300 | 31/10/2024 1500
+T | 1 | borrow book
+D | 0 | return book | 30/11/2024 1500
+N | 1 | play game
+E | 0 | final exam | 01/12/2024 0900 | 01/12/2024 1100
+D | 0 | submit report | 17/11/2024 2359

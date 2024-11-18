@@ -103,6 +103,7 @@ public class May {
                     }
                     LocalDateTime fromTime = Parser.parseDateTime(eventTime[1].trim());
                     LocalDateTime toTime = Parser.parseDateTime(eventTime[2].trim());
+
                     taskManager.addOrUpdateTask(new Event(eventTime[0].trim(), fromTime, toTime));
                 }
 

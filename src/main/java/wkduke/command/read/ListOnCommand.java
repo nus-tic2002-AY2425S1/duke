@@ -5,10 +5,12 @@ import wkduke.parser.TimeParser;
 import wkduke.storage.Storage;
 import wkduke.task.Task;
 import wkduke.task.TaskList;
+import wkduke.task.TimeAware;
 import wkduke.ui.Ui;
 import wkduke.ui.UiTaskGroup;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static wkduke.common.Messages.MESSAGE_TASK_LIST_TIPS;
@@ -48,6 +50,22 @@ public class ListOnCommand extends Command {
     }
 
     /**
+     * Finds all tasks in the task list that occur on the specified date.
+     *
+     * @param taskList The task list to search.
+     * @return A list of tasks occurring on the specified date.
+     */
+    private List<Task> findOnDateTasks(TaskList taskList) {
+        List<Task> matchingTasks = new ArrayList<>();
+        for (Task task : taskList.getTasks()) {
+            if (task instanceof TimeAware timeAwareTask && timeAwareTask.isOccursOnDate(on)) {
+                matchingTasks.add(task);
+            }
+        }
+        return matchingTasks;
+    }
+
+    /**
      * Checks if this ListOnCommand is equal to another object.
      * A ListOnCommand is considered equal if it is of the same type and has the same date for listing tasks.
      *
@@ -74,17 +92,15 @@ public class ListOnCommand extends Command {
     public void execute(TaskList taskList, Ui ui, Storage storage) {
         assert taskList != null : "Precondition failed: 'taskList' cannot be null";
         assert ui != null : "Precondition failed: 'ui' cannot be null";
-        List<Task> tasks = taskList.getAllTaskOnDate(on);
-        if (tasks.isEmpty()) {
-            ui.printMessages(
-                    String.format(MESSAGE_FAILED, on.format(TimeParser.CLI_DATE_FORMATTER))
-            );
+
+        List<Task> matchingTasks = findOnDateTasks(taskList);
+        if (matchingTasks.isEmpty()) {
+            ui.printMessages(String.format(MESSAGE_FAILED, on.format(TimeParser.CLI_DATE_FORMATTER)));
             return;
         }
-        assert !tasks.isEmpty() : "Postcondition failed: 'tasks' cannot be empty";
-        ui.printUiTaskGroup(taskList, new UiTaskGroup(
-                        String.format(MESSAGE_SUCCESS, on.format(TimeParser.CLI_DATE_FORMATTER)), MESSAGE_TASK_LIST_TIPS, tasks
-                )
+        assert !matchingTasks.isEmpty() : "Postcondition failed: 'tasks' cannot be empty";
+        ui.printUiTaskGroup(taskList, new UiTaskGroup(String.format(MESSAGE_SUCCESS,
+                on.format(TimeParser.CLI_DATE_FORMATTER)), MESSAGE_TASK_LIST_TIPS, matchingTasks)
         );
     }
 }

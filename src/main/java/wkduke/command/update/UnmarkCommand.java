@@ -56,14 +56,13 @@ public class UnmarkCommand extends Command {
      * @param updatedTasks        A list to store tasks successfully marked as not done.
      * @param alreadyNotDoneTasks A list to store tasks that were already in the "not done" status.
      */
-    private void updateTaskStatus(TaskList taskList, List<Task> updatedTasks, List<Task> alreadyNotDoneTasks) {
+    private void unmarkTasks(TaskList taskList, List<Task> updatedTasks, List<Task> alreadyNotDoneTasks) {
         for (Integer taskNumber : taskNumbers) {
             int taskIndex = taskNumber - 1;
             Task task = taskList.getTask(taskIndex);
-
-            boolean isUpdated = taskList.unmarkTask(taskIndex);
-            if (isUpdated) {
+            if (task.isDone()) {
                 updatedTasks.add(task);
+                task.markAsUndone();
             } else {
                 alreadyNotDoneTasks.add(task);
             }
@@ -107,7 +106,7 @@ public class UnmarkCommand extends Command {
             // Update task statuses
             List<Task> updatedTasks = new ArrayList<>();
             List<Task> alreadyNotDoneTasks = new ArrayList<>();
-            updateTaskStatus(taskList, updatedTasks, alreadyNotDoneTasks);
+            unmarkTasks(taskList, updatedTasks, alreadyNotDoneTasks);
 
             // Save taskList to storage
             if (!updatedTasks.isEmpty()) {

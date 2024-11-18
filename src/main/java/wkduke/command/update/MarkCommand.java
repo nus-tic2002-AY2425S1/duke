@@ -56,16 +56,15 @@ public class MarkCommand extends Command {
      * @param updatedTasks       A list to store tasks successfully marked as done.
      * @param alreadyMarkedTasks A list to store tasks that were already marked as done.
      */
-    private void updateTaskStatus(TaskList taskList, List<Task> updatedTasks, List<Task> alreadyMarkedTasks) {
+    private void markTasks(TaskList taskList, List<Task> updatedTasks, List<Task> alreadyMarkedTasks) {
         for (Integer taskNumber : taskNumbers) {
             int taskIndex = taskNumber - 1;
             Task task = taskList.getTask(taskIndex);
-
-            boolean isUpdated = taskList.markTask(taskIndex);
-            if (isUpdated) {
-                updatedTasks.add(task);
-            } else {
+            if (task.isDone()) {
                 alreadyMarkedTasks.add(task);
+            } else {
+                task.markAsDone();
+                updatedTasks.add(task);
             }
         }
     }
@@ -107,7 +106,7 @@ public class MarkCommand extends Command {
             // Update task statuses
             List<Task> updatedTasks = new ArrayList<>();
             List<Task> alreadyMarkedTasks = new ArrayList<>();
-            updateTaskStatus(taskList, updatedTasks, alreadyMarkedTasks);
+            markTasks(taskList, updatedTasks, alreadyMarkedTasks);
 
             // Save taskList to storage
             if (!updatedTasks.isEmpty()) {

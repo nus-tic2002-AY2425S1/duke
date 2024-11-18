@@ -1,7 +1,6 @@
 package wkduke.storage;
 
 import wkduke.common.Messages;
-import wkduke.exception.command.CommandOperationException;
 import wkduke.exception.storage.FileContentException;
 import wkduke.exception.storage.StorageFilePathException;
 import wkduke.exception.storage.StorageOperationException;
@@ -15,9 +14,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-
-import static wkduke.common.Messages.MESSAGE_DUPLICATE_TASK_IN_FILE;
-import static wkduke.common.Messages.MESSAGE_DUPLICATE_TASK_IN_FILE_HELP;
 
 /**
  * Manages storage of task data in the file system.
@@ -112,12 +108,6 @@ public class Storage {
             throw new StorageOperationException(
                     Messages.MESSAGE_READ_FILE_ERROR,
                     String.format("FilePath='%s", filePath)
-            );
-        } catch (CommandOperationException e) {
-            throw new StorageOperationException(
-                    MESSAGE_DUPLICATE_TASK_IN_FILE,
-                    String.format("FilePath='%s, %s", filePath, e.getDetail()),
-                    MESSAGE_DUPLICATE_TASK_IN_FILE_HELP
             );
         }
     }

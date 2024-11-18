@@ -22,7 +22,7 @@ public class Messages {
     public static final String MESSAGE_INVALID_DEADLINE_ENCODED = "Deadline task missing 'by' information!";
     public static final String MESSAGE_INVALID_EVENT_ENCODED = "Event task missing 'from' or 'to' information!";
 
-    public static final String MESSAGE_DUPLICATE_TASK = "The task already exists in your task list!";
+    public static final String MESSAGE_DUPLICATE_TASK = "Task already exists in your task list!";
     public static final String MESSAGE_DUPLICATE_TASK_IN_FILE = "A duplicate task was found in your task file!";
     public static final String MESSAGE_DUPLICATE_TASK_HELP = "Use the 'list' command to view all tasks and avoid duplicates.";
     public static final String MESSAGE_DUPLICATE_TASK_IN_FILE_HELP = "Please check your file to ensure no duplicate entries exist.";
@@ -63,7 +63,7 @@ public class Messages {
               bye        - Exits the application.
               help       - Displays this help message.
             
-              Tips: You can type the command name (e.g., 'todo', 'delete', etc.) to see 
+              Tips: You can type the command name (e.g., 'todo', 'delete', etc.) to see
                     detailed usage and examples for that command.
             """;
     public static final String MESSAGE_TASK_LIST_TIPS = """

@@ -22,7 +22,7 @@ public class TaskListEncoder {
     public static List<String> encodeTaskList(TaskList taskList) {
         final List<String> encodedTasks = new ArrayList<>();
 
-        for (Task task : taskList.getAllTask()) {
+        for (Task task : taskList.getTasks()) {
             encodedTasks.add(TaskEncoder.encodeTask(task));
         }
         return encodedTasks;

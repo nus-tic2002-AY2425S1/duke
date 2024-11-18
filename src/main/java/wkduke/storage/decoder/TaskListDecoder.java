@@ -1,10 +1,14 @@
 package wkduke.storage.decoder;
 
-import wkduke.exception.command.CommandOperationException;
 import wkduke.exception.storage.FileContentException;
+import wkduke.task.Task;
 import wkduke.task.TaskList;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static wkduke.common.Messages.MESSAGE_DUPLICATE_TASK_IN_FILE;
+import static wkduke.common.Messages.MESSAGE_DUPLICATE_TASK_IN_FILE_HELP;
 
 
 /**
@@ -19,11 +23,16 @@ public class TaskListDecoder {
      * @return A {@code TaskList} containing the decoded tasks.
      * @throws FileContentException If any encoded task has an invalid format.
      */
-    public static TaskList decodeTaskList(List<String> encodedTasks) throws FileContentException, CommandOperationException {
-        TaskList taskList = new TaskList();
+    public static TaskList decodeTaskList(List<String> encodedTasks) throws FileContentException {
+        List<Task> tasks = new ArrayList<>();
         for (String encodedTask : encodedTasks) {
-            taskList.addTask(TaskDecoder.decodeTask(encodedTask));
+            Task task = TaskDecoder.decodeTask(encodedTask);
+            if (tasks.contains(task)) {
+                throw new FileContentException(MESSAGE_DUPLICATE_TASK_IN_FILE, String.format("EncodedTask='%s'", encodedTask),
+                        MESSAGE_DUPLICATE_TASK_IN_FILE_HELP);
+            }
+            tasks.add(task);
         }
-        return taskList;
+        return new TaskList(tasks);
     }
 }

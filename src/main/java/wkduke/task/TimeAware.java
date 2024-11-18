@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 /**
  * Represents a task that has time-based characteristics, allowing it to determine if it occurs on a specific date.
  */
-interface TimeAware {
+public interface TimeAware {
     /**
      * Retrieves the date time used for comparison when sorting or filtering tasks.
      *

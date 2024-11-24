@@ -2,9 +2,13 @@ package wkduke.command.update;
 
 import wkduke.exception.storage.StorageOperationException;
 import wkduke.storage.Storage;
+import wkduke.task.Task;
 import wkduke.task.TaskList;
 import wkduke.ui.Ui;
 import wkduke.ui.UiTaskGroup;
+
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * A command to sort tasks in the task list by priority.
@@ -17,6 +21,18 @@ public class SortByPriorityCommand extends SortCommand {
      */
     public SortByPriorityCommand(SortOrder sortOrder) {
         super(sortOrder);
+    }
+
+    /**
+     * Sorts tasks in the task list by priority.
+     *
+     * @param taskList The task list to sort.
+     */
+    // Solution below inspired by https://medium.com/@mgautham1995/order-a-java-list-using-a-custom-comparison-order-for-enum-69565e741236
+    private void sortTaskByPriority(TaskList taskList) {
+        List<Task> tasks = taskList.getTasks();
+        tasks.sort((sortOrder == SortOrder.ASCENDING) ? Comparator.comparing(Task::getPriority)
+                : Comparator.comparing(Task::getPriority).reversed());
     }
 
     /**
@@ -45,9 +61,9 @@ public class SortByPriorityCommand extends SortCommand {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws StorageOperationException {
-        taskList.sortTaskByPriority(sortOrder);
+        sortTaskByPriority(taskList);
         storage.save(taskList);
         ui.printUiTaskGroup(taskList, new UiTaskGroup(
-                String.format(MESSAGE_SUCCESS, "priority", sortOrder), "", taskList.getAllTask()));
+                String.format(MESSAGE_SUCCESS, "priority", sortOrder), "", taskList.getTasks()));
     }
 }

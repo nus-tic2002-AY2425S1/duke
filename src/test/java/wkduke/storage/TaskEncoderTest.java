@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestClassOrder(ClassOrderer.OrderAnnotation.class)
-public class TaskEncoderTest {
+class TaskEncoderTest {
     @Order(1)
     @Nested
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -47,7 +47,7 @@ public class TaskEncoderTest {
         @Order(1)
         @ParameterizedTest
         @MethodSource("validTaskProvider")
-        public void encodeTask_validTask_returnsEncodedString(Task task, String expectedEncodedString) {
+        void encodeTask_validTask_returnsEncodedString(Task task, String expectedEncodedString) {
             String encodedTask = TaskEncoder.encodeTask(task);
             assertEquals(expectedEncodedString, encodedTask);
         }

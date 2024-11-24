@@ -23,19 +23,21 @@ import static wkduke.common.Messages.MESSAGE_FLEXIBLE_INPUT_RETRY_PROMPT;
  * Provides methods to display messages, errors, and read user commands.
  */
 public class Ui {
-    public static final int INDENT_HELP_MSG_NUM = 7;
-    private static final String BORDER_LINE = "____________________________________________________________________________";
+    public static final int INDENT_HELP_MSG_NUM = 8;
+    private static final int MAX_ERROR_HEADER_LINE_LENGTH = 77;
+    private static final int MAX_PRINT_LIST_HEADER_LINE_LENGTH = 78;
+    private static final String BORDER_LINE = "________________________________________________________________________________";
     private static final int INDENT_LEVEL1_NUM = 4;
     private static final int INDENT_LEVEL2_NUM = INDENT_LEVEL1_NUM + 1;
+    private static final int DISPLAY_INDEX_OFFSET = 1;
     private static final String WK_DUKE_LOGO = """
-              ___       __   ___  __    ________  ___  ___  ___  __    _______
-             |\\  \\     |\\  \\|\\  \\|\\  \\ |\\   ___ \\|\\  \\|\\  \\|\\  \\|\\  \\ |\\  ___ \\
-             \\ \\  \\    \\ \\  \\ \\  \\/  /|\\ \\  \\_|\\ \\ \\  \\\\\\  \\ \\  \\/  /|\\ \\   __/|
-              \\ \\  \\  __\\ \\  \\ \\   ___  \\ \\  \\ \\\\ \\ \\  \\\\\\  \\ \\   ___  \\ \\  \\_|/__
-               \\ \\  \\|\\__\\_\\  \\ \\  \\\\ \\  \\ \\  \\_\\\\ \\ \\  \\\\\\  \\ \\  \\\\ \\  \\ \\  \\_|\\ \\
-                \\ \\____________\\ \\__\\\\ \\__\\ \\_______\\ \\_______\\ \\__\\\\ \\__\\ \\_______\\
-                 \\|____________|\\|__| \\|__|\\|_______|\\|_______|\\|__| \\|__|\\|_______|
-            
+                ___       __   ___  __    ________  ___  ___  ___  __    _______
+               |\\  \\     |\\  \\|\\  \\|\\  \\ |\\   ___ \\|\\  \\|\\  \\|\\  \\|\\  \\ |\\  ___ \\
+               \\ \\  \\    \\ \\  \\ \\  \\/  /|\\ \\  \\_|\\ \\ \\  \\\\\\  \\ \\  \\/  /|\\ \\   __/|
+                \\ \\  \\  __\\ \\  \\ \\   ___  \\ \\  \\ \\\\ \\ \\  \\\\\\  \\ \\   ___  \\ \\  \\_|/__
+                 \\ \\  \\|\\__\\_\\  \\ \\  \\\\ \\  \\ \\  \\_\\\\ \\ \\  \\\\\\  \\ \\  \\\\ \\  \\ \\  \\_|\\ \\
+                  \\ \\____________\\ \\__\\\\ \\__\\ \\_______\\ \\_______\\ \\__\\\\ \\__\\ \\_______\\
+                   \\|____________|\\|__| \\|__|\\|_______|\\|_______|\\|__| \\|__|\\|_______|
             """;
     private final Scanner in;
     private final PrintStream out;
@@ -50,6 +52,48 @@ public class Ui {
     }
 
     /**
+     * Wraps a message to a specified maximum line length, accounting for additional indentation
+     * on subsequent lines.
+     *
+     * @param message       The message to wrap.
+     * @param maxLineLength The maximum length of each line before wrapping.
+     * @param extraIndent   The number of spaces to prepend to wrapped lines.
+     * @return The wrapped message as a string with newlines inserted appropriately.
+     */
+    // Solution below inspired by https://stackoverflow.com/questions/4055430/java-code-for-wrapping-text-lines-to-a-max-line-width
+    private static String wrapMessage(String message, int maxLineLength, int extraIndent) {
+        StringBuilder wrappedMessage = new StringBuilder();
+        String indent = " ".repeat(extraIndent);
+        int adjustedMaxLineLength = maxLineLength - extraIndent;
+        // Split the message into lines using existing newline characters
+        String[] lines = message.split("\n");
+        for (int i = 0; i < lines.length; i++) {
+            String line = lines[i];
+            int start = 0;
+            // Wrap each line if it exceeds the maximum line length
+            while (start < line.length()) {
+                int effectiveMaxLineLength = (start == 0) ? maxLineLength : adjustedMaxLineLength;
+                int end = Math.min(start + effectiveMaxLineLength, line.length());
+                String subLine = line.substring(start, end);
+                // If it's not the first subline of a line, prepend extra indentation
+                if (start != 0) {
+                    wrappedMessage.append(indent);
+                }
+                wrappedMessage.append(subLine);
+                if (end < line.length()) {
+                    wrappedMessage.append(System.lineSeparator());
+                }
+                start = end;
+            }
+            // Add a newline if this is not the last line of the message
+            if (i < lines.length - 1) {
+                wrappedMessage.append(System.lineSeparator());
+            }
+        }
+        return wrappedMessage.toString();
+    }
+
+    /**
      * Adds a formatted message to the list if the content is not null or empty.
      *
      * @param messages The list to add the message to.
@@ -58,7 +102,7 @@ public class Ui {
      */
     private void addMessageIfNotEmpty(List<String> messages, String label, String content) {
         if (content != null && !content.trim().isEmpty()) {
-            messages.add(String.format(" %s: %s", label, content));
+            messages.add(Ui.wrapMessage(String.format(" %s: %s", label, content), MAX_ERROR_HEADER_LINE_LENGTH, INDENT_HELP_MSG_NUM));
         }
     }
 
@@ -84,7 +128,7 @@ public class Ui {
         List<String> formattedTasks = new ArrayList<>();
         for (Task task : tasks) {
             int taskIndex = taskList.getTaskIndex(task);
-            String index = (taskIndex == -1) ? "⌦" : String.format("%" + digits + "d", taskIndex + 1); // Align the index
+            String index = (taskIndex == -1) ? "x" : String.format("%" + digits + "d", taskIndex + DISPLAY_INDEX_OFFSET); // Align the index
             formattedTasks.add(String.format(" %s. %s", index, task));
         }
         return formattedTasks;
@@ -95,6 +139,7 @@ public class Ui {
      */
     private void showLine() {
         out.print(BORDER_LINE.indent(INDENT_LEVEL1_NUM));
+        out.println();
     }
 
     /**
@@ -109,7 +154,6 @@ public class Ui {
      * @return A {@link Storage} instance initialized with the specified or default data source.
      * @throws StorageOperationException If the default data source cannot be initialized.
      */
-
     public Storage getFlexibleDataSource() throws StorageOperationException {
         showLine();
         out.print(Messages.MESSAGE_FLEXIBLE_DATA_SOURCE.indent(INDENT_LEVEL2_NUM));
@@ -118,16 +162,17 @@ public class Ui {
 
         while (!filePath.isEmpty()) {
             try {
-                return new Storage(filePath);
+                Storage storage = new Storage(filePath);
+                out.printf((MESSAGE_CUSTOM_DATA_SOURCE_POST) + "%n", filePath);
+                return storage;
             } catch (StorageOperationException | StorageFilePathException e) {
                 out.printf("\t Error: %s%n%n", e.getMessage());
                 out.print(MESSAGE_FLEXIBLE_INPUT_RETRY_PROMPT);
                 filePath = in.nextLine().trim();
-            } finally {
-                out.printf((MESSAGE_CUSTOM_DATA_SOURCE_POST) + "%n", filePath);
             }
         }
         out.println(MESSAGE_DEFAULT_DATA_SOURCE_POST);
+        out.println();
         return new Storage();
     }
 
@@ -141,6 +186,7 @@ public class Ui {
         for (String message : messages) {
             out.print(message.indent(INDENT_LEVEL2_NUM));
         }
+        out.println();
         showLine();
     }
 
@@ -170,14 +216,19 @@ public class Ui {
      */
     public void printUiTaskGroups(TaskList taskList, List<UiTaskGroup> taskGroups) {
         List<String> messages = new ArrayList<>();
-        for (UiTaskGroup uiTaskGroup : taskGroups) {
+        int size = taskGroups.size();
+        for (int i = 0; i < size; i++) {
+            UiTaskGroup uiTaskGroup = taskGroups.get(i);
             List<Task> tasks = uiTaskGroup.tasks();
             if (tasks.isEmpty()) {
                 continue;
             }
-            messages.add(uiTaskGroup.header());
+            messages.add(wrapMessage(uiTaskGroup.header(), MAX_PRINT_LIST_HEADER_LINE_LENGTH, 0));
             messages.addAll(formatTasksWithIndex(taskList, tasks));
             messages.add(uiTaskGroup.footer());
+            if (i < size - 1) {
+                messages.add(System.lineSeparator()); // Add a blank line between groups
+            }
         }
         printMessages(messages.toArray(new String[0]));
     }
@@ -219,10 +270,6 @@ public class Ui {
      * Displays the welcome logo and message to the user.
      */
     public void showWelcome() {
-        out.print(BORDER_LINE.indent(INDENT_LEVEL1_NUM));
-        out.print(WK_DUKE_LOGO.indent(INDENT_LEVEL2_NUM));
-        out.print(Messages.MESSAGE_WELCOME.indent(INDENT_LEVEL2_NUM));
-        out.print(BORDER_LINE.indent(INDENT_LEVEL1_NUM));
-
+        printMessages(WK_DUKE_LOGO, System.lineSeparator(), Messages.MESSAGE_WELCOME);
     }
 }

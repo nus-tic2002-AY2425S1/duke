@@ -10,7 +10,7 @@ import static wkduke.ui.Ui.INDENT_HELP_MSG_NUM;
 public class AddTodoCommand extends AddCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD_TODO + " {task-description}\n"
             + "Description:".indent(INDENT_HELP_MSG_NUM)
-            + "  - Adds a Todo task with the specified description to your task list.".indent(INDENT_HELP_MSG_NUM)
+            + "  - Adds a Todo task with the specified description.".indent(INDENT_HELP_MSG_NUM)
             + "Example:".indent(INDENT_HELP_MSG_NUM)
             + "  todo Read book".indent(INDENT_HELP_MSG_NUM)
             + "Constraints:".indent(INDENT_HELP_MSG_NUM)

@@ -2,6 +2,7 @@ package wkduke.command.update;
 
 import wkduke.command.Command;
 import wkduke.common.Messages;
+import wkduke.common.Utils;
 import wkduke.exception.command.CommandOperationException;
 import wkduke.exception.storage.StorageOperationException;
 import wkduke.storage.Storage;
@@ -9,6 +10,10 @@ import wkduke.task.Task;
 import wkduke.task.TaskList;
 import wkduke.task.TaskPriority;
 import wkduke.ui.Ui;
+import wkduke.ui.UiTaskGroup;
+
+import java.util.List;
+import java.util.Set;
 
 import static wkduke.ui.Ui.INDENT_HELP_MSG_NUM;
 
@@ -31,11 +36,10 @@ public class UpdatePriorityCommand extends Command {
             + "  - Task number must be positive integer.".indent(INDENT_HELP_MSG_NUM)
             + "  - Task number must exist in the task list.".indent(INDENT_HELP_MSG_NUM)
             + "  - 'task-priority' must be one of: L, M, H.".indent(INDENT_HELP_MSG_NUM)
-            + "  - The task's current priority will be updated only if it's different.".indent(INDENT_HELP_MSG_NUM);
+            + "  - The task's priority will be updated only if it's different.".indent(INDENT_HELP_MSG_NUM);
 
     private static final String MESSAGE_SUCCESS = "OK! I've updated the priority of this task:";
     private static final String MESSAGE_FAILED = "This task already has the specified priority:";
-    private static final String TASK_PLACEHOLDER = "  %s";
     private final int taskNumber;
     private final TaskPriority priority;
 
@@ -85,26 +89,28 @@ public class UpdatePriorityCommand extends Command {
         assert ui != null : "Precondition failed: 'ui' cannot be null";
         assert storage != null : "Precondition failed: 'storage' cannot be null";
         try {
+            // Validate task numbers
+            Utils.validateTaskNumbers(taskList, Set.of(taskNumber));
+
+            // Update task priority
             int taskIndex = taskNumber - 1;
             Task task = taskList.getTask(taskIndex);
-            boolean isUpdated = taskList.setTaskPriority(taskIndex, priority);
-
-            if (isUpdated) {
-                storage.save(taskList);
-                ui.printMessages(
-                        MESSAGE_SUCCESS,
-                        String.format(TASK_PLACEHOLDER, task.toString())
-                );
-            } else {
-                ui.printMessages(
-                        MESSAGE_FAILED,
-                        String.format(TASK_PLACEHOLDER, task.toString())
-                );
+            if (priority.equals(task.getPriority())) {
+                ui.printUiTaskGroup(taskList, new UiTaskGroup(String.format(MESSAGE_FAILED), "", List.of(task)));
+                return;
             }
+            task.setPriority(priority);
+
+            // Save taskList to storage
+            storage.save(taskList);
+
+            // Display success messages
+            ui.printUiTaskGroup(taskList, new UiTaskGroup(String.format(MESSAGE_SUCCESS), "", List.of(task)));
         } catch (IndexOutOfBoundsException e) {
             throw new CommandOperationException(
                     Messages.MESSAGE_INVALID_TASK_NUMBER,
-                    String.format("Command='%s', TaskNumber='%s' TaskPriority=''%s", COMMAND_WORD, taskNumber, priority)
+                    String.format("Command='%s', TaskNumber='%s' TaskPriority=''%s", COMMAND_WORD, taskNumber, priority),
+                    Messages.MESSAGE_INVALID_TASK_NUMBER_HELP
             );
         }
     }

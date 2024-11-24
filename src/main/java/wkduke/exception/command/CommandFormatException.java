@@ -8,25 +8,6 @@ import wkduke.exception.WKDukeException;
  */
 public class CommandFormatException extends WKDukeException {
     /**
-     * Constructs a CommandFormatException with the specified error message.
-     *
-     * @param message The error message describing the command format issue.
-     */
-    public CommandFormatException(String message) {
-        super(message);
-    }
-
-    /**
-     * Constructs a CommandFormatException with the specified error message and detailed information.
-     *
-     * @param message The error message describing the command format issue.
-     * @param detail  Additional detail about the command format issue.
-     */
-    public CommandFormatException(String message, String detail) {
-        super(message, detail);
-    }
-
-    /**
      * Constructs a CommandFormatException with the specified error message, detailed information, and help text.
      *
      * @param message The error message describing the command format issue.

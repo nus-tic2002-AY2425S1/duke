@@ -88,6 +88,20 @@ public abstract class Task {
     }
 
     /**
+     * Marks the task as done.
+     */
+    public void markAsDone() {
+        isDone = true;
+    }
+
+    /**
+     * Marks the task as not done.
+     */
+    public void markAsUndone() {
+        isDone = false;
+    }
+
+    /**
      * Checks if this task is equal to another object.
      * Two tasks are considered equal if they have the same description and completion status.
      *
@@ -116,19 +130,5 @@ public abstract class Task {
     @Override
     public String toString() {
         return "[" + priority + "][" + getStatusIcon() + "] " + description;
-    }
-
-    /**
-     * Marks the task as done.
-     */
-    void markAsDone() {
-        isDone = true;
-    }
-
-    /**
-     * Marks the task as not done.
-     */
-    void markAsUndone() {
-        isDone = false;
     }
 }

@@ -11,7 +11,7 @@ public abstract class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " /by <priority|tasktype|datetime> /order <asc|desc>\n"
             + "Description:".indent(INDENT_HELP_MSG_NUM)
-            + "  - Sorts tasks in your task list based on the specified field and order.".indent(INDENT_HELP_MSG_NUM)
+            + "  - Sorts your tasks based on the specified field and order.".indent(INDENT_HELP_MSG_NUM)
             + "Field:\n".indent(INDENT_HELP_MSG_NUM)
             + "  priority - Sort tasks by priority (e.g., high, medium, low)\n".indent(INDENT_HELP_MSG_NUM)
             + "  tasktype - Sort tasks by type (e.g., todo, deadline, event)\n".indent(INDENT_HELP_MSG_NUM)

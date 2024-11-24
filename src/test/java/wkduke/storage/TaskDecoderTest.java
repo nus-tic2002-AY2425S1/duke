@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestClassOrder(ClassOrderer.OrderAnnotation.class)
-public class TaskDecoderTest {
+class TaskDecoderTest {
     @Order(1)
     @Nested
     @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -59,7 +59,7 @@ public class TaskDecoderTest {
         @Order(1)
         @ParameterizedTest
         @MethodSource("validTaskProvider")
-        public void decodeTask_validEncodedTask_returnsCorrectTask(String encodedTask, Task expectedTask) throws FileContentException {
+        void decodeTask_validEncodedTask_returnsCorrectTask(String encodedTask, Task expectedTask) throws FileContentException {
             Task task = TaskDecoder.decodeTask(encodedTask);
             assertEquals(expectedTask, task);
         }
@@ -84,7 +84,7 @@ public class TaskDecoderTest {
         @Order(1)
         @ParameterizedTest
         @MethodSource("invalidTaskProvider")
-        public void decodeTask_invalidEncodedTask_throwsFileContentException(String encodedTask) {
+        void decodeTask_invalidEncodedTask_throwsFileContentException(String encodedTask) {
             assertThrows(FileContentException.class, () -> TaskDecoder.decodeTask(encodedTask));
         }
     }

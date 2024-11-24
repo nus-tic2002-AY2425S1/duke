@@ -6,25 +6,6 @@ package wkduke.exception;
  */
 public class TaskFormatException extends WKDukeException {
     /**
-     * Constructs a TaskFormatException with the specified error message.
-     *
-     * @param message The error message describing the task format issue.
-     */
-    public TaskFormatException(String message) {
-        super(message);
-    }
-
-    /**
-     * Constructs a TaskFormatException with the specified error message and detailed information.
-     *
-     * @param message The error message describing the task format issue.
-     * @param detail  Additional detail about the task format issue.
-     */
-    public TaskFormatException(String message, String detail) {
-        super(message, detail);
-    }
-
-    /**
      * Constructs a TaskFormatException with the specified error message, detailed information, and help text.
      *
      * @param message The error message describing the task format issue.

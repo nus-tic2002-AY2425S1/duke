@@ -11,6 +11,8 @@ repositories {
 dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.0'
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: '5.10.0'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '5.14.2'
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '5.14.2'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.10.0'
 }
 
@@ -26,6 +28,8 @@ test {
         showStackTraces true
         showStandardStreams = false
     }
+
+    jvmArgs '-Xshare:off'
 }
 
 application {

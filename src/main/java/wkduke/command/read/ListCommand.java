@@ -44,7 +44,7 @@ public class ListCommand extends Command {
     public void execute(TaskList taskList, Ui ui, Storage storage) {
         assert taskList != null : "Precondition failed: 'taskList' cannot be null";
         assert ui != null : "Precondition failed: 'ui' cannot be null";
-        List<Task> tasks = taskList.getAllTask();
+        List<Task> tasks = taskList.getTasks();
         if (tasks.isEmpty()) {
             ui.printMessages(MESSAGE_FAILED);
             return;

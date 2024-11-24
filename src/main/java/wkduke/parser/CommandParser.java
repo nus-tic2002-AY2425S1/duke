@@ -60,7 +60,7 @@ public class CommandParser {
     public static Command parseCommand(String userInput) throws CommandFormatException, TaskFormatException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
-            throw new AssertionError("Basic command scenario is already handled earlier");
+            throw new AssertionError("Empty command scenario is already handled earlier");
         }
 
         final String commandWord = matcher.group("commandWord");

@@ -19,8 +19,10 @@ public class WKDuke {
     private TaskList taskList;
 
     /**
-     * Constructs a {@code WKDuke} instance, initializing UI, storage, and task list.
-     * Displays an initialization error and exits if storage fails to load.
+     * Constructs a {@code WKDuke} instance.
+     * This constructor initializes the user interface (UI), sets up storage, and loads
+     * the task list. If an error occurs during storage initialization, it will display an
+     * error message and terminate the application.
      */
     public WKDuke() {
         ui = new Ui();
@@ -29,7 +31,7 @@ public class WKDuke {
             taskList = storage.load();
         } catch (StorageOperationException | FileContentException e) {
             ui.showError(e);
-            System.exit(-1);
+            System.exit(1);
         }
     }
 
@@ -43,8 +45,10 @@ public class WKDuke {
     }
 
     /**
-     * Runs the main application loop, showing the welcome message and processing user commands.
-     * Catches and handles exceptions related to storage and command execution.
+     * Executes the main application loop.
+     * The method displays the welcome message, reads and processes user commands,
+     * and catches and handles exceptions related to storage and command execution.
+     * If storage operations fail, the application will terminate with an error.
      */
     public void run() {
         ui.showWelcome();
@@ -57,7 +61,7 @@ public class WKDuke {
                 isExit = c.isExit();
             } catch (StorageOperationException e) {
                 ui.showError(e);
-                System.exit(-1);
+                System.exit(1);
             } catch (WKDukeException e) {
                 ui.showError(e);
             }

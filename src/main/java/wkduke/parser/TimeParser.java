@@ -17,7 +17,8 @@ import static wkduke.ui.Ui.INDENT_HELP_MSG_NUM;
  */
 public class TimeParser {
     public static final DateTimeFormatter ENCODING_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    public static final DateTimeFormatter CLI_FORMATTER = DateTimeFormatter.ofPattern("d MMM yyyy h:mma");
+    public static final DateTimeFormatter CLI_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("d MMM yyyy h:mma");
+    public static final DateTimeFormatter CLI_DATE_FORMATTER = DateTimeFormatter.ofPattern("d MMM yyyy");
     public static final String MESSAGE_USAGE = "DateTime Format:".indent(INDENT_HELP_MSG_NUM)
             + "  yyyy-MM-dd - Date only, e.g., 2024-11-05".indent(INDENT_HELP_MSG_NUM)
             + "  yyyy/MM/dd - Alternative date format, e.g., 2024/11/05".indent(INDENT_HELP_MSG_NUM)

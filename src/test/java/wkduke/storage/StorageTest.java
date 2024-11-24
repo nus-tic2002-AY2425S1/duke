@@ -11,7 +11,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import wkduke.exception.command.CommandOperationException;
 import wkduke.exception.storage.FileContentException;
 import wkduke.exception.storage.StorageFilePathException;
 import wkduke.exception.storage.StorageOperationException;
@@ -32,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static wkduke.util.TestUtil.assertTextFilesEqual;
 
 @TestClassOrder(ClassOrderer.OrderAnnotation.class)
-public class StorageTest {
+class StorageTest {
     private static final String VALID_DATA_FILE = "src/test/data/StorageTest/ValidData.txt";
     private static final String INVALID_DATA_FILE = "src/test/data/StorageTest/InvalidData.txt";
 
@@ -57,12 +56,12 @@ public class StorageTest {
         @Order(1)
         @ParameterizedTest
         @MethodSource("validFilePathsProvider")
-        public void constructor_validFilePath_createsStorage(String filePath) {
+        void constructor_validFilePath_createsStorage(String filePath) {
             assertDoesNotThrow(() -> new Storage(filePath));
         }
 
         @BeforeEach
-        void setup() throws StorageOperationException, CommandOperationException {
+        void setup() throws StorageOperationException {
             storage = new Storage(VALID_DATA_FILE);
             taskList = new TaskList();
             taskList.addTask(new Todo("Read book", false, TaskPriority.LOW));
@@ -120,7 +119,7 @@ public class StorageTest {
         @Order(1)
         @ParameterizedTest
         @MethodSource("invalidFilePathsProvider")
-        public void constructor_invalidFilePath_throwsStorageFilePathException(String filePath) {
+        void constructor_invalidFilePath_throwsStorageFilePathException(String filePath) {
             assertThrows(StorageFilePathException.class, () -> new Storage(filePath));
         }
 

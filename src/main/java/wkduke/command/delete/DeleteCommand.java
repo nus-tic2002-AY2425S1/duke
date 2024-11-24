@@ -48,12 +48,13 @@ public class DeleteCommand extends Command {
     }
 
     /**
-     * Deletes tasks specified in the taskNumbers list from the taskList and adds them to the deletedTasks list.
+     * Deletes tasks from the given task list based on the specified task numbers.
      *
-     * @param taskList     The task list from which tasks will be deleted.
-     * @param deletedTasks A list to store the deleted tasks for reference.
+     * @param taskList The task list from which tasks will be deleted.
+     * @return A list of tasks that were successfully deleted.
      */
-    private void deleteTasks(TaskList taskList, List<Task> deletedTasks) {
+    private List<Task> deleteTasks(TaskList taskList) {
+        List<Task> deletedTasks = new ArrayList<>();
         for (Integer taskNumber : taskNumbers) {
             int taskIndex = taskNumber - 1;
             Task task = taskList.getTask(taskIndex);
@@ -63,6 +64,7 @@ public class DeleteCommand extends Command {
         for (Task task : deletedTasks) {
             taskList.deleteTask(task);
         }
+        return deletedTasks;
     }
 
     /**
@@ -95,29 +97,28 @@ public class DeleteCommand extends Command {
         assert taskList != null : "Precondition failed: 'taskList' cannot be null";
         assert ui != null : "Precondition failed: 'ui' cannot be null";
         assert storage != null : "Precondition failed: 'storage' cannot be null";
+        assert taskNumbers != null : "Precondition failed: 'taskNumbers' cannot be null";
         try {
             // Validate task numbers
             Utils.validateTaskNumbers(taskList, taskNumbers);
 
-            // Update task statuses
-            List<Task> deletedTasks = new ArrayList<>();
-            deleteTasks(taskList, deletedTasks);
+            // Delete task
+            List<Task> deletedTasks = deleteTasks(taskList);
 
             // Save taskList to storage
             if (!deletedTasks.isEmpty()) {
                 storage.save(taskList);
             }
 
-            // Display success and failure messages
-            ui.printUiTaskGroup(taskList, new UiTaskGroup(
-                            MESSAGE_SUCCESS_PRE, String.format(MESSAGE_SUCCESS_POST, taskList.size()), deletedTasks
-                    )
+            // Display success messages
+            ui.printUiTaskGroup(taskList, new UiTaskGroup(MESSAGE_SUCCESS_PRE,
+                    String.format(MESSAGE_SUCCESS_POST, taskList.size()), deletedTasks)
             );
         } catch (IndexOutOfBoundsException e) {
             throw new CommandOperationException(
                     Messages.MESSAGE_INVALID_TASK_NUMBER,
-                    String.format("Command='unmark', TaskNumber='%s'", taskNumbers),
-                    e.getMessage()
+                    String.format("Command='delete', TaskNumber='%s'", taskNumbers),
+                    Messages.MESSAGE_INVALID_TASK_NUMBER_HELP
             );
         }
     }

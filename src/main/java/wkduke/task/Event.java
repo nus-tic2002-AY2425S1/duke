@@ -71,7 +71,7 @@ public class Event extends Task implements TimeAware {
     /**
      * {@inheritDoc}
      * <p>
-     * This implementation checks if the specified date falls within the event's time range,
+     * This implementation checks if the specified date (ignoring the time) falls within the event's time range,
      * from the start date (inclusive) to the end date (inclusive).
      *
      * @param targetDateTime The date to check against the event's time range.
@@ -79,8 +79,8 @@ public class Event extends Task implements TimeAware {
      */
     @Override
     public boolean isOccursOnDate(LocalDateTime targetDateTime) {
-        boolean isOnStartDate = targetDateTime.isEqual(from);
-        boolean isOnEndDate = targetDateTime.isEqual(to);
+        boolean isOnStartDate = targetDateTime.toLocalDate().isEqual(from.toLocalDate());
+        boolean isOnEndDate = targetDateTime.toLocalDate().isEqual(to.toLocalDate());
         boolean isBetweenDates = targetDateTime.isAfter(from) && targetDateTime.isBefore(to);
         return isOnStartDate || isOnEndDate || isBetweenDates;
     }
@@ -124,6 +124,6 @@ public class Event extends Task implements TimeAware {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from:" + from.format(TimeParser.CLI_FORMATTER) + " to:" + to.format(TimeParser.CLI_FORMATTER) + ")";
+        return "[E]" + super.toString() + " (from:" + from.format(TimeParser.CLI_DATE_TIME_FORMATTER) + " to:" + to.format(TimeParser.CLI_DATE_TIME_FORMATTER) + ")";
     }
 }

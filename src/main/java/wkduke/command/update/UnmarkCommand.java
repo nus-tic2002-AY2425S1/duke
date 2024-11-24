@@ -122,7 +122,7 @@ public class UnmarkCommand extends Command {
             throw new CommandOperationException(
                     Messages.MESSAGE_INVALID_TASK_NUMBER,
                     String.format("Command='unmark', TaskNumber='%s'", taskNumbers),
-                    e.getMessage()
+                    Messages.MESSAGE_INVALID_TASK_NUMBER_HELP
             );
         }
     }

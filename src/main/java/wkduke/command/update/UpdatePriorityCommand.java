@@ -109,7 +109,8 @@ public class UpdatePriorityCommand extends Command {
         } catch (IndexOutOfBoundsException e) {
             throw new CommandOperationException(
                     Messages.MESSAGE_INVALID_TASK_NUMBER,
-                    String.format("Command='%s', TaskNumber='%s' TaskPriority=''%s", COMMAND_WORD, taskNumber, priority)
+                    String.format("Command='%s', TaskNumber='%s' TaskPriority=''%s", COMMAND_WORD, taskNumber, priority),
+                    Messages.MESSAGE_INVALID_TASK_NUMBER_HELP
             );
         }
     }

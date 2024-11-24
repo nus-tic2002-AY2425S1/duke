@@ -14,6 +14,7 @@ public class Messages {
 
     public static final String MESSAGE_INVALID_TASK_NUMBERS_FORMAT = "Invalid task number argument format! '%s'";
     public static final String MESSAGE_INVALID_TASK_NUMBER = "Invalid task number 'Task not found'!";
+    public static final String MESSAGE_INVALID_TASK_NUMBER_HELP = "Use the 'list' command to view all tasks along with their task numbers.";
 
     public static final String MESSAGE_INVALID_DATETIME_FORMAT = "Invalid datetime argument format!";
     public static final String MESSAGE_INVALID_DATETIME_RANGE = MESSAGE_INVALID_DATETIME_FORMAT + " '%s' is after '%s'!";

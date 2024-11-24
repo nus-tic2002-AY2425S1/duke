@@ -118,7 +118,7 @@ public class DeleteCommand extends Command {
             throw new CommandOperationException(
                     Messages.MESSAGE_INVALID_TASK_NUMBER,
                     String.format("Command='delete', TaskNumber='%s'", taskNumbers),
-                    e.getMessage()
+                    Messages.MESSAGE_INVALID_TASK_NUMBER_HELP
             );
         }
     }

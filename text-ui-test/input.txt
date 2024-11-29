@@ -1,0 +1,78 @@
+list
+todo
+todo learn a new language
+list
+unmark 1
+list
+mark 1
+mark 1
+list
+deadline
+deadline return pen
+deadline /by 2024-01-01
+deadline /by
+deadline return pen /by 1 Jan 2024
+deadline return pen /by 2024-01-01
+deadline return pen with time /by 2024-01-01 1800
+list
+mark 6
+unmark 6
+unmark 6
+list
+event
+event orientation
+event orientation /from
+event orientation /from Jan 1st
+event orientation /from Jan 1st /to
+event orientation /from 2024-03-05 /to
+event orientation /to
+event orientation /to 2nd
+event orientation /from Jan 1st /to 2nd
+event orientation /from 05-03-2024
+event orientation /from 2024-03-05
+event faculty orientation /from 2024-03-05 /to 2024-03-07
+event faculty orientation /from 2024-03-10 1000 /to 2024-03-12 2000
+list
+fd
+fd code review
+fd code review /duration
+fd code review /duration invalidDuration
+fd code review /duration 2
+list
+archive 6
+delete 6
+list
+find
+find asdf
+find book
+find pen
+find orientation
+list
+event daily standup /from 2024-07-06 0900 /to 2024-07-06 1000
+deadline report submission /by 2024-07-06
+show
+show 2024-123-123
+show 2024-03-11
+show 2024-03-12
+show 2024-07-06
+mark abc
+mark 123456789
+unmark abc
+unmark 123456789
+delete abc
+delete 123456789
+list
+delete 11
+list
+delete 10
+list
+delete 9
+list
+delete 8
+list
+delete 7
+list
+delete 6
+list
+archive all
+bye

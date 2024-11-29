@@ -13,14 +13,21 @@ then
 fi
 
 # compile the code into the bin folder, terminates if error occurred
-if ! javac -cp ../src/main/java -Xlint:none -d ../bin ../src/main/java/*.java
+if ! javac -cp ../src/main/java -Xlint:none -d ../bin ../src/main/java/**/*.java
+# if ! javac -cp ../src/main/java -Xlint:none -d ../bin ../src/main/java/*.java
 then
     echo "********** BUILD FAILURE **********"
     exit 1
 fi
 
+# Set the storage file path environment variable
+export STORAGE_FILE_PATH="../src/main/java/data/tasks.txt"
+
 # run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-java -classpath ../bin Duke < input.txt > ACTUAL.TXT
+java -cp ../bin -Dstorage.file="$STORAGE_FILE_PATH" Javaro < input.txt > ACTUAL.TXT
+
+# java -cp ../bin Javaro < input.txt > ACTUAL.TXT
+# java -classpath ../bin Javaro < input.txt > ACTUAL.TXT
 
 # convert to UNIX format
 cp EXPECTED.TXT EXPECTED-UNIX.TXT

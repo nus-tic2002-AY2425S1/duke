@@ -1,0 +1,6 @@
+D | 0 | Submit paper | 22/10/2024 2359
+T | 1 | borrow book
+D | 0 | return book | 30/11/2024 1500
+N | 1 | play game
+E | 0 | final exam | 01/12/2024 0900 | 01/12/2024 1100
+D | 0 | submit report | 17/11/2024 2359

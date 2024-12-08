@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.0'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: '5.10.0'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '5.14.2'
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '5.14.2'
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.10.0'
+}
+
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+
+        showExceptions true
+        exceptionFormat "full"
+        showCauses true
+        showStackTraces true
+        showStandardStreams = false
+    }
+
+    jvmArgs '-Xshare:off'
+}
+
+application {
+    mainClass.set("wkduke.WKDuke")
+}
+
+shadowJar {
+    archiveBaseName = "wkduke"
+    archiveClassifier = null
+    archiveVersion = '1.0.0'
+    mainClassName = 'wkduke.WKDuke'
+}
+
+run {
+    standardInput = System.in
+    enableAssertions = true
+}

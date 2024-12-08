@@ -1,0 +1,6 @@
+T | L | 0 | Read book
+T | H | 1 | Complete assignment
+D | H | 1 | Submit report | 2024-11-05 23:59
+D | L | 0 | Start project | 2024-12-10 12:00
+E | M | 0 | Attend workshop | 2024-11-05 09:00 | 2024-11-05 17:00
+E | H | 1 | Meeting | 2024-11-10 08:00 | 2024-11-10 18:00

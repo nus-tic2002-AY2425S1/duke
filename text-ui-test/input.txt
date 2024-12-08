@@ -1,0 +1,38 @@
+list
+todo read book
+deadline return book /by June 6th
+event project meeting /from Aug 6th 2pm /to 4pm
+todo borrow book
+deadline return book 2 /by Sunday
+event project meeting 2 /from Mon 2pm /to 4pm
+list
+mark 1
+list
+mark 2
+list
+mark 3
+mark 3
+list
+unmark 3
+unmark 3
+list
+unmark 2
+list
+unmark 1
+list
+delete 1
+list
+delete 2
+list
+[Invalid Input Test]
+mark
+mark a
+mark 10
+unmark
+unmark a
+unmark 10
+deadline return book
+deadline return book /by
+event project meeting /from
+event project meeting /from Aug 6th
+bye

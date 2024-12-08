@@ -1,0 +1,40 @@
+.label {
+    -fx-background-color: linear-gradient(to bottom right, #7bd391cc, #79f09ccb);
+    -fx-border-color: #d55e00 #009e73 #cc79a7 #0072b2;
+    -fx-border-width: 3px;
+    -fx-background-radius: 1em 1em 0 1em;
+    -fx-border-radius: 1em 1em 0 1em;
+
+    -fx-font-family: "a"; /* Specify the name of your custom font */
+    -fx-font-size: 18px; /* Change to your desired font size */
+    -fx-font-weight: bold; /* This makes the text bold */
+    -fx-text-fill: #d6076f; /* Set the text color to black (change as needed) */
+
+
+}
+
+.reply-label {
+    -fx-background-color: linear-gradient(to bottom right, #00f7ffcc, #00ddff);
+    -fx-background-radius: 1em 1em 1em 0;
+    -fx-border-radius: 1em 1em 1em 0;
+
+
+    /* Font Styling */
+    -fx-font-family: "a"; /* Specify the name of your custom font */
+    -fx-font-size: 18px; /* Change to your desired font size */
+    -fx-font-weight: bold; /* This makes the text bold */
+    -fx-text-fill: #070bd6; /* Set the text color to black (change as needed) */
+}
+
+#displayPicture {
+    /* Shadow effect on image. */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 5, 5);
+
+    /* Change size of image. */
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+
+    /* Rotate image clockwise by degrees. */
+    -fx-rotate: 0;
+}
+

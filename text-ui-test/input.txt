@@ -1,0 +1,38 @@
+todo read book
+deadline return book /by 2/12/2019 1500
+event project meeting /from 2/12/2019 1500 /to 2/12/2019 1800
+fixedDuration Read report /duration 2
+todo read book
+list
+mark 1
+mark 4
+list
+unmark 1
+list
+delete 5
+list
+update 1 todo not read book
+update 2 deadline not return book /by 2/12/2019 1500
+update 3 event not project meeting /from 2/12/2019 1500 /to 2/12/2019 1800
+update 4 fixedDuration not Read report /duration 5
+list
+find book
+find project meeting
+
+todo
+deadline
+event
+deadline test fail
+event test fail
+fixedDuration test fail
+testFail
+mark 1000
+unmark 1000
+mark fail
+unmark fail
+delete 1000
+delete fail
+deadline return book /by wrongdate
+event project meeting /from wrongdate /to wrongdate
+list
+bye

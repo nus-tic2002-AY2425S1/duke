@@ -1,0 +1,17 @@
+E|0|happy gathering (from:Oct 20 2020 to:Oct 20 2021)
+D|1|return storybook (by:Oct 27 2022)
+D|0|submit assignment (by:Nov 17 2024)
+D|0|project (by:Nov 17 2024)
+E|0|Updated Happy together (from:Oct 20 2024 to:Oct 23 2024)
+D|0|Final Testing again :) (by:Oct 20 2024)
+E|0|project (b) (from:Dec 12 2020 to:Oct 24 2024)
+E|1|Final timeline confirmed (from:Oct 12 2023 to:Dec 12 2025)
+D|0|Project submission TIC2002 (by:Nov 17 2024)
+T|0|Read Comic/Watch Anime
+T|0|testing today
+D|0|Real Project submission (by:Nov 17 2024)
+T|0|testing today
+D|0|Real Project submission (by:Nov 17 2024)
+T|0|testing today
+D|0|Real Project submission (by:Nov 17 2024)
+E|1|Final timeline confirmed (from:Oct 12 2023 to:Dec 12 2025)

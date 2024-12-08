@@ -1,7 +1,109 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
-
+--------------------------------------
+Hello! I'm checkbot.
+What task are you checking off today? :)
+--------------------------------------
+--------------------------------------
+Here are the task(s) in your list:
+--------------------------------------
+--------------------------------------
+Got it! I've added this task:
+  1. [   ][T][ ] task 1 - record video for TIC2002
+Now you have 1 task(s) in the list.
+--------------------------------------
+--------------------------------------
+Got it! I've added this task:
+  2. [   ][D][ ] task 2 - TIC2002 Report 2 (by: 17 NOVEMBER 2024, 11:59PM)
+Now you have 2 task(s) in the list.
+--------------------------------------
+--------------------------------------
+Got it! I've added this task:
+  3. [   ][E][ ] DAY6 concert (from: 22 NOVEMBER 2024, 7:00PM to: 22 NOVEMBER 2024, 10:00PM)
+Now you have 3 task(s) in the list.
+--------------------------------------
+--------------------------------------
+Got it! I've added this task:
+  4. [   ][T][ ] task 4
+Now you have 4 task(s) in the list.
+--------------------------------------
+--------------------------------------
+Got it! I've added this task:
+  5. [   ][T][ ] task 5 - collect things from somewhere (between: 23 NOVEMBER 2024, 12:00AM and: 30 NOVEMBER 2024, 12:00AM)
+Now you have 5 task(s) in the list.
+--------------------------------------
+--------------------------------------
+Here are the task(s) in your list:
+1. [   ][T][ ] task 1 - record video for TIC2002
+2. [   ][D][ ] task 2 - TIC2002 Report 2 (by: 17 NOVEMBER 2024, 11:59PM)
+3. [   ][E][ ] DAY6 concert (from: 22 NOVEMBER 2024, 7:00PM to: 22 NOVEMBER 2024, 10:00PM)
+4. [   ][T][ ] task 4
+5. [   ][T][ ] task 5 - collect things from somewhere (between: 23 NOVEMBER 2024, 12:00AM and: 30 NOVEMBER 2024, 12:00AM)
+--------------------------------------
+--------------------------------------
+Nice! I've marked this task as done: 
+  1. [   ][T][X] task 1 - record video for TIC2002
+--------------------------------------
+--------------------------------------
+Nice! I've marked this task as done: 
+  3. [   ][E][X] DAY6 concert (from: 22 NOVEMBER 2024, 7:00PM to: 22 NOVEMBER 2024, 10:00PM)
+--------------------------------------
+--------------------------------------
+Okay, I've marked this task as not done yet: 
+  1. [   ][T][ ] task 1 - record video for TIC2002
+--------------------------------------
+--------------------------------------
+Got it! I've changed the priority of this task to: HIGH
+  5. [!!!][T][ ] task 5 - collect things from somewhere (between: 23 NOVEMBER 2024, 12:00AM and: 30 NOVEMBER 2024, 12:00AM)
+--------------------------------------
+--------------------------------------
+Got it! I've changed the priority of this task to: MEDIUM
+  1. [ !!][T][ ] task 1 - record video for TIC2002
+--------------------------------------
+--------------------------------------
+Got it! I've changed the priority of this task to: LOW
+  2. [  !][D][ ] task 2 - TIC2002 Report 2 (by: 17 NOVEMBER 2024, 11:59PM)
+--------------------------------------
+--------------------------------------
+Here are the task(s) in your list:
+1. [ !!][T][ ] task 1 - record video for TIC2002
+2. [  !][D][ ] task 2 - TIC2002 Report 2 (by: 17 NOVEMBER 2024, 11:59PM)
+3. [   ][E][X] DAY6 concert (from: 22 NOVEMBER 2024, 7:00PM to: 22 NOVEMBER 2024, 10:00PM)
+4. [   ][T][ ] task 4
+5. [!!!][T][ ] task 5 - collect things from somewhere (between: 23 NOVEMBER 2024, 12:00AM and: 30 NOVEMBER 2024, 12:00AM)
+--------------------------------------
+--------------------------------------
+Here are the undone task(s) in order of priority:
+5. [!!!][T][ ] task 5 - collect things from somewhere (between: 23 NOVEMBER 2024, 12:00AM and: 30 NOVEMBER 2024, 12:00AM)
+1. [ !!][T][ ] task 1 - record video for TIC2002
+2. [  !][D][ ] task 2 - TIC2002 Report 2 (by: 17 NOVEMBER 2024, 11:59PM)
+4. [   ][T][ ] task 4
+--------------------------------------
+--------------------------------------
+Here are the matching task(s) in your list:
+1. [ !!][T][ ] task 1 - record video for TIC2002
+2. [  !][D][ ] task 2 - TIC2002 Report 2 (by: 17 NOVEMBER 2024, 11:59PM)
+4. [   ][T][ ] task 4
+5. [!!!][T][ ] task 5 - collect things from somewhere (between: 23 NOVEMBER 2024, 12:00AM and: 30 NOVEMBER 2024, 12:00AM)
+--------------------------------------
+--------------------------------------
+Here are the matching task(s) in your list:
+5. [!!!][T][ ] task 5 - collect things from somewhere (between: 23 NOVEMBER 2024, 12:00AM and: 30 NOVEMBER 2024, 12:00AM)
+--------------------------------------
+--------------------------------------
+Here are the matching task(s) in your list:
+3. [   ][E][X] DAY6 concert (from: 22 NOVEMBER 2024, 7:00PM to: 22 NOVEMBER 2024, 10:00PM)
+--------------------------------------
+--------------------------------------
+Got it. I've removed this task: 
+  task 4
+Now you have 4 task(s) in the list.
+--------------------------------------
+--------------------------------------
+Here are the task(s) in your list:
+1. [ !!][T][ ] task 1 - record video for TIC2002
+2. [  !][D][ ] task 2 - TIC2002 Report 2 (by: 17 NOVEMBER 2024, 11:59PM)
+3. [   ][E][X] DAY6 concert (from: 22 NOVEMBER 2024, 7:00PM to: 22 NOVEMBER 2024, 10:00PM)
+4. [!!!][T][ ] task 5 - collect things from somewhere (between: 23 NOVEMBER 2024, 12:00AM and: 30 NOVEMBER 2024, 12:00AM)
+--------------------------------------
+--------------------------------------
+Bye! Remember to do your tasks!
+--------------------------------------
